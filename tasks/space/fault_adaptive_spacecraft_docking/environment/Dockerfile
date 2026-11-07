@@ -28,12 +28,39 @@ ENV PATH=/opt/venv/bin:$PATH
 # requirements.txt is the ONE list of Python dependencies; this image installs it.
 COPY requirements.txt /tmp/requirements.txt
 RUN uv venv /opt/venv --python 3.12 \
-    && uv pip install --python /opt/venv -r /tmp/requirements.txt \
+    && uv pip install --no-cache --python /opt/venv -r /tmp/requirements.txt \
+    && find /opt/venv -name '__pycache__' -type d -prune -exec rm -rf {} + \
     && chmod -R a+rX /opt/venv \
     && { [ ! -d /opt/uv-python ] || chmod -R a+rX /opt/uv-python; }
 # /opt/uv-python only exists when uv had to download a managed CPython; the ALE base
 # ships a standalone CPython 3.12 (at /opt/python, behind /usr/local/bin/python3), so uv
 # links the venv against that instead of downloading one.
+
+# The chaser's docking camera (tests/camera.py renders it for the grader): MuJoCo 3.16's Filament module (in the mujoco
+# wheel) on Vulkan through Mesa's lavapipe, the CPU Vulkan driver (the task has no GPU). The agent may use the same
+# renderer for synthetic views of its own (given/target.md). Proved at build, as root and as the agent account: a
+# Filament context on lavapipe, and the ICD file tests/camera.py pins (Ubuntu names it lvp_icd.x86_64.json).
+RUN apt-get update && apt-get install -y --no-install-recommends mesa-vulkan-drivers libvulkan1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && ls /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
+RUN env -u DISPLAY python3 -c "import mujoco._render_filament as F, mujoco.experimental.studio.window; F.Context(F.ContextConfig(graphics_api=F.GraphicsApi.GRAPHICS_API_VULKAN)); print('[image] Filament on Vulkan OK (root)')" \
+    && runuser -u user -- env -u DISPLAY python3 -c "import mujoco._render_filament as F, mujoco.experimental.studio.window; F.Context(F.ContextConfig(graphics_api=F.GraphicsApi.GRAPHICS_API_VULKAN)); print('[image] Filament on Vulkan OK (agent)')"
+
+# ---- task assets (docs/task-assets.md). payload/render/ is the grader's camera bundle (tests/review/
+# build_camera_bundle.py: the target's and the craft's meshes, their maps, the light); it goes to
+# /opt/fault-docking-render, root's alone (mode 0700): with it an agent could render the grader's frames, so the agent
+# gets the target's interface document and sample frames instead. The rest of payload/ (given/frames/: the sample
+# frames) goes to /opt/task-assets/payload, which environment/setup/setup.sh stages into the agent home. The files
+# live in the benchmark's Hugging Face dataset (tasks/space/fault_adaptive_spacecraft_docking/payload/) and are
+# fetched at the commit pinned in assets.sha256, each checked against its sha256 (fetch_assets.py is the benchmark's
+# canonical copy, shared/task_assets/).
+COPY fetch_assets.py assets.sha256 /opt/task-assets/
+RUN python3 /opt/task-assets/fetch_assets.py /opt/task-assets/assets.sha256 /opt/task-assets/payload \
+    && mv /opt/task-assets/payload/render /opt/fault-docking-render \
+    && chown -R root:root /opt/fault-docking-render /opt/task-assets \
+    && chmod -R go-rwx /opt/fault-docking-render && chmod 700 /opt/fault-docking-render \
+    && chmod -R a+rX /opt/task-assets \
+    && ! runuser -u user -- cat /opt/fault-docking-render/bundle.json >/dev/null 2>&1
 
 # The declared artifact path (task.toml `artifacts`), owned by the agent. The engine never
 # creates an artifact path or fixes its ownership, so the image does both, and the agent
@@ -46,5 +73,5 @@ ENV MPLBACKEND=Agg
 
 # Fail the build early if the venv is broken — and prove the AGENT account can use it,
 # which is the exact failure the UV_PYTHON_INSTALL_DIR line above prevents.
-RUN python3 -c "import numpy; print('[image] numpy', numpy.__version__)" \
-    && runuser -u user -- python3 -c "import numpy; print('[image] agent-UID import OK')"
+RUN python3 -c "import numpy, mujoco, cv2, PIL; print('[image] numpy', numpy.__version__, 'mujoco', mujoco.__version__, 'cv2', cv2.__version__, 'PIL', PIL.__version__)" \
+    && runuser -u user -- python3 -c "import numpy, mujoco, cv2, PIL; print('[image] agent-UID import OK')"

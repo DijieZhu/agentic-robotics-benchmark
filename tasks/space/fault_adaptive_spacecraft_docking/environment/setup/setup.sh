@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Setup — runs as trusted root, cwd = this staged folder, before the agent phase.
 #
-# One job here: put the agent-visible material (the practice grader, the agent's own
-# editable copy of the environment) into the agent home, owned by the agent. Keep this
-# stage dynamic-only: package installation and fixed downloads belong in environment/Dockerfile,
-# and lint rejects them here.
+# One job here: put the agent-visible material into the agent home as the agent's own
+# writable copy: the documents in payload/given/ (the plant's datasheet model.md, the sensors'
+# camera.md, the target's target.md, the sample frames' README) and the sample frames the
+# image holds in /opt/task-assets/payload/given/frames/ (environment/Dockerfile). The agent
+# gets no simulator, no renderer of the grader's scene and nothing that grades a controller.
+# Keep this stage dynamic-only: package installation and fixed downloads belong in
+# environment/Dockerfile, and lint rejects them here.
 #
 # Everything under payload/ is staged, whatever it is called — add, rename or remove
 # payload files without touching this script.
@@ -23,3 +26,12 @@ for entry in payload/* payload/.[!.]*; do
   [ -e "$entry" ] || continue
   chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/$(basename "$entry")"
 done
+
+# The image's task assets (the sample frames), next to payload/ in the agent home.
+if [ -d /opt/task-assets/payload ]; then
+  cp -r /opt/task-assets/payload/. "$HOME_DIR/"
+  for entry in /opt/task-assets/payload/*; do
+    [ -e "$entry" ] || continue
+    chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/$(basename "$entry")"
+  done
+fi

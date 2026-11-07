@@ -1,30 +1,30 @@
 #!/usr/bin/env bash
-# The task's own reference solution, run in place of the agent by `ale validate` — as the
-# same unprivileged account, with the same timeout. That identity is not a detail: an
-# oracle with more privilege would pass exactly the tasks a real agent then fails on
-# access alone.
+# The task's reference solution, run in place of the agent by `ale validate`, as the same unprivileged account with
+# the same timeout. It installs the PRIVILEGED reference controller (solution/privileged/oracle.py, with the copy of
+# the simulator beside it) and the reference token: the grader hands a submission whose .oracle_token matches the
+# digest in tests/hidden/ the simulator's current truth in every observation, and this controller plans from it alone
+# (an exact replica of the plant, simulate-and-select over a fixed policy family). It shows that the hidden episodes
+# can be done; the anchor is its own measured score on them. An agent gets no such block and works from the
+# chaser's sensors: the docking camera's frames, the star tracker, the IMU, the boom's telemetry, the fuel gauge.
 #
-# Two jobs: (1) produce whatever the real method produces — for a learning task, TRAIN
-# here, inside the agent's budget, and save a checkpoint; (2) leave a self-contained
-# /home/user/submission/ that the verify stage can drive without this folder. Its real
-# measured score becomes the anchor.
+# Round 1's non-privileged reference (the task author's identifying controller, which read the numeric delayed pose
+# of round 1's 16-number observation) was removed in round 2: that observation no longer exists. Its round-1 result
+# is in tests/README.md, its code in the repository's history (solution/reference/ before round 2).
 set -euo pipefail
 
 SUB="${ALE_HOME:-/home/user}/submission"
+HERE="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$SUB"
 
-# A real task trains here first, e.g.:
-#   python3 "$(dirname "$0")/train.py" --out "$SUB/policy.pt"
-# This task's reference policy is analytic, so there is nothing to train.
-
-cp "$(dirname "$0")/solver.py" "$SUB/solver.py"
+cp "$HERE/privileged/oracle.py" "$HERE/privileged/spacecraft_docking_env.py" "$SUB/"
+cp "$HERE/privileged/oracle_token" "$SUB/.oracle_token"
 
 cat > "$SUB/run.sh" <<'SH'
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")"
-exec /opt/venv/bin/python3 solver.py
+exec /opt/venv/bin/python3 -B oracle.py
 SH
 chmod +x "$SUB/run.sh"
 
-echo "[oracle] submission ready at $SUB" >&2
+echo "[oracle] privileged submission ready at $SUB" >&2

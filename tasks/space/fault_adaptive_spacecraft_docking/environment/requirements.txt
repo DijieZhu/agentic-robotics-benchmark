@@ -2,4 +2,21 @@
 # the py3.12 /opt/venv. Pin what your grader and reference implementation import; the
 # simulator itself belongs here too when it is pip-installable (otherwise install it in
 # the Dockerfile and keep this list for the rest).
-numpy>=1.26,<3
+#
+# numpy: the grader's camera noise (tests/camera.py) and every controller's numerics.
+# mujoco: the grader's DOCK camera renderer (Filament, mujoco._render_filament, on lavapipe), and the agent's own
+# synthetic views from given/target.md. pillow: the camera bundle's maps (grader) and the sample frames (agent).
+# opencv-python-headless: image tools for the agent's perception. The rest are mujoco's dependencies, resolved with
+# `uv pip compile --python-version 3.12 --python-platform x86_64-manylinux_2_28` (2026-11-07).
+numpy==2.5.4
+mujoco==3.16.0
+pillow==13.0.0
+opencv-python-headless==5.0.0.93
+absl-py==2.5.1
+etils==1.15.0
+fsspec==2026.9.0
+glfw==2.11.0
+pyopengl==3.1.10
+typing-extensions==4.16.0
+websockets==17.4
+zipp==4.1.2

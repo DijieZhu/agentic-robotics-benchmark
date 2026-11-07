@@ -18,20 +18,33 @@ network_mode = "no-network"
 # Separate verification: after the agent phase the solver sandbox is released and a fresh
 # verifier sandbox starts from the task image, with only the declared artifact
 # (/home/user/submission) restored at the same path. test.sh runs as root there; setup.sh
-# does NOT run, so the agent's home (the dev copy of the simulator, the practice grader) and
+# does NOT run, so the agent's home (given/: the plant's datasheet, the sensors' documents,
+# the sample frames; the agent gets no simulator and no renderer of the grader's scene) and
 # anything the agent left outside the submission are absent. This closes the shared-mode hole
-# where a file the agent planted on root's PATH would run as root at verify. The grader is
-# self-contained from tests/ (env.py, anchor.json, grader_config.json, robotics_grader/) plus
-# the image's /opt/venv; it re-owns the restored submission to the agent account and drives
-# the live controller over the kit Solver (deprivileged, which reclaims root's PATH before any
-# agent code runs). The timeout is unchanged: the oracle verifies in well under a minute, so
-# the one extra sandbox start is far inside the 1800 s budget.
+# where a file the agent planted on root's PATH would run as root at verify.
+# The grader is self-contained from tests/ (env.py, camera.py, the fixed hidden set in hidden/,
+# anchor.json, grader_config.json, nonet_exec.py, robotics_grader/) plus the image's /opt/venv
+# and its root-only camera bundle (/opt/fault-docking-render); it re-owns the restored
+# submission to the agent account and drives the live controller over the kit Solver, started
+# through nonet_exec.py: the agent account, a fixed environment and no socket but AF_UNIX (a
+# self-test before episode 0 checks that the seccomp filter holds; where it cannot be
+# installed, or the camera cannot be rendered, the verify ends as a task error and grades
+# nothing). Every submission meets the same 48 hidden episodes. The grader renders the docking
+# camera's frame of every fresh observation on the CPU (Filament on lavapipe). Measured on
+# 2026-11-07 in a fresh 2-CPU container of the task image: the privileged reference verifies
+# in 969 s (12,816 steps, 10,651 frames at 85.5 ms each, its replies 23.5 s). The timeout's
+# rule: 1800 s of controller replies (the reply budget) + 2 x the rendering of a run that takes
+# every episode to 400 steps (about 16,800 frames at 0.12 s, the p95 frame cost: the mean 85.5 ms
+# times the bench's p95 / mean of 1.4; 2,016 s; the factor 2 covers a co-tenant) + 480 s of READY
+# handshakes (the start and three restarts) + 300 s (the camera's start and canary, the
+# self-test, the simulator) = 6,612 s, rounded up to 10 minutes.
 [verifier]
-timeout_sec = 1800
+timeout_sec = 7200
 environment_mode = "separate"
 
 # The fresh verifier sandbox's resources, matched to the agent environment: the grader runs
-# 48 short episodes over one numpy controller, CPU-bound on small matrices, no GPU.
+# 48 short episodes and renders the camera on the CPU (lavapipe), the controller shares the two
+# CPUs; no GPU. The renderer holds about 0.5 GB.
 [verifier.environment]
 cpus = 2
 memory_mb = 4096

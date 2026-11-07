@@ -10,7 +10,9 @@ degraded nozzle, while high aggregate duty advances it an extra slot. The second
 (the re-key) fires once the approach is within a hidden distance of the port, or at a
 hidden deadline; it also reverses the target's slew, remounts the IMU and starts a pose
 blackout. Pose is delayed and can disappear in bursts; the ambiguously mounted IMU
-remains current.
+remains current. Near the target, plume impingement continuously attenuates nozzles whose
+exhaust points at the target body, so the identified far-field plant is not a fixed model
+during terminal approach.
 
 An episode is defined by its 64-bit seed through a keyed hash (`_RNG`), so this source can
 be shared with the agent: knowing it and any number of draws reveals neither the seed nor
@@ -24,7 +26,7 @@ import struct
 __all__ = ["FaultAdaptiveDocking"]
 
 DT = 0.12
-STEPS = 300
+STEPS = 400
 PORT_RADIUS = 1.14
 BODY_RADIUS = 0.82
 MAX_RADIUS = 6.2
@@ -142,6 +144,9 @@ class FaultAdaptiveDocking(object):
         self.failure_scale = self.rng.uniform(0.35, 0.50)
         self.secondary_failure_scale = self.rng.uniform(0.55, 0.70)
         self.failure_exponents = [self.rng.uniform(0.65, 1.60) for _ in range(6)]
+        self.failure_valve_memory = [
+            self.rng.uniform(0.145 + 0.02 * i, 0.155 + 0.02 * i) for i in range(6)
+        ]
         self.rekey_earliest = max(
             self.failure_step + 25,
             self.rng.integer(108, 126),
@@ -150,7 +155,7 @@ class FaultAdaptiveDocking(object):
             self.rekey_earliest + 18,
             self.rng.integer(148, 166),
         )
-        self.rekey_proximity = self.rng.uniform(0.88, 0.98)
+        self.rekey_proximity = self.rng.uniform(1.18, 1.30)
         self.rekey_blackout_duration = 30 + (
             (self.failure_step + self.rekey_deadline) % 13
         )
@@ -166,7 +171,12 @@ class FaultAdaptiveDocking(object):
         self.rekey_failure_scale = self.rng.uniform(0.45, 0.60)
         self.rekey_secondary_failure_scale = self.rng.uniform(0.65, 0.80)
         self.rekey_exponents = [self.rng.uniform(0.65, 1.60) for _ in range(6)]
+        self.rekey_valve_memory = [
+            self.rng.uniform(0.235 + 0.025 * i, 0.245 + 0.025 * i) for i in range(6)
+        ]
         self.nozzle_exponents = [1.0] * 6
+        self.valve_memory = [0.0] * 6
+        self.slot_valves = [0.0] * 6
         next_speed = self.rng.uniform(0.020, 0.045)
         self.rekey_phase_rate = -next_speed if self.phase_rate > 0.0 else next_speed
         self.rekey_active = False
@@ -196,6 +206,28 @@ class FaultAdaptiveDocking(object):
             (first, first + self.rng.integer(7, 14)),
             (second, second + self.rng.integer(10, 19)),
         )
+        # Keep these draws after the legacy episode parameters so paired seeds
+        # differ only by the newly introduced near-field physics.
+        self.plume_onset_gap = 0.65
+        self.plume_strength = 0.82
+        # Six independent passive vortex cells sit behind the docking shroud.  A
+        # cell belongs to a physical nozzle (not an electrical slot), which makes
+        # its mode trackable only after the moving rotor has also been identified.
+        plume_parity = -1.0 if self.rng.random() < 0.5 else 1.0
+        plume_magnitude = (0.92, 0.98, 1.04, 1.10, 1.16, 1.20)
+        self.plume_swirl = [
+            plume_parity * (1.0 if nozzle % 2 == 0 else -1.0) * magnitude
+            for nozzle, magnitude in enumerate(plume_magnitude)
+        ]
+        self.plume_switch_energy = [0.24 + 0.028 * nozzle for nozzle in range(6)]
+        self.plume_energy = [0.0] * 6
+        # A compliant docking boom breathes radially while the target tumbles.
+        # Its current extension is sensed independently of the delayed camera.
+        self.port_amplitude = self.rng.uniform(0.10, 0.16)
+        self.port_omega = self.rng.uniform(0.18, 0.28)
+        self.port_extension_phase = self.rng.uniform(-math.pi, math.pi)
+        self.port_encoder_sign = -1.0 if self.rng.random() < 0.5 else 1.0
+        self.rekey_port_encoder_sign = -1.0 if self.rng.random() < 0.5 else 1.0
 
         self.fuel = 1.0
         self.steps = 0
@@ -212,9 +244,23 @@ class FaultAdaptiveDocking(object):
         return self._observe(force_valid=True)
 
     def goal_state(self):
-        gx = PORT_RADIUS * math.cos(self.phase)
-        gy = PORT_RADIUS * math.sin(self.phase)
-        return gx, gy, -self.phase_rate * gy, self.phase_rate * gx, self.phase
+        port_radius = self.port_radius()
+        radial_rate = (
+            self.port_amplitude * self.port_omega
+            * math.cos(self.port_extension_phase)
+        )
+        c, s = math.cos(self.phase), math.sin(self.phase)
+        gx, gy = port_radius * c, port_radius * s
+        return (
+            gx,
+            gy,
+            radial_rate * c - self.phase_rate * gy,
+            radial_rate * s + self.phase_rate * gx,
+            self.phase,
+        )
+
+    def port_radius(self):
+        return PORT_RADIUS + self.port_amplitude * math.sin(self.port_extension_phase)
 
     def _record_pose(self):
         gx, gy, _, _, goal_theta = self.goal_state()
@@ -279,8 +325,46 @@ class FaultAdaptiveDocking(object):
             float(age),
             1.0 if valid else 0.0,
             self.steps / float(self.max_steps),
-            PORT_RADIUS,
+            PORT_RADIUS + self.port_encoder_sign * (self.port_radius() - PORT_RADIUS),
         ]
+
+    def _plume_column(self, column, nozzle):
+        """Return the near-field column after target-body plume recirculation.
+
+        Exhaust is opposite the nozzle's force vector. Only exhaust directed toward the
+        target is shadowed, and the effect grows smoothly from a hidden surface-gap onset
+        to full strength at the nominal docking radius. Lost axial momentum feeds a
+        signed transverse recirculation cell belonging to the physical nozzle.
+        """
+        radius = math.hypot(self.x, self.y)
+        surface_gap = radius - BODY_RADIUS
+        docking_gap = self.port_radius() - BODY_RADIUS
+        field = _clip(
+            (self.plume_onset_gap - surface_gap)
+            / max(self.plume_onset_gap - docking_gap, 1e-6),
+            0.0,
+            1.0,
+        )
+        if field <= 0.0:
+            return column, 0.0
+        c, s = math.cos(self.theta), math.sin(self.theta)
+        # Unit direction from spacecraft to target, expressed in the body frame.
+        target_x = -(c * self.x + s * self.y) / max(radius, 1e-6)
+        target_y = (s * self.x - c * self.y) / max(radius, 1e-6)
+        force_norm = math.hypot(column[0], column[1])
+        alignment = max(
+            0.0,
+            (-column[0] * target_x - column[1] * target_y)
+            / max(force_norm, 1e-9),
+        )
+        angular_coupling = 0.35 + 0.65 * alignment ** 4
+        loss = self.plume_strength * field * angular_coupling
+        fx, fy, torque = column
+        return (
+            (1.0 - loss) * fx - self.plume_swirl[nozzle] * loss * fy,
+            (1.0 - loss) * fy + self.plume_swirl[nozzle] * loss * fx,
+            (1.0 - loss) * torque,
+        ), field * angular_coupling
 
     def step(self, action):
         if not isinstance(action, (list, tuple)) or len(action) != 6:
@@ -315,10 +399,15 @@ class FaultAdaptiveDocking(object):
             self.failure_scale = self.rekey_failure_scale
             self.secondary_failure_scale = self.rekey_secondary_failure_scale
             self.nozzle_exponents = list(self.rekey_exponents)
+            self.valve_memory = list(self.rekey_valve_memory)
+            self.slot_valves = [0.0] * 6
             self.phase_rate = self.rekey_phase_rate
+            self.port_encoder_sign = self.rekey_port_encoder_sign
         if not self.routing_active and self.steps >= self.failure_step:
             self.routing_active = True
             self.nozzle_exponents = list(self.failure_exponents)
+            self.valve_memory = list(self.failure_valve_memory)
+            self.slot_valves = [0.0] * 6
             self.routing_phase = (
                 self.routing_direction * self.routing_initial_shift
             ) % 6
@@ -340,6 +429,16 @@ class FaultAdaptiveDocking(object):
             if command[trigger_slot] > 0.78 and self.routing_relay_armed:
                 reverse_after_step = True
                 self.routing_relay_armed = False
+        # Each command channel drives a first-order valve.  The state belongs to
+        # the electrical slot, not the physical nozzle currently routed to it;
+        # relay, stride and fuel still use the requested command.  Bus events
+        # replace the valve constant and clear all six states.
+        plume_load = [0.0] * 6
+        for i, duty in enumerate(command):
+            self.slot_valves[i] = (
+                self.valve_memory[i] * self.slot_valves[i]
+                + (1.0 - self.valve_memory[i]) * duty
+            )
         for i, duty in enumerate(command):
             nozzle = (
                 self.routing_order[(i + routing_shift) % 6]
@@ -355,11 +454,18 @@ class FaultAdaptiveDocking(object):
                 scale = self.secondary_failure_scale
             else:
                 scale = 1.0
-            realized_duty = duty ** self.nozzle_exponents[nozzle]
-            column = self.columns[nozzle]
-            body_ax += column[0] * scale * realized_duty
-            body_ay += column[1] * scale * realized_duty
-            alpha += column[2] * scale * realized_duty
+            realized_duty = self.slot_valves[i] ** self.nozzle_exponents[nozzle]
+            column, plume_activation = self._plume_column(self.columns[nozzle], nozzle)
+            delivered = scale * realized_duty
+            plume_load[nozzle] += plume_activation * realized_duty
+            body_ax += column[0] * delivered
+            body_ay += column[1] * delivered
+            alpha += column[2] * delivered
+        for nozzle in range(6):
+            self.plume_energy[nozzle] += DT * plume_load[nozzle]
+            if self.plume_energy[nozzle] >= self.plume_switch_energy[nozzle]:
+                self.plume_energy[nozzle] -= self.plume_switch_energy[nozzle]
+                self.plume_swirl[nozzle] *= -1.0
         self.last_accel_body = [body_ax, body_ay, alpha]
 
         c, s = math.cos(self.theta), math.sin(self.theta)
@@ -372,6 +478,9 @@ class FaultAdaptiveDocking(object):
         self.y += self.vy * DT
         self.theta = _wrap(self.theta + self.omega * DT)
         self.phase = _wrap(self.phase + self.phase_rate * DT)
+        self.port_extension_phase = _wrap(
+            self.port_extension_phase + self.port_omega * DT
+        )
         self.fuel = max(0.0, self.fuel - FUEL_BURN * sum(command))
         if event_active:
             if reverse_after_step:
@@ -397,11 +506,11 @@ class FaultAdaptiveDocking(object):
             self.rekey_active
             and self.first_relay_reversals >= 1
             and self.rekey_relay_reversals >= 1
-            and pos_error < 0.105 and vel_error < 0.075
-            and angle_error < 0.025 and rate_error < 0.020
+            and pos_error < 0.085 and vel_error < 0.060
+            and angle_error < 0.020 and rate_error < 0.015
         )
         self.hold_steps = self.hold_steps + 1 if docked else 0
-        if self.hold_steps >= 20:
+        if self.hold_steps >= 30:
             self.success, self.failure_reason = True, "docked"
 
         radius = math.hypot(self.x, self.y)
