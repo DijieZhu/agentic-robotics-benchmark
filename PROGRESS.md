@@ -241,7 +241,7 @@ and `verify/` included.
 ## 7. 2026-10-21 — task assets: one configuration file names the asset repository
 
 Tasks with large agent-visible files fetch them at image build from the Hugging Face dataset
-`grounded-intelligence-initiative/agentic-robotics-last-exam` (first used by the open pull
+`grounded-intelligence-initiative/ale-robotics-assets` (first used by the open pull
 request #13). The dataset is now named once, in `task-assets.toml`; `scripts/task_assets.py`
 writes it into every task's `image/assets.sha256` (`sync`), checks it in CI (`check`) and
 writes a new task's list (`list`); `shared/task_assets/fetch_assets.py` is the canonical
@@ -381,6 +381,17 @@ Gotchas found on the way:
   benchmark; its success rate is 21--25%, versus the previous Opus 5.5 46--48/48 result.
 - Not yet validated on the Harbor-based engine (§8): PR #10's branch pins `vendor/ale` at
   `90a7c1c`, and §8's `validate-44ad164a` on `1cdbc02` ran the version before this hardening.
+
+## 10. 2026-11-07 — the asset dataset is renamed `ale-robotics-assets`
+
+The Hugging Face dataset that serves the tasks' large agent-visible files was renamed from
+`grounded-intelligence-initiative/agentic-robotics-last-exam` to
+`grounded-intelligence-initiative/ale-robotics-assets` (the Hub answers the old name with a redirect).
+Following section 4 of `docs/task-assets.md`: `task-assets.toml` names the new dataset and
+`scripts/task_assets.py sync` rewrote the `repo` line of every task's `environment/assets.sha256` and
+re-vendored the fetcher (its docstring names the dataset). File lists, hashes and pinned dataset commits
+are unchanged, since a Hub rename keeps the repository's history. Every task with assets has a new
+content digest, so the registry is re-exported after the merge.
 
 ## Open items
 

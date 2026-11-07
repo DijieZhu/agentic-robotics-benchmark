@@ -25,7 +25,7 @@ licence **CC-BY-4.0**. This notice is the attribution the licence asks for.
   to the statistics of the author's original videos (MuJoCo's native renderer). The physics, the probe paths, the arm
   motion and the cameras are the author's.
 - **Where they live:** the 120 videos and the 80 data arrays of `data/objects/` are in the benchmark's Hugging Face
-  dataset `grounded-intelligence-initiative/agentic-robotics-last-exam` under
+  dataset `grounded-intelligence-initiative/ale-robotics-assets` under
   `tasks/arm/robocasa_object_dynamics_from_video/payload/`, fetched at the commit pinned in `environment/assets.sha256`
   (docs/task-assets.md). Do not add them back to git; to change one, upload it, re-run `scripts/task_assets.py list`
   with the new commit, and re-validate.

@@ -10,7 +10,7 @@ enforces the identity.
 file, as `sha256sum` writes them:
 
     # endpoint: https://huggingface.co
-    # repo: grounded-intelligence-initiative/agentic-robotics-last-exam
+    # repo: grounded-intelligence-initiative/ale-robotics-assets
     # revision: <40-hex commit of the dataset repository>
     # prefix: tasks/<platform>/<task name>/payload
     <sha256>  photos/photo_01.jpg

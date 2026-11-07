@@ -19,7 +19,7 @@ the packs model them, re-placed in this room, and the shell (walls, ceiling, ski
 from the packs' textures. The base maps are downsized to 512 px. The image light (`ibl.ktx`) is the mean of three light
 probes of the same room path-traced with NVIDIA OVRTX, the sunlit patches and the lamps' emissive surfaces painted out
 (the cameras' renderer draws their light with lights of its own), prefiltered with Filament's cmgen. The decor is not in
-git: its files are in the benchmark's Hugging Face dataset `grounded-intelligence-initiative/agentic-robotics-last-exam`
+git: its files are in the benchmark's Hugging Face dataset `grounded-intelligence-initiative/ale-robotics-assets`
 under `tasks/humanoid/furniture_assembly_from_drawings/payload/render/room_decor/`, fetched by the image build at the
 commit pinned in `environment/assets.sha256` and checked file by file (`docs/task-assets.md`); to change one, upload it,
 re-run `scripts/task_assets.py list` with the new commit and re-validate. The cameras' colour renderer is MuJoCo's

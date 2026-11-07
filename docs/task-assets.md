@@ -5,6 +5,10 @@ dataset. A task fetches them while its image is built, pinned to one dataset com
 dataset is named in exactly one place, [`task-assets.toml`](../task-assets.toml) at the repository root, so moving
 the assets (the dataset renamed, a mirror) is one edit and one command (section 4).
 
+The dataset is [`grounded-intelligence-initiative/ale-robotics-assets`](https://huggingface.co/datasets/grounded-intelligence-initiative/ale-robotics-assets).
+It was renamed from `grounded-intelligence-initiative/agentic-robotics-last-exam` on 2026-11-07; the Hub redirects the
+old name, but every task now names the new one.
+
 Only agent-visible material goes there: the dataset is public and its files end up in the image the agent runs in.
 The grader's ground truth and the oracle's reference artifact stay in the task's `tests/` and `solution/` in git
 (they reach the sandbox only when their stage runs; see [`security-model.md`](security-model.md)).
@@ -23,7 +27,7 @@ An asset list looks like this:
 
 ```text
 # endpoint: https://huggingface.co
-# repo: grounded-intelligence-initiative/agentic-robotics-last-exam
+# repo: grounded-intelligence-initiative/ale-robotics-assets
 # revision: d2a07b8c123c6cf0d500d1c8737802c50e3240c9
 # prefix: tasks/arm/robotic_arm_replica_requirements_from_photos/payload
 cf8cb99a7adf0631aff2d5f99cb966cf91c0c8d78c363c09f54eccd09104ec3e  photos/PH-01.jpg
@@ -69,7 +73,7 @@ while you author).
    request on the dataset):
 
    ```bash
-   hf upload grounded-intelligence-initiative/agentic-robotics-last-exam upload \
+   hf upload grounded-intelligence-initiative/ale-robotics-assets upload \
        tasks/<platform>/<name>/payload --repo-type dataset --commit-message "<name>: payload"
    ```
 
