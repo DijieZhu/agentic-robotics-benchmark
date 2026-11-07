@@ -1,0 +1,10 @@
+# The controller's Python (3.12, /opt/venv): what the reference controller imports and
+# what an agent's controller may use. Installed by environment/Dockerfile (and, identically, by
+# the separate verification image, which runs the submitted controller).
+numpy>=1.26,<3
+pillow>=10
+scipy>=1.11
+opencv-python-headless>=4.9
+torch==2.7.1   # the PyPI build for CUDA 12.6: runs on drivers from 560 on
+transformers>=4.45,<5
+huggingface_hub>=0.25

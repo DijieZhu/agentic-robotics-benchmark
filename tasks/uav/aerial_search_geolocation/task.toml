@@ -1,0 +1,37 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+# Aerial search and geolocation: the agent builds a controller that flies a quadrotor
+# through unseen TravelUAV scenes (Unreal Engine with the AirSim plugin), finds the targets
+# it is given as text, and reports each one's position or declares it absent.
+[task]
+name = "grounded-intelligence-initiative/aerial_search_geolocation"
+
+[metadata]
+platform = "uav"
+# The reference expert is graded with an oracle token (solution/reference/oracle_token,
+# sha256 in tests/hidden/): with it, observations carry the placed objects' true positions.
+oracle_kind = "token-privileged"
+
+# One GPU renders the scene (offscreen Vulkan) and runs whatever models the controller uses.
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1
+
+[agent]
+timeout_sec = 3600
+network_mode = "no-network"
+
+# The grading run needs scenes the agent must never see, so it runs in its own sandbox
+# built from tests/Dockerfile (held-out scenes + hidden object pool). The submission is
+# carried over from the agent's sandbox.
+[verifier]
+# 24 missions of up to 1000 actions each, with scene start-up and up to 30 s per reply.
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1

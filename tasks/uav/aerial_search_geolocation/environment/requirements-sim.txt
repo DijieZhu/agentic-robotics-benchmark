@@ -1,0 +1,5 @@
+# The simulator side's Python (3.10, /opt/aerialsim/venv): the bridge speaks AirSim's RPC
+# with msgpack directly and encodes frames with OpenCV. No learning stack here.
+numpy>=1.24,<2
+opencv-python-headless>=4.8,<5
+msgpack>=1.0,<2

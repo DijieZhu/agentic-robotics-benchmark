@@ -1,0 +1,19 @@
+{
+  "pool": "/opt/aerialsim/hidden/pool.json",
+  "backend": "airsim",
+  "sim_user": "aerialsim",
+  "missions_per_map": 8,
+  "targets_per_mission": 3,
+  "min_target_distance_m": 40.0,
+  "max_target_distance_m": 120.0,
+  "absent_probability": 0.5,
+  "action_budget": 1000,
+  "image_size": 256,
+  "gpu": 0,
+  "probe_rate": 0.04,
+  "probe_pass_fraction": 0.25,
+  "step_timeout_s": 30,
+  "sim_step_timeout_s": 120,
+  "guard_python": "/opt/venv/bin/python3",
+  "scoring_cap": 1.5
+}
