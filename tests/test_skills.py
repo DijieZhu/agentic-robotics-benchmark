@@ -1,7 +1,8 @@
 """Skill definitions are well-formed: every SKILL.md has valid YAML frontmatter with a
-`name` + `description`, the onboarding skills exist, and the router references each mode
-skill. A malformed skill (bad frontmatter, missing hand-off) should fail CI here rather
-than silently mis-load in an agent."""
+`name` + `description`, the onboarding skills exist, the router references each mode
+skill, and the trajectory skill names the script it drives. A malformed skill (bad
+frontmatter, missing hand-off) should fail CI here rather than silently mis-load in an
+agent."""
 
 from __future__ import annotations
 
@@ -19,6 +20,33 @@ ONBOARDING_SKILLS = {
     "onboard-closed-loop",
     "onboard-artifact-rollout",
 }
+
+
+# The old shapes' vocabulary (see test_no_skill_cites_the_retired_gate).
+RETIRED_VOCABULARY = (
+    "run_task.py", "--agent example", "grader_protocol", "eval.mode",
+    "description.md", "practice_grader/grade.py at the task root",
+    # the pre-core/v1 layout, which core/v1 replaced with setup/payload/ for the
+    # visible channel, a vendored verify/robotics_grader/, a per-task
+    # image/Dockerfile and verify/verify.py as the grader entry
+    "files/", "kits/", "ale-domain/kits", "ale-domain/images",
+    "robotics-cli", "verify/grade.py",
+    # the core/v1 layout the Harbor format replaced on 2026-11-03: the engine
+    # at vendor/ale loads none of these names, so a skill that tells an agent
+    # to write one produces a folder `ale lint` rejects
+    "task.yaml", "core/v1", "image/Dockerfile", "image/requirements.txt",
+    "image: {kind", "setup/run.sh", "oracle/run.sh", "verify/run.sh",
+    "verify/verify.py", "verify/env.py", "verify/anchor.json",
+    "verify/grader_config.json", "verify/robotics_grader", "params:",
+    # where the old engine staged the oracle and the verdict
+    ".ale-oracle", "/opt/ale/verify", "ALE_VERDICT_PATH", "ALE_VERIFICATION_PATH",
+    # the retired reproduction / open-ended genre split (design 20260902 §8)
+    "genre", "reproduction", "open_ended", "open-ended", "faithful", "\"probe\": true",
+)
+
+# The skill that records model runs' trajectories, and the script it drives.
+TRAJECTORY_SKILL = "agent-trajectory-archiving"
+TRAJECTORY_COMMANDS = ("inventory", "curate", "export", "scan", "upload", "sample")
 
 
 def _all_skill_files() -> list[Path]:
@@ -73,24 +101,7 @@ def test_no_skill_cites_the_retired_gate():
     `harness/run_task.py --agent example`, or to write a `grader/` directory subclassing
     `grader_protocol`, produces a task the engine cannot load.
     """
-    retired = ("run_task.py", "--agent example", "grader_protocol", "eval.mode",
-               "description.md", "practice_grader/grade.py at the task root",
-               # the pre-core/v1 layout, which core/v1 replaced with setup/payload/ for the
-               # visible channel, a vendored verify/robotics_grader/, a per-task
-               # image/Dockerfile and verify/verify.py as the grader entry
-               "files/", "kits/", "ale-domain/kits", "ale-domain/images",
-               "robotics-cli", "verify/grade.py",
-               # the core/v1 layout the Harbor format replaced on 2026-11-03: the engine
-               # at vendor/ale loads none of these names, so a skill that tells an agent
-               # to write one produces a folder `ale lint` rejects
-               "task.yaml", "core/v1", "image/Dockerfile", "image/requirements.txt",
-               "image: {kind", "setup/run.sh", "oracle/run.sh", "verify/run.sh",
-               "verify/verify.py", "verify/env.py", "verify/anchor.json",
-               "verify/grader_config.json", "verify/robotics_grader", "params:",
-               # where the old engine staged the oracle and the verdict
-               ".ale-oracle", "/opt/ale/verify", "ALE_VERDICT_PATH", "ALE_VERIFICATION_PATH",
-               # the retired reproduction / open-ended genre split (design 20260902 §8)
-               "genre", "reproduction", "open_ended", "open-ended", "faithful", "\"probe\": true")
+    retired = RETIRED_VOCABULARY
     for skill_file in SKILLS_DIR.rglob("SKILL.md"):
         if skill_file.parent.name not in ONBOARDING_SKILLS:
             continue
@@ -128,3 +139,21 @@ def test_skills_name_the_engine_oracle_gate():
         assert "harness/ale_onboard.py" in text, f"{skill_file}: does not name the record reader"
         for stale in ("partial_oracle", "domain policy", "only warns", "engine itself only"):
             assert stale not in text, f"{skill_file}: still says {stale!r}"
+
+
+def test_trajectory_skill_names_its_script_and_no_retired_vocabulary():
+    """The trajectory skill drives scripts/trajectories.py: it names the script, every
+    subcommand and the parameters that hold every path, and carries neither the old task
+    shapes' vocabulary nor the archived repositories' (promote, publish, mirror)."""
+    skill_file = SKILLS_DIR / TRAJECTORY_SKILL / "SKILL.md"
+    text = skill_file.read_text(encoding="utf-8")
+    assert _frontmatter(text)["name"] == TRAJECTORY_SKILL
+    assert "scripts/trajectories.py" in text
+    for command in TRAJECTORY_COMMANDS:
+        assert f"`{command}`" in text, f"{skill_file}: does not name the {command!r} subcommand"
+    for flag in ("--runs-dir", "--archive", "--dest", "--secrets-from"):
+        assert flag in text, f"{skill_file}: does not name the parameter {flag}"
+    lowered = text.lower()
+    for name in RETIRED_VOCABULARY + ("promote", "publish", "mirror"):
+        found = name in lowered if name.islower() else name in text
+        assert not found, f"{skill_file}: cites the retired {name!r}"

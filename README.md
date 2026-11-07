@@ -115,8 +115,10 @@ scripts/
   export_registry.py            registry v2 from the engine's own loader (task identity)
   lint_domain.py                domain lint (what `ale lint` cannot know), placement included
   task_assets.py                every task's asset list against task-assets.toml (check / sync)
+  trajectories.py               model runs' trajectories: inventory, curate, export, scan, upload, sample
 schemas/task-registry.schema.json   the registry's contract (owned here; the export is tested against it)
 skills/onboard-*/SKILL.md       agent-facing onboarding skills (router + one per verify pattern)
+skills/agent-trajectory-archiving/SKILL.md   recording model runs' trajectories (scripts/trajectories.py)
 tests/                          pytest suite
 docs/                           architecture, security model, contributing,
                                 evidence/ (real verdicts, isolation audit), dev/ (design records)
@@ -153,6 +155,8 @@ cd shared && python3 -m robotics_grader.selftest
 # run a task with a real agent (the difficulty test; the results are in <runs>)
 cd vendor/ale && VIRTUAL_ENV= DOCKER_HOST=unix:///var/run/docker.sock \
     uv run ale run ../../tasks/<platform>/<slug> --agent claude-code --model <model> --runs-dir <runs>
+# then keep one trajectory per task and agent: skills/agent-trajectory-archiving/SKILL.md
+python3 scripts/trajectories.py inventory --runs-dir <runs> --out inventory.jsonl
 
 # the task registry (task identity from the engine loader; refuses a dirty tree; contract in
 # schemas/task-registry.schema.json). platforms come from tasks/platforms.json; the website

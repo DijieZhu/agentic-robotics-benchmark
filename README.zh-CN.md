@@ -99,8 +99,10 @@ scripts/
   export_registry.py            用引擎自己的 loader 导出 registry v2（任务身份）
   lint_domain.py                领域 lint（`ale lint` 不知道的规则），含落地路径检查
   task_assets.py                逐个任务核对 asset 清单与 task-assets.toml（check / sync）
+  trajectories.py               模型运行的 trajectory：inventory、curate、export、scan、upload、sample
 schemas/task-registry.schema.json   registry 的契约（归本仓库所有；导出结果按它测试）
 skills/onboard-*/SKILL.md       面向 agent 的 onboarding skill（路由 + 每种 verify 模式一个）
+skills/agent-trajectory-archiving/SKILL.md   记录模型运行的 trajectory（scripts/trajectories.py）
 tests/                          pytest 套件
 docs/                           架构、安全模型、贡献指南、evidence/（真实 verdict 与隔离审计）、
                                 dev/（设计记录）
@@ -137,6 +139,8 @@ cd shared && python3 -m robotics_grader.selftest
 # 用真 agent 跑一个任务（难度测试；结果在 <runs> 里）
 cd vendor/ale && VIRTUAL_ENV= DOCKER_HOST=unix:///var/run/docker.sock \
     uv run ale run ../../tasks/<platform>/<slug> --agent claude-code --model <model> --runs-dir <runs>
+# 然后每个任务、每个 agent 保留一条 trajectory：skills/agent-trajectory-archiving/SKILL.md
+python3 scripts/trajectories.py inventory --runs-dir <runs> --out inventory.jsonl
 
 # 任务 registry（任务身份来自引擎 loader；工作树不干净则拒绝；契约见
 # schemas/task-registry.schema.json）。platforms 来自 tasks/platforms.json；

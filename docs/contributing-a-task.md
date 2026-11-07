@@ -204,7 +204,9 @@ raise the engineering or perception challenge and test again; do not suppress sc
 arbitrary penalties, and keep the task completable by a human expert under the stated
 conditions. Before reading a failed run as a model limitation, fix what is not the task:
 environment failures, missing dependencies, unclear instructions. Keep the run instructions
-and the results for the pull request.
+and the results for the pull request, and record each run's trajectories as
+`skills/agent-trajectory-archiving/SKILL.md` describes (`scripts/trajectories.py`: one trajectory
+per task and agent, with the agent's whole session, its score and its cost).
 
 Three limits of the `claude-code` harness and the engine lowered scores without any error
 at the previous pin (`90a7c1c`). Re-checked in the code of the current pin (`1cdbc02`,
