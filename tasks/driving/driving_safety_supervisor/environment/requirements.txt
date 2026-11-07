@@ -1,0 +1,11 @@
+# The supervisor's Python (3.12, /opt/venv): what the reference supervisor imports and what
+# an agent's supervisor may use. Installed by environment/Dockerfile. (The CARLA client lives in
+# its own 3.10 interpreter: requirements-sim.txt.)
+numpy>=1.26,<3
+pillow>=10
+scipy>=1.11
+opencv-python-headless>=4.9
+torch==2.7.1   # the PyPI build for CUDA 12.6: runs on drivers from 560 on
+torchvision==0.22.1   # matches torch 2.7.1; COCO detector weights in /opt/models
+transformers>=4.45,<5
+huggingface_hub>=0.25

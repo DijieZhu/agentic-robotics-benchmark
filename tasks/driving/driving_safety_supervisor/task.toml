@@ -1,0 +1,42 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+# A safety supervisor for an automated vehicle in CARLA: the agent builds a process that,
+# every 0.1 s, watches the front camera and a nominal planner (CARLA's stock BehaviorAgent)
+# and either lets its control through or overrides it, on a fixed hidden set of 24
+# procedurally staged long-tail episodes (tests/hidden/episodes.json, selected once by a
+# pre-registered rule; tests/README.md), in forms practice never shows.
+[task]
+name = "grounded-intelligence-initiative/driving_safety_supervisor"
+
+[metadata]
+platform = "driving"
+# The oracle submits the oracle token (solution/reference/oracle_token; its sha256 is
+# tests/oracle_token.sha256): the grader then adds the simulator's ground truth to its
+# observations, and the reference expert drives from that.
+oracle_kind = "token-privileged"
+
+# One GPU renders CARLA (offscreen Vulkan) and runs whatever models the supervisor uses.
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1
+
+[agent]
+timeout_sec = 3600
+network_mode = "no-network"
+
+# A fresh sandbox for grading (only the submission is restored), on the same image: the
+# secret is the fixed set (its seeds, lock keys and layout digests), and nothing the agent
+# left running in its own sandbox may reach CARLA during the grading run.
+[verifier]
+# The set's 24 episodes allow at most 7,537 control steps of 0.1 s in all (each its route
+# length / 5 m/s + 15 s), plus up to 90 s each held at a red or yellow light, plus CARLA
+# start-up and town loads; the reference's verify took 435 s (2026-11-06).
+timeout_sec = 10800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1

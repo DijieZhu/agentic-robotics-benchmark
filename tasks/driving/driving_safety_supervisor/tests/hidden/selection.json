@@ -1,0 +1,3937 @@
+{
+ "format": "driving_safety_supervisor selection 1",
+ "frozen": {
+  "tests/drive_bridge.py": "e7afdbf99dfb14a2b99238ec2c1f597bfe3a2980a226315faf28d8b04ffc2f8c",
+  "environment/setup/payload/drive/drive_bridge.py": "e7afdbf99dfb14a2b99238ec2c1f597bfe3a2980a226315faf28d8b04ffc2f8c",
+  "tests/drive_protocol.py": "1afdea40bf89552fe254ed6f5009709b472c1933a771cb8178d5c24c29a1f40d",
+  "tests/drive_variants.py": "c3808a415cf1d9d32ab00e4cd663d44a2d672b9839d3b5eb68117f90386bbfea",
+  "tests/episode_score.py": "252e9ff1ef4b9d88de4ccd5357f6e26fe085d2654011220cef62747e21f79cd0",
+  "tests/verify.py": "5db60dcabfe21d0045a76048c781796d35126bea50f38b252fea3e0a5d46f3c6",
+  "tests/sim_client.py": "d56fa0f52bad70e03df3409ff657c8039c20d91b27383077f8128522eba07616",
+  "solution/solver.py": "7e7c5e903ee59de0c530fab3a03fba74efe77d0bb6e3f0fce8e1a9adb23affac",
+  "solution/footprints.json": "00c5e2073b1c20022ce6534e16ff91b70f520a7d16f56b4603f4c1527849885b",
+  "solution/solve.sh": "278e35847c5a8bd3bb21a4d3a0202675755a373f0054750a045eeb8ad75b24d8"
+ },
+ "frozen_commit": "f5b12589a884599035c0e4b21fc867bb457071fc",
+ "tools": {
+  "tests/review/select_set.py": "9d8aeb5f196695b5a9c5a9a7d8640ec88fb3d834a590ea171cdb2a4eb9b38db4",
+  "tests/review/run_episode.py": "421ad297ed1b5b246fe3b6e74fe61965972b9b6d41a88a9473db264458b2f7f0",
+  "tests/review/dev_batch.py": "f691b2a65f4f16f2c035587f265cdeb9ee887336643c0b3eea96ada12552fd74"
+ },
+ "image": "ale-framework:c803df660b128dc54c63d9d48cca95b5",
+ "image_id": "sha256:3c47ea687174ad3ecf3d8b6e8fc848d48cd34fa3d7084a49e39f024e99b61894",
+ "rule": "tests/review/select_set.py (module docstring)",
+ "cells": [
+  [
+   "Town04",
+   "debris"
+  ],
+  [
+   "Town04",
+   "walking_in_lane"
+  ],
+  [
+   "Town04",
+   "spinning_car"
+  ],
+  [
+   "Town04",
+   "overtaking_oncoming"
+  ],
+  [
+   "Town04",
+   "reversing_car"
+  ],
+  [
+   "Town04",
+   "dropped_cargo"
+  ],
+  [
+   "Town04",
+   "crowd_against_light"
+  ],
+  [
+   "Town05",
+   "debris"
+  ],
+  [
+   "Town05",
+   "walking_in_lane"
+  ],
+  [
+   "Town05",
+   "shoulder_pass"
+  ],
+  [
+   "Town05",
+   "shoulder_pass"
+  ],
+  [
+   "Town05",
+   "shoulder_pass"
+  ],
+  [
+   "Town05",
+   "spinning_car"
+  ],
+  [
+   "Town05",
+   "overtaking_oncoming"
+  ],
+  [
+   "Town05",
+   "reversing_car"
+  ],
+  [
+   "Town05",
+   "dropped_cargo"
+  ],
+  [
+   "Town05",
+   "crowd_against_light"
+  ],
+  [
+   "Town10HD",
+   "debris"
+  ],
+  [
+   "Town10HD",
+   "walking_in_lane"
+  ],
+  [
+   "Town10HD",
+   "spinning_car"
+  ],
+  [
+   "Town10HD",
+   "overtaking_oncoming"
+  ],
+  [
+   "Town10HD",
+   "reversing_car"
+  ],
+  [
+   "Town10HD",
+   "dropped_cargo"
+  ],
+  [
+   "Town10HD",
+   "crowd_against_light"
+  ]
+ ],
+ "batches": [
+  {
+   "batch": 1,
+   "drawn_utc": "2026-11-06T22:43:35Z",
+   "count": 96,
+   "cells": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+   ],
+   "rounds": [
+    4,
+    7
+   ],
+   "seeds_redrawn": 0,
+   "source": "os.urandom: 8 bytes little-endian per seed (mod 2**62), 1 byte per distractor count, 32 bytes per lock key"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "c096",
+   "draw": 0,
+   "batch": 1,
+   "round": 4,
+   "cell": 0,
+   "town": "Town04",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 2599218274057536904,
+   "distractors": 0,
+   "lock_key": "ea3ade680e9a13f4dc6f10aeef309332474a75aaf3e10c213318f4be09d74047",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "debris",
+     "route_completion": 1.0,
+     "route_length_m": 66.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 1,
+     "time_s": 11.25,
+     "excused_s": 0.0,
+     "pace": 0.7885,
+     "mean_speed": 5.83,
+     "layout": "b48c9721580d6e5674d1d0ccc2ce6e99fa35f73df262b69e65a54ba106093e2f",
+     "overrides": 113,
+     "steps": 113
+    },
+    "staging": {
+     "props": [
+      [
+       "static.prop.trashcan03",
+       2.44,
+       0.6,
+       48.1
+      ],
+      [
+       "static.prop.box03",
+       3.01,
+       -0.1,
+       29.2
+      ],
+      [
+       "static.prop.garbage01",
+       3.27,
+       -0.84,
+       283.0
+      ],
+      [
+       "static.prop.trashcan01",
+       2.0,
+       0.0,
+       0.0
+      ]
+     ],
+     "lane_width": 3.5,
+     "passing_lane": "same",
+     "weather": "ClearSunset"
+    },
+    "score": 0.972956,
+    "layout": "b48c9721580d6e5674d1d0ccc2ce6e99fa35f73df262b69e65a54ba106093e2f",
+    "probes": [
+     2,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.563,
+      149,
+      "static.prop.garbage01",
+      8.0
+     ],
+     "prop": [
+      0.563,
+      149,
+      "static.prop.garbage01",
+      8.0
+     ],
+     "vehicle": [
+      10.726,
+      161,
+      "vehicle.audi.etron",
+      5.4
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33,
+     25.0
+    ],
+    "max_reply_s": 0.01,
+    "wall_s": 12.9,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c097",
+   "draw": 1,
+   "batch": 1,
+   "round": 4,
+   "cell": 1,
+   "town": "Town04",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 3018055156200106373,
+   "distractors": 0,
+   "lock_key": "df45bd6acd46899c709b0b60ba64d516f4921baaec50c737ef65ca17083c5017",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "occluded_pedestrian",
+     "variant": "walking_in_lane",
+     "route_completion": 0.9792,
+     "route_length_m": 83.9,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 11.75,
+     "excused_s": 0.0,
+     "pace": 0.6912,
+     "mean_speed": 6.9,
+     "layout": "7d4c72a41e8d399ab2d5477b61fb6287060ce4696533a5648f0fa23f4e2be730",
+     "overrides": 118,
+     "steps": 118
+    },
+    "staging": {
+     "walker": "walker.pedestrian.0014",
+     "lateral": 0.51,
+     "speed": 0.99,
+     "lane_width": 3.5,
+     "passing_lane": "same",
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.912614,
+    "layout": "7d4c72a41e8d399ab2d5477b61fb6287060ce4696533a5648f0fa23f4e2be730",
+    "probes": [
+     7,
+     2
+    ],
+    "clearance": {
+     "all": [
+      1.699,
+      297,
+      "walker.pedestrian.0014",
+      9.3
+     ],
+     "prop": null,
+     "vehicle": null,
+     "walker": [
+      1.699,
+      297,
+      "walker.pedestrian.0014",
+      9.3
+     ]
+    },
+    "walker_fast": [
+     0.99,
+     297,
+     "walker.pedestrian.0014",
+     3.8,
+     9.8
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33,
+     25.0
+    ],
+    "max_reply_s": 0.011,
+    "wall_s": 11.9,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c098",
+   "draw": 2,
+   "batch": 1,
+   "round": 4,
+   "cell": 2,
+   "town": "Town04",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2341270275461731637,
+   "distractors": 1,
+   "lock_key": "e6a2295c14e9be814e872906b148b44b1925bf7b20f9a2ac6eaaea7c14c46757",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "spinning_car",
+     "route_completion": 0.9744,
+     "route_length_m": 77.9,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 1,
+     "time_s": 13.0,
+     "excused_s": 0.0,
+     "pace": 0.8246,
+     "mean_speed": 5.81,
+     "layout": "84ac081c496afc28d1afb1f8c80b90d477aaffd642086b0ec303dc845c9ee5cf",
+     "overrides": 130,
+     "steps": 130
+    },
+    "staging": {
+     "car": "vehicle.dodge.charger_2020",
+     "spin": 250.2,
+     "v_car": 9.06,
+     "slide_m": 12.97,
+     "slide_s": 2.17,
+     "rest_lateral": 1.0,
+     "lane_width": 3.5,
+     "weather": "WetCloudyNoon"
+    },
+    "score": 0.954912,
+    "layout": "84ac081c496afc28d1afb1f8c80b90d477aaffd642086b0ec303dc845c9ee5cf",
+    "probes": [
+     2,
+     2
+    ],
+    "clearance": {
+     "all": [
+      0.715,
+      444,
+      "vehicle.dodge.charger_2020",
+      11.2
+     ],
+     "prop": null,
+     "vehicle": [
+      0.715,
+      444,
+      "vehicle.dodge.charger_2020",
+      11.2
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.008,
+    "wall_s": 13.4,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c099",
+   "draw": 3,
+   "batch": 1,
+   "round": 4,
+   "cell": 3,
+   "town": "Town04",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 1278695483695905482,
+   "distractors": 0,
+   "lock_key": "a046377fdf432db0284612bfab1fb6d3c5fb1a78ac4972d1870565423ba9bfa8",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "oncoming_left_turn",
+     "variant": "overtaking_oncoming",
+     "route_completion": 0.9722,
+     "route_length_m": 73.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 10.7,
+     "excused_s": 0.0,
+     "pace": 0.9358,
+     "mean_speed": 6.55,
+     "layout": "8a4f4ec96c82db0337680115dc9fe152b1c60147299a152d7e58d1058351ba37",
+     "overrides": 107,
+     "steps": 107
+    },
+    "staging": {
+     "car": "vehicle.micro.microlino",
+     "bike": "vehicle.diamondback.century",
+     "intrusion": 0.88,
+     "v_car": 10.58,
+     "v_bike": 3.78,
+     "release_m": 58.6,
+     "lane_width": 3.5,
+     "oncoming_width": 3.5,
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.9722,
+    "layout": "8a4f4ec96c82db0337680115dc9fe152b1c60147299a152d7e58d1058351ba37",
+    "probes": [
+     3,
+     2
+    ],
+    "clearance": {
+     "all": [
+      0.443,
+      592,
+      "vehicle.micro.microlino",
+      6.6
+     ],
+     "prop": null,
+     "vehicle": [
+      0.443,
+      592,
+      "vehicle.micro.microlino",
+      6.6
+     ],
+     "walker": [
+      2.432,
+      624,
+      "walker.pedestrian.0037",
+      8.5
+     ]
+    },
+    "walker_fast": [
+     1.49,
+     619,
+     "walker.pedestrian.0020",
+     8.37,
+     8.9
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 12.6,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c100",
+   "draw": 4,
+   "batch": 1,
+   "round": 4,
+   "cell": 4,
+   "town": "Town04",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 647773959867568321,
+   "distractors": 1,
+   "lock_key": "4f384a824dc7256819b31db47bc0f899195f2fb9a58895799d385fa08ffcc7a9",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "reversing_car",
+     "route_completion": 0.9737,
+     "route_length_m": 77.2,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 3,
+     "time_s": 15.8,
+     "excused_s": 0.0,
+     "pace": 0.6721,
+     "mean_speed": 4.73,
+     "layout": "2765d6aec38b694c4fd6421e356960393c5ae3c8dbe9f1b287d87452f119cac5",
+     "overrides": 158,
+     "steps": 158
+    },
+    "staging": {
+     "lead": "vehicle.micro.microlino",
+     "lead_kmh": 25.68,
+     "back_speed": 1.06,
+     "reverse_started": false,
+     "weather": "WetCloudyNoon"
+    },
+    "score": 0.842113,
+    "layout": "2765d6aec38b694c4fd6421e356960393c5ae3c8dbe9f1b287d87452f119cac5",
+    "probes": [
+     5,
+     2
+    ],
+    "clearance": {
+     "all": [
+      0.625,
+      751,
+      "vehicle.micro.microlino",
+      12.6
+     ],
+     "prop": null,
+     "vehicle": [
+      0.625,
+      751,
+      "vehicle.micro.microlino",
+      12.6
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.009,
+    "wall_s": 12.6,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c101",
+   "draw": 5,
+   "batch": 1,
+   "round": 4,
+   "cell": 5,
+   "town": "Town04",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 2178044572164918206,
+   "distractors": 2,
+   "lock_key": "6721a78c9f4a24cfebd5ef17f5f3b98a587f4c3e4fcef732ec7c5ed5596bf420",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "dropped_cargo",
+     "route_completion": 0.9722,
+     "route_length_m": 69.7,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 4,
+     "time_s": 19.25,
+     "excused_s": 0.0,
+     "pace": 0.4971,
+     "mean_speed": 3.51,
+     "layout": "b5964b92bf5adc80306f2ca3525037bae5fae54b3bfe58fd174f2b89ec1884db",
+     "overrides": 193,
+     "steps": 193
+    },
+    "staging": {
+     "truck": "vehicle.carlamotors.carlacola",
+     "truck_kmh": 29.96,
+     "pieces": 3,
+     "lane_width": 3.5,
+     "planned": [
+      [
+       "static.prop.box02",
+       3.66,
+       0.71,
+       62.7
+      ],
+      [
+       "static.prop.box02",
+       4.68,
+       0.79,
+       213.6
+      ],
+      [
+       "static.prop.box01",
+       5.41,
+       0.61,
+       298.5
+      ]
+     ],
+     "weather": "SoftRainNoon",
+     "released_at_s": 1.9,
+     "dropped_at_s": 5.95,
+     "landed": [
+      [
+       "static.prop.box02",
+       3.66,
+       0.71
+      ],
+      [
+       "static.prop.box02",
+       4.68,
+       0.79
+      ],
+      [
+       "static.prop.box01",
+       5.41,
+       0.61
+      ]
+     ]
+    },
+    "score": 0.725098,
+    "layout": "b5964b92bf5adc80306f2ca3525037bae5fae54b3bfe58fd174f2b89ec1884db",
+    "probes": [
+     7,
+     6
+    ],
+    "clearance": {
+     "all": [
+      0.686,
+      923,
+      "static.prop.box02",
+      15.4
+     ],
+     "prop": [
+      0.686,
+      923,
+      "static.prop.box02",
+      15.4
+     ],
+     "vehicle": [
+      1.211,
+      917,
+      "vehicle.ford.ambulance",
+      12.1
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.01,
+    "wall_s": 15.4,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c102",
+   "draw": 6,
+   "batch": 1,
+   "round": 4,
+   "cell": 6,
+   "town": "Town04",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 494743273540536149,
+   "distractors": 0,
+   "lock_key": "e44007d57d0e8e90c13447965d8ec7597201cbe3609ae073563943e65be6de9a",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "red_light_runner",
+     "variant": "crowd_against_light",
+     "route_completion": 0.9833,
+     "route_length_m": 118.7,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 2,
+     "time_s": 50.4,
+     "excused_s": 29.3,
+     "pace": 0.7808,
+     "mean_speed": 2.3,
+     "layout": "a3d5033ca5c73d1061846e0f48a760245459cbf55b1a5d7a9ceb154eaa62d253",
+     "overrides": 504,
+     "steps": 504
+    },
+    "staging": {
+     "group": 3,
+     "turners": 1,
+     "lane_width": 3.5,
+     "people": [
+      [
+       1.17,
+       1.37,
+       5.78,
+       2.72
+      ],
+      [
+       1.41,
+       1.65,
+       4.64,
+       null
+      ],
+      [
+       0.96,
+       1.16,
+       5.84,
+       null
+      ]
+     ],
+     "distractors": [],
+     "weather": "SoftRainNoon",
+     "returned_by_hand": 1
+    },
+    "score": 0.93264,
+    "layout": "a3d5033ca5c73d1061846e0f48a760245459cbf55b1a5d7a9ceb154eaa62d253",
+    "probes": [
+     13,
+     2
+    ],
+    "clearance": {
+     "all": [
+      1.5,
+      1048,
+      "walker.pedestrian.0023",
+      43.6
+     ],
+     "prop": null,
+     "vehicle": [
+      11.352,
+      1072,
+      "vehicle.mini.cooper_s_2021",
+      45.2
+     ],
+     "walker": [
+      1.5,
+      1048,
+      "walker.pedestrian.0023",
+      43.6
+     ]
+    },
+    "walker_fast": [
+     18.26,
+     1048,
+     "walker.pedestrian.0023",
+     5.55,
+     44.4
+    ],
+    "walker_launch": [
+     1,
+     18.26,
+     1048,
+     "walker.pedestrian.0023",
+     5.55,
+     44.4
+    ],
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.014,
+    "wall_s": 42.7,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c103",
+   "draw": 7,
+   "batch": 1,
+   "round": 4,
+   "cell": 7,
+   "town": "Town05",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 3262016771887215287,
+   "distractors": 2,
+   "lock_key": "42f7fe2ab6d97d39acb8c25603ed27776a5bbd5becea802a771564f110a3385d",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "debris",
+     "route_completion": 0.9714,
+     "route_length_m": 75.8,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 11.0,
+     "excused_s": 0.0,
+     "pace": 0.9453,
+     "mean_speed": 6.36,
+     "layout": "de2a3348209f88c56ceb36e2b4d7310973c56846cd32e56bb0b3105cd10f490d",
+     "overrides": 110,
+     "steps": 110
+    },
+    "staging": {
+     "props": [
+      [
+       "static.prop.haybale",
+       3.42,
+       -0.68,
+       358.6
+      ],
+      [
+       "static.prop.haybale",
+       1.1,
+       -0.7,
+       202.5
+      ],
+      [
+       "static.prop.haybale",
+       0.18,
+       0.9,
+       6.4
+      ],
+      [
+       "static.prop.garbage01",
+       2.0,
+       0.0,
+       0.0
+      ]
+     ],
+     "lane_width": 3.5,
+     "passing_lane": "same",
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.9714,
+    "layout": "de2a3348209f88c56ceb36e2b4d7310973c56846cd32e56bb0b3105cd10f490d",
+    "probes": [
+     2,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.91,
+      1192,
+      "static.prop.haybale",
+      7.0
+     ],
+     "prop": [
+      0.91,
+      1192,
+      "static.prop.haybale",
+      7.0
+     ],
+     "vehicle": [
+      5.346,
+      1204,
+      "vehicle.volkswagen.t2_2021",
+      7.7
+     ],
+     "walker": [
+      2.7,
+      1218,
+      "walker.pedestrian.0046",
+      3.0
+     ]
+    },
+    "walker_fast": [
+     1.47,
+     1219,
+     "walker.pedestrian.0022",
+     22.5,
+     2.9
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 12.6,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c104",
+   "draw": 8,
+   "batch": 1,
+   "round": 4,
+   "cell": 8,
+   "town": "Town05",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1670147299873200839,
+   "distractors": 2,
+   "lock_key": "3e764e63e6dcad635a15c62dc600ccfcc4bf070d427fb34893484944e5c9f0e8",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "occluded_pedestrian",
+     "variant": "walking_in_lane",
+     "route_completion": 0.9778,
+     "route_length_m": 84.7,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 12.3,
+     "excused_s": 0.0,
+     "pace": 0.9507,
+     "mean_speed": 6.79,
+     "layout": "e08ffa4907121212aff72592736cac04549d1eae7b0ec847adca8c05335c8fdc",
+     "overrides": 123,
+     "steps": 123
+    },
+    "staging": {
+     "walker": "walker.pedestrian.0033",
+     "lateral": 0.02,
+     "speed": 1.59,
+     "lane_width": 3.5,
+     "passing_lane": "same",
+     "distractors": [
+      "kerb_props",
+      "kerb_props"
+     ],
+     "weather": "ClearNoon"
+    },
+    "score": 0.9778,
+    "layout": "e08ffa4907121212aff72592736cac04549d1eae7b0ec847adca8c05335c8fdc",
+    "probes": [
+     2,
+     1
+    ],
+    "clearance": {
+     "all": [
+      1.628,
+      1343,
+      "walker.pedestrian.0033",
+      10.7
+     ],
+     "prop": [
+      8.916,
+      1344,
+      "static.prop.bench01",
+      4.2
+     ],
+     "vehicle": null,
+     "walker": [
+      1.628,
+      1343,
+      "walker.pedestrian.0033",
+      10.7
+     ]
+    },
+    "walker_fast": [
+     1.6,
+     1343,
+     "walker.pedestrian.0033",
+     24.65,
+     5.9
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.012,
+    "wall_s": 10.6,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c105",
+   "draw": 9,
+   "batch": 1,
+   "round": 4,
+   "cell": 9,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 2161068010719315083,
+   "distractors": 2,
+   "lock_key": "7dad59f559899a170cc62ec1ee40f323ca0600b736989a40448dd19d5083bada",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "shoulder_pass",
+     "route_completion": 0.9744,
+     "route_length_m": 84.7,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 1,
+     "time_s": 19.15,
+     "excused_s": 0.0,
+     "pace": 0.6087,
+     "mean_speed": 4.36,
+     "layout": "dd774c272599f332db8e37247eb1c8c5c340329db9093b24c503a1704967bc52",
+     "overrides": 192,
+     "steps": 192
+    },
+    "staging": {
+     "shoulder_width": 3.5,
+     "shoulder_type": "Shoulder",
+     "lane_width": 3.5,
+     "lanes_closed": 2,
+     "wrecks": [
+      [
+       "vehicle.lincoln.mkz_2017",
+       -0.83,
+       7.8
+      ],
+      [
+       "vehicle.dodge.charger_2020",
+       -0.79,
+       -12.5
+      ]
+     ],
+     "wreck_gap": 5.56,
+     "sign": "static.prop.trafficwarning",
+     "sign_lateral": 0.0,
+     "sign_room": 1.69,
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.84074,
+    "layout": "dd774c272599f332db8e37247eb1c8c5c340329db9093b24c503a1704967bc52",
+    "probes": [
+     2,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.342,
+      1489,
+      "static.prop.trafficwarning",
+      10.6
+     ],
+     "prop": [
+      0.342,
+      1489,
+      "static.prop.trafficwarning",
+      10.6
+     ],
+     "vehicle": [
+      1.593,
+      1484,
+      "vehicle.dodge.charger_2020",
+      13.6
+     ],
+     "walker": [
+      3.361,
+      1519,
+      "walker.pedestrian.0033",
+      10.7
+     ]
+    },
+    "walker_fast": [
+     1.48,
+     1515,
+     "walker.pedestrian.0029",
+     16.3,
+     13.0
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 16.1,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c106",
+   "draw": 10,
+   "batch": 1,
+   "round": 4,
+   "cell": 10,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 11560296614005008,
+   "distractors": 2,
+   "lock_key": "43fcd7d75a86d31cf71540f44ad055e34926d739a68de783003b2ec913344bf9",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "shoulder_pass",
+     "route_completion": 0.9767,
+     "route_length_m": 75.4,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 10.35,
+     "excused_s": 0.0,
+     "pace": 1.0043,
+     "mean_speed": 6.93,
+     "layout": "31b3890a8f9fe14705fc9548f6c55f8a640e84f1a718046408ad8f800dfae078",
+     "overrides": 104,
+     "steps": 104
+    },
+    "staging": {
+     "shoulder_width": 3.5,
+     "shoulder_type": "Shoulder",
+     "lane_width": 3.5,
+     "lanes_closed": 2,
+     "wrecks": [
+      [
+       "vehicle.ford.crown",
+       -0.71,
+       9.5
+      ],
+      [
+       "vehicle.audi.tt",
+       -0.74,
+       -6.3
+      ]
+     ],
+     "wreck_gap": 6.11,
+     "sign": "static.prop.trafficwarning",
+     "sign_lateral": 0.0,
+     "sign_room": 2.34,
+     "weather": "ClearSunset"
+    },
+    "score": 0.9767,
+    "layout": "31b3890a8f9fe14705fc9548f6c55f8a640e84f1a718046408ad8f800dfae078",
+    "probes": [
+     6,
+     4
+    ],
+    "clearance": {
+     "all": [
+      0.894,
+      1641,
+      "static.prop.trafficwarning",
+      5.7
+     ],
+     "prop": [
+      0.894,
+      1641,
+      "static.prop.trafficwarning",
+      5.7
+     ],
+     "vehicle": [
+      1.52,
+      1635,
+      "vehicle.ford.crown",
+      6.8
+     ],
+     "walker": [
+      3.085,
+      1665,
+      "walker.pedestrian.0012",
+      8.4
+     ]
+    },
+    "walker_fast": [
+     1.47,
+     1667,
+     "walker.pedestrian.0042",
+     8.61,
+     2.8
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.014,
+    "wall_s": 10.8,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c107",
+   "draw": 11,
+   "batch": 1,
+   "round": 4,
+   "cell": 11,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 3999740768250041489,
+   "distractors": 0,
+   "lock_key": "9f28781b98d9a18c96a714527bc76a69ab5daa0c36b1b30d34182ebc9e3b62f0",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "shoulder_pass",
+     "route_completion": 0.9762,
+     "route_length_m": 77.5,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 10.65,
+     "excused_s": 0.0,
+     "pace": 1.0034,
+     "mean_speed": 6.99,
+     "layout": "5ac0afc8ba21a464ea2d99e988713cec688b07a0dd09d1f18890fa3e5768a468",
+     "overrides": 107,
+     "steps": 107
+    },
+    "staging": {
+     "shoulder_width": 3.5,
+     "shoulder_type": "Shoulder",
+     "lane_width": 3.5,
+     "lanes_closed": 2,
+     "wrecks": [
+      [
+       "vehicle.mercedes.coupe_2020",
+       -0.72,
+       6.0
+      ],
+      [
+       "vehicle.nissan.micra",
+       -0.82,
+       -6.5
+      ]
+     ],
+     "wreck_gap": 5.67,
+     "sign": "static.prop.warningaccident",
+     "sign_lateral": 0.0,
+     "sign_room": 3.12,
+     "distractors": [],
+     "weather": "ClearSunset"
+    },
+    "score": 0.9762,
+    "layout": "5ac0afc8ba21a464ea2d99e988713cec688b07a0dd09d1f18890fa3e5768a468",
+    "probes": [
+     1,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.891,
+      1795,
+      "static.prop.warningaccident",
+      5.9
+     ],
+     "prop": [
+      0.891,
+      1795,
+      "static.prop.warningaccident",
+      5.9
+     ],
+     "vehicle": [
+      0.931,
+      1789,
+      "vehicle.mercedes.coupe_2020",
+      7.0
+     ],
+     "walker": [
+      3.301,
+      1819,
+      "walker.pedestrian.0027",
+      8.8
+     ]
+    },
+    "walker_fast": [
+     1.29,
+     1819,
+     "walker.pedestrian.0027",
+     14.98,
+     10.65
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.012,
+    "wall_s": 10.1,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c108",
+   "draw": 12,
+   "batch": 1,
+   "round": 4,
+   "cell": 12,
+   "town": "Town05",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 4116088342472849376,
+   "distractors": 2,
+   "lock_key": "269350455e26566822830afa885b1bd79d55aa12f742858b3a7c66d9fa906b13",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "spinning_car",
+     "route_completion": 0.9714,
+     "route_length_m": 69.7,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 5,
+     "time_s": 11.35,
+     "excused_s": 0.0,
+     "pace": 0.586,
+     "mean_speed": 5.93,
+     "layout": "a9561f8208665803a0b6384d1116248a6181494fbb37ca18ff23122bebe69543",
+     "overrides": 114,
+     "steps": 114
+    },
+    "staging": {
+     "car": "vehicle.mini.cooper_s_2021",
+     "spin": 253.3,
+     "v_car": 10.51,
+     "slide_m": 11.28,
+     "slide_s": 2.09,
+     "rest_lateral": 1.0,
+     "lane_width": 3.5,
+     "weather": "CloudyNoon"
+    },
+    "score": 0.757328,
+    "layout": "a9561f8208665803a0b6384d1116248a6181494fbb37ca18ff23122bebe69543",
+    "probes": [
+     3,
+     1
+    ],
+    "clearance": {
+     "all": [
+      0.717,
+      138,
+      "vehicle.mini.cooper_s_2021",
+      9.5
+     ],
+     "prop": null,
+     "vehicle": [
+      0.717,
+      138,
+      "vehicle.mini.cooper_s_2021",
+      9.5
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33,
+     25.0
+    ],
+    "max_reply_s": 0.008,
+    "wall_s": 11.0,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c109",
+   "draw": 13,
+   "batch": 1,
+   "round": 4,
+   "cell": 13,
+   "town": "Town05",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 4449184738489798193,
+   "distractors": 1,
+   "lock_key": "f64a33dcfa433bd741ab8ee9ab0d0d9bf4da4cdbcee6fa5d5c6e3018330082ec",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "oncoming_left_turn",
+     "variant": "overtaking_oncoming",
+     "route_completion": 1.0,
+     "route_length_m": 66.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 9.5,
+     "excused_s": 0.0,
+     "pace": 0.9815,
+     "mean_speed": 6.88,
+     "layout": "23f4904cdbc49572d588b19fed2b3e303dc32107da5552a7e474234e3ad03ce2",
+     "overrides": 95,
+     "steps": 95
+    },
+    "staging": {
+     "car": "vehicle.nissan.patrol",
+     "bike": "vehicle.diamondback.century",
+     "intrusion": 1.1,
+     "v_car": 9.98,
+     "v_bike": 4.3,
+     "release_m": 67.7,
+     "lane_width": 3.5,
+     "oncoming_width": 3.5,
+     "weather": "CloudyNoon"
+    },
+    "score": 1.0,
+    "layout": "23f4904cdbc49572d588b19fed2b3e303dc32107da5552a7e474234e3ad03ce2",
+    "probes": [
+     1,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.43,
+      277,
+      "vehicle.nissan.patrol",
+      6.2
+     ],
+     "prop": null,
+     "vehicle": [
+      0.43,
+      277,
+      "vehicle.nissan.patrol",
+      6.2
+     ],
+     "walker": [
+      3.406,
+      306,
+      "walker.pedestrian.0033",
+      5.4
+     ]
+    },
+    "walker_fast": [
+     1.47,
+     309,
+     "walker.pedestrian.0041",
+     24.66,
+     4.2
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.01,
+    "wall_s": 12.5,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c110",
+   "draw": 14,
+   "batch": 1,
+   "round": 4,
+   "cell": 14,
+   "town": "Town05",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 100075815438953678,
+   "distractors": 2,
+   "lock_key": "81892380f37423632367f7e49c279b97ecd84d01ee6501a455e6a1c1df14732a",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "reversing_car",
+     "route_completion": 0.9737,
+     "route_length_m": 76.1,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 5,
+     "time_s": 48.55,
+     "excused_s": 30.25,
+     "pace": 0.5719,
+     "mean_speed": 1.52,
+     "layout": "9bb606c6adaceea7107efd48e7a45d6d54b0658cdccae3b87251eaf27f497cb3",
+     "overrides": 486,
+     "steps": 486
+    },
+    "staging": {
+     "lead": "vehicle.seat.leon",
+     "lead_kmh": 23.49,
+     "back_speed": 1.1,
+     "reverse_started": true,
+     "distractors": [
+      "parked_car",
+      "pavement_people"
+     ],
+     "weather": "WetCloudyNoon",
+     "reverse_at_s": 18.7
+    },
+    "score": 0.751398,
+    "layout": "9bb606c6adaceea7107efd48e7a45d6d54b0658cdccae3b87251eaf27f497cb3",
+    "probes": [
+     16,
+     10
+    ],
+    "clearance": {
+     "all": [
+      0.618,
+      426,
+      "vehicle.seat.leon",
+      12.9
+     ],
+     "prop": null,
+     "vehicle": [
+      0.618,
+      426,
+      "vehicle.seat.leon",
+      12.9
+     ],
+     "walker": [
+      6.02,
+      453,
+      "walker.pedestrian.0028",
+      4.1
+     ]
+    },
+    "walker_fast": [
+     1.66,
+     458,
+     "walker.pedestrian.0002",
+     13.72,
+     30.3
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.016,
+    "wall_s": 36.3,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c111",
+   "draw": 15,
+   "batch": 1,
+   "round": 4,
+   "cell": 15,
+   "town": "Town05",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 2716353819307765794,
+   "distractors": 1,
+   "lock_key": "28c2cf6bc68ccd0827ea2ee16c0b60e7d64368230d2bf441f801ce9f54147242",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "dropped_cargo",
+     "route_completion": 0.9762,
+     "route_length_m": 86.6,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 6,
+     "time_s": 47.4,
+     "excused_s": 27.85,
+     "pace": 0.6104,
+     "mean_speed": 1.74,
+     "layout": "15352101409399daf824d06f4800cef73094337dff7f6c0a60c26a0a42b34561",
+     "overrides": 474,
+     "steps": 474
+    },
+    "staging": {
+     "truck": "vehicle.carlamotors.european_hgv",
+     "truck_kmh": 25.26,
+     "pieces": 2,
+     "lane_width": 3.5,
+     "planned": [
+      [
+       "static.prop.box01",
+       2.44,
+       0.37,
+       82.2
+      ],
+      [
+       "static.prop.box02",
+       4.24,
+       -0.13,
+       320.1
+      ]
+     ],
+     "weather": "CloudyNoon",
+     "released_at_s": 1.9,
+     "dropped_at_s": 7.6,
+     "landed": [
+      [
+       "static.prop.box01",
+       2.44,
+       0.37
+      ],
+      [
+       "static.prop.box02",
+       4.24,
+       -0.13
+      ]
+     ]
+    },
+    "score": 0.757258,
+    "layout": "15352101409399daf824d06f4800cef73094337dff7f6c0a60c26a0a42b34561",
+    "probes": [
+     13,
+     2
+    ],
+    "clearance": {
+     "all": [
+      0.891,
+      615,
+      "static.prop.box02",
+      12.5
+     ],
+     "prop": [
+      0.891,
+      615,
+      "static.prop.box02",
+      12.5
+     ],
+     "vehicle": [
+      1.711,
+      590,
+      "vehicle.mercedes.coupe_2020",
+      47.3
+     ],
+     "walker": [
+      6.132,
+      606,
+      "walker.pedestrian.0029",
+      9.1
+     ]
+    },
+    "walker_fast": [
+     1.48,
+     602,
+     "walker.pedestrian.0018",
+     23.21,
+     19.7
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.014,
+    "wall_s": 32.4,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c112",
+   "draw": 16,
+   "batch": 1,
+   "round": 4,
+   "cell": 16,
+   "town": "Town05",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 293052754254461780,
+   "distractors": 0,
+   "lock_key": "4137a689dfcfec6ca910ee96de6be6d8d0333d406f3b65403955b1dd4d3e6c21",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "red_light_runner",
+     "variant": "crowd_against_light",
+     "route_completion": 0.9787,
+     "route_length_m": 94.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 2,
+     "time_s": 18.3,
+     "excused_s": 0.0,
+     "pace": 0.7097,
+     "mean_speed": 4.98,
+     "layout": "e59ef2ad2c8b367926ca44c82a2d367d2607064f56777ef3f7b8d2954586499d",
+     "overrides": 183,
+     "steps": 183
+    },
+    "staging": {
+     "group": 7,
+     "turners": 1,
+     "lane_width": 3.5,
+     "people": [
+      [
+       0.41,
+       1.43,
+       4.81,
+       null
+      ],
+      [
+       1.27,
+       1.68,
+       6.12,
+       null
+      ],
+      [
+       2.43,
+       1.55,
+       5.84,
+       null
+      ],
+      [
+       1.87,
+       1.5,
+       5.82,
+       null
+      ],
+      [
+       1.7,
+       1.58,
+       5.62,
+       null
+      ],
+      [
+       2.15,
+       1.35,
+       6.5,
+       null
+      ],
+      [
+       0.64,
+       1.31,
+       4.88,
+       3.57
+      ]
+     ],
+     "weather": "CloudyNoon",
+     "returned_by_hand": 1
+    },
+    "score": 0.886526,
+    "layout": "e59ef2ad2c8b367926ca44c82a2d367d2607064f56777ef3f7b8d2954586499d",
+    "probes": [
+     2,
+     1
+    ],
+    "clearance": {
+     "all": [
+      1.63,
+      736,
+      "walker.pedestrian.0006",
+      10.8
+     ],
+     "prop": null,
+     "vehicle": [
+      5.155,
+      759,
+      "vehicle.nissan.micra",
+      3.7
+     ],
+     "walker": [
+      1.63,
+      736,
+      "walker.pedestrian.0006",
+      10.8
+     ]
+    },
+    "walker_fast": [
+     10.58,
+     736,
+     "walker.pedestrian.0006",
+     7.19,
+     12.0
+    ],
+    "walker_launch": [
+     1,
+     10.58,
+     736,
+     "walker.pedestrian.0006",
+     7.19,
+     12.0
+    ],
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.016,
+    "wall_s": 18.3,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c113",
+   "draw": 17,
+   "batch": 1,
+   "round": 4,
+   "cell": 17,
+   "town": "Town10HD",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 3575924781257870967,
+   "distractors": 1,
+   "lock_key": "004e8d9131a244c859b363aeeeae2e047cd185af74bc32ad434b4be83b2777ea",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "debris",
+     "route_completion": 0.98,
+     "route_length_m": 91.8,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 2,
+     "time_s": 17.3,
+     "excused_s": 0.0,
+     "pace": 0.7338,
+     "mean_speed": 5.33,
+     "layout": "724dc5cb23385d6e2ac5a22a585228fa66dedc0e37eda3606e4fd111df317253",
+     "overrides": 173,
+     "steps": 173
+    },
+    "staging": {
+     "props": [
+      [
+       "static.prop.garbage01",
+       0.36,
+       1.06,
+       308.7
+      ],
+      [
+       "static.prop.box01",
+       2.35,
+       0.27,
+       244.8
+      ],
+      [
+       "static.prop.trashcan03",
+       3.03,
+       1.19,
+       312.5
+      ],
+      [
+       "static.prop.haybale",
+       3.53,
+       -0.57,
+       292.6
+      ],
+      [
+       "static.prop.box01",
+       2.0,
+       0.0,
+       0.0
+      ]
+     ],
+     "lane_width": 3.5,
+     "passing_lane": "same",
+     "weather": "WetNoon"
+    },
+    "score": 0.901874,
+    "layout": "724dc5cb23385d6e2ac5a22a585228fa66dedc0e37eda3606e4fd111df317253",
+    "probes": [
+     4,
+     1
+    ],
+    "clearance": {
+     "all": [
+      0.616,
+      796,
+      "static.prop.haybale",
+      12.4
+     ],
+     "prop": [
+      0.616,
+      796,
+      "static.prop.haybale",
+      12.4
+     ],
+     "vehicle": [
+      2.834,
+      806,
+      "vehicle.toyota.prius",
+      6.8
+     ],
+     "walker": [
+      6.21,
+      829,
+      "walker.pedestrian.0042",
+      2.6
+     ]
+    },
+    "walker_fast": [
+     1.26,
+     830,
+     "walker.pedestrian.0024",
+     22.47,
+     10.6
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.015,
+    "wall_s": 24.4,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c114",
+   "draw": 18,
+   "batch": 1,
+   "round": 4,
+   "cell": 18,
+   "town": "Town10HD",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 3727580283062809647,
+   "distractors": 1,
+   "lock_key": "a87e51e32064a1531b6f8342f1f28cce3bd6e5f3f09ef8bf80f4e9ea7a02d2d2",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "occluded_pedestrian",
+     "variant": "walking_in_lane",
+     "route_completion": 0.9756,
+     "route_length_m": 82.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 3,
+     "time_s": 15.4,
+     "excused_s": 0.0,
+     "pace": 0.7334,
+     "mean_speed": 5.16,
+     "layout": "c0954764e1c674819441ced91a3ad70f6eb7d53c332fca1a40e9cd1c37d968b8",
+     "overrides": 154,
+     "steps": 154
+    },
+    "staging": {
+     "walker": "walker.pedestrian.0029",
+     "lateral": -0.23,
+     "speed": 1.42,
+     "lane_width": 3.5,
+     "passing_lane": "oncoming",
+     "distractors": [
+      "oncoming_cones"
+     ],
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.878891,
+    "layout": "c0954764e1c674819441ced91a3ad70f6eb7d53c332fca1a40e9cd1c37d968b8",
+    "probes": [
+     3,
+     2
+    ],
+    "clearance": {
+     "all": [
+      1.641,
+      878,
+      "vehicle.ford.mustang",
+      6.3
+     ],
+     "prop": [
+      2.407,
+      861,
+      "static.prop.constructioncone",
+      4.1
+     ],
+     "vehicle": [
+      1.641,
+      878,
+      "vehicle.ford.mustang",
+      6.3
+     ],
+     "walker": [
+      1.709,
+      858,
+      "walker.pedestrian.0029",
+      12.9
+     ]
+    },
+    "walker_fast": [
+     1.42,
+     858,
+     "walker.pedestrian.0029",
+     4.24,
+     15.3
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 23.2,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c115",
+   "draw": 19,
+   "batch": 1,
+   "round": 4,
+   "cell": 19,
+   "town": "Town10HD",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 4174685850884798563,
+   "distractors": 1,
+   "lock_key": "85eaf7ad907b43f23dc6033bb46367c0f8eb6e6099bcdda851d1e758e7e4e802",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "spinning_car",
+     "route_completion": 0.9722,
+     "route_length_m": 72.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 1,
+     "time_s": 11.9,
+     "excused_s": 0.0,
+     "pace": 0.8305,
+     "mean_speed": 5.85,
+     "layout": "55d4389fb9df9718b227520b449f18a5e20b9387898bdc0c7f232cce76ec6144",
+     "overrides": 119,
+     "steps": 119
+    },
+    "staging": {
+     "car": "vehicle.citroen.c3",
+     "spin": 196.9,
+     "v_car": 10.97,
+     "slide_m": 12.29,
+     "slide_s": 2.18,
+     "rest_lateral": 1.0,
+     "lane_width": 3.5,
+     "weather": "SoftRainNoon"
+    },
+    "score": 0.952756,
+    "layout": "55d4389fb9df9718b227520b449f18a5e20b9387898bdc0c7f232cce76ec6144",
+    "probes": [
+     1,
+     1
+    ],
+    "clearance": {
+     "all": [
+      0.702,
+      921,
+      "vehicle.citroen.c3",
+      9.8
+     ],
+     "prop": null,
+     "vehicle": [
+      0.702,
+      921,
+      "vehicle.citroen.c3",
+      9.8
+     ],
+     "walker": null
+    },
+    "walker_fast": null,
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.009,
+    "wall_s": 16.9,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c116",
+   "draw": 20,
+   "batch": 1,
+   "round": 4,
+   "cell": 20,
+   "town": "Town10HD",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 720179926129827735,
+   "distractors": 0,
+   "lock_key": "8dd3df1713dea35f5ffa4c19bfcd2d6f17db5c94b48763fa7f986faa198a8004",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "oncoming_left_turn",
+     "variant": "overtaking_oncoming",
+     "route_completion": 0.9737,
+     "route_length_m": 76.0,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 0,
+     "time_s": 10.55,
+     "excused_s": 0.0,
+     "pace": 0.9903,
+     "mean_speed": 6.93,
+     "layout": "73d9d186d6f9acabb55b7cbef06143bcd88204498829c74644f15387c10cf6b9",
+     "overrides": 106,
+     "steps": 106
+    },
+    "staging": {
+     "car": "vehicle.mini.cooper_s_2021",
+     "bike": "vehicle.diamondback.century",
+     "intrusion": 1.01,
+     "v_car": 9.97,
+     "v_bike": 4.41,
+     "release_m": 68.3,
+     "lane_width": 3.5,
+     "oncoming_width": 3.5,
+     "weather": "WetNoon"
+    },
+    "score": 0.9737,
+    "layout": "73d9d186d6f9acabb55b7cbef06143bcd88204498829c74644f15387c10cf6b9",
+    "probes": [
+     2,
+     2
+    ],
+    "clearance": {
+     "all": [
+      0.448,
+      969,
+      "vehicle.mini.cooper_s_2021",
+      7.2
+     ],
+     "prop": null,
+     "vehicle": [
+      0.448,
+      969,
+      "vehicle.mini.cooper_s_2021",
+      7.2
+     ],
+     "walker": [
+      8.752,
+      997,
+      "walker.pedestrian.0019",
+      7.5
+     ]
+    },
+    "walker_fast": [
+     1.44,
+     998,
+     "walker.pedestrian.0019",
+     24.91,
+     4.4
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 16.0,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c117",
+   "draw": 21,
+   "batch": 1,
+   "round": 4,
+   "cell": 21,
+   "town": "Town10HD",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 4163219625507615884,
+   "distractors": 2,
+   "lock_key": "1710a4565213ee2c6e7da76ce7ba40d7231b927f10ef406b8c3363bfafc5520c",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "reversing_car",
+     "route_completion": 0.9783,
+     "route_length_m": 89.2,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 3,
+     "time_s": 16.85,
+     "excused_s": 0.0,
+     "pace": 0.7315,
+     "mean_speed": 5.25,
+     "layout": "fac7b74f911500d6066b623d80907f81ec3e5281523335b0602f4c6fd1d78ccd",
+     "overrides": 169,
+     "steps": 169
+    },
+    "staging": {
+     "lead": "vehicle.dodge.charger_2020",
+     "lead_kmh": 27.01,
+     "back_speed": 0.83,
+     "reverse_started": false,
+     "weather": "WetCloudyNoon"
+    },
+    "score": 0.880232,
+    "layout": "fac7b74f911500d6066b623d80907f81ec3e5281523335b0602f4c6fd1d78ccd",
+    "probes": [
+     3,
+     0
+    ],
+    "clearance": {
+     "all": [
+      0.591,
+      1028,
+      "vehicle.dodge.charger_2020",
+      13.2
+     ],
+     "prop": null,
+     "vehicle": [
+      0.591,
+      1028,
+      "vehicle.dodge.charger_2020",
+      13.2
+     ],
+     "walker": [
+      9.64,
+      1062,
+      "walker.pedestrian.0003",
+      2.9
+     ]
+    },
+    "walker_fast": [
+     1.41,
+     1058,
+     "walker.pedestrian.0024",
+     24.75,
+     14.9
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.014,
+    "wall_s": 22.0,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c118",
+   "draw": 22,
+   "batch": 1,
+   "round": 4,
+   "cell": 22,
+   "town": "Town10HD",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 4398870302839650771,
+   "distractors": 1,
+   "lock_key": "f170fe3a6a206312c757f3394ad71ee4b7c2a6f561a112641b0f802270cdecfc",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "broken_down_vehicle",
+     "variant": "dropped_cargo",
+     "route_completion": 0.9737,
+     "route_length_m": 79.3,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 2,
+     "time_s": 14.7,
+     "excused_s": 0.0,
+     "pace": 0.7414,
+     "mean_speed": 5.15,
+     "layout": "2f2201a5aa2e67a8b2d404495755a8017a6d84ddd22c98acf28c11a29f5e1c77",
+     "overrides": 147,
+     "steps": 147
+    },
+    "staging": {
+     "truck": "vehicle.mercedes.sprinter",
+     "truck_kmh": 25.52,
+     "pieces": 2,
+     "lane_width": 3.5,
+     "planned": [
+      [
+       "static.prop.box03",
+       2.47,
+       0.58,
+       344.3
+      ],
+      [
+       "static.prop.box02",
+       2.98,
+       0.08,
+       216.5
+      ]
+     ],
+     "distractors": [
+      "pavement_people"
+     ],
+     "weather": "ClearNoon",
+     "released_at_s": 1.9,
+     "dropped_at_s": 6.75,
+     "landed": [
+      [
+       "static.prop.box03",
+       2.47,
+       0.58
+      ],
+      [
+       "static.prop.box02",
+       2.98,
+       0.08
+      ]
+     ]
+    },
+    "score": 0.900517,
+    "layout": "2f2201a5aa2e67a8b2d404495755a8017a6d84ddd22c98acf28c11a29f5e1c77",
+    "probes": [
+     8,
+     1
+    ],
+    "clearance": {
+     "all": [
+      0.874,
+      1123,
+      "static.prop.box02",
+      10.5
+     ],
+     "prop": [
+      0.874,
+      1123,
+      "static.prop.box02",
+      10.5
+     ],
+     "vehicle": [
+      3.649,
+      1099,
+      "vehicle.tesla.model3",
+      9.2
+     ],
+     "walker": [
+      5.46,
+      1116,
+      "walker.pedestrian.0012",
+      5.7
+     ]
+    },
+    "walker_fast": [
+     1.44,
+     1119,
+     "walker.pedestrian.0032",
+     22.66,
+     12.8
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.013,
+    "wall_s": 19.2,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c119",
+   "draw": 23,
+   "batch": 1,
+   "round": 4,
+   "cell": 23,
+   "town": "Town10HD",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 996817575800215341,
+   "distractors": 0,
+   "lock_key": "b745001d089f525ca962ae8bd4e1194af4f5cfc433b1361d12a4e31e7af3a115",
+   "status": "ran",
+   "run": {
+    "truth": {
+     "done": true,
+     "termination": "completed",
+     "kind": "red_light_runner",
+     "variant": "crowd_against_light",
+     "route_completion": 0.9836,
+     "route_length_m": 121.5,
+     "collisions": {
+      "walker": 0,
+      "vehicle": 0,
+      "static": 0
+     },
+     "red_lights": 0,
+     "hazard_collisions": 0,
+     "harsh_brakes": 3,
+     "time_s": 22.25,
+     "excused_s": 0.0,
+     "pace": 0.7583,
+     "mean_speed": 5.36,
+     "layout": "f82291ee250b45f838297b33607641163047110c2080772683a92744f440b139",
+     "overrides": 223,
+     "steps": 223
+    },
+    "staging": {
+     "group": 6,
+     "turners": 1,
+     "lane_width": 3.5,
+     "people": [
+      [
+       0.91,
+       1.49,
+       5.12,
+       null
+      ],
+      [
+       2.28,
+       1.64,
+       5.61,
+       null
+      ],
+      [
+       0.35,
+       1.63,
+       5.68,
+       null
+      ],
+      [
+       0.55,
+       1.23,
+       5.02,
+       2.6
+      ],
+      [
+       2.23,
+       1.29,
+       6.58,
+       null
+      ],
+      [
+       1.94,
+       1.13,
+       6.37,
+       null
+      ]
+     ],
+     "distractors": [],
+     "weather": "WetCloudyNoon"
+    },
+    "score": 0.900487,
+    "layout": "f82291ee250b45f838297b33607641163047110c2080772683a92744f440b139",
+    "probes": [
+     3,
+     0
+    ],
+    "clearance": {
+     "all": [
+      2.01,
+      1150,
+      "walker.pedestrian.0016",
+      17.6
+     ],
+     "prop": null,
+     "vehicle": [
+      4.62,
+      1162,
+      "vehicle.carlamotors.firetruck",
+      8.1
+     ],
+     "walker": [
+      2.01,
+      1150,
+      "walker.pedestrian.0016",
+      17.6
+     ]
+    },
+    "walker_fast": [
+     1.64,
+     1148,
+     "walker.pedestrian.0042",
+     15.4,
+     10.5
+    ],
+    "walker_launch": null,
+    "speed_limits": [
+     8.33
+    ],
+    "max_reply_s": 0.017,
+    "wall_s": 28.3,
+    "aborted": false,
+    "note": "",
+    "dir": "/tmp/pr24t2/sel2/r4"
+   },
+   "failed": [],
+   "keep": true,
+   "selection": "kept"
+  },
+  {
+   "id": "c120",
+   "draw": 24,
+   "batch": 1,
+   "round": 5,
+   "cell": 0,
+   "town": "Town04",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 3873228713583472679,
+   "distractors": 2,
+   "lock_key": "731e313a50e5b3265c13696c60262c38db1dd377dee65cd0f04e78cfb92352de",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c121",
+   "draw": 25,
+   "batch": 1,
+   "round": 5,
+   "cell": 1,
+   "town": "Town04",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1008058624370101780,
+   "distractors": 0,
+   "lock_key": "1b92673ddfe219e2e4b9c61ce93d8c800d8df3a8acfa1ec43409227710d08d9c",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c122",
+   "draw": 26,
+   "batch": 1,
+   "round": 5,
+   "cell": 2,
+   "town": "Town04",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2156841407575120968,
+   "distractors": 0,
+   "lock_key": "8edd9d4f7551133280af4048f8fa1681590e745e9ab0a6f7ca6442114fd957f5",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c123",
+   "draw": 27,
+   "batch": 1,
+   "round": 5,
+   "cell": 3,
+   "town": "Town04",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 2403641441989327276,
+   "distractors": 1,
+   "lock_key": "4a0d821edd990590553477ff1bc4174286cca4dca4d3d107c12ce4481b50225e",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c124",
+   "draw": 28,
+   "batch": 1,
+   "round": 5,
+   "cell": 4,
+   "town": "Town04",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 3606298863114633369,
+   "distractors": 0,
+   "lock_key": "f54e3f67becf50356b8165f587d692724734a2794a8b8e909c94dfda28f8c741",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c125",
+   "draw": 29,
+   "batch": 1,
+   "round": 5,
+   "cell": 5,
+   "town": "Town04",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 3155597654894980066,
+   "distractors": 2,
+   "lock_key": "6ac3e76d82e06905bb758abfebbf48f58345d229d266b98d2f3a9a597add8d08",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c126",
+   "draw": 30,
+   "batch": 1,
+   "round": 5,
+   "cell": 6,
+   "town": "Town04",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 956010394693507073,
+   "distractors": 2,
+   "lock_key": "071b3f746946a2aaa5e86747887dfca232277510a8d852b12ad137cc1fe43efe",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c127",
+   "draw": 31,
+   "batch": 1,
+   "round": 5,
+   "cell": 7,
+   "town": "Town05",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 892513977609502487,
+   "distractors": 1,
+   "lock_key": "429d8ce671f4366962765dc219fe3c1ce2fb750f135e25f5f56b700757d9d029",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c128",
+   "draw": 32,
+   "batch": 1,
+   "round": 5,
+   "cell": 8,
+   "town": "Town05",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 3180708924018137001,
+   "distractors": 0,
+   "lock_key": "f7e19abeae916d93b18a6a7624bdf5a572488c453ab1546e968253b870f5332b",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c129",
+   "draw": 33,
+   "batch": 1,
+   "round": 5,
+   "cell": 9,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 3488090680513357443,
+   "distractors": 2,
+   "lock_key": "b7d58104e637337f02182bc88a0c4be8f3bc056b372ab2c83cf04bf5900b8ada",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c130",
+   "draw": 34,
+   "batch": 1,
+   "round": 5,
+   "cell": 10,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 1794854469952442687,
+   "distractors": 0,
+   "lock_key": "0706d3e47c245065254ad9b2cb6c0fcd0c460dd9ecb4f509057f3ddb5da17bd1",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c131",
+   "draw": 35,
+   "batch": 1,
+   "round": 5,
+   "cell": 11,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 934335607255942750,
+   "distractors": 1,
+   "lock_key": "7a8ce5edbf52b96950240561765147f7684b08749fad644b01f49bd5b5ef6bbe",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c132",
+   "draw": 36,
+   "batch": 1,
+   "round": 5,
+   "cell": 12,
+   "town": "Town05",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1199111576115000908,
+   "distractors": 0,
+   "lock_key": "bd614d1b88a84b6b2707d682dad08b73269416d8f3d2ef055dda0e25b4414581",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c133",
+   "draw": 37,
+   "batch": 1,
+   "round": 5,
+   "cell": 13,
+   "town": "Town05",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 4131315561887091037,
+   "distractors": 1,
+   "lock_key": "4b2f640071d489319cdba3e235fcb735a349a9d04e3615e0aa9ccaac23c0e292",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c134",
+   "draw": 38,
+   "batch": 1,
+   "round": 5,
+   "cell": 14,
+   "town": "Town05",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 3857112305166266860,
+   "distractors": 1,
+   "lock_key": "9aad8cf49dd1b70ca44c649d9bacbbbe5ab5ba075bbf8e4755122b8bf4ac2b13",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c135",
+   "draw": 39,
+   "batch": 1,
+   "round": 5,
+   "cell": 15,
+   "town": "Town05",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 1276060747436276633,
+   "distractors": 1,
+   "lock_key": "570ffa6fd3feafa0973dec17f139b0fd6bd46a8e9e6c44aac504b210929e7b5f",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c136",
+   "draw": 40,
+   "batch": 1,
+   "round": 5,
+   "cell": 16,
+   "town": "Town05",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 3705116656081566212,
+   "distractors": 2,
+   "lock_key": "13e2a3f41708edbdeb508ed8650045006234cff8f7e57671f9baf6f1a9b5a2e7",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c137",
+   "draw": 41,
+   "batch": 1,
+   "round": 5,
+   "cell": 17,
+   "town": "Town10HD",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 2106990256377405634,
+   "distractors": 2,
+   "lock_key": "3cdd31144a60940c11fab34fafe2239a69ebbd8455bc20da23fe188fd2401492",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c138",
+   "draw": 42,
+   "batch": 1,
+   "round": 5,
+   "cell": 18,
+   "town": "Town10HD",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1659055844843564493,
+   "distractors": 1,
+   "lock_key": "e747df1f4f79ed8045759c1733e50b9569da89c0830abef9d1551aa55fbac1f8",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c139",
+   "draw": 43,
+   "batch": 1,
+   "round": 5,
+   "cell": 19,
+   "town": "Town10HD",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2025931626503269663,
+   "distractors": 2,
+   "lock_key": "432458612240855f1a41078fdf556daa8479976555a28193d08333ae50fa1c39",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c140",
+   "draw": 44,
+   "batch": 1,
+   "round": 5,
+   "cell": 20,
+   "town": "Town10HD",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 4064178681315652038,
+   "distractors": 0,
+   "lock_key": "b4b71a768a775d8873eaf10a668a5bffc782f204bb7524e1f1c71a34e4a732f3",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c141",
+   "draw": 45,
+   "batch": 1,
+   "round": 5,
+   "cell": 21,
+   "town": "Town10HD",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1445202110366730429,
+   "distractors": 2,
+   "lock_key": "31edf7959bc13cfbdaa1581a98c2d536f918866ef8bb3b821cf0da28efe73c14",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c142",
+   "draw": 46,
+   "batch": 1,
+   "round": 5,
+   "cell": 22,
+   "town": "Town10HD",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 2481463062888494184,
+   "distractors": 1,
+   "lock_key": "57acbeb0a695172231080a335cf58f8acb07e2d893592ed360cb33106006eed7",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c143",
+   "draw": 47,
+   "batch": 1,
+   "round": 5,
+   "cell": 23,
+   "town": "Town10HD",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 2018337408933953795,
+   "distractors": 2,
+   "lock_key": "6c9d069cc077775c075373f8a5f2478d2e1b1c1d39daa0ad3544b4b7a29311d8",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c144",
+   "draw": 48,
+   "batch": 1,
+   "round": 6,
+   "cell": 0,
+   "town": "Town04",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 3833515983694383360,
+   "distractors": 0,
+   "lock_key": "fe09efa658f2fdc93aac31c0dde5d76946c01384ed7583f7697a7f3af7397efd",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c145",
+   "draw": 49,
+   "batch": 1,
+   "round": 6,
+   "cell": 1,
+   "town": "Town04",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 4357573169388868275,
+   "distractors": 1,
+   "lock_key": "086c71756e7e539911d52cf3e1a37a800fae018473a5002b42981f6cf78f51ad",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c146",
+   "draw": 50,
+   "batch": 1,
+   "round": 6,
+   "cell": 2,
+   "town": "Town04",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1122173014967262461,
+   "distractors": 0,
+   "lock_key": "eccbc7122e2d3a848812b0d8e4bf9101636717aaa0f68134761ca3339ee01ec0",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c147",
+   "draw": 51,
+   "batch": 1,
+   "round": 6,
+   "cell": 3,
+   "town": "Town04",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 3507472460398825478,
+   "distractors": 0,
+   "lock_key": "01e6d0b9e626032ae1d7e096579ba8d9617d60b5b3f6baf8b152146b327fc5a6",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c148",
+   "draw": 52,
+   "batch": 1,
+   "round": 6,
+   "cell": 4,
+   "town": "Town04",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1030473125876943062,
+   "distractors": 2,
+   "lock_key": "dd93c00af18198c7d49964f0d807d3bb90beed960759ac0d882df941214e3160",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c149",
+   "draw": 53,
+   "batch": 1,
+   "round": 6,
+   "cell": 5,
+   "town": "Town04",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 1197273974478455105,
+   "distractors": 1,
+   "lock_key": "20ebc2113094d1a9b17f01f15844a64c5500cc9da31370b5d6026946220538a0",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c150",
+   "draw": 54,
+   "batch": 1,
+   "round": 6,
+   "cell": 6,
+   "town": "Town04",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 2835325239659832566,
+   "distractors": 1,
+   "lock_key": "8f8c6e565298283955f926e3cef2c75d4297dc5b359194acd969d9c7a928067e",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c151",
+   "draw": 55,
+   "batch": 1,
+   "round": 6,
+   "cell": 7,
+   "town": "Town05",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 3062008594381735295,
+   "distractors": 0,
+   "lock_key": "22d3249b028e4135b8858a019feb496ab76740a1edaffbe50f8ea270c490b051",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c152",
+   "draw": 56,
+   "batch": 1,
+   "round": 6,
+   "cell": 8,
+   "town": "Town05",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1256075653652283867,
+   "distractors": 2,
+   "lock_key": "22121a12006d6f67cd33bb09be556f1f6a36eec94702a27e93f1de6a4ba6d0dd",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c153",
+   "draw": 57,
+   "batch": 1,
+   "round": 6,
+   "cell": 9,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 586452286520935064,
+   "distractors": 0,
+   "lock_key": "4f74b89e022c843100d89c7960b85e03a9d623e1587050b2183e8224d28085c5",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c154",
+   "draw": 58,
+   "batch": 1,
+   "round": 6,
+   "cell": 10,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 2816467531558760399,
+   "distractors": 1,
+   "lock_key": "4ba85c6d5da4f4c019b51480a379986675eb9cbc87d3e717b71c835925e03606",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c155",
+   "draw": 59,
+   "batch": 1,
+   "round": 6,
+   "cell": 11,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 4273433091946125126,
+   "distractors": 1,
+   "lock_key": "ac3265b4ca2bc009267c3da200382e17020d6d768cc8036b2535e417908441ba",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c156",
+   "draw": 60,
+   "batch": 1,
+   "round": 6,
+   "cell": 12,
+   "town": "Town05",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2275979780432708163,
+   "distractors": 0,
+   "lock_key": "0c9974f74ea95b0dbf4108cc97e17760723db6a47cef27b8b772b56cba5c41d8",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c157",
+   "draw": 61,
+   "batch": 1,
+   "round": 6,
+   "cell": 13,
+   "town": "Town05",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 4403371319126778272,
+   "distractors": 2,
+   "lock_key": "da02c5721bb3be670273fee5440ec3058f4abd14487db2bb845514e535f1f8d7",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c158",
+   "draw": 62,
+   "batch": 1,
+   "round": 6,
+   "cell": 14,
+   "town": "Town05",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2821197920582054211,
+   "distractors": 0,
+   "lock_key": "a88f5daff16d55a67545c69fbee8957c231b50b06465c2cf482bb9fdcbdf88e4",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c159",
+   "draw": 63,
+   "batch": 1,
+   "round": 6,
+   "cell": 15,
+   "town": "Town05",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 4196350405510000741,
+   "distractors": 1,
+   "lock_key": "a7d0b3882602d4d0ab951824882d5dc52e07e0a7c5ce91c5056cf9f0c46b6534",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c160",
+   "draw": 64,
+   "batch": 1,
+   "round": 6,
+   "cell": 16,
+   "town": "Town05",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 911785348658931900,
+   "distractors": 1,
+   "lock_key": "7e82962f7aca7816dfd18808f129ec019c42746f36b0fbc95656d35de1867bef",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c161",
+   "draw": 65,
+   "batch": 1,
+   "round": 6,
+   "cell": 17,
+   "town": "Town10HD",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 2128294687424732124,
+   "distractors": 0,
+   "lock_key": "817850c0c0553d1d74c4d7b3a4442b2ca094a3641a5f3854f752db94e293247c",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c162",
+   "draw": 66,
+   "batch": 1,
+   "round": 6,
+   "cell": 18,
+   "town": "Town10HD",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1622407859635844422,
+   "distractors": 1,
+   "lock_key": "c7dbd3e9aac89c63c484a71752fc920d56c3aa8c408e7377bd42f67e77f63441",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c163",
+   "draw": 67,
+   "batch": 1,
+   "round": 6,
+   "cell": 19,
+   "town": "Town10HD",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2279861812025149934,
+   "distractors": 2,
+   "lock_key": "031b5198556d993e5e67927c764ba5eb240c115944829aedf81d8a3b5ff3da68",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c164",
+   "draw": 68,
+   "batch": 1,
+   "round": 6,
+   "cell": 20,
+   "town": "Town10HD",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 2404992373607181015,
+   "distractors": 1,
+   "lock_key": "0880a176d4601fc79e4a7bad9eea8812bf7efedd8abfd42a1e7bd5824a46a8ce",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c165",
+   "draw": 69,
+   "batch": 1,
+   "round": 6,
+   "cell": 21,
+   "town": "Town10HD",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 3546555751711123963,
+   "distractors": 1,
+   "lock_key": "c4efe7c5ccefd11efe023402770a3457433a95283294514dbff8549161cf21ac",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c166",
+   "draw": 70,
+   "batch": 1,
+   "round": 6,
+   "cell": 22,
+   "town": "Town10HD",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 4562271778082644995,
+   "distractors": 0,
+   "lock_key": "759594fa6affed7d38e5f6ff5eaf4e7c69681bcdf0c86cbd4be15df2d35322be",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c167",
+   "draw": 71,
+   "batch": 1,
+   "round": 6,
+   "cell": 23,
+   "town": "Town10HD",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 4302231069716449303,
+   "distractors": 2,
+   "lock_key": "39e2d5a3d591241f0218e752b440b1d6cec3f23d8c5231ca812218c6d7c4c304",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c168",
+   "draw": 72,
+   "batch": 1,
+   "round": 7,
+   "cell": 0,
+   "town": "Town04",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 2043416904533648091,
+   "distractors": 1,
+   "lock_key": "29068ed5fbeb4393cdc90ee6f5b31b77ccd4e052e5a7bb1838b49f88a3bfb757",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c169",
+   "draw": 73,
+   "batch": 1,
+   "round": 7,
+   "cell": 1,
+   "town": "Town04",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 4478961387421501149,
+   "distractors": 0,
+   "lock_key": "b7b460b3fa430a48707ba7e3abda7fb701ee4eabfbeb25030057255adbff8299",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c170",
+   "draw": 74,
+   "batch": 1,
+   "round": 7,
+   "cell": 2,
+   "town": "Town04",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2648469375852324106,
+   "distractors": 1,
+   "lock_key": "211b9bea0ba8a09bdb5bb970be9d5aa0e1c653a5cbd9fe79562233ba53a25e03",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c171",
+   "draw": 75,
+   "batch": 1,
+   "round": 7,
+   "cell": 3,
+   "town": "Town04",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 2722319804830385679,
+   "distractors": 1,
+   "lock_key": "88616e9603fb5db2cd77987801c3587b2b433f8dc67e82a0dbc16469778bb006",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c172",
+   "draw": 76,
+   "batch": 1,
+   "round": 7,
+   "cell": 4,
+   "town": "Town04",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 4200542227357207210,
+   "distractors": 2,
+   "lock_key": "ba7b6aa234577abe09085c42a70048bc9a82320a718025a6d529748740e03236",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c173",
+   "draw": 77,
+   "batch": 1,
+   "round": 7,
+   "cell": 5,
+   "town": "Town04",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 182925695230898877,
+   "distractors": 1,
+   "lock_key": "eba5b72422c8d4d58e1189dca8040d5e05c196cd988872e7913d54a9c9ad1a96",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c174",
+   "draw": 78,
+   "batch": 1,
+   "round": 7,
+   "cell": 6,
+   "town": "Town04",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 1815452866399918080,
+   "distractors": 2,
+   "lock_key": "4a60ccbcfef874aae75cd7dcf74a5bf2e869c138ff4320c622fe2a25fd46628f",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c175",
+   "draw": 79,
+   "batch": 1,
+   "round": 7,
+   "cell": 7,
+   "town": "Town05",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 4172759327185394617,
+   "distractors": 0,
+   "lock_key": "42fd94ccdb7b81fd8b6d60ce218873823c3181ce4f287f7988860e7d6b10d833",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c176",
+   "draw": 80,
+   "batch": 1,
+   "round": 7,
+   "cell": 8,
+   "town": "Town05",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 4136221926476281690,
+   "distractors": 2,
+   "lock_key": "1df787bd592de3129fcfc10281217988447f82da2666382283ede6affaf6227e",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c177",
+   "draw": 81,
+   "batch": 1,
+   "round": 7,
+   "cell": 9,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 2789938142413213696,
+   "distractors": 2,
+   "lock_key": "00f57e0f0c66648dfea9d67c0706ee5e7f3c65c2d91e4e034f5f5f40835818c0",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c178",
+   "draw": 82,
+   "batch": 1,
+   "round": 7,
+   "cell": 10,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 6176592865521728,
+   "distractors": 0,
+   "lock_key": "b7e487b617d5fe2afedb0941c6389e577025d19e649a73ca6108654699eea67d",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c179",
+   "draw": 83,
+   "batch": 1,
+   "round": 7,
+   "cell": 11,
+   "town": "Town05",
+   "variant": "shoulder_pass",
+   "kind": "broken_down_vehicle",
+   "seed": 3996859867276377602,
+   "distractors": 2,
+   "lock_key": "ac95918342c6b046c3f207be696da3736d126dfa9f9df485ba22e9ecbdd842fd",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c180",
+   "draw": 84,
+   "batch": 1,
+   "round": 7,
+   "cell": 12,
+   "town": "Town05",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 3743200010684534082,
+   "distractors": 0,
+   "lock_key": "1f0b79a32816a3d55b9806dcf0986a53cf1416f32e08f24f25d1ca8591224f44",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c181",
+   "draw": 85,
+   "batch": 1,
+   "round": 7,
+   "cell": 13,
+   "town": "Town05",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 2081694066910023056,
+   "distractors": 2,
+   "lock_key": "648e8bf2b5332a8f1bee961f278ec763d98c147af6df407ef39447281d9f3658",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c182",
+   "draw": 86,
+   "batch": 1,
+   "round": 7,
+   "cell": 14,
+   "town": "Town05",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 2557283257974669335,
+   "distractors": 1,
+   "lock_key": "47987942c170127500a1e3854e9751d096806d0e55cff81f3f2f4a37a2b096ef",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c183",
+   "draw": 87,
+   "batch": 1,
+   "round": 7,
+   "cell": 15,
+   "town": "Town05",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 1321018921995135666,
+   "distractors": 0,
+   "lock_key": "4170339a036ef2b196996eda1a6251b79c587d7094bb9a5f6bed6e3f5a5f42c4",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c184",
+   "draw": 88,
+   "batch": 1,
+   "round": 7,
+   "cell": 16,
+   "town": "Town05",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 4604875524472003446,
+   "distractors": 1,
+   "lock_key": "f7422bc3aa41a753b7797b77d19001bab0766fbb59b5154d594957b72ab0fb26",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c185",
+   "draw": 89,
+   "batch": 1,
+   "round": 7,
+   "cell": 17,
+   "town": "Town10HD",
+   "variant": "debris",
+   "kind": "broken_down_vehicle",
+   "seed": 4224783879993890735,
+   "distractors": 0,
+   "lock_key": "ee51755cfe7abbef2143e1ccf17a704896f94c6c03cf3fb6bc459d0533159ce5",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c186",
+   "draw": 90,
+   "batch": 1,
+   "round": 7,
+   "cell": 18,
+   "town": "Town10HD",
+   "variant": "walking_in_lane",
+   "kind": "occluded_pedestrian",
+   "seed": 1213847475662522433,
+   "distractors": 2,
+   "lock_key": "de422f6843a591de6f431a845b2aaf0cc53c2982eb17cd06211abba7a58bf22a",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c187",
+   "draw": 91,
+   "batch": 1,
+   "round": 7,
+   "cell": 19,
+   "town": "Town10HD",
+   "variant": "spinning_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1466384821588930528,
+   "distractors": 0,
+   "lock_key": "fe26ce58a26f1a912709bae3ea4f7b5f2ce0282a901b2d3027f6b2044c86de6b",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c188",
+   "draw": 92,
+   "batch": 1,
+   "round": 7,
+   "cell": 20,
+   "town": "Town10HD",
+   "variant": "overtaking_oncoming",
+   "kind": "oncoming_left_turn",
+   "seed": 4069089517946179402,
+   "distractors": 2,
+   "lock_key": "f4a0791e2460824c73154f101a928af4f2594b86de82802c36e4930bf35be07c",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c189",
+   "draw": 93,
+   "batch": 1,
+   "round": 7,
+   "cell": 21,
+   "town": "Town10HD",
+   "variant": "reversing_car",
+   "kind": "broken_down_vehicle",
+   "seed": 1408657935896324075,
+   "distractors": 2,
+   "lock_key": "38b77544dfb6c3822fc56318bb0a18e4ab3eb476dd9c08461aadad8bd4a70f2f",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c190",
+   "draw": 94,
+   "batch": 1,
+   "round": 7,
+   "cell": 22,
+   "town": "Town10HD",
+   "variant": "dropped_cargo",
+   "kind": "broken_down_vehicle",
+   "seed": 795397935270424139,
+   "distractors": 2,
+   "lock_key": "88e81711f122cc19702149771bf497d5d84648f8e74bc7d8efa81e08dab4b070",
+   "status": "drawn",
+   "selection": "not run"
+  },
+  {
+   "id": "c191",
+   "draw": 95,
+   "batch": 1,
+   "round": 7,
+   "cell": 23,
+   "town": "Town10HD",
+   "variant": "crowd_against_light",
+   "kind": "red_light_runner",
+   "seed": 2514842630694039889,
+   "distractors": 1,
+   "lock_key": "10253dd36b554d74097a70cc13c8d91e8f227aa3ae26797f85ac1b62b3e7c8a6",
+   "status": "drawn",
+   "selection": "not run"
+  }
+ ],
+ "supersedes": {
+  "file": "tests/hidden/superseded/selection-1.json",
+  "sha256": "90999bc99a18a6b1f52c7d74450592295e6963640ae705a516de1bef4d45adab",
+  "frozen_commit": "c74c883b6a0afbfd66641f2ddb5ccf3ff512b182",
+  "last_round": 3,
+  "episodes_sha256": "e81a092eb6e2ca55ec58c98462de82b25342496436c69afa8d37cac562fecdea",
+  "why": "review findings: S4 always moved the warning sign to the lane's left, which made every Town05 shoulder pass shallower (now centred wherever the shoulder leaves the car 1.0 m to spare, on spots whose shoulder is clear of the map's poles and signs); c006's run had a walker launched by the physics near the car (the keep rule now screens such launches)"
+ },
+ "runs": [
+  {
+   "round": 4,
+   "started_utc": "2026-11-06T22:43:49Z",
+   "finished_utc": "2026-11-06T22:48:34Z",
+   "dir": "/tmp/pr24t2/sel2/r4",
+   "gpus": "0,1",
+   "cpus": "16-23,24-31",
+   "due": 24,
+   "ran": 24,
+   "rc": 0
+  }
+ ],
+ "set": {
+  "made_utc": "2026-11-06T22:49:13Z",
+  "kept": [
+   "c096",
+   "c097",
+   "c098",
+   "c099",
+   "c100",
+   "c101",
+   "c102",
+   "c103",
+   "c104",
+   "c105",
+   "c106",
+   "c107",
+   "c108",
+   "c109",
+   "c110",
+   "c111",
+   "c112",
+   "c113",
+   "c114",
+   "c115",
+   "c116",
+   "c117",
+   "c118",
+   "c119"
+  ],
+  "dropped": [],
+  "not_run": [
+   "c120",
+   "c144",
+   "c168",
+   "c121",
+   "c145",
+   "c169",
+   "c122",
+   "c146",
+   "c170",
+   "c123",
+   "c147",
+   "c171",
+   "c124",
+   "c148",
+   "c172",
+   "c125",
+   "c149",
+   "c173",
+   "c126",
+   "c150",
+   "c174",
+   "c127",
+   "c151",
+   "c175",
+   "c128",
+   "c152",
+   "c176",
+   "c129",
+   "c153",
+   "c177",
+   "c130",
+   "c154",
+   "c178",
+   "c131",
+   "c155",
+   "c179",
+   "c132",
+   "c156",
+   "c180",
+   "c133",
+   "c157",
+   "c181",
+   "c134",
+   "c158",
+   "c182",
+   "c135",
+   "c159",
+   "c183",
+   "c136",
+   "c160",
+   "c184",
+   "c137",
+   "c161",
+   "c185",
+   "c138",
+   "c162",
+   "c186",
+   "c139",
+   "c163",
+   "c187",
+   "c140",
+   "c164",
+   "c188",
+   "c141",
+   "c165",
+   "c189",
+   "c142",
+   "c166",
+   "c190",
+   "c143",
+   "c167",
+   "c191"
+  ],
+  "episodes_sha256": "994bab76a4c478ca08645fffccbadd2085e03281177e59b212148546a85195f9"
+ }
+}
