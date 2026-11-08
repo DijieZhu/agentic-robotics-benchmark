@@ -1,0 +1,34 @@
+schema_version = "1.4+ale.1"
+
+# Where the agent leaves its work.
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/novel_object_6dof_grasp_detection"
+
+[metadata]
+platform = "arm"
+
+# 8 CPUs: the agent builds and tests its own grasp generator and ranking model, and the verify stage
+# runs 8 solver processes (one frame at a time, one CPU each) and then 6 scoring workers. Each
+# scoring worker holds one scene's meshes and grasp-quality models, about 6 GB, hence 64 GB.
+[environment]
+cpus = 8
+memory_mb = 65536
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Verify: fetch and unpack the hidden frames (about 1.5 GB), then 8 solver processes on blocks of 56
+# frames, each within its block budget (grader_config.json): a submission's at most 56 x 10 s + 4 x 120 s
+# (17 min), the privileged reference's at most 56 x 300 s + 4 x 120 s (4.8 h; it needs about 1.5 h);
+# then scoring (about 15 min). The deadline covers the reference's budget.
+[verifier]
+timeout_sec = 21600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 65536
+gpus = 0

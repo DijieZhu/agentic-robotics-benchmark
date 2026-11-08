@@ -1,0 +1,10 @@
+{
+  "metric": "ap_gain",
+  "direction": "higher",
+  "value": 64.4729,
+  "full_at": 0.98,
+  "baseline_mean_ap": 7.866108398398201,
+  "source": "one full verify of the privileged reference (solution/ as committed) under ale validate in the separate-verifier layout on an 8-CPU, 64 GB sandbox (2026-11-07): mean AP 72.339 over the 448 hidden frames, ap_gain 64.4729, 448 of 448 frames valid, 0 timeouts, slowest call 94.5 s of its 300 s limit. Its work per frame is fixed (no clock), so the score does not depend on the machine: the same frames run on another host (16 frames, a different CPU) differed by at most 2.0 AP per frame and by -0.31 AP on their mean, about 0.5 % of the gain; full_at 0.98 covers that.",
+  "reference_commit": "solution/ of the 2026-11-07 maintainer fixes (the commit that set this anchor)",
+  "note": "ap_gain = max(0, mean AP - baseline_mean_ap) over the 448 hidden frames; baseline_mean_ap is the starting detector's mean AP, re-measured with this grader (7.866108398398201, identical). Reference = solution/: grasplib candidates ranked by a gradient-boosted scorer; with the ground truth that the grader exports only to a submission carrying the oracle token (tests/verify.py privileged()), the best 8000 candidates are checked for collision and emptiness and, per object, up to 40 of the survivors (after the evaluator's NMS) get graspnetAPI's own force-closure test; the output is sorted by that true label."
+}

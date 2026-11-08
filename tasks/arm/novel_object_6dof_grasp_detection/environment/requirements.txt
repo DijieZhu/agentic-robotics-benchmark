@@ -1,0 +1,5 @@
+# The task image's Python dependencies — the ONE list. image/Dockerfile installs it into
+# the py3.12 /opt/venv. Pin what your grader and reference implementation import; the
+# simulator itself belongs here too when it is pip-installable (otherwise install it in
+# the Dockerfile and keep this list for the rest).
+numpy>=1.26,<3
