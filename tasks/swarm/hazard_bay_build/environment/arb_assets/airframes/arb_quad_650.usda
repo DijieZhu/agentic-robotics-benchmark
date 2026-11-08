@@ -1,0 +1,552 @@
+#usda 1.0
+(
+    defaultPrim = "arb_quad_650"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "arb_quad_650" (
+    variants = {
+        string look = "proxy"
+    }
+    prepend variantSets = "look"
+)
+{
+    def "Looks"
+    {
+        def Material "hull"
+        {
+            token outputs:surface.connect = </arb_quad_650/Looks/hull/S.outputs:surface>
+
+            def Shader "S"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.16, 0.18, 0.24)
+                float inputs:metallic = 0.3
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+
+        def Material "arm"
+        {
+            token outputs:surface.connect = </arb_quad_650/Looks/arm/S.outputs:surface>
+
+            def Shader "S"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.1, 0.11)
+                float inputs:metallic = 0.5
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "motor"
+        {
+            token outputs:surface.connect = </arb_quad_650/Looks/motor/S.outputs:surface>
+
+            def Shader "S"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.7, 0.7, 0.72)
+                float inputs:metallic = 0.8
+                float inputs:roughness = 0.3
+                token outputs:surface
+            }
+        }
+
+        def Material "prop"
+        {
+            token outputs:surface.connect = </arb_quad_650/Looks/prop/S.outputs:surface>
+
+            def Shader "S"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.05, 0.05, 0.05)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "gear"
+        {
+            token outputs:surface.connect = </arb_quad_650/Looks/gear/S.outputs:surface>
+
+            def Shader "S"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.85, 0.45, 0.1)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+    }
+
+    def Xform "Body" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        custom string arb:airframe_model = "arb_quad_650"
+        custom int arb:rotors = 4
+        float physics:mass = 2.4
+
+        def Cube "hull" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/hull>
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.22, 0.22, 0.09)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "hull_top" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/arm>
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.154, 0.11, 0.03)
+            double3 xformOp:translate = (0, 0, 0.06)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "arm_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/arm>
+            double size = 1
+            quatf xformOp:orient = (0.9238795, 0, 0, 0.38268343)
+            float3 xformOp:scale = (0.325, 0.03, 0.025)
+            double3 xformOp:translate = (0.11490485194281398, 0.11490485194281397, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "Rotor_0"
+        {
+            custom int arb:spin = 1
+            double3 xformOp:translate = (0.22980970388562796, 0.22980970388562794, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "motor" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.04
+                rel material:binding = </arb_quad_650/Looks/motor>
+                double radius = 0.032
+                double3 xformOp:translate = (0, 0, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "prop" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.005
+                rel material:binding = </arb_quad_650/Looks/prop>
+                double radius = 0.19
+                double3 xformOp:translate = (0, 0, 0.045)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Cube "arm_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/arm>
+            double size = 1
+            quatf xformOp:orient = (0.38268343, 0, 0, 0.9238795)
+            float3 xformOp:scale = (0.325, 0.03, 0.025)
+            double3 xformOp:translate = (-0.11490485194281397, 0.11490485194281398, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "Rotor_1"
+        {
+            custom int arb:spin = -1
+            double3 xformOp:translate = (-0.22980970388562794, 0.22980970388562796, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "motor" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.04
+                rel material:binding = </arb_quad_650/Looks/motor>
+                double radius = 0.032
+                double3 xformOp:translate = (0, 0, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "prop" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.005
+                rel material:binding = </arb_quad_650/Looks/prop>
+                double radius = 0.19
+                double3 xformOp:translate = (0, 0, 0.045)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Cube "arm_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/arm>
+            double size = 1
+            quatf xformOp:orient = (-0.38268343, 0, 0, 0.9238795)
+            float3 xformOp:scale = (0.325, 0.03, 0.025)
+            double3 xformOp:translate = (-0.114904851942814, -0.11490485194281397, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "Rotor_2"
+        {
+            custom int arb:spin = 1
+            double3 xformOp:translate = (-0.229809703885628, -0.22980970388562794, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "motor" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.04
+                rel material:binding = </arb_quad_650/Looks/motor>
+                double radius = 0.032
+                double3 xformOp:translate = (0, 0, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "prop" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.005
+                rel material:binding = </arb_quad_650/Looks/prop>
+                double radius = 0.19
+                double3 xformOp:translate = (0, 0, 0.045)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Cube "arm_3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/arm>
+            double size = 1
+            quatf xformOp:orient = (-0.9238795, 0, 0, 0.38268343)
+            float3 xformOp:scale = (0.325, 0.03, 0.025)
+            double3 xformOp:translate = (0.11490485194281395, -0.114904851942814, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "Rotor_3"
+        {
+            custom int arb:spin = -1
+            double3 xformOp:translate = (0.2298097038856279, -0.229809703885628, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "motor" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.04
+                rel material:binding = </arb_quad_650/Looks/motor>
+                double radius = 0.032
+                double3 xformOp:translate = (0, 0, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "prop" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.005
+                rel material:binding = </arb_quad_650/Looks/prop>
+                double radius = 0.19
+                double3 xformOp:translate = (0, 0, 0.045)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Cube "gear_skid_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.46, 0.018, 0.018)
+            double3 xformOp:translate = (0, -0.22, -0.345)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_strut_00" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.24226265, 0.7600524, -0.60301673, 0)
+            float3 xformOp:scale = (0.016, 0.016, 0.3285681)
+            double3 xformOp:translate = (-0.136, -0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_strut_01" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.24226265, 0.7600524, 0.60301673, -0)
+            float3 xformOp:scale = (0.016, 0.016, 0.3285681)
+            double3 xformOp:translate = (0.136, -0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_brace_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.38872674, 0.37448406, 0.8418154, -0)
+            float3 xformOp:scale = (0.01, 0.01, 0.41560197)
+            double3 xformOp:translate = (0.04800000000000001, -0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_skid_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.46, 0.018, 0.018)
+            double3 xformOp:translate = (0, 0.22, -0.345)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_strut_10" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.24226265, -0.7600524, -0.60301673, 0)
+            float3 xformOp:scale = (0.016, 0.016, 0.3285681)
+            double3 xformOp:translate = (-0.136, 0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_strut_11" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.24226265, -0.7600524, 0.60301673, 0)
+            float3 xformOp:scale = (0.016, 0.016, 0.3285681)
+            double3 xformOp:translate = (0.136, 0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "gear_brace_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </arb_quad_650/Looks/gear>
+            double size = 1
+            quatf xformOp:orient = (0.38872674, -0.37448406, 0.8418154, 0)
+            float3 xformOp:scale = (0.01, 0.01, 0.41560197)
+            double3 xformOp:translate = (0.04800000000000001, 0.1595, -0.18999999999999997)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "Mount"
+        {
+            double3 xformOp:translate = (0, 0, -0.045)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Xform "Hook"
+        {
+            double3 xformOp:translate = (0, -0.08800000000000001, -0.075)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "ring" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Z"
+                double height = 0.004
+                rel material:binding = </arb_quad_650/Looks/motor>
+                double radius = 0.012
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+    }
+    variantSet "look" = {
+        "proxy" {
+
+        }
+        "real" {
+            over "Body"
+            {
+                over "hull"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "hull_top"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "arm_0"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "Rotor_0"
+                {
+                    over "motor"
+                    {
+                        uniform token purpose = "guide"
+                    }
+
+                    over "prop"
+                    {
+                        uniform token purpose = "guide"
+                    }
+                }
+
+                over "arm_1"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "Rotor_1"
+                {
+                    over "motor"
+                    {
+                        uniform token purpose = "guide"
+                    }
+
+                    over "prop"
+                    {
+                        uniform token purpose = "guide"
+                    }
+                }
+
+                over "arm_2"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "Rotor_2"
+                {
+                    over "motor"
+                    {
+                        uniform token purpose = "guide"
+                    }
+
+                    over "prop"
+                    {
+                        uniform token purpose = "guide"
+                    }
+                }
+
+                over "arm_3"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "Rotor_3"
+                {
+                    over "motor"
+                    {
+                        uniform token purpose = "guide"
+                    }
+
+                    over "prop"
+                    {
+                        uniform token purpose = "guide"
+                    }
+                }
+
+                over "gear_skid_0"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_strut_00"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_strut_01"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_brace_0"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_skid_1"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_strut_10"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_strut_11"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                over "gear_brace_1"
+                {
+                    uniform token purpose = "guide"
+                }
+
+                def Xform "Look" (
+                    prepend references = @./look/arb_quad_650_look.usda@
+                )
+                {
+                }
+            }
+
+        }
+    }
+}
+

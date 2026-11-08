@@ -1,0 +1,2278 @@
+{
+ "scan": {
+  "ok": true,
+  "errors": [],
+  "notes": [
+   "no run.sh in the submission: the hoist mission will have no controller",
+   "no plan.json in the submission: the mission will have no plan"
+  ],
+  "facts": {
+   "items": {
+    "cracker_box": [
+     "../Axis_Aligned/003_cracker_box.usd",
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned_Physics/003_cracker_box.usd"
+    ],
+    "mustard_bottle": [
+     "../Axis_Aligned/006_mustard_bottle.usd",
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned_Physics/006_mustard_bottle.usd"
+    ],
+    "sugar_box": [
+     "../Axis_Aligned/004_sugar_box.usd",
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned_Physics/004_sugar_box.usd"
+    ],
+    "soup_can": [
+     "../Axis_Aligned/005_tomato_soup_can.usd",
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned_Physics/005_tomato_soup_can.usd"
+    ],
+    "power_drill": [
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned/035_power_drill.usd"
+    ],
+    "mug": [
+     "/opt/assets/isaac/Isaac/Props/YCB/Axis_Aligned/025_mug.usd"
+    ]
+   },
+   "robots": {
+    "UAV_1": {
+     "articulation_root": "/World/Fleet/UAV_1/Airframe/Body",
+     "assets": [
+      "/opt/assets/arb/airframes/arb_hex_800.usda",
+      "/opt/assets/isaac/Isaac/Robots/RobotStudio/so101_new_calib/so101_new_calib.usd",
+      "configuration/so101_new_calib_physics.usd",
+      "configuration/so101_new_calib_robot.usd",
+      "configuration/so101_new_calib_sensor.usd"
+     ],
+     "cameras": [
+      "/World/Fleet/UAV_1/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_1/Airframe/Body/Camera",
+      "/World/Fleet/UAV_1/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_1/Airframe/Body/CameraDown"
+     ],
+     "tagged_cameras": [
+      "/World/Fleet/UAV_1/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_1/Airframe/Body/Camera",
+      "/World/Fleet/UAV_1/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_1/Airframe/Body/CameraDown"
+     ],
+     "declared": {
+      "airframe_model": "arb_hex_800",
+      "arm_model": "so101",
+      "base_model": null
+     }
+    },
+    "UAV_2": {
+     "articulation_root": "/World/Fleet/UAV_2/Airframe/Body",
+     "assets": [
+      "/opt/assets/arb/airframes/arb_hex_800.usda",
+      "/opt/assets/isaac/Isaac/Robots/RobotStudio/so101_new_calib/so101_new_calib.usd",
+      "configuration/so101_new_calib_physics.usd",
+      "configuration/so101_new_calib_robot.usd",
+      "configuration/so101_new_calib_sensor.usd"
+     ],
+     "cameras": [
+      "/World/Fleet/UAV_2/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_2/Airframe/Body/Camera",
+      "/World/Fleet/UAV_2/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_2/Airframe/Body/CameraDown"
+     ],
+     "tagged_cameras": [
+      "/World/Fleet/UAV_2/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_2/Airframe/Body/Camera",
+      "/World/Fleet/UAV_2/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_2/Airframe/Body/CameraDown"
+     ],
+     "declared": {
+      "airframe_model": "arb_hex_800",
+      "arm_model": "so101",
+      "base_model": null
+     }
+    },
+    "UAV_3": {
+     "articulation_root": "/World/Fleet/UAV_3/Airframe/Body",
+     "assets": [
+      "/opt/assets/arb/airframes/arb_hex_800.usda",
+      "/opt/assets/isaac/Isaac/Robots/RobotStudio/so101_new_calib/so101_new_calib.usd",
+      "configuration/so101_new_calib_physics.usd",
+      "configuration/so101_new_calib_robot.usd",
+      "configuration/so101_new_calib_sensor.usd"
+     ],
+     "cameras": [
+      "/World/Fleet/UAV_3/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_3/Airframe/Body/Camera",
+      "/World/Fleet/UAV_3/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_3/Airframe/Body/CameraDown"
+     ],
+     "tagged_cameras": [
+      "/World/Fleet/UAV_3/Airframe/Body/Thermal",
+      "/World/Fleet/UAV_3/Airframe/Body/Camera",
+      "/World/Fleet/UAV_3/Airframe/Body/ThermalDown",
+      "/World/Fleet/UAV_3/Airframe/Body/CameraDown"
+     ],
+     "declared": {
+      "airframe_model": "arb_hex_800",
+      "arm_model": "so101",
+      "base_model": null
+     }
+    },
+    "UGV": {
+     "articulation_root": "/World/Fleet/UGV/Base/base_link",
+     "assets": [
+      "./Props/instanceable_meshes.usd",
+      "/opt/assets/isaac/Isaac/Robots/Clearpath/Jackal/jackal.usd",
+      "/opt/assets/isaac/Isaac/Robots/Kinova/Gen3/gen3n7_instanceable.usd"
+     ],
+     "cameras": [
+      "/World/Fleet/UGV/Base/base_link/Camera"
+     ],
+     "tagged_cameras": [
+      "/World/Fleet/UGV/Base/base_link/Camera"
+     ],
+     "declared": {
+      "airframe_model": null,
+      "arm_model": "kinova_gen3",
+      "base_model": "jackal"
+     }
+    }
+   },
+   "ropes": {
+    "UAV_1": {
+     "links": 12,
+     "chain_joints": 11,
+     "hook_joints": 1,
+     "ring_joints": 1
+    },
+    "UAV_2": {
+     "links": 12,
+     "chain_joints": 11,
+     "hook_joints": 1,
+     "ring_joints": 1
+    },
+    "UAV_3": {
+     "links": 12,
+     "chain_joints": 11,
+     "hook_joints": 1,
+     "ring_joints": 1
+    }
+   },
+   "graph_nodes": 157
+  }
+ },
+ "groups": {
+  "layout": {
+   "Table_A": {
+    "center": [
+     -1.3,
+     0.7
+    ],
+    "extent": [
+     1.2,
+     0.6
+    ],
+    "top": 0.75,
+    "bottom": 0.0
+   },
+   "Table_B": {
+    "center": [
+     1.45,
+     0.55
+    ],
+    "extent": [
+     0.957,
+     0.8374
+    ],
+    "top": 0.45,
+    "bottom": 0.0
+   },
+   "crate": {
+    "center": [
+     0.1,
+     1.5,
+     0.16
+    ],
+    "extent": [
+     0.6,
+     0.424,
+     0.32
+    ],
+    "top": 0.32,
+    "bottom": 0.0
+   },
+   "pads": {
+    "Pad_1": {
+     "center": [
+      0.0,
+      -1.5
+     ],
+     "extent": [
+      0.75,
+      0.75
+     ],
+     "top": 0.0011,
+     "bottom": 0.0001
+    },
+    "Pad_2": {
+     "center": [
+      -0.95,
+      -3.15
+     ],
+     "extent": [
+      0.75,
+      0.75
+     ],
+     "top": 0.0011,
+     "bottom": 0.0001
+    },
+    "Pad_3": {
+     "center": [
+      0.95,
+      -3.15
+     ],
+     "extent": [
+      0.75,
+      0.75
+     ],
+     "top": 0.0011,
+     "bottom": 0.0001
+    },
+    "UGV_Bay": {
+     "center": [
+      -2.8,
+      2.2
+     ],
+     "extent": [
+      1.25,
+      0.95
+     ],
+     "top": 0.0011,
+     "bottom": 0.0001
+    },
+    "Valve_Square": {
+     "center": [
+      -1.2,
+      2.45
+     ],
+     "extent": [
+      0.85,
+      0.85
+     ],
+     "top": 0.0011,
+     "bottom": 0.0001
+    }
+   },
+   "valve_handle": {
+    "center": [
+     -1.2,
+     3.2,
+     1.065
+    ],
+    "extent": [
+     0.06,
+     0.03,
+     0.29
+    ],
+    "top": 1.21,
+    "bottom": 0.92
+   },
+   "plume": {
+    "center": [
+     2.4,
+     2.85,
+     2.15
+    ],
+    "extent": [
+     1.2,
+     1.3,
+     2.1
+    ],
+    "top": 3.2,
+    "bottom": 1.1
+   },
+   "gauge_dial": {
+    "center": [
+     -0.6,
+     3.22,
+     1.2
+    ],
+    "extent": [
+     0.1,
+     0.002,
+     0.1
+    ],
+    "top": 1.25,
+    "bottom": 1.15,
+    "diameter": 0.1
+   },
+   "fire_pan": {
+    "center": [
+     2.6,
+     1.9,
+     0.04
+    ],
+    "extent": [
+     0.6,
+     0.6,
+     0.08
+    ],
+    "top": 0.08,
+    "bottom": 0.0
+   },
+   "tank": {
+    "center": [
+     -1.9,
+     -3.1,
+     0.35
+    ],
+    "extent": [
+     0.8,
+     0.6,
+     0.7
+    ],
+    "top": 0.7,
+    "bottom": 0.0
+   },
+   "bucket": {
+    "center": [
+     -0.0,
+     -2.5825,
+     0.1265
+    ],
+    "extent": [
+     0.2725,
+     0.275,
+     0.253
+    ],
+    "top": 0.253,
+    "bottom": 0.0
+   },
+   "robots": {
+    "UAV_1": {
+     "box": {
+      "center": [
+       0.0,
+       -1.5,
+       0.2905
+      ],
+      "extent": [
+       1.18,
+       1.0728,
+       0.584
+      ],
+      "top": 0.5825,
+      "bottom": -0.0015
+     },
+     "art_root": "/World/Fleet/UAV_1/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        0.0,
+        -1.36,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        0.0,
+        -1.36,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        0.06,
+        -1.5,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        -0.06,
+        -1.5,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null
+    },
+    "UAV_2": {
+     "box": {
+      "center": [
+       -0.95,
+       -3.15,
+       0.2905
+      ],
+      "extent": [
+       1.18,
+       1.0728,
+       0.584
+      ],
+      "top": 0.5825,
+      "bottom": -0.0015
+     },
+     "art_root": "/World/Fleet/UAV_2/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        -0.95,
+        -3.01,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        -0.95,
+        -3.01,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        -0.89,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        -1.01,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null
+    },
+    "UAV_3": {
+     "box": {
+      "center": [
+       0.95,
+       -3.15,
+       0.2905
+      ],
+      "extent": [
+       1.18,
+       1.0728,
+       0.584
+      ],
+      "top": 0.5825,
+      "bottom": -0.0015
+     },
+     "art_root": "/World/Fleet/UAV_3/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        0.95,
+        -3.01,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        0.95,
+        -3.01,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        1.01,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        0.89,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null
+    },
+    "UGV": {
+     "box": {
+      "center": [
+       -2.8,
+       2.2,
+       0.8196
+      ],
+      "extent": [
+       0.43,
+       0.5106,
+       1.6352
+      ],
+      "top": 1.6372,
+      "bottom": 0.002
+     },
+     "art_root": "/World/Fleet/UGV/Base/base_link",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UGV/Base/base_link/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        -2.94,
+        2.04,
+        0.9169
+       ],
+       "look": [
+        0.8695,
+        0.4623,
+        0.1736
+       ],
+       "up": [
+        -0.1533,
+        -0.0815,
+        0.9848
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5
+      }
+     ],
+     "airframe": null,
+     "arm": "kinova_gen3",
+     "base": "jackal"
+    }
+   },
+   "flags": {
+    "steam": true,
+    "fire": true,
+    "disabled": {
+     "UAV_1": false,
+     "UAV_2": false,
+     "UAV_3": false,
+     "UGV": false
+    }
+   },
+   "wall_s": 252.6
+  },
+  "settle": {
+   "moved": {
+    "/World/Facility/Items/cracker_box": 0.0057,
+    "/World/Facility/Items/mustard_bottle": 0.0,
+    "/World/Facility/Items/sugar_box": 0.0031,
+    "/World/Facility/Items/soup_can": 0.0001,
+    "/World/Facility/Items/power_drill": 0.0,
+    "/World/Facility/Items/mug": 0.0,
+    "/World/Facility/Bucket/Body": 0.0,
+    "/World/Facility/SteamLine/ValveBody": 0.0003,
+    "/World/Facility/SteamLine/Handle": 0.0012,
+    "/World/Fleet/UAV_1/Airframe/Body": 0.0084,
+    "/World/Fleet/UAV_1/Arm/base": 0.0067,
+    "/World/Fleet/UAV_1/Arm/shoulder": 0.0064,
+    "/World/Fleet/UAV_1/Arm/upper_arm": 0.0053,
+    "/World/Fleet/UAV_1/Arm/lower_arm": 0.0048,
+    "/World/Fleet/UAV_1/Arm/wrist": 0.0037,
+    "/World/Fleet/UAV_1/Arm/gripper": 0.0047,
+    "/World/Fleet/UAV_1/Arm/moving_jaw_so101_v1": 0.0056,
+    "/World/Fleet/UAV_2/Airframe/Body": 0.0,
+    "/World/Fleet/UAV_2/Arm/base": 0.0,
+    "/World/Fleet/UAV_2/Arm/shoulder": 0.0,
+    "/World/Fleet/UAV_2/Arm/upper_arm": 0.0,
+    "/World/Fleet/UAV_2/Arm/lower_arm": 0.0001,
+    "/World/Fleet/UAV_2/Arm/wrist": 0.0001,
+    "/World/Fleet/UAV_2/Arm/gripper": 0.0001,
+    "/World/Fleet/UAV_2/Arm/moving_jaw_so101_v1": 0.0001,
+    "/World/Fleet/UAV_3/Airframe/Body": 0.0,
+    "/World/Fleet/UAV_3/Arm/base": 0.0,
+    "/World/Fleet/UAV_3/Arm/shoulder": 0.0,
+    "/World/Fleet/UAV_3/Arm/upper_arm": 0.0,
+    "/World/Fleet/UAV_3/Arm/lower_arm": 0.0001,
+    "/World/Fleet/UAV_3/Arm/wrist": 0.0001,
+    "/World/Fleet/UAV_3/Arm/gripper": 0.0001,
+    "/World/Fleet/UAV_3/Arm/moving_jaw_so101_v1": 0.0001,
+    "/World/Fleet/UGV/Base/base_link": 0.0,
+    "/World/Fleet/UGV/Base/front_left_wheel_link": 0.0,
+    "/World/Fleet/UGV/Base/front_right_wheel_link": 0.0,
+    "/World/Fleet/UGV/Base/rear_left_wheel_link": 0.0,
+    "/World/Fleet/UGV/Base/rear_right_wheel_link": 0.0,
+    "/World/Fleet/UGV/Arm/base_link": 0.0,
+    "/World/Fleet/UGV/Arm/shoulder_link": 0.0,
+    "/World/Fleet/UGV/Arm/half_arm_1_link": 0.0,
+    "/World/Fleet/UGV/Arm/half_arm_2_link": 0.0001,
+    "/World/Fleet/UGV/Arm/forearm_link": 0.0002,
+    "/World/Fleet/UGV/Arm/spherical_wrist_1_link": 0.0002,
+    "/World/Fleet/UGV/Arm/spherical_wrist_2_link": 0.0003,
+    "/World/Fleet/UGV/Arm/bracelet_link": 0.0002,
+    "/World/Fleet/UGV/Arm/end_effector_link": 0.0002
+   },
+   "rope_moved": {
+    "/World/Fleet/UAV_1/Rope/Link_0": 0.021,
+    "/World/Fleet/UAV_1/Rope/Link_1": 0.0282,
+    "/World/Fleet/UAV_1/Rope/Link_2": 0.0219,
+    "/World/Fleet/UAV_1/Rope/Link_3": 0.0033,
+    "/World/Fleet/UAV_1/Rope/Link_4": 0.0089,
+    "/World/Fleet/UAV_1/Rope/Link_5": 0.0034,
+    "/World/Fleet/UAV_1/Rope/Link_6": 0.0838,
+    "/World/Fleet/UAV_1/Rope/Link_7": 0.1668,
+    "/World/Fleet/UAV_1/Rope/Link_8": 0.174,
+    "/World/Fleet/UAV_1/Rope/Link_9": 0.1767,
+    "/World/Fleet/UAV_1/Rope/Link_10": 0.1428,
+    "/World/Fleet/UAV_1/Rope/Link_11": 0.053,
+    "/World/Fleet/UAV_2/Rope/Link_0": 0.0124,
+    "/World/Fleet/UAV_2/Rope/Link_1": 0.0361,
+    "/World/Fleet/UAV_2/Rope/Link_2": 0.0543,
+    "/World/Fleet/UAV_2/Rope/Link_3": 0.0616,
+    "/World/Fleet/UAV_2/Rope/Link_4": 0.0673,
+    "/World/Fleet/UAV_2/Rope/Link_5": 0.0943,
+    "/World/Fleet/UAV_2/Rope/Link_6": 0.148,
+    "/World/Fleet/UAV_2/Rope/Link_7": 0.1848,
+    "/World/Fleet/UAV_2/Rope/Link_8": 0.1856,
+    "/World/Fleet/UAV_2/Rope/Link_9": 0.1838,
+    "/World/Fleet/UAV_2/Rope/Link_10": 0.1457,
+    "/World/Fleet/UAV_2/Rope/Link_11": 0.0526,
+    "/World/Fleet/UAV_3/Rope/Link_0": 0.0097,
+    "/World/Fleet/UAV_3/Rope/Link_1": 0.029,
+    "/World/Fleet/UAV_3/Rope/Link_2": 0.0466,
+    "/World/Fleet/UAV_3/Rope/Link_3": 0.0541,
+    "/World/Fleet/UAV_3/Rope/Link_4": 0.0573,
+    "/World/Fleet/UAV_3/Rope/Link_5": 0.0867,
+    "/World/Fleet/UAV_3/Rope/Link_6": 0.152,
+    "/World/Fleet/UAV_3/Rope/Link_7": 0.1842,
+    "/World/Fleet/UAV_3/Rope/Link_8": 0.1798,
+    "/World/Fleet/UAV_3/Rope/Link_9": 0.1792,
+    "/World/Fleet/UAV_3/Rope/Link_10": 0.1355,
+    "/World/Fleet/UAV_3/Rope/Link_11": 0.0447
+   },
+   "items": {
+    "cracker_box": {
+     "center": [
+      -1.6194,
+      0.6143,
+      0.8563
+     ],
+     "size": [
+      0.0718,
+      0.164,
+      0.2134
+     ],
+     "mass": 0.41100001335144043,
+     "moved": 0.0057
+    },
+    "mustard_bottle": {
+     "center": [
+      -1.18,
+      0.8,
+      0.8474
+     ],
+     "size": [
+      0.0582,
+      0.096,
+      0.1913
+     ],
+     "mass": 0.6029999852180481,
+     "moved": 0.0
+    },
+    "sugar_box": {
+     "center": [
+      -0.8985,
+      0.5768,
+      0.8374
+     ],
+     "size": [
+      0.0451,
+      0.0927,
+      0.1763
+     ],
+     "mass": 0.5139999985694885,
+     "moved": 0.0031
+    },
+    "soup_can": {
+     "center": [
+      1.2998,
+      0.5,
+      0.5008
+     ],
+     "size": [
+      0.0677,
+      0.0677,
+      0.1019
+     ],
+     "mass": 0.3490000069141388,
+     "moved": 0.0001
+    },
+    "power_drill": {
+     "center": [
+      1.62,
+      0.66,
+      0.5461
+     ],
+     "size": [
+      0.0572,
+      0.1844,
+      0.1868
+     ],
+     "mass": 0.8949999213218689,
+     "moved": 0.0
+    },
+    "mug": {
+     "center": [
+      1.42,
+      0.34,
+      0.4927
+     ],
+     "size": [
+      0.0813,
+      0.0931,
+      0.117
+     ],
+     "mass": 0.11800000071525574,
+     "moved": 0.0
+    }
+   },
+   "bucket_mass": 11.199999809265137,
+   "robots": {
+    "UAV_1": {
+     "root": "/World/Fleet/UAV_1/Airframe/Body",
+     "mass": 5.317005634307861,
+     "links": 8,
+     "dofs": 6,
+     "dof_types": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dof_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll",
+      "gripper"
+     ],
+     "link_names": [
+      "Body",
+      "base",
+      "shoulder",
+      "upper_arm",
+      "lower_arm",
+      "wrist",
+      "gripper",
+      "moving_jaw_so101_v1"
+     ],
+     "fixed_base": false,
+     "position": [
+      -0.0078,
+      -1.502,
+      0.4839
+     ],
+     "quat": [
+      0.9999,
+      -0.0081,
+      0.0001,
+      -0.015
+     ],
+     "n_limited": 6,
+     "link_masses": [
+      4.684999942779541,
+      0.1469999998807907,
+      0.10000599920749664,
+      0.10299999266862869,
+      0.10400000214576721,
+      0.07900000363588333,
+      0.08699999749660492,
+      0.011999999172985554
+     ]
+    },
+    "UAV_2": {
+     "root": "/World/Fleet/UAV_2/Airframe/Body",
+     "mass": 5.317005634307861,
+     "links": 8,
+     "dofs": 6,
+     "dof_types": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dof_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll",
+      "gripper"
+     ],
+     "link_names": [
+      "Body",
+      "base",
+      "shoulder",
+      "upper_arm",
+      "lower_arm",
+      "wrist",
+      "gripper",
+      "moving_jaw_so101_v1"
+     ],
+     "fixed_base": false,
+     "position": [
+      -0.95,
+      -3.15,
+      0.479
+     ],
+     "quat": [
+      1.0,
+      -0.0,
+      0.0,
+      -0.0
+     ],
+     "n_limited": 6,
+     "link_masses": [
+      4.684999942779541,
+      0.1469999998807907,
+      0.10000599920749664,
+      0.10299999266862869,
+      0.10400000214576721,
+      0.07900000363588333,
+      0.08699999749660492,
+      0.011999999172985554
+     ]
+    },
+    "UAV_3": {
+     "root": "/World/Fleet/UAV_3/Airframe/Body",
+     "mass": 5.317005634307861,
+     "links": 8,
+     "dofs": 6,
+     "dof_types": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dof_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll",
+      "gripper"
+     ],
+     "link_names": [
+      "Body",
+      "base",
+      "shoulder",
+      "upper_arm",
+      "lower_arm",
+      "wrist",
+      "gripper",
+      "moving_jaw_so101_v1"
+     ],
+     "fixed_base": false,
+     "position": [
+      0.95,
+      -3.15,
+      0.479
+     ],
+     "quat": [
+      1.0,
+      -0.0,
+      0.0,
+      -0.0
+     ],
+     "n_limited": 6,
+     "link_masses": [
+      4.684999942779541,
+      0.1469999998807907,
+      0.10000599920749664,
+      0.10299999266862869,
+      0.10400000214576721,
+      0.07900000363588333,
+      0.08699999749660492,
+      0.011999999172985554
+     ]
+    },
+    "UGV": {
+     "root": "/World/Fleet/UGV/Base/base_link",
+     "mass": 29.647808074951172,
+     "links": 14,
+     "dofs": 11,
+     "dof_types": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dof_names": [
+      "front_left_wheel_joint",
+      "front_right_wheel_joint",
+      "rear_left_wheel_joint",
+      "rear_right_wheel_joint",
+      "joint_1",
+      "joint_2",
+      "joint_3",
+      "joint_4",
+      "joint_5",
+      "joint_6",
+      "joint_7"
+     ],
+     "link_names": [
+      "base_link",
+      "front_left_wheel_link",
+      "front_right_wheel_link",
+      "rear_left_wheel_link",
+      "rear_right_wheel_link",
+      "base_link_0",
+      "shoulder_link",
+      "half_arm_1_link",
+      "half_arm_2_link",
+      "forearm_link",
+      "spherical_wrist_1_link",
+      "spherical_wrist_2_link",
+      "bracelet_link",
+      "end_effector_link"
+     ],
+     "fixed_base": false,
+     "position": [
+      -2.8,
+      2.2,
+      0.0635
+     ],
+     "quat": [
+      0.7071,
+      -0.0,
+      0.0,
+      0.7071
+     ],
+     "n_limited": 3,
+     "link_masses": [
+      19.687904357910156,
+      0.47699999809265137,
+      0.47699999809265137,
+      0.47699999809265137,
+      0.47699999809265137,
+      1.6970000267028809,
+      1.3773000240325928,
+      1.163599967956543,
+      1.163599967956543,
+      0.9302000403404236,
+      0.6780999898910522,
+      0.6780999898910522,
+      0.36399999260902405,
+      1.0000000116860974e-07
+     ]
+    }
+   },
+   "flags": {
+    "steam": true,
+    "fire": true,
+    "disabled": {
+     "UAV_1": false,
+     "UAV_2": false,
+     "UAV_3": false,
+     "UGV": false
+    }
+   },
+   "wall_s": 27.5
+  },
+  "steam": {
+   "initial": {
+    "steam": true,
+    "fire": true,
+    "disabled": {
+     "UAV_1": false,
+     "UAV_2": false,
+     "UAV_3": false
+    },
+    "ugv_disabled": false
+   },
+   "p_in": [
+    2.648,
+    3.0512,
+    2.0499
+   ],
+   "p_out": [
+    2.648,
+    4.0,
+    2.0499
+   ],
+   "uav1_disabled_1s": true,
+   "uav1_disabled_1p5s": true,
+   "uav2_disabled_outside": false,
+   "uav3_disabled_untouched": false,
+   "uav1_pos": [
+    2.648,
+    3.0512,
+    2.0492
+   ],
+   "ugv_disabled_2s_near_fire": true,
+   "ugv_disabled_near_fire": true,
+   "handle_turned_deg": 91.99,
+   "handle_direction": 1.0,
+   "t_closed": 0.28,
+   "t_steam_off": 3.27,
+   "steam_off_delay_s": 2.98,
+   "steam_after_close": false,
+   "uav3_disabled_after_close": false,
+   "uav1_still_disabled": true,
+   "handle_reopened_deg": 1.55,
+   "steam_back_on": true,
+   "uav3_disabled_after_reopen": true,
+   "wall_s": 266.6
+  },
+  "hoist": {
+   "ropes": {
+    "UAV_1": {
+     "links": 12,
+     "joints": 13,
+     "hook_body": "/World/Fleet/UAV_1/Airframe/Body",
+     "hook_local": [
+      0.0,
+      -0.104,
+      -0.08
+     ],
+     "ring_local": [
+      0.0,
+      0.14,
+      0.25
+     ]
+    },
+    "UAV_2": {
+     "links": 12,
+     "joints": 13,
+     "hook_body": "/World/Fleet/UAV_2/Airframe/Body",
+     "hook_local": [
+      0.0,
+      -0.104,
+      -0.08
+     ],
+     "ring_local": [
+      -0.1212,
+      -0.07,
+      0.25
+     ]
+    },
+    "UAV_3": {
+     "links": 12,
+     "joints": 13,
+     "hook_body": "/World/Fleet/UAV_3/Airframe/Body",
+     "hook_local": [
+      0.0,
+      -0.104,
+      -0.08
+     ],
+     "ring_local": [
+      0.1212,
+      -0.07,
+      0.25
+     ]
+    }
+   },
+   "ring_min_gap_deg": 120.0,
+   "rope_mass": {
+    "UAV_1": 0.44999998807907104,
+    "UAV_2": 0.44999998807907104,
+    "UAV_3": 0.44999998807907104
+   },
+   "initial": {
+    "bucket": {
+     "pos": [
+      -0.0,
+      -2.6,
+      0.0
+     ],
+     "tilt_deg": 0.0,
+     "bottom_z": -0.0,
+     "speed": 0.0
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 0.8669,
+      "dev": 0.4029,
+      "zmin": 0.005
+     },
+     "UAV_2": {
+      "chord": 1.0247,
+      "dev": 0.3585,
+      "zmin": 0.005
+     },
+     "UAV_3": {
+      "chord": 1.0247,
+      "dev": 0.3612,
+      "zmin": 0.005
+     }
+    },
+    "fire": true
+   },
+   "slack": {
+    "bucket": {
+     "pos": [
+      -0.0,
+      -2.6,
+      0.0
+     ],
+     "tilt_deg": 0.0,
+     "bottom_z": 0.0,
+     "speed": 0.0
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 1.2415,
+      "dev": 0.3531,
+      "zmin": 0.1452
+     },
+     "UAV_2": {
+      "chord": 1.2415,
+      "dev": 0.3339,
+      "zmin": 0.1326
+     },
+     "UAV_3": {
+      "chord": 1.2415,
+      "dev": 0.336,
+      "zmin": 0.1364
+     }
+    },
+    "bucket_moved": 0.0
+   },
+   "lifted": {
+    "bucket": {
+     "pos": [
+      0.001,
+      -2.5964,
+      0.8097
+     ],
+     "tilt_deg": 0.17,
+     "bottom_z": 0.8092,
+     "speed": 0.039
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 1.503,
+      "dev": 0.0118,
+      "zmin": 1.1189
+     },
+     "UAV_2": {
+      "chord": 1.5034,
+      "dev": 0.0076,
+      "zmin": 1.1206
+     },
+     "UAV_3": {
+      "chord": 1.5033,
+      "dev": 0.011,
+      "zmin": 1.1206
+     }
+    },
+    "offset": [
+     0.0,
+     0.0038
+    ],
+    "fire": true
+   },
+   "pick": "UAV_2",
+   "hang": {
+    "bucket": {
+     "pos": [
+      -0.1521,
+      -2.6771,
+      0.8441
+     ],
+     "tilt_deg": 4.22,
+     "bottom_z": 0.8289,
+     "speed": 0.053
+    },
+    "offset": [
+     -0.0583,
+     -0.0449
+    ],
+    "shift_m": 0.076,
+    "ropes": {
+     "UAV_1": {
+      "chord": 1.5019,
+      "dev": 0.0109,
+      "zmin": 1.144
+     },
+     "UAV_2": {
+      "chord": 1.5022,
+      "dev": 0.0144,
+      "zmin": 1.1626
+     },
+     "UAV_3": {
+      "chord": 1.5022,
+      "dev": 0.0238,
+      "zmin": 1.1504
+     }
+    }
+   },
+   "swing": {
+    "period_s": 1.592,
+    "periods": [
+     1.642,
+     1.517,
+     1.558,
+     1.575,
+     1.608,
+     1.692
+    ],
+    "peaks": [
+     0.063,
+     0.083,
+     0.098,
+     0.085,
+     0.106,
+     0.099
+    ],
+    "decay": 1.095,
+    "rms_first": 0.094,
+    "rms_last": 0.1029,
+    "max_tilt": 13.59,
+    "bucket": {
+     "pos": [
+      0.096,
+      -2.9324,
+      0.8568
+     ],
+     "tilt_deg": 2.82,
+     "bottom_z": 0.8473,
+     "speed": 0.666
+    }
+   },
+   "tip": {
+    "bucket": {
+     "pos": [
+      0.25,
+      -2.8726,
+      0.7932
+     ],
+     "tilt_deg": 25.9,
+     "bottom_z": 0.7153,
+     "speed": 0.207
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 1.5043,
+      "dev": 0.017,
+      "zmin": 1.1102
+     },
+     "UAV_2": {
+      "chord": 0.927,
+      "dev": 0.3797,
+      "zmin": 0.7063
+     },
+     "UAV_3": {
+      "chord": 1.5023,
+      "dev": 0.0183,
+      "zmin": 1.1095
+     }
+    }
+   },
+   "over_pan": {
+    "bucket": {
+     "pos": [
+      2.6012,
+      1.8763,
+      0.8104
+     ],
+     "tilt_deg": 4.09,
+     "bottom_z": 0.8015,
+     "speed": 0.212
+    },
+    "fire": true,
+    "pouring": false,
+    "tipped_in_zone": true,
+    "carry_tilt_max": 15.5
+   },
+   "pour": {
+    "bucket": {
+     "pos": [
+      2.6758,
+      1.922,
+      0.8706
+     ],
+     "tilt_deg": 20.12,
+     "bottom_z": 0.8121,
+     "speed": 0.228
+    },
+    "fire": false,
+    "pouring": false,
+    "t_tilt": 80.967,
+    "t_fire_out": 81.933,
+    "fire_out_delay_s": 0.967
+   },
+   "ugv_disabled_after_fire_out": false,
+   "fire_end": false,
+   "abrupt": {
+    "max_speed": 2.46,
+    "max_tilt": 46.55,
+    "bucket": {
+     "pos": [
+      1.5651,
+      2.7979,
+      0.9973
+     ],
+     "tilt_deg": 15.84,
+     "bottom_z": 0.9512,
+     "speed": 1.341
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 1.3209,
+      "dev": 0.2323,
+      "zmin": 1.256
+     },
+     "UAV_2": {
+      "chord": 1.4847,
+      "dev": 0.0492,
+      "zmin": 1.3068
+     },
+     "UAV_3": {
+      "chord": 1.4782,
+      "dev": 0.0978,
+      "zmin": 1.3086
+     }
+    }
+   },
+   "set_down": {
+    "bucket": {
+     "pos": [
+      0.1057,
+      -2.3291,
+      -0.0
+     ],
+     "tilt_deg": 0.0,
+     "bottom_z": -0.0,
+     "speed": 0.0
+    },
+    "ropes": {
+     "UAV_1": {
+      "chord": 0.9799,
+      "dev": 0.1837,
+      "zmin": 0.0925
+     },
+     "UAV_2": {
+      "chord": 1.148,
+      "dev": 0.2981,
+      "zmin": 0.144
+     },
+     "UAV_3": {
+      "chord": 1.0884,
+      "dev": 0.3129,
+      "zmin": 0.1261
+     }
+    }
+   },
+   "stats": {
+    "max_speed": 2.728,
+    "max_chord": 1.5224,
+    "stretch": 0.0224,
+    "nan": false
+   },
+   "wall_s": 302.8
+  },
+  "fleet": {
+   "reach": {
+    "min_dist_to_grip": 0.0265,
+    "grip": [
+     -1.2,
+     3.2,
+     1.148
+    ],
+    "hub": [
+     -1.2,
+     3.2,
+     0.9465
+    ],
+    "samples": 24000
+   },
+   "robots": {
+    "UAV_1": {
+     "art_root": "/World/Fleet/UAV_1/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        0.0,
+        -1.36,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67,
+       "pos_in_root": [
+        -0.0001,
+        0.1387,
+        -0.0298
+       ],
+       "look_in_root": [
+        -0.0028,
+        0.6577,
+        -0.7533
+       ],
+       "pan_from_approach": {
+        "dist": 3.251,
+        "ang_h": -0.01,
+        "ang_v": 1.69,
+        "in_view": true,
+        "ang_size_deg": 10.546
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        0.0,
+        -1.36,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5,
+       "pos_in_root": [
+        -0.0001,
+        0.1377,
+        0.0202
+       ],
+       "look_in_root": [
+        -0.0039,
+        0.9144,
+        -0.4048
+       ],
+       "pan_from_approach": {
+        "dist": 3.288,
+        "ang_h": -0.02,
+        "ang_v": -23.89,
+        "in_view": false,
+        "ang_size_deg": 10.426
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        0.06,
+        -1.5,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91,
+       "pos_in_root": [
+        0.0605,
+        -0.0003,
+        -0.0675
+       ],
+       "look_in_root": [
+        -0.0,
+        0.0196,
+        -0.9998
+       ],
+       "pan_from_approach": {
+        "dist": 3.321,
+        "ang_h": -1.46,
+        "ang_v": 43.9,
+        "in_view": false,
+        "ang_size_deg": 10.325
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        -0.06,
+        -1.5,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7,
+       "pos_in_root": [
+        -0.0595,
+        -0.0008,
+        -0.0675
+       ],
+       "look_in_root": [
+        -0.0,
+        0.0196,
+        -0.9998
+       ],
+       "pan_from_approach": {
+        "dist": 3.321,
+        "ang_h": 1.42,
+        "ang_v": 43.89,
+        "in_view": false,
+        "ang_size_deg": 10.325
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_1/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null,
+     "mass": 5.317005634307861,
+     "root_pos": [
+      -0.0005,
+      -1.4981,
+      0.485
+     ],
+     "root_quat": [
+      0.9999,
+      -0.0098,
+      0.0,
+      -0.0022
+     ],
+     "dofs": 6
+    },
+    "UAV_2": {
+     "art_root": "/World/Fleet/UAV_2/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        -0.95,
+        -3.01,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67,
+       "pos_in_root": [
+        -0.0,
+        0.14,
+        -0.0265
+       ],
+       "look_in_root": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "pan_from_approach": {
+        "dist": 3.254,
+        "ang_h": 0.0,
+        "ang_v": 1.59,
+        "in_view": true,
+        "ang_size_deg": 10.535
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        -0.95,
+        -3.01,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5,
+       "pos_in_root": [
+        -0.0,
+        0.14,
+        0.0235
+       ],
+       "look_in_root": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "pan_from_approach": {
+        "dist": 3.291,
+        "ang_h": 0.0,
+        "ang_v": -23.99,
+        "in_view": false,
+        "ang_size_deg": 10.416
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        -0.89,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91,
+       "pos_in_root": [
+        0.06,
+        0.0,
+        -0.0615
+       ],
+       "look_in_root": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "pan_from_approach": {
+        "dist": 3.324,
+        "ang_h": -1.43,
+        "ang_v": 43.8,
+        "in_view": false,
+        "ang_size_deg": 10.315
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        -1.01,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7,
+       "pos_in_root": [
+        -0.06,
+        0.0,
+        -0.0615
+       ],
+       "look_in_root": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "pan_from_approach": {
+        "dist": 3.324,
+        "ang_h": 1.43,
+        "ang_v": 43.8,
+        "in_view": false,
+        "ang_size_deg": 10.315
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_2/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null,
+     "mass": 5.317005634307861,
+     "root_pos": [
+      -0.95,
+      -3.15,
+      0.479
+     ],
+     "root_quat": [
+      1.0,
+      -0.0,
+      0.0,
+      -0.0
+     ],
+     "dofs": 6
+    },
+    "UAV_3": {
+     "art_root": "/World/Fleet/UAV_3/Airframe/Body",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Thermal",
+       "model": "THERM-C",
+       "camera": true,
+       "pos": [
+        0.95,
+        -3.01,
+        0.4525
+       ],
+       "look": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "up": [
+        0.0,
+        0.766,
+        0.6428
+       ],
+       "focal": 9.0,
+       "hap": 7.679999828338623,
+       "vap": 6.139999866485596,
+       "hfov_deg": 46.21,
+       "vfov_deg": 37.67,
+       "pos_in_root": [
+        0.0,
+        0.14,
+        -0.0265
+       ],
+       "look_in_root": [
+        0.0,
+        0.6428,
+        -0.766
+       ],
+       "pan_from_approach": {
+        "dist": 3.254,
+        "ang_h": 0.0,
+        "ang_v": 1.59,
+        "in_view": true,
+        "ang_size_deg": 10.535
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        0.95,
+        -3.01,
+        0.5025
+       ],
+       "look": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "up": [
+        0.0,
+        0.4226,
+        0.9063
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5,
+       "pos_in_root": [
+        0.0,
+        0.14,
+        0.0235
+       ],
+       "look_in_root": [
+        0.0,
+        0.9063,
+        -0.4226
+       ],
+       "pan_from_approach": {
+        "dist": 3.291,
+        "ang_h": 0.0,
+        "ang_v": -23.99,
+        "in_view": false,
+        "ang_size_deg": 10.416
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/ThermalDown",
+       "model": "THERM-A",
+       "camera": true,
+       "pos": [
+        1.01,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 1.7000000476837158,
+       "hap": 1.9199999570846558,
+       "vap": 1.440000057220459,
+       "hfov_deg": 58.91,
+       "vfov_deg": 45.91,
+       "pos_in_root": [
+        0.06,
+        0.0,
+        -0.0615
+       ],
+       "look_in_root": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "pan_from_approach": {
+        "dist": 3.324,
+        "ang_h": -1.43,
+        "ang_v": 43.8,
+        "in_view": false,
+        "ang_size_deg": 10.315
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/CameraDown",
+       "model": "CAM-RGB-W",
+       "camera": true,
+       "pos": [
+        0.89,
+        -3.15,
+        0.4175
+       ],
+       "look": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "up": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "focal": 4.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 109.21,
+       "vfov_deg": 82.7,
+       "pos_in_root": [
+        -0.06,
+        0.0,
+        -0.0615
+       ],
+       "look_in_root": [
+        0.0,
+        0.0,
+        -1.0
+       ],
+       "pan_from_approach": {
+        "dist": 3.324,
+        "ang_h": 1.43,
+        "ang_v": 43.8,
+        "in_view": false,
+        "ang_size_deg": 10.315
+       }
+      },
+      {
+       "path": "/World/Fleet/UAV_3/Airframe/Body/Lidar",
+       "model": "LIDAR-3D",
+       "camera": false
+      }
+     ],
+     "airframe": "arb_hex_800",
+     "arm": "so101",
+     "base": null,
+     "mass": 5.317005634307861,
+     "root_pos": [
+      0.95,
+      -3.15,
+      0.479
+     ],
+     "root_quat": [
+      1.0,
+      -0.0,
+      0.0,
+      -0.0
+     ],
+     "dofs": 6
+    },
+    "UGV": {
+     "art_root": "/World/Fleet/UGV/Base/base_link",
+     "sensors": [
+      {
+       "path": "/World/Fleet/UGV/Base/base_link/Camera",
+       "model": "CAM-RGB-M",
+       "camera": true,
+       "pos": [
+        -2.94,
+        2.04,
+        0.9169
+       ],
+       "look": [
+        0.8695,
+        0.4623,
+        0.1736
+       ],
+       "up": [
+        -0.1533,
+        -0.0815,
+        0.9848
+       ],
+       "focal": 8.0,
+       "hap": 11.260000228881836,
+       "vap": 7.039999961853027,
+       "hfov_deg": 70.27,
+       "vfov_deg": 47.5,
+       "pos_in_root": [
+        -0.16,
+        0.14,
+        0.8534
+       ],
+       "look_in_root": [
+        0.4623,
+        -0.8695,
+        0.1736
+       ],
+       "dial_from_bay": {
+        "dist": 2.636,
+        "ang_h": 1.23,
+        "ang_v": -3.83,
+        "in_view": true,
+        "ang_size_deg": 2.173,
+        "in_front": true
+       }
+      }
+     ],
+     "airframe": null,
+     "arm": "kinova_gen3",
+     "base": "jackal",
+     "mass": 29.647808074951172,
+     "root_pos": [
+      -2.8,
+      2.2,
+      0.0635
+     ],
+     "root_quat": [
+      0.7071,
+      0.0,
+      -0.0,
+      0.7071
+     ],
+     "dofs": 11
+    }
+   },
+   "wall_s": 9.2
+  }
+ }
+}

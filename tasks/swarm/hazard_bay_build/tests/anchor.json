@@ -1,0 +1,38 @@
+{
+  "metric": "acceptance_score",
+  "direction": "higher",
+  "value": 0.9564,
+  "full_at": 0.98,
+  "source": "The privileged reference (solution/: solve.sh with build_scene.py, controller.py and vehicle.py, and the oracle token, so the bay mission's observations carry the true state), frozen at hard/pr31 200b2da before the fixed hidden set was selected, measured by full verifies of this grader on that set (tests/hidden/fixed_set.json of bc3c091: missions b20e-01 and b20e-02, the scene probes at seed 0) the separate verifier's way: environment/setup/setup.sh, solve.sh as the agent, then the agent's home left with the submission alone (root-owned, no ~/given, no staged solution) and tests/test.sh as root in the staged tests folder, the verdict through ROBOTICS_GRADER_VERDICT_PATH; each in a fresh task container (arb-eval-prebuild/pr31v2:1) with one RTX 4090 and 8 cores, on apollo, 2026-11-06: two at once, one on each GPU, and a third beside them, the reference behind the leak audit's spy wrapper (recheck). All three scored acceptance_score 0.956417 (combine mission_gate, progress_gate true), every metric of the three verdicts identical: the five scene sections 1.0 each (layout, physics, steam, hoist, fleet; every check 1.0), the mission section 0.9564 (b20e-01 done at 324.5 s, b20e-02 at 365.0 s, 6 of 6 parts in the crate each, the fire out at 100.0 s and 90.2 s with 1.1 L poured and at most 0.005 L spilt; in_time 0.851, swing 0.536 from swings of 0.143 and 0.221 m, no_collisions 0.9 for one touch of the vehicle's wheel on the crate in b20e-01, every other check 1.0); privileged_mode 1, egress guard seccomp, the match lock held (1885 of 2071 probes). Each verify took 29 min: one Isaac Sim start compiling shaders for 7 to 9 min (the canary's or the first probe's), the two missions 7.8 to 8.3 min each (about 23 ms a control step). Round 4 (2026-11-06: the bay mission's wire without ground truth, the fleet's sensors rendered in the real bay; the reference's one change, vehicle.py sha256 2bd5dacd5c845e6e3085167e5a8daf6f436ac7efb8535216fcd499ad7a812e01, reads the held part from the true state; controller.py, build_scene.py and run.sh unchanged): one full verify of the grader of hard/pr31 d12391d the same separate verifier's way (a fresh container of the verifier image, one RTX 4090 and 8 cores, apollo; the reference behind the spy wrapper, recheck) scored acceptance_score 0.956417 (0.9564174805910343, bit for bit), every metric of its verdict equal to the three above but the anchor's own (anchor_value, anchor_full_at, ratio); both missions as before (b20e-01: 19,680 steps, lock 982 / 867; b20e-02: 22,110 steps, lock 1089 / 1018). The verify took 5,291 s: the scene part 684 s (the physics canary 321 s, the render canary 104 s, the scan and five probes), the missions 2,508 s and 2,098 s.",
+  "reference_commit": "hard/pr31 d12391d (round 4: the grader the full verify ran; the fixed hidden set of bc3c091; solution/ frozen at 200b2da but vehicle.py, round 4's one change)",
+  "note": "full_at 0.98: the verifies agree to 4 decimals (to the last digit, as every check does), the rule's case for 0.98. Nothing in a verify draws from OS entropy or the clock any more (the scene probes at seed 0, each mission's noise seed and lock key from the set) and the mission is a lockstep exchange, so the reference repeats exactly, whatever the load: in development one day ran three times, two at once in one container and one on the other GPU, identical in every number, and one selection candidate ran twice, with and without the reference's own log in different slots, identical. The 2 % below the value is left for what other hardware or a later engine could change. Under another combination (tests/review/scoring_options.md) the anchor and full_at are in by_combine.",
+  "by_combine": {
+    "mission_gate": {
+      "value": 0.9564,
+      "full_at": 0.98
+    },
+    "weighted": {
+      "value": 0.9765,
+      "full_at": 0.98
+    },
+    "mission_0.8": {
+      "value": 0.9651,
+      "full_at": 0.98
+    },
+    "mission_gate.progress_gate": {
+      "value": 0.9564,
+      "full_at": 0.98
+    },
+    "weighted.progress_gate": {
+      "value": 0.9765,
+      "full_at": 0.98
+    },
+    "mission_0.8.progress_gate": {
+      "value": 0.9651,
+      "full_at": 0.98
+    }
+  },
+  "by_combine_note": "The anchor and full_at under each combination of grader_config.json (`combine`, with `.progress_gate` when `progress_gate` is true); the grader uses the entry of the combination in use (the top-level pair is that of the default, mission_gate.progress_gate). Each value is the lowest of the same three full verifies under that combination, from the verdicts' acceptance.* metrics, rounded to 4 decimals: mission_gate 0.956417, weighted 0.976465, mission_0.8 0.965134, the same three with the progress gate, which changes none of the reference's numbers (it completes all three jobs in both runs). The verifies agree under every combination, so full_at is 0.98 for each by the same rule.",
+  "history": "Round 2 (2026-11-04 to 2026-11-05), when each verify drew its own days from round 2's narrower ranges (the vehicle within 0.15 m and 8 degrees of its bay, the pan within 0.30 m, the lever 0-30 degrees, 2-4 upright parts a table, one 7 m/s gust) and its own hoist-probe moves: value 0.9537, full_at 0.92 (the lowest of eight full verifies of the reference, the owner's decision of 2026-11-04; by_combine weighted 0.9764 / 0.96, mission_0.8 0.9675 / 0.94); before that decision 0.9584, the lowest of the three sizing verifies. Those verifies ranged from 0.9132 (ale validate's oracle pass on 540c35b) to 0.9803, the spread coming from the days and the hoist probe's draws; with the fixed set there is no such spread left.",
+  "recheck": "Round 4's verify is the recheck and the leak audit (round 4's spy, round 3's extended to the sensors' frames folder): beside the reference controller, as the agent's account, through both missions (502 records). Every internet socket was refused (AF_INET and AF_INET6, TCP and UDP, to the internet and to 127.0.0.1 and ::1, a name lookup, raw ICMP, packet, netlink, vsock; a Unix socket pair worked); every read of the grader's files and of the probe's folders was refused; in the frames folder listing, the manifest, the slots' headers and read-only mappings worked and creating, renaming, truncating, deleting, opening for writing and mapping writable were refused; Kit's shared folders (cache, logs, data) were refused, to list and to write; /dev/shm and /proc/net/unix showed names only; CUDA worked as the agent's account (an RTX 4090); of the other accounts' processes environ, fd and mem were refused and maps refused or empty, the command lines holding nothing of the set. It scored as above. Round 3: The third full verify above is the recheck, and the leak audit: the same reference behind a run.sh that started a spy beside the controller, as the agent's account, for both missions. Every internet socket it tried was refused by the seccomp filter (AF_INET and AF_INET6, TCP and UDP, to the internet and to 127.0.0.1 and ::1, raw ICMP, packet, netlink, vsock; Unix sockets worked); every read of the grader's files was refused (/opt/ale/tests: the set, the config, the grader, the anchor; the probe's folders in the verify's work folder: the config with the days, the probes' code, the real bay's layer); of the other accounts' processes (root's and the probe's) environ, fd, mem and maps were refused and the command lines, readable as on any Linux, held nothing of the set. It scored acceptance_score 0.956417, every metric as the two above. ale validate on this anchor's commit is the maintainers' to run; its oracle pass is the same full verify on the same set."
+}

@@ -1,0 +1,57 @@
+# hazard_bay_build: rebuild a hazardous maintenance bay of a process plant in NVIDIA Isaac Sim from photographs
+# and a few facts; design the robot fleet for it (three flying robots that carry a water bucket on ropes, a ground
+# vehicle with an arm) from a hardware catalog; and program the fleet through the plant's whole job (the valve closed,
+# the fire put out with the bucket, the parts cleared into the crate). The agent delivers one USD stage (the bay, the
+# steam line with a quarter-turn valve and a leaking plume, a burning pan, a water tank and the bucket on three rope
+# chains, the fleet, the OmniGraph logic for the hazard rules) and the fleet's program (run.sh). The grader runs none
+# of the agent's scene code: it opens the stage in its own Isaac Sim processes as an unprivileged account and measures
+# it (layout, rest and masses, the valve and the plume, the bucket on its ropes under the grader's own moves, the
+# fleet's design), then runs the agent's program behind a wire, with no internet access, on the two days of the fixed
+# hidden set (tests/hidden/fixed_set.json: each day's parts, vehicle pose, lever, pan, water and gusts, the same for
+# every submission) in the grader's own stage of the real bay (the agent's four robots mounted in it, the plant's rope
+# rig) and measures the outcomes. The program gets no ground truth: each robot's own state and the frames of its
+# declared sensors, which the grader renders in the real bay. Needs one NVIDIA RTX GPU.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/hazard_bay_build"
+
+[metadata]
+platform = "swarm"
+
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1
+
+# Setup (environment/setup/setup.sh: stage ~/given, < 1 min) has no field: the engine bounds it at a fixed 1800 s.
+# [agent] timeout_sec: 8 h. [verifier] timeout_sec: two canaries (physics; the real bay rendered, where the renderer's
+# pipelines compile: canary_timeout_s 2400), the scan, five probe groups and the fixed hidden set's two missions in the
+# real bay with the fleet's sensors rendered every 6 control steps, each in a fresh Isaac Sim process. The rule
+# (round 4, 2026-11-06): verifier timeout = 1.5 x the measured scene part (with the cold render canary) + 2 x
+# (control.setup_timeout_s + control.episode_wall_cap_s + 90 s), rounded up to 30 min; the wall cap = 2 x the measured
+# time of a full run (36,000 control steps) of a fleet streaming all the sensors the cap allows, with a program that
+# answers at once, + control.reply_budget_s, rounded up to 10 min. Measured on 2026-11-06 (an RTX 4090 to itself):
+# 3,600 steps of a fleet streaming 16 RGB cameras at 1920 x 1200 and 4 LIDAR-3D took 539.8 s (149.9 ms a step), so
+# T_sim = 90.0 min and the cap 2 x 90.0 + 30 = 210 min (12,600 s). Timeout: the scene part measured in the reference's
+# full verify (a fresh verifier container, the Kit caches cold: 684 s, the physics canary 321 s and the render canary
+# 104 s of it) gives 1.5 x 11.4 + 2 x (20 + 210 + 1.5) = 480.1 min, rounded up to 510 min (30,600 s). That verify took
+# 88 min in all (the missions 41.8 and 35.0 min; 29 min in round 3, without rendering). A run's budget is the program's
+# own reply time (control.reply_budget_s, 30 min); the wall clock only caps a run (control.episode_wall_cap_s).
+[agent]
+timeout_sec = 28800
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 30600
+# Separate verification (2026-11-04): a fresh verifier sandbox from the same image, which the agent never touched;
+# only the declared artifact (/home/user/submission) is restored into it. In a shared sandbox, programs the agent
+# leaves earlier on root's PATH (the base image's /usr/local/bin is the agent's) would run as root at verify.
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1

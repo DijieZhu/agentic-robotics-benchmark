@@ -1,0 +1,746 @@
+{
+  "probe_timeout_s": 900,
+  "probe_retries": 1,
+  "canary_timeout_s": 2400,
+  "scan_timeout_s": 300,
+  "max_submission_bytes": 2147483648,
+  "scoring_cap": 1.5,
+  "combine": "mission_gate",
+  "progress_gate": true,
+  "scoring_note": "combine: how acceptance_score is made from the sections. 'weighted' = the weighted mean by `sections`; 'mission_gate' = the weighted mean of the five scene sections (their `sections` weights) times the control section; any other name selects the block sections_<name> (e.g. 'mission_0.8': the mission at 0.8, the five scene sections at 0.2 in their proportions). progress_gate: the mission's checks a run earns without doing its jobs count only as far as it did them: the bucket's three (lift-off level, swing, water kept) only in a run that put the fire out, the safety checks (parts not dropped, no losses, no collisions, separation; consistency by the mean) in proportion to each run's progress, (steam released + fire out + station cleared) / 3. The verdict's metrics record the acceptance under every combination, with and without the gate (acceptance.<combine>[.progress_gate]). The anchor follows the switch (anchor.json, by_combine); the agent's text must be changed to match: tests/review/scoring_options.md.",
+  "sections": {
+    "layout": 0.08,
+    "physics": 0.04,
+    "steam": 0.04,
+    "hoist": 0.2,
+    "control": 0.54,
+    "fleet": 0.1
+  },
+  "sections_mission_0.8": {
+    "layout": 0.034783,
+    "physics": 0.017391,
+    "steam": 0.017391,
+    "hoist": 0.086957,
+    "control": 0.8,
+    "fleet": 0.043478
+  },
+  "tol": {
+    "pos_full": 0.02,
+    "pos_zero": 0.08,
+    "ext_full": 0.02,
+    "ext_zero": 0.08,
+    "top_full": 0.01,
+    "top_zero": 0.05,
+    "pad_full": 0.03,
+    "pad_zero": 0.12,
+    "plume_pos_full": 0.15,
+    "plume_pos_zero": 0.4,
+    "plume_ext_full": 0.25,
+    "plume_ext_zero": 0.6,
+    "mass_full": 0.02,
+    "mass_zero": 0.1,
+    "settle_full": 0.01,
+    "settle_zero": 0.05,
+    "item_size_full": 0.01,
+    "item_size_zero": 0.04
+  },
+  "spec": {
+    "steam_stop_s": 3.0,
+    "steam_stop_tol_full": 0.7,
+    "steam_stop_tol_zero": 2.5,
+    "fire_out_s": 3.0,
+    "bucket_kg": 11.2,
+    "tether_share_factor": 1.3,
+    "lift_min_bottom_m": 0.4,
+    "lift_max_tilt_deg": 5.0,
+    "tether_slack_max_m": 0.05,
+    "bail_min_gap_deg": 100.0,
+    "valve_torque_Nm": 4.0,
+    "lever_m": 0.22,
+    "dial_px_min": 40,
+    "pan_px_min": 25,
+    "reach_tol_m": 0.06,
+    "g": 9.81,
+    "rope_length_m": 1.5,
+    "rope_kg_per_m": 0.3,
+    "rope_links_min": 8,
+    "rope_len_tol_full": 0.03,
+    "rope_len_tol_zero": 0.1,
+    "rope_mass_tol_full": 0.1,
+    "rope_mass_tol_zero": 0.4,
+    "sag_tol_full": 0.25,
+    "sag_tol_zero": 0.6,
+    "period_tol_full": 0.08,
+    "period_tol_zero": 0.3,
+    "decay_min": 0.25,
+    "decay_max": 1.6,
+    "hang_tol_full": 0.05,
+    "hang_tol_zero": 0.2,
+    "tip_tol_full_deg": 5.0,
+    "tip_tol_zero_deg": 15.0,
+    "stretch_max": 0.08,
+    "stability_speed_max": 4.0
+  },
+  "catalog": {
+    "sensors": {
+      "CAM-RGB-W": {
+        "type": "rgb",
+        "res": [
+          1920,
+          1200
+        ],
+        "focal": 4.0,
+        "hap": 11.26,
+        "vap": 7.04,
+        "mass": 0.06,
+        "stream": {
+          "format": "uint8",
+          "channels": 3,
+          "unit": "sRGB",
+          "noise": null
+        }
+      },
+      "CAM-RGB-M": {
+        "type": "rgb",
+        "res": [
+          1920,
+          1200
+        ],
+        "focal": 8.0,
+        "hap": 11.26,
+        "vap": 7.04,
+        "mass": 0.065,
+        "stream": {
+          "format": "uint8",
+          "channels": 3,
+          "unit": "sRGB",
+          "noise": null
+        }
+      },
+      "CAM-RGB-T": {
+        "type": "rgb",
+        "res": [
+          1920,
+          1200
+        ],
+        "focal": 16.0,
+        "hap": 11.26,
+        "vap": 7.04,
+        "mass": 0.09,
+        "stream": {
+          "format": "uint8",
+          "channels": 3,
+          "unit": "sRGB",
+          "noise": null
+        }
+      },
+      "CAM-RGB-S": {
+        "type": "rgb",
+        "res": [
+          640,
+          480
+        ],
+        "focal": 3.6,
+        "hap": 4.8,
+        "vap": 3.6,
+        "mass": 0.012,
+        "stream": {
+          "format": "uint8",
+          "channels": 3,
+          "unit": "sRGB",
+          "noise": null
+        }
+      },
+      "THERM-A": {
+        "type": "thermal",
+        "res": [
+          160,
+          120
+        ],
+        "focal": 1.7,
+        "hap": 1.92,
+        "vap": 1.44,
+        "mass": 0.015,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "K",
+          "noise": {
+            "sigma_k": 0.1
+          }
+        }
+      },
+      "THERM-B": {
+        "type": "thermal",
+        "res": [
+          640,
+          512
+        ],
+        "focal": 13.0,
+        "hap": 7.68,
+        "vap": 6.14,
+        "mass": 0.11,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "K",
+          "noise": {
+            "sigma_k": 0.05
+          }
+        }
+      },
+      "THERM-C": {
+        "type": "thermal",
+        "res": [
+          640,
+          512
+        ],
+        "focal": 9.0,
+        "hap": 7.68,
+        "vap": 6.14,
+        "mass": 0.095,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "K",
+          "noise": {
+            "sigma_k": 0.05
+          }
+        }
+      },
+      "TOF-D": {
+        "type": "depth",
+        "res": [
+          320,
+          240
+        ],
+        "focal": 2.0,
+        "hap": 2.88,
+        "vap": 2.16,
+        "mass": 0.04,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "m",
+          "noise": {
+            "sigma_m": 0.004,
+            "rel": 0.005
+          },
+          "range_m": [
+            0.15,
+            4.0
+          ]
+        }
+      },
+      "STEREO-X": {
+        "type": "depth",
+        "res": [
+          1280,
+          720
+        ],
+        "focal": 2.1,
+        "hap": 5.0,
+        "vap": 2.8,
+        "mass": 0.075,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "m",
+          "noise": {
+            "quad_m": 0.00155
+          },
+          "range_m": [
+            0.3,
+            10.0
+          ]
+        }
+      },
+      "LIDAR-2D": {
+        "type": "lidar",
+        "res": null,
+        "focal": null,
+        "hap": null,
+        "vap": null,
+        "mass": 0.16,
+        "range_m": 25.0,
+        "vfov_deg": 0.0,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "m",
+          "rows": 1,
+          "columns": 1440,
+          "elevation_deg": [
+            0.0,
+            0.0
+          ],
+          "noise": {
+            "sigma_m": 0.02
+          },
+          "range_m": [
+            0.15,
+            25.0
+          ]
+        }
+      },
+      "LIDAR-3D": {
+        "type": "lidar",
+        "res": null,
+        "focal": null,
+        "hap": null,
+        "vap": null,
+        "mass": 0.35,
+        "range_m": 30.0,
+        "vfov_deg": 90.0,
+        "stream": {
+          "format": "float32",
+          "channels": 1,
+          "unit": "m",
+          "rows": 32,
+          "columns": 1024,
+          "elevation_deg": [
+            45.0,
+            -45.0
+          ],
+          "noise": {
+            "sigma_m": 0.02
+          },
+          "range_m": [
+            0.3,
+            30.0
+          ]
+        }
+      }
+    },
+    "airframes": {
+      "crazyflie": {
+        "empty": 0.027,
+        "mtow": 0.042,
+        "asset": "Bitcraze/Crazyflie",
+        "thrust_max": 0.6
+      },
+      "arl_robot_1": {
+        "empty": 1.25,
+        "mtow": 2.2,
+        "asset": "NTNU/ARL-Robot-1",
+        "thrust_max": 45.0
+      },
+      "quadcopter": {
+        "empty": 0.9,
+        "mtow": 1.6,
+        "asset": "IsaacSim/Quadcopter",
+        "thrust_max": 32.0
+      },
+      "arb_quad_450": {
+        "empty": 1.15,
+        "mtow": 2.4,
+        "asset": "airframes/arb_quad_450",
+        "thrust_max": 48.0
+      },
+      "arb_quad_650": {
+        "empty": 2.4,
+        "mtow": 6.0,
+        "asset": "airframes/arb_quad_650",
+        "thrust_max": 120.0
+      },
+      "arb_hex_800": {
+        "empty": 4.1,
+        "mtow": 12.0,
+        "asset": "airframes/arb_hex_800",
+        "thrust_max": 220.0
+      },
+      "arb_x8_1000": {
+        "empty": 6.9,
+        "mtow": 18.0,
+        "asset": "airframes/arb_x8_1000",
+        "thrust_max": 360.0
+      }
+    },
+    "bases": {
+      "jackal": {
+        "mass": 17.0,
+        "payload": 20.0,
+        "asset": "Clearpath/Jackal"
+      },
+      "dingo": {
+        "mass": 9.0,
+        "payload": 20.0,
+        "asset": "Clearpath/Dingo"
+      },
+      "limo": {
+        "mass": 4.2,
+        "payload": 2.0,
+        "asset": "AgilexRobotics/limo"
+      },
+      "jetbot": {
+        "mass": 0.9,
+        "payload": 0.5,
+        "asset": "NVIDIA/Jetbot"
+      },
+      "kaya": {
+        "mass": 1.3,
+        "payload": 1.0,
+        "asset": "NVIDIA/Kaya"
+      },
+      "leatherback": {
+        "mass": 3.5,
+        "payload": 2.0,
+        "asset": "NVIDIA/Leatherback"
+      },
+      "create3": {
+        "mass": 3.3,
+        "payload": 9.0,
+        "asset": "iRobot/Create3"
+      },
+      "turtlebot": {
+        "mass": 1.0,
+        "payload": 5.0,
+        "asset": "Turtlebot/"
+      }
+    },
+    "arms": {
+      "so101": {
+        "mass": 0.7,
+        "payload": 0.25,
+        "reach": 0.35,
+        "asset": "RobotStudio/so101"
+      },
+      "so100": {
+        "mass": 0.7,
+        "payload": 0.25,
+        "reach": 0.35,
+        "asset": "RobotStudio/so100"
+      },
+      "ur3": {
+        "mass": 11.0,
+        "payload": 3.0,
+        "reach": 0.5,
+        "asset": "UniversalRobots/ur3/"
+      },
+      "ur3e": {
+        "mass": 11.2,
+        "payload": 3.0,
+        "reach": 0.5,
+        "asset": "UniversalRobots/ur3e/"
+      },
+      "ur5": {
+        "mass": 18.4,
+        "payload": 5.0,
+        "reach": 0.85,
+        "asset": "UniversalRobots/ur5/"
+      },
+      "ur5e": {
+        "mass": 20.6,
+        "payload": 5.0,
+        "reach": 0.85,
+        "asset": "UniversalRobots/ur5e/"
+      },
+      "ur10": {
+        "mass": 28.9,
+        "payload": 10.0,
+        "reach": 1.3,
+        "asset": "UniversalRobots/ur10/"
+      },
+      "ur10e": {
+        "mass": 33.5,
+        "payload": 12.5,
+        "reach": 1.3,
+        "asset": "UniversalRobots/ur10e/"
+      },
+      "ur16e": {
+        "mass": 33.1,
+        "payload": 16.0,
+        "reach": 0.9,
+        "asset": "UniversalRobots/ur16e/"
+      },
+      "ur20": {
+        "mass": 64.0,
+        "payload": 20.0,
+        "reach": 1.75,
+        "asset": "UniversalRobots/ur20/"
+      },
+      "ur30": {
+        "mass": 63.5,
+        "payload": 30.0,
+        "reach": 1.3,
+        "asset": "UniversalRobots/ur30/"
+      },
+      "kinova_gen3": {
+        "mass": 8.2,
+        "payload": 4.0,
+        "reach": 0.9,
+        "asset": "Kinova/Gen3"
+      },
+      "kinova_jaco2": {
+        "mass": 5.5,
+        "payload": 1.3,
+        "reach": 0.9,
+        "asset": "Kinova/Jaco2"
+      },
+      "xarm6": {
+        "mass": 12.2,
+        "payload": 5.0,
+        "reach": 0.7,
+        "asset": "Ufactory/xarm6"
+      },
+      "xarm7": {
+        "mass": 13.7,
+        "payload": 3.5,
+        "reach": 0.7,
+        "asset": "Ufactory/xarm7"
+      },
+      "lite6": {
+        "mass": 7.3,
+        "payload": 0.6,
+        "reach": 0.44,
+        "asset": "Ufactory/lite6"
+      },
+      "uf850": {
+        "mass": 18.5,
+        "payload": 5.0,
+        "reach": 0.85,
+        "asset": "Ufactory/uf850"
+      },
+      "franka_panda": {
+        "mass": 18.0,
+        "payload": 3.0,
+        "reach": 0.855,
+        "asset": "FrankaRobotics/Franka"
+      },
+      "franka_factory": {
+        "mass": 18.0,
+        "payload": 3.0,
+        "reach": 0.855,
+        "asset": "FrankaRobotics/FactoryFranka"
+      },
+      "sawyer": {
+        "mass": 19.0,
+        "payload": 4.0,
+        "reach": 1.26,
+        "asset": "RethinkRobotics/Sawyer"
+      },
+      "tm12": {
+        "mass": 33.3,
+        "payload": 12.0,
+        "reach": 1.3,
+        "asset": "Techman/TM12"
+      },
+      "cobotta_pro_900": {
+        "mass": 27.0,
+        "payload": 6.0,
+        "reach": 0.9,
+        "asset": "Denso/CobottaPro900"
+      },
+      "cobotta_pro_1300": {
+        "mass": 45.0,
+        "payload": 12.0,
+        "reach": 1.3,
+        "asset": "Denso/CobottaPro1300"
+      },
+      "rizon4": {
+        "mass": 18.5,
+        "payload": 4.0,
+        "reach": 0.9,
+        "asset": "Flexiv/Rizon4"
+      },
+      "kr210": {
+        "mass": 1100.0,
+        "payload": 150.0,
+        "reach": 2.7,
+        "asset": "Kuka/KR210"
+      },
+      "openarm": {
+        "mass": 8.0,
+        "payload": 2.0,
+        "reach": 0.6,
+        "asset": "OpenArm/openarm_unimanual"
+      },
+      "mecademic_meca500": {
+        "mass": 4.6,
+        "payload": 0.5,
+        "reach": 0.33,
+        "asset": "Mecademic/"
+      }
+    }
+  },
+  "control": {
+    "step_timeout_s": 10.0,
+    "ready_timeout_factor": 4,
+    "max_restarts": 1,
+    "lock_rate": 0.05,
+    "lock_magnitude": 0.4,
+    "score": {
+      "liftoff_tilt_full_deg": 3.0,
+      "liftoff_tilt_zero_deg": 10.0,
+      "spill_full_l": 0.05,
+      "spill_zero_l": 1.0,
+      "swing_full_m": 0.08,
+      "swing_zero_m": 0.3,
+      "sep_full_m": 1.2,
+      "sep_zero_m": 0.9,
+      "time_full_s": 300.0,
+      "time_zero_s": 600.0,
+      "collisions_zero": 5,
+      "consistency_full": 0.05,
+      "consistency_zero": 0.3
+    },
+    "reply_budget_s": 1800,
+    "episode_wall_cap_s": 12600,
+    "setup_timeout_s": 1200
+  },
+  "sensors": {
+    "note": "The bay mission's sensors (control.md, The sensors; tests/sensor_rig.py): every streamed sensor captured together every `every` control steps (read: one Replicator orchestrator step per capture, every product fresh; 'render': one plain render, a read then lags) and delivered `delay` steps later in `slots` slot files; per robot the first cap.cameras cameras and cap.lidars lidars stream; the grader's cameras clip at clip_m; every render product pinned to `render` (the lidar heads and the frame clock, depth-only products, to range_settings); the thermal model; the gauge's scale; the lidar heads' render grid; the frame clock; the vehicle's odometry and the flying robots' encoders (tests/wire_obs.py); the real bay's look (mission_stage.dress); the render canary's fixed sensors. The per-model stream data are in catalog.sensors.*.stream.",
+    "every": 6,
+    "delay": 6,
+    "slots": 2,
+    "read": "orchestrator",
+    "cap": {
+      "cameras": 4,
+      "lidars": 1
+    },
+    "clip_m": [
+      0.01,
+      100.0
+    ],
+    "render": {
+      "omni:rtx:rendermode": "RealTimePathTracing",
+      "omni:rtx:post:aa:op": "dlss",
+      "omni:rtx:post:dlss:execMode": "performance",
+      "omni:rtx:post:motionblur:enabled": false,
+      "omni:rtx:post:dof:enabled": false,
+      "omni:rtx:post:tonemap:operator": "acesApproximation",
+      "omni:rtx:post:tonemap:exposureKey": 0.25,
+      "omni:rtx:rt:ecoMode:enabled": false
+    },
+    "range_settings": {
+      "omni:rtx:rendermode": "RealTimePathTracing",
+      "omni:rtx:post:aa:op": "none",
+      "omni:rtx:post:dlss:execMode": "performance",
+      "omni:rtx:post:motionblur:enabled": false,
+      "omni:rtx:post:dof:enabled": false,
+      "omni:rtx:post:tonemap:operator": "acesApproximation",
+      "omni:rtx:post:tonemap:exposureKey": 0.25,
+      "omni:rtx:rt:ecoMode:enabled": false
+    },
+    "thermal": {
+      "ambient_k": 293.15,
+      "burning_k": 723.15,
+      "cool_to_k": 313.15,
+      "tau_s": 8.0,
+      "hot_prim": "/World/Facility/FirePan"
+    },
+    "gauge": {
+      "zero_deg": -135.0,
+      "deg_per_bar": 21.875
+    },
+    "lidar": {
+      "backend": "equirect",
+      "px_per_column": 1,
+      "rows_per_band": 1,
+      "rows_2d": 63
+    },
+    "clock": {
+      "at": [
+        700.0,
+        0.0,
+        10.0
+      ],
+      "box_m": 40.0,
+      "quad_m": 4.0,
+      "d0_m": 1.0,
+      "step_m": 0.25,
+      "modulo": 64,
+      "clip_m": [
+        0.5,
+        30.0
+      ]
+    },
+    "odometry": {
+      "odo_scale": 0.02,
+      "gyro_scale": 0.01,
+      "odo_walk_m_sqrt_m": 0.02,
+      "gyro_white_deg_s": 0.387,
+      "vel_body_m_s": 0.02,
+      "pose_white_m": 0.005,
+      "uav_joint_rad": 0.001
+    },
+    "look": {
+      "hall": "/opt/assets/arb/hall/bay_hall.usda",
+      "lights": [
+        {
+          "type": "DomeLight",
+          "name": "Dome",
+          "intensity": 300.0
+        },
+        {
+          "type": "DistantLight",
+          "name": "Sun",
+          "intensity": 1800.0,
+          "angle": 4.0,
+          "rotate_z_deg": 35.0,
+          "rotate_x_deg": -50.0
+        }
+      ],
+      "rope_material": "/World/Looks/black",
+      "pads": "/World/Facility/Pads",
+      "pads_lift_m": [
+        0.0001,
+        0.0003
+      ],
+      "needle": "/World/Facility/SteamLine/Gauge/needle",
+      "dial": "/World/Facility/SteamLine/Gauge/Dial",
+      "deinstance_robots": false
+    },
+    "canary": {
+      "sensors": [
+        {
+          "model": "CAM-RGB-M",
+          "eye": [
+            -2.8,
+            2.2,
+            0.95
+          ],
+          "target": [
+            -0.6,
+            3.22,
+            1.2
+          ]
+        },
+        {
+          "model": "THERM-C",
+          "eye": [
+            2.6,
+            -0.4,
+            2.5
+          ],
+          "target": [
+            2.6,
+            1.9,
+            0.07
+          ]
+        },
+        {
+          "model": "TOF-D",
+          "eye": [
+            -1.24,
+            2.61,
+            0.95
+          ],
+          "target": [
+            -1.2,
+            3.35,
+            0.6
+          ]
+        },
+        {
+          "model": "LIDAR-3D",
+          "eye": [
+            0.0,
+            -1.5,
+            1.0
+          ]
+        }
+      ]
+    }
+  }
+}
