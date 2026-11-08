@@ -21,6 +21,7 @@ The grader's ground truth and the oracle's reference artifact stay in the task's
 | `shared/task_assets/fetch_assets.py` | the canonical download script (stdlib only) |
 | `tasks/<platform>/<name>/environment/fetch_assets.py` | a byte-identical copy (the image's build context is the task's `environment/` folder, less `setup/`) |
 | `tasks/<platform>/<name>/environment/assets.sha256` | the task's asset list: a header, then one `<sha256>  <relative path>` line per file |
+| `tasks/<platform>/<name>/tests/fetch_assets.py`, `tests/assets.sha256` | the same two files for a separate verifier image that fetches assets too (a task with a `tests/Dockerfile`, whose build context is `tests/`) |
 | `scripts/task_assets.py` | `sync`, `check`, `list`, `url` (below) |
 
 An asset list looks like this:
@@ -66,6 +67,13 @@ fi
 The files are not in git: keep them out of `environment/setup/payload/` (an `environment/setup/.gitignore` helps
 while you author).
 
+Files the agent home never gets (a simulator release, a scene archive, model weights, mirrored byte for byte from
+their sources) are fetched by the image step that unpacks or moves them, into a scratch folder that the same step
+removes, so no layer keeps the download. A step that needs only the files under one folder of the list fetches a
+filtered copy of it, for example
+`grep -E '^(#|[0-9a-f]{64}  carla/)' assets.sha256 > carla.sha256` (`tasks/driving/driving_safety_supervisor` and
+`tasks/uav/aerial_search_geolocation` work this way).
+
 ## 3. Adding or updating a task's assets
 
 1. Put the files in a local folder with the paths the agent should see (for example `upload/photos/photo_01.jpg`).
@@ -86,6 +94,9 @@ while you author).
    python3 scripts/task_assets.py url tasks/<platform>/<name>      # where the image will fetch from
    ```
 
+   A separate verifier image that fetches files too gets its own list in `tests/`: the same `list` command with
+   `--context tests`.
+
 4. Rebuild and validate (`ale validate`): the image build downloads every file and fails on any hash mismatch.
 
 Replacing a file is the same procedure: upload, re-run `list` with the new commit, validate.
@@ -98,7 +109,7 @@ Replacing a file is the same procedure: upload, re-run `list` with the new commi
 3. Run the sync and commit the result together with the configuration change:
 
    ```bash
-   python3 scripts/task_assets.py sync     # rewrites endpoint / repo in every environment/assets.sha256
+   python3 scripts/task_assets.py sync     # rewrites endpoint / repo in every asset list
    python3 scripts/task_assets.py check    # what CI runs
    ```
 
@@ -113,6 +124,7 @@ task to confirm the new location serves the files.
 
 - a task's `endpoint` or `repo` line differs from `task-assets.toml`;
 - its `environment/fetch_assets.py` is missing or differs from `shared/task_assets/fetch_assets.py`;
+- the same for a separate verifier image's `tests/assets.sha256` and `tests/fetch_assets.py`, where a task has them;
 - its `prefix` is not `tasks/<platform>/<name>/payload`, its `revision` is not a 40-hex commit, or a line is
   malformed.
 

@@ -1,7 +1,7 @@
 """scripts/task_assets.py and shared/task_assets/fetch_assets.py: one configuration file redirects every task.
 
 Since the Harbor layout (2026-11-03) a task's asset list and its copy of the fetcher sit in environment/, the image's
-build context.
+build context; a task whose separate verifier image (tests/Dockerfile) fetches assets too has them in tests/ as well.
 """
 import functools
 import hashlib
@@ -42,7 +42,7 @@ def add_task(root: Path, files: dict[str, bytes], name="demo_task") -> tuple[Pat
 def test_repository_config_and_lists_agree():
     lists = TA.asset_lists(ROOT)
     assert lists, "no environment/assets.sha256 under tasks/: the check would pass on nothing"
-    assert all(lst.parent.name == "environment" for lst in lists), lists
+    assert all(lst.parent.name in TA.CONTEXT_DIRS for lst in lists), lists
     assert TA.check(ROOT) == []
 
 
@@ -85,6 +85,29 @@ def test_check_catches_a_modified_fetcher_and_a_wrong_prefix(tmp_path):
     problems = TA.check(root)
     assert any("differs from shared/task_assets/fetch_assets.py" in p for p in problems)
     assert any("should be 'tasks/arm/demo_task/payload'" in p for p in problems)
+
+
+def test_a_separate_verifier_images_list_is_checked_and_synced(tmp_path):
+    root = make_repo(tmp_path)
+    task, payload = add_task(root, {"scenes/a.zip": b"Z"})
+    (task / "tests").mkdir()
+    lst = TA.write_list(task, payload, REV, root, context="tests")
+    assert lst == task / "tests" / TA.LIST_NAME
+    assert lst.read_text() == (task / "environment" / TA.LIST_NAME).read_text()
+    assert (task / "tests" / TA.FETCHER_NAME).read_bytes() == (ROOT / TA.CANONICAL_FETCHER).read_bytes()
+    assert TA.asset_lists(root) == [task / "environment" / TA.LIST_NAME, lst]
+    assert TA.check(root) == []
+    (task / "tests" / TA.FETCHER_NAME).write_text("# edited\n")
+    assert TA.check(root) == ["tasks/arm/demo_task/tests/fetch_assets.py: differs from "
+                              "shared/task_assets/fetch_assets.py; run 'python3 scripts/task_assets.py sync'"]
+    (root / TA.CONFIG).write_text('[huggingface]\ndataset = "org-b/renamed"\nendpoint = "https://huggingface.co"\n')
+    assert sorted(TA.sync(root)) == ["tasks/arm/demo_task/environment/assets.sha256",
+                                     "tasks/arm/demo_task/tests/assets.sha256",
+                                     "tasks/arm/demo_task/tests/fetch_assets.py"]
+    assert TA.check(root) == []
+    assert TA.parse(lst)[0]["repo"] == "org-b/renamed"
+    with pytest.raises(SystemExit):
+        TA.write_list(task, payload, REV, root, context="solution")
 
 
 def test_check_catches_a_missing_fetcher(tmp_path):

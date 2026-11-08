@@ -6,12 +6,14 @@ A task's large agent-visible files live in the benchmark's Hugging Face dataset,
 the dataset, a dataset commit and the folder, then one sha256 per file), and `environment/fetch_assets.py` downloads
 them while the image is built. The image's build context is the task's `environment/` folder (less `setup/`), so the
 dataset name has to be written into each task; this script writes it from the one configuration file and checks that
-nothing drifted.
+nothing drifted. A task whose separate verifier image (`tests/Dockerfile`, built from `tests/`) fetches assets as well
+carries the same two files in `tests/`, and they are synced and checked the same way.
 
     python3 scripts/task_assets.py sync            # rewrite every task's endpoint / repo header, re-vendor the fetcher
     python3 scripts/task_assets.py check           # CI: fail on any task that disagrees with task-assets.toml
-    python3 scripts/task_assets.py list TASK_DIR PAYLOAD_DIR --revision COMMIT
+    python3 scripts/task_assets.py list TASK_DIR PAYLOAD_DIR --revision COMMIT [--context tests]
                                                    # write TASK_DIR/environment/assets.sha256 for PAYLOAD_DIR's files
+                                                   # (--context tests: the separate verifier image's list)
     python3 scripts/task_assets.py url TASK_DIR    # print where a task's files are downloaded from
 
 Stdlib only. Usage and the rename procedure: docs/task-assets.md.
@@ -35,6 +37,9 @@ CONFIG = "task-assets.toml"
 CANONICAL_FETCHER = Path("shared") / "task_assets" / "fetch_assets.py"
 #: The task folder that holds the asset list and the fetcher: the image's build context.
 CONTEXT_DIR = "environment"
+#: Every task folder that can hold them: the image's build context, and the build context of a separate verifier image
+#: (`tests/Dockerfile`).
+CONTEXT_DIRS = (CONTEXT_DIR, "tests")
 LIST_NAME = "assets.sha256"
 FETCHER_NAME = "fetch_assets.py"
 HEADER_KEYS = ("endpoint", "repo", "revision", "prefix")
@@ -79,10 +84,11 @@ def load_config(root: Path = ROOT) -> dict[str, str]:
 
 
 def asset_lists(root: Path = ROOT) -> list[Path]:
-    """Every task's (and template's) environment/assets.sha256."""
+    """Every task's (and template's) environment/assets.sha256, and tests/assets.sha256 where a separate verifier image
+    fetches assets too."""
     found = []
     for base in ("tasks", "templates"):
-        found += sorted((root / base).glob(f"**/{CONTEXT_DIR}/{LIST_NAME}"))
+        found += sorted(p for context in CONTEXT_DIRS for p in (root / base).glob(f"**/{context}/{LIST_NAME}"))
     return [p for p in found if "vendor" not in p.relative_to(root).parts]
 
 
@@ -182,13 +188,16 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def write_list(task_dir: Path, payload: Path, revision: str, root: Path = ROOT) -> Path:
-    """environment/assets.sha256 for every regular file under `payload` (the folder uploaded to the dataset's
-    tasks/<platform>/<name>/payload/), pinned at `revision`; vendors the fetcher next to it."""
+def write_list(task_dir: Path, payload: Path, revision: str, root: Path = ROOT, context: str = CONTEXT_DIR) -> Path:
+    """<context>/assets.sha256 (environment/, or tests/ for a separate verifier image) for every regular file under
+    `payload` (the folder uploaded to the dataset's tasks/<platform>/<name>/payload/), pinned at `revision`; vendors the
+    fetcher next to it."""
     if not REVISION.match(revision):
         raise SystemExit(f"--revision must be the 40-hex dataset commit, got {revision!r}")
+    if context not in CONTEXT_DIRS:
+        raise SystemExit(f"--context must be one of {', '.join(CONTEXT_DIRS)}, got {context!r}")
     task_dir = task_dir.resolve()
-    lst = task_dir / CONTEXT_DIR / LIST_NAME
+    lst = task_dir / context / LIST_NAME
     prefix = expected_prefix(lst, root)
     if prefix is None:
         raise SystemExit(f"{task_dir} is not at tasks/<platform>/<name>/ in {root}")
@@ -210,6 +219,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("task_dir", type=Path)
     p.add_argument("payload_dir", type=Path)
     p.add_argument("--revision", required=True, help="the dataset commit that holds these files")
+    p.add_argument("--context", choices=CONTEXT_DIRS, default=CONTEXT_DIR,
+                   help="the folder the list goes in: environment (default) or tests (a separate verifier image)")
     p = sub.add_parser("url", help="print where a task's files are downloaded from")
     p.add_argument("task_dir", type=Path)
     ap.add_argument("--root", type=Path, default=ROOT, help=argparse.SUPPRESS)
@@ -227,7 +238,7 @@ def main(argv: list[str] | None = None) -> int:
         print("\n".join(changed) if changed else "nothing to change")
         return 0
     if args.cmd == "list":
-        print(write_list(args.task_dir, args.payload_dir.resolve(), args.revision, root))
+        print(write_list(args.task_dir, args.payload_dir.resolve(), args.revision, root, args.context))
         return 0
     head, files, _ = parse(args.task_dir.resolve() / CONTEXT_DIR / LIST_NAME)
     endpoint = (head.get("endpoint") or "https://huggingface.co").rstrip("/")
