@@ -1,0 +1,40 @@
+{
+ "episodes": 6,
+ "pairs_per_episode": 1,
+ "sim_cap_s": 900.0,
+ "program_time_cap_s": 1200.0,
+ "privileged_program_time_cap_s": 3600.0,
+ "silence_s": 120.0,
+ "cpu_cap_factor": 4.0,
+ "max_ticks_per_step": 500,
+ "settle_s": 0.5,
+ "camera_budget_frames": 450,
+ "runner_account": "nobody",
+ "socket_sample_s": 0.5,
+ "safety": {
+  "panda_force_N": 30.0,
+  "press_ticks": 3,
+  "object_speed_m_s": 3.0
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "note": "the grader's cell configuration; cell_config.json in the payload is this file minus the grader-only keys (runner_account, socket_sample_s, privileged_program_time_cap_s). program_time_cap_s caps the program's own time per episode: the wall clock minus the cell's simulation (step) and rendering (get_camera), which the sim cap and the frame budget bound (cellkit.wire); cpu_cap_factor x program_time_cap_s = the program's CPU seconds; privileged_program_time_cap_s caps the oracle's episodes, whose reference controller steps the cell inside its one call",
+ "reference_lacing": true
+}

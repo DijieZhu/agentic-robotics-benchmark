@@ -1,0 +1,140 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "work_score",
+ "note": "work_score is the episode mean of the accepted work over the work order (per pair: lacing of each shoe 0.30 + 0.30, box erected 0.12, and pair packed 0.13, lid closed 0.10, shipped 0.05 each times the fraction of the pair's shoes laced through every row; a safety violation voids the pair at work), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1). Measured, not drawn: every submission meets the same 6 episodes (tests/hidden/seeds.json), and the reference repeated each selection run's score to the last bit in the verify (the same simulated time, ticks and per-pair detail in all 6). full_at 0.98 is the margin for a last-bit difference on another host flipping part of an episode: a submission earns reward 1.0 (two decimals) from work_score 0.9751; boxing every pair without lacing (0.12 per episode) reads reward 0.12, lacing one shoe per pair and boxing it (0.56) 0.57. One shoe lost in one episode by the reference itself (0.56 there, mean 0.927) would read 0.95: the set was chosen so that does not happen on this image (23 of 24 candidates at 1.0 from a physical start, the image equal to the host venv to the bit on 4 seeds of the first selection).",
+ "source": "Own measurement, 2026-11-07 UTC (the night of 2026-11-06 local): the privileged reference (solution/solve.sh installs solution/reference/packer.py and the token; tests/reference/ at the freeze 52bee23, byte-identical to the first freeze's) through this build's verify on the second fixed hidden set (tests/hidden/seeds.json, sha256 2739737ad20dcb77), in one fresh CPU container of the task image (pr48fix-task:fdec188, sha256:42897dfdf249, CPython 3.12.14; 8 CPUs, 16 GB, no network) laid out as the separate verifier (tests/review/regrade.sh: tests/ root-only at /opt/ale/tests, only the submission restored, bash test.sh as root; the committed tests/ of 8f876cc; run pr48fix-verify-2): the 6 episodes scored 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, work_score 1.0, each equal to its selection run; verify wall 4009 s. value = that verify's work_score (the lowest recorded verify: verifies below). The set: the first 6, in drawn order, of 24 candidates drawn from os.urandom (63 bits) and committed before any ran (779d2d6), each run once in its own container of that image through verify.run_episode with the solve.sh submission, kept when it scored 1.0 and its scene started physical (no contact deeper than 1 mm, the lid tray flat inside the infeed tray's rim, no lace inside it, nothing moving more than 2 mm in 1 s idle); 23 of 24 passed, draw 1 was dropped (0.56: a tail in the reference's dead zone); the set is draws 0, 2, 3, 4, 5, 6 (tests/hidden/selection.json, the rule in tests/review/select_set.py). Before: the first fixed set (2026-11-06, value 1.0, full_at 0.98), superseded when the lid tray's delivery was fixed (its scene 4 started with the lid jammed on the rim); before that (2026-11-05) value 0.695 with full_at 0.50, the old reference's mean on host seeds 1-64 with the seeds drawn per verify run. After the renderer amendment (2026-11-07, tests/hidden/selection.json amendments: the agent cameras in Filament, the physics model, the reference and the scoring unchanged) the same verify on the amended image (pr48fil-task:26749c5, sha256:51b0ed5d0bd9; tests/ of 26749c5; run pr48fil-verify-2): the 6 episodes scored 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, work_score 1, each repeating its selection run (the same simulated time, ticks and per-pair detail); verify wall 6669 s.",
+ "value": 1.0,
+ "verifies": [
+  {
+   "container_wall_s": 4010,
+   "episodes": [
+    {
+     "episode_wall_s": 672.6,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 2122884573269676624,
+     "sim_time_s": 463.6800000014859,
+     "ticks": 46368,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 666.2,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 4719008913886956474,
+     "sim_time_s": 513.9600000016702,
+     "ticks": 51396,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 610.2,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 4368013278335071650,
+     "sim_time_s": 455.02000000144454,
+     "ticks": 45502,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 665.3,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 3827466843397421061,
+     "sim_time_s": 478.25000000155546,
+     "ticks": 47825,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 629.7,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 3920012241597211682,
+     "sim_time_s": 517.9100000015768,
+     "ticks": 51791,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 760.1,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 7237323703085341543,
+     "sim_time_s": 495.8500000016395,
+     "ticks": 49585,
+     "work_score": 1.0
+    }
+   ],
+   "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+   "run": "pr48fix-verify-2",
+   "seeds_sha256": "2739737ad20dcb770bc6e474d4bd66747ff49b76d613e5c61ff7b50c256432ec",
+   "started_utc": "2026-11-07T04:45:28Z",
+   "verify_wall_s": 4009.0,
+   "work_score": 1.0
+  },
+  {
+   "container_wall_s": 6672,
+   "episodes": [
+    {
+     "episode_wall_s": 1023.0,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 2122884573269676624,
+     "sim_time_s": 463.6800000014859,
+     "ticks": 46368,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 1025.4,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 4719008913886956474,
+     "sim_time_s": 513.9600000016702,
+     "ticks": 51396,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 1051.3,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 4368013278335071650,
+     "sim_time_s": 455.02000000144454,
+     "ticks": 45502,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 1141.2,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 3827466843397421061,
+     "sim_time_s": 478.25000000155546,
+     "ticks": 47825,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 1123.0,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 3920012241597211682,
+     "sim_time_s": 517.9100000015768,
+     "ticks": 51791,
+     "work_score": 1.0
+    },
+    {
+     "episode_wall_s": 1298.2,
+     "equals_selection_run": true,
+     "same_trajectory": true,
+     "seed": 7237323703085341543,
+     "sim_time_s": 495.8500000016395,
+     "ticks": 49585,
+     "work_score": 1.0
+    }
+   ],
+   "image_id": "sha256:51b0ed5d0bd9fba453eff8444347529ec5399a79dd29e44b0e1a42fe8e003d82",
+   "run": "pr48fil-verify-2",
+   "seeds_sha256": "2739737ad20dcb770bc6e474d4bd66747ff49b76d613e5c61ff7b50c256432ec",
+   "started_utc": "2026-11-07T23:52:42Z",
+   "verify_wall_s": 6669.4,
+   "work_score": 1.0
+  }
+ ]
+}

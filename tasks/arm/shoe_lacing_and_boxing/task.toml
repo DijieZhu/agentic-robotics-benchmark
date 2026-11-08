@@ -1,0 +1,56 @@
+# shoe_lacing_and_boxing (Physical Execution, robotic arm; built 2026-10-30 by Yuanfang Peng).
+#
+# A two-arm MuJoCo finishing cell at the end of a sneaker line: for each episode's pair, the cell must seat each shoe in the
+# lacing cradle, lace it criss-cross through its eyelet rows with the lacing hook and the gripper, erect the flat
+# shoe-box blank, pack the laced pair, set the lid tray on it and push the box to the outfeed. The agent delivers
+# packer.py (solve(cell): a camera-only program; three fixed RGB-D cameras and a wrist camera per arm; no object
+# poses, no eyelet positions, no lace or box state on the wire), run as an unprivileged account on hidden-seed episodes
+# of the grader's own cell. Score = the mean over the episodes of the accepted work over the work order (per pair: the
+# lacing of each shoe, the box erected, and packed / closed / shipped credited in proportion to the pair's laced shoes),
+# an episode with a safety violation scoring 0. The oracle submits the privileged reference program with a 256-bit
+# token. Grader knobs live in tests/grader_config.json.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (packer.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/shoe_lacing_and_boxing"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/arm/<name>/. The metric
+# (work_score, higher) lives in tests/anchor.json.
+platform = "arm"
+tags = ["lacing", "packaging", "shoe", "deformable-linear-object", "panda", "multi-robot", "bimanual", "mujoco",
+        "code-as-policy", "camera-only", "rgbd", "hidden-seed", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home (the grader's root-owned copy
+# is built by tests/test.sh in the verifier sandbox). [agent] timeout_sec: 4 h. [verifier] timeout_sec: the import check, then 6 hidden episodes of one pair each (six, not four:
+# the reference's own episode-to-episode spread, see tests/README.md section 4), each a cell build plus the program
+# within its 1200 s program-time cap, which does not count the cell's simulation (900 s simulated at most) and
+# rendering (450 frames at most); at the bounds an episode takes about 3000 s of wall clock here (up to 1500 s
+# simulating at 0.6x real time, up to 250 s rendering: Filament on lavapipe, 0.4-0.6 s a frame on 8 CPUs, plus ~10 s
+# building the render twins) and about 4900 s on a machine twice as slow, hence 9 h for the six. The oracle's episodes run the reference controller inside one privileged call: its verify of the fixed hidden
+# set (tests/hidden/seeds.json) took 4009 s here (610-760 s per episode, in a container with 8 CPUs; tests/README.md
+# section 4). The verifier sandbox's start and tests/test.sh's copy of the givens count against it too.
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 32400
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

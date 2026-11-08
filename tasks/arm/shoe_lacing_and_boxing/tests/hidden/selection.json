@@ -1,0 +1,5877 @@
+{
+ "format": "shoe_lacing_and_boxing selection 2",
+ "frozen_utc": "2026-11-07T04:17:37Z",
+ "frozen": {
+  "environment/Dockerfile": "2b2e1da18d48498137343f140aca9763ec7e599813c14a8ab5fa4037a0c08961",
+  "environment/obj2stl.py": "7f85012a35cbb2d22838b76fcae1ffc952413a13d2326eb1be51d220feb147cb",
+  "environment/panda_assets.sha256": "9ee816910981b5e3d4b6b01c6364ed06ddf32e883c74c8b6dec99a934b0002b6",
+  "environment/panda_converted.sha256": "561687a640e3f9032ca52775286403ea54cfac266192528dcfd3d5956f1b3a57",
+  "environment/requirements.txt": "dba20169dfe6fbb6944d9add5eb9fe50c7266e1196f9e41d3f89ae2d117436f1",
+  "solution/reference/oracle_token": "def4452377b8828b81c4903e22d08ae9ecc7cbd18c3656fd17fede327d16fb83",
+  "solution/reference/packer.py": "ce3989e272d4bc0ec8ee5982b7bc315c6847e26a8b7402c8ce5b854daee13669",
+  "solution/solve.sh": "2966bd65db07f9f7224a5ad6ab9f33a16906591f546ab3313d18149b27de0a93",
+  "tests/cellkit/__init__.py": "d4bfa1914b9b27b6ea92fc97ddf6ff742013df04fa375e783b02de48b42fb6ef",
+  "tests/cellkit/lockdown.py": "a713a867eaac37b9136cb2a4c6167720f6240ee92c780fc57fb0fe2f484c62e7",
+  "tests/cellkit/netaudit.py": "e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916",
+  "tests/cellkit/runner.py": "789d6b24d38f236fee9d729ce95842c82beb0ae4350058065de191363a668fe7",
+  "tests/cellkit/seeds.py": "2f10e1ffb773baf3a0d46018aefae33d94a7f8f43cc6c7e48da70182f129f2d9",
+  "tests/cellkit/verify_freeze.py": "9ff33af6c611623831c82766549cbd2b92409b224f0eb3dd4e7ec16c37de5ca5",
+  "tests/cellkit/wire.py": "92be82fbb16953a4d57429b046ef5711078340cc60ac5f029dc3954de9985a25",
+  "tests/given_hashes.json": "e1e0f50f83741af9394c3004d53c4cb61595d22e6ddfec9252da73de76addeb6",
+  "tests/grader_config.json": "9f8e691d4e935ce8fa96d4cacc08efcf98da2a6d1ce7c285f2aed14b42fca5fd",
+  "tests/hidden/oracle_token.sha256": "d1f177ed547a767640c0922cdc00382cc4e47130d54d759cf7763c115652fad2",
+  "tests/reference/box_skills.py": "74796a01ba36107f93faf549b9a7b41dad17488727489fa80bb8d2d3272346d8",
+  "tests/reference/controller.py": "6b286ec8cd91cee36c7b0d3b2c1c68498b55c49aa9dac571d07aa3c019ce2147",
+  "tests/reference/lace_skills.py": "866bc22f7b58b70757dcfb5623f9321f57fa368a55b135ea8b6f033fa866e5aa",
+  "tests/reference/primitives.py": "f29ac9d93cb7773ca19e24334f04279808b2880eeec05059ed7edfa34098c573",
+  "tests/shoecell/__init__.py": "39de8cf0c2b0ec3575c52811a0a47de8048ece3a0578cadf78c53d4b6c26a799",
+  "tests/shoecell/cameras.py": "6bf6d1c2e43307e1775d3ce578a3e69273dbd07e38ae8fe905777eaac497b35b",
+  "tests/shoecell/carton.py": "36164d689176f52a47a423c2beae7dc704f45debb900c70ae7246c8b435c2722",
+  "tests/shoecell/cell.py": "7f829e8bc9f1f5d1bbe5d5e4799663f428a178469c89893041e72c7f348b9b42",
+  "tests/shoecell/client.py": "a12ff8379f1459c811105205064a4dd83ca0808d2ecc14f130c65967105ecf5c",
+  "tests/shoecell/control.py": "c96421b4ea0e9b971ac80a94bb920037eabdce65965a5ae4e5e79593dab6836d",
+  "tests/shoecell/episode.py": "c0539806f341a4109d1956a7ae8a82aeb3f3a0781dd02e547062291f88c7794c",
+  "tests/shoecell/grasp.py": "fda1fcb04aa4fb2813981a96f9fd369c656eabb7cdf52405bee0b292157ee52f",
+  "tests/shoecell/lace.py": "e3ef6d87617e3e5b8134e39f297595a704c1aad5466c312207590c8f91f2c977",
+  "tests/shoecell/local.py": "a02f6132cb915cbbdb771280d2e657ed8da4b950c08f58efb3db3779b911e071",
+  "tests/shoecell/physics.py": "433c3665f9eaf09c27d683808e81d27b6d37a2b6f892164d003a1526b5e8450e",
+  "tests/shoecell/practice.py": "a4599a623ff8cd92a4dd139dcf154ad44a7adb3f7534594a1f83bfeb37877adc",
+  "tests/shoecell/server.py": "1016553d5848915a187b24dd288ad143acea2d038c644188f785bad9a772f1b2",
+  "tests/shoecell/shoe.py": "d64d0e66b381e8d93124944a70f957854383e35e0d59b3148e281af6c33f894f",
+  "tests/test.sh": "917c4ddbae2ca665ddf638fe4e37a6281548246233c09cda149fb2de44a0f1dd",
+  "tests/verify.py": "eae59dddc5fad84a486f9581c7132e2cc9f804d9dcb024d2c1ada6afcb7a9cff"
+ },
+ "image": {
+  "tag": "pr48fix-task:fdec188",
+  "id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+  "built_from": "environment/ (its files are frozen above)"
+ },
+ "rule": "tests/review/select_set.py (module docstring)",
+ "frozen_commit": "52bee23cbc00dd23d6ceb28d5200cd7f7b30e4d5",
+ "batches": [
+  {
+   "batch": 1,
+   "drawn_utc": "2026-11-07T04:17:57Z",
+   "count": 24,
+   "redrawn": 0,
+   "source": "os.urandom(8) per seed, little-endian, the top bit cleared (63 bits); a draw below 2**32 or a duplicate drawn again",
+   "tool_sha256": {
+    "tests/review/select_set.py": "aaf3b59f9f219dc35a02936cbf6a6a91add82871c2b72ef3619cad08fd19f2d2",
+    "tests/review/run_candidate.sh": "7133ffcd5999ae72d474f1bc5b1520ad16d802a1e100079f994c6363562ee623"
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "draw": 0,
+   "batch": 1,
+   "seed": 2122884573269676624,
+   "status": "kept",
+   "result": {
+    "seed": 2122884573269676624,
+    "label": "pr48fix-c2-00",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:30:34Z",
+    "wall_s": 746.7322850227356,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 463.6800000014859,
+    "ticks": 46368,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 742.2230389118195,
+    "cell_work_s": 1.1446502208709717,
+    "episode_wall_s": 743.3874499797821,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.274426729562074
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5684090659011847
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.34768755371474025
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6486928036378727
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.02951918415512,
+         "back": 89.9963460516294,
+         "left": 89.99428623851686,
+         "right": 89.99586314037201
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5791879690174911,
+         -0.18872945259765736,
+         -6.941651890069925e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 463.04000000148284
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "31b198128bab14b4a122f7aa21c8730645f4bb7e864e7ef57cfd8123d82bcdb4",
+    "final_qpos_sha256": "a8cda251b0e85bb817fc2de324076a62ca80673463e76f64af462eefab3728d4",
+    "scene": {
+     "batch": {
+      "length": 0.1874195818479844,
+      "width": 0.07724505163748396,
+      "row_spacing": 0.018929526831292842,
+      "throat_gap": 0.024744200125026095
+     },
+     "carton": {
+      "L": 0.22270326018816816,
+      "W": 0.16842574014826844,
+      "H": 0.1037356223690824
+     },
+     "colours": {
+      "upper": "teal",
+      "sole": "black",
+      "lace": "yellow"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 0.027125740016931077,
+       "way": "as drawn",
+       "pos": [
+        0.28222354103921776,
+        0.35255601777973167
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 0.24852403310845522,
+       "way": "as drawn",
+       "pos": [
+        0.5088026470413477,
+        0.345061629285229
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.3139797063252958,
+       -0.2267875329505961
+      ],
+      "yaw": 3.019305477934739,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.3754507922617561,
+       0.13774708990086948
+      ],
+      "yaw": 0.028777327927805296,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00011035230394183598,
+      "rest_pos": [
+       0.37545090259509767,
+       0.13774709194652887,
+       0.030990163198183623
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.00876759215665222,
+       0.009691454075168093,
+       -0.10265168107523343
+      ],
+      "light": [
+       0.8009545884407918,
+       0.8203968900769183,
+       1.027549355413015
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 16.08153597400536,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 3.719443441489373e-05,
+      "shoe1": 0.0003590995455961474,
+      "lid": 7.150755349453666e-07,
+      "blank": 2.114711337073042e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 2.93048496828512e-07,
+      "shoe1": 9.183856025174392e-07,
+      "lid": 3.558777965627528e-08,
+      "blank": 1.0556056038980274e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 1,
+   "batch": 1,
+   "seed": 4817189750285414682,
+   "status": "dropped",
+   "result": {
+    "seed": 4817189750285414682,
+    "label": "pr48fix-c2-01",
+    "started_utc": "2026-11-07T04:18:08Z",
+    "finished_utc": "2026-11-07T04:29:14Z",
+    "wall_s": 666.1306867599487,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 0.5599999999999999,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 454.6700000014429,
+    "ticks": 45467,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 661.6211369037628,
+    "cell_work_s": 1.0927927494049072,
+    "episode_wall_s": 662.7263917922974,
+    "pairs": [
+     {
+      "credit": 0.5599999999999999,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 0.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "reason": "row 2 not laced",
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3357396810837575
+         ]
+        ],
+        "tail_b": [],
+        "rows_credited": 0
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.39560243729277966
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.693483790492764
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 0.5,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99663725539712,
+         "back": 90.03493012550103,
+         "left": 89.99586353002518,
+         "right": 89.99619686804097
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.57890288433182,
+         -0.17030973110639053,
+         -9.161733800065761e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 454.0300000014398
+     }
+    ],
+    "slips": 0,
+    "n_events": 42,
+    "events_sha256": "d5e6d13fd3a058ec667bfe4f372daa5bee12fdf4df64cd897dae646f05f143e6",
+    "final_qpos_sha256": "871f99a1ae1ee0d76006e76f247b1599fc821cdc1a8d7ee477ab72f3aac1a85c",
+    "scene": {
+     "batch": {
+      "length": 0.20226733286671583,
+      "width": 0.0709487067550525,
+      "row_spacing": 0.018831893759378226,
+      "throat_gap": 0.0278092323233058
+     },
+     "carton": {
+      "L": 0.23958067598404137,
+      "W": 0.15641273711605747,
+      "H": 0.10289745249048898
+     },
+     "colours": {
+      "upper": "green",
+      "sole": "grey",
+      "lace": "yellow"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.1963642422540538,
+       "way": "as drawn",
+       "pos": [
+        0.27507265626745664,
+        0.35842283941959907
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": 1,
+       "yaw": 3.0931730311649717,
+       "way": "turned",
+       "pos": [
+        0.5163723511637353,
+        0.3641265233657562
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.3136833760837258,
+       -0.20522645378116314
+      ],
+      "yaw": -0.07189876719830031,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.41623440885042473,
+       0.136932710509108
+      ],
+      "yaw": -0.021641837856382188,
+      "rest": "flat",
+      "tilt_deg": 8.537736462515939e-07,
+      "moved_mm": 0.0001292444138913676,
+      "rest_pos": [
+       0.416234513427683,
+       0.13693278645458568,
+       0.03099016319818362
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.012724363252704218,
+       -0.018813634888495773,
+       0.09905956670799881
+      ],
+      "light": [
+       0.8857091829770608,
+       1.1267098103071809,
+       0.9173851629736302
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 8.537736462515939e-07,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 21.938391472894924,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 3.0191931935239427e-05,
+      "shoe1": 7.64959090427237e-05,
+      "lid": 7.15077375078421e-07,
+      "blank": 2.1146253103006134e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 4.473253440895876e-07,
+      "shoe1": 6.886473880102989e-07,
+      "lid": 3.5587779697879465e-08,
+      "blank": 1.0555287363436205e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": false
+   },
+   "reason": "work_score 0.5600; milestones below 1: lacing_a 0.00"
+  },
+  {
+   "draw": 2,
+   "batch": 1,
+   "seed": 4719008913886956474,
+   "status": "kept",
+   "result": {
+    "seed": 4719008913886956474,
+    "label": "pr48fix-c2-02",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:30:23Z",
+    "wall_s": 735.3182361125946,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 513.9600000016702,
+    "ticks": 51396,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 730.6232702732086,
+    "cell_work_s": 1.1362507343292236,
+    "episode_wall_s": 731.7795679569244,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.27257344326197114
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.570321540203369
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.38215490621700093
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6787895187810156
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99600609379276,
+         "back": 90.0376039321462,
+         "left": 89.9982229802139,
+         "right": 89.99593027839445
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5781977868834599,
+         -0.14627034883869625,
+         -3.230725292607223e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 513.3200000016853
+     }
+    ],
+    "slips": 0,
+    "n_events": 49,
+    "events_sha256": "6cc60315539e82643bda1ee1e34cdcce56eaaa8453c7cb48be0fd11702cd042a",
+    "final_qpos_sha256": "43aa8599309533ad785364000a0878692836be4a692215376d06a60f6ce2587a",
+    "scene": {
+     "batch": {
+      "length": 0.17607862550077702,
+      "width": 0.0704501189973378,
+      "row_spacing": 0.01773908851419692,
+      "throat_gap": 0.02772248638022574
+     },
+     "carton": {
+      "L": 0.21762844301727347,
+      "W": 0.15651584991172324,
+      "H": 0.09485808168965289
+     },
+     "colours": {
+      "upper": "orange",
+      "sole": "black",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.3893439762301414,
+       "way": "turned",
+       "pos": [
+        0.2892873607166215,
+        0.36233248273607616
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": 1,
+       "yaw": 3.0307395056558066,
+       "way": "turned",
+       "pos": [
+        0.5219688006414893,
+        0.37351365574706036
+       ]
+      }
+     ],
+     "side_lying": 2,
+     "blank": {
+      "pos": [
+       0.3106524305237899,
+       -0.2092477070161942
+      ],
+      "yaw": -0.0338634860593732,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.39508508722863905,
+       0.13278361193039984
+      ],
+      "yaw": -0.006456601837835103,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00010566704847987044,
+      "rest_pos": [
+       0.3950851893469949,
+       0.1327836390848937,
+       0.030990163198183634
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.004650297431660956,
+       -0.009097393974803589,
+       -0.07809776201623392
+      ],
+      "light": [
+       0.8982260556321467,
+       1.056371208611613,
+       0.9989229626922655
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.760422966966814,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00010388416565173775,
+      "shoe1": 0.0001100176307644297,
+      "lid": 7.150755533694407e-07,
+      "blank": 2.1126476695893265e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 9.843991691952283e-08,
+      "shoe1": 1.2347244643052093e-06,
+      "lid": 3.5587779636897526e-08,
+      "blank": 1.0545922918355519e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 3,
+   "batch": 1,
+   "seed": 4368013278335071650,
+   "status": "kept",
+   "result": {
+    "seed": 4368013278335071650,
+    "label": "pr48fix-c2-03",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:29:25Z",
+    "wall_s": 677.8247365951538,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 455.02000000144454,
+    "ticks": 45502,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 673.4380323886871,
+    "cell_work_s": 1.1261727809906006,
+    "episode_wall_s": 674.5792634487152,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3342769159743294
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6515724760852964
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33266514230810923
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6512166842605254
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99603347886446,
+         "back": 90.02893151510285,
+         "left": 89.99613884025236,
+         "right": 89.992287015314
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5785587723109336,
+         -0.10651638086612829,
+         3.621100124854231e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 454.37000000144144
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "e724b7195bea8130378afbe0d2d1820f6554778ffaeca169beac890147639924",
+    "final_qpos_sha256": "121407264781964bb68abb82bbb96068bf545cb2ef1526d0f4c603f5f777d208",
+    "scene": {
+     "batch": {
+      "length": 0.18398278927572362,
+      "width": 0.07512436645766642,
+      "row_spacing": 0.016114575805208406,
+      "throat_gap": 0.027895674833337845
+     },
+     "carton": {
+      "L": 0.23049066629583667,
+      "W": 0.16574002467191892,
+      "H": 0.0981934777343762
+     },
+     "colours": {
+      "upper": "teal",
+      "sole": "black",
+      "lace": "sky"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 2.952113071945334,
+       "way": "turned",
+       "pos": [
+        0.2810208935516806,
+        0.35631765119609216
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.145679329774565,
+       "way": "turned",
+       "pos": [
+        0.5239096275482581,
+        0.35215679919304493
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.3013270638697569,
+       -0.23040765561955062
+      ],
+      "yaw": 0.07593018209221347,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.3754437558009759,
+       0.13763634413295645
+      ],
+      "yaw": 3.1348652235030774,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00010465713489685542,
+      "rest_pos": [
+       0.37544385629144783,
+       0.13763637336959328,
+       0.030990163198183644
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.005104218017173392,
+       0.00034210517796887455,
+       0.09520946627218618
+      ],
+      "light": [
+       1.1588053803576759,
+       1.0786806277394647,
+       1.0104241915399537
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.9258897290274,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003239918239760707,
+      "shoe1": 0.000381077107214403,
+      "lid": 7.150670784604134e-07,
+      "blank": 2.1114759469672779e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.7216897682017673e-07,
+      "shoe1": 6.497867970155484e-07,
+      "lid": 3.558777965856353e-08,
+      "blank": 1.0540234342140954e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 4,
+   "batch": 1,
+   "seed": 3827466843397421061,
+   "status": "kept",
+   "result": {
+    "seed": 3827466843397421061,
+    "label": "pr48fix-c2-04",
+    "started_utc": "2026-11-07T04:18:08Z",
+    "finished_utc": "2026-11-07T04:31:02Z",
+    "wall_s": 774.614589214325,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 478.25000000155546,
+    "ticks": 47825,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 769.538571357727,
+    "cell_work_s": 1.1793999671936035,
+    "episode_wall_s": 770.7301554679871,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3325391582985648
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6231719503745075
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.2719700624697659
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5593307935642018
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99643555586162,
+         "back": 90.02866546722183,
+         "left": 90.00255842857295,
+         "right": 90.0017333478458
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5791447053600726,
+         -0.08595242681583272,
+         -0.0001387295661332774
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 477.60000000155236
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "4b4dfa80558e7cb0ca94afe4bedcab2cc0e50373ed7d707ad41f7867c0e00918",
+    "final_qpos_sha256": "0ae875536a31b76639dfc63a91804f051d22be05dfe61b62f722b2701a35df30",
+    "scene": {
+     "batch": {
+      "length": 0.1749020091070934,
+      "width": 0.07324399373191333,
+      "row_spacing": 0.01823976956100756,
+      "throat_gap": 0.02477966096568838
+     },
+     "carton": {
+      "L": 0.2184720262857771,
+      "W": 0.1662667489585192,
+      "H": 0.09971692062916333
+     },
+     "colours": {
+      "upper": "orange",
+      "sole": "grey",
+      "lace": "black"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": -0.04139077242300976,
+       "way": "as drawn",
+       "pos": [
+        0.28417634752171855,
+        0.3568755663870962
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.2641231969178106,
+       "way": "turned",
+       "pos": [
+        0.5080315894228221,
+        0.36981467696587006
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.28877826266625,
+       -0.2337301406570162
+      ],
+      "yaw": 0.09900387028609639,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.38417385560760126,
+       0.13387167294118185
+      ],
+      "yaw": 3.151021403064252,
+      "rest": "flat",
+      "tilt_deg": 1.2074182697257333e-06,
+      "moved_mm": 1.9537626982320865e-05,
+      "rest_pos": [
+       0.3841738669834889,
+       0.13387165705697432,
+       0.03099016319820398
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.004907879881999611,
+       0.017968814475156008,
+       -0.07018500920554771
+      ],
+      "light": [
+       0.9496290671196581,
+       0.8641507124766218,
+       0.9079153018826446
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.2074182697257333e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 15.618194668411595,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 4.532104486078839e-05,
+      "shoe1": 3.641262010740567e-05,
+      "lid": 4.4975212278538994e-05,
+      "blank": 2.1135147369521128e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 4.870366232011042e-07,
+      "shoe1": 1.1388955828507554e-07,
+      "lid": 3.581129377378656e-08,
+      "blank": 1.055006652071619e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 5,
+   "batch": 1,
+   "seed": 3920012241597211682,
+   "status": "kept",
+   "result": {
+    "seed": 3920012241597211682,
+    "label": "pr48fix-c2-05",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:30:06Z",
+    "wall_s": 718.6683061122894,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 517.9100000015768,
+    "ticks": 51791,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 714.2995095252991,
+    "cell_work_s": 1.103437900543213,
+    "episode_wall_s": 715.421290397644,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.2723090434346069
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5726472571821762
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33111345188996216
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6526792198064243
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.03490739412514,
+         "back": 89.99594969094152,
+         "left": 89.99232085239933,
+         "right": 89.99511772484372
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5786524786502298,
+         -0.1571014122574207,
+         -7.47776869271683e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 517.2700000015919
+     }
+    ],
+    "slips": 0,
+    "n_events": 48,
+    "events_sha256": "e72d3d2ca432917b856ce695c09a8f157a52fadbac0250006526a43ff77e629f",
+    "final_qpos_sha256": "0b2db7bca4c3424fd58f229fc19297432b9a719a149337bdb36d075a0ce6506c",
+    "scene": {
+     "batch": {
+      "length": 0.18322723128853335,
+      "width": 0.07689988915704767,
+      "row_spacing": 0.018975986062382932,
+      "throat_gap": 0.02741737347115086
+     },
+     "carton": {
+      "L": 0.22828038606213358,
+      "W": 0.1675049325279664,
+      "H": 0.09571922252078587
+     },
+     "colours": {
+      "upper": "navy",
+      "sole": "gum",
+      "lace": "yellow"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.0406046052888898,
+       "way": "turned",
+       "pos": [
+        0.29152962140883637,
+        0.34962218606149736
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 3.3031616608275867,
+       "way": "turned",
+       "pos": [
+        0.5195946662887382,
+        0.3669239309982518
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.29769404274436373,
+       -0.2056492729587791
+      ],
+      "yaw": 3.0916046176947964,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.4077844578151659,
+       0.13674318037212313
+      ],
+      "yaw": -0.0036340927937155293,
+      "rest": "flat",
+      "tilt_deg": 8.537736462515939e-07,
+      "moved_mm": 9.829691966351908e-05,
+      "rest_pos": [
+       0.407784442703676,
+       0.13674308324371695,
+       0.03099016319818362
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.019241184637951738,
+       -0.013427168129237589,
+       -0.045043182135483265
+      ],
+      "light": [
+       1.050974877457568,
+       1.0373600370868494,
+       0.9917464987090004
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 8.537736462515939e-07,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 18.54010006823222,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 5.0522555940791105e-05,
+      "shoe1": 0.0003962062765383463,
+      "lid": 7.150795289886086e-07,
+      "blank": 2.109875496881141e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 1.22863475870648e-07,
+      "shoe1": 2.5432881937823285e-07,
+      "lid": 3.558777968500099e-08,
+      "blank": 1.0533393488026998e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 6,
+   "batch": 1,
+   "seed": 7237323703085341543,
+   "status": "kept",
+   "result": {
+    "seed": 7237323703085341543,
+    "label": "pr48fix-c2-06",
+    "started_utc": "2026-11-07T04:18:08Z",
+    "finished_utc": "2026-11-07T04:32:15Z",
+    "wall_s": 847.2045805454254,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 495.8500000016395,
+    "ticks": 49585,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 842.7945802211761,
+    "cell_work_s": 1.1773622035980225,
+    "episode_wall_s": 843.9842729568481,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3353373671000357
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6296748900755902
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3365433636153206
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6316512168112929
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99622133261086,
+         "back": 90.03415080561759,
+         "left": 89.99950862508196,
+         "right": 89.99570280320121
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5791733395360379,
+         -0.15150981317236625,
+         -0.00012630770109925882
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 495.21000000163644
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "b5f1aeb3588d81eee6a1ab042b1bbea1032527c45fbca42632868236e262ad72",
+    "final_qpos_sha256": "6b221b16afd5017ba94b819b2d5921dc963d53c76989198bafc30e8ebac05c61",
+    "scene": {
+     "batch": {
+      "length": 0.1879186082769704,
+      "width": 0.07081703668240279,
+      "row_spacing": 0.016947282619153375,
+      "throat_gap": 0.0264344744330407
+     },
+     "carton": {
+      "L": 0.225425143106461,
+      "W": 0.15789389330554832,
+      "H": 0.09833961133554224
+     },
+     "colours": {
+      "upper": "black",
+      "sole": "gum",
+      "lace": "sky"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.09388605728973126,
+       "way": "as drawn",
+       "pos": [
+        0.275000548205939,
+        0.3606194398309697
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": -0.11314043247300332,
+       "way": "as drawn",
+       "pos": [
+        0.5110288615232556,
+        0.35237938809759417
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.28505654434353456,
+       -0.21803354246456813
+      ],
+      "yaw": -0.034766404779760784,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.39990798654453175,
+       0.13255207185844875
+      ],
+      "yaw": 3.126206231032617,
+      "rest": "flat",
+      "tilt_deg": 1.4787793334710982e-06,
+      "moved_mm": 9.990082067094662e-05,
+      "rest_pos": [
+       0.39990792345540926,
+       0.1325519943991911,
+       0.030990163198183616
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.016567960496339424,
+       0.014109967448332542,
+       -0.015371901851767539
+      ],
+      "light": [
+       1.0715624287003973,
+       1.0105596847521772,
+       1.0410725682941944
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.4787793334710982e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 17.727543296857583,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 6.343471023321523e-05,
+      "shoe1": 0.0003242526842576334,
+      "lid": 7.150794224760096e-07,
+      "blank": 2.1135250615447507e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.198635982790761e-07,
+      "shoe1": 9.489193021423591e-07,
+      "lid": 3.558777966230705e-08,
+      "blank": 1.0549738964128272e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   }
+  },
+  {
+   "draw": 7,
+   "batch": 1,
+   "seed": 2871042868485003104,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 2871042868485003104,
+    "label": "pr48fix-c2-07",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:36:52Z",
+    "wall_s": 1124.2896313667297,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 538.160000001098,
+    "ticks": 53816,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 1119.4279417991638,
+    "cell_work_s": 1.1798224449157715,
+    "episode_wall_s": 1120.6251950263977,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.272482584354314
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5723128126829188
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33569618098474824
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6319790889437846
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99651132371984,
+         "back": 90.02710523759663,
+         "left": 89.99780423967667,
+         "right": 89.99705402126709
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5791093219494765,
+         -0.07143328663379687,
+         6.997231279361493e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 537.5200000011131
+     }
+    ],
+    "slips": 1,
+    "n_events": 52,
+    "events_sha256": "a7719d5a66c0a3d4ebc7829e010ecb8077286751981f98a91ce05b44847b5429",
+    "final_qpos_sha256": "bbb0986358bb061532c5d0f9f817f9df792f8353770bc300aca7d00a5930ac8b",
+    "scene": {
+     "batch": {
+      "length": 0.17438838908035922,
+      "width": 0.07006970220654887,
+      "row_spacing": 0.018055823948722707,
+      "throat_gap": 0.02679267488491834
+     },
+     "carton": {
+      "L": 0.21072347043014067,
+      "W": 0.15279499504099572,
+      "H": 0.10211932684426908
+     },
+     "colours": {
+      "upper": "green",
+      "sole": "grey",
+      "lace": "black"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.2606173263763,
+       "way": "turned",
+       "pos": [
+        0.2909974855399738,
+        0.3501495367911906
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 0.023424339643024372,
+       "way": "as drawn",
+       "pos": [
+        0.5159195008356279,
+        0.37389629368686267
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.2939562604733503,
+       -0.2153154012681458
+      ],
+      "yaw": 0.1432084198756877,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.42226638275258394,
+       0.13611598882821085
+      ],
+      "yaw": 3.1447920119354773,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00011895360302524074,
+      "rest_pos": [
+       0.42226630019677547,
+       0.13611590318652614,
+       0.030990163198183623
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.004535095836941262,
+       0.0012389832419369765,
+       0.08614187655238476
+      ],
+      "light": [
+       1.0279756067207195,
+       1.0705593026837372,
+       1.136372140358855
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 25.349764942785086,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 2.4627704758865714e-05,
+      "shoe1": 0.0003474438778351709,
+      "lid": 7.150792981296339e-07,
+      "blank": 2.117971558364372e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 6.594867952141236e-08,
+      "shoe1": 6.008613884102402e-07,
+      "lid": 3.5587779721506985e-08,
+      "blank": 1.0571311816845976e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 8,
+   "batch": 1,
+   "seed": 8002189469249703128,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 8002189469249703128,
+    "label": "pr48fix-c2-08",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:29:29Z",
+    "wall_s": 682.2398381233215,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 466.5500000014996,
+    "ticks": 46655,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 677.7040615081787,
+    "cell_work_s": 1.087421178817749,
+    "episode_wall_s": 678.8080666065216,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.2748796718271629
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5633404431506672
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.4088227277922589
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6936174496478886
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.02920091029284,
+         "back": 90.01190411391369,
+         "left": 90.00043027468935,
+         "right": 90.00274047041597
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5785920833507043,
+         -0.18370032898040373,
+         2.922873840978284e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 465.91000000149654
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "a2b6c74220f4e017a0475edcdf3623e002acab990cefa0f83efbf1453d0fca1f",
+    "final_qpos_sha256": "08f3bfe83b825ddc19a14ae00da3cdf61db4e34a1446809730ff3858a019b865",
+    "scene": {
+     "batch": {
+      "length": 0.17382178611629287,
+      "width": 0.07403372535084632,
+      "row_spacing": 0.01778602393229116,
+      "throat_gap": 0.025754891368584727
+     },
+     "carton": {
+      "L": 0.21357811428429738,
+      "W": 0.1659901193526671,
+      "H": 0.10323783453789961
+     },
+     "colours": {
+      "upper": "purple",
+      "sole": "black",
+      "lace": "lime"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": -0.017862232883874396,
+       "way": "as drawn",
+       "pos": [
+        0.29436797529248954,
+        0.3494635687930068
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": 1,
+       "yaw": 3.205891367017879,
+       "way": "turned",
+       "pos": [
+        0.5095210388410834,
+        0.3566865731601973
+       ]
+      }
+     ],
+     "side_lying": 2,
+     "blank": {
+      "pos": [
+       0.2958334652410959,
+       -0.21650686873225958
+      ],
+      "yaw": 3.0235848196280175,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.41114071371206684,
+       0.13663512226413038
+      ],
+      "yaw": 3.142940331691357,
+      "rest": "flat",
+      "tilt_deg": 8.537736462515939e-07,
+      "moved_mm": 1.2374645384152396e-05,
+      "rest_pos": [
+       0.41114072598293594,
+       0.13663512386338644,
+       0.03099016319818362
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.005595676311160504,
+       -0.004003919237605225,
+       0.05569817748930447
+      ],
+      "light": [
+       1.045628379302699,
+       1.1991975181604693,
+       0.8759025716950702
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 8.537736462515939e-07,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.48275463037139,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00011211501929720459,
+      "shoe1": 0.00010205805288289817,
+      "lid": 7.150783596873287e-07,
+      "blank": 2.115907615023983e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 1.0359520176090552e-07,
+      "shoe1": 4.902300547711428e-07,
+      "lid": 3.5587779632043816e-08,
+      "blank": 1.056174463399928e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 9,
+   "batch": 1,
+   "seed": 4120012204518049219,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 4120012204518049219,
+    "label": "pr48fix-c2-09",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:30:26Z",
+    "wall_s": 739.2547197341919,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 528.180000001334,
+    "ticks": 52818,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 734.9229981899261,
+    "cell_work_s": 1.0220146179199219,
+    "episode_wall_s": 735.9629678726196,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3989244522272162
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6833290186786536
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33436722794798907
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6506321892336058
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.02857409190612,
+         "back": 89.9965103690531,
+         "left": 89.99650478448557,
+         "right": 89.99810430929669
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5784013417329089,
+         -0.13757166222603434,
+         -3.5503932367935356e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 527.5300000013493
+     }
+    ],
+    "slips": 0,
+    "n_events": 48,
+    "events_sha256": "3d806f918806a7098728e3e500828cf6293eb379624a993171d47f7ed489a4aa",
+    "final_qpos_sha256": "8e36fd49f603c05eda18a2f6e0799f981f8f7f0f4448d2087a557f9aecde9c1b",
+    "scene": {
+     "batch": {
+      "length": 0.20508268300614285,
+      "width": 0.0718922241013577,
+      "row_spacing": 0.01740306737703763,
+      "throat_gap": 0.02486849646055936
+     },
+     "carton": {
+      "L": 0.24730084588462228,
+      "W": 0.1570351425835662,
+      "H": 0.1017600426017918
+     },
+     "colours": {
+      "upper": "navy",
+      "sole": "white",
+      "lace": "black"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": 1,
+       "yaw": -0.18099632636528046,
+       "way": "as drawn",
+       "pos": [
+        0.2836540461412519,
+        0.37338054065160153
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.2875106656054927,
+       "way": "turned",
+       "pos": [
+        0.5195484447950359,
+        0.365417636883513
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.30892890060697076,
+       -0.2050671739491617
+      ],
+      "yaw": 3.11076220414367,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.3899881961097187,
+       0.13649311151133908
+      ],
+      "yaw": 3.1258658236428825,
+      "rest": "flat",
+      "tilt_deg": 1.2074182697257333e-06,
+      "moved_mm": 0.00012915908300383685,
+      "rest_pos": [
+       0.38998818297449916,
+       0.13649298302190477,
+       0.03099016319867438
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.003114027075181096,
+       -0.011922167101998657,
+       -0.09433569606023494
+      ],
+      "light": [
+       0.9240613171323628,
+       1.1568058750223684,
+       0.8975043032254951
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.2074182697257333e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 21.88455097432335,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 4.171402225875459e-05,
+      "shoe1": 0.0003691177247772775,
+      "lid": 0.00014122667430903116,
+      "blank": 2.1131578587524515e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 1.8545685629704987e-07,
+      "shoe1": 5.617837382233963e-07,
+      "lid": 1.8139049570942078e-07,
+      "blank": 1.054841499047959e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 10,
+   "batch": 1,
+   "seed": 5050221829154294261,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 5050221829154294261,
+    "label": "pr48fix-c2-10",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:34:56Z",
+    "wall_s": 1008.9296207427979,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 453.3200000014364,
+    "ticks": 45332,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 1004.6522624492645,
+    "cell_work_s": 1.0385634899139404,
+    "episode_wall_s": 1005.7014000415802,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33251802902180033
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6294239342438401
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3369128479112525
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6333260011539293
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.00209926989042,
+         "back": 90.03105009480124,
+         "left": 90.01447712235169,
+         "right": 90.00730020484043
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5784858719389527,
+         -0.10347472023625731,
+         -7.678493189927093e-06
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 452.6700000014333
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "ea813b3311fce03d2e534525466aaa392f68f50ac21ed76017518fc1b283e898",
+    "final_qpos_sha256": "85f47fbf917f1512e4c0e4b9dfa8319663982a5239abb43b529ebe99e641ae62",
+    "scene": {
+     "batch": {
+      "length": 0.1752762608866394,
+      "width": 0.0736587035961275,
+      "row_spacing": 0.01878319910394396,
+      "throat_gap": 0.025287023965035064
+     },
+     "carton": {
+      "L": 0.21703335431398071,
+      "W": 0.16231284428880705,
+      "H": 0.09436903346554781
+     },
+     "colours": {
+      "upper": "purple",
+      "sole": "grey",
+      "lace": "lime"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.19889511413845162,
+       "way": "as drawn",
+       "pos": [
+        0.29008816308060154,
+        0.36415600751261656
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.043613556987857516,
+       "way": "as drawn",
+       "pos": [
+        0.5096419881525948,
+        0.3687840342795178
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.3011121061346559,
+       -0.21697808818597525
+      ],
+      "yaw": 0.0973459962889256,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.3893575528360177,
+       0.13739806919733205
+      ],
+      "yaw": 0.02567644295228704,
+      "rest": "flat",
+      "tilt_deg": 2.561320938754782e-06,
+      "moved_mm": 9.050486539159481e-05,
+      "rest_pos": [
+       0.3893575941914531,
+       0.13739798869355188,
+       0.0309901631981836
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.006802101103524354,
+       -0.0007052130584317695,
+       -0.10633814056345271
+      ],
+      "light": [
+       1.1660675214488994,
+       1.140534655609018,
+       1.1734107858987968
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 2.561320938754782e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.228861351945003,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 3.118961139580948e-05,
+      "shoe1": 0.0003245086612578132,
+      "lid": 7.150772505641379e-07,
+      "blank": 2.1114770622346836e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 2.7000422800632934e-07,
+      "shoe1": 2.7526019583407653e-07,
+      "lid": 3.558777969282939e-08,
+      "blank": 1.054002375865451e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 11,
+   "batch": 1,
+   "seed": 8869361316769442715,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 8869361316769442715,
+    "label": "pr48fix-c2-11",
+    "started_utc": "2026-11-07T04:18:08Z",
+    "finished_utc": "2026-11-07T04:32:06Z",
+    "wall_s": 838.1242244243622,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 503.280000001675,
+    "ticks": 50328,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 833.8958835601807,
+    "cell_work_s": 1.1557440757751465,
+    "episode_wall_s": 835.0710237026215,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.2744585863003257
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5684029163009443
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3955917762268834
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6947393577517549
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.0363850188445,
+         "back": 89.99595539974061,
+         "left": 89.99560129585649,
+         "right": 89.99779579265962
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5783352257688096,
+         -0.16663448795673894,
+         -8.302326516757347e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 502.6400000016719
+     }
+    ],
+    "slips": 0,
+    "n_events": 51,
+    "events_sha256": "66a2eb9f06cd6de6f2c759ce48e84c2167a27f39667b879e5bddcffb845ae93d",
+    "final_qpos_sha256": "54fd309ffcd9876e785d71112fcf96914ff727e9e42898d4aec7a8831cf4a341",
+    "scene": {
+     "batch": {
+      "length": 0.19100919032966826,
+      "width": 0.07419524778618795,
+      "row_spacing": 0.016242324209080422,
+      "throat_gap": 0.026766280149414238
+     },
+     "carton": {
+      "L": 0.2378141296607293,
+      "W": 0.1609073864633786,
+      "H": 0.09763173343182964
+     },
+     "colours": {
+      "upper": "red",
+      "sole": "black",
+      "lace": "black"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 2.9890972442867527,
+       "way": "turned",
+       "pos": [
+        0.27599148001869983,
+        0.3635683031975958
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": 1,
+       "yaw": 0.19368470599486975,
+       "way": "as drawn",
+       "pos": [
+        0.5117708468477957,
+        0.36585804427140756
+       ]
+      }
+     ],
+     "side_lying": 2,
+     "blank": {
+      "pos": [
+       0.29448834983689687,
+       -0.22702498437540705
+      ],
+      "yaw": 3.0742973419446837,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.3829855700501751,
+       0.13465857884643603
+      ],
+      "yaw": 0.012646215913164623,
+      "rest": "flat",
+      "tilt_deg": 1.7075472925031877e-06,
+      "moved_mm": 9.89211936443197e-05,
+      "rest_pos": [
+       0.3829855228441818,
+       0.13465866577742447,
+       0.030990163198183613
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.00891488674420431,
+       -0.007456090743310035,
+       0.038447258426888065
+      ],
+      "light": [
+       0.8280107286836917,
+       1.1840272783037777,
+       0.9063717477390326
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.7075472925031877e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 18.582062309965707,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 4.450970496207666e-06,
+      "shoe1": 4.5802429321341755e-05,
+      "lid": 7.150755359399953e-07,
+      "blank": 2.1113203994049263e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 6.426058887215445e-08,
+      "shoe1": 2.2107603269299974e-07,
+      "lid": 3.558777965655597e-08,
+      "blank": 1.0539160014565278e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 12,
+   "batch": 1,
+   "seed": 5839128621219627216,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 5839128621219627216,
+    "label": "pr48fix-c2-12",
+    "started_utc": "2026-11-07T04:18:08Z",
+    "finished_utc": "2026-11-07T04:30:30Z",
+    "wall_s": 742.4331028461456,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 445.7500000014003,
+    "ticks": 44575,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 737.8460690975189,
+    "cell_work_s": 1.1948847770690918,
+    "episode_wall_s": 739.0538465976715,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3341883078069591
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6504981400214316
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.25688657695078587
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5462409054155687
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.9965715604711,
+         "back": 90.03021185573571,
+         "left": 89.99648541521448,
+         "right": 89.99323425852491
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5780655756766698,
+         -0.1503989050088763,
+         -2.7648537843050946e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 445.1000000013972
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "e624fad066b41ad483ae6de088d8f289b76e4dbee8df686fc15ea0ac8d933c2e",
+    "final_qpos_sha256": "378c49837b6751c19655b4c8ac539e15ef280f95fd3b31b6c3af42f1ae7cf97d",
+    "scene": {
+     "batch": {
+      "length": 0.20868649970675932,
+      "width": 0.07066066454957247,
+      "row_spacing": 0.018524818897845425,
+      "throat_gap": 0.02624589199674781
+     },
+     "carton": {
+      "L": 0.25166660063368096,
+      "W": 0.15593858054830767,
+      "H": 0.10250182364445849
+     },
+     "colours": {
+      "upper": "orange",
+      "sole": "grey",
+      "lace": "lime"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 2.9570668924288093,
+       "way": "turned",
+       "pos": [
+        0.2797816296649281,
+        0.3647764938271394
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.3255196388502273,
+       "way": "turned",
+       "pos": [
+        0.5191905938127919,
+        0.3557969560984088
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.29518957420487524,
+       -0.21145410725002536
+      ],
+      "yaw": -0.03385462110113335,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.4048042902756837,
+       0.13408258765783918
+      ],
+      "yaw": 0.022447924999899255,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00013883353031555215,
+      "rest_pos": [
+       0.40480429146406743,
+       0.1340824488293951,
+       0.030990163198183634
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.019956493378244965,
+       -0.005656929346487396,
+       -0.11743968190201025
+      ],
+      "light": [
+       1.0067294960816358,
+       0.9037549717369613,
+       0.9987419506945555
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.086402238119557,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003275838596004257,
+      "shoe1": 0.11524127797578188,
+      "lid": 0.0001509404304801732,
+      "blank": 2.1133313415251944e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 2.5565853041428865e-07,
+      "shoe1": 0.0002962042737369376,
+      "lid": 3.5587779731972984e-08,
+      "blank": 1.0549177175113144e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 13,
+   "batch": 1,
+   "seed": 2549334260819312031,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 2549334260819312031,
+    "label": "pr48fix-c2-13",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:33:19Z",
+    "wall_s": 911.1584129333496,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 541.8500000010107,
+    "ticks": 54185,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 907.0323152542114,
+    "cell_work_s": 1.0797863006591797,
+    "episode_wall_s": 908.130907535553,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3361932886841562
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6308366322505002
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3341970935656361
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6259883274777117
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.02853679397911,
+         "back": 89.9962709000024,
+         "left": 89.98841798976757,
+         "right": 90.02076898821242
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5793419499417889,
+         -0.07074450858644502,
+         -5.804947103569368e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 541.2000000010261
+     }
+    ],
+    "slips": 0,
+    "n_events": 51,
+    "events_sha256": "95dfc7f3fc17bf6118c597e020c9e8e42e08cf555d4e28ff041f626dd40ba9f6",
+    "final_qpos_sha256": "36805a8e5411587df7460283fd7daa9f66491cc4e0d50b88c25ef6403cfeb49e",
+    "scene": {
+     "batch": {
+      "length": 0.2037267839241355,
+      "width": 0.07350822359751512,
+      "row_spacing": 0.018600582451452064,
+      "throat_gap": 0.026969751536645593
+     },
+     "carton": {
+      "L": 0.24246887392643898,
+      "W": 0.16057857085977217,
+      "H": 0.09772987134066041
+     },
+     "colours": {
+      "upper": "black",
+      "sole": "gum",
+      "lace": "yellow"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.12598122916627624,
+       "way": "as drawn",
+       "pos": [
+        0.29299527498458544,
+        0.3608950236437889
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.0196121083563936,
+       "way": "turned",
+       "pos": [
+        0.5239688523882595,
+        0.3494576147464074
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.2903303937407392,
+       -0.2213542798941753
+      ],
+      "yaw": 3.2368400019657115,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.4155327165147746,
+       0.13286698465733074
+      ],
+      "yaw": 3.132597109297819,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00012180902357926503,
+      "rest_pos": [
+       0.4155326710432927,
+       0.13286687165386812,
+       0.03099016319818363
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.008211895496428,
+       0.0065402750471573075,
+       -0.08265418568385005
+      ],
+      "light": [
+       1.0223126417363222,
+       0.8614241415787446,
+       0.8493888098735493
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 17.400730026487167,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003324291645150244,
+      "shoe1": 0.0003721638299230311,
+      "lid": 7.150780076915133e-07,
+      "blank": 2.1109695228052205e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 2.049101033514874e-07,
+      "shoe1": 6.413312228335083e-07,
+      "lid": 3.5587779695516666e-08,
+      "blank": 1.0537471290188822e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 14,
+   "batch": 1,
+   "seed": 2232118297445647364,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 2232118297445647364,
+    "label": "pr48fix-c2-14",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:31:11Z",
+    "wall_s": 783.3896596431732,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 477.8800000015537,
+    "ticks": 47788,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 779.066878080368,
+    "cell_work_s": 1.1086153984069824,
+    "episode_wall_s": 780.186466217041,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3451727188718826
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6495746639772558
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3509540250724427
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6493529994508308
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99592549814287,
+         "back": 90.03420161938409,
+         "left": 89.9933207912794,
+         "right": 89.9913024672697
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5787307964661307,
+         -0.1176436508298035,
+         -8.422960987652267e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 477.2300000015506
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "506e5971877f450c99ea182d1b18c74f8ec095686fd32ffe1e485028aca5e05f",
+    "final_qpos_sha256": "a12424902f45ee57e11fb7c1791a7938ae831f192973bc6c1cea1dc01c3b3446",
+    "scene": {
+     "batch": {
+      "length": 0.18411167319551014,
+      "width": 0.07754076509504261,
+      "row_spacing": 0.018883529642474837,
+      "throat_gap": 0.027743695467612926
+     },
+     "carton": {
+      "L": 0.22350363878649598,
+      "W": 0.17324806370105206,
+      "H": 0.09733338031460476
+     },
+     "colours": {
+      "upper": "black",
+      "sole": "gum",
+      "lace": "white"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.24601760989379817,
+       "way": "as drawn",
+       "pos": [
+        0.2870460788500698,
+        0.3642510961150545
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": -0.14538325100242783,
+       "way": "as drawn",
+       "pos": [
+        0.5244132675221997,
+        0.3685848044911932
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.3006338067376293,
+       -0.22546005533028343
+      ],
+      "yaw": 0.05360126705122975,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.4043810178029423,
+       0.1324795770636466
+      ],
+      "yaw": 0.01846628524408106,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 1.4333396729614985e-05,
+      "rest_pos": [
+       0.40438100348343625,
+       0.13247957643276706,
+       0.030990163198183623
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.0049856743633383965,
+       0.007208312473056276,
+       -0.06352235518384128
+      ],
+      "light": [
+       0.8147542370835229,
+       1.1441103847641885,
+       0.8602507767691729
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 9.623842641728695,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00036908356881403144,
+      "shoe1": 0.00031413567414035373,
+      "lid": 7.150771596165612e-07,
+      "blank": 2.1105076652386936e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 4.1628795395010306e-07,
+      "shoe1": 8.412213386286467e-07,
+      "lid": 3.558777961380927e-08,
+      "blank": 1.0535634608808714e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 15,
+   "batch": 1,
+   "seed": 8894036138449180107,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 8894036138449180107,
+    "label": "pr48fix-c2-15",
+    "started_utc": "2026-11-07T04:18:07Z",
+    "finished_utc": "2026-11-07T04:31:08Z",
+    "wall_s": 780.3968842029572,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 510.46000000170926,
+    "ticks": 51046,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 775.7779078483582,
+    "cell_work_s": 1.1783649921417236,
+    "episode_wall_s": 776.9723567962646,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33422941773339315
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.621556027969242
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3335882234399945
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6296155159389256
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.03811108947208,
+         "back": 89.99564747268187,
+         "left": 89.9912951365123,
+         "right": 89.99528992510993
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5784846895085246,
+         -0.18703842198998463,
+         -4.717739031763033e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 509.8200000017062
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "162977078b881b3a4e903e820dafea2e35af62919ba306ae491679a850308bd4",
+    "final_qpos_sha256": "6ddb731311c9ed12ff87ec9c9665afa474fa7203c5b57d5222cb490c43e29b34",
+    "scene": {
+     "batch": {
+      "length": 0.18687744005545878,
+      "width": 0.07342376601511251,
+      "row_spacing": 0.01877355509568933,
+      "throat_gap": 0.025045981768825647
+     },
+     "carton": {
+      "L": 0.23248255277667804,
+      "W": 0.16625037674882448,
+      "H": 0.09501417361261007
+     },
+     "colours": {
+      "upper": "orange",
+      "sole": "grey",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 3.322343810508008,
+       "way": "turned",
+       "pos": [
+        0.2784852583699883,
+        0.35231537845348776
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.2727750206778436,
+       "way": "turned",
+       "pos": [
+        0.5067833612665307,
+        0.34785815602149206
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.30960727120079745,
+       -0.23041713882066833
+      ],
+      "yaw": 3.0401075553718675,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.3900038359756962,
+       0.13787916618616397
+      ],
+      "yaw": 3.1710519040971024,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.0001075277000030824,
+      "rest_pos": [
+       0.3900039363991172,
+       0.13787912774994682,
+       0.030990163198183623
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.012275692406187777,
+       -0.0005938341095506096,
+       0.038931286883530314
+      ],
+      "light": [
+       0.9862945891845671,
+       0.900141209253282,
+       1.191710004183548
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 17.07591018947111,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00032382624773876905,
+      "shoe1": 0.00031650163534656774,
+      "lid": 7.150746404376265e-07,
+      "blank": 2.1093767010509503e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.0915228047429255e-07,
+      "shoe1": 3.312240110988588e-07,
+      "lid": 3.558777966239737e-08,
+      "blank": 1.0530378308459089e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 16,
+   "batch": 1,
+   "seed": 9086865752718199337,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 9086865752718199337,
+    "label": "pr48fix-c2-16",
+    "started_utc": "2026-11-07T04:29:15Z",
+    "finished_utc": "2026-11-07T04:39:58Z",
+    "wall_s": 643.1943070888519,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 440.24000000137397,
+    "ticks": 44024,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 638.8698756694794,
+    "cell_work_s": 1.0767302513122559,
+    "episode_wall_s": 639.963103055954,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.34954836881529633
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6351826737231517
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.2860135566761596
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5650390104421035
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99609889699452,
+         "back": 90.03110023125095,
+         "left": 89.99667666727747,
+         "right": 89.99416933741902
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.578540004599955,
+         -0.10645609067639494,
+         -7.913175729496469e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 439.59000000137087
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "4caac3ac0d9bd4e95d1fa7e9930049dad515f42be701e3c27058f17d66069ca5",
+    "final_qpos_sha256": "d08e1d3f650f0ec44809d37c50bf7d7cfb500da2c0ed280a0ec382e3aceaff26",
+    "scene": {
+     "batch": {
+      "length": 0.19805205785477145,
+      "width": 0.0750801039098795,
+      "row_spacing": 0.0163952206030133,
+      "throat_gap": 0.024033688424701848
+     },
+     "carton": {
+      "L": 0.2342350486789167,
+      "W": 0.16672676885289334,
+      "H": 0.102682156866093
+     },
+     "colours": {
+      "upper": "teal",
+      "sole": "black",
+      "lace": "sky"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.045548665378518,
+       "way": "turned",
+       "pos": [
+        0.2948015931560969,
+        0.35510054454570195
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 2.931077311057951,
+       "way": "turned",
+       "pos": [
+        0.524710880025882,
+        0.3462764214884754
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.2912327028161958,
+       -0.2268991229906196
+      ],
+      "yaw": 0.0765657228271781,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.38616763930379006,
+       0.1378903768976124
+      ],
+      "yaw": 3.1503601204207463,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00011943403114230925,
+      "rest_pos": [
+       0.3861676529270992,
+       0.1378902582431003,
+       0.03099016319818363
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.0020233046335873077,
+       0.015759288098857734,
+       -0.017571808545975537
+      ],
+      "light": [
+       1.0632062921072047,
+       0.9768135844574983,
+       1.0485018244819522
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 19.415977744108293,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00034904320838593486,
+      "shoe1": 3.8500681466038006e-05,
+      "lid": 7.150790156802243e-07,
+      "blank": 2.1134089079288487e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 6.360997710696719e-07,
+      "shoe1": 1.9714242711554786e-07,
+      "lid": 3.5587779674145654e-08,
+      "blank": 1.0548892405731775e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 17,
+   "batch": 1,
+   "seed": 4106710539165904282,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 4106710539165904282,
+    "label": "pr48fix-c2-17",
+    "started_utc": "2026-11-07T04:29:26Z",
+    "finished_utc": "2026-11-07T04:42:57Z",
+    "wall_s": 811.315735578537,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 524.3800000014238,
+    "ticks": 52438,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 807.0854918956757,
+    "cell_work_s": 1.1441149711608887,
+    "episode_wall_s": 808.2476582527161,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33420305754118673
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6341798004845927
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33337897570786074
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6319100393705914
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99566015239498,
+         "back": 90.03612101654582,
+         "left": 89.99519448364428,
+         "right": 89.99338352069873
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5785497655514223,
+         -0.12219362140809857,
+         -8.206852991242351e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 523.7300000014392
+     }
+    ],
+    "slips": 0,
+    "n_events": 49,
+    "events_sha256": "b844724ff13c61f71aa745761e4209d5bda88528e2a2a2ea0620850b7edd9b15",
+    "final_qpos_sha256": "2f5cc3365492259a3c316f1e4c019471afa082d55167d5452c0f0352e200625a",
+    "scene": {
+     "batch": {
+      "length": 0.17115669168016495,
+      "width": 0.07282414357297631,
+      "row_spacing": 0.018506690381319944,
+      "throat_gap": 0.027535470991278573
+     },
+     "carton": {
+      "L": 0.2185353267874175,
+      "W": 0.1634758500991889,
+      "H": 0.09464320156721076
+     },
+     "colours": {
+      "upper": "blue",
+      "sole": "black",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.2491403931462814,
+       "way": "turned",
+       "pos": [
+        0.2880744128605149,
+        0.3465708830743517
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": -0.03532983714288074,
+       "way": "as drawn",
+       "pos": [
+        0.5195668196418379,
+        0.3632437428317414
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.3006696786175388,
+       -0.23430066194635096
+      ],
+      "yaw": 0.04263903571177727,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.38360422256030663,
+       0.13470144526220965
+      ],
+      "yaw": 0.015132720915643078,
+      "rest": "flat",
+      "tilt_deg": 1.7075472925031877e-06,
+      "moved_mm": 0.00011175947438069594,
+      "rest_pos": [
+       0.383604126334041,
+       0.13470138842308652,
+       0.030990163198183613
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.012269444637771163,
+       0.0040182457698146705,
+       0.08825899163514031
+      ],
+      "light": [
+       1.0433314334995534,
+       0.9138816033843083,
+       1.0864432963144077
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.7075472925031877e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 17.169191750185863,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003196798733991861,
+      "shoe1": 0.000324224725201873,
+      "lid": 7.150762040548726e-07,
+      "blank": 2.111228899571254e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.071664825872946e-07,
+      "shoe1": 3.1008058494980164e-07,
+      "lid": 3.558777964315301e-08,
+      "blank": 1.0538979966599806e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 18,
+   "batch": 1,
+   "seed": 1687601094886790891,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 1687601094886790891,
+    "label": "pr48fix-c2-18",
+    "started_utc": "2026-11-07T04:29:31Z",
+    "finished_utc": "2026-11-07T04:40:46Z",
+    "wall_s": 675.2185392379761,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 475.6800000015432,
+    "ticks": 47568,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 670.8162088394165,
+    "cell_work_s": 1.1710963249206543,
+    "episode_wall_s": 672.013489484787,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3336588345160227
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6370594237238417
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33484617878768813
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6356746765068929
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.02840928507496,
+         "back": 89.99611876026005,
+         "left": 89.99699762999805,
+         "right": 89.99674463519285
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5786065245504716,
+         -0.11511368064568232,
+         3.6110311743218606e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 475.04000000154014
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "b68395aeb1cb8e1b0b6a896055a2a24c6d21763a75619cb37b743ec09b265770",
+    "final_qpos_sha256": "d0e5c3ee2e49c0db5190a9b0a9890256e44e7bb78c806c377547f5b7eaaff615",
+    "scene": {
+     "batch": {
+      "length": 0.17410261111243377,
+      "width": 0.07640475054182047,
+      "row_spacing": 0.016397438630133994,
+      "throat_gap": 0.027582431280555375
+     },
+     "carton": {
+      "L": 0.21435182491697471,
+      "W": 0.16959794518278018,
+      "H": 0.09923725139205632
+     },
+     "colours": {
+      "upper": "red",
+      "sole": "white",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.256673799932102,
+       "way": "turned",
+       "pos": [
+        0.28553382888510387,
+        0.3647882184373866
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.18567915787834,
+       "way": "turned",
+       "pos": [
+        0.5140186158415222,
+        0.3608214536904352
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.31405413192011755,
+       -0.23303112164037337
+      ],
+      "yaw": 3.1881515373262874,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.4162511786156555,
+       0.13511504807374491
+      ],
+      "yaw": 3.1278553357053176,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 1.2732049151653948e-05,
+      "rest_pos": [
+       0.4162511911931806,
+       0.1351150500513542,
+       0.030990163198183623
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.012049209260256804,
+       -0.012887865401448347,
+       -0.03838333717789792
+      ],
+      "light": [
+       0.8140564275899944,
+       1.033572051732378,
+       1.1070239113237692
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 14.715390131267357,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003371290238906145,
+      "shoe1": 0.0003682596809073742,
+      "lid": 7.150797184159506e-07,
+      "blank": 2.1131647453645276e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 5.611987620140896e-07,
+      "shoe1": 5.60103418405038e-07,
+      "lid": 3.558777961892842e-08,
+      "blank": 1.0548488338349835e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 19,
+   "batch": 1,
+   "seed": 6999985246297924752,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 6999985246297924752,
+    "label": "pr48fix-c2-19",
+    "started_utc": "2026-11-07T04:30:07Z",
+    "finished_utc": "2026-11-07T04:43:02Z",
+    "wall_s": 774.5066814422607,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 473.9800000015351,
+    "ticks": 47398,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 770.0825185775757,
+    "cell_work_s": 1.2242543697357178,
+    "episode_wall_s": 771.3243250846863,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3336299078184812
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6235170059241016
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33786140853551716
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6241801943363067
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 89.99610980614088,
+         "back": 90.03382157025891,
+         "left": 90.00033075386736,
+         "right": 89.99897509641674
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5789103312917137,
+         -0.17933192606736584,
+         -0.0002466069818567986
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 473.340000001532
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "46575041bff5cd25f167f6e146e5433215fd133ad669f3fe3c8fe14ef41ea4a5",
+    "final_qpos_sha256": "135c88a5c2ca6b9d75584e9b70c789087a28075ee6844b88610fededdb202b0c",
+    "scene": {
+     "batch": {
+      "length": 0.19515085483722563,
+      "width": 0.07338681061752113,
+      "row_spacing": 0.018263517731598306,
+      "throat_gap": 0.024647364372703547
+     },
+     "carton": {
+      "L": 0.2365324935641977,
+      "W": 0.1605483334016208,
+      "H": 0.1017331008466126
+     },
+     "colours": {
+      "upper": "purple",
+      "sole": "black",
+      "lace": "yellow"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 3.319436411654802,
+       "way": "turned",
+       "pos": [
+        0.2869755933977834,
+        0.3602508483309586
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 2.9863130531811106,
+       "way": "turned",
+       "pos": [
+        0.5165877326829258,
+        0.35154803881017244
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.29090338790841025,
+       -0.23361081122654884
+      ],
+      "yaw": -0.08521575287260293,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.41188510276565354,
+       0.1341376171536458
+      ],
+      "yaw": 3.1687399033361467,
+      "rest": "flat",
+      "tilt_deg": 1.4787793334710982e-06,
+      "moved_mm": 0.00013678961414705174,
+      "rest_pos": [
+       0.4118850854326273,
+       0.13413775284065602,
+       0.030990163198183616
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.0017773814318632238,
+       0.003016054519421111,
+       0.05297809639759388
+      ],
+      "light": [
+       1.1692065578802926,
+       0.8247853619048796,
+       0.9698956278114849
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 1.4787793334710982e-06,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 16.415200764522968,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003236215347812243,
+      "shoe1": 0.0003640861856397424,
+      "lid": 7.150787613837976e-07,
+      "blank": 2.1135957112889355e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.0882324325583523e-07,
+      "shoe1": 4.5803768603123467e-07,
+      "lid": 3.558777972355187e-08,
+      "blank": 1.0550455344053705e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 20,
+   "batch": 1,
+   "seed": 5483866023544768705,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 5483866023544768705,
+    "label": "pr48fix-c2-20",
+    "started_utc": "2026-11-07T04:30:24Z",
+    "finished_utc": "2026-11-07T04:44:17Z",
+    "wall_s": 832.9069917201996,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 463.0300000014828,
+    "ticks": 46303,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 828.680445432663,
+    "cell_work_s": 1.2458088397979736,
+    "episode_wall_s": 829.9441633224487,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3496442635444146
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6491879925043083
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3484621095857904
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6515780958154173
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.03416869333459,
+         "back": 89.99620161144937,
+         "left": 89.99393021411922,
+         "right": 89.99706354009972
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5789439936735101,
+         -0.1857581140585792,
+         -5.2365871495420755e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 462.39000000147973
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "4fff45b1c7b375e1c7042a95eed5fafbb7d981dbdbd5f4850c43325bcedf4462",
+    "final_qpos_sha256": "4212366708a7a6f67b76866037bd01fd703d179f5afde35d46d0224f03dd9872",
+    "scene": {
+     "batch": {
+      "length": 0.18450362451078353,
+      "width": 0.07745636779159872,
+      "row_spacing": 0.018978641109783194,
+      "throat_gap": 0.02635359208120858
+     },
+     "carton": {
+      "L": 0.219564186776311,
+      "W": 0.1671539154891062,
+      "H": 0.10152419946143762
+     },
+     "colours": {
+      "upper": "orange",
+      "sole": "grey",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.04805875741775867,
+       "way": "as drawn",
+       "pos": [
+        0.2943349482831766,
+        0.357596107919447
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 3.1044908309546497,
+       "way": "turned",
+       "pos": [
+        0.5110280710445124,
+        0.35448864117875584
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.28682604503383,
+       -0.20631148985098194
+      ],
+      "yaw": 3.0437786562457028,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.38307325965046607,
+       0.1341961725465038
+      ],
+      "yaw": 0.02302064498722218,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00011966710120175113,
+      "rest_pos": [
+       0.38307337840922934,
+       0.13419618726286398,
+       0.03099016319818363
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.01233818977548726,
+       -0.015540381040076632,
+       -0.09240143317507792
+      ],
+      "light": [
+       1.0505052412571887,
+       1.1527964250485845,
+       1.0454253040752413
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 13.886806480771595,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00036731554233709966,
+      "shoe1": 0.0003646870294519288,
+      "lid": 7.150776923742452e-07,
+      "blank": 2.1142840384217316e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 3.9678540100674904e-07,
+      "shoe1": 4.680020732369934e-07,
+      "lid": 3.558777964160049e-08,
+      "blank": 1.055331313090368e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 21,
+   "batch": 1,
+   "seed": 7597512152699986438,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 7597512152699986438,
+    "label": "pr48fix-c2-21",
+    "started_utc": "2026-11-07T04:30:28Z",
+    "finished_utc": "2026-11-07T04:43:27Z",
+    "wall_s": 779.4055089950562,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 472.3300000015272,
+    "ticks": 47233,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 775.425549030304,
+    "cell_work_s": 1.0654897689819336,
+    "episode_wall_s": 776.5116181373596,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3479565032484439
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6370993306431713
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3528183785427606
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6370874493602148
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.00222045802253,
+         "back": 90.02954861006553,
+         "left": 90.01416388865469,
+         "right": 90.00589725137927
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5784219043434428,
+         -0.09777129068133548,
+         1.4621231062175853e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 471.6800000015241
+     }
+    ],
+    "slips": 0,
+    "n_events": 45,
+    "events_sha256": "a2a4c879e78114cc256cbfdb78a4ddc3d252b14e0bd995b7b83b39bd2e97480e",
+    "final_qpos_sha256": "fd0edce7e4e93d53152bfd53f561b84549d805bd7d84af5a6088edca7d513d2a",
+    "scene": {
+     "batch": {
+      "length": 0.1733751403881707,
+      "width": 0.07846433934545978,
+      "row_spacing": 0.018538274924184476,
+      "throat_gap": 0.025029700155291032
+     },
+     "carton": {
+      "L": 0.21466776736336643,
+      "W": 0.17577665291611347,
+      "H": 0.09777859253099352
+     },
+     "colours": {
+      "upper": "blue",
+      "sole": "grey",
+      "lace": "pink"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": 1,
+       "yaw": 0.008375937119229626,
+       "way": "as drawn",
+       "pos": [
+        0.2854879021249497,
+        0.35449036142591905
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 0.13338776181150525,
+       "way": "as drawn",
+       "pos": [
+        0.5112643555696024,
+        0.3618512311811586
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.2918049107779899,
+       -0.2058333444131859
+      ],
+      "yaw": 0.11289505541594028,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.42231342824267165,
+       0.1339072947202452
+      ],
+      "yaw": 3.115337260051871,
+      "rest": "flat",
+      "tilt_deg": 0.0,
+      "moved_mm": 0.00011999703395514074,
+      "rest_pos": [
+       0.422313418063419,
+       0.13390717515573972,
+       0.030990163198183634
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       -0.0017725688298963135,
+       0.005258447332117049,
+       0.05688478391437238
+      ],
+      "light": [
+       1.0546533133051408,
+       0.8413537692221024,
+       1.1185088358643953
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 0.0,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 8.972292842407127,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.00039115019453792526,
+      "shoe1": 0.0003570468015199889,
+      "lid": 7.150765566166777e-07,
+      "blank": 2.1114384414071858e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 1.0543010351525225e-06,
+      "shoe1": 6.780733693545306e-07,
+      "lid": 3.558777967420161e-08,
+      "blank": 1.0539739654914235e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 22,
+   "batch": 1,
+   "seed": 310618416587761827,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 310618416587761827,
+    "label": "pr48fix-c2-22",
+    "started_utc": "2026-11-07T04:30:32Z",
+    "finished_utc": "2026-11-07T04:41:27Z",
+    "wall_s": 655.2872292995453,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 466.90000000150127,
+    "ticks": 46690,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 651.2075567245483,
+    "cell_work_s": 1.0651421546936035,
+    "episode_wall_s": 652.28919506073,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.3335212002212087
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.6338614425003531
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.344184711732048
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.635275900795646
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.01542405304558,
+         "back": 90.03476947368257,
+         "left": 90.0132966600685,
+         "right": 89.99964066437546
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5785541678597843,
+         -0.07461127599760926,
+         4.279186871443522e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 466.25000000149817
+     }
+    ],
+    "slips": 0,
+    "n_events": 43,
+    "events_sha256": "6f68da1fb5ad1761ec0b0f086383fca88b715cacbb5a7ed100296778437987ef",
+    "final_qpos_sha256": "ff28b68804d18f1415504d09d464c730b1f9c912b43791a50e77e582d05714fa",
+    "scene": {
+     "batch": {
+      "length": 0.18474413684466015,
+      "width": 0.07485591132319068,
+      "row_spacing": 0.01724582340023626,
+      "throat_gap": 0.027428441116843068
+     },
+     "carton": {
+      "L": 0.2224209246371641,
+      "W": 0.16852218112959155,
+      "H": 0.09935803974219452
+     },
+     "colours": {
+      "upper": "teal",
+      "sole": "grey",
+      "lace": "sky"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 3.234483633519629,
+       "way": "turned",
+       "pos": [
+        0.2835251278052008,
+        0.35169893832207827
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": -0.19763747850375596,
+       "way": "as drawn",
+       "pos": [
+        0.5095696563476538,
+        0.34945650396011924
+       ]
+      }
+     ],
+     "side_lying": 0,
+     "blank": {
+      "pos": [
+       0.29507604105432794,
+       -0.2105445485190108
+      ],
+      "yaw": 0.1396758058290535,
+      "way": "as drawn"
+     },
+     "lid": {
+      "pos": [
+       0.4114657453159133,
+       0.13476579208955725
+      ],
+      "yaw": 3.1147829276213495,
+      "rest": "flat",
+      "tilt_deg": 8.537736462515939e-07,
+      "moved_mm": 1.2268137605847625e-05,
+      "rest_pos": [
+       0.4114657440148902,
+       0.13476577989060076,
+       0.03099016319818362
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.019797063696085273,
+       -0.0026789885842728317,
+       -0.11490236461646482
+      ],
+      "light": [
+       0.8557728634042789,
+       0.9087241944459615,
+       0.9580045623456988
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 8.537736462515939e-07,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 13.289332903970722,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003184442665445053,
+      "shoe1": 0.00032403379703210974,
+      "lid": 7.15071869453985e-07,
+      "blank": 2.1124898100095008e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 2.556463118388637e-07,
+      "shoe1": 3.555316996900769e-07,
+      "lid": 3.558777961480652e-08,
+      "blank": 1.0545215653789516e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  },
+  {
+   "draw": 23,
+   "batch": 1,
+   "seed": 2350025180672298079,
+   "status": "after_cutoff",
+   "result": {
+    "seed": 2350025180672298079,
+    "label": "pr48fix-c2-23",
+    "started_utc": "2026-11-07T04:30:35Z",
+    "finished_utc": "2026-11-07T04:41:37Z",
+    "wall_s": 661.2626566886902,
+    "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+    "frozen_ok": true,
+    "frozen_differs": [],
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "mujoco": "3.14.0",
+    "cpus_visible": 16,
+    "blas_env": {
+     "OPENBLAS_NUM_THREADS": "2",
+     "OMP_NUM_THREADS": "2",
+     "OPENBLAS_CORETYPE": null
+    },
+    "work_score": 1.0,
+    "safety_ok": true,
+    "violations": [],
+    "done_reason": "finish",
+    "end_reason": "finish",
+    "internal_errors": 0,
+    "illegal_call_count": 0,
+    "sim_time_s": 477.2100000015505,
+    "ticks": 47721,
+    "step_calls": 0,
+    "calls": {
+     "describe": 1,
+     "get_camera": 2,
+     "reference_run": 1,
+     "finish": 1
+    },
+    "camera_frames_total": 2,
+    "program_time_s": 656.9235067367554,
+    "cell_work_s": 1.1287682056427002,
+    "episode_wall_s": 658.0700385570526,
+    "pairs": [
+     {
+      "credit": 1.0,
+      "safety_void": false,
+      "milestones": {
+       "lacing_a": 1.0,
+       "lacing_b": 1.0,
+       "erected": 1.0,
+       "packed": 1.0,
+       "closed": 1.0,
+       "shipped": 1.0
+      },
+      "detail": {
+       "lacing_a": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.33407576559145896
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.621604025732154
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "lacing_b": {
+        "snug_fraction": 1.0,
+        "tail_a": [
+         [
+          2,
+          "R",
+          -1,
+          0.27037735045928946
+         ]
+        ],
+        "tail_b": [
+         [
+          2,
+          "L",
+          -1,
+          0.5708763131923842
+         ]
+        ],
+        "rows_credited": 1
+       },
+       "laced_fraction": 1.0,
+       "carton": {
+        "erected": true,
+        "wall_angles_deg": {
+         "front": 90.03892594806338,
+         "back": 89.99564264385896,
+         "left": 89.99282401914321,
+         "right": 89.99672524740838
+        },
+        "locked": {
+         "front": true,
+         "back": true,
+         "left": true,
+         "right": true,
+         "lid": false,
+         "flap": false
+        },
+        "floor_pos": [
+         0.5779436568425267,
+         -0.16712901008423062,
+         -1.1809458617212449e-05
+        ],
+        "closed": true
+       },
+       "inside": [
+        true,
+        true
+       ],
+       "heel_to_toe": true
+      },
+      "shipped_at": 476.57000000154744
+     }
+    ],
+    "slips": 0,
+    "n_events": 47,
+    "events_sha256": "ac555bde081a6741abbf31eaf4cbef4b1bd654382df5663343936d2365714b36",
+    "final_qpos_sha256": "237a1242be4fa057462ddbdac95d2553001515b66316513469076a8581f3e8f1",
+    "scene": {
+     "batch": {
+      "length": 0.19094161333098084,
+      "width": 0.07980067855229542,
+      "row_spacing": 0.018493422661929573,
+      "throat_gap": 0.026357508657134654
+     },
+     "carton": {
+      "L": 0.24008202306356305,
+      "W": 0.17357753168548645,
+      "H": 0.09650745396696524
+     },
+     "colours": {
+      "upper": "blue",
+      "sole": "grey",
+      "lace": "sky"
+     },
+     "shoes": [
+      {
+       "side": "A",
+       "on_side": false,
+       "side_sign": -1,
+       "yaw": 2.9917942914787607,
+       "way": "turned",
+       "pos": [
+        0.2797184293533662,
+        0.3511083433721602
+       ]
+      },
+      {
+       "side": "B",
+       "on_side": true,
+       "side_sign": -1,
+       "yaw": 3.117247404796966,
+       "way": "turned",
+       "pos": [
+        0.5188042607868747,
+        0.36694258737149527
+       ]
+      }
+     ],
+     "side_lying": 1,
+     "blank": {
+      "pos": [
+       0.29180127826821195,
+       -0.2269770357094222
+      ],
+      "yaw": 3.069571301358473,
+      "way": "turned"
+     },
+     "lid": {
+      "pos": [
+       0.37697037528218447,
+       0.13256616020100598
+      ],
+      "yaw": 0.02675448425607184,
+      "rest": "flat",
+      "tilt_deg": 8.537736462515939e-07,
+      "moved_mm": 0.00011725648660981713,
+      "rest_pos": [
+       0.3769703625948676,
+       0.13256604363293298,
+       0.03099016319818362
+      ]
+     },
+     "jitter": {
+      "cradle": [
+       0.004240064916766036,
+       -5.2415894803072016e-05,
+       0.08822536622673854
+      ],
+      "light": [
+       1.0098380133151243,
+       1.007477658004173,
+       0.916612729952177
+      ]
+     }
+    },
+    "start_state": {
+     "deep": {},
+     "lid_tilt_deg": 8.537736462515939e-07,
+     "lid_rim_contact_N": 0.0,
+     "lid_inside_rim_mm": 8.333151397775536,
+     "lace_in_lid": {},
+     "idle_s": 1.0,
+     "moved_mm": {
+      "shoe0": 0.0003469365422222948,
+      "shoe1": 1.4946260524006389e-05,
+      "lid": 7.150774479545973e-07,
+      "blank": 2.1081598255630746e-07
+     },
+     "speed_t0_m_s": {
+      "shoe0": 4.2662955129813465e-07,
+      "shoe1": 2.172494744809676e-07,
+      "lid": 3.558777966100098e-08,
+      "blank": 1.0524668502246373e-08
+     },
+     "ok": true,
+     "why_not": []
+    },
+    "passes": true
+   },
+   "outcome": "passes"
+  }
+ ],
+ "runs": [
+  {
+   "collected_utc": "2026-11-07T04:44:39Z",
+   "candidates": 24,
+   "first_start_utc": "2026-11-07T04:18:07Z",
+   "last_finish_utc": "2026-11-07T04:44:17Z",
+   "image_id": "sha256:42897dfdf2495639f6066e8953022616928fd1c5ca1dedb617da327f1859129a",
+   "python": [
+    "3.12.14"
+   ],
+   "cpus_visible": [
+    16
+   ],
+   "blas_env": {
+    "OPENBLAS_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_CORETYPE": null
+   },
+   "results": "the per-run records (<draw>.json, .summary.json, .stderr): the maintainers' run folder on apollo, not shipped",
+   "note": "24 containers, one per candidate, 16 at a time (the last 8 as slots freed), each --network none, --cpuset-cpus 32-47 --cpus 1 --memory 8g (the verifier's OpenBLAS thread count: 2); from 04:37Z beside the camera-only localisation runs of the maintainers (perception2, 6 jobs on cores 40-47)"
+  }
+ ],
+ "set": {
+  "made_utc": "2026-11-07T04:44:39Z",
+  "size": 6,
+  "kept": [
+   0,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "dropped": [
+   1
+  ],
+  "after_cutoff": [
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ],
+  "seeds_sha256": "2739737ad20dcb770bc6e474d4bd66747ff49b76d613e5c61ff7b50c256432ec",
+  "hollowing": {
+   "side_lying_kinds_all": [
+    0,
+    1,
+    2
+   ],
+   "side_lying_kinds_kept": [
+    0,
+    1,
+    2
+   ],
+   "missing": [],
+   "missing_cause": {},
+   "hollow": false
+  }
+ },
+ "amendments": [
+  {
+   "amended_utc": "2026-11-07T23:52:00Z",
+   "commit": "26749c5",
+   "what": "the agent cameras' renderer (render only; the owner's request of 2026-11-07, the OVRTX light baked into Filament): the colour from MuJoCo's Filament renderer on a render twin of the cell in the dressed factory hall (tests/shoecell/look.py), the depth from the classic renderer on a depth twin (the cell's own geometry plus the hall); the rig gets the scene (physics.py: one argument); the cell manual says what the cameras see (given_hashes.json); the image adds Mesa's lavapipe and the render bundle (environment/Dockerfile). The physics model, the reference and the scoring are unchanged: the reference's privileged run reads two frames, the random generators of the scene and of the sensor noise are untouched.",
+   "image": {
+    "tag": "pr48fil-task:26749c5",
+    "id": "sha256:51b0ed5d0bd9fba453eff8444347529ec5399a79dd29e44b0e1a42fe8e003d82",
+    "built_from": "environment/ at 26749c5"
+   },
+   "frozen": {
+    "environment/Dockerfile": "18435ab0cca992f23daf95a1e5c7d3560a0ae636f735e293bec59227d1fe1a2a",
+    "environment/obj2stl.py": "7f85012a35cbb2d22838b76fcae1ffc952413a13d2326eb1be51d220feb147cb",
+    "environment/panda_assets.sha256": "9ee816910981b5e3d4b6b01c6364ed06ddf32e883c74c8b6dec99a934b0002b6",
+    "environment/panda_converted.sha256": "561687a640e3f9032ca52775286403ea54cfac266192528dcfd3d5956f1b3a57",
+    "environment/requirements.txt": "dba20169dfe6fbb6944d9add5eb9fe50c7266e1196f9e41d3f89ae2d117436f1",
+    "solution/reference/oracle_token": "def4452377b8828b81c4903e22d08ae9ecc7cbd18c3656fd17fede327d16fb83",
+    "solution/reference/packer.py": "ce3989e272d4bc0ec8ee5982b7bc315c6847e26a8b7402c8ce5b854daee13669",
+    "solution/solve.sh": "2966bd65db07f9f7224a5ad6ab9f33a16906591f546ab3313d18149b27de0a93",
+    "tests/cellkit/__init__.py": "d4bfa1914b9b27b6ea92fc97ddf6ff742013df04fa375e783b02de48b42fb6ef",
+    "tests/cellkit/lockdown.py": "a713a867eaac37b9136cb2a4c6167720f6240ee92c780fc57fb0fe2f484c62e7",
+    "tests/cellkit/netaudit.py": "e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916",
+    "tests/cellkit/runner.py": "789d6b24d38f236fee9d729ce95842c82beb0ae4350058065de191363a668fe7",
+    "tests/cellkit/seeds.py": "2f10e1ffb773baf3a0d46018aefae33d94a7f8f43cc6c7e48da70182f129f2d9",
+    "tests/cellkit/verify_freeze.py": "9ff33af6c611623831c82766549cbd2b92409b224f0eb3dd4e7ec16c37de5ca5",
+    "tests/cellkit/wire.py": "92be82fbb16953a4d57429b046ef5711078340cc60ac5f029dc3954de9985a25",
+    "tests/given_hashes.json": "42ec8f55671985ed321e82a8cdb8e555d06988f7e3bc3ff7a4942cac3c02fde9",
+    "tests/grader_config.json": "9f8e691d4e935ce8fa96d4cacc08efcf98da2a6d1ce7c285f2aed14b42fca5fd",
+    "tests/hidden/oracle_token.sha256": "d1f177ed547a767640c0922cdc00382cc4e47130d54d759cf7763c115652fad2",
+    "tests/reference/box_skills.py": "74796a01ba36107f93faf549b9a7b41dad17488727489fa80bb8d2d3272346d8",
+    "tests/reference/controller.py": "6b286ec8cd91cee36c7b0d3b2c1c68498b55c49aa9dac571d07aa3c019ce2147",
+    "tests/reference/lace_skills.py": "866bc22f7b58b70757dcfb5623f9321f57fa368a55b135ea8b6f033fa866e5aa",
+    "tests/reference/primitives.py": "f29ac9d93cb7773ca19e24334f04279808b2880eeec05059ed7edfa34098c573",
+    "tests/shoecell/__init__.py": "39de8cf0c2b0ec3575c52811a0a47de8048ece3a0578cadf78c53d4b6c26a799",
+    "tests/shoecell/cameras.py": "1304eca5a8da8c79838cce51fb3c4752f7a1c7e83c3e1037df538fd31deac56f",
+    "tests/shoecell/carton.py": "36164d689176f52a47a423c2beae7dc704f45debb900c70ae7246c8b435c2722",
+    "tests/shoecell/cell.py": "7f829e8bc9f1f5d1bbe5d5e4799663f428a178469c89893041e72c7f348b9b42",
+    "tests/shoecell/client.py": "a12ff8379f1459c811105205064a4dd83ca0808d2ecc14f130c65967105ecf5c",
+    "tests/shoecell/control.py": "c96421b4ea0e9b971ac80a94bb920037eabdce65965a5ae4e5e79593dab6836d",
+    "tests/shoecell/episode.py": "c0539806f341a4109d1956a7ae8a82aeb3f3a0781dd02e547062291f88c7794c",
+    "tests/shoecell/grasp.py": "fda1fcb04aa4fb2813981a96f9fd369c656eabb7cdf52405bee0b292157ee52f",
+    "tests/shoecell/lace.py": "e3ef6d87617e3e5b8134e39f297595a704c1aad5466c312207590c8f91f2c977",
+    "tests/shoecell/local.py": "a02f6132cb915cbbdb771280d2e657ed8da4b950c08f58efb3db3779b911e071",
+    "tests/shoecell/look.py": "9d53ca325d87e6e562090b12f8a04f7e4daf76586acc40501c5728132d496108",
+    "tests/shoecell/physics.py": "1df1916f61431dcb21cfb296c415ed83baaf5491147606771fc481e0175c09c7",
+    "tests/shoecell/practice.py": "a4599a623ff8cd92a4dd139dcf154ad44a7adb3f7534594a1f83bfeb37877adc",
+    "tests/shoecell/server.py": "1016553d5848915a187b24dd288ad143acea2d038c644188f785bad9a772f1b2",
+    "tests/shoecell/shoe.py": "d64d0e66b381e8d93124944a70f957854383e35e0d59b3148e281af6c33f894f",
+    "tests/test.sh": "917c4ddbae2ca665ddf638fe4e37a6281548246233c09cda149fb2de44a0f1dd",
+    "tests/verify.py": "eae59dddc5fad84a486f9581c7132e2cc9f804d9dcb024d2c1ada6afcb7a9cff"
+   },
+   "changed": [
+    "environment/Dockerfile",
+    "tests/given_hashes.json",
+    "tests/shoecell/cameras.py",
+    "tests/shoecell/look.py",
+    "tests/shoecell/physics.py"
+   ],
+   "check": {
+    "run": "pr48fil-verify-2",
+    "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)"
+   }
+  }
+ ]
+}
