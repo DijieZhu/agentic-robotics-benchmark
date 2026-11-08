@@ -1,0 +1,37 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/unmanned_aerial_vehicle_requirements_replica_from_photos"
+
+[metadata]
+platform = "uav"
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root
+# in the agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead
+# of /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The
+# verifier has everything the grader reads: tests/ (gt.json, schemas.json, anchor.json, grade.py, procedure.py, the
+# kit), the image's /opt/venv and the restored submission. environment/setup/setup.sh does not run there, and verify
+# reads nothing it stages. Its machine: the grader is static and single-threaded (test.sh pins the BLAS threads to 1);
+# on the oracle submission, in a container of the task image limited to 2 CPUs and 4 GB, it used 9.6 s of one CPU
+# (10.3 s wall, most of it the economy criterion's search over all 6,912 candidate BOMs) and peaked at 44 MB RSS, so
+# 2 CPUs and 4 GB, no GPU, leave ample room for the base image's desktop session. timeout_sec also covers the
+# verifier's start, the restore of the submission and the stage upload, far inside 900 s.
+[verifier]
+timeout_sec = 900
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

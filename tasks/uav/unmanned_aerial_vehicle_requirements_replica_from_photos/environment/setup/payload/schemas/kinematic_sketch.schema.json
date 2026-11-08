@@ -1,0 +1,1032 @@
+{
+  "type": "object",
+  "properties": {
+    "dimensions_mm": {
+      "type": "object",
+      "properties": {
+        "motor_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "motor_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "frame_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "frame_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "frame_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "guard_inner_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "motor_mount_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_bay_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_bay_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_bay_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "sensor_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "sensor_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_box_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_box_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "payload_box_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "sensor_box_x_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "sensor_box_y_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "sensor_box_z_mm": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "motor_x_mm",
+        "motor_y_mm",
+        "frame_x_mm",
+        "frame_y_mm",
+        "frame_z_mm",
+        "guard_inner_mm",
+        "motor_mount_mm",
+        "battery_bay_x_mm",
+        "battery_bay_y_mm",
+        "battery_bay_z_mm",
+        "battery_x_mm",
+        "battery_y_mm",
+        "battery_z_mm",
+        "payload_x_mm",
+        "payload_y_mm",
+        "payload_z_mm",
+        "sensor_x_mm",
+        "sensor_z_mm",
+        "payload_box_x_mm",
+        "payload_box_y_mm",
+        "payload_box_z_mm",
+        "sensor_box_x_mm",
+        "sensor_box_y_mm",
+        "sensor_box_z_mm"
+      ],
+      "additionalProperties": false
+    },
+    "rotor_cant_deg": {
+      "type": "object",
+      "properties": {
+        "FL": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "FR": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "RL": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "RR": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "additionalProperties": false
+    },
+    "rotor_radial_tilt_deg": {
+      "type": "object",
+      "properties": {
+        "FL": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "FR": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "RL": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "RR": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "nominal",
+            "tolerance",
+            "sources"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "additionalProperties": false
+    },
+    "spin": {
+      "type": "object",
+      "properties": {
+        "FL": {
+          "enum": [
+            "CW",
+            "CCW"
+          ]
+        },
+        "FR": {
+          "enum": [
+            "CW",
+            "CCW"
+          ]
+        },
+        "RL": {
+          "enum": [
+            "CW",
+            "CCW"
+          ]
+        },
+        "RR": {
+          "enum": [
+            "CW",
+            "CCW"
+          ]
+        }
+      },
+      "required": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "dimensions_mm",
+    "rotor_cant_deg",
+    "rotor_radial_tilt_deg",
+    "spin"
+  ],
+  "additionalProperties": false
+}

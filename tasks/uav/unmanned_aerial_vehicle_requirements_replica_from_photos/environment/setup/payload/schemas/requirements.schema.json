@@ -1,0 +1,569 @@
+{
+  "type": "object",
+  "properties": {
+    "facets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "unit": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "value",
+          "unit",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "derived": {
+      "type": "object",
+      "properties": {
+        "thrust_min_FL_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_min_FR_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_min_RL_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_min_RR_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_peak_FL_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_peak_FR_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_peak_RL_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "thrust_peak_RR_n": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_peak_FL_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_peak_FR_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_peak_RL_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_peak_RR_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_rms_FL_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_rms_FR_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_rms_RL_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "esc_rms_RR_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "battery_peak_a": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "minimum_voltage_v": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        },
+        "mission_energy_wh": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(B-0?[1-9]|B-1[0-2]|BL-0[1-8]|PH-(0[1-9]|1[0-2])|DS-0[1-8]|LR-[AB]|Q-01)$"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "sources"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "facets",
+    "derived"
+  ],
+  "additionalProperties": false
+}

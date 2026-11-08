@@ -1,0 +1,197 @@
+facets:
+- id: replica_count
+  value: 8
+  unit: count
+  sources:
+  - B-01
+- id: core_policy
+  value: retain
+  unit: text
+  sources:
+  - B-01
+- id: control_stack
+  value: PX4/ROS2
+  unit: text
+  sources:
+  - B-01
+- id: payload_mass
+  value: 0.445
+  unit: kg
+  sources:
+  - PH-12
+- id: mission_duration
+  value: 252
+  unit: s
+  sources:
+  - B-07
+- id: auxiliary_power
+  value: 38
+  unit: W
+  sources:
+  - B-07
+- id: tip_clearance
+  value: 2
+  unit: mm
+  sources:
+  - B-05
+- id: reserve_fraction
+  value: 0.2
+  unit: '1'
+  sources:
+  - B-07
+- id: delivered_lot
+  value: B
+  unit: text
+  sources:
+  - Q-01
+  - LR-B
+- id: battery_series
+  value: 6
+  unit: count
+  sources:
+  - B-03
+- id: motor_mount
+  value: 16
+  unit: mm
+  sources:
+  - BL-03
+  - B-05
+- id: old_envelope_status
+  value: superseded
+  unit: text
+  sources:
+  - BL-02
+derived:
+  battery_peak_a:
+    value: 47.53133643353709
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  minimum_voltage_v:
+    value: 19.718864238169363
+    unit: V
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  mission_energy_wh:
+    value: 54.797239487931876
+    unit: Wh
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_min_FL_n:
+    value: 4.716905479015522
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_peak_FL_a:
+    value: 22.650491320720256
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_peak_FL_n:
+    value: 14.299124547681263
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_rms_FL_a:
+    value: 11.928876989467353
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_min_FR_n:
+    value: 4.909608002956812
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_peak_FR_a:
+    value: 16.067234433419397
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_peak_FR_n:
+    value: 10.640388809479084
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_rms_FR_a:
+    value: 10.107971009785855
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_min_RL_n:
+    value: 1.199353199462835
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_peak_RL_a:
+    value: 21.255258863685512
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_peak_RL_n:
+    value: 13.301515751904153
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_rms_RL_a:
+    value: 9.650026457515812
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_min_RR_n:
+    value: 3.855600065526577
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_peak_RR_a:
+    value: 17.236712268129736
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  thrust_peak_RR_n:
+    value: 11.096921040331154
+    unit: N
+    sources:
+    - B-09
+    - LR-B
+    - PH-02
+  esc_rms_RR_a:
+    value: 9.125829395226209
+    unit: A
+    sources:
+    - B-09
+    - LR-B
+    - PH-02

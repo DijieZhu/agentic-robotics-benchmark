@@ -1,0 +1,8 @@
+{
+  "metric": "requirements_score",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 1.0,
+  "note": "requirements_score is the weighted mean of the five criteria, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+  "source": "the oracle's own measured requirements_score under ale validate: the static, deterministic grader scores the oracle submission (the reference unit's answer) exactly 1.0 on all five criteria on every run. First measured on this instance (R10) by validate-cc5767e0 on engine 90a7c1c (2026-10-29); re-measured on engine 1cdbc02 with separate verification and the assets on the dataset's main branch, the run named in the pull request"
+}

@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "motors": {
+      "type": "object",
+      "properties": {
+        "FL": {
+          "enum": [
+            "VM-23",
+            "VM-25",
+            "VM-28",
+            "VM-32"
+          ]
+        },
+        "FR": {
+          "enum": [
+            "VM-23",
+            "VM-25",
+            "VM-28",
+            "VM-32"
+          ]
+        },
+        "RL": {
+          "enum": [
+            "VM-23",
+            "VM-25",
+            "VM-28",
+            "VM-32"
+          ]
+        },
+        "RR": {
+          "enum": [
+            "VM-23",
+            "VM-25",
+            "VM-28",
+            "VM-32"
+          ]
+        }
+      },
+      "required": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "additionalProperties": false
+    },
+    "propeller": {
+      "enum": [
+        "VP-48H",
+        "VP-51",
+        "VP-525"
+      ]
+    },
+    "esc": {
+      "enum": [
+        "VE-28",
+        "VE-35",
+        "VE-45"
+      ]
+    },
+    "battery": {
+      "enum": [
+        "VB-36",
+        "VB-42",
+        "VB-50"
+      ]
+    }
+  },
+  "required": [
+    "motors",
+    "propeller",
+    "esc",
+    "battery"
+  ],
+  "additionalProperties": false
+}
