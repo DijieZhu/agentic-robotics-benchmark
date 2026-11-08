@@ -9,10 +9,10 @@ tests/review/select_set.py), and verify.py runs that list as it stands. The cell
 agent's givens and the grader's copy of the givens) are byte-identical and pinned by tests/given_hashes.json, and the
 lid tray's delivery spot keeps even the biggest lid inside the rim. The files the set was selected with (the reference, the cell, the grader, the
 image's inputs) are unchanged since (their sha256 in the selection record), or changed only by a recorded amendment
-that touched the cameras' renderer alone and after which the reference's full verify on the amended image repeated
-every selection run (score, simulated time, ticks and per-pair detail). The anchor is the lowest work_score of the
-recorded full verifies of the privileged submission on the set, with a full_at under which those verifies still read
-reward 1.0. Nothing the agent sees names the token, the set or its selection; the cell library's own mentions of its
+that touched the cameras' renderer alone, or the grader's verify-start lockdown alone, and after which the reference's
+full verify on the amended image repeated every selection run (score, simulated time, ticks and per-pair detail).
+The anchor is the lowest work_score of the recorded full verifies of the privileged submission on the set, with a
+full_at under which those verifies still read reward 1.0. Nothing the agent sees names the token, the set or its selection; the cell library's own mentions of its
 privileged calls (the PR author's public cell code, byte-identical to the grader's) are pinned as they are.
 
 Standard library only (the host-side suite has no numpy): verify.py is read as a syntax tree, not imported.
@@ -55,6 +55,8 @@ AMENDMENTS = SELECTION.get("amendments", [])
 # physics model, the reference and the scoring untouched), the given-file pins that follow it, and the image's inputs
 RENDER_ONLY = ("tests/shoecell/cameras.py", "tests/shoecell/physics.py", "tests/shoecell/look.py",
                "tests/given_hashes.json", "environment/Dockerfile")
+# ... or the grader's verify-start lockdown alone (kind "lockdown": tests/verify.py, nothing an episode runs or scores)
+AMENDABLE = {"renderer": RENDER_ONLY, "lockdown": ("tests/verify.py",)}
 
 
 def current_frozen():
@@ -201,12 +203,13 @@ class FrozenTests(unittest.TestCase):
                              "set and the anchor were measured with the frozen file".format(rel))
         self.assertEqual(sorted(frozen), select_set.frozen_paths(str(TASK)))
 
-    def test_every_amendment_changed_only_the_renderer_and_the_reference_repeated_every_run(self):
+    def test_every_amendment_changed_only_what_its_kind_allows_and_the_reference_repeated_every_run(self):
         prev = SELECTION["frozen"]
         for am in AMENDMENTS:
             changed = sorted(p for p in set(prev) | set(am["frozen"]) if prev.get(p) != am["frozen"].get(p))
             self.assertEqual(changed, am["changed"])
-            self.assertTrue(set(changed) <= set(RENDER_ONLY), set(changed) - set(RENDER_ONLY))
+            allowed = AMENDABLE[am.get("kind", "renderer")]
+            self.assertTrue(set(changed) <= set(allowed), set(changed) - set(allowed))
             self.assertTrue(am.get("what"))
             runs = [v for v in ANCHOR["verifies"] if v["run"] == am["check"]["run"]]
             self.assertEqual(len(runs), 1, "the amendment's check names one recorded verify")

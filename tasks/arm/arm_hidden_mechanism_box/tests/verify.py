@@ -17,7 +17,8 @@ Additions to the kit wire (the vendored kit stays byte-identical):
   * A start-up self-test proves the network block (`egress_guard`); if the filter cannot be
     installed, /proc/net is polled every step and any agent-UID internet socket zeroes the run.
   * Every agent-UID process is killed (bounded, fail-closed) before the solver starts and after it
-    closes.
+    closes. One that outlives the bounded kill (the base image's supervisord respawns the account's
+    desktop as fast as it is killed) is stopped; only one still running once stopped fails the run.
   * A wall-clock budget below the stage timeout: on overrun the remaining episodes count 0.
   * Every path agent behaviour can reach is charged as a score, never a crash.
 """
@@ -101,6 +102,47 @@ def kill_agent_processes(uid, rounds=20, pause=0.25):
                 pass
         time.sleep(pause)
     return not _agent_pids(uid)
+
+
+def _proc_state(pid):
+    """The /proc state letter of `pid` ("X" once it is gone)."""
+    try:
+        with open("/proc/{}/status".format(pid)) as f:
+            for line in f:
+                if line.startswith("State:"):
+                    return line.split()[1]
+    except (OSError, IndexError):
+        pass
+    return "X"
+
+
+def _still_running(uid, bound_s=3.0):
+    """SIGSTOP every live process of `uid` until a pass finds none still running (a respawn that appears meanwhile is
+    stopped by the next pass) or `bound_s` elapsed; returns the PIDs still running (empty: every one is stopped)."""
+    deadline = time.monotonic() + float(bound_s)
+    while True:
+        for pid in _agent_pids(uid):
+            try:
+                os.kill(pid, signal.SIGSTOP)
+            except OSError:
+                pass
+        time.sleep(0.05)
+        running = [pid for pid in _agent_pids(uid) if _proc_state(pid) not in ("T", "t", "X")]
+        if not running or time.monotonic() > deadline:
+            return running
+
+
+def stop_agent_processes(uid):
+    """kill_agent_processes, then: True when none is left or every one left is stopped. The base image's supervisord
+    respawns the agent account's desktop as fast as it is killed, so in the separate verifier a process that outlives
+    the bounded kill is the image's own; it is stopped (a stopped process does not exit, so it is not respawned) and
+    only one still running once stopped fails the run (cleanup_failed), as before."""
+    if kill_agent_processes(uid):
+        return True
+    running = _still_running(uid)
+    log("{} process(es) of the agent account outlived the kill, {} still running after the freeze".format(
+        len(_agent_pids(uid)), len(running)))
+    return not running
 
 
 class GuardedSolver(Solver):
@@ -313,7 +355,7 @@ def main():
     except KeyError:
         write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None))
         return
-    if not kill_agent_processes(uid):
+    if not stop_agent_processes(uid):
         write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
                                    anchored=anchor is not None))
         return
@@ -340,7 +382,7 @@ def main():
         kill_agent_processes(uid)
         write_verdict(zero_verdict(reason=str(exc)[:200], anchored=anchor is not None))
         return
-    cleanup_ok = kill_agent_processes(uid)
+    cleanup_ok = stop_agent_processes(uid)
     measured = sum(scores) / len(scores) if scores else 0.0
     if egress_hits or not cleanup_ok or not math.isfinite(measured) or measured < 0:
         measured = 0.0

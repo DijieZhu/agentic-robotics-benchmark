@@ -5872,6 +5872,65 @@
     "run": "pr48fil-verify-2",
     "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)"
    }
+  },
+  {
+   "amended_utc": "2026-11-08T10:01:02Z",
+   "kind": "lockdown",
+   "commit": "d81821e",
+   "what": "the grader's verify-start lockdown (tests/verify.py: _early_lockdown and two helpers; nothing an episode runs or scores): a process of the agent account that outlives the verify-start kill (the base image's supervisord respawns the desktop it runs as that account as fast as it is killed) is stopped by the account freezer, and only one still running after up to 3 s voids contract_ok, where before any such process did. The image, the cell, the reference, the set and the scoring are unchanged.",
+   "image": {
+    "tag": "pr48fil-task:26749c5",
+    "id": "sha256:51b0ed5d0bd9fba453eff8444347529ec5399a79dd29e44b0e1a42fe8e003d82",
+    "built_from": "environment/ at 26749c5"
+   },
+   "frozen": {
+    "environment/Dockerfile": "18435ab0cca992f23daf95a1e5c7d3560a0ae636f735e293bec59227d1fe1a2a",
+    "environment/obj2stl.py": "7f85012a35cbb2d22838b76fcae1ffc952413a13d2326eb1be51d220feb147cb",
+    "environment/panda_assets.sha256": "9ee816910981b5e3d4b6b01c6364ed06ddf32e883c74c8b6dec99a934b0002b6",
+    "environment/panda_converted.sha256": "561687a640e3f9032ca52775286403ea54cfac266192528dcfd3d5956f1b3a57",
+    "environment/requirements.txt": "dba20169dfe6fbb6944d9add5eb9fe50c7266e1196f9e41d3f89ae2d117436f1",
+    "solution/reference/oracle_token": "def4452377b8828b81c4903e22d08ae9ecc7cbd18c3656fd17fede327d16fb83",
+    "solution/reference/packer.py": "ce3989e272d4bc0ec8ee5982b7bc315c6847e26a8b7402c8ce5b854daee13669",
+    "solution/solve.sh": "2966bd65db07f9f7224a5ad6ab9f33a16906591f546ab3313d18149b27de0a93",
+    "tests/cellkit/__init__.py": "d4bfa1914b9b27b6ea92fc97ddf6ff742013df04fa375e783b02de48b42fb6ef",
+    "tests/cellkit/lockdown.py": "a713a867eaac37b9136cb2a4c6167720f6240ee92c780fc57fb0fe2f484c62e7",
+    "tests/cellkit/netaudit.py": "e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916",
+    "tests/cellkit/runner.py": "789d6b24d38f236fee9d729ce95842c82beb0ae4350058065de191363a668fe7",
+    "tests/cellkit/seeds.py": "2f10e1ffb773baf3a0d46018aefae33d94a7f8f43cc6c7e48da70182f129f2d9",
+    "tests/cellkit/verify_freeze.py": "9ff33af6c611623831c82766549cbd2b92409b224f0eb3dd4e7ec16c37de5ca5",
+    "tests/cellkit/wire.py": "92be82fbb16953a4d57429b046ef5711078340cc60ac5f029dc3954de9985a25",
+    "tests/given_hashes.json": "42ec8f55671985ed321e82a8cdb8e555d06988f7e3bc3ff7a4942cac3c02fde9",
+    "tests/grader_config.json": "9f8e691d4e935ce8fa96d4cacc08efcf98da2a6d1ce7c285f2aed14b42fca5fd",
+    "tests/hidden/oracle_token.sha256": "d1f177ed547a767640c0922cdc00382cc4e47130d54d759cf7763c115652fad2",
+    "tests/reference/box_skills.py": "74796a01ba36107f93faf549b9a7b41dad17488727489fa80bb8d2d3272346d8",
+    "tests/reference/controller.py": "6b286ec8cd91cee36c7b0d3b2c1c68498b55c49aa9dac571d07aa3c019ce2147",
+    "tests/reference/lace_skills.py": "866bc22f7b58b70757dcfb5623f9321f57fa368a55b135ea8b6f033fa866e5aa",
+    "tests/reference/primitives.py": "f29ac9d93cb7773ca19e24334f04279808b2880eeec05059ed7edfa34098c573",
+    "tests/shoecell/__init__.py": "39de8cf0c2b0ec3575c52811a0a47de8048ece3a0578cadf78c53d4b6c26a799",
+    "tests/shoecell/cameras.py": "1304eca5a8da8c79838cce51fb3c4752f7a1c7e83c3e1037df538fd31deac56f",
+    "tests/shoecell/carton.py": "36164d689176f52a47a423c2beae7dc704f45debb900c70ae7246c8b435c2722",
+    "tests/shoecell/cell.py": "7f829e8bc9f1f5d1bbe5d5e4799663f428a178469c89893041e72c7f348b9b42",
+    "tests/shoecell/client.py": "a12ff8379f1459c811105205064a4dd83ca0808d2ecc14f130c65967105ecf5c",
+    "tests/shoecell/control.py": "c96421b4ea0e9b971ac80a94bb920037eabdce65965a5ae4e5e79593dab6836d",
+    "tests/shoecell/episode.py": "c0539806f341a4109d1956a7ae8a82aeb3f3a0781dd02e547062291f88c7794c",
+    "tests/shoecell/grasp.py": "fda1fcb04aa4fb2813981a96f9fd369c656eabb7cdf52405bee0b292157ee52f",
+    "tests/shoecell/lace.py": "e3ef6d87617e3e5b8134e39f297595a704c1aad5466c312207590c8f91f2c977",
+    "tests/shoecell/local.py": "a02f6132cb915cbbdb771280d2e657ed8da4b950c08f58efb3db3779b911e071",
+    "tests/shoecell/look.py": "9d53ca325d87e6e562090b12f8a04f7e4daf76586acc40501c5728132d496108",
+    "tests/shoecell/physics.py": "1df1916f61431dcb21cfb296c415ed83baaf5491147606771fc481e0175c09c7",
+    "tests/shoecell/practice.py": "a4599a623ff8cd92a4dd139dcf154ad44a7adb3f7534594a1f83bfeb37877adc",
+    "tests/shoecell/server.py": "1016553d5848915a187b24dd288ad143acea2d038c644188f785bad9a772f1b2",
+    "tests/shoecell/shoe.py": "d64d0e66b381e8d93124944a70f957854383e35e0d59b3148e281af6c33f894f",
+    "tests/test.sh": "917c4ddbae2ca665ddf638fe4e37a6281548246233c09cda149fb2de44a0f1dd",
+    "tests/verify.py": "0eddd485d5962aa42ad97fbb6b967b43e62b726bca795c48e83bf0c37a61489b"
+   },
+   "changed": [
+    "tests/verify.py"
+   ],
+   "check": {
+    "run": "survivor-shoe-verify-3",
+    "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)"
+   }
   }
  ]
 }

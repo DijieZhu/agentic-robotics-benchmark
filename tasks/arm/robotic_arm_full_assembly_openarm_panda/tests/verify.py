@@ -80,6 +80,30 @@ def log(msg):
     print(msg, file=sys.stderr, flush=True)
 
 
+def _proc_state(pid):
+    """The /proc state letter of `pid` ("X" once it is gone)."""
+    try:
+        with open("/proc/%d/status" % pid) as fh:
+            for line in fh:
+                if line.startswith("State:"):
+                    return line.split()[1]
+    except (OSError, IndexError):
+        pass
+    return "X"
+
+
+def _still_running(uid, bound_s=3.0):
+    """PIDs of the account's live processes that are not stopped, after the freezer has had up to `bound_s` to stop
+    them (a respawn that appears meanwhile is frozen by the next pass); empty when every one is stopped."""
+    deadline = time.time() + float(bound_s)
+    while True:
+        FREEZER[0].freeze_now()
+        time.sleep(0.05)
+        running = [pid for pid in lockdown.live_uid_processes(uid) if _proc_state(pid) not in ("T", "t", "X")]
+        if not running or time.time() > deadline:
+            return running
+
+
 def _early_lockdown():
     out = {"agent_processes_killed": 0.0, "agent_processes_left": 0.0, "stage_locked": 0.0, "stage_parent_locked": 0.0,
            "stage_lock_latency_ms": -1.0, "submission_late_writes": 0.0, "late_writes_quarantined": 0.0, "late_write_gate_active": 0.0,
@@ -95,12 +119,22 @@ def _early_lockdown():
     if uid is not None and uid != 0:
         killed, left = lockdown.stop_and_kill_uid(uid, grace_s=8.0)
         out["agent_processes_killed"], out["agent_processes_left"] = float(killed), float(left)
-        if left:
-            out["reasons"].append("%d process(es) of the agent account survived the kill at verify start" % left)
     # PLAN 21.16: supervisord (the image's PID 1) respawns the agent account's desktop within seconds of the kill, and the
     # respawned session runs the account's autostart entries: every process of the account stays SIGSTOPped (polled every
     # 0.1 s; a stopped process does not exit, so it is not respawned) until the verdict is written
     FREEZER[0] = verify_freeze.AgentFreezer.for_user(AGENT_USER).start()
+    if out["agent_processes_left"]:
+        # The image's supervisord respawns the account's desktop as fast as it is killed, so in the separate verifier a
+        # process that outlives the kill is the image's own (2026-11-07: one respawned desktop process outlived this kill
+        # and set contract_ok 0 before any episode ran). It is frozen with the rest of the account; only a process that
+        # is still running once the freezer had its turn voids the contract.
+        running = _still_running(uid)
+        if running:
+            out["reasons"].append("%d process(es) of the agent account survived the kill at verify start and could not be "
+                                  "stopped" % len(running))
+        else:
+            log("[grader] %d process(es) of the agent account (the image's respawned desktop) outlived the kill at verify "
+                "start: frozen until the verdict" % int(out["agent_processes_left"]))
     out["saved"] = runner.lock_stage(STAGE_DIR)
     out["stage_locked"] = 1.0 if out["saved"] is not None else 0.0
     parent = os.path.dirname(os.path.abspath(STAGE_DIR))

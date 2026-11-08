@@ -9,9 +9,11 @@ does not run in the verifier, so the givens it stages into the agent home are no
 besides the submission is read. given_hashes.json stays in this folder as the maintainers' pin of the givens; this
 grader does not read it. In the separate verifier nothing the agent started is running: the freeze and kill stop only
 the image's own desktop session, which the base image's supervisord runs as the agent account and which this grader
-does not use. The engine restores the submission before it uploads this folder, so no restored entry is late; the
-lockdown, the snapshot and gate G1 stay as defence in depth. A submission root that is not a directory still fails G1;
-a symbolic-link root is not restored at all (the engine copies no link), so G0 then finds the three files missing.
+does not use; supervisord respawns it as fast as it is killed, so a process of it that outlives the bounded kill is
+left stopped (agent_processes_left), and only one that cannot be stopped fails the verify. The engine restores the
+submission before it uploads this folder, so no restored entry is late; the lockdown, the snapshot and gate G1 stay as
+defence in depth. A submission root that is not a directory still fails G1; a symbolic-link root is not restored at all
+(the engine copies no link), so G0 then finds the three files missing.
 """
 import json
 import os
@@ -39,10 +41,35 @@ def live(uid):
     return result
 
 
+def state(pid):
+    try:
+        for line in Path('/proc/%d/status'%pid).read_text().splitlines():
+            if line.startswith('State:'):return line.split()[1]
+    except (OSError,IndexError):pass
+    return 'X'
+
+
+def still_running(uid,bound=3.):
+    # SIGSTOP every live process of uid until a pass finds none still running (a respawn that appears meanwhile is
+    # stopped by the next pass) or bound elapsed; the PIDs still running (empty: every one is stopped).
+    end=time.monotonic()+bound
+    while True:
+        for pid in live(uid):
+            try:os.kill(pid,signal.SIGSTOP)
+            except ProcessLookupError:pass
+        time.sleep(.05)
+        running=[pid for pid in live(uid) if state(pid) not in ('T','t','X')]
+        if not running or time.monotonic()>end:return running
+
+
 def freeze_and_kill(uid):
+    """(processes killed, processes left frozen). The image's supervisord respawns the account's desktop as fast as
+    it is killed, so in the separate verifier a process that outlives the 8 s kill is the image's own: it is stopped
+    (a stopped process does not exit, so it is not respawned) and stays stopped while this grader reads the
+    submission; only one still running once stopped fails the verify, as before."""
     if uid==0:raise RuntimeError('refusing to kill root')
     end=time.monotonic()+8
-    seen=set()
+    seen=set();frozen=0
     while pids:=live(uid):
         seen.update(pids)
         for pid in pids:
@@ -55,9 +82,13 @@ def freeze_and_kill(uid):
                 except ProcessLookupError:pass
         time.sleep(.03)
         if time.monotonic()>end:
-            if live(uid):raise RuntimeError('agent processes survived lockdown')
+            if left:=live(uid):
+                if still_running(uid):raise RuntimeError('agent processes survived lockdown and could not be stopped')
+                frozen=len(left)
+                print('[grader] %d process(es) of the agent account (the image\'s respawned desktop) outlived the '
+                      'kill: stopped'%frozen,file=sys.stderr,flush=True)
             break
-    return len(seen)
+    return len(seen),frozen
 
 
 def snapshot():
@@ -65,8 +96,9 @@ def snapshot():
     # ctime survives tar mtime preservation; measure before any regular-file chmod.
     start=min(p.lstat().st_ctime for p in STAGE.rglob('*') if p.is_file())
     uid=pwd.getpwnam(HOME.name).pw_uid
-    killed=freeze_and_kill(uid)
-    metrics=dict(agent_processes_killed=float(killed),agent_processes_left=0.,gate_g1_submission_integrity=1.)
+    killed,frozen=freeze_and_kill(uid)
+    metrics=dict(agent_processes_killed=float(killed),agent_processes_left=float(frozen),
+                 gate_g1_submission_integrity=1.)
     for p in STAGE.rglob('*'):
         if not p.is_symlink():p.chmod(0o700 if p.is_dir() else 0o600)
     src=HOME/'submission';dst=Path('/opt/uav-submission-snapshot')

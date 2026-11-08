@@ -219,6 +219,15 @@ anchor is the oracle's full or near-full score with `full_at` near 1. Here:
   simulated time, ticks and per-pair detail in all six (each 1.00; verify wall 6669 s on a host shared with other
   runs: the episodes took 1023-1298 s against 610-760 s, the cell's own simulation and frames 5.7-25 s of them). The anchor keeps both verifies; value and
   full_at are unchanged.
+* The lockdown amendment (2026-11-08, the second in `amendments`, kind `lockdown`): `tests/verify.py`'s verify-start
+  lockdown alone. The base image's supervisord respawns the agent account's desktop as fast as the grader kills it,
+  so a process of the account could outlive the verify-start kill and set contract_ok 0 before any episode ran. Such a
+  process is now stopped by the account freezer, and only one still running after up to 3 s voids contract_ok. No
+  episode runs or scores differently, and the image is unchanged (the repository test allows only `tests/verify.py`
+  for this kind). The check is the same as for the renderer amendment: the reference's full verify on the same image
+  (`tests/` of d81821e, run `survivor-shoe-verify-3`) repeated every kept selection run, the same score, simulated
+  time, ticks and per-pair detail in all six (each 1.00; verify wall 4593 s). The anchor keeps all three verifies;
+  value and full_at are unchanged.
 * What the agent sees: `instruction.md` says the hidden episodes use other seeds and that the cell builds their scenes
   with the same code (it said "fresh seeds of the same distribution" before; a selected set is neither). Nothing
   agent-visible names the set, its selection or the token (the repository test); the cell library's own mentions of
