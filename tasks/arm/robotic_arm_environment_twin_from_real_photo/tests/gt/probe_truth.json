@@ -1,0 +1,5107 @@
+{
+ "format": "gt-probe-truth/2",
+ "variants": [
+  "nominal",
+  "mass_x0.5",
+  "mass_x2",
+  "mass_mix_s0",
+  "mass_mix_s1",
+  "friction_0.4",
+  "friction_0.8",
+  "timestep_1ms",
+  "speed_x0.5",
+  "speed_x2",
+  "jitter_s0",
+  "jitter_s1",
+  "jitter_s2",
+  "planes_+3mm",
+  "planes_-3mm",
+  "alt_primitives"
+ ],
+ "excluded_items": [
+  "item_01",
+  "item_06",
+  "item_12",
+  "item_14",
+  "item_15",
+  "item_16"
+ ],
+ "not_lifted": [
+  "item_01",
+  "item_06",
+  "item_12",
+  "item_14",
+  "item_15",
+  "item_16"
+ ],
+ "hold_frames": {
+  "item_01": "drawer",
+  "item_06": "drawer",
+  "item_12": "world",
+  "item_14": "world",
+  "item_15": "drawer",
+  "item_16": "drawer"
+ },
+ "scored_drawer_probe": "drawer:out",
+ "summary": {
+  "n_probes": 14,
+  "n_lift_probes": 13,
+  "n_probes_with_nonempty_gt_set": 7,
+  "n_lift_probes_with_nonempty_gt_set": 6,
+  "probes_with_nonempty_gt_set": {
+   "lift:item_00": {
+    "item_09": "disturbed"
+   },
+   "lift:item_03": {
+    "item_07": "disturbed"
+   },
+   "lift:item_08": {
+    "item_10": "carried",
+    "item_18": "carried"
+   },
+   "lift:item_13": {
+    "item_04": "disturbed"
+   },
+   "lift:item_17": {
+    "item_09": "disturbed"
+   },
+   "lift:item_18": {
+    "item_10": "carried"
+   },
+   "drawer:out": {
+    "item_03": "rides",
+    "item_07": "rides"
+   }
+  },
+  "n_ambiguous_entries": 8,
+  "n_entries": 169
+ },
+ "probes": {
+  "lift:item_00": {
+   "items": {
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.011,
+      0.074,
+      0.003
+     ],
+     "nominal_rot_deg": 0.097
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.01,
+      0.124,
+      -0.002
+     ],
+     "nominal_rot_deg": 0.088
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "disturbed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "disturbed",
+      "mass_x2": "disturbed",
+      "mass_mix_s0": "disturbed",
+      "mass_mix_s1": "disturbed",
+      "friction_0.4": "disturbed",
+      "friction_0.8": "disturbed",
+      "timestep_1ms": "disturbed",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "disturbed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "disturbed",
+      "jitter_s2": "disturbed",
+      "planes_+3mm": "disturbed",
+      "planes_-3mm": "disturbed",
+      "alt_primitives": "disturbed"
+     },
+     "nominal_d_mm": [
+      26.263,
+      -103.618,
+      -60.819
+     ],
+     "nominal_rot_deg": 177.597
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "intermediate",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "intermediate",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "intermediate",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -2.103,
+      -0.912,
+      -0.001
+     ],
+     "nominal_rot_deg": 6.979
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {
+    "item_09": "disturbed"
+   },
+   "ambiguous_items": [
+    "item_17"
+   ],
+   "finite_all_variants": true
+  },
+  "lift:item_02": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_03": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "disturbed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "disturbed",
+      "mass_x2": "disturbed",
+      "mass_mix_s0": "disturbed",
+      "mass_mix_s1": "disturbed",
+      "friction_0.4": "disturbed",
+      "friction_0.8": "disturbed",
+      "timestep_1ms": "disturbed",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "disturbed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "disturbed",
+      "jitter_s2": "disturbed",
+      "planes_+3mm": "disturbed",
+      "planes_-3mm": "disturbed",
+      "alt_primitives": "disturbed"
+     },
+     "nominal_d_mm": [
+      -8.573,
+      3.628,
+      27.519
+     ],
+     "nominal_rot_deg": 29.641
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {
+    "item_07": "disturbed"
+   },
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_04": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.052,
+      -0.017,
+      -0.007
+     ],
+     "nominal_rot_deg": 0.107
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.002,
+      -0.009,
+      0.004
+     ],
+     "nominal_rot_deg": 0.017
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_05": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_07": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.007,
+      0.001
+     ],
+     "nominal_rot_deg": 0.007
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_08": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "carried",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "carried",
+      "mass_x0.5": "carried",
+      "mass_x2": "carried",
+      "mass_mix_s0": "carried",
+      "mass_mix_s1": "carried",
+      "friction_0.4": "carried",
+      "friction_0.8": "carried",
+      "timestep_1ms": "carried",
+      "speed_x0.5": "carried",
+      "speed_x2": "carried",
+      "jitter_s0": "carried",
+      "jitter_s1": "carried",
+      "jitter_s2": "carried",
+      "planes_+3mm": "carried",
+      "planes_-3mm": "carried",
+      "alt_primitives": "carried"
+     },
+     "nominal_d_mm": [
+      0.007,
+      -0.007,
+      40.003
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "carried",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "carried",
+      "mass_x0.5": "carried",
+      "mass_x2": "carried",
+      "mass_mix_s0": "carried",
+      "mass_mix_s1": "carried",
+      "friction_0.4": "carried",
+      "friction_0.8": "carried",
+      "timestep_1ms": "carried",
+      "speed_x0.5": "carried",
+      "speed_x2": "carried",
+      "jitter_s0": "carried",
+      "jitter_s1": "carried",
+      "jitter_s2": "carried",
+      "planes_+3mm": "carried",
+      "planes_-3mm": "carried",
+      "alt_primitives": "carried"
+     },
+     "nominal_d_mm": [
+      0.006,
+      -0.002,
+      40.003
+     ],
+     "nominal_rot_deg": 0.003
+    }
+   },
+   "gt_outcome_set": {
+    "item_10": "carried",
+    "item_18": "carried"
+   },
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_09": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.067,
+      -0.016,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.093
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.066,
+      -0.001
+     ],
+     "nominal_rot_deg": 0.089
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_10": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.003,
+      0.001
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.008,
+      0.003
+     ],
+     "nominal_rot_deg": 0.004
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_11": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "disturbed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "disturbed",
+      "mass_x2": "disturbed",
+      "mass_mix_s0": "intermediate",
+      "mass_mix_s1": "intermediate",
+      "friction_0.4": "disturbed",
+      "friction_0.8": "intermediate",
+      "timestep_1ms": "intermediate",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "disturbed",
+      "jitter_s0": "intermediate",
+      "jitter_s1": "intermediate",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "disturbed",
+      "planes_-3mm": "intermediate",
+      "alt_primitives": "disturbed"
+     },
+     "nominal_d_mm": [
+      7.136,
+      -5.179,
+      0.009
+     ],
+     "nominal_rot_deg": 11.318
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "intermediate",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "intermediate",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.527,
+      -2.496,
+      -0.0
+     ],
+     "nominal_rot_deg": 2.96
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {},
+   "ambiguous_items": [
+    "item_04",
+    "item_13"
+   ],
+   "finite_all_variants": true
+  },
+  "lift:item_13": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.008,
+      0.064,
+      0.001
+     ],
+     "nominal_rot_deg": 0.112
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "disturbed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "disturbed",
+      "mass_x2": "disturbed",
+      "mass_mix_s0": "disturbed",
+      "mass_mix_s1": "disturbed",
+      "friction_0.4": "disturbed",
+      "friction_0.8": "disturbed",
+      "timestep_1ms": "disturbed",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "disturbed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "disturbed",
+      "jitter_s2": "disturbed",
+      "planes_+3mm": "disturbed",
+      "planes_-3mm": "disturbed",
+      "alt_primitives": "disturbed"
+     },
+     "nominal_d_mm": [
+      494.238,
+      -180.862,
+      -73.321
+     ],
+     "nominal_rot_deg": 122.232
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "disturbed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      543.288,
+      215.587,
+      -770.682
+     ],
+     "nominal_rot_deg": 89.96
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.007,
+      0.106,
+      -0.002
+     ],
+     "nominal_rot_deg": 0.09
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "intermediate",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.051,
+      -0.017,
+      -0.007
+     ],
+     "nominal_rot_deg": 0.107
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": false,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {
+    "item_04": "disturbed"
+   },
+   "ambiguous_items": [
+    "item_00",
+    "item_05",
+    "item_09",
+    "item_11",
+    "item_17"
+   ],
+   "finite_all_variants": true
+  },
+  "lift:item_17": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.007,
+      -0.004,
+      -0.002
+     ],
+     "nominal_rot_deg": 0.009
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.002,
+      0.0
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "disturbed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "disturbed",
+      "mass_x0.5": "disturbed",
+      "mass_x2": "disturbed",
+      "mass_mix_s0": "disturbed",
+      "mass_mix_s1": "disturbed",
+      "friction_0.4": "disturbed",
+      "friction_0.8": "disturbed",
+      "timestep_1ms": "disturbed",
+      "speed_x0.5": "disturbed",
+      "speed_x2": "disturbed",
+      "jitter_s0": "disturbed",
+      "jitter_s1": "disturbed",
+      "jitter_s2": "disturbed",
+      "planes_+3mm": "disturbed",
+      "planes_-3mm": "disturbed",
+      "alt_primitives": "disturbed"
+     },
+     "nominal_d_mm": [
+      -23.838,
+      10.319,
+      13.34
+     ],
+     "nominal_rot_deg": 43.386
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.006,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.005,
+      -0.005,
+      0.0
+     ],
+     "nominal_rot_deg": 0.002
+    }
+   },
+   "gt_outcome_set": {
+    "item_09": "disturbed"
+   },
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "lift:item_18": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.033,
+      0.044,
+      0.001
+     ],
+     "nominal_rot_deg": 0.048
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.01,
+      0.064,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.046
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.011,
+      -0.009,
+      0.004
+     ],
+     "nominal_rot_deg": 0.011
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "carried",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "carried",
+      "mass_x0.5": "carried",
+      "mass_x2": "carried",
+      "mass_mix_s0": "carried",
+      "mass_mix_s1": "carried",
+      "friction_0.4": "carried",
+      "friction_0.8": "carried",
+      "timestep_1ms": "carried",
+      "speed_x0.5": "carried",
+      "speed_x2": "carried",
+      "jitter_s0": "carried",
+      "jitter_s1": "carried",
+      "jitter_s2": "carried",
+      "planes_+3mm": "carried",
+      "planes_-3mm": "carried",
+      "alt_primitives": "carried"
+     },
+     "nominal_d_mm": [
+      -0.001,
+      0.006,
+      40.001
+     ],
+     "nominal_rot_deg": 0.002
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    }
+   },
+   "gt_outcome_set": {
+    "item_10": "carried"
+   },
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  },
+  "drawer:out": {
+   "items": {
+    "item_00": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_02": {
+     "label": "SaladDressing",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_03": {
+     "label": "Raisins",
+     "nominal": "rides",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "rides",
+      "mass_x0.5": "rides",
+      "mass_x2": "rides",
+      "mass_mix_s0": "rides",
+      "mass_mix_s1": "rides",
+      "friction_0.4": "rides",
+      "friction_0.8": "rides",
+      "timestep_1ms": "rides",
+      "speed_x0.5": "rides",
+      "speed_x2": "rides",
+      "jitter_s0": "rides",
+      "jitter_s1": "rides",
+      "jitter_s2": "rides",
+      "planes_+3mm": "rides",
+      "planes_-3mm": "rides",
+      "alt_primitives": "rides"
+     },
+     "nominal_d_mm": [
+      -0.903,
+      -49.955,
+      0.0
+     ],
+     "nominal_rot_deg": 0.067
+    },
+    "item_04": {
+     "label": "Corn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_05": {
+     "label": "Parmesan",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_07": {
+     "label": "Spaghetti",
+     "nominal": "rides",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "rides",
+      "mass_x0.5": "rides",
+      "mass_x2": "rides",
+      "mass_mix_s0": "rides",
+      "mass_mix_s1": "rides",
+      "friction_0.4": "rides",
+      "friction_0.8": "rides",
+      "timestep_1ms": "rides",
+      "speed_x0.5": "rides",
+      "speed_x2": "rides",
+      "jitter_s0": "rides",
+      "jitter_s1": "rides",
+      "jitter_s2": "rides",
+      "planes_+3mm": "rides",
+      "planes_-3mm": "rides",
+      "alt_primitives": "rides"
+     },
+     "nominal_d_mm": [
+      -0.873,
+      -50.054,
+      0.004
+     ],
+     "nominal_rot_deg": 0.055
+    },
+    "item_08": {
+     "label": "GranolaBars",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.003,
+      0.001
+     ],
+     "nominal_rot_deg": 0.003
+    },
+    "item_09": {
+     "label": "GreenBeans",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.001,
+      -0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_10": {
+     "label": "Butter",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.001,
+      -0.007,
+      0.001
+     ],
+     "nominal_rot_deg": 0.004
+    },
+    "item_11": {
+     "label": "Pineapple",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_13": {
+     "label": "Cherries",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_17": {
+     "label": "AlphabetSoup",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "nominal_rot_deg": 0.0
+    },
+    "item_18": {
+     "label": "Popcorn",
+     "nominal": "stayed",
+     "unambiguous": true,
+     "per_variant": {
+      "nominal": "stayed",
+      "mass_x0.5": "stayed",
+      "mass_x2": "stayed",
+      "mass_mix_s0": "stayed",
+      "mass_mix_s1": "stayed",
+      "friction_0.4": "stayed",
+      "friction_0.8": "stayed",
+      "timestep_1ms": "stayed",
+      "speed_x0.5": "stayed",
+      "speed_x2": "stayed",
+      "jitter_s0": "stayed",
+      "jitter_s1": "stayed",
+      "jitter_s2": "stayed",
+      "planes_+3mm": "stayed",
+      "planes_-3mm": "stayed",
+      "alt_primitives": "stayed"
+     },
+     "nominal_d_mm": [
+      -0.002,
+      -0.006,
+      0.001
+     ],
+     "nominal_rot_deg": 0.003
+    }
+   },
+   "gt_outcome_set": {
+    "item_03": "rides",
+    "item_07": "rides"
+   },
+   "ambiguous_items": [],
+   "finite_all_variants": true
+  }
+ }
+}

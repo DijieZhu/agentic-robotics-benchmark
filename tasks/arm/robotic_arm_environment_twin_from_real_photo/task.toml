@@ -1,0 +1,63 @@
+# robotic_arm_environment_twin_from_real_photo: one real colour photo of a console table with toy grocery items on its
+# top, on a shelf and in its open drawer (stacks, a bridge, items resting on other items). The agent builds the
+# interactive MuJoCo twin a robot will plan in: every loose item a free body with collision geometry, mass and
+# friction, the console and its sliding drawer, and the photo's camera as photo_cam. It delivers
+# submission/scene.xml + assets/ + objects.json. One NVIDIA RTX GPU in the sandbox for OVRTX renders of the twin.
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json; static, no agent code runs, CPU only, nothing rendered):
+# gates G1 submission integrity (verify-start lockdown) x G0 twin validity (the public gate twin_gate.py, the same
+# code as the agent's check_twin.py, plus the blow-up check of the standard settle) x (C1 inventory 0.15 + C2
+# pose_shape 0.25 + C3 environment 0.10 + C4 static_physics 0.20 + C5 interaction 0.25 + C6 scale 0.05), measured in
+# the true camera frame after the principal-ray turn and one fitted global scale. twin_score = that gated weighted
+# mean; reward = twin_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/robotic_arm_environment_twin_from_real_photo"
+
+[metadata]
+platform = "arm"
+
+# The whole sandbox: OVRTX's first-render shader compile runs on up to 8 CPUs and peaks near 13 GB resident; the
+# agent's own MuJoCo work and an OVRTX render (about 3 GB of GPU memory at 1920 x 1080) run beside it.
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1
+
+# setup: stage the givens (< 5 s), then fill OVRTX's shader cache with one warm-up render as the agent account (cold
+# compile measured 621-1371 s; capped at 1440 s, killed 30 s later; it never fails setup, the engine's setup limit is
+# 1800 s). agent: one photo to an interactive twin, OVRTX renders and the MuJoCo checks (6 h budget). verify: see below.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root
+# in the agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead
+# of /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The
+# verifier has everything the grader reads: tests/ (gt/, grader_config.json, anchor.json, the grading modules,
+# setup_payload/ with the public gate and simulation, the kit), the image's /opt/venv and the restored submission.
+# environment/setup/setup.sh does not run there. The grader renders nothing and needs no GPU. As root it only locks,
+# measures, snapshots and copies the submission; the gate, the compile and every simulation run in a worker process
+# as the unprivileged account `nobody` under a 6 GB address-space limit and a hard timeout planned from the verify
+# deadline.
+# Its machine (worker single-threaded; test.sh pins the BLAS threads to 1): in a container of this image with the
+# verifier's 2 CPUs and 8 GB and the desktop session running, the oracle's test.sh took 26 s (the truth's self-test
+# about half of it), the worker as nobody peaked at 0.37 GB RSS and the whole container at 0.50 GB; on the host every
+# variant of the local QC took at most 39 s and 0.64 GB. The heaviest twins the gate admits (host): 60 items with 1477
+# collision geoms and 1.39 M hull vertices took 302 s (worker peak 2.2 GB), 19 items of 25 pieces x 950 vertices 222 s
+# (1.6 GB). So 2 CPUs and 8 GB, no GPU; timeout_sec covers the heaviest twin about six times over, the verifier's start,
+# the restore of the submission and the stage upload; the worker's hard timeout is planned from the verify deadline, so
+# a slower twin loses criteria, never the verdict.
+[verifier]
+timeout_sec = 1800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 8192
+gpus = 0

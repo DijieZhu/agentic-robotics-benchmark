@@ -1,0 +1,138 @@
+<mujoco model="env_twin_gt">
+  <compiler angle="radian" meshdir="assets" texturedir="assets" autolimits="true" />
+  <option timestep="0.002" integrator="implicitfast" cone="elliptic" impratio="10" solver="Newton" iterations="100" ls_iterations="50" tolerance="1e-10" gravity="0 0 -9.81">
+    <flag autoreset="disable" />
+  </option>
+  <statistic center="0.1 0.1 -0.2" extent="1.5" />
+  <visual>
+    <global offwidth="1920" offheight="1080" />
+    <quality shadowsize="4096" />
+    <map znear="0.02" zfar="10" />
+  </visual>
+  <default>
+    <geom condim="3" solref="0.005 1" solimp="0.95 0.99 0.001 0.5 2" friction="0.6 0.005 0.0001" />
+    <default class="visual" />
+    <default class="item"><geom contype="1" conaffinity="1" group="3" /></default>
+    <default class="furniture"><geom contype="2" conaffinity="1" group="0" /></default>
+    <default class="drawer"><geom contype="4" conaffinity="1" group="0" /></default>
+  </default>
+  <asset>
+    <mesh name="hull_AlphabetSoup" file="AlphabetSoup_hull.stl" inertia="exact" />
+    <mesh name="hull_Butter" file="Butter_hull.stl" inertia="exact" />
+    <mesh name="hull_Cherries" file="Cherries_hull.stl" inertia="exact" />
+    <mesh name="hull_ChocolatePudding" file="ChocolatePudding_hull.stl" inertia="exact" />
+    <mesh name="hull_Corn" file="Corn_hull.stl" inertia="exact" />
+    <mesh name="hull_GranolaBars" file="GranolaBars_hull.stl" inertia="exact" />
+    <mesh name="hull_GreenBeans" file="GreenBeans_hull.stl" inertia="exact" />
+    <mesh name="hull_Mushrooms" file="Mushrooms_hull.stl" inertia="exact" />
+    <mesh name="hull_Mustard" file="Mustard_hull.stl" inertia="exact" />
+    <mesh name="hull_Parmesan" file="Parmesan_hull.stl" inertia="exact" />
+    <mesh name="hull_Pineapple" file="Pineapple_hull.stl" inertia="exact" />
+    <mesh name="hull_Popcorn" file="Popcorn_hull.stl" inertia="exact" />
+    <mesh name="hull_Raisins" file="Raisins_hull.stl" inertia="exact" />
+    <mesh name="hull_SaladDressing" file="SaladDressing_hull.stl" inertia="exact" />
+    <mesh name="hull_Spaghetti" file="Spaghetti_hull.stl" inertia="exact" />
+    </asset>
+  <worldbody>
+    <light name="key" pos="0.1 -0.6 1.6" dir="0 0.35 -1" directional="true" diffuse="0.7 0.7 0.7" specular="0.1 0.1 0.1" castshadow="true" />
+    <light name="fill" pos="0 1.2 1.0" dir="0 -0.6 -0.6" directional="true" diffuse="0.25 0.25 0.25" specular="0 0 0" castshadow="false" />
+    <camera name="photo_cam" pos="-0.000000030 -0.426003142 0.448975105" quat="0.914952231338 0.396585882579 -0.033534182923 -0.066764591554" resolution="1920 1080" sensorsize="0.00576 0.00324" focalpixel="1390.53 1386.99" principalpixel="-4.957 17.414" />
+    <geom name="top_slab" class="furniture" type="box" pos="-0.235075 0.234374 -0.017626" size="0.864925 0.236626 0.02" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="right_side_panel" class="furniture" type="box" pos="0.62085 0.234374 -0.405843" size="0.009 0.236626 0.368217" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="left_side_panel" class="furniture" type="box" pos="-1.091 0.234374 -0.405843" size="0.009 0.236626 0.368217" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="left_divider" class="furniture" type="box" pos="-0.08245 0.236815 -0.214483" size="0.01355 0.234185 0.176857" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="right_divider" class="furniture" type="box" pos="0.2584 0.23531 -0.212643" size="0.0141 0.23569 0.175017" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="left_shelf" class="furniture" type="box" pos="-0.589 0.23539 -0.38234" size="0.493 0.23561 0.009" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="right_shelf" class="furniture" type="box" pos="0.442175 0.21561 -0.37866" size="0.169675 0.25539 0.009" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="middle_shelf" class="furniture" type="box" pos="0.0877 0.23539 -0.37866" size="0.1566 0.23561 0.009" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="back_panel" class="furniture" type="box" pos="-0.235075 0.465 -0.405843" size="0.864925 0.006 0.368217" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    <geom name="left_back" class="furniture" type="box" pos="-0.589 0.21507 -0.205483" size="0.493 0.009 0.167857" quat="1 0 0 0" rgba="0.08 0.08 0.08 1" />
+    <geom name="wall" class="furniture" type="box" pos="0 0.52206 0.61297" size="3 0.03 1.38703" quat="1 0 0 0" rgba="0.83 0.82 0.78 1" />
+    <geom name="room_floor" class="furniture" type="box" pos="0 -1.25397 -0.80406" size="3 1.74603 0.03" quat="1 0 0 0" rgba="0.36 0.25 0.17 1" />
+    <geom name="neighbour_furniture" class="furniture" type="box" pos="0.97463 0.442775 -0.349005" size="0.15 0.049285 0.425055" quat="1 0 0 0" rgba="0.08 0.08 0.08 1" />
+    <body name="drawer" pos="0.0874748 -0.2009802 -0.1752071" quat="0.9999558 0 0 -0.009405049">
+      <joint name="drawer_slide" type="slide" axis="0 1 0" limited="true" range="-0.07805164 0.2135034" />
+      <geom name="drawer_floor" class="drawer" type="box" pos="-1.45e-05 0.1800425 -0.0018863" size="0.137186 0.18 0.004" quat="0.9999842 0.00531451 0.001812516 9.633e-06" rgba="0.9 0.9 0.88 1" />
+      <geom name="drawer_wall_left" class="drawer" type="box" pos="-0.144186 0.18 0.030204" size="0.007 0.18 0.042003" quat="1 0 0 0" rgba="0.9 0.9 0.88 1" />
+      <geom name="drawer_wall_right" class="drawer" type="box" pos="0.144186 0.18 0.029064" size="0.007 0.18 0.040863" quat="1 0 0 0" rgba="0.9 0.9 0.88 1" />
+      <geom name="drawer_back" class="drawer" type="box" pos="0 0.367 0.029064" size="0.137186 0.007 0.040863" quat="1 0 0 0" rgba="0.9 0.9 0.88 1" />
+      <geom name="drawer_front" class="drawer" type="box" pos="0 -0.00737 0.05238" size="0.165641 0.00737 0.085" quat="1 0 0 0" rgba="0.045 0.04 0.038 1" />
+    </body>
+    <body name="item_00" pos="0.231569713 0.056444 0.043992715" quat="0.17023769 0.000100116 0.003494671 0.985396827">
+      <freejoint name="item_00_free" />
+      <geom name="item_00_col" class="item" type="mesh" mesh="hull_AlphabetSoup" density="150" />
+      </body>
+    <body name="item_01" pos="0.082509429 -0.111408454 -0.149205974" quat="0.710220016 0.074755798 -0.698421339 0.046975874">
+      <freejoint name="item_01_free" />
+      <geom name="item_01_col" class="item" type="mesh" mesh="hull_Mustard" density="150" />
+      </body>
+    <body name="item_02" pos="-0.098352591 0.089437242 0.076022973" quat="0.853209668 0.002471382 -0.000113627 -0.521562213">
+      <freejoint name="item_02_free" />
+      <geom name="item_02_col" class="item" type="mesh" mesh="hull_SaladDressing" density="150" />
+      </body>
+    <body name="item_03" pos="0.187049308 -0.05963258 -0.113295198" quat="0.304557167 -9.668e-06 0.005595533 -0.952477623">
+      <freejoint name="item_03_free" />
+      <geom name="item_03_col" class="item" type="mesh" mesh="hull_Raisins" density="40" />
+      </body>
+    <body name="item_04" pos="0.05301488 0.098239607 0.088877247" quat="0.667815026 -0.010247814 -0.003040151 -0.744250517">
+      <freejoint name="item_04_free" />
+      <geom name="item_04_col" class="item" type="mesh" mesh="hull_Corn" density="150" />
+      </body>
+    <body name="item_05" pos="0.167933539 0.133683986 0.053587419" quat="0.698456868 0.005192311 -0.001771463 -0.715631124">
+      <freejoint name="item_05_free" />
+      <geom name="item_05_col" class="item" type="mesh" mesh="hull_Parmesan" density="150" />
+      </body>
+    <body name="item_06" pos="0.002351096 -0.026781939 -0.094853061" quat="0.775504598 -0.082532247 0.011029158 -0.625826977">
+      <freejoint name="item_06_free" />
+      <geom name="item_06_col" class="item" type="mesh" mesh="hull_ChocolatePudding" density="40" />
+      </body>
+    <body name="item_07" pos="0.140333531 -0.021635855 -0.027197828" quat="0.030563538 0.700389213 -0.713058234 0.008293095">
+      <freejoint name="item_07_free" />
+      <geom name="item_07_col" class="item" type="mesh" mesh="hull_Spaghetti" density="40" />
+      </body>
+    <body name="item_08" pos="0.449052552 0.041686966 -0.308692462" quat="0.939030938 -9.5613e-05 0.000201704 0.343832586">
+      <freejoint name="item_08_free" />
+      <geom name="item_08_col" class="item" type="mesh" mesh="hull_GranolaBars" density="40" />
+      </body>
+    <body name="item_09" pos="0.273993107 0.04169317 0.114256984" quat="0.560737343 -0.00887211 -0.00112089 -0.827945446">
+      <freejoint name="item_09_free" />
+      <geom name="item_09_col" class="item" type="mesh" mesh="hull_GreenBeans" density="150" />
+      </body>
+    <body name="item_10" pos="0.463127614 0.042924454 -0.153790108" quat="0.35803539 -0.609906196 -0.358175669 -0.609536941">
+      <freejoint name="item_10_free" />
+      <geom name="item_10_col" class="item" type="mesh" mesh="hull_Butter" density="40" />
+      </body>
+    <body name="item_11" pos="0.002283485 0.129640449 0.031113096" quat="0.636492853 0.002065471 -0.001655686 -0.771278057">
+      <freejoint name="item_11_free" />
+      <geom name="item_11_col" class="item" type="mesh" mesh="hull_Pineapple" density="150" />
+      </body>
+    <body name="item_12" pos="-0.0034321 0.135369491 0.077135011" quat="0.004996689 0.94378331 -0.329021051 -0.031515793">
+      <freejoint name="item_12_free" />
+      <geom name="item_12_col" class="item" type="mesh" mesh="hull_Mushrooms" density="150" />
+      </body>
+    <body name="item_13" pos="0.074092948 0.085937161 0.03094755" quat="0.566790346 -0.006518103 0.006257861 -0.823812513">
+      <freejoint name="item_13_free" />
+      <geom name="item_13_col" class="item" type="mesh" mesh="hull_Cherries" density="150" />
+      </body>
+    <body name="item_14" pos="0.044669163 0.106270504 0.135105839" quat="0.269496648 0.009282973 -0.004813047 0.962944556">
+      <freejoint name="item_14_free" />
+      <geom name="item_14_col" class="item" type="mesh" mesh="hull_Mushrooms" density="150" />
+      </body>
+    <body name="item_15" pos="0.002526841 -0.038276127 -0.144061517" quat="0.425418959 -0.072182575 -0.031096037 -0.901577185">
+      <freejoint name="item_15_free" />
+      <geom name="item_15_col" class="item" type="mesh" mesh="hull_Butter" density="40" />
+      </body>
+    <body name="item_16" pos="0.089137025 -0.026016624 -0.110959118" quat="0.889387073 -0.001187855 -0.002276004 0.457147726">
+      <freejoint name="item_16_free" />
+      <geom name="item_16_col" class="item" type="mesh" mesh="hull_Raisins" density="40" />
+      </body>
+    <body name="item_17" pos="0.315246183 0.022537782 0.043993273" quat="0.424807942 0.001978138 -0.002923683 -0.905276616">
+      <freejoint name="item_17_free" />
+      <geom name="item_17_col" class="item" type="mesh" mesh="hull_AlphabetSoup" density="150" />
+      </body>
+    <body name="item_18" pos="0.468257898 0.030012689 -0.206229512" quat="0.999759132 -0.000213983 0.000220146 0.021945013">
+      <freejoint name="item_18_free" />
+      <geom name="item_18_col" class="item" type="mesh" mesh="hull_Popcorn" density="40" />
+      </body>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,239 @@
+{
+ "format": "gt-support-truth/2",
+ "rule": "edge a->b when contacts whose normal into b points up (cos >= 0.5) carry >= 0.10 m_b g, averaged over the last 0.5 s of the standard settle; required = present in every physics variant",
+ "variants": [
+  "nominal",
+  "mass_x0.5",
+  "mass_x2",
+  "mass_mix_s0",
+  "mass_mix_s1",
+  "friction_0.4",
+  "friction_0.8",
+  "timestep_1ms",
+  "jitter_s0",
+  "jitter_s1",
+  "jitter_s2",
+  "planes_+3mm",
+  "planes_-3mm",
+  "alt_primitives"
+ ],
+ "excluded_items": [
+  "item_01",
+  "item_06",
+  "item_12",
+  "item_14",
+  "item_15",
+  "item_16"
+ ],
+ "required": [
+  {
+   "supporter": "drawer",
+   "supporter_class": "drawer",
+   "supported": "item_03",
+   "supported_label": "Raisins",
+   "nominal_weight_frac": 1.3586
+  },
+  {
+   "supporter": "furniture:right_shelf",
+   "supporter_class": "right_shelf",
+   "supported": "item_08",
+   "supported_label": "GranolaBars",
+   "nominal_weight_frac": 1.6664
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_00",
+   "supported_label": "AlphabetSoup",
+   "nominal_weight_frac": 1.4663
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_02",
+   "supported_label": "SaladDressing",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_05",
+   "supported_label": "Parmesan",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_11",
+   "supported_label": "Pineapple",
+   "nominal_weight_frac": 1.2132
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_13",
+   "supported_label": "Cherries",
+   "nominal_weight_frac": 1.7951
+  },
+  {
+   "supporter": "furniture:top_slab",
+   "supporter_class": "top",
+   "supported": "item_17",
+   "supported_label": "AlphabetSoup",
+   "nominal_weight_frac": 1.2247
+  },
+  {
+   "supporter": "item_00",
+   "supporter_class": "item_00",
+   "supported": "item_09",
+   "supported_label": "GreenBeans",
+   "nominal_weight_frac": 0.6748
+  },
+  {
+   "supporter": "item_03",
+   "supporter_class": "item_03",
+   "supported": "item_07",
+   "supported_label": "Spaghetti",
+   "nominal_weight_frac": 0.4311
+  },
+  {
+   "supporter": "item_08",
+   "supporter_class": "item_08",
+   "supported": "item_18",
+   "supported_label": "Popcorn",
+   "nominal_weight_frac": 1.302
+  },
+  {
+   "supporter": "item_13",
+   "supporter_class": "item_13",
+   "supported": "item_04",
+   "supported_label": "Corn",
+   "nominal_weight_frac": 0.789
+  },
+  {
+   "supporter": "item_17",
+   "supporter_class": "item_17",
+   "supported": "item_09",
+   "supported_label": "GreenBeans",
+   "nominal_weight_frac": 0.3252
+  },
+  {
+   "supporter": "item_18",
+   "supporter_class": "item_18",
+   "supported": "item_10",
+   "supported_label": "Butter",
+   "nominal_weight_frac": 1.0
+  }
+ ],
+ "ambiguous": [
+  {
+   "supporter": "item_11",
+   "supporter_class": "item_11",
+   "supported": "item_04",
+   "supported_label": "Corn",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "timestep_1ms",
+    "jitter_s0",
+    "planes_+3mm",
+    "planes_-3mm"
+   ]
+  }
+ ],
+ "static_items": [
+  {
+   "item": "item_00",
+   "label": "AlphabetSoup",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_02",
+   "label": "SaladDressing",
+   "static_in_every_variant": false,
+   "not_static_in": [
+    "jitter_s0"
+   ]
+  },
+  {
+   "item": "item_03",
+   "label": "Raisins",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_04",
+   "label": "Corn",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_05",
+   "label": "Parmesan",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_07",
+   "label": "Spaghetti",
+   "static_in_every_variant": false,
+   "not_static_in": [
+    "jitter_s1"
+   ]
+  },
+  {
+   "item": "item_08",
+   "label": "GranolaBars",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_09",
+   "label": "GreenBeans",
+   "static_in_every_variant": false,
+   "not_static_in": [
+    "jitter_s0"
+   ]
+  },
+  {
+   "item": "item_10",
+   "label": "Butter",
+   "static_in_every_variant": false,
+   "not_static_in": [
+    "jitter_s1"
+   ]
+  },
+  {
+   "item": "item_11",
+   "label": "Pineapple",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_13",
+   "label": "Cherries",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_17",
+   "label": "AlphabetSoup",
+   "static_in_every_variant": true,
+   "not_static_in": []
+  },
+  {
+   "item": "item_18",
+   "label": "Popcorn",
+   "static_in_every_variant": false,
+   "not_static_in": [
+    "jitter_s1"
+   ]
+  }
+ ]
+}

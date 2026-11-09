@@ -1,0 +1,87 @@
+{
+ "format": "twin-sim/2",
+ "note": "The standard simulation and probe protocol applied to every twin (lengths in mm unless the key says m; angles in deg; times in s).",
+ "sim": {
+  "timestep": 0.002,
+  "integrator": "implicitfast",
+  "cone": "elliptic",
+  "impratio": 10.0,
+  "solver": "Newton",
+  "iterations": 100,
+  "ls_iterations": 50,
+  "tolerance": 1e-10,
+  "noslip_iterations": 0,
+  "gravity_m_s2": [0.0, 0.0, -9.81],
+  "disable_flags": ["autoreset"],
+  "enable_flags": [],
+  "note": "mjOption is reset to MuJoCo's defaults first (density, viscosity, wind, magnetic, flags, o_* overrides), then these values are applied. tolerance 1e-10: with a kinematic body (armature 1e4) in a contact island, the Newton solver stopped early at 1e-8 and light items rocked (a 15 g box on the 0.6 deg drawer floor moved 0.3-0.5 mm / 0.5 deg in 10 s); at 1e-10 it stays within 0.012 mm, at the same cost"
+ },
+ "contact": {
+  "condim": 3,
+  "solref": [0.005, 1.0],
+  "solimp": [0.95, 0.99, 0.001, 0.5, 2.0],
+  "margin_m": 0.0,
+  "gap_m": 0.0,
+  "priority": 0,
+  "solmix": 1.0,
+  "override_friction": true,
+  "friction": [0.6, 0.005, 0.0001]
+ },
+ "classes": {
+  "item": {"contype": 1, "conaffinity": 7},
+  "furniture": {"contype": 2, "conaffinity": 1},
+  "drawer": {"contype": 4, "conaffinity": 1},
+  "note": "items touch items, furniture and the drawer; the drawer never touches the furniture; visual geoms (contype = conaffinity = 0) stay non-colliding"
+ },
+ "kinematic": {
+  "armature": 10000.0,
+  "note": "driven or held bodies get this armature on their dofs (then mj_setConst) and have qpos/qvel written before every step; every other dof has no armature, damping or friction loss, every joint no stiffness, every body no gravity compensation, every geom no surface velocity, adhesion or fluid coefficients"
+ },
+ "settle": {
+  "seconds": 3.0,
+  "explode_window_s": 2.0,
+  "explode_speed_m_s": 3.0,
+  "explode_disp_mm": 300.0,
+  "note": "motion is sampled at every step"
+ },
+ "static": {
+  "pos_mm": 3.0,
+  "rot_deg": 2.0,
+  "note": "an item is static when, over the settle, the displacement of its collision-geometry centroid stays within pos_mm and its rotation within rot_deg (maxima over every step)"
+ },
+ "measure": {
+  "point": "collision-geometry centroid (geom centres weighted by the volume of their bounding boxes; the body COM for an item without colliding geoms)",
+  "rotation": "angle of the body's rotation relative to the start (frame-independent)"
+ },
+ "support": {
+  "up_cos": 0.5,
+  "force_frac": 0.1,
+  "avg_last_s": 0.5
+ },
+ "lift": {
+  "lift_mm": 40.0,
+  "rise_s": 0.8,
+  "hold_s": 0.7,
+  "profile": "minimum-jerk"
+ },
+ "drawer": {
+  "out_mm": 50.0,
+  "in_mm": 30.0,
+  "move_s": 1.0,
+  "hold_s": 0.7,
+  "profile": "minimum-jerk",
+  "out_direction": "the joint direction that moves the drawer toward photo_cam",
+  "note": "only the pull-out (out_mm) is part of the scored protocol; in_mm is kept for diagnostics"
+ },
+ "outcome": {
+  "carried_rise_mm": 24.0,
+  "carried_tol_mm": 15.0,
+  "ride_tol_mm": 10.0,
+  "follow_max_deg": 10.0,
+  "stay_mm": 5.0,
+  "stay_deg": 5.0,
+  "disturbed_mm": 10.0,
+  "disturbed_deg": 10.0,
+  "note": "carried (lift) / rides (drawer): the item follows the driven body (rise >= carried_rise_mm for lifts, |d - d_driven| <= tol, rotation < follow_max_deg); stayed: |d| < stay_mm and rotation < stay_deg; disturbed: |d| >= disturbed_mm or rotation >= disturbed_deg, and not following; anything else is intermediate"
+ }
+}

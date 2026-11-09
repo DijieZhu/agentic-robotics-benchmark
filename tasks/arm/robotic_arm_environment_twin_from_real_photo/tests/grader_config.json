@@ -1,0 +1,18 @@
+{
+ "format": "twin-grader-config/1",
+ "version": "env-twin-real/3",
+ "note": "The grader's knobs (hidden with the tests). The weights and bands here are the ones the contract states; the gate, the standard simulation and the probe protocol are the public files setup_payload/twin_gate.py and setup_payload/twin_sim_config.json; part-1 knobs not listed under part1 keep their defaults (twin/config.py). Times in s, memory in MB.",
+ "weights": {"inventory": 0.15, "pose_shape": 0.25, "environment": 0.10, "static_physics": 0.20, "interaction": 0.25, "scale": 0.05},
+ "static_physics": {"w_static": 0.5, "w_support": 0.5, "snap_mm": 25.0},
+ "interaction": {"w_lift": 0.7, "w_drawer": 0.3, "axis_deg": [4.0, 15.0], "false_mover_penalty": 1.0},
+ "part1": {"regions": {"balanced": true,
+                      "note": "work areas: the area each true item's support chain ends in (the console top, the open drawer, the right shelf); checked against the support truth by part 2",
+                      "of_item": {"item_00": "top", "item_01": "drawer", "item_02": "top", "item_03": "drawer", "item_04": "top", "item_05": "top", "item_06": "drawer", "item_07": "drawer", "item_08": "shelf", "item_09": "top", "item_10": "shelf", "item_11": "top", "item_12": "top", "item_13": "top", "item_14": "top", "item_15": "drawer", "item_16": "drawer", "item_17": "top", "item_18": "shelf"},
+                      "of_supporter": {"furniture:top_slab": "top", "drawer": "drawer", "furniture:right_shelf": "shelf"}}},
+ "selftest": {"gt_settle_mm": 1.0, "gt_settle_deg": 0.5},
+ "gt": {"twin": "gt/twin", "depth_ref": "gt/depth_ref.png", "depth_class": "gt/depth_class.png",
+        "support_truth": "gt/support_truth.json", "probe_truth": "gt/probe_truth.json"},
+ "runtime": {"default_budget_s": 1700, "reserve_s": 30, "min_worker_s": 30, "max_worker_s": 3600, "worker_margin_s": 10,
+             "worker_account": "nobody", "worker_address_space_mb": 6144,
+             "stage_caps_s": {"selftest": 400, "gate": 180, "g0_settle": 180, "part1": 600, "c4": 300, "c5": 600}}
+}
