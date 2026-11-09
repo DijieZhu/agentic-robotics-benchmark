@@ -1,0 +1,62 @@
+# uav_cad_design_from_photos: the hardware-design (CAD) stage for a research quadrotor (an atomic
+# task). A mechanical designer re-creates the lost CAD of one AGIPIX research quadrotor, the original AGIPIX v2 design
+# (carbon plates, 3D-printed mounts, aluminium landing legs; a Livox MID-360 lidar, an Intel RealSense D455, a Jetson
+# Orin NX compute stack, a Cube Orange flight controller), in FreeCAD 1.1 from one fixed photo set (rendered with
+# Blender Cycles in a lab room: every made part on a cutting mat, both sides, close-ups, the assembled unit and a
+# disassembly sequence) and the purchased components' datasheets, drawings and STEP files. No topology, no templates,
+# no practice unit. It delivers one FreeCAD document, /home/user/submission/drone.FCStd: one PartDesign Body per part
+# tag, the purchased components placed, one Assembly with the base grounded and Fixed joints, in the assembled
+# configuration.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available,
+# and verify records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs): headless FreeCAD reads the document as an unprivileged account; the unit is aligned rigidly on
+# the base; identical parts are matched to installed positions inside their family; shape 0.30, functional features
+# 0.25 (the parts' existing holes and bores), installation 0.20 (the purchased components' poses), mass properties
+# 0.10, fit 0.10, rotor clearance 0.05, with a shape floor; design_score = reward (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/uav_cad_design_from_photos"
+
+[metadata]
+platform = "uav"
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set and the purchased components' documents (< 1 min). agent: re-model the unit in FreeCAD
+# (6 h). verify: the verifier sandbox's start, the lockdown, the FreeCAD document read by headless FreeCAD and the grade.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root.
+# setup.sh does not run there; the purchased components the grader reads are the image's own fetched assets
+# (/opt/task-assets/payload, pinned by sha256), and the made parts' reference is in tests/. The verifier runs the
+# image's own desktop as the agent account; verify stops it first.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0
