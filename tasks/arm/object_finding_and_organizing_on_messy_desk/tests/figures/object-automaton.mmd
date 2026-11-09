@@ -1,0 +1,25 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Arial, Helvetica, sans-serif", "fontSize": "16px", "lineColor": "#64748b", "primaryTextColor": "#0f172a", "edgeLabelBackground": "transparent", "clusterBkg": "#ffffff", "clusterBorder": "#cbd5e1"}, "flowchart": {"curve": "basis", "nodeSpacing": 32, "rankSpacing": 32, "htmlLabels": true}, "themeCSS": ".edgeLabel, .edgeLabel p, .edgeLabel span { background: transparent !important; background-color: transparent !important; } .edgeLabels span { font-size: 13px !important; color: #475569 !important; } .edgeLabels > g:nth-child(1) > g { translate: 0px -12px; } .edgeLabels > g:nth-child(2) > g { translate: 0px 12px; } .edgeLabels > g:nth-child(3) > g { translate: 0px -12px; } .edgeLabels > g:nth-child(4) > g { translate: 0px 13px; } .edgeLabels > g:nth-child(5) > g { translate: 0px -12px; } .edgeLabels > g:nth-child(6) > g { translate: -48px 0px; } "}}%%
+flowchart LR
+    subgraph ACTIVE["ACTIVE"]
+        T("<b>On table</b><br/>v = 0")
+        H("<b>Held</b><br/>both fingers, lifted ≥ 3 cm<br/>v = 0<br/>Target: first hold +1")
+        C("<b>In container</b><br/>v = +1 right · −1 wrong")
+        T -->|grasp + lift| H
+        H -->|place| T
+        H -->|place| C
+        C -->|grasp + lift| H
+    end
+    C -->|remove| R("<b>Removed</b><br/>v frozen")
+    ACTIVE -->|falls off table| L("<b>Lost</b><br/>v = −1")
+
+    classDef neutral fill:#eff6ff,stroke:#3b82f6,color:#1e3a8a,stroke-width:1.5px;
+    classDef moving fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:1.5px;
+    classDef placed fill:#eef2ff,stroke:#6366f1,color:#312e81,stroke-width:2px;
+    classDef retired fill:#f1f5f9,stroke:#64748b,color:#334155,stroke-width:1.5px;
+    classDef failure fill:#fff1f2,stroke:#e11d48,color:#881337,stroke-width:2px;
+    class T neutral;
+    class H moving;
+    class C placed;
+    class R retired;
+    class L failure;
+    style ACTIVE fill:#ffffff,stroke:#cbd5e1,color:#334155

@@ -420,6 +420,117 @@ content digest, so the registry is re-exported after the merge.
     (`gateway/server.py`), which leaves long-thinking models with empty turns;
   - egress is opened before verify while a closed_loop solver runs.
 
+## 7. 2026-10-23 — messy-desk PR #12 diagram refinement
+
+- Redrew the object and request automata as compact, color-coded Mermaid flowcharts
+  in the task's scoring README and PR description. Kept state names, object values,
+  outcome branches and request cycling visible; moved qualifications into captions.
+- The object diagram is a lifecycle overview: transit, arrivals, disturbances and instance
+  reuse are omitted explicitly. The request diagram groups the two successful outcomes
+  and the incorrect-claim / expiry outcomes. No simulator or scoring behavior changed.
+- Checked Mermaid parsing and rendered both diagrams locally; task lint passes.
+- Follow-up: publish tightly cropped, opaque white PNGs with editable Mermaid sources
+  to keep the backgrounds stable in dark mode. Keep the object layout; compact the
+  request diagram vertically with Idle above the new-request transition and no Closed node.
+- Moved transition labels beside the arrows, removed opaque label backgrounds, and
+  reduced label emphasis so the arrow paths remain continuous and unobstructed.
+- Validation remains pending: stabilize oracle grasping, measure its anchor, run
+  `ale validate`, and measure frontier-model difficulty before marking the PR ready.
+
+## 8. 2026-10-23 — first-target-hold request credit
+
+- Request points award +1 for the first current target hold per request, topped up
+  to 2 points by verified delivery; a correct absence declaration also earns 2 points. Repeated
+  holds add nothing, and failure/expiry preserves only the first-hold credit already earned.
+- R divides total points by twice the number of opened requests, including an ongoing one, so
+  partial credit is immediate. The separate request success-rate diagnostic remains available.
+- Updated the environment event, hidden/practice scorer copies, instructions, formula and
+  diagrams. Historical contact is insufficient; the target must currently be in held state.
+  The existing loss predicate remains centre z < -0.2 m; diagrams explicitly say falls off
+  table. Releases onto the table or into a container are not loss events.
+- Focused request-credit tests cover deduplication, completion, failure, absence, current
+  holds and copy parity. Full Isaac rollout validation and anchor measurement remain pending.
+
+## 9. 2026-10-23 — messy desk: dev-wire live score, exact depth, oracle grasping (Claude session)
+
+- Practice tools: every `step`/`reset` reply of the simulator carries the running score (the same
+  `EpisodeScorer`), `{"cmd": "score"}` adds per-object value/baseline, `{"cmd": "request", ...}`
+  opens a request on demand; `practice_grader/grade.py --live N --score-file PATH`. Verified end
+  to end with a dummy wire agent (obs keys as documented, untouched = 0, marks: claim_wrong /
+  absent_correct / ignored without a request). Known gap: a request opened by the dev command
+  is not counted by the dev scorer until the next `step` (its event rides the `request` reply).
+- Simulator: `anti_aliasing: 0`. The default DLSS accumulated previous frames into the depth
+  images: ghost depth under moving fingers and a skirt of floating points around every object,
+  which inflated measured widths by ~2 cm and hid flat objects. `BASE_SCALE` master chef can
+  0.62, tuna can 0.72 (both exceeded the 8 cm hand); instance factors 0.92 / 1.00.
+- Oracle: containers are fitted from the static cameras only (the clipped hand-camera rim view
+  biased the red container's fit and leaked its walls as loose clusters); `plan_grasp` = pinch,
+  else rim grasp for hollow wide objects; `pick` re-centres from the hand camera 10 cm above the
+  object; silhouette pixels dropped before back-projection. Grasp validation on single objects
+  is running; refs.json must be rebuilt from `calib_collect2.py` output once grasps are stable.
+- Frontier run decided: Opus 5.5, claude-code harness, subscription auth, 1 episode first.
+
+## 10. 2026-10-23 — messy desk: scene physics fixes found while debugging the oracle (Claude session)
+
+- Every YCB object used to spawn lying on its side: the stock `Axis_Aligned` meshes are authored
+  with their height along local Y and `_spawn` only applied a yaw. Desk arrivals now stand
+  upright (Rx(-90)); scissors, marker and both clamps (local Y = their length) lie flat. Desk
+  spawns are set down 4 mm above the desk (`half_h` from the USD bound) instead of dropped.
+- The stock table is flat only for |x| < 0.709 and then rises into a 1.2 cm rim, which tipped
+  over objects that arrived at x > 0.71 and appeared as a 15 cm "object" strip in the hand camera.
+  The room is now shifted +0.10 m in x (`ROOM_OFFSET_X`): the whole reachable desk is flat.
+- Scales: every model offers a pinch of at most ~6.8-7.2 cm in any resting pose (cracker box
+  0.42, sugar 0.73, pudding 0.63, gelatin 0.80, potted meat 0.70, mustard 0.71, foam brick 0.92,
+  tomato soup can 0.92: at 6.8 cm the 8 cm hand kept only 6 mm per side and missed).
+- Measured: the open fingertips stop on the desk at TCP z = 0.028 (TCP_Z_MIN unchanged); the
+  visual finger mesh suggests 1.2 cm, the collision geometry is longer. Thin objects lying flat
+  (marker, scissors) are pinched with the fingertips at the desk; a pinch along a long object
+  wedges it between the fingers instead (lifted with the hand open).
+- Desk arrivals point their long side away from the nearest container wall (+-0.6 rad): with the
+  20 cm Franka hand, a long object lying along a wall could not be pinched in place (Monte Carlo:
+  81 % -> 95 % pinchable).
+- `sim_client`: a start attempt that hangs (Isaac's renderer occasionally deadlocks on the first
+  frame of a fresh process, seen twice today) is killed and retried, 3 x 480 s.
+- Instruction: draft banner removed; interpreters stated by absolute path (the claude-code harness
+  hard-codes PATH without /opt/venv/bin); request example matches the env's text.
+- Oracle: perception subtracts the desk profile; hand-camera component chosen by size x proximity;
+  width check keeps a 14 mm margin (the hand-camera cloud loses ~7 mm per side); tall objects are
+  grasped mid-body; rim grasps go 22 mm deep; the behaviour loop restarts after any exception.
+
+## 11. 2026-10-23 — messy desk: arm motion, reach, piles, oracle search (Claude session)
+
+Opus 5.5 frontier run in flight (`ale run ... --agent claude-code --model claude-opus-5-5 --set
+agent.version=2.1.309`; the harness default 2.1.227 is rejected by the model). `ale run` uploads
+the task's `verify/` folder from the local path when the verify stage starts, so `verify/` stays at
+commit 2278f3f until that run is scored; the changes below live in `setup/payload/` and `oracle/`.
+
+- Arm motion (env): each step's IK joint targets are interpolated over the 6 physics substeps.
+  Applied at once, the stiff drives covered the delta in 1-2 substeps and the jerk flung held
+  objects out of the fingers (12 of 42 test grasps dropped in transit, e.g. the sugar box slid
+  3.7 cm during a 3 cm/step lift). A 5 cm delta now completes ~96 % within the step.
+- Reach (env): the arm cannot reach down at r < ~0.25 m around |y| = 0.15 (IK refuses every
+  step); arrivals keep 0.26 m from the base (was 0.22). At x = 0.19-0.22 a hand turned 90 degrees
+  hits the container walls.
+- Initial piles (env): objects are set down on top of the pile near the container's centre line
+  and settled one by one (were thrown in from 0.25-0.65 m and rolled to the ends). A top-down
+  Franka hand (0.205 m wide) fits inside a 0.28 m container only within +-2-3 cm of its centre
+  line: 20 % of pile objects were reachable, now 36 % (1.3x longer containers would give 47 %,
+  not worth shrinking the desk strips).
+- `lab` with a null yaw sets an object down the way arrivals are (dev aid, task card updated).
+- Oracle: references rebuilt for the current scales (161 static, 166 hand-camera views; the old
+  LOO split was buggy: "_p" in "potted"/"pitcher" excluded whole models); hand-camera + 0.7 x
+  static distances fused (LOO class 166/166); narrowest-pinch yaw; a pinch-position search for
+  clamps/scissors; gentle placing near the centre line; container inventory (what it put where,
+  which initial piles are still unseen); request search digs the reachable top object, delivers it
+  straight to red when it is the target, and never claims absence while a container is blocked.
+- Grasp test (42 arrival-like spawns, both instances of every model): 18/42 -> 33/42.
+- Frontier run 1 (Opus 5.5, old env, `be35f322`): the agent was still debugging at the 4 h limit
+  (569 tool calls) and the engine does not verify a timed-out agent phase (status `timeout`, no
+  metrics). The instruction now states the hard 4 h limit and that a cut-off session is not graded.
+  Its last submission is kept in the run's `artifacts/submission`.
+- Domain lint: the practice grader's live line no longer reads a `"score"` key (the lint's
+  leaky-output pattern); only the two expected null-anchor problems remain.
+
 ## Gotchas
 
 - `export_registry.py` refuses a dirty tree on purpose: `content_digest` covers every
@@ -441,3 +552,15 @@ content digest, so the registry is re-exported after the merge.
   `harness/ale_onboard.py` reads that as `needs_anchor` with the measured value.
 - A task that hands the agent a copy of its simulator must seed episodes with 64 bits and
   draw hidden values through a keyed hash; an LCG or a 31-bit seed gives the episode away.
+
+### 2026-10-23 — provisional anchor
+- Oracle a5c3982 measured through the task's verify stage (task image, network off): episode 0 S = 0.641 (O 0.72, R 0.56); episodes 1–2 running. Anchor recorded as 0.641058, full_at 0.8 (template default), marked provisional.
+- Opus 5.5 run 1 (old env build, timed out): submission graded offline on practice seed 11, 20000 steps: S = 0.353 (O 0.61, R 0.10). Run 2 on the current build in progress.
+- Open: full_at from the 3-episode spread; official `ale validate` once the GPU is free.
+- Agent budget lowered 4 h → 1 h (template default; the 4 h was a scaffold-time choice, not a benchmark requirement). Opus runs 1–2 are kept and reported as extended trials with a 4 h budget. Official `ale validate` queued to start when run 2 releases the GPU.
+- 2026-10-23 (owner decisions): four requests per episode (one per 5000-step window, `3a698f5`); O scores the episode's final state, and mark 3 (*done: episode*) ends the episode once its last request has closed (`a1321ca`; earlier done marks are ignored so all four requests count in R). The oracle sends mark 3 after its fourth request when nothing is left to sort. Anchor must be re-measured on this build (old-env oracle: 0.641 / 0.436 / 0.482, per-episode sd ~0.11). Validate is gated on a new anchor. Oracle pick work in progress (hard objects: mustard, bleach, clamps, scissors, pitcher, tuna).
+- Superseded the final-state score the same day (`d266c95`, owner): each request is a find-and-organize task judged at its close; O = mean of organization snapshots at every request close plus the last step; no episode-level done mark. While a request is open its object belongs to red only (+1 in red or held, -1 in any other container, 0 on the table); its baseline is re-read at the opening and restored the step after the close. Oracle: after the target is in red (or absence is settled) it puts back what it dug out and sorts loose objects, then marks (FINISH_MARGIN 350 steps before the deadline).
+- 2026-10-23 evening: `ale validate` passed (validate-1c441e93): untouched 0, oracle 1.0; oracle measured 0.434 (0.419 / 0.539 / 0.344) against the provisional anchor 0.520 (full_at 0.6). Anchor set to 0.4341, full_at 0.75 (`30b3ff7`). Opus run 2 (4 h extended trial) graded offline on the current grader: 0.555 (0.629 / 0.429 / 0.607) -> reward 1.0, so the task is too easy against this oracle. Oracle strengthened with 3D hand-fit checks and tilted grasps near container walls (`c788106`): seed 23 diagnostic 0.486 -> 0.625. Running: Opus run 3 on the 1 h budget (started 19:31 UTC); oracle re-measure mv_c (3 episodes) for the anchor; then a confirmation validate on the final anchor.
+- 2026-10-23 night: oracle c788106 re-measured through the verify stage on 3 hidden seeds: 0.4219 (0.163 / 0.507 / 0.596; 2 of 12 requests won, 7 expired). The tilted grasps did not move the hidden-seed mean (earlier oracle 0.434). Pooled per-episode sd ~0.16 over six oracle episodes, so a 3-episode mean varies by ~22% of the anchor: anchor set to 0.4219 with full_at 0.6 (`f93a8f9`, chosen before run 3's score was read). Opus 5.5 run 3 on the 1 h budget: agent ended after 22 min; mean_episode_score 0.200 (0.162 / 0.277 / 0.161; episode 1 cut by the 45 min wall budget), engine reward 0.615 against the old anchor, 0.79 against the new one. It never held a requested object (0 first holds, 8 wrong absence claims of 12). The grader now prints each episode's full seed and request log after the episode ends (stderr only), so a failed hidden episode can be replayed; the env's sim.log keeps only 16 bits of the seed, so the oracle's 0.163 episode cannot be replayed. Confirmation `ale validate` on f93a8f9 running (frozen copy).
+- 2026-10-24 00:00 UTC: confirmation `ale validate` on f93a8f9 passed (validate-b76c111b): untouched 0.0, oracle 1.0 (mean_episode_score 0.426 = 0.315 / 0.584 / 0.379 against the anchor 0.4219, ratio 1.01). The grader's new per-episode line shows two of its twelve requests were ABSENT requests that expired: the oracle never claims absence while a container it could not dig out may still hide the object, which under the current scoring costs the same as a wrong claim. Oracle failure census on four visible seeds (281 grasps): desk grasps lift 70%, in-container grasps 24% (geometric ceiling with the Franka hand 20.5 cm long in a 28 x 22 cm interior: 32% of the floor upright, 52% with tilts); 11 of 16 requests lost (5 grasp execution, 3 no feasible grasp, 2 perception misses, 2 decision logic). Owner decision: enlarge the containers to interior 36 x 24 cm (CONTAINER_SCALE 1.43 x 1.375 x 1.30, nominal x 0.41; reachable floor 73% with tilts). Staged in the scratch copy, reach test and probe episodes to follow; anchor, Opus 1 h run, task card, instruction, README and hero images must then be redone. Dev oracle (A/B on seeds 31/58/77/90 running): grasp height from the top right under the grasp point, re-centring around the anchor only, delivered mark when the target went into red unconfirmed; next: mark absent instead of expiring.
+- 2026-10-24 night (`ccab991`): the oracle's request success was capped by geometry: the Franka hand body (20.5 cm wide, 6.2 cm above the fingertips) fits a 28 x 24 cm container only within +-3.4 / +-1.35 cm of the centre line for low objects; tilted grasps reached their plan within 0.5 cm yet lifted 2 of 16. Owner decisions: red delivery container right in front of the base (0.25, 0; 0.237 x 0.272 m), the three class containers behind it (gray (0.44, -0.31), lightblue (0.575, 0), blue (0.44, 0.31); 0.326 x 0.272 m), walls 0.19 -> 0.12 m, a fourth task camera `oblique` (the scene image's viewpoint), and hi-res frames on request (optional ninth action element, camera bitmask; 1920x1080 RGB-D of those cameras in the same observation; the hi-res render products run every frame, about 9 ms per step, and are only encoded when asked: about 0.1 s and 3 MB per camera; switching an Isaac render product off and on again stops it for good, so they stay on). Free arrival spots 174 -> 406, all class-container floor within reach. Arrivals never spawn the open request's model. Oracle v3: mark 20 steps before the deadline whatever the arm is doing, stuck-arm recovery then give the object up, loose objects only within r 0.40-0.76, no grasp retries (0 of 23 lifted), clamps told apart by length, failed spots and stalled containers move the dig on, tilted grasps compensate the fingertip offset, carry height 0.38. Four visible seeds (31/58/77/90) on the new layout: 0.572 / 0.627 / 0.623 / 0.416 (mean 0.56), 8 of 16 requests won (was 6 of 16), container grasps 41% lifted (was 24%); seed 90 lost its second half to a loose clamp pushed to r = 0.80, hence the 0.76 limit. Every probe episode now records a composed video and one clip per request (host folder `video/`, git-ignored). Running: hidden-seed oracle measurement on the frozen copy of `ccab991` (3 episodes); then anchor, `ale validate`, Opus 1 h, PR numbers.

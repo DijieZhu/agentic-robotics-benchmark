@@ -1,0 +1,9 @@
+{
+  "metric": "mean_episode_score",
+  "direction": "higher",
+  "value": 0.908,
+  "full_at": 0.98,
+  "source": "Own measurement under S = O * R (2026-11-08): the privileged reference (solution/solve.sh, which installs solution/privileged/oracle.py at sha256 7a5c88e8 with the reference token) on the fixed hidden set (tests/episodes.json). Its full verify of 2026-11-08 (ale validate run validate-57b10a4e, the previous grader, which differs from this one in the score formula only) logged every episode's O and R: 0.9445822 x 0.875, 0.8974577 x 1.0, 1.0 x 1.0, so S = 0.8265094 / 0.8974577 / 1.0000000, mean_episode_score 0.9079890; ale validate on this version (validate-afd10a26, 2026-11-08) measured the same three scores to the last digit. full_at 0.98: the reference has repeated its episodes to the last digit in every run (the selection runs, a fresh-container verify, three ale validate runs), so 2 % is left for an engine run on another host; a submission earns full reward from mean_episode_score 0.890. Before: 0.9528 under S = 1/2 O + 1/2 R with full_at 0.95 (2026-11-05 to 11-08); 0.4877, oracle v17 on three fresh draws, with full_at 0.5 (until 2026-11-05).",
+  "reference_commit": "the 2026-11-08 round (S = O * R); the privileged reference 7a5c88e8 since e57d657; the fixed set since d4b0b66",
+  "note": "Authoring flow: leave `value` null and run `ale validate`. The run fails with `oracle_not_full` and the oracle episode's verification.json (key `metrics`) carries the measured metric. Write it here, run again, and the oracle lands on reward 1.0. `full_at` is where the reward saturates, in ratio units: the worst ratio an honest on-reference run lands on. Here the reference is the privileged controller on the fixed hidden episode set, so it is measured, not drawn: repeated runs of the same submission meet the same episodes."
+}

@@ -1,0 +1,24 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Arial, Helvetica, sans-serif", "fontSize": "16px", "lineColor": "#64748b", "primaryTextColor": "#0f172a", "edgeLabelBackground": "transparent", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1"}, "flowchart": {"curve": "basis", "nodeSpacing": 24, "rankSpacing": 26, "htmlLabels": true}, "themeCSS": ".edgeLabel, .edgeLabel p, .edgeLabel span { background: transparent !important; background-color: transparent !important; } .edgeLabels span { font-size: 13px !important; color: #475569 !important; } .edgeLabels > g:nth-child(1) > g { translate: -14px -20px; } .edgeLabels > g:nth-child(2) > g { translate: -32px 0px; } .edgeLabels > g:nth-child(3) > g { translate: 12px -20px; } "}}%%
+flowchart TB
+    I(["<b>Idle</b>"])
+    O("<b>Open request</b><br/>First target hold: +1<br/>(both fingers, lifted)")
+    S("<b>Success</b><br/>Delivered / absent<br/>2 points")
+    E("<b>Expired</b><br/>Deadline, no mark<br/>0 or 1 point")
+    W("<b>Wrong mark</b><br/>First-hold point − 1<br/>−1 or 0 points")
+    I -->|new request| O
+    O -->|verified| S
+    O -->|deadline| E
+    O -->|rejected| W
+    S -.-> I
+    E -.-> I
+    W -.-> I
+
+    classDef neutral fill:#eff6ff,stroke:#3b82f6,color:#1e3a8a,stroke-width:1.5px;
+    classDef active fill:#eef2ff,stroke:#6366f1,color:#312e81,stroke-width:2px;
+    classDef success fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px;
+    classDef failure fill:#fff1f2,stroke:#e11d48,color:#881337,stroke-width:2px;
+    class I neutral;
+    class O active;
+    class S success;
+    class E neutral;
+    class W failure;

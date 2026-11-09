@@ -1,0 +1,6 @@
+# Dependencies of the py3.12 /opt/venv: the interpreter that answers `python3` (verify stage,
+# practice grader, the agent's own tooling). The simulator lives in a second venv, see
+# requirements-isaac.txt; the two never import each other.
+numpy>=1.26,<3
+pillow>=10,<12
+scipy>=1.11,<2

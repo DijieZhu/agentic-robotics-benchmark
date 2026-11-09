@@ -1,0 +1,81 @@
+# TEMPLATE — a complete robotics task that scores green as shipped. Change it into yours
+# one field at a time; `ale validate` after each change tells you if you broke it.
+
+schema_version = "1.4+ale.1"
+
+# Where the agent leaves its work.
+artifacts = ["/home/user/submission"]
+
+# The task's stable identity, "<org>/<slug>". The org is grounded-intelligence-initiative,
+# the GitHub and Hugging Face organization that owns the benchmark, for every task here.
+# The slug, the part after the "/", is yours: collection-unique, ^[a-z0-9][a-z0-9_-]*$,
+# preferably snake_case. Pick it before anything else: it is the Task Name registered in
+# the project's sheet, and once the task lands at tasks/<platform>/<slug>/ the folder must
+# carry the same name (the domain lint checks).
+[task]
+name = "grounded-intelligence-initiative/object_finding_and_organizing_on_messy_desk"
+
+# Free-form values with no runtime behavior; this repository reads one of them.
+# platform: one of the benchmark's platform keys (tasks/platforms.json in this repository):
+#   arm | hand | quadruped | humanoid | uav | driving | underwater | space | soft |
+#   surgical | swarm | subsystems
+# It also names the tasks/<platform>/ folder the task lands in. A platform that is not on
+# the list needs a maintainer to add it to tasks/platforms.json first.
+# The metric and its direction live in tests/anchor.json (`metric`, `direction`): an
+# OUTCOME on a positive scale (success_rate, reward, SPL, ATE, collision_rate, or a cost
+# with direction lower), never a wall-clock time, throughput, FPS or frequency, which
+# measure the machine, not the method.
+[metadata]
+platform = "arm"
+
+# The agent's machine. environment/Dockerfile builds it, with environment/ less setup/ as
+# the build context; its FROM names the ALE base at an exact version (lint rejects `latest`
+# and an untagged FROM). A prebuilt image works too: `docker_image = "ghcr.io/...:tag"`
+# here, and delete environment/Dockerfile (an image named directly wins over a build).
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1
+
+# Setup (environment/setup/setup.sh: staging the agent-visible material) has no field: the
+# engine bounds it at a fixed 1800 s. [agent] timeout_sec: the agent's whole budget, including
+# training.
+[agent]
+timeout_sec = 3600
+network_mode = "no-network"
+
+# [verifier] timeout_sec: the scoring run — closed_loop needs room for every episode plus probes.
+# Here: the 3 hidden episodes (tests/episodes.json), each in a simulator of its own: 20000 steps of
+# simulator time (0.13-0.16 s a step measured on an RTX 4090 host, under 4000 s an episode on a
+# slower one) plus the episode's controller budget (controller_budget_s in
+# tests/grader_config.json, 3000 s) plus the hi-res frames that budget can buy (about 3000 s
+# more simulator time at most); plus the starts: the separate verifier is always a fresh
+# sandbox, so its first simulator start compiles the renderer's shaders (547-621 s measured,
+# sim_ready_timeout_s 1500 per attempt, 3 attempts) and the later ones take seconds. About
+# 3 x 10000 + 4500 = 34500 s at worst; a frugal controller's run takes about 2.5 hours. The
+# score never depends on how long it takes.
+#
+# Grader knobs live in tests/grader_config.json, never in this file: [metadata] has no
+# runtime behavior, and episode counts are the grader's business anyway. Not
+# tests/config.json either: the engine writes its own file under that name at verify time.
+#
+# There is no admission bar in this file. `ale validate` runs the task twice: an untouched
+# sandbox must score reward 0.0, and the oracle, run in place of the agent, must score 1.0,
+# both after the engine rounds `reward` to two decimals. Either miss fails validation
+# (`untouched_nonzero`, `oracle_not_full`). The tolerance that lets the reference land on 1.0
+# on the fixed hidden episodes is `full_at` in tests/anchor.json, sized from its measured
+# run-to-run spread. See that file.
+[verifier]
+timeout_sec = 36000
+# Separate verification (2026-11-04): a fresh verifier sandbox from the same image, which the agent never touched;
+# only the declared artifact (/home/user/submission) is restored into it. In a shared sandbox, programs the agent
+# leaves earlier on root's PATH (the base image's /usr/local/bin is the agent's) would run as root at verify. The
+# grader needs nothing else from the agent's sandbox: tests/ brings env.py, sim_client.py and the scorer, the image
+# brings Isaac Sim and the stock assets, and setup.sh only stages the agent's material (the desk lab).
+environment_mode = "separate"
+
+# The verifier runs the simulator on the GPU, as the agent's sandbox does: the same resources.
+[verifier.environment]
+cpus = 8
+memory_mb = 32768
+gpus = 1

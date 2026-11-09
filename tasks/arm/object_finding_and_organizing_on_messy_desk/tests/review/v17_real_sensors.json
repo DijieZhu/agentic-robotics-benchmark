@@ -1,0 +1,288 @@
+{
+ "what": "The non-privileged reference (solution/reference_v17, oracle v17) on the real-sensor grader and the fixed hidden set, run once as the separate verifier runs a submission.",
+ "date_utc": "2026-11-09T02:30:48Z to 05:00:04Z (8956 s wall)",
+ "grader": "tests/ of 104c858 (S = O * R, anchor 0.908 / full_at 0.98; real camera sensors since 5ca4fa5)",
+ "submission": {
+  "installed_by": "solution/reference_v17/install.sh, unchanged",
+  "solver_py_sha256": "ee1b05e98378f43a341a8a64773815afe24b5b435919daa0188015ba6b894691",
+  "refs_json_sha256": "0977cd1e85d67a257de5caffa03a106a3720aa3ead175af8c7161722b027a9d7",
+  "adaptation": "none: the wire is unchanged (the same observation keys, depth in mm with 0 for no return, `info` with the nominal camera poses) and v17 already drops a pixel without a depth return (it keeps depth above 5 cm for the fixed cameras, 2 cm for the hand camera)"
+ },
+ "how": "a fresh container from the task image (environment/Dockerfile), the submission copied to /home/user/submission owned by the agent account, tests/ root-only at /opt/ale/tests, `bash test.sh` as root, no network, one RTX 4090 (driver 580.178.04) of its own, 16 cores, 32 GB",
+ "episodes": [
+  {
+   "episode": 0,
+   "O": 0.02714932126696833,
+   "R": 0.25,
+   "S": 0.0067873303167420825,
+   "snapshots": [
+    0.0769,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "controller_s": 329.3,
+   "requests_opened": 4,
+   "requests_success": 0,
+   "requests_delivered": 0,
+   "absent_correct": 0,
+   "first_holds": 2,
+   "objects_lost": 2,
+   "requests": [
+    {
+     "t": 3123,
+     "id": 1,
+     "event": "opened",
+     "text": "the master chef can",
+     "absent": false
+    },
+    {
+     "t": 4044,
+     "id": 1,
+     "event": "first_hold"
+    },
+    {
+     "t": 4323,
+     "id": 1,
+     "event": "expired"
+    },
+    {
+     "t": 7039,
+     "id": 2,
+     "event": "opened",
+     "text": "the extra large clamp",
+     "absent": false
+    },
+    {
+     "t": 7354,
+     "id": 2,
+     "event": "first_hold"
+    },
+    {
+     "t": 8239,
+     "id": 2,
+     "event": "expired"
+    },
+    {
+     "t": 11422,
+     "id": 3,
+     "event": "opened",
+     "text": "the cracker box",
+     "absent": true
+    },
+    {
+     "t": 12622,
+     "id": 3,
+     "event": "expired"
+    },
+    {
+     "t": 18537,
+     "id": 4,
+     "event": "opened",
+     "text": "the tuna fish can",
+     "absent": false
+    },
+    {
+     "t": 19737,
+     "id": 4,
+     "event": "expired"
+    }
+   ]
+  },
+  {
+   "episode": 1,
+   "O": 0.23499451954694922,
+   "R": 0.0,
+   "S": 0.0,
+   "snapshots": [
+    0.2,
+    0.1304,
+    0.2857,
+    0.2647
+   ],
+   "controller_s": 200.2,
+   "requests_opened": 4,
+   "requests_success": 0,
+   "requests_delivered": 0,
+   "absent_correct": 0,
+   "first_holds": 0,
+   "objects_lost": 0,
+   "requests": [
+    {
+     "t": 2677,
+     "id": 1,
+     "event": "opened",
+     "text": "the bowl",
+     "absent": true
+    },
+    {
+     "t": 3877,
+     "id": 1,
+     "event": "expired"
+    },
+    {
+     "t": 6717,
+     "id": 2,
+     "event": "opened",
+     "text": "the pudding box",
+     "absent": false
+    },
+    {
+     "t": 7917,
+     "id": 2,
+     "event": "expired"
+    },
+    {
+     "t": 11426,
+     "id": 3,
+     "event": "opened",
+     "text": "the power drill",
+     "absent": true
+    },
+    {
+     "t": 12626,
+     "id": 3,
+     "event": "expired"
+    },
+    {
+     "t": 17420,
+     "id": 4,
+     "event": "opened",
+     "text": "the potted meat can",
+     "absent": true
+    },
+    {
+     "t": 18620,
+     "id": 4,
+     "event": "expired"
+    }
+   ]
+  },
+  {
+   "episode": 2,
+   "O": 0.4036940836940837,
+   "R": 0.25,
+   "S": 0.10092352092352093,
+   "snapshots": [
+    0.0,
+    0.4444,
+    0.4286,
+    0.5455
+   ],
+   "controller_s": 244.2,
+   "requests_opened": 4,
+   "requests_success": 1,
+   "requests_delivered": 1,
+   "absent_correct": 0,
+   "first_holds": 1,
+   "objects_lost": 0,
+   "requests": [
+    {
+     "t": 425,
+     "id": 1,
+     "event": "opened",
+     "text": "the large marker",
+     "absent": true
+    },
+    {
+     "t": 1625,
+     "id": 1,
+     "event": "expired"
+    },
+    {
+     "t": 6576,
+     "id": 2,
+     "event": "opened",
+     "text": "the foam brick",
+     "absent": true
+    },
+    {
+     "t": 7776,
+     "id": 2,
+     "event": "expired"
+    },
+    {
+     "t": 11306,
+     "id": 3,
+     "event": "opened",
+     "text": "the scissors",
+     "absent": true
+    },
+    {
+     "t": 12506,
+     "id": 3,
+     "event": "expired"
+    },
+    {
+     "t": 15877,
+     "id": 4,
+     "event": "opened",
+     "text": "the large marker",
+     "absent": false
+    },
+    {
+     "t": 16522,
+     "id": 4,
+     "event": "first_hold"
+    },
+    {
+     "t": 16706,
+     "id": 4,
+     "event": "delivered"
+    }
+   ]
+  }
+ ],
+ "mean_episode_score": 0.03590361708008767,
+ "mean_organization": 0.22194597483600043,
+ "mean_request_progress": 0.16666666666666666,
+ "ratio": 0.0395414285022992,
+ "reward": 0.04034839643091755,
+ "probes_passed": [
+  603.0,
+  620.0
+ ],
+ "match_lock_ok": 1.0,
+ "episodes_aborted": 0.0,
+ "episodes_cut": 0.0,
+ "privileged_mode": 0.0,
+ "same_submission_ideal_cameras": {
+  "grader": "c9be3f5 (2026-11-05), rescored under S = O * R from its own log",
+  "O": [
+   0.7775,
+   0.5708,
+   0.6532
+  ],
+  "R": [
+   0.0,
+   0.375,
+   0.25
+  ],
+  "S": [
+   0.0,
+   0.2141,
+   0.1633
+  ],
+  "mean_episode_score": 0.1258,
+  "reward": 0.141,
+  "mean_organization": 0.667,
+  "absent_correct": 2,
+  "probes_passed": [
+   607,
+   620
+  ]
+ },
+ "grader_log": [
+  "[grader] secured root PATH dir /usr/local/bin (was uid=1000 gid=1000 mode=755)",
+  "[grader] simulator up in 206s (1 start attempt(s))",
+  "[grader] episode 0: score=0.0068 {\"absent_correct\": 0, \"absent_wrong\": 0, \"arrivals\": 10, \"claims_wrong\": 0, \"containers_cleared\": 1, \"disturbances\": 11, \"first_holds\": 2, \"objects_lost\": 2, \"org_den\": 17.0, \"org_num\": 1.0, \"organization\": 0.02714932126696833, \"request_progress\": 0.25, \"request_rate\": 0.0, \"requests_delivered\": 0, \"requests_expired\": 4, \"requests_failed\": 4, \"requests_opened\": 4, \"requests_success\": 0, \"score\": 0.0067873303167420825, \"snapshots\": [0.0769, 0.0, 0.0, 0.0], \"steps\": 20000}",
+  "[grader] episode 0: requests=[{\"t\": 3123, \"id\": 1, \"event\": \"opened\", \"text\": \"the master chef can\", \"absent\": false}, {\"t\": 4044, \"id\": 1, \"event\": \"first_hold\"}, {\"t\": 4323, \"id\": 1, \"event\": \"expired\"}, {\"t\": 7039, \"id\": 2, \"event\": \"opened\", \"text\": \"the extra large clamp\", \"absent\": false}, {\"t\": 7354, \"id\": 2, \"event\": \"first_hold\"}, {\"t\": 8239, \"id\": 2, \"event\": \"expired\"}, {\"t\": 11422, \"id\": 3, \"event\": \"opened\", \"text\": \"the cracker box\", \"absent\": true}, {\"t\": 12622, \"id\": 3, \"event\": \"expired\"}, {\"t\": 18537, \"id\": 4, \"event\": \"opened\", \"text\": \"the tuna fish can\", \"absent\": false}, {\"t\": 19737, \"id\": 4, \"event\": \"expired\"}]",
+  "[grader] simulator up in 12s (1 start attempt(s))",
+  "[grader] episode 1: score=0.0000 {\"absent_correct\": 0, \"absent_wrong\": 0, \"arrivals\": 22, \"claims_wrong\": 0, \"containers_cleared\": 2, \"disturbances\": 9, \"first_holds\": 0, \"objects_lost\": 0, \"org_den\": 34.0, \"org_num\": 10.0, \"organization\": 0.23499451954694922, \"request_progress\": 0.0, \"request_rate\": 0.0, \"requests_delivered\": 0, \"requests_expired\": 4, \"requests_failed\": 4, \"requests_opened\": 4, \"requests_success\": 0, \"score\": 0.0, \"snapshots\": [0.2, 0.1304, 0.2857, 0.2647], \"steps\": 20000}",
+  "[grader] episode 1: requests=[{\"t\": 2677, \"id\": 1, \"event\": \"opened\", \"text\": \"the bowl\", \"absent\": true}, {\"t\": 3877, \"id\": 1, \"event\": \"expired\"}, {\"t\": 6717, \"id\": 2, \"event\": \"opened\", \"text\": \"the pudding box\", \"absent\": false}, {\"t\": 7917, \"id\": 2, \"event\": \"expired\"}, {\"t\": 11426, \"id\": 3, \"event\": \"opened\", \"text\": \"the power drill\", \"absent\": true}, {\"t\": 12626, \"id\": 3, \"event\": \"expired\"}, {\"t\": 17420, \"id\": 4, \"event\": \"opened\", \"text\": \"the potted meat can\", \"absent\": true}, {\"t\": 18620, \"id\": 4, \"event\": \"expired\"}]",
+  "[grader] simulator up in 13s (1 start attempt(s))",
+  "[grader] episode 2: score=0.1009 {\"absent_correct\": 0, \"absent_wrong\": 0, \"arrivals\": 19, \"claims_wrong\": 0, \"containers_cleared\": 3, \"disturbances\": 7, \"first_holds\": 1, \"objects_lost\": 0, \"org_den\": 25.0, \"org_num\": 15.0, \"organization\": 0.4036940836940837, \"request_progress\": 0.25, \"request_rate\": 0.25, \"requests_delivered\": 1, \"requests_expired\": 3, \"requests_failed\": 3, \"requests_opened\": 4, \"requests_success\": 1, \"score\": 0.10092352092352093, \"snapshots\": [0.0, 0.4444, 0.4286, 0.5455], \"steps\": 20000}",
+  "[grader] episode 2: requests=[{\"t\": 425, \"id\": 1, \"event\": \"opened\", \"text\": \"the large marker\", \"absent\": true}, {\"t\": 1625, \"id\": 1, \"event\": \"expired\"}, {\"t\": 6576, \"id\": 2, \"event\": \"opened\", \"text\": \"the foam brick\", \"absent\": true}, {\"t\": 7776, \"id\": 2, \"event\": \"expired\"}, {\"t\": 11306, \"id\": 3, \"event\": \"opened\", \"text\": \"the scissors\", \"absent\": true}, {\"t\": 12506, \"id\": 3, \"event\": \"expired\"}, {\"t\": 15877, \"id\": 4, \"event\": \"opened\", \"text\": \"the large marker\", \"absent\": false}, {\"t\": 16522, \"id\": 4, \"event\": \"first_hold\"}, {\"t\": 16706, \"id\": 4, \"event\": \"delivered\"}]",
+  "[grader] measured=0.0359 anchor=0.908 ratio=0.040 reward=0.040 lock=True aborted=0 cut=0 privileged=False"
+ ]
+}

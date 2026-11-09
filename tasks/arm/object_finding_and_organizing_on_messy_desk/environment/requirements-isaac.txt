@@ -1,0 +1,6 @@
+# Dependencies of the py3.10 /opt/isaac venv that runs the simulator process. Isaac Sim 4.5
+# supports Python 3.10 only; it is installed from pypi.nvidia.com (see the Dockerfile).
+isaacsim[all,extscache]==4.5.0
+requests>=2.31
+numpy>=1.26,<3
+pillow>=10,<12
