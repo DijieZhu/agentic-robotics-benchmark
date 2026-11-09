@@ -1,4 +1,4 @@
-"""unmanned_aerial_vehicle_requirements_replica_from_photos: a process of the agent account that outlives the
+"""uav_requirements_replica_from_photos: a process of the agent account that outlives the
 verify-start kill (the base image's supervisord respawns the desktop it runs as that account, as fast as it is killed)
 is stopped, not held against the submission; one that is still running once stopped still fails the verify.
 
@@ -16,7 +16,7 @@ import unittest
 from pathlib import Path
 
 VERIFY = (Path(__file__).resolve().parents[1]
-          / "tasks/uav/unmanned_aerial_vehicle_requirements_replica_from_photos/tests/verify.py")
+          / "tasks/uav/uav_requirements_replica_from_photos/tests/verify.py")
 
 
 class _Desktop:
