@@ -54,7 +54,7 @@ def run(assets, model, seed, untouched=False, robot_z=None):
         idle_until(drv, ep, r["id"], r["deadline_t"])
     sc = ep.score()
     ep.env.close()
-    return {"model": model, "seed": seed, "untouched": untouched, "score": sc["score"], "requests": sc["requests"],
+    return {"model": model, "seed": seed, "untouched": untouched, "score": sc["credit"], "requests": sc["requests"],
             "reference": log, "t": ep.env.t, "wall_s": round(time.time() - t0, 1)}
 
 

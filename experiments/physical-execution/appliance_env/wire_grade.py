@@ -36,8 +36,7 @@ class LocalSolver(Solver):
 
 
 def wire_obs(ep, obs, uid, truth):
-    w = E.to_wire({k: v for k, v in obs.items() if k != "request"})
-    w["request"] = obs.get("request")
+    w = E.to_wire(obs)
     w["unit"] = uid
     if truth:
         w["truth"] = ep.env.truth()
@@ -65,7 +64,6 @@ def run(a):
                         w = wire_obs(ep, obs, uid, a.truth)
                         if lock.due():
                             other = ep.env.perturbed_observation(obs, np.random.default_rng(t))
-                            other["request"] = obs.get("request")
                             action = lock.probe(solver, t, w, perturbed=wire_obs(ep, other, uid, a.truth))
                         else:
                             action = solver.act(t, w)
@@ -78,10 +76,10 @@ def run(a):
                         t += 1
                     sc = ep.score()
                 except SolverAborted as exc:
-                    sc = {"score": 0.0, "requests": ep.score()["requests"] if getattr(ep, "requests", None) else []}
+                    sc = {"credit": 0.0, "requests": ep.score()["requests"] if getattr(ep, "requests", None) else []}
                     reason = "aborted: %s" % str(exc)[:120]
                 ep.env.close()
-                rec = {"unit": uid, "model": units[uid]["model"], "seed": seed, "score": sc["score"], "reason": reason,
+                rec = {"unit": uid, "model": units[uid]["model"], "seed": seed, "score": sc["credit"], "reason": reason,
                        "requests": sc["requests"], "steps": ep.env.t, "wall_s": round(time.time() - t0, 1)}
                 results.append(rec)
                 print("%-4s %-24s seed %-3d score %.2f %s  %s" % (uid, units[uid]["model"], seed, rec["score"], reason,

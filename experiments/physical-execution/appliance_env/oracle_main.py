@@ -5,7 +5,7 @@ token run every observation carries `truth` (the unit's placement jitter, its jo
 microwave's flag) and `unit` names the unit; the reference builds its own copy of the scene from them
 (reference.Shadow) and runs the primitive for each open request. Logs go to stderr.
 
-    bash run.sh  ->  python3 -I oracle_main.py --units units.json --assets <unit models>
+    bash run.sh  ->  python3 -I oracle_main.py --units units.json      (units.json: id -> model, kind, dir)
 """
 import argparse
 import json
@@ -13,6 +13,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import appliance_env as E  # noqa: E402
 import reference as R  # noqa: E402
 
 
@@ -22,10 +23,17 @@ def log(msg):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--units", required=True, help="JSON: unit id -> {model, kind}")
-    ap.add_argument("--assets", required=True)
+    ap.add_argument("--units", required=True, help="JSON: unit id -> {model, kind, dir}")
+    ap.add_argument("--assets", default=None, help="a folder of <kind folder>/<model> models, instead of each dir")
     a = ap.parse_args()
     units = json.load(open(a.units))
+    base = os.path.dirname(os.path.abspath(a.units))
+    specs = {}
+    for uid, u in units.items():
+        if a.assets:
+            specs[uid] = E.unit_spec(u["model"])
+        else:
+            specs[uid] = E.unit_spec(u["model"], files=E.read_unit_files(os.path.join(base, u["dir"])))
     out = sys.stdout
 
     def write(obj):
@@ -62,25 +70,22 @@ def main():
             write({"action": [0, 0, 0, 0, 0, 0, -1, 0]})
             msg = read()
             continue
-        spec = units[obs["unit"]]
-        sh = R.Shadow({"model": spec["model"], "kind": spec["kind"], "scale": 1.0, "door_mass": None},
-                      os.path.expanduser(a.assets), read, write)
+        sh = R.Shadow(specs[obs["unit"]], os.path.expanduser(a.assets) if a.assets else None, read, write)
         sh.start(msg, truth["jitter"])
         drv = R.Driver(sh)
         drv.MAX_STEPS = 10 ** 6
         try:
             while True:
-                req = sh.obs.get("request")
-                if req is None:
+                rid = int(sh.obs.get("request_id", -1))
+                if rid < 0:
                     drv.tick(drv.site_pos(), drv.site_R(), -1.0)
                     continue
-                rid = req["id"]
-                text = req["text"]
+                text = sh.obs["request_text"]
                 try:
                     run_request(drv, text)
                 except R.PrimitiveError as exc:
                     log("request %d failed: %s" % (rid, exc))
-                while sh.obs.get("request") is not None and sh.obs["request"]["id"] == rid:
+                while int(sh.obs.get("request_id", -1)) == rid:
                     drv.tick(drv.site_pos(), drv.site_R(), -1.0)
         except R.EpisodeOver as over:
             msg = over.msg

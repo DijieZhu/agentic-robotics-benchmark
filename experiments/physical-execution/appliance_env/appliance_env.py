@@ -30,6 +30,8 @@ SUBSTEPS = 50                     # -> 10 Hz control
 CONTROL_DT = TIMESTEP * SUBSTEPS
 MAX_DPOS = 0.03
 MAX_DROT = 0.2
+MAX_ARM_SPEED = 8.0               # rad/s: faster is an unstable simulation (box_env's rule)
+MAX_UNIT_SPEED = 30.0             # rad/s, any unit joint
 WRENCH_NOISE = 0.3
 RGB_NOISE = 2.0
 HOME_Q = np.array([0.0, -0.55, 0.0, -2.45, 0.0, 1.95, math.pi / 4])
@@ -176,28 +178,51 @@ def yaw_quat(yaw):
     return np.array([math.cos(yaw / 2), 0.0, 0.0, math.sin(yaw / 2)])
 
 
-def unit_spec(model, scale=1.0, kind=None, door_mass=None):
-    """A unit = one RoboCasa model plus how it is mounted. `model` is '<folder>/<name>'."""
+def unit_spec(model, scale=1.0, kind=None, door_mass=None, files=None):
+    """A unit = one RoboCasa model plus how it is mounted. `model` is '<folder>/<name>'; `files` the
+    model's files already in memory (read_unit_files), or None to read them from the assets folder."""
     folder = model.split("/")[0]
     return {"model": model, "kind": kind or KIND_OF_FOLDER[folder], "scale": float(scale),
-            "door_mass": door_mass}
+            "door_mass": door_mass, "files": files}
 
 
 # ----------------------------------------------------------------------------------------------
 # Unit loading
 # ----------------------------------------------------------------------------------------------
+def read_unit_files(folder):
+    """A unit's model.xml and every file under its folder, read into memory: {"xml": text, "assets":
+    {relative path: bytes}}. A process that drops privileges after loading (the lab) keeps them."""
+    folder = os.path.expanduser(folder)
+    files = {}
+    for root, _dirs, names in os.walk(folder):
+        for n in names:
+            path = os.path.join(root, n)
+            rel = os.path.relpath(path, folder)
+            if rel != "model.xml":
+                with open(path, "rb") as f:
+                    files[rel] = f.read()
+    with open(os.path.join(folder, "model.xml")) as f:
+        xml = f.read()
+    return {"xml": xml, "assets": files}
+
+
 def load_unit_spec(assets, spec):
     """MjSpec of the unit's model.xml, uniformly scaled, visual meshes massless, collision geoms
-    hidden from the cameras, mesh and texture files made absolute."""
-    folder = os.path.join(os.path.expanduser(assets), spec["model"])
-    u = mujoco.MjSpec.from_file(os.path.join(folder, "model.xml"))
+    hidden from the cameras. From `spec["files"]` (read_unit_files) when present, else from the
+    folder `assets/<model>` (mesh and texture files made absolute)."""
+    if spec.get("files"):
+        u = mujoco.MjSpec.from_string(spec["files"]["xml"], assets=spec["files"]["assets"])
+        folder = None
+    else:
+        folder = os.path.join(os.path.expanduser(assets), spec["model"])
+        u = mujoco.MjSpec.from_file(os.path.join(folder, "model.xml"))
     s = spec["scale"]
     for mesh in u.meshes:
-        if mesh.file and not os.path.isabs(mesh.file):
+        if folder and mesh.file and not os.path.isabs(mesh.file):
             mesh.file = os.path.join(folder, mesh.file)
         mesh.scale = np.asarray(mesh.scale) * s
     for tex in u.textures:
-        if tex.file and not os.path.isabs(tex.file):
+        if folder and tex.file and not os.path.isabs(tex.file):
             tex.file = os.path.join(folder, tex.file)
     for b in u.bodies:
         b.pos = np.asarray(b.pos) * s
@@ -271,6 +296,8 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     robot_base = np.array([0.0, 0.0, mt["robot_z"]])
 
     w = mujoco.MjSpec()
+    if spec.get("files"):
+        w.assets = dict(spec["files"]["assets"])      # the attached unit's meshes, from memory
     w.compiler.degree = False
     w.compiler.autolimits = True
     w.option.timestep = TIMESTEP
@@ -614,6 +641,16 @@ class ApplianceEnv(object):
         self.t += 1
         return self.observation(), False, {}
 
+    def unstable(self):
+        """box_env's rule: a non-finite state, an arm joint faster than MAX_ARM_SPEED or a unit joint faster
+        than MAX_UNIT_SPEED (rad/s) ends the episode with score 0."""
+        d = self.data
+        if not (np.all(np.isfinite(d.qpos)) and np.all(np.isfinite(d.qvel))):
+            return True
+        if np.max(np.abs(d.qvel[self.jv])) > MAX_ARM_SPEED:
+            return True
+        return bool(self.unit.dofs) and float(np.max(np.abs(d.qvel[self.unit.dofs]))) > MAX_UNIT_SPEED
+
     def wrench_world(self):
         """Force (N) and torque (N m) at the wrist sensor, rotated from the sensor frame to the world frame."""
         d = self.data
@@ -639,6 +676,24 @@ class ApplianceEnv(object):
         img = r.render().astype(np.float32)
         img += self.rng.normal(0, RGB_NOISE, img.shape)
         return np.clip(img, 0, 255).astype(np.uint8)
+
+    def camera_matrix(self, cam):
+        """3x3 pinhole intrinsics of `cam` (left, right, wrist) at its image size; no distortion."""
+        if cam == "wrist":
+            w, h, cid = WRIST["width"], WRIST["height"], self.wrist_cam
+        else:
+            _p, _t, _f, w, h = CAMERAS[cam]
+            cid = self.model.camera(cam).id
+        f = (h / 2.0) / math.tan(math.radians(float(self.model.cam_fovy[cid])) / 2.0)
+        return np.array([[f, 0.0, w / 2.0], [0.0, f, h / 2.0], [0.0, 0.0, 1.0]])
+
+    def fixed_pose(self, cam):
+        """4x4 world pose of a fixed camera (left, right), OpenCV convention (x right, y down, z forward)."""
+        d, cid = self.data, self.model.camera(cam).id
+        T = np.eye(4)
+        T[:3, :3] = d.cam_xmat[cid].reshape(3, 3) @ np.diag([1.0, -1.0, -1.0])
+        T[:3, 3] = d.cam_xpos[cid]
+        return T
 
     def wrist_pose(self, d=None):
         """4x4 world pose of the wrist camera, OpenCV convention (x right, y down, z forward)."""
@@ -684,6 +739,11 @@ class ApplianceEnv(object):
         obs = {
             "t": self.t,
             "T_world_wrist": self.wrist_pose(),
+            "T_world_left": self.fixed_pose("left"),
+            "T_world_right": self.fixed_pose("right"),
+            "K_left": self.camera_matrix("left"),
+            "K_right": self.camera_matrix("right"),
+            "K_wrist": self.camera_matrix("wrist"),
             "q": d.qpos[self.jq].copy(),
             "dq": d.qvel[self.jv].copy(),
             "ee_pos": d.site_xpos[self.site].copy(),
@@ -693,8 +753,8 @@ class ApplianceEnv(object):
             + self.rng.normal(0, 1, 6) * np.array([WRENCH_NOISE] * 3 + [WRENCH_NOISE / 10] * 3),
         }
         if self.render_enabled:
-            for cam in self.render_next:
-                obs[cam] = self.render(cam)
+            for cam in CAMERA_NAMES:            # an image the previous action did not ask for is empty
+                obs[cam] = self.render(cam) if cam in self.render_next else np.zeros((0, 0, 3), np.uint8)
         return obs
 
     def close(self):

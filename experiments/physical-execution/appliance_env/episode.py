@@ -15,9 +15,9 @@ adds what the grader will own in P4:
     one request must not change anything else). A counted stage stays counted.
 
     ep = Episode(ApplianceEnv(spec, assets), seed)
-    obs = ep.reset()                  # obs["request"] = {"text", "deadline_t", "id"} or None
+    obs = ep.reset()                  # obs["request_id"], ["request_text"], ["request_deadline_t"]
     obs, done, info = ep.step(action)
-    ep.score()                        # mean request credit, and the per-request record
+    ep.score()                        # {"credit": mean request credit, "requests": the per-request record}
 """
 
 import numpy as np
@@ -171,14 +171,18 @@ class Episode(object):
         return self._obs(obs), done, info
 
     def _obs(self, obs):
+        """The open request, flat (the lab's reply schema has no optional objects): id, text and
+        deadline step, or -1 / "" / -1 while none is open."""
         r = self.current
-        obs["request"] = None if r is None else {"id": r["id"], "text": r["text"], "deadline_t": r["deadline_t"]}
+        obs["request_id"] = -1 if r is None else r["id"]
+        obs["request_text"] = "" if r is None else r["text"]
+        obs["request_deadline_t"] = -1 if r is None else r["deadline_t"]
         return obs
 
     def score(self):
         rs = self.requests
         credit = [0.5 * r["reached"] + 0.5 * r["completed"] for r in rs]
-        return {"score": float(np.mean(credit)) if credit else 0.0,
+        return {"credit": float(np.mean(credit)) if credit else 0.0,
                 "requests": [{k: r[k] for k in ("id", "what", "target", "text", "t_open", "t_close", "reached",
                                                 "completed")} for r in rs]}
 
