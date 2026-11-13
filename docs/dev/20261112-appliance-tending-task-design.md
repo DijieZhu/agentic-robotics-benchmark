@@ -415,5 +415,30 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
     hidden units themselves. The controller does nothing on the practice units.
   - **Reading:** the task is too easy as built. Because the lab serves exactly the scored units, the
     intended difficulty (controls on models the agent has not seen) reduces to calibrating three known units
-    and coping with the placement jitter. Both trials took this route. Next: raise the difficulty so the
-    scored units are not the lab's units (owner decision pending).
+    and coping with the placement jitter. Both trials took this route.
+- **Owner decision (2026-11-13): keep the calibration framing, tighten the budget** (as in
+  arm_hidden_mechanism_box, the capability is system identification with few real trials; ALE asks for no
+  out-of-distribution test, the project asks for a frontier reward roughly below 0.5). Changes (`12e02b3`):
+  six scored units, two per kind (u3 Stovetop002, u4 Microwave087, u5 Oven053: the next models in each kind's
+  committed draw order, `selection.json`), **8 lab trials** (was 16), 12 graded episodes (2 per unit); agent
+  time stays 2 h.
+- **Anchor re-measured** (`aab6476`): 14 oracle runs of the same content (168 episodes), mean
+  `mean_request_credit` **0.9911**, worst run 0.9722; `full_at` 0.95. Every lost credit is u5 (Oven053, 7 of 28
+  episodes lost one request): near the jitter limit (e.g. yaw -8 degrees, y +3.7 cm) the reference finds no
+  feasible grasp pose for the temperature knob, in process as over the wire. The next oven in the draw
+  order (Oven034) fails at the same placement, and smaller turns per grasp do not help, so the measured
+  anchor stands rather than a planner change. `ale validate` (`validate-c8a6192e`): untouched 0.0, oracle 1.0.
+- **Frontier trial 3** (`ale run` ed315672, Opus 5.5, 2 h, six units, 8 trials): **reward 0.43**
+  (`mean_request_credit` 0.403, ratio 0.406). Cooktops u0 and u3 1.0 in all four episodes; microwaves u1 and
+  u4 0.0; ovens u2 0.17 and u5 0.25. 143 of 143 probe pairs differed; no aborts or faults; verify 136 s. Agent
+  phase 1746 s: it stopped when its 8 trials were spent.
+  - It spent six trials on one first image of each unit (controls marked by hand, triangulated from the two
+    fixed cameras) and the last two on the cooktops (each knob turned on and off, which gave u0's
+    knob-to-burner map). Microwave buttons and oven knobs were never tested on a scored unit: it assumed the
+    practice microwave's keypad layout and turned both front knobs of each oven. It also believed the lab
+    gives no evidence of microwave or oven state, though a request that closes early does (trial 2 used
+    that).
+  - Practice grader on the practice units: cooktop and microwave 1.0 in 8 of 8, oven 1.0 in 6 of 8.
+  - **Reading:** inside the target band, with the expected failure mode (too few trials to calibrate every
+    unit, so the untested kinds fail). One run; trials 1-2 differed by 0.45 on the same task, so the spread
+    of a single run is large.
