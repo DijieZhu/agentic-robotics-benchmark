@@ -38,13 +38,13 @@ def run(assets, model, seed, untouched=False, pose_from_cameras=False):
             continue
         try:
             if r["what"] in ("burner_on", "burner_off"):
-                res = drv.knob(r["target"], "on" if r["what"] == "burner_on" else "off")
+                drv.knob(r["target"], "on" if r["what"] == "burner_on" else "off")
             elif r["what"] == "preheat":
-                res = drv.knob("temp", "on")
+                drv.knob("temp", "on")
             elif r["what"] in ("start", "stop"):
-                res = drv.button(r["target"])
+                drv.button(r["target"])
             else:
-                res = drv.door("open")
+                drv.door("open")
             log.append({"id": r["id"], "status": "ok", "steps": drv.steps})
         except R.PrimitiveError as exc:
             log.append({"id": r["id"], "status": "fail", "stage": exc.stage, "error": str(exc)[:200]})

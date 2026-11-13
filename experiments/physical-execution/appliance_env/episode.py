@@ -21,8 +21,6 @@ adds what the grader will own in P4:
 
 import numpy as np
 
-import appliance_env as E
-
 DEADLINE = 600                    # control steps per request (60 s at 10 Hz)
 REACH_HOLD = 3
 COMPLETE_HOLD = 20
