@@ -27,8 +27,8 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 - Knob physics: friction loss 0.20 N m, armature 0.002 kg m^2. A burner is on while its knob angle `a` satisfies
   0.35 <= a mod 2 pi <= 2 pi - 0.35 (a flame marker shows while it is on). The oven is preheated while its
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
-- Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0
-  (cooktop), u1 (microwave), u2 (oven); you reach them only through the lab.
+- Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0 and
+  u3 (cooktops), u1 and u4 (microwaves), u2 and u5 (ovens); you reach them only through the lab.
 
 ```python
 import sys; sys.path.insert(0, "/home/user")

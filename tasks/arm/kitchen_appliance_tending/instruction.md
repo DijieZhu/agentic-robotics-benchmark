@@ -29,9 +29,9 @@ MuJoCo through OSMesa on the CPU.
 
 ## The scored units
 
-Three hidden units, `u0` (a cooktop), `u1` (a microwave) and `u2` (an oven), each a different model from the
-practice units of its kind. Same as in your dev sim: the robot, the controller, the action and observation
-formats, the cameras, the sensor noise, the physics settings, the request texts and the credit rule. Different:
+Six hidden units, two of each kind: `u0` and `u3` (cooktops), `u1` and `u4` (microwaves), `u2` and `u5` (ovens),
+each a different model from the practice units and from each other. Same as in your dev sim: the robot, the
+controller, the action and observation formats, the cameras, the sensor noise, the physics settings, the request texts and the credit rule. Different:
 the appliance model (its size, look, where its controls are and how they move) and the placement draw.
 
 ## Requests
@@ -75,11 +75,11 @@ Action: a list of 8 numbers `[dx, dy, dz, drx, dry, drz, grip, cams]` at 10 Hz: 
 (world frame, clipped to 0.03 m), a world-frame rotation vector (clipped to 0.2 rad), the gripper command (-1
 open ... +1 closed) and a camera bit mask for the next observation (1 = left, 2 = right, 4 = wrist).
 
-## The lab (your only access to the three scored units)
+## The lab (your only access to the six scored units)
 
 `labclient.py` talks to a service on `/run/ale-lab/lab.sock` (JSON lines; `python3 labclient.py --help`). A
-**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **16
-trials in total**, shared by all units, never refunded), then `step` with an action returns the next observation
+**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **8
+trials in total**, shared by all six units, never refunded), then `step` with an action returns the next observation
 (steps are free) until the episode ends. A trial ends when its episode ends, when you start a new trial or close
 the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 2000 requests applies.
 Each trial draws a fresh placement, initial state, request queue and sensor noise. The lab never reports scores,
@@ -100,7 +100,7 @@ gripper and wrist-camera pose, wrench; the images are unchanged), in a hidden or
 the real one. If fewer than 10 % of these pairs get two replies that differ (by more than 1e-4 in some number),
 the whole run scores 0: a controller that ignores its input, or answers a repeated `t` from a cache, fails.
 
-The grader runs 9 episodes: 3 on each unit with fresh hidden placements and requests, in a hidden order (the
+The grader runs 12 episodes: 2 on each unit with fresh hidden placements and requests, in a hidden order (the
 observation names the unit). An episode in which the controller crashes, answers late or malformed, or makes the
 simulation unstable (an arm joint faster than 8 rad/s or a unit joint faster than 30 rad/s) scores 0; after 3
 restarts of your controller the remaining episodes score 0. The whole grading run must finish within 6000 s; the

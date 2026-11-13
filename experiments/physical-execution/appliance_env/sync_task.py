@@ -48,7 +48,11 @@ def main():
             shutil.copyfile(os.path.join(HERE, n), os.path.join(TASK, dest, n))
     sel = json.load(open(os.path.join(TASK, "tests", "hidden", "selection.json")))["selected"]
     order = ("cooktop", "microwave", "oven")
-    hidden = [("u%d" % i, sel[k]["hidden"]) for i, k in enumerate(order)]
+    # `hidden` is a list per kind (two since 2026-11-13): u0-u2 are the first entries in kind order, u3-u5 the
+    # second entries, so the original three keep their ids.
+    per_kind = [sel[k]["hidden"] if isinstance(sel[k]["hidden"], list) else [sel[k]["hidden"]] for k in order]
+    hidden = [("u%d" % (r * len(order) + i), models[r])
+              for r in range(max(len(m) for m in per_kind)) for i, models in enumerate(per_kind) if r < len(models)]
     practice = [("p%d" % i, sel[k]["practice"]) for i, k in enumerate(order)]
     for dest in ("tests", "environment/setup/ref", "solution/oracle"):
         copy_units(assets, hidden, dest)

@@ -847,6 +847,8 @@ class Shadow(object):
                 d.qpos[m.joint("u_" + name).qposadr[0]] = v
             env.unit.turned_on = bool(truth["turned_on"])
         mujoco.mj_forward(m, d)
+        if not truth and getattr(self, "hook", None) is not None:
+            self.hook(self, obs)            # a controller without the truth keeps the unit's state itself
         env.t = int(obs["t"])
 
     @property

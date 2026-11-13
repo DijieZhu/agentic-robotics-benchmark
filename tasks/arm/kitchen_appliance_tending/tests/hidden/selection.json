@@ -336,7 +336,10 @@
  "owner_decision": "2026-11-12: no range survived the recheck (Stove028 14/20, Stove075 15/20); ranges are dropped for now, so the units are one cooktop, one microwave and one oven, and 'Open the oven door' leaves v1.",
  "selected": {
   "cooktop": {
-   "hidden": "stovetops/Stovetop011",
+   "hidden": [
+    "stovetops/Stovetop011",
+    "stovetops/Stovetop002"
+   ],
    "practice": "stovetops/Stovetop018",
    "survivors_in_draw_order": [
     "stovetops/Stovetop011",
@@ -358,7 +361,10 @@
    ]
   },
   "microwave": {
-   "hidden": "microwaves/Microwave081",
+   "hidden": [
+    "microwaves/Microwave081",
+    "microwaves/Microwave087"
+   ],
    "practice": "microwaves/Microwave075",
    "survivors_in_draw_order": [
     "microwaves/Microwave081",
@@ -386,7 +392,10 @@
    ]
   },
   "oven": {
-   "hidden": "ovens/Oven036",
+   "hidden": [
+    "ovens/Oven036",
+    "ovens/Oven053"
+   ],
    "practice": "ovens/Oven039",
    "survivors_in_draw_order": [
     "ovens/Oven036",
@@ -396,5 +405,6 @@
     "ovens/Oven037"
    ]
   }
- }
+ },
+ "extension_2026_11_13": "Owner decision 2026-11-13, after frontier trials 1-2 (reward 0.48 and 0.93, both calibrating the scored units through the lab): keep the calibration framing and tighten the budget. Two scored units per kind: selected.<kind>.hidden is now a list; its first entry is the original draw, its second the next model in that kind's survivors_in_draw_order after the practice unit (no new draw). Ids: u0-u2 = cooktop, microwave, oven (first entries), u3-u5 = the second entries in the same kind order."
 }

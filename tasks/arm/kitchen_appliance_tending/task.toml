@@ -21,7 +21,7 @@ memory_mb = 12288
 timeout_sec = 7200
 network_mode = "no-network"
 
-# 9 episodes (3 per hidden unit), each at most 3 x 600 control steps; the grader's own budget is 6000 s
+# 12 episodes (2 per hidden unit), each at most 3 x 600 control steps; the grader's own budget is 6000 s
 # (grader_config.json), and starting the solver, the egress self-test and the stops need a little more.
 [verifier]
 timeout_sec = 7200
