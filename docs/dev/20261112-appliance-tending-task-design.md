@@ -1,6 +1,6 @@
 # Design: kitchen appliance tending (draft 2, 2026-11-12)
 
-Status: **draft for the owner's review.** No task folder exists yet. Decisions marked
+Status: **draft for the owner's review; P1 done (2026-11-12, §10).** No task folder exists yet. Decisions marked
 **[owner]** are open; the rest is a recommendation the phases in §9 can still overturn.
 
 Draft 2 replaces draft 1 (same day), which used a mobile base inside RoboCasa's full runtime.
@@ -163,4 +163,68 @@ a larger lab budget) before adding difficulty anywhere else.
 
 ## 10. Results log
 
-(empty: P1 not started)
+### P1 — environment (2026-11-12, dev host TASL)
+
+Code: `experiments/physical-execution/appliance_env/` (its README has the set-up and every command);
+outputs in its git-ignored `../outputs/p1/`. Python 3.12, MuJoCo 3.16.0, NumPy 2.5.4, robosuite 1.5.2
+model files only; no RoboCasa code runs.
+
+- **Assets and licence.** RoboCasa v1.0 fixtures come as `fixtures_lightwheel.zip` (530 MB, sha256
+  `62c1c877…bd6c3e`), whose README names the source: Hugging Face
+  `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF` (revision `420a04af`), licence
+  **CC-BY-4.0**. The older `robocasa/robocasa-assets` `fixtures.zip` (227 MB) is the v0.2 set. This
+  settles §5's licence question for the models used here, subject to the owner's sign-off.
+- **Inventory.** 26 stoves (ranges), 24 stovetops, 50 microwaves, 25 ovens; **all 125 compile
+  standalone** in plain MuJoCo. Controls as RoboCasa names them: burner knobs
+  `knob_<location>_joint` (4-6 per model; ranges: horizontal axis on the front panel, range about
+  0-3.1/3.7 rad, friction loss 0.75; stovetops: vertical axis on the top surface, friction loss 1.0);
+  oven and range doors `door_joint` (range 0-1.15 / 0-1.57 rad, drop-down); microwave door `microjoint`
+  (-1.57-0, side hinge); `knob_temp_joint`, `knob_time_joint`, `rack<k>_joint`; microwave
+  `start_button` / `stop_button` are fixed geoms, not joints (RoboCasa switches the state on contact).
+  Every model has a `door_handle_main` geom where it has a door.
+- **Masses.** The models set no masses, so MuJoCo's default density gives every visual mesh mass too
+  (raw door subtrees: microwave 3-36 kg, oven 2.5-35 kg, range 17-88 kg). With visual meshes made
+  massless (as robosuite does for its objects) the doors weigh: Microwave011 4.75 kg, Oven048 6.25 kg,
+  Stove026 8.8 kg, in line with the pilot's 6.6 kg oven door. Whether to set door masses explicitly is
+  a P2 decision.
+- **Environment.** `appliance_env.py` builds floor, support (counter, cabinet column or nothing), back
+  wall, the [box] Panda and controller, cameras and F/T, and the unit turned to face the robot; build
+  0.7-0.9 s. Re-implemented predicates: burner on (`0.35 <= angle mod 2pi <= 2pi - 0.35`), door
+  fraction (flipped for negative ranges), open >= 0.90, closed <= 0.005, preheated >= 0.25, microwave
+  on/off by gripper contact with start/stop (door open switches it off), button far > 0.15 m; burner
+  flame sites shown while on (RoboCasa's visual cue).
+- **Predicate check** (`check_predicates.py`): **all pass**. 15 threshold cases on Stove026 and
+  Microwave011, and physical presses through the controller on Microwave011: start turns it on, stop
+  turns it off, start again on, opening the door turns it off, start after closing on; `*_far` false
+  at the button and true after backing off. Not compared against a running RoboCasa: the formulas
+  are transcribed from RoboCasa `3443cdf` (`stove.py`, `microwave.py`, `fixture.py`, `oven.py`).
+- **Reach** (`reach.py`, kinematic IK, no collision check; pre-contact point 8 cm out and the contact
+  point; approach nominal, 30 degrees down or 30 degrees to either side; door handles at fractions 0
+  and 0.5 for microwaves, 0 and 0.3 for drop-down doors). Fully reachable models:
+
+  | Mount (front of unit, robot base height) | stovetop | microwave | oven | range |
+  |---|---|---|---|---|
+  | 0.50 m, 0.65 m | 24/24 | 43/50 | 25/25 | 24/26 |
+  | 0.50 m, 0.80 m | 24/24 | 35/50 | 25/25 | 24/26 |
+  | **0.55 m, 0.65 m** | **24/24** | **50/50** | **25/25** | **24/26** |
+  | 0.55 m, 0.80 m | 24/24 | 49/50 | 25/25 | 24/26 |
+
+  The two ranges that fail (Stove001, Stove074) have their knobs on a rear panel 1.34 m out and
+  1.22 m up; they drop out. The microwave's open door swings towards the robot, which is what needs
+  the extra distance. Default mount now: front 0.55 m, base 0.65 m, for every kind.
+- **Collisions matter more than kinematics.** With a level approach the hand's lower edge hit the
+  counter before the fingertips reached Microwave011's start button (3 cm above the counter); a
+  35-degree downward approach pressed it. P2's primitives must plan approaches against the unit and
+  its support, not only reach.
+- **Cost** (`perf.py`, one thread, classic renderer through OSMesa on the CPU): 183-231 control steps
+  per second without images; 0.014-0.06 s per image (320 x 240 fixed, 256 x 192 wrist); 7-16 steps
+  per second with all three images every step; peak RSS 1.27 GB over five units. An episode of
+  3 x 600 steps costs under 5 minutes of simulator time even with every image, so 8 episodes fit
+  [box]'s 6000 s. Filament (what [box] uses) is not measured yet.
+- **Images.** Fixed cameras beside and above the robot's shoulders show the whole front of each unit;
+  the arm crosses the centre of both views at the home pose. Rendering is plain (one light, no image-
+  based lighting); P4 decides between this and [box]'s Filament set-up.
+
+**For P2:** candidate pool = every model except Stove001 and Stove074. Open questions carried over:
+explicit door masses; an approach planner that respects the counter and the unit body; a home pose
+whose wrist camera sees the unit.

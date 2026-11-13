@@ -35,8 +35,8 @@
   holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
   is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
   task folder exists yet.
-- **Next step:** owner review of the appliance-tending design, draft 2 (its **[owner]** marks),
-  then its P1: extract RoboCasa appliance models into a single-file MuJoCo environment.
+- **Next step:** appliance-tending P2 (privileged reference primitives in the P1 environment, then
+  the practice / hidden model split); the design's **[owner]** marks are still open.
 
 ## Dated log
 
@@ -497,6 +497,13 @@ scripted reference (simulator poses, joints and contacts).
   then completed with the hand clear and nothing else disturbed), a privileged reference. Phases P1
   (environment) to P5 (gates and frontier runs); P3 checks the score does not floor at 0 before the
   task is built. Open owner decisions are marked **[owner]** there.
+- **P1 done (2026-11-12):** `experiments/physical-execution/appliance_env/` (prototype environment,
+  inventory, reach, predicate and cost scripts; results in the design's §10). All 125 RoboCasa
+  stove / stovetop / microwave / oven models load in plain MuJoCo; their source is the CC-BY-4.0
+  dataset `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF`; a fixed Panda 0.55 m from
+  the unit front with its base 0.65 m high reaches every control of 123 of them (kinematically);
+  the re-implemented predicates pass, including physical microwave button presses; 183-231 control
+  steps per second without images, 0.014-0.06 s per OSMesa image, 1.27 GB peak.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and
@@ -506,7 +513,7 @@ scripted reference (simulator poses, joints and contacts).
 
 - **Appliance-tending task (§12):** owner decisions in draft 2's **[owner]** marks (slug and
   sheet registration, depth images, oven in v1, partial-progress credit, agent budget, asset
-  licence); then P1.
+  licence sign-off: CC-BY-4.0 found in P1); then P2.
 - **`experiments/physical-execution/` docs** link to absolute paths on the author's Mac
   (`/Users/…/simulator-lab/…`) that do not exist in this repository, and name a home directory
   in a public repository. Replace them with repository-relative paths, or a note naming the
@@ -553,7 +560,11 @@ scripted reference (simulator poses, joints and contacts).
   draw hidden values through a keyed hash; an LCG or a 31-bit seed gives the episode away.
 - The dev host `TASL` (`ucrtasl`) has no `gh` and, as of 2026-11-12, no engine venv
   (`vendor/ale/.venv`): run `cd vendor/ale && VIRTUAL_ENV= uv sync --frozen --all-groups` before
-  the gates. `ale-qemu-runner:0.1.1` is already built there.
+  the gates. `ale-qemu-runner:0.1.1` is already built there. `uv` is a user install at
+  `~/.local/bin/uv` (not on the default `PATH`); the appliance P1 venv, Python and RoboCasa fixture
+  assets live in `~/arb-data/` (outside the repository).
+- `pgrep -f <pattern>` inside a `bash -c` wait loop matches the loop's own command line; select
+  by something only the target process carries.
 
 ## Appendix A. `object_finding_and_organizing_on_messy_desk` working notes (PR #12, 2026-10-23 to 2026-10-24)
 
