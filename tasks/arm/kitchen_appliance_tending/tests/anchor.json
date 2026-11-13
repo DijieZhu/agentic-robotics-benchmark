@@ -1,8 +1,8 @@
 {
   "metric": "mean_request_credit",
   "direction": "higher",
-  "value": 1.0,
-  "full_at": 1.0,
-  "source": "Own measurement, 2026-11-12 (draft, P3): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds: ale validate run validate-305fbac0 plus six ale run --agent oracle runs (d722d802, c876c54a, a35e3cfd, 290f11ea, d3383a4e, 1d55c147; engine 1cdbc02, the dev host's Docker): mean_request_credit 1.0 in all 7 runs (63 of 63 episodes at 1.0, 3 per hidden unit per run), no aborts, seccomp guard on.",
-  "note": "Measured, not drawn. full_at 1.0: the measured worst oracle ratio (every run 1.0), as arm_hidden_mechanism_box sets it; the reference also scored 1.0 in all 20 recheck episodes of each hidden unit (tests/hidden/selection.json)."
+  "value": 0.9911,
+  "full_at": 0.95,
+  "source": "Own measurement, 2026-11-13 (six scored units, 12 episodes per run): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds, engine 1cdbc02, the dev host's Docker. 14 runs of the same task content: ale run --agent oracle run 1aa17e1b on commit 12e02b3 (7 runs: 1.0 x6, 0.9861), plus validate-e952debb (1.0) and ale run 5306e0cd (6 runs: 0.9861, 0.9722, 0.9722, 1.0, 0.9861, 0.9722), both on the identical content before it was committed. Mean 0.99106 over 168 episodes; every lost credit is u5 (Oven053, 7 of its 28 episodes lost one request): at placements near the jitter limit the reference finds no feasible grasp pose for the temperature knob. No aborts, seccomp guard on.",
+  "note": "Measured, not drawn. full_at 0.95: the worst oracle run (0.9722) is ratio 0.981; 0.95 leaves room for a run that loses two requests (0.944, ratio 0.953) so the oracle still scores 1.0. The 2026-11-12 anchor (1.0 on three units) is superseded."
 }
