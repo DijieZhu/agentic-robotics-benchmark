@@ -14,7 +14,7 @@
 > physical-execution experiments and the appliance-tending task design; the messy-desk notes
 > that #12 had appended under Open items and Gotchas moved to Appendix A).
 
-## Current state (2026-11-12)
+## Current state (2026-11-13)
 
 - **Engine:** `vendor/ale` @ `1cdbc02` (engine 0.1.1, Harbor task format, §8).
 - **Tasks on `main` (22),** every one with `[verifier] environment_mode = "separate"`:
@@ -32,15 +32,17 @@
     example), `hazard_bay_build`
 - **`identity-history.json`** records every task above (the last export: `a3fa38d`, after #12).
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
-  holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
-  is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
-  task folder exists yet.
-- **Next step:** appliance-tending P3's frontier trial: Opus 5.5 through `ale run` on the draft task
-  `tasks/arm/kitchen_appliance_tending/` (the owner adds `ALE_CLAUDE_CODE_OAUTH_TOKEN` to `vendor/ale/.env`
-  first; `--auth subscription --set agent.version=2.1.309`). The draft validates (untouched 0.0, oracle 1.0). Owner decisions taken on 2026-11-12: knob friction
-  0.20 N m; v1 requests = burner on/off, preheat, turn the oven off, range door open, microwave
-  start/stop; the reference gets the truth by token. Open: draft 2's other **[owner]** marks. Risk: only
-  2 range models are at 1.00 in every seed (design §10).
+  holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
+  task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
+- **Next step:** the owner decides after frontier trial 1 (Opus 5.5 scored reward 0.48 but stopped after
+  15.5 of its 120 minutes with 4 of 16 lab trials used; design §10, P3): run a second trial first, or raise
+  the difficulty now. The trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending
+  --agent claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
+  artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
+  Owner decisions taken on 2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, turn
+  the oven off, microwave start/stop (ranges and the range door dropped after the 20-seed recheck); the
+  reference gets the truth by token. Open: slug and sheet registration, the final agent budget (8 h
+  proposed), depth images.
 
 ## Dated log
 
@@ -521,11 +523,13 @@ scripted reference (simulator poses, joints and contacts).
   hidden and practice units proposed in the design's §10.
   Then "turn the oven off" was added (owner): with a smaller preheat turn (target 0.32 of the knob's
   range) ranges score 0.85 and ovens 0.67, with 2 and 8 models at 1.00 in every seed.
-- **P3 (2026-11-12, trial pending):** the reference speaks the grading wire (`reference.Shadow`); units drawn
+- **P3 (2026-11-12 to 2026-11-13):** the reference speaks the grading wire (`reference.Shadow`); units drawn
   (`tests/hidden/selection.json`; ranges failed the 20-seed recheck and are dropped for now, owner);
   draft task `tasks/arm/kitchen_appliance_tending/` (after arm_hidden_mechanism_box; 9 graded episodes,
   16 lab trials, 2 h agent budget for the trial); anchor 1.0 / full_at 1.0 from 7 oracle engine runs;
-  `ale validate` passes; practice-model baseline 0.926 on the practice units. Design §10, P3.
+  `ale validate` passes; practice-model baseline 0.926 on the practice units. Frontier trial 1 (Opus 5.5,
+  run e83a9535): reward 0.48 (u0 0.67, u1 0.11, u2 0.67), but the agent misjudged the clock and stopped after
+  934 of 7200 s with 4 of 16 lab trials used, so it is a lower bound. Design §10, P3.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and
@@ -561,6 +565,9 @@ scripted reference (simulator poses, joints and contacts).
 
 ## Gotchas
 
+- On the TASL host, `claude` is not on `PATH` and the system Node (v12) is too old to install it. The
+  desktop app's CLI lives at `~/.claude/remote/ccd-cli/<version>` (2.1.321 on 2026-11-13); use it for
+  `setup-token`: from `vendor/ale`, `CLAUDE_CONFIG_DIR="$PWD/.ale/auth/claude-code" ~/.claude/remote/ccd-cli/<version> setup-token`.
 - `export_registry.py` refuses a dirty tree on purpose: `content_digest` covers every
   regular file, ignored `__pycache__/` included. Export from a clean commit; `--allow-dirty`
   is for throwaway exports and never writes the canonical `identity-history.json`.

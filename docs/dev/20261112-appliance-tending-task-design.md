@@ -349,7 +349,7 @@ Code: `episode.py` (the grader-side episode: initial state, request queue, credi
   above stand. The range pool (2 models) is just enough for one hidden and one practice range; if P4's
   20-seed recheck drops one, the temperature-knob primitive needs work before the draw.
 
-### P3 — draft task, baseline, gates (2026-11-12; the frontier trial is pending)
+### P3 — draft task, baseline, gates, first frontier trial (2026-11-12 to 2026-11-13)
 
 Plan approved by the owner: build a draft task folder (most of P4) so a frontier model can be run through `ale
 run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscription auth).
@@ -380,4 +380,24 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   and runs the reference's primitives. Practice grader: **0.926** over 9 episodes (8 at 1.0; one microwave start
   missed), 37 of 37 probe pairs differed. The task is solvable as instructed from observations alone, given a
   unit's model; on the hidden units an agent must also find the controls of models it has not seen.
-- **Pending:** the frontier trial (needs the owner's subscription token in `vendor/ale/.env`).
+- **Frontier trial 1** (2026-11-13, `ale run` e83a9535, Opus 5.5, subscription auth, claude-code 2.1.309,
+  2 h budget): **reward 0.48** (`mean_request_credit` 0.4815). Per unit: u0 cooktop 0.67, u1 microwave 0.11,
+  u2 oven 0.67; per request type: burner off 1.0, burner on 0.57, preheat 1.0, oven off 0.57, microwave start
+  1.0, microwave stop 0.0. Episodes are bimodal: four at 1.0, four at 0.0 (the controller stalls on the first
+  request until every deadline passes), one at 0.33. 116 of 116 probe pairs differed; no aborts, no simulation
+  faults, seccomp guard on, verify 134 s.
+  - **The agent stopped after 934 s of its 7200 s** (13 %) with 4 of its 16 lab trials used. It ran `date`
+    once, at the start, and after about 15 minutes wrote "~13 min left — finalizing": it misjudged the clock
+    (nothing in its context reported a deadline). The score is therefore a lower bound for this budget.
+  - **What it built:** per-unit calibration measured in the lab: u0's knob height (z 0.937) and its
+    left-to-right knob-to-location map (two locations confirmed, three inferred), u1's start / stop buttons as
+    wrist-image templates taken at one placement, u2's temperature knob (the right-hand one) as templates.
+    The controller finds a control with the wrist camera (blob detection on u0, two-view template matching
+    and triangulation on u1 / u2), grips and turns knobs until the wrist torque shows a stop, and presses
+    buttons until contact. It does not handle the practice units at all. Microwave failures are consistent
+    with templates taken at a single placement not transferring to the placement jitter.
+  - **Reading:** one run, below the 0.5 target, but with most of the budget and trials unused; it does not
+    establish the difficulty. In 15 minutes the agent learned each hidden unit through the lab and solved
+    two of the three kinds in most episodes, which suggests a full-budget run would score higher. Open owner
+    decision: a second trial before changing anything, or raise the difficulty now (fewer lab trials, more
+    placement jitter, more request types, or hidden units drawn per grading run).
