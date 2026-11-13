@@ -1,8 +1,8 @@
 {
   "metric": "mean_request_credit",
   "direction": "higher",
-  "value": null,
+  "value": 1.0,
   "full_at": 1.0,
-  "source": "To be measured: the privileged reference (solution/solve.sh, token truth) through this build's verify (ale validate), several fresh runs.",
-  "note": "Authoring flow: leave value null and run ale validate; the oracle run fails with oracle_not_full and its verification.json carries the measured metric. Record it here with full_at sized from the oracle runs' spread."
+  "source": "Own measurement, 2026-11-12 (draft, P3): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds: ale validate run validate-305fbac0 plus six ale run --agent oracle runs (d722d802, c876c54a, a35e3cfd, 290f11ea, d3383a4e, 1d55c147; engine 1cdbc02, the dev host's Docker): mean_request_credit 1.0 in all 7 runs (63 of 63 episodes at 1.0, 3 per hidden unit per run), no aborts, seccomp guard on.",
+  "note": "Measured, not drawn. full_at 1.0: the measured worst oracle ratio (every run 1.0), as arm_hidden_mechanism_box sets it; the reference also scored 1.0 in all 20 recheck episodes of each hidden unit (tests/hidden/selection.json)."
 }

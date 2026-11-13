@@ -20,6 +20,8 @@ Phase P1 of `docs/dev/20261112-appliance-tending-task-design.md`. Results are in
 | `batch_episodes.sh` | P2: reference episodes on every candidate model x seeds, sharded. |
 | `oracle_main.py` | P3: the reference as a submission: speaks the grading wire, builds its own copy of the scene from the token truth (`reference.Shadow`), runs the primitive for each request. |
 | `wire_grade.py` | P3: grades a submission over the wire with the kit's `Solver` and `ProbeLock` (prototype of the task's grader and practice grader); `--truth` makes it a token run. |
+| `sync_task.py` | P3: copies the canonical code and the selected unit models into `tasks/arm/kitchen_appliance_tending/` (byte-identical copies). |
+| `baseline/` | P3: the practice-model baseline: `perceive.py` (placement and knob angles by render-and-compare against the fixed cameras), `baseline_main.py` (the reference's primitives without the truth). |
 
 ## Set-up (outside the repository)
 
