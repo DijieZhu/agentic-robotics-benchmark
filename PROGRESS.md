@@ -34,9 +34,10 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** the owner decides after frontier trial 1 (Opus 5.5 scored reward 0.48 but stopped after
-  15.5 of its 120 minutes with 4 of 16 lab trials used; design §10, P3): run a second trial first, or raise
-  the difficulty now. The trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending
+- **Next step:** raise the appliance task's difficulty. Frontier trials (Opus 5.5, 2 h): trial 1 reward
+  0.48 (stopped after 15.5 min, 4 of 16 lab trials), trial 2 reward **0.93** (70 min, all 16 trials). Both
+  calibrated the three scored units through the lab, which serves exactly those units (design §10, P3).
+  The owner picks the lever (proposed: scored units that never appear in the lab) and the trial budget. The trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending
   --agent claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
   Owner decisions taken on 2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, turn
@@ -529,7 +530,9 @@ scripted reference (simulator poses, joints and contacts).
   16 lab trials, 2 h agent budget for the trial); anchor 1.0 / full_at 1.0 from 7 oracle engine runs;
   `ale validate` passes; practice-model baseline 0.926 on the practice units. Frontier trial 1 (Opus 5.5,
   run e83a9535): reward 0.48 (u0 0.67, u1 0.11, u2 0.67), but the agent misjudged the clock and stopped after
-  934 of 7200 s with 4 of 16 lab trials used, so it is a lower bound. Design §10, P3.
+  934 of 7200 s with 4 of 16 lab trials used, so it is a lower bound. Trial 2 (run a9132c62): reward 0.93
+  (u0 1.0, u1 0.78, u2 1.0; 70 min, all 16 lab trials), the same lab-calibration strategy: too easy as built.
+  Design §10, P3.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and

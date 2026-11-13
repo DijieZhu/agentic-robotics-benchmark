@@ -401,3 +401,19 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
     two of the three kinds in most episodes, which suggests a full-budget run would score higher. Open owner
     decision: a second trial before changing anything, or raise the difficulty now (fewer lab trials, more
     placement jitter, more request types, or hidden units drawn per grading run).
+- **Frontier trial 2** (2026-11-13, `ale run` a9132c62, the same task and settings as trial 1): **reward 0.93**
+  (`mean_request_credit` 0.926). Per unit: u0 1.0, u1 0.78, u2 1.0; every request type 1.0 except microwave
+  stop 0.5; eight episodes at 1.0, one at 0.33 (a microwave episode). 52 of 53 probe pairs differed (lock ok);
+  no aborts or faults; verify 87 s. Agent phase 4198 s of 7200 s; **all 16 lab trials used.**
+  - The agent again declared itself done after about 15 minutes (its first report expected u1 to fail), but it
+    had scheduled its own wake-up first; on waking it ran `date`, found about an hour had passed rather than
+    two, and spent the rest fixing the microwave: a press-by-press scan in the lab located the start and stop
+    buttons (the stop target is about 3 mm wide).
+  - **Same strategy as trial 1:** per-unit calibration through the lab. Reference image patches of u0, u1
+    and u2 taken in lab trials (`refs.pkl`) are matched in the fixed cameras and triangulated each episode;
+    the knob-to-location map, the oven's temperature knob and the button positions were measured on the
+    hidden units themselves. The controller does nothing on the practice units.
+  - **Reading:** the task is too easy as built. Because the lab serves exactly the scored units, the
+    intended difficulty (controls on models the agent has not seen) reduces to calibrating three known units
+    and coping with the placement jitter. Both trials took this route. Next: raise the difficulty so the
+    scored units are not the lab's units (owner decision pending).
