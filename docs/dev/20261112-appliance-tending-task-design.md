@@ -242,7 +242,7 @@ P1's own checks still pass (`check_predicates.py`: all pass).
   front 0.15 m below its top (at least 20 degrees below horizontal), solved by IK from four fixed starts;
   joint-limit margins 0.6-1.05 rad on the test units, and the wrist camera sees each unit's front (the
   P1 home pose did not).
-- **Knob physics (deviation from RoboCasa, [owner]).** RoboCasa's knobs have friction loss 0.75 N m
+- **Knob physics (deviation from RoboCasa; approved by the owner, 2026-11-12).** RoboCasa's knobs have friction loss 0.75 N m
   (ranges) to 1.0 N m (cooktops) and armature 1.0 kg m^2. This environment's controller ([box]'s: the
   target re-based every step, at most 0.03 m / 0.2 rad ahead) delivers roughly 0.5-0.8 N m at the
   wrist, and a pinch with the 20 N fingers holds about 0.6 N m on a 24 mm knob: the reference could
@@ -281,6 +281,6 @@ P1's own checks still pass (`check_predicates.py`: all pass).
 - **Not done in P2 yet:** camera pose estimation (the reference still reads the unit pose from the
   simulator); microwave door open/close and the oven door; a request sequence within one episode
   (initial states, the hold-and-clear rule across requests); choosing practice and hidden models.
-- **Proposed v1 request list [owner]:** cooktop and range burner on/off, range and oven preheat, range
-  door open, microwave start/stop. Microwave doors and the oven door stay out unless P2 spends more
-  time on them.
+- **Owner decisions (2026-11-12):** the knob physics above is approved (friction loss 0.20 N m, armature
+  0.002 kg m^2). The v1 request list is: cooktop and range burner on / off, range and oven preheat,
+  range door open, microwave start / stop. Microwave doors and the oven door are out of v1.

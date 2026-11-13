@@ -35,9 +35,10 @@
   holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
   is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
   task folder exists yet.
-- **Next step:** appliance-tending P2, second pass: camera pose estimation for the reference, request
-  sequences within an episode, then the practice / hidden model split. Owner decisions waiting: the
-  knob-friction change and the v1 request list (design §10, P2), plus draft 2's **[owner]** marks.
+- **Next step:** appliance-tending P2, second pass: request sequences within an episode, camera pose
+  estimation for the reference, then the practice / hidden model split. Owner decisions taken on
+  2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, range door open, microwave
+  start/stop (no microwave or oven doors). Draft 2's other **[owner]** marks are still open.
 
 ## Dated log
 
@@ -508,7 +509,7 @@ scripted reference (simulator poses, joints and contacts).
 - **P2 first pass (2026-11-12):** `reference.py` (privileged primitives behind a collision-checked IK
   planner), `run_reference.py`, `batch.sh`, `summarize.py`. Environment: unit-facing home pose, RoboCasa's
   once-per-step state update and gripper-only contact, wrench in the world frame, and knob friction set
-  to 0.20 N m (RoboCasa's 0.75-1.0 N m exceeds what this controller delivers; an owner decision).
+  to 0.20 N m (RoboCasa's 0.75-1.0 N m exceeds what this controller delivers; approved by the owner).
   Batch over 123 models: knobs 74-88 %, preheat 57-68 %, microwave start/stop 93-94 %, range door 75 %,
   oven door 21 %, microwave door 0 % (not working yet). Results in the design's §10.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
