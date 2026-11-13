@@ -15,6 +15,9 @@ Phase P1 of `docs/dev/20261112-appliance-tending-task-design.md`. Results are in
 | `run_reference.py` | P2: runs primitives as trials (fresh episode, initial state, one primitive) and writes JSON lines; `--video` saves the cameras. |
 | `batch.sh` | P2: every candidate model x the primitives x seeds, sharded over parallel processes. |
 | `summarize.py` | P2: success per kind and primitive, failure stages, fully reliable models. |
+| `episode.py` | P2: the grader-side episode around the environment: initial state, three requests, the two-stage credit. |
+| `run_episodes.py` | P2: whole episodes with the reference (or `--untouched`), one JSON line each. |
+| `batch_episodes.sh` | P2: reference episodes on every candidate model x seeds, sharded. |
 
 ## Set-up (outside the repository)
 
@@ -71,4 +74,8 @@ MUJOCO_GL=osmesa ~/arb-data/venv-p1/bin/python -I smoke.py --assets ~/arb-data/r
 
 ```bash
 bash batch.sh ../outputs/p2/batch3 32 0 1 2 && ~/arb-data/venv-p1/bin/python -I summarize.py ../outputs/p2/batch3/*.jsonl
+```
+
+```bash
+bash batch_episodes.sh ../outputs/p2/ep_batch1 40 0 1 2 3 4
 ```

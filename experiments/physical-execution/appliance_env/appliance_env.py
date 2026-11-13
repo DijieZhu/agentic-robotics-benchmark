@@ -271,12 +271,14 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
         g.type = mujoco.mjtGeom.mjGEOM_BOX
         g.size = [max(depth, 0.6) / 2 + 0.05, max(width, 0.6) / 2 + 0.25, mt["bottom_z"] / 2]
         g.pos = [front + g.size[0] - 0.03, jitter[1], mt["bottom_z"] / 2]
+        g.name = "support"
         g.rgba = [0.82, 0.80, 0.76, 1]
     # back wall
     g = wb.add_geom()
     g.type = mujoco.mjtGeom.mjGEOM_BOX
     g.size = [0.02, 1.5, 1.4]
     g.pos = [front + max(depth, 0.6) + 0.15, 0.0, 1.4]
+    g.name = "back_wall"
     g.rgba = [0.9, 0.88, 0.84, 1]
     # robot pedestal (visual)
     g = wb.add_geom()
@@ -286,7 +288,10 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     g.rgba = [0.25, 0.25, 0.27, 1]
     g.contype = 0
     g.conaffinity = 0
-    front_centre = np.array([front, jitter[1], mt["bottom_z"] + (hi[2] - lo[2]) / 2])
+    # Cameras and the home pose follow the NOMINAL mount, never the episode's jitter: cameras that moved
+    # with the unit would show it in the same place every episode, and a home pose solved for the
+    # jittered unit would encode its pose in the initial joint angles.
+    front_centre = np.array([mt["front_x"], 0.0, mt["bottom_z"] + (hi[2] - lo[2]) / 2])
     for name, (p, tgt, fovy, _w, _h) in CAMERAS.items():
         cp = front_centre + np.asarray(p)
         ct = front_centre + np.asarray(tgt)
@@ -309,7 +314,7 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     m = w.compile()
     m.site_rgba[:, 3] = 0.0           # sites are markers, never seen (burner flames are switched by the unit)
     top_z = mt["bottom_z"] + (hi[2] - lo[2])
-    look = np.array([front, jitter[1], top_z - HOME_LOOK_BELOW_TOP])
+    look = np.array([mt["front_x"], 0.0, top_z - HOME_LOOK_BELOW_TOP])
     return m, {"unit_pos": pos, "unit_yaw": yaw, "robot_base": robot_base, "bbox_lo": lo, "bbox_hi": hi,
                "mount": mt, "look_point": look}
 

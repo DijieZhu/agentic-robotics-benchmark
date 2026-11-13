@@ -112,8 +112,12 @@ fraction) instead of the 0.5 "reached" stage?]**
 - Grader: [box]'s `verify.py` structure. 8 episodes (2 per hidden unit, hidden order; the
   observation names the unit, so the controller may adapt across episodes), fresh 64-bit seeds from
   `seed_rng` (unit pose jitter, initial control states, request queue, sensor noise).
-- Reference (`solution/`): privileged, knows `units.json`; estimates the unit pose from the fixed
-  cameras at t = 0 ([box]'s `perceive.py`), then runs the primitives. It spends no lab trials.
+- Reference (`solution/`): privileged, and given the truth by token (owner decision 2026-11-12; the
+  spacecraft and messy-desk pattern): only in a run that presents the oracle token from `solution/`
+  (its sha256 in `tests/hidden/`), the grader adds the unit's true pose and every control's state to
+  each observation; untokened runs never see them. It then runs the primitives and spends no lab
+  trials. The anchor is therefore "perfect perception + these primitives"; the reference does no
+  camera perception (this replaces draft 2's box-style pose estimation).
 - Anchor: the reference's `mean_request_credit` over at least 20 fresh oracle runs through the
   engine; `full_at` = its worst measured ratio ([box] measured 1.0 in 24 of 24 runs and set
   `full_at` 1.0). If its run-to-run spread is wide, switch to a fixed hidden episode set
@@ -284,3 +288,46 @@ P1's own checks still pass (`check_predicates.py`: all pass).
 - **Owner decisions (2026-11-12):** the knob physics above is approved (friction loss 0.20 N m, armature
   0.002 kg m^2). The v1 request list is: cooktop and range burner on / off, range and oven preheat,
   range door open, microwave start / stop. Microwave doors and the oven door are out of v1.
+
+### P2 — second pass: episodes, leaks, the reference's truth, model reliability (2026-11-12)
+
+Code: `episode.py` (the grader-side episode: initial state, request queue, credit), `run_episodes.py`
+(reference or untouched episodes), `batch_episodes.sh` (every candidate model, sharded).
+
+- **Owner decisions.** Knob friction 0.20 N m and the v1 request list (above) are approved. The
+  reference gets the truth by token (§6), so P2 does no camera pose estimation.
+- **Episode** (`episode.py`): the initial state is drawn per episode (each burner on with p 0.3 at
+  0.8-1.6 rad; the microwave running with p 0.5); then K = 3 requests, each drawn from those valid in
+  the state it opens on (burner on/off, preheat, range door open, microwave start/stop), with a
+  600-step deadline. Credit follows §4: reached (target held 3 steps) 0.5, completed (held 20 steps,
+  hand at least 0.10 m from the control, every other control in the discrete state it had when this
+  request opened) 0.5. "Other controls as they were when the request opened" means a failed earlier
+  request does not cost later ones. Request text is fixed templates ("Turn on the rear left burner.",
+  "Preheat the oven.", "Open the oven door.", "Start the microwave.").
+- **Two leaks fixed in `appliance_env.py`.** The fixed cameras were placed relative to the jittered
+  unit, so the unit looked the same in every episode and the camera poses changed instead; and the home
+  pose was solved for the jittered unit, so the initial joint angles encoded its pose. Both now follow
+  the nominal mount: cameras and initial joints are identical across seeds (checked: max joint
+  difference 0.0); only the unit moves.
+- **Checks.** Untouched episodes score 0.00 (4 kinds). Reference episodes on one model per kind,
+  seeds 0-1: all 1.00.
+- **Reliability over every candidate model** (`ep_batch1`: 123 models x 5 seeds = 615 episodes; median
+  401 control steps and 3.6 s wall per episode without images):
+
+  | Kind | Mean episode score | Models at 1.00 in all 5 seeds |
+  |---|---|---|
+  | cooktop | 0.83 | 17/24 |
+  | range | 0.79 | 2/24 (Stove063, Stove064) |
+  | microwave | 0.91 | 34/50 |
+  | oven | 0.70 | 11/25 |
+
+  Requests completed: burner on 300/344, burner off 203/247, start 315/358, stop 367/392, range door
+  open 22/30, preheat 142/292 (a failed preheat leaves the oven valid for another preheat, so ovens
+  repeat it).
+- **Selection rule (proposed for P4).** Candidates are the models at 1.00 in all 5 seeds. P4 re-runs
+  each candidate on 20 fresh seeds, keeps those still at 1.00, then draws with `os.urandom` (recorded
+  before any candidate runs, as spacecraft's `select_set.py` does) the hidden units (one cooktop, one
+  range, one microwave, one oven) and, from the rest, the practice units (one per kind).
+- **For the owner.** An oven unit offers one v1 request (preheat), so a successful oven episode has one
+  request, not three. Adding "turn the oven off" (the temperature knob back to zero; the knob primitive
+  already does it) would give ovens and ranges a second request type.

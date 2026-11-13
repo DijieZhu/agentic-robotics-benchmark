@@ -35,10 +35,11 @@
   holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
   is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
   task folder exists yet.
-- **Next step:** appliance-tending P2, second pass: request sequences within an episode, camera pose
-  estimation for the reference, then the practice / hidden model split. Owner decisions taken on
-  2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, range door open, microwave
-  start/stop (no microwave or oven doors). Draft 2's other **[owner]** marks are still open.
+- **Next step:** appliance-tending P3 (camera-only baseline and one frontier-model run on practice
+  units; go on only if neither floors at 0). Owner decisions taken on 2026-11-12: knob friction
+  0.20 N m; v1 requests = burner on/off, preheat, range door open, microwave start/stop; the reference
+  gets the truth by token. Open: "turn the oven off" as a second oven request; draft 2's other
+  **[owner]** marks.
 
 ## Dated log
 
@@ -512,6 +513,11 @@ scripted reference (simulator poses, joints and contacts).
   to 0.20 N m (RoboCasa's 0.75-1.0 N m exceeds what this controller delivers; approved by the owner).
   Batch over 123 models: knobs 74-88 %, preheat 57-68 %, microwave start/stop 93-94 %, range door 75 %,
   oven door 21 %, microwave door 0 % (not working yet). Results in the design's §10.
+- **P2 second pass (2026-11-12):** `episode.py` (initial state, three requests, two-stage credit),
+  `run_episodes.py`, `batch_episodes.sh`. Fixed two leaks (cameras and the home pose followed the
+  jittered unit). Untouched 0.00; reference episodes over 123 models x 5 seeds: cooktop 0.83, range
+  0.79, microwave 0.91, oven 0.70; models at 1.00 in every seed: 17 / 2 / 34 / 11. Selection rule for the
+  hidden and practice units proposed in the design's §10.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and
