@@ -35,8 +35,9 @@
   holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
   is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
   task folder exists yet.
-- **Next step:** appliance-tending P3 (camera-only baseline and one frontier-model run on practice
-  units; go on only if neither floors at 0). Owner decisions taken on 2026-11-12: knob friction
+- **Next step:** appliance-tending P3's frontier trial: Opus 5.5 through `ale run` on the draft task
+  `tasks/arm/kitchen_appliance_tending/` (the owner adds `ALE_CLAUDE_CODE_OAUTH_TOKEN` to `vendor/ale/.env`
+  first; `--auth subscription --set agent.version=2.1.309`). The draft validates (untouched 0.0, oracle 1.0). Owner decisions taken on 2026-11-12: knob friction
   0.20 N m; v1 requests = burner on/off, preheat, turn the oven off, range door open, microwave
   start/stop; the reference gets the truth by token. Open: draft 2's other **[owner]** marks. Risk: only
   2 range models are at 1.00 in every seed (design §10).
@@ -520,6 +521,11 @@ scripted reference (simulator poses, joints and contacts).
   hidden and practice units proposed in the design's §10.
   Then "turn the oven off" was added (owner): with a smaller preheat turn (target 0.32 of the knob's
   range) ranges score 0.85 and ovens 0.67, with 2 and 8 models at 1.00 in every seed.
+- **P3 (2026-11-12, trial pending):** the reference speaks the grading wire (`reference.Shadow`); units drawn
+  (`tests/hidden/selection.json`; ranges failed the 20-seed recheck and are dropped for now, owner);
+  draft task `tasks/arm/kitchen_appliance_tending/` (after arm_hidden_mechanism_box; 9 graded episodes,
+  16 lab trials, 2 h agent budget for the trial); anchor 1.0 / full_at 1.0 from 7 oracle engine runs;
+  `ale validate` passes; practice-model baseline 0.926 on the practice units. Design §10, P3.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and

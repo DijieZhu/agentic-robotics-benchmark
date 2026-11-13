@@ -348,3 +348,36 @@ Code: `episode.py` (the grader-side episode: initial state, request queue, credi
   off 91/107, range door open 13/16. Cooktops and microwaves have no temperature knob; their numbers
   above stand. The range pool (2 models) is just enough for one hidden and one practice range; if P4's
   20-seed recheck drops one, the temperature-knob primitive needs work before the draw.
+
+### P3 — draft task, baseline, gates (2026-11-12; the frontier trial is pending)
+
+Plan approved by the owner: build a draft task folder (most of P4) so a frontier model can be run through `ale
+run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscription auth).
+
+- **The reference over the wire** (`reference.Shadow`, `oracle_main.py`, `wire_grade.py`): the reference keeps
+  its own copy of the scene in step with each observation and answers every query (a probe's repeat too) from
+  the queried observation. Over the wire it scores what it scored in process (1.0 on four P2 units).
+- **Unit selection** (`tests/hidden/selection.json`): the 20 recheck seeds and the draw key were drawn with
+  `os.urandom` and committed (`3e7ad6f`) before any recheck ran. Survivors at 1.00 in all 20: cooktops 16/17,
+  microwaves 22/34, ovens 5/8, **ranges 0/2** (Stove028 14/20, Stove075 15/20). **Owner decision:** ranges are
+  dropped for now; "Open the oven door" leaves v1. Drawn: hidden u0 Stovetop011, u1 Microwave081, u2 Oven036;
+  practice p0 Stovetop018, p1 Microwave075, p2 Oven039.
+- **Draft task** `tasks/arm/kitchen_appliance_tending/` (`47fa7ed`), after arm_hidden_mechanism_box: grader
+  (seccomp launcher, kit Solver and ProbeLock, 9 episodes = 3 per hidden unit, token truth for the oracle), lab
+  service with an appliance plugin (16 trials; hidden models read into memory before the privilege drop),
+  payload (dev sim, practice units, task card, practice grader, helpers), image (OSMesa), instruction. The
+  observation now carries the cameras' intrinsics and poses (the fixed cameras' poses depend on the unit's
+  model) and always the three image keys (empty when not asked); the request is three flat fields
+  (`request_id`, `request_text`, `request_deadline_t`), as the lab's reply schema needs. Agent budget 2 h for
+  the trial. `sync_task.py` keeps the code and models byte-identical across dev sim, lab, grader and reference.
+- **Gates.** `ale lint` ok; `lint_domain` ok; task assets ok; kit byte-identical; `pytest` passes.
+  **Anchor:** `mean_request_credit` 1.0, `full_at` 1.0: the reference scored 1.0 in all 7 engine runs on fresh
+  seeds (63 of 63 episodes). **`ale validate` (`validate-9c43caa4`): untouched 0.0, oracle 1.0.** A verify takes
+  about a minute.
+- **Baseline** (`baseline/`): knows only the practice models; estimates the unit's placement by
+  render-and-compare against the fixed cameras (2 mm / 0.25 degree on the practice units, about 5 s) and a
+  knob's angle before an "off" request (about 0.05 rad), tracks the knob it turns and the microwave flag itself,
+  and runs the reference's primitives. Practice grader: **0.926** over 9 episodes (8 at 1.0; one microwave start
+  missed), 37 of 37 probe pairs differed. The task is solvable as instructed from observations alone, given a
+  unit's model; on the hidden units an agent must also find the controls of models it has not seen.
+- **Pending:** the frontier trial (needs the owner's subscription token in `vendor/ale/.env`).
