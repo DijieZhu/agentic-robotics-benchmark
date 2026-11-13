@@ -118,6 +118,33 @@ def axis_angle_mat(v):
     return np.eye(3) + math.sin(th) * K + (1 - math.cos(th)) * K @ K
 
 
+CAMERA_NAMES = ("left", "right", "wrist")
+
+
+def encode_image(img):
+    import base64
+    img = np.ascontiguousarray(img, dtype=np.uint8)
+    return {"dtype": "uint8", "shape": list(img.shape), "b64": base64.b64encode(img.tobytes()).decode("ascii")}
+
+
+def decode_image(d):
+    import base64
+    return np.frombuffer(base64.b64decode(d["b64"]), np.uint8).reshape(d["shape"])
+
+
+def to_wire(obs):
+    """Observation with numpy arrays -> JSON-ready dict (images base64, box_env's format)."""
+    out = {}
+    for k, v in obs.items():
+        if k in CAMERA_NAMES:
+            out[k] = encode_image(v)
+        elif isinstance(v, np.ndarray):
+            out[k] = v.tolist()
+        else:
+            out[k] = v
+    return out
+
+
 def ik(m, d, site, jq, jv, lo, hi, target, approach, iters=300, q_rest=None):
     """Position + approach-axis (the gripper site's z) IK from d.qpos, modified in place.
     Returns (position error m, approach error rad)."""
@@ -449,11 +476,14 @@ class ApplianceEnv(object):
         self.model = None
         self._renderers = {}
 
-    def reset(self, seed):
+    def reset(self, seed, jitter=None):
+        """A fresh episode. `jitter` (dx, dy, dyaw) overrides the seed's unit placement: a controller's
+        own copy of the scene (reference.Shadow) is built at a pose it was told or estimated."""
         self.seed = int(seed) & (2 ** 64 - 1)
         place = np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 7])
         self.rng = np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 11])
-        jitter = place.uniform(-1, 1, 3) * self.jitter_scale
+        jitter = place.uniform(-1, 1, 3) * self.jitter_scale if jitter is None else np.asarray(jitter, float)
+        self.jitter = jitter
         self.model, self.layout = build_model(self.assets, self.spec, jitter, self.mount)
         self.data = mujoco.MjData(self.model)
         self.unit = Unit(self.model, self.spec["kind"])
@@ -610,11 +640,50 @@ class ApplianceEnv(object):
         img += self.rng.normal(0, RGB_NOISE, img.shape)
         return np.clip(img, 0, 255).astype(np.uint8)
 
+    def wrist_pose(self, d=None):
+        """4x4 world pose of the wrist camera, OpenCV convention (x right, y down, z forward)."""
+        d = self.data if d is None else d
+        T = np.eye(4)
+        T[:3, :3] = d.cam_xmat[self.wrist_cam].reshape(3, 3) @ np.diag([1.0, -1.0, -1.0])
+        T[:3, 3] = d.cam_xpos[self.wrist_cam]
+        return T
+
+    def truth(self):
+        """The simulator's truth about the unit, for the oracle's token runs only: its placement jitter,
+        every unit joint's value and the microwave's on/off flag."""
+        m, d = self.model, self.data
+        joints = {}
+        for j in range(m.njnt):
+            name = m.joint(j).name
+            if name.startswith("u_"):
+                joints[name[2:]] = float(d.qpos[m.jnt_qposadr[j]])
+        return {"jitter": [float(x) for x in self.jitter], "joints": joints, "turned_on": bool(self.unit.turned_on)}
+
+    def perturbed_observation(self, obs, rng):
+        """A probe copy for the grader's lock (box_env's rule): joint readings offset by up to 0.001 rad,
+        with the gripper pose and wrist-camera pose recomputed consistently, and a small wrench offset."""
+        f = mujoco.MjData(self.model)
+        f.qpos[:] = self.data.qpos
+        q = np.asarray(obs["q"], float) + rng.uniform(-0.001, 0.001, 7)
+        f.qpos[self.jq] = q
+        mujoco.mj_kinematics(self.model, f)
+        mujoco.mj_camlight(self.model, f)
+        out = dict(obs)
+        out["q"] = np.round(q, 6)
+        out["ee_pos"] = np.round(f.site_xpos[self.site], 6)
+        out["ee_quat"] = np.round(quat_from_mat(f.site_xmat[self.site].reshape(3, 3)), 6)
+        out["T_world_wrist"] = np.round(self.wrist_pose(f), 6)
+        w = np.asarray(obs["wrench"], float).copy()
+        w[:3] += rng.uniform(-0.2, 0.2, 3)
+        out["wrench"] = np.round(w, 4)
+        return out
+
     def observation(self):
         d = self.data
         R = d.site_xmat[self.site].reshape(3, 3)
         obs = {
             "t": self.t,
+            "T_world_wrist": self.wrist_pose(),
             "q": d.qpos[self.jq].copy(),
             "dq": d.qvel[self.jv].copy(),
             "ee_pos": d.site_xpos[self.site].copy(),

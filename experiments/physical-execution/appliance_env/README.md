@@ -18,6 +18,8 @@ Phase P1 of `docs/dev/20261112-appliance-tending-task-design.md`. Results are in
 | `episode.py` | P2: the grader-side episode around the environment: initial state, three requests, the two-stage credit. |
 | `run_episodes.py` | P2: whole episodes with the reference (or `--untouched`), one JSON line each. |
 | `batch_episodes.sh` | P2: reference episodes on every candidate model x seeds, sharded. |
+| `oracle_main.py` | P3: the reference as a submission: speaks the grading wire, builds its own copy of the scene from the token truth (`reference.Shadow`), runs the primitive for each request. |
+| `wire_grade.py` | P3: grades a submission over the wire with the kit's `Solver` and `ProbeLock` (prototype of the task's grader and practice grader); `--truth` makes it a token run. |
 
 ## Set-up (outside the repository)
 

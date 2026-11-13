@@ -271,6 +271,10 @@ class Driver(object):
     def tick(self, target, R, grip, speed=0.03, turn=0.2, cams=0):
         if self.steps >= self.MAX_STEPS:
             raise PrimitiveError(self.stage, "step budget exhausted")
+        if hasattr(self.env, "command"):          # over the wire: the action is computed per query (Shadow)
+            obs = self.env.command(np.asarray(target, float), np.asarray(R, float), grip, speed, turn, cams)
+            self.steps += 1
+            return obs
         dp = np.asarray(target, float) - self.site_pos()
         n = np.linalg.norm(dp)
         if n > speed:
@@ -779,3 +783,88 @@ class Driver(object):
         self.confirm("confirm", lambda: self.env.unit_state()["door_open"], handle)
         out["fraction"] = round(frac(), 4)
         return out
+
+
+# ----------------------------------------------------------------------------------------------
+# Over the wire: the reference as a submission (solution/), driving its own copy of the scene
+# ----------------------------------------------------------------------------------------------
+class EpisodeOver(Exception):
+    """The grader moved on (reset or close) while a primitive was running."""
+
+    def __init__(self, msg):
+        super().__init__(msg.get("type"))
+        self.msg = msg
+
+
+def step_law(obs, target, R, grip, speed, turn, cams):
+    """The action for one query: Driver.tick's law, from the QUERIED observation's gripper pose, so a
+    repeated query of the same step (the grader's probe) gets an answer consistent with what it shows."""
+    ee = np.asarray(obs["ee_pos"], float)
+    Ree = np.zeros(9)
+    mujoco.mju_quat2Mat(Ree, np.asarray(obs["ee_quat"], float))
+    dp = target - ee
+    n = np.linalg.norm(dp)
+    if n > speed:
+        dp *= speed / n
+    dr = rotvec(R @ Ree.reshape(3, 3).T)
+    n = np.linalg.norm(dr)
+    if n > turn:
+        dr *= turn / n
+    return [round(float(x), 6) for x in list(dp) + list(dr)] + [float(grip), int(cams)]
+
+
+class Shadow(object):
+    """The controller's own copy of the scene, kept in step with the observations: the robot's joints and
+    gripper from each observation, the unit's pose and control states from what the controller was told
+    (the oracle's token truth) or estimated (a baseline). Looks like an ApplianceEnv to `Driver`, and
+    `command` speaks the stdio wire (`read`, `write` are line callables)."""
+
+    def __init__(self, spec, assets, read, write, mount=None):
+        self.spec, self.assets, self.mount = spec, assets, mount
+        self.read, self.write = read, write
+        self.env = None
+        self.pending = None
+
+    def __getattr__(self, name):
+        return getattr(self.__dict__["env"], name)
+
+    def start(self, msg, jitter):
+        self.env = E.ApplianceEnv(self.spec, self.assets, render=False, mount=self.mount, jitter_scale=(0, 0, 0))
+        self.env.reset(0, jitter=jitter)
+        self.pending = msg
+        self.sync(msg["obs"])
+
+    def sync(self, obs):
+        env = self.env
+        m, d = env.model, env.data
+        d.qpos[env.jq] = obs["q"]
+        d.qvel[env.jv] = obs["dq"]
+        w = float(obs["gripper"]) / 2
+        d.qpos[env.gq[0]], d.qpos[env.gq[1]] = w, -w
+        truth = obs.get("truth")
+        if truth:
+            for name, v in truth["joints"].items():
+                d.qpos[m.joint("u_" + name).qposadr[0]] = v
+            env.unit.turned_on = bool(truth["turned_on"])
+        mujoco.mj_forward(m, d)
+        env.t = int(obs["t"])
+
+    @property
+    def obs(self):
+        return self.pending["obs"]
+
+    def command(self, target, R, grip, speed, turn, cams):
+        """Answer the pending step (and any repeat of it) with the law; return the next step's observation."""
+        t0 = self.pending["t"]
+        self.write({"action": step_law(self.pending["obs"], target, R, grip, speed, turn, cams)})
+        while True:
+            msg = self.read()
+            if msg.get("type") != "act":
+                raise EpisodeOver(msg)
+            if int(msg["t"]) == t0:
+                self.write({"action": step_law(msg["obs"], target, R, grip, speed, turn, cams)})
+                continue
+            self.pending = msg
+            self.sync(msg["obs"])
+            return msg["obs"]
+
