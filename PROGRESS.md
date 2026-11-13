@@ -35,8 +35,8 @@
   holds RoboCasa feasibility pilots for a planned appliance-tending task (§12). The task design
   is `docs/dev/20261112-appliance-tending-task-design.md`, awaiting the owner's approval; no
   task folder exists yet.
-- **Next step:** owner review of the appliance-tending design (its open questions), then build
-  the task image and the camera-based pilot it asks for first.
+- **Next step:** owner review of the appliance-tending design, draft 2 (its **[owner]** marks),
+  then its P1: extract RoboCasa appliance models into a single-file MuJoCo environment.
 
 ## Dated log
 
@@ -488,16 +488,25 @@ scripted reference (simulator poses, joints and contacts).
   20/20 holdout seeds. Unseen kitchens (one seed each): 17/28; the rack hook failed 0/7, the
   other three mostly transfer. About 145 control steps/s on 4 cores, 1.9 GB, without cameras.
   Only the forward direction of each control was tested.
-- **Design:** `docs/dev/20261112-appliance-tending-task-design.md` (draft): a closed_loop task in
-  which a `PandaOmron` tends stove, microwave and oven requests in hidden kitchens from cameras
-  only, scored by RoboCasa's own fixture predicates against a privileged reference on a fixed
-  hidden set. Phases P1 (image and render pilot) to P5 (validate and frontier runs); open
-  owner decisions are marked **[owner]** there.
+- **Design:** `docs/dev/20261112-appliance-tending-task-design.md`. Draft 1 used a mobile
+  `PandaOmron` in RoboCasa's full runtime. Draft 2 (owner direction, same day) drops locomotion,
+  because navigating from cameras would likely floor every frontier model at 0, and follows
+  `arm_hidden_mechanism_box`: a fixed Panda, one single-file MuJoCo environment shared by the dev
+  sim, the lab and the grader, appliance models extracted from RoboCasa's CC-BY-4.0 fixtures, hidden
+  units with a 16-trial lab, on-request RGB plus wrist F/T, two-stage credit per request (reached,
+  then completed with the hand clear and nothing else disturbed), a privileged reference. Phases P1
+  (environment) to P5 (gates and frontier runs); P3 checks the score does not floor at 0 before the
+  task is built. Open owner decisions are marked **[owner]** there.
+- **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
+  `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
+  `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and
+  `arm_hidden_mechanism_box` (robosuite Panda, LIBERO scene, closed loop) are the related tasks.
 
 ## Open items
 
-- **Appliance-tending task (§12):** owner decisions in the design's **[owner]** marks (slug and
-  sheet registration, base odometry, agent budget, asset licence, simulator-copy risk); then P1.
+- **Appliance-tending task (§12):** owner decisions in draft 2's **[owner]** marks (slug and
+  sheet registration, depth images, oven in v1, partial-progress credit, agent budget, asset
+  licence); then P1.
 - **`experiments/physical-execution/` docs** link to absolute paths on the author's Mac
   (`/Users/…/simulator-lab/…`) that do not exist in this repository, and name a home directory
   in a public repository. Replace them with repository-relative paths, or a note naming the

@@ -1,189 +1,165 @@
-# Design: kitchen appliance tending (draft, 2026-11-12)
+# Design: kitchen appliance tending (draft 2, 2026-11-12)
 
 Status: **draft for the owner's review.** No task folder exists yet. Decisions marked
-**[owner]** are open; everything else is a recommendation that the pilots in §8 can still
-overturn. Feasibility evidence: `experiments/physical-execution/APPLIANCE_PILOT_TEST.md`.
+**[owner]** are open; the rest is a recommendation the phases in §9 can still overturn.
 
-## 1. The task in one paragraph
+Draft 2 replaces draft 1 (same day), which used a mobile base inside RoboCasa's full runtime.
+Two reasons for the change: base navigation from cameras would likely push every frontier model
+to a reward of 0, which measures nothing; and `tasks/arm/arm_hidden_mechanism_box` (#18) already
+solves the same kind of problem on `main` (a fixed Panda operating articulated parts it has no
+model of), with a shape that has passed review and `ale validate`. This draft follows that task
+wherever it can, and cites it as **[box]**.
 
-A Franka Panda on an Omron mobile base (RoboCasa's `PandaOmron`) stands in a kitchen it has
-not seen. Over one episode it receives a queue of household requests in plain text ("turn on
-the front-left burner", "start the microwave", "open the oven"), one at a time, each with a
-deadline. It must drive to the right appliance, find the right control from its cameras,
-operate it through ordinary contact, and leave every other appliance as it should be. The agent
-delivers a controller (`/home/user/submission/run.sh`) that the hidden grader drives over the
-closed_loop stdio wire, in hidden kitchens, after the agent is gone. This is the second task of
-the physical-execution family after `object_finding_and_organizing_on_messy_desk`, and it
-reuses that task's structure wherever it can.
+Feasibility evidence: `experiments/physical-execution/APPLIANCE_PILOT_TEST.md` (RoboCasa, a
+privileged scripted controller: stove knob, microwave start, oven door 10/10 each on the tuned
+kitchen; 17/28 on unseen kitchens with the rack included, the rack 0/7).
 
-- Proposed slug: `kitchen_appliance_tending` **[owner: confirm the name and register it in the
-  sheet]**. Platform: `arm` (no mobile-manipulator key exists; the scored skill is arm
-  manipulation).
-- Verify pattern: closed_loop. Verification: `environment_mode = "separate"`, like every task
-  on `main`.
+## 1. The task
 
-## 2. Why this task, and where the difficulty comes from
+A Franka Panda stands fixed in front of a kitchen appliance it has not seen: a stove, a microwave
+or an oven. Over an episode it receives a few household requests in plain text ("turn on the
+rear-left burner", "open the microwave door", "press start"), one at a time, each with a deadline.
+It must find the right control from its cameras, operate it through contact, let go, and leave
+every other control of the appliance as it should be. The agent delivers a controller
+(`/home/user/submission/run.sh`) that the hidden grader drives over the closed_loop stdio wire on
+hidden appliances after the agent is gone.
 
-The pilot shows the controls are physically operable through ordinary actions (no joint
-edits, no teleports), but only with privileged geometry. The agent gets none of it. The
-difficulty is real engineering, not penalties:
+- Proposed slug: `kitchen_appliance_tending` **[owner: confirm; register it in the sheet]**.
+  Platform `arm`. Verify pattern closed_loop; `environment_mode = "separate"`.
+- What it measures: finding small controls on an unseen appliance from images, contact-rich
+  actuation with weak fingers (20 N per finger against a knob with 1.0 N m friction; a 6.6 kg
+  oven door), and not disturbing the rest of the appliance. No locomotion.
 
-- **Perception of small controls.** A stove knob is a few centimetres wide and its "on" angle
-  is 0.35 rad; the agent must find it, and the right one of four to six, from RGB-D alone.
-- **Unseen appliance models and layouts.** Knobs sit on the stovetop's front edge in one layout
-  and on a rear panel in another; microwave buttons and oven handles differ by model. The
-  pilot's own privileged controller generalized to 17/28 unseen scenes.
-- **Contact-rich actuation with weak fingers.** 20 N per finger turns a knob with 1.0 N m
-  friction slowly (about 375 steps for 0.7 rad); the oven door is 6.6 kg and not gravity
-  compensated.
-- **Mobile base and blocking.** An open oven door blocks the robot; the base must stand beside
-  the door's sweep, and kitchen islands limit where it can stand.
-- **Long horizon with state.** Several requests per episode; earlier actions change what later
-  ones need (a door left open, a burner that must stay on).
+## 2. What we take from `arm_hidden_mechanism_box`
 
-Expected frontier result: well below 0.5 against a privileged reference (§6). That must be
-measured (§8, P5), not assumed.
+| [box] does | Here |
+|---|---|
+| One environment file (`box_env.py`, plain MuJoCo 3.16, about 800 lines: scene, Panda, OSC controller, cameras, sensor noise, credit), **byte-identical** in the agent's dev sim, the lab and the grader; only the loaded box differs | `appliance_env.py`, the same way; only the loaded **unit** differs |
+| No robosuite runtime: `robosuite==1.5.2 --no-deps` for the Panda model files; the LIBERO tabletop scene from a pinned dataset revision | The same Panda files; the appliance models extracted from RoboCasa's fixture assets (§5); no RoboCasa runtime and no 10 GB asset download in the image |
+| A box spec = an MJCF body fragment + a stage list; 4 hidden boxes in `tests/ref/boxes.json` | A **unit spec** = an MJCF fragment + its controls (joint, kind, label, target predicates); hidden units in `tests/ref/units.json` |
+| A practice box with its ground truth (`env.gt()`) in the agent's home | Practice units (different models from the hidden ones) with ground truth |
+| A lab service (`/run/ale-lab/lab.sock`, started by `setup.sh`, dedicated `alelab` account) with **16 trials** on the hidden boxes; observations only, no scores | The same service and rules on the hidden units |
+| Fixed Panda; the box at a fresh pose each episode (±4 cm, ±5 cm, ±25° yaw) | Fixed Panda; the unit at a fresh pose (ranges from the reach study, P1) |
+| Observation: joints, end-effector pose, gripper, noisy wrist force/torque, wrist-camera pose; RGB from two fixed cameras and the wrist camera **on request** (bit mask in the action; images cost time); no depth, no box state | The same, plus `request` (`null` or `{"text", "deadline_t"}`) **[owner: add depth?]** |
+| Action `[dx, dy, dz, drx, dry, drz, grip, cams]` at 10 Hz, clipped 0.03 m / 0.2 rad | The same |
+| Staged partial credit with a hold rule (3 steps) | §4 |
+| 8 episodes (2 per box), placements and noise from OS entropy (`seed_rng`); probe rate 1 %, at least 10 % of probe pairs must differ; 6000 s budget; seccomp network guard (`nonet_exec.py`); agent processes stopped first; 200 MiB / 5000-file submission cap; one controller process for the whole run (online adaptation allowed) | The same, with the counts in §6 |
+| Privileged reference: knows every hidden box (`solution/ref/boxes.json`), estimates the box pose from the two fixed cameras at t = 0, then runs scripted primitives | The same: knows every hidden unit's controls, estimates the unit pose from the fixed cameras, runs the pilot's primitives (pinch-turn, fingertip press, handle drag) |
+| CPU only (4 CPUs, 12 GB, no GPU); MuJoCo's Filament renderer on Vulkan lavapipe | The same unless P1 measures it too slow |
+| Agent budget 8 h | 8 h **[owner]** (the lab trials and per-model debugging need it) |
 
-## 3. Episode
+## 3. Units and requests
 
-- **Scene.** One RoboCasa kitchen per episode: a layout with an oven, a style, RoboCasa's
-  default base spawn deviation and arm-joint noise. No task objects in v1.
-- **Requests.** A queue of K requests (proposal: K = 5) drawn from the v1 grammar below. One
-  request is open at a time; the next opens when the current one closes. Each has a deadline
-  in control steps (proposal: 1500 steps = 75 s at 20 Hz; the pilot's passing trials took
-  355-1226 steps from a spawn next to the appliance, so the deadline includes driving).
-- **Initial state.** Some controls may start in a non-default state (a burner on, the oven door
-  open) so that "off" and "close" requests make sense; the initial state is part of the hidden
-  episode.
+A unit is one appliance model mounted in a short counter section, with the robot's mount height
+chosen per kind so every control is reachable (P1 measures reach; a wall oven may need a raised
+mount or a lower base). RoboCasa's fixture registry offers about 17 stove, 50 microwave and 21 oven
+models, enough to keep the practice and hidden models disjoint.
 
-v1 request grammar (from what the pilot established; §8 P2 extends the reverse directions):
+Proposal: **4 hidden units** (2 stoves or cooktops, 1 microwave, 1 oven), **3 practice units**
+(one of each kind) **[owner: drop the oven from v1 if P1 shows its reach needs a different
+mount]**. Each episode loads one hidden unit and opens **K = 3** requests in sequence; a request
+closes on success or at its deadline (proposal: 600 steps = 60 s), then the next opens.
 
-| Request | Judged by (RoboCasa's own predicate) | Pilot evidence |
-|---|---|---|
-| turn on burner `<location>` | `Stove` knob joint ≥ 0.35 rad (burner shown on) | 10/10 tuned, 5/7 unseen |
-| turn off burner `<location>` | knob joint < 0.35 rad | untested (P2) |
-| start the microwave | `Microwave.get_state()["turned_on"]` | 10/10 tuned, 6/7 unseen |
-| open the oven door | `Fixture.is_open` ≥ 0.90 of range | 10/10 tuned, 6/7 unseen |
-| open the microwave door | `Fixture.is_open` on the microwave | untested (P2) |
+| Kind | Requests (v1 candidates) | Predicate (as RoboCasa defines it, re-implemented in `appliance_env.py`) | Pilot |
+|---|---|---|---|
+| stove | turn on / turn off burner `<location>` | knob angle ≥ 0.35 rad (`Stove.is_burner_on`) / below it | on: 10/10 tuned, 5/7 unseen; off: untested |
+| microwave | press start / press stop | `turned_on` true / false, gripper ≥ 0.15 m from the button (`gripper_button_far`) | start: 10/10, 6/7; stop: untested |
+| microwave | open / close the door | door ≥ 0.90 of its range (`Fixture.is_open`) / closed | untested |
+| oven | open the door | ≥ 0.90 of its range | 10/10, 6/7 |
+| oven | preheat | temperature knob ≥ 0.25 (`PreheatOven`) | untested |
 
-Left out of v1: sliding the oven rack (0/7 on unseen scenes; the hook does not transfer),
-closing the oven door (needs lifting 6.6 kg; untested). Candidates once a pilot passes them:
-sink faucet on/off and the coffee machine button (RoboCasa has atomic tasks with predicates
-for both).
+Left out: the oven rack (0/7 unseen), closing the oven door (lifting 6.6 kg; untested). The
+initial control states are drawn per episode so that "off", "stop" and "close" requests start from
+"on", "running" and "open". P2 fixes the final list from what the reference does reliably.
 
-## 4. Interface (the wire)
+## 4. Scoring
 
-The template's closed_loop wire, as the messy-desk task uses it:
+Per request, two stages, each judged by the grader from its own simulator state:
 
-```
-READY
-{"type": "reset"}                        -> {"ok": true}
-{"type": "act", "t": 0, "obs": {...}}    -> {"action": [12 numbers]}
-{"type": "close"}                        -> {"ok": true}, then exit
-```
+- **reached** (0.5): the requested control reaches its target state and holds it for 3
+  consecutive steps;
+- **completed** (0.5): the target state holds for 20 consecutive steps with the hand at least
+  0.10 m from the control (the pilot's and RoboCasa's release rule), **and** every other control of
+  the unit is in its expected state (its initial state, changed only by earlier successful
+  requests) during those steps.
 
-- **Observation:** `request` (`null` or `{"text", "deadline_t"}`), RGB and depth (16-bit mm
-  PNG, base64) from `robot0_agentview_left`, `robot0_agentview_right`, `robot0_eye_in_hand`
-  (resolution decided by the render pilot, P1); arm joint positions and velocities, gripper
-  width, end-effector pose in the base frame; base odometry (integrated base motion since
-  reset, with drift noise) **[owner: odometry, or no base pose at all]**. No fixture poses,
-  no joint values of appliances, no segmentation.
-- **Action:** RoboCasa's `PandaOmron` composite action at 20 Hz (arm delta pose, gripper, base
-  velocity, torso), clipped; the instruction documents each element.
-- Probe lock: a probed step is asked twice with the same `t`, perturbed proprioception in the
-  copy, as in messy desk. An aborted episode scores 0 and is never dropped; at most 3 restarts.
-- Controller time budget per episode (wait time for replies only; simulator time not counted),
-  as in messy desk, so a slow host does not cost the agent.
+A counted stage stays counted. Episode score = mean of its K request scores; metric
+`mean_request_credit` = mean over the 8 episodes, direction higher. Untouched scores 0: every
+request needs a state change the robot causes. An episode in which the controller crashes, answers
+late or malformed, or makes the simulation unstable scores 0 ([box]'s rule, including the joint
+speed limit). **[owner: partial credit for progress toward the target (knob angle, door
+fraction) instead of the 0.5 "reached" stage?]**
 
-## 5. Scoring
+## 5. Assets and licence
 
-Per request: **success = 1** if, before its deadline, the requested control reaches its target
-state, holds it for 20 consecutive control steps with the hand at least 0.10 m from the control
-(the pilot's acceptance rule), **and** every other tracked control is in its expected state at
-that moment (the state after all earlier requests). Otherwise 0. The request closes on success
-or at its deadline.
+- Appliance models: RoboCasa's fixture assets, CC-BY-4.0 (RoboCasa README; the Hugging Face dataset
+  `robocasa/robocasa-assets` carries `fixtures.zip` and `textures.zip` under that licence). The
+  v1.0 "lightwheel" fixtures come through `download_kitchen_assets.py` from a Box link instead; P1
+  checks which source holds the chosen models and that its licence is CC-BY-4.0 **[owner: sign
+  off]**.
+- The extracted MJCF and meshes of the chosen models go into the benchmark's asset dataset
+  (`ale-robotics-assets`, fetched at build through `environment/fetch_assets.py` +
+  `assets.sha256`); `tests/NOTICE.md` gives the attribution, as
+  `robocasa_object_dynamics_from_video` does. Hidden models' meshes must not be in the image: the
+  grader carries them in `tests/` (as [box] carries `tests/ref/boxes.json`), so the asset dataset
+  holds only the practice models and the robot's scene.
+- Behaviour RoboCasa implements in Python, not in MJCF (the microwave's button state, the burner
+  threshold, door "open" fractions), is re-implemented in `appliance_env.py` and checked against
+  RoboCasa on the same models (P1).
 
-- Metric: `request_success_rate` = successes / requests over the hidden set, direction higher.
-  An outcome on a positive scale; untouched = 0, because every request needs a state change the
-  robot causes (an "off" request starts from "on").
-- "Every other control as expected" is what makes it tending rather than five isolated
-  primitives: turning on the wrong burner, or knocking a knob while passing, fails the request.
-- Not scored: time to completion (wall-clock is banned as a metric; the deadline is a step
-  count), smoothness, collisions with the kitchen beyond their effect on control states
-  **[owner: add a collision-free condition?]**.
+## 6. Grader, reference, anchor
 
-## 6. Reference, anchor and hidden set
+- Grader: [box]'s `verify.py` structure. 8 episodes (2 per hidden unit, hidden order; the
+  observation names the unit, so the controller may adapt across episodes), fresh 64-bit seeds from
+  `seed_rng` (unit pose jitter, initial control states, request queue, sensor noise).
+- Reference (`solution/`): privileged, knows `units.json`; estimates the unit pose from the fixed
+  cameras at t = 0 ([box]'s `perceive.py`), then runs the primitives. It spends no lab trials.
+- Anchor: the reference's `mean_request_credit` over at least 20 fresh oracle runs through the
+  engine; `full_at` = its worst measured ratio ([box] measured 1.0 in 24 of 24 runs and set
+  `full_at` 1.0). If its run-to-run spread is wide, switch to a fixed hidden episode set
+  (spacecraft, messy desk) instead of widening `full_at`.
 
-Follow the messy-desk / spacecraft pattern:
+## 7. Why the score should not floor at 0
 
-- **Privileged reference** (`solution/privileged/`): the pilot's scripted controller, extended
-  to sequence requests and drive between appliances. In a token run only (`.oracle_token`,
-  sha256 in `tests/hidden/`), the grader puts the simulator's truth (fixture geometry, joint
-  values) into the observation. Untokened runs never see it.
-- **Fixed hidden set** (`tests/hidden/episodes.json`): N episodes (proposal: 8 kitchens × 5
-  requests = 40 requests), 64-bit seeds from `os.urandom`, each world's digest recorded,
-  selected by a written rule before any candidate runs (spacecraft's `select_set.py`). The
-  hidden set uses layouts and styles that the reference was not tuned on.
-- **Anchor** = the reference's own `request_success_rate` on that set; `full_at` sized from
-  its run-to-run spread (MuJoCo is deterministic on one binary, so expect a tight `full_at`
-  such as 0.95-0.98, as in spacecraft).
-- A reference that cannot reach 1.0 on the set is fine: the anchor is its measured value.
-  Candidate episodes it fails can stay in the set (unlike spacecraft's dropped draw)
-  **[owner]**.
+- The "reached" stage credits half a request for getting the control to its target at all.
+- Every episode has a fixed base and an appliance in view at t = 0; no navigation.
+- P3 measures it before the task is built (§9).
 
-## 7. Sandbox, image and budget
+If frontier models still score near 0 in P3, simplify further (more practice units, depth images,
+a larger lab budget) before adding difficulty anywhere else.
 
-- **Image:** `container-ubuntu22-base:0.1.1`, py3.12 `/opt/venv` with robosuite 1.5.2 and
-  RoboCasa 1.0.1 (the pilot's commits `5ce6643` / `3443cdf`), pinned in `requirements.txt`;
-  the agent-UID import and render self-checks of `robocasa_object_dynamics_from_video`.
-- **Assets:** RoboCasa's kitchen fixtures and textures go into the asset dataset and are
-  fetched at build through `environment/fetch_assets.py` + `assets.sha256` (no build-time
-  download from elsewhere, per #59). Size and the assets' licences must be checked
-  **[owner: licence sign-off]**.
-- **Agent's practice tools** (`environment/setup/payload/`): a kitchen lab (the same simulator
-  with dev seeds, a practice grader speaking the real wire and printing the raw metric only, a
-  task card with camera intrinsics and the robot's limits). The agent has RoboCasa itself in the
-  image, so it can build any stock kitchen locally (§9, risk 1).
-- **Resources:** RoboCasa is CPU physics; rendering decides the rest (P1). Proposal: 8 CPUs,
-  16 GB, `gpus = 1` only if EGL on the GPU works in the sandbox and is needed for speed.
-- **Agent budget:** proposal 2 h **[owner]** (messy desk uses 1 h; its 4 h runs ran out while
-  still debugging). **Verifier budget:** from P1's measured steps per second with cameras.
+## 8. Risks
 
-## 8. Plan of work (each phase ends with a written result in this file's §10)
+1. **Extracting fixtures.** RoboCasa builds fixtures through Python (`models/fixtures/*.py`), not
+   only MJCF; some joints, sites and button logic may need rework. P1 extracts two models per kind
+   first.
+2. **Reach.** Oven doors and wall ovens sit low or high relative to a counter-mounted Panda. P1
+   measures reach per model; the mount can differ per kind.
+3. **Render speed.** [box] renders with Filament on the CPU (about 0.07 s per image); appliances are
+   larger scenes. P1 measures.
+4. **Reference reliability on hidden models.** The pilot's privileged controller transferred to
+   17 of 28 unseen scenes without knowing their models; this reference knows them, but P2 must show
+   it before the hidden set is chosen.
+5. **The agent holds the dev simulator.** Hidden units never leave `tests/`, the lab and
+   `solution/`; seeds are 64-bit OS entropy; the lab returns observations only. Same as [box].
 
-- **P1 — image and render pilot.** Build the image on the dev host (TASL: 96 cores, 4 × RTX 6000
-  Ada); run the pilot `--no-render`, then with 3 cameras through OSMesa and through EGL; record
-  control steps per second, memory, asset size. Decides resolution, resources and the verifier
-  budget.
-- **P2 — reference coverage.** Add knob off and microwave door open to the privileged
-  controller; add base navigation between appliances and request sequencing; run dev seeds,
-  then a frozen run on unseen layouts and styles. Decide the final v1 grammar from the result.
-- **P3 — camera-only feasibility.** A simple non-privileged controller (perception from the
-  task's own cameras, no simulator truth) that passes at least some requests of each type. This
-  shows the task is solvable as instructed, and it is the first practice-grader user.
-- **P4 — the task folder.** From `templates/task/`: environment server and wire, grader,
-  practice grader, instruction, task card, oracle token, hidden-set selection, anchor.
-  `ale lint`, `scripts/lint_domain.py`, `scripts/task_assets.py check`.
-- **P5 — gates and difficulty.** `ale validate` (untouched 0.0, oracle 1.0), then frontier
-  runs (`ale run`); target reward roughly below 0.5.
+## 9. Plan of work (each phase writes its result in §10)
 
-## 9. Risks
-
-1. **The agent has the simulator.** RoboCasa's stock kitchens are in the image, so a controller
-   could recognise the layout and style from an image and read exact fixture geometry from its
-   own copy. Options **[owner]**: (a) accept it as a map prior, which is legitimate robotics but
-   removes most of the perception challenge; (b) perturb hidden kitchens at reset (fixture model
-   swaps within RoboCasa's registry, small placement jitter, lighting and texture changes) and
-   say so in the instruction. Recommendation: (b).
-2. **Determinism.** The anchor and `full_at` assume the reference repeats its score in a fresh
-   container. Check with two fresh verifies (as spacecraft did) before freezing.
-3. **Render speed.** Three cameras through OSMesa may be slow enough to dominate verify time;
-   P1 measures it.
-4. **The oven door blocks the robot.** A later request can become infeasible after "open the
-   oven door". The episode generator must check each queue with the reference, or order oven
-   requests last.
-5. **Seeds.** The agent holds a simulator copy, so episode seeds must be 64-bit and hidden values
-   drawn through a keyed hash (PROGRESS gotcha).
+- **P1 — environment.** Pick candidate models (3-4 per kind); extract them from RoboCasa; build
+  `appliance_env.py` with the [box] Panda, controller, cameras and F/T; re-implement the predicates
+  and check them against RoboCasa; measure reach per model, step rate with images, memory.
+- **P2 — reference.** Port the pilot's primitives to the new environment with privileged unit
+  specs; add burner off, microwave stop and door open/close; add camera pose estimation; run every
+  candidate model over many fresh seeds. Choose the practice and hidden models and the final
+  request list from the results.
+- **P3 — solvability and floor check.** A camera-only baseline controller (no unit spec) on the
+  practice units, and one frontier-model run on a minimal version (one practice unit, the practice
+  grader). Go on only if neither is stuck at 0.
+- **P4 — the task folder.** From [box]: lab service, grader, practice grader, wire skeleton,
+  payload, instruction, `tests/NOTICE.md`, assets in the dataset. `ale lint`,
+  `scripts/lint_domain.py`, `scripts/task_assets.py check`.
+- **P5 — gates and difficulty.** `ale validate` (untouched 0.0, oracle 1.0), anchor from fresh
+  oracle runs, frontier runs (`ale run`); target reward roughly below 0.5.
 
 ## 10. Results log
 
