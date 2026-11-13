@@ -34,6 +34,20 @@ WRENCH_NOISE = 0.3
 RGB_NOISE = 2.0
 HOME_Q = np.array([0.0, -0.55, 0.0, -2.45, 0.0, 1.95, math.pi / 4])
 NULLSPACE_Q = np.array([0.0, -0.3, 0.0, -2.2, 0.0, 1.9, math.pi / 4])
+HOME_SITE = np.array([0.45, 0.0, 0.55])  # the gripper site at home, relative to the robot base; P2 chose the
+                                         # candidate with the largest joint-limit margin over six units
+HOME_MIN_DOWN = math.radians(20)  # the home approach points at least this far below horizontal
+HOME_STARTS = [HOME_Q, np.array([0.0, -0.3, 0.0, -2.0, 0.0, 1.8, math.pi / 4]),
+               np.array([0.0, 0.0, 0.0, -1.6, 0.0, 1.6, math.pi / 4]),
+               np.array([0.0, -0.8, 0.0, -2.7, 0.0, 2.6, math.pi / 4])]
+HOME_LOOK_BELOW_TOP = 0.15        # it points at the unit's front centre line this far below the unit's top,
+                                  # so the wrist camera sees the unit's front
+# Control physics. RoboCasa's knobs carry frictionloss 0.75-1.0 N m and armature 1.0 kg m^2, tuned for
+# its own controller; this environment's controller (box_env's: the target re-based each step, at most
+# 0.03 m / 0.2 rad ahead) delivers about 0.5-0.8 N m at the wrist, and a real cooker knob needs about
+# 0.1-0.3 N m. P2 sets knobs to a real knob's values (design doc section 10, P2).
+KNOB_FRICTIONLOSS = 0.20          # N m
+KNOB_ARMATURE = 0.002             # kg m^2
 VISUAL_MASS = 1e-6                # visual meshes carry no mass (as robosuite does for its objects)
 
 # Mounting per kind: where the unit's bottom sits and the robot base height. P1's reach study tunes
@@ -104,6 +118,33 @@ def axis_angle_mat(v):
     return np.eye(3) + math.sin(th) * K + (1 - math.cos(th)) * K @ K
 
 
+def ik(m, d, site, jq, jv, lo, hi, target, approach, iters=300, q_rest=None):
+    """Position + approach-axis (the gripper site's z) IK from d.qpos, modified in place.
+    Returns (position error m, approach error rad)."""
+    jp, jr = np.zeros((3, m.nv)), np.zeros((3, m.nv))
+    approach = np.asarray(approach, float) / np.linalg.norm(approach)
+    for _ in range(iters):
+        mujoco.mj_kinematics(m, d)
+        mujoco.mj_comPos(m, d)
+        p = d.site_xpos[site]
+        z = d.site_xmat[site].reshape(3, 3)[:, 2]
+        ep = target - p
+        er = np.cross(z, approach)
+        if np.linalg.norm(ep) < 1e-4 and np.linalg.norm(er) < 1e-3:
+            break
+        mujoco.mj_jacSite(m, d, jp, jr, site)
+        J = np.vstack([jp[:, jv], 0.5 * jr[:, jv]])
+        e = np.concatenate([ep, 0.5 * er])
+        Jp = J.T @ np.linalg.inv(J @ J.T + 1e-4 * np.eye(6))
+        dq = Jp @ e
+        if q_rest is not None:                  # stay near a rest pose in the task's null space
+            dq += (np.eye(len(jq)) - Jp @ J) @ (0.1 * (q_rest - d.qpos[jq]))
+        d.qpos[jq] = np.clip(d.qpos[jq] + np.clip(dq, -0.1, 0.1), lo, hi)
+    mujoco.mj_kinematics(m, d)
+    z = d.site_xmat[site].reshape(3, 3)[:, 2]
+    return float(np.linalg.norm(target - d.site_xpos[site])), math.acos(max(-1.0, min(1.0, float(z @ approach))))
+
+
 def yaw_quat(yaw):
     return np.array([math.cos(yaw / 2), 0.0, 0.0, math.sin(yaw / 2)])
 
@@ -152,6 +193,9 @@ def load_unit_spec(assets, spec):
         j.pos = np.asarray(j.pos) * s
         if j.type == mujoco.mjtJoint.mjJNT_SLIDE:
             j.range = np.asarray(j.range) * s
+        if j.name.startswith("knob_"):
+            j.frictionloss = spec.get("knob_frictionloss", KNOB_FRICTIONLOSS)
+            j.armature = KNOB_ARMATURE
     if spec.get("door_mass"):
         for b in u.bodies:
             if b.name == "door":
@@ -264,8 +308,10 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     wb.add_frame(pos=list(pos), quat=list(yaw_quat(yaw))).attach_body(u.body("object"), "u_", "")
     m = w.compile()
     m.site_rgba[:, 3] = 0.0           # sites are markers, never seen (burner flames are switched by the unit)
+    top_z = mt["bottom_z"] + (hi[2] - lo[2])
+    look = np.array([front, jitter[1], top_z - HOME_LOOK_BELOW_TOP])
     return m, {"unit_pos": pos, "unit_yaw": yaw, "robot_base": robot_base, "bbox_lo": lo, "bbox_hi": hi,
-               "mount": mt}
+               "mount": mt, "look_point": look}
 
 
 # ----------------------------------------------------------------------------------------------
@@ -365,7 +411,7 @@ class Unit(object):
         s = {}
         for loc, (qa, _dof) in self.knobs.items():
             a = float(d.qpos[qa]) % (2 * math.pi)
-            s["knob_" + loc] = round(a, 4)
+            s["knob_" + loc] = round(a if a <= math.pi else a - 2 * math.pi, 4)
             s["burner_on_" + loc] = bool(BURNER_ON_MIN <= a <= 2 * math.pi - BURNER_ON_MIN)
         if self.door is not None:
             f = self.door_fraction(d)
@@ -425,8 +471,9 @@ class ApplianceEnv(object):
         self.ft_force = m.sensor("r_g_force_ee").adr[0]
         self.ft_torque = m.sensor("r_g_torque_ee").adr[0]
         self.wrist_cam = m.camera("r_eye_in_hand").id
-        hand = m.body("r_right_hand").id
-        self.gripper_geoms = set(g for g in range(m.ngeom) if self._under(m, m.geom_bodyid[g], hand))
+        gripper = m.body("r_g_right_gripper").id      # RoboCasa checks contact with the gripper model only
+        self.gripper_geoms = set(g for g in range(m.ngeom) if self._under(m, m.geom_bodyid[g], gripper))
+        self.ft_site = m.site("r_g_ft_frame").id
         self._jp, self._jr = np.zeros((3, m.nv)), np.zeros((3, m.nv))
         self._M = np.zeros((m.nv, m.nv))
 
@@ -438,14 +485,36 @@ class ApplianceEnv(object):
             body = m.body_parentid[body]
         return False
 
+    def home_q(self):
+        """Joint pose with the gripper site at HOME_SITE pointing at the unit's look point (so the wrist
+        camera sees the unit's front), solved by damped least squares from HOME_Q."""
+        m = self.model
+        d = mujoco.MjData(m)
+        d.qpos[self.jq] = HOME_Q
+        target = self.layout["robot_base"] + HOME_SITE
+        jid = [m.joint("r_joint%d" % i).id for i in range(1, 8)]
+        lo, hi = m.jnt_range[jid, 0], m.jnt_range[jid, 1]
+        v = self.layout["look_point"] - target
+        horiz = math.hypot(v[0], v[1])
+        v[2] = min(v[2], -math.tan(HOME_MIN_DOWN) * horiz)
+        best = None
+        for q0 in HOME_STARTS:                  # fixed starts: the result is a function of the unit only
+            d.qpos[self.jq] = q0
+            pe, ae = ik(m, d, self.site, self.jq, self.jv, lo, hi, target, v, iters=600, q_rest=HOME_Q)
+            q = d.qpos[self.jq].copy()
+            score = (pe > 0.005 or ae > 0.05, -float(np.min(np.minimum(q - lo, hi - q))))
+            if best is None or score < best[0]:
+                best = (score, q)
+        return best[1]
+
     def _init_state(self):
         m, d = self.model, self.data
         mujoco.mj_resetData(m, d)
-        d.qpos[self.jq] = HOME_Q
+        d.qpos[self.jq] = self.home_q()
         d.qpos[self.gq[0]], d.qpos[self.gq[1]] = 0.04, -0.04
         mujoco.mj_forward(m, d)
         self.grip_target = 0.04
-        self.q_null = NULLSPACE_Q.copy()
+        self.q_null = d.qpos[self.jq].copy()      # the null space pulls towards the unit-facing home pose
         q_hold = d.qpos[self.jq].copy()
         for _ in range(150):
             d.ctrl[self.act] = 200.0 * (q_hold - d.qpos[self.jq]) - 20.0 * d.qvel[self.jv] + d.qfrc_bias[self.jv]
@@ -505,9 +574,17 @@ class ApplianceEnv(object):
             d.ctrl[self.act] = self._osc_torque()
             d.ctrl[self.gact] = [self.grip_target, -self.grip_target]
             mujoco.mj_step(self.model, d)
-            self.unit.update(self.model, d, self.gripper_geoms)
+        # RoboCasa updates fixture state once per control step (after the physics substeps).
+        self.unit.update(self.model, d, self.gripper_geoms)
         self.t += 1
         return self.observation(), False, {}
+
+    def wrench_world(self):
+        """Force (N) and torque (N m) at the wrist sensor, rotated from the sensor frame to the world frame."""
+        d = self.data
+        R = d.site_xmat[self.ft_site].reshape(3, 3)
+        return np.concatenate([R @ d.sensordata[self.ft_force:self.ft_force + 3],
+                               R @ d.sensordata[self.ft_torque:self.ft_torque + 3]])
 
     def unit_state(self):
         return self.unit.state(self.data, self.data.site_xpos[self.site])
@@ -538,8 +615,7 @@ class ApplianceEnv(object):
             "ee_pos": d.site_xpos[self.site].copy(),
             "ee_quat": quat_from_mat(R),
             "gripper": float(d.qpos[self.gq[0]] - d.qpos[self.gq[1]]),
-            "wrench": np.concatenate([d.sensordata[self.ft_force:self.ft_force + 3],
-                                      d.sensordata[self.ft_torque:self.ft_torque + 3]])
+            "wrench": self.wrench_world()
             + self.rng.normal(0, 1, 6) * np.array([WRENCH_NOISE] * 3 + [WRENCH_NOISE / 10] * 3),
         }
         if self.render_enabled:

@@ -228,3 +228,59 @@ model files only; no RoboCasa code runs.
 **For P2:** candidate pool = every model except Stove001 and Stove074. Open questions carried over:
 explicit door masses; an approach planner that respects the counter and the unit body; a home pose
 whose wrist camera sees the unit.
+
+### P2 — privileged reference, first pass (2026-11-12, dev host TASL; in progress)
+
+Code: `experiments/physical-execution/appliance_env/` `reference.py` (primitives), `run_reference.py`
+(trials), `batch.sh` (every candidate model, sharded), `summarize.py`; outputs in `../outputs/p2/`.
+P1's own checks still pass (`check_predicates.py`: all pass).
+
+- **Environment changes.** Unit state (microwave on/off, burner flames) is updated once per control
+  step, as RoboCasa does, and "the gripper touches" means the gripper subtree only, as RoboCasa's
+  `check_contact(robot.gripper)`. The wrench is reported in the world frame. Knob angles display in
+  (-pi, pi]. **Home pose:** the gripper site at the robot base + (0.45, 0, 0.55) m, pointing at the unit's
+  front 0.15 m below its top (at least 20 degrees below horizontal), solved by IK from four fixed starts;
+  joint-limit margins 0.6-1.05 rad on the test units, and the wrist camera sees each unit's front (the
+  P1 home pose did not).
+- **Knob physics (deviation from RoboCasa, [owner]).** RoboCasa's knobs have friction loss 0.75 N m
+  (ranges) to 1.0 N m (cooktops) and armature 1.0 kg m^2. This environment's controller ([box]'s: the
+  target re-based every step, at most 0.03 m / 0.2 rad ahead) delivers roughly 0.5-0.8 N m at the
+  wrist, and a pinch with the 20 N fingers holds about 0.6 N m on a 24 mm knob: the reference could
+  not turn a range knob. P2 sets knob friction loss to 0.20 N m and armature to 0.002 kg m^2
+  (`appliance_env.KNOB_FRICTIONLOSS`, `KNOB_ARMATURE`), close to a real cooker knob (about 0.1-0.3 N m).
+- **Reference.** Reads control geometry and joint values from the simulator; acts only through the
+  8-number action. A planner checks each primitive's key poses by full-pose IK chained from the
+  current joints (what the controller's small steps follow), with a collision check against the unit
+  and its support (the target part allowed); when that fails it solves the first pose from fixed starts
+  and hands the executor the Cartesian poses of the joint-space interpolation (`via`). Primitives:
+  - knob: pinch across a bar's thin side (or a round knob's diameter), fingertips 3 mm proud of the
+    knob's base, approach along the axis or tilted (20/35 degrees down, 20 degrees sideways), either
+    finger direction; a turn the wrist cannot make at once is made in up to three grasps;
+  - button: closed fingertips, approach tilted 35/20/0/50 degrees down (a level hand meets the counter
+    first, P1), the hand's wide side across or upright;
+  - drop-down door (range, oven): the pilot's drag from above until the door's weight takes over;
+  - microwave door: pull by the handle to 0.45 rad, then push from inside the gap with the side of
+    the closed fingers; close: push the outer face round. **Neither works yet.**
+- **Batch** (`batch3`: 123 candidate models x applicable primitives x seeds 0-2, 1032 trials, about
+  2 minutes on 32 processes):
+
+  | Kind | Primitive | ok / trials | Main failure |
+  |---|---|---|---|
+  | stovetop | knob on / off | 62/72, 56/72 | plan (no collision-free grasp) |
+  | range | knob on / off | 63/72, 53/72 | plan, approach |
+  | range | temperature knob (preheat) | 41/72 | plan, twist |
+  | range | door open | 54/72 | drag (the door does not follow) |
+  | microwave | start / stop | 139/150, 141/150 | press (no switch) |
+  | microwave | door open | 0/150 | the door falls back closed during the push |
+  | oven | temperature knob (preheat) | 51/75 | plan |
+  | oven | door open | 16/75 | drag: oven doors carry a 2.0 N m/rad closing spring (ranges 0.05) |
+
+  Models whose every trial of the candidate v1 set succeeds: stovetops 17/24 (knob on/off),
+  microwaves 40/50 (start/stop), ovens 13/25 (preheat), ranges 1/24 (knob on/off, preheat, door
+  open; 4 more miss one trial).
+- **Not done in P2 yet:** camera pose estimation (the reference still reads the unit pose from the
+  simulator); microwave door open/close and the oven door; a request sequence within one episode
+  (initial states, the hold-and-clear rule across requests); choosing practice and hidden models.
+- **Proposed v1 request list [owner]:** cooktop and range burner on/off, range and oven preheat, range
+  door open, microwave start/stop. Microwave doors and the oven door stay out unless P2 spends more
+  time on them.

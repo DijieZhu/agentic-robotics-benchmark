@@ -11,6 +11,10 @@ Phase P1 of `docs/dev/20261112-appliance-tending-task-design.md`. Results are in
 | `check_predicates.py` | Threshold checks of the re-implemented predicates, and physical microwave button presses through the controller. |
 | `perf.py` | Build time, control steps per second, seconds per image, peak memory. |
 | `smoke.py` | Builds units and saves a contact sheet of the three camera images. |
+| `reference.py` | P2: the privileged reference's primitives (knob, button, doors) behind a collision-checked IK planner; acts only through the 8-number action. |
+| `run_reference.py` | P2: runs primitives as trials (fresh episode, initial state, one primitive) and writes JSON lines; `--video` saves the cameras. |
+| `batch.sh` | P2: every candidate model x the primitives x seeds, sharded over parallel processes. |
+| `summarize.py` | P2: success per kind and primitive, failure stages, fully reliable models. |
 
 ## Set-up (outside the repository)
 
@@ -39,6 +43,8 @@ uv venv --python 3.12 ~/arb-data/venv-p1
 VIRTUAL_ENV=~/arb-data/venv-p1 uv pip install mujoco==3.16.0 numpy==2.5.4 scipy==1.18.1 opencv-python-headless==5.0.0.93 pillow==13.0.0 && VIRTUAL_ENV=~/arb-data/venv-p1 uv pip install --no-deps robosuite==1.5.2
 ```
 
+`run_reference.py --video` also needs `imageio` (`VIRTUAL_ENV=~/arb-data/venv-p1 uv pip install imageio==2.37.0`).
+
 ## Runs
 
 Outputs go to `../outputs/p1/` (git-ignored). Rendering uses `MUJOCO_GL=osmesa`.
@@ -61,4 +67,8 @@ MUJOCO_GL=osmesa OMP_NUM_THREADS=1 ~/arb-data/venv-p1/bin/python -I perf.py --as
 
 ```bash
 MUJOCO_GL=osmesa ~/arb-data/venv-p1/bin/python -I smoke.py --assets ~/arb-data/robocasa-assets/extracted/fixtures --out ../outputs/p1/smoke stovetops/Stovetop002 microwaves/Microwave011 ovens/Oven048 stoves/Stove026
+```
+
+```bash
+bash batch.sh ../outputs/p2/batch3 32 0 1 2 && ~/arb-data/venv-p1/bin/python -I summarize.py ../outputs/p2/batch3/*.jsonl
 ```
