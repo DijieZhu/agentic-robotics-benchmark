@@ -27,7 +27,7 @@ IK_STARTS = np.random.default_rng(20261113).uniform(0.15, 0.85, (6, 7))   # fixe
 PRE = 0.12                     # m: pre-grasp stand-off along the approach
 KNOB_ON_TARGET = 0.60          # rad: commanded past RoboCasa's 0.35 on-threshold, for margin (pilot)
 KNOB_OFF_TARGET = 0.05         # rad: back towards the joint's lower limit
-TEMP_TARGET = 0.40             # normalized: past PreheatOven's 0.25
+TEMP_TARGET = 0.32             # normalized: past PreheatOven's 0.25, with margin (P2: 0.40 left too large a turn)
 HOLD_OK = 20                   # control steps the outcome must hold with the hand clear (design §4)
 CLEAR = 0.10                   # m: hand clearance from the control while it holds
 

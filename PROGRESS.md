@@ -37,9 +37,9 @@
   task folder exists yet.
 - **Next step:** appliance-tending P3 (camera-only baseline and one frontier-model run on practice
   units; go on only if neither floors at 0). Owner decisions taken on 2026-11-12: knob friction
-  0.20 N m; v1 requests = burner on/off, preheat, range door open, microwave start/stop; the reference
-  gets the truth by token. Open: "turn the oven off" as a second oven request; draft 2's other
-  **[owner]** marks.
+  0.20 N m; v1 requests = burner on/off, preheat, turn the oven off, range door open, microwave
+  start/stop; the reference gets the truth by token. Open: draft 2's other **[owner]** marks. Risk: only
+  2 range models are at 1.00 in every seed (design §10).
 
 ## Dated log
 
@@ -518,6 +518,8 @@ scripted reference (simulator poses, joints and contacts).
   jittered unit). Untouched 0.00; reference episodes over 123 models x 5 seeds: cooktop 0.83, range
   0.79, microwave 0.91, oven 0.70; models at 1.00 in every seed: 17 / 2 / 34 / 11. Selection rule for the
   hidden and practice units proposed in the design's §10.
+  Then "turn the oven off" was added (owner): with a smaller preheat turn (target 0.32 of the knob's
+  range) ranges score 0.85 and ovens 0.67, with 2 and 8 models at 1.00 in every seed.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
   `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and

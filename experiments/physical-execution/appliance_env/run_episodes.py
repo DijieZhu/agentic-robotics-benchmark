@@ -24,8 +24,9 @@ def idle_until(drv, ep, rid, deadline):
         drv.tick(drv.site_pos(), drv.site_R(), -1.0)
 
 
-def run(assets, model, seed, untouched=False, pose_from_cameras=False):
-    ep = EP.Episode(E.ApplianceEnv(E.unit_spec(model), assets, render=pose_from_cameras), seed)
+def run(assets, model, seed, untouched=False, robot_z=None):
+    mount = {"robot_z": robot_z} if robot_z is not None else None
+    ep = EP.Episode(E.ApplianceEnv(E.unit_spec(model), assets, render=False, mount=mount), seed)
     ep.reset()
     drv = R.Driver(ep)
     drv.MAX_STEPS = 100000
@@ -41,6 +42,8 @@ def run(assets, model, seed, untouched=False, pose_from_cameras=False):
                 drv.knob(r["target"], "on" if r["what"] == "burner_on" else "off")
             elif r["what"] == "preheat":
                 drv.knob("temp", "on")
+            elif r["what"] == "oven_off":
+                drv.knob("temp", "off")
             elif r["what"] in ("start", "stop"):
                 drv.button(r["target"])
             else:
@@ -62,12 +65,14 @@ def main():
     ap.add_argument("--models", nargs="+", required=True)
     ap.add_argument("--seeds", nargs="+", type=int, default=[0])
     ap.add_argument("--untouched", action="store_true")
+    ap.add_argument("--robot-z", type=float, default=None, help="override the robot base height (m)")
     a = ap.parse_args()
     assets = os.path.expanduser(a.assets)
     with open(a.out, "a") as f:
         for model in a.models:
             for seed in a.seeds:
-                rec = run(assets, model, seed, a.untouched)
+                rec = run(assets, model, seed, a.untouched, a.robot_z)
+                rec["robot_z"] = a.robot_z
                 f.write(json.dumps(rec) + "\n")
                 f.flush()
                 print("%-24s seed %-3d score %.2f  %s" % (model, seed, rec["score"], " | ".join(

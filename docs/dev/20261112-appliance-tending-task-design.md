@@ -286,8 +286,9 @@ P1's own checks still pass (`check_predicates.py`: all pass).
   simulator); microwave door open/close and the oven door; a request sequence within one episode
   (initial states, the hold-and-clear rule across requests); choosing practice and hidden models.
 - **Owner decisions (2026-11-12):** the knob physics above is approved (friction loss 0.20 N m, armature
-  0.002 kg m^2). The v1 request list is: cooktop and range burner on / off, range and oven preheat,
-  range door open, microwave start / stop. Microwave doors and the oven door are out of v1.
+  0.002 kg m^2). The v1 request list is: cooktop and range burner on / off, range and oven preheat and
+  turn the oven off (added the same day, below), range door open, microwave start / stop. Microwave
+  doors and the oven door are out of v1.
 
 ### P2 — second pass: episodes, leaks, the reference's truth, model reliability (2026-11-12)
 
@@ -328,6 +329,22 @@ Code: `episode.py` (the grader-side episode: initial state, request queue, credi
   each candidate on 20 fresh seeds, keeps those still at 1.00, then draws with `os.urandom` (recorded
   before any candidate runs, as spacecraft's `select_set.py` does) the hidden units (one cooktop, one
   range, one microwave, one oven) and, from the rest, the practice units (one per kind).
-- **For the owner.** An oven unit offers one v1 request (preheat), so a successful oven episode has one
-  request, not three. Adding "turn the oven off" (the temperature knob back to zero; the knob primitive
-  already does it) would give ovens and ranges a second request type.
+- **"Turn off the oven" added (owner decision, 2026-11-12).** Ovens offered one v1 request (preheat), so
+  a successful oven episode had one request. The temperature knob back below RoboCasa's 0.25 is now a
+  request too ("Turn off the oven."), and an oven starts preheated with p 0.4. Measured with it
+  (`ep_batch2`, all models x 5 seeds), the temperature-knob turns were the weak point (oven mean 0.60,
+  2/25 oven models at 1.00 in every seed). Neither returning the hand home between requests (oven 0.57)
+  nor a higher robot base (0.85 m: 0.63; 1.0 m: 0.60) helped. Smaller turns did (`ep_oven_t32`): the
+  preheat target 0.32 of the knob's range instead of 0.40 (`reference.TEMP_TARGET`; RoboCasa's threshold
+  is 0.25) and a preheated start at 30-50 % of the range instead of 40-80 %
+  (`episode.PREHEATED_RANGE`):
+
+  | Kind | Mean episode score | Models at 1.00 in all 5 seeds |
+  |---|---|---|
+  | range | 0.85 | 2/24 (Stove028, Stove075) |
+  | oven | 0.67 | 8/25 (Oven034, 036, 037, 038, 039, 049, 050, 053) |
+
+  Requests completed in that run: preheat 162/262, turn the oven off 120/181, burner on 162/169, burner
+  off 91/107, range door open 13/16. Cooktops and microwaves have no temperature knob; their numbers
+  above stand. The range pool (2 models) is just enough for one hidden and one practice range; if P4's
+  20-seed recheck drops one, the temperature-knob primitive needs work before the draw.
