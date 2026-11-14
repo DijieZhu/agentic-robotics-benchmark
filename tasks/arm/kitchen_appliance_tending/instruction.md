@@ -17,7 +17,7 @@ still running at the limit is cut off.
 | `appliance_env.py` | The complete robot environment: the cell, the Panda arm and gripper (robosuite models), the operational-space controller, cameras, sensor noise. The lab and the grader run this exact file; only the unit differs. Read its docstrings. |
 | `episode.py` | The exact episode logic the lab and the grader run: initial states, requests, deadlines and the credit rule. |
 | `task_card.md` | Frames, mounts, the units, the cameras, the sensors and the numbers. |
-| `units.json`, `units/` | Three practice units (p0 cooktop, p1 microwave, p2 oven) with their models; `env.unit_state()` and `env.truth()` give their ground truth in your dev sim. They are examples of the kinds, not the scored units. |
+| `units.json`, `units/` | Three practice units (p0 cooktop, p1 microwave, p2 oven) with their models and mechanisms (`quirks`); `env.unit_state()` and `env.truth()` give their ground truth in your dev sim. They are examples of the kinds, not the scored units. |
 | `practice_grader/grade.py` | Runs your controller over the grading wire against the practice units on visible seeds and prints the raw metric. |
 | `labclient.py` | Client for the lab (library and command line). |
 | `helpers/lab_bridge.py` | Optional boilerplate: runs your controller (`run.sh`) for one lab trial and logs every observation and action. |
@@ -30,9 +30,16 @@ MuJoCo through OSMesa on the CPU.
 ## The scored units
 
 Nine hidden units, three of each kind: `u0`, `u3`, `u6` (cooktops), `u1`, `u4`, `u7` (microwaves) and `u2`, `u5`,
-`u8` (ovens), each a different model from the practice units and from each other. Same as in your dev sim: the robot, the
-controller, the action and observation formats, the cameras, the sensor noise, the physics settings, the request texts and the credit rule. Different:
-the appliance model (its size, look, where its controls are and how they move) and the placement draw.
+`u8` (ovens), each a different model from the practice units and from each other. Same as in your dev sim: the
+robot, the controller, the action and observation formats, the cameras, the sensor noise, the physics settings, the
+request texts and the credit rule. Different: the appliance model (its size, look, where its controls are and how
+they move), its mechanism and the placement draw.
+
+A unit may have one of these mechanisms (nothing reports which, if any; `units.json` lists the practice units'):
+- **push to turn**: every knob of the unit turns only while it is pushed in along its axis with 6 N or more
+  (as on gas cookers); otherwise it is locked;
+- **reversed**: every knob of the unit turns the other way round (on / higher is the opposite rotation);
+- **hold to start**: the microwave starts only after its start button has been held for 15 steps (1.5 s).
 
 ## Requests
 

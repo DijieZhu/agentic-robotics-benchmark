@@ -31,9 +31,10 @@ def main():
     specs = {}
     for uid, u in units.items():
         if a.assets:
-            specs[uid] = E.unit_spec(u["model"])
+            specs[uid] = E.unit_spec(u["model"], quirks=u.get("quirks"))
         else:
-            specs[uid] = E.unit_spec(u["model"], files=E.read_unit_files(os.path.join(base, u["dir"])))
+            specs[uid] = E.unit_spec(u["model"], files=E.read_unit_files(os.path.join(base, u["dir"])),
+                                     quirks=u.get("quirks"))
     out = sys.stdout
 
     def write(obj):

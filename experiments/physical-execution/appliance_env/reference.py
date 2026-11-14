@@ -28,6 +28,7 @@ IK_STARTS = np.random.default_rng(20261113).uniform(0.15, 0.85, (6, 7))   # fixe
 PRE = 0.12                     # m: pre-grasp stand-off along the approach
 KNOB_ON_TARGET = 0.60          # rad: commanded past RoboCasa's 0.35 on-threshold, for margin (pilot)
 KNOB_OFF_TARGET = 0.05         # rad: back towards the joint's lower limit
+PUSH_DEPTH = 0.015              # m: how far past the grasp the hand is commanded along a push-to-turn knob's axis
 SET_CHUNK = 1.2                # rad: the largest turn per grasp for a setting request
 SET_TOL = 0.08                 # rad: a setting is reached within this of its goal angle
 SET_WITHIN = {"low": 0.5, "medium": 0.5, "high": 0.35}    # where inside a setting's band to aim (fraction)
@@ -494,6 +495,8 @@ class Driver(object):
             self.follow_via(self._via, g_open)
             self.move("approach_knob", grasp - R[:, 2] * PRE, R, g_open, max_steps=400, tol=0.008, ang_tol=0.08)
             self.move("to_knob", grasp, R, g_open, speed=0.01, tol=0.004)
+            # a push-to-turn knob turns only while pushed in: press along the axis while twisting
+            push = outward * PUSH_DEPTH if "push_to_turn" in self.env.unit.quirks else np.zeros(3)
             self.hold("pinch", 15, 1.0, R, grasp)
             if not self.touching(gid):
                 raise PrimitiveError("pinch", "fingers do not touch the knob")
@@ -507,7 +510,7 @@ class Driver(object):
                     break
                 cmd = min(cmd + 0.03, abs(self.qpos(adr) - q0) + 0.35, chunk + 0.2)
                 Rot = E.axis_angle_mat(direction * cmd * axis)
-                self.tick(anchor + Rot @ (grasp - anchor), Rot @ R, 1.0, turn=0.2)
+                self.tick(anchor + Rot @ (grasp - anchor) - push, Rot @ R, 1.0, turn=0.2)
             else:                                      # stalled: let go and grasp again (the next grasp)
                 out["grasps"][-1]["stalled_at"] = round(self.qpos(adr), 4)
             Rnow = self.site_R()

@@ -210,7 +210,7 @@ def main():
     try:
         for uid in ids:
             c = table[uid]
-            spec = E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(base, c["dir"])))
+            spec = E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(base, c["dir"])), quirks=c.get("quirks"))
             for seed in seeds:
                 ep = EP.Episode(E.ApplianceEnv(spec, None, render=True), seed)
                 try:

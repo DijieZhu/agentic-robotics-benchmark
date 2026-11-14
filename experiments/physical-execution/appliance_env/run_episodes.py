@@ -25,9 +25,9 @@ def idle_until(drv, ep, rid, deadline):
         drv.tick(drv.site_pos(), drv.site_R(), -1.0)
 
 
-def run(assets, model, seed, untouched=False, robot_z=None):
+def run(assets, model, seed, untouched=False, robot_z=None, quirks=None):
     mount = {"robot_z": robot_z} if robot_z is not None else None
-    ep = EP.Episode(E.ApplianceEnv(E.unit_spec(model), assets, render=False, mount=mount), seed)
+    ep = EP.Episode(E.ApplianceEnv(E.unit_spec(model, quirks=quirks), assets, render=False, mount=mount), seed)
     ep.reset()
     drv = R.Driver(ep)
     drv.MAX_STEPS = 100000
@@ -68,13 +68,14 @@ def main():
     ap.add_argument("--models", nargs="+", required=True)
     ap.add_argument("--seeds", nargs="+", type=int, default=[0])
     ap.add_argument("--untouched", action="store_true")
+    ap.add_argument("--quirks", nargs="*", default=None, help="the unit's mechanisms (appliance_env.QUIRKS)")
     ap.add_argument("--robot-z", type=float, default=None, help="override the robot base height (m)")
     a = ap.parse_args()
     assets = os.path.expanduser(a.assets)
     with open(a.out, "a") as f:
         for model in a.models:
             for seed in a.seeds:
-                rec = run(assets, model, seed, a.untouched, a.robot_z)
+                rec = run(assets, model, seed, a.untouched, a.robot_z, a.quirks)
                 rec["robot_z"] = a.robot_z
                 f.write(json.dumps(rec) + "\n")
                 f.flush()

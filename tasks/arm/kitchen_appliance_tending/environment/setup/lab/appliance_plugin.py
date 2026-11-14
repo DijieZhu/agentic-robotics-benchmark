@@ -78,7 +78,7 @@ class ApplianceLab(object):
             if uid.startswith("_"):
                 continue
             files = E.read_unit_files(os.path.join(base, cfg["dir"]))
-            self.specs[uid] = E.unit_spec(cfg["model"], files=files)
+            self.specs[uid] = E.unit_spec(cfg["model"], files=files, quirks=cfg.get("quirks"))
         self.SCHEMA = _schema(sorted(self.specs))
         self.MESSAGES = MESSAGES
 

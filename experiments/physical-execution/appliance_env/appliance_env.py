@@ -89,6 +89,17 @@ HEADLIGHT_AMBIENT = (0.05, 0.2)
 CAMERA_POS_JITTER = 0.04                  # m, +- per axis
 CAMERA_ROT_JITTER = 0.05                  # rad, +- per axis of a small rotation
 FLAME_SCALE = (0.6, 1.4)                  # a burner's flame radius scale from its lowest to its highest setting
+# Unit mechanisms (a unit has at most one; nothing reports it):
+#   push_to_turn  a knob turns only while pushed in along its axis with PUSH_FORCE or more (gas-cooker safety
+#                 knobs); otherwise its friction is LOCK_FRICTIONLOSS
+#   reversed      every knob of the unit turns the other way (the joint axis is flipped; settings unchanged)
+#   hold_start    the microwave's start button must be held HOLD_START_STEPS control steps (child lock)
+QUIRKS = ("push_to_turn", "reversed", "hold_start")
+PUSH_FORCE = 6.0                          # N, along the knob's axis, summed over the gripper's contacts with it
+LOCK_FRICTIONLOSS = 4.0                   # N m: far beyond what the arm can twist
+LOCK_DAMPING = 400.0                      # N m s / rad: MuJoCo's friction loss is soft and creeps under a steady
+                                          # torque; this damping holds the creep to a fraction of a degree a second
+HOLD_START_STEPS = 15                     # control steps (1.5 s)
 INDICATOR_BELOW_TOP = 0.03        # m, centre below the front face's top edge
 INDICATOR_CLEAR = 0.02            # m, from any control (knob, button, handle) in the front view
 WRIST = {"fovy": 75.0, "width": 256, "height": 192}
@@ -203,12 +214,15 @@ def yaw_quat(yaw):
     return np.array([math.cos(yaw / 2), 0.0, 0.0, math.sin(yaw / 2)])
 
 
-def unit_spec(model, scale=1.0, kind=None, door_mass=None, files=None):
+def unit_spec(model, scale=1.0, kind=None, door_mass=None, files=None, quirks=None):
     """A unit = one RoboCasa model plus how it is mounted. `model` is '<folder>/<name>'; `files` the
-    model's files already in memory (read_unit_files), or None to read them from the assets folder."""
+    model's files already in memory (read_unit_files), or None to read them from the assets folder;
+    `quirks` the unit's mechanisms (QUIRKS)."""
     folder = model.split("/")[0]
+    quirks = sorted(quirks or [])
+    assert all(q in QUIRKS for q in quirks), quirks
     return {"model": model, "kind": kind or KIND_OF_FOLDER[folder], "scale": float(scale),
-            "door_mass": door_mass, "files": files}
+            "door_mass": door_mass, "files": files, "quirks": quirks}
 
 
 # ----------------------------------------------------------------------------------------------
@@ -273,6 +287,8 @@ def load_unit_spec(assets, spec):
         if j.name.startswith("knob_"):
             j.frictionloss = spec.get("knob_frictionloss", KNOB_FRICTIONLOSS)
             j.armature = KNOB_ARMATURE
+            if "reversed" in spec.get("quirks", ()):
+                j.axis = -np.asarray(j.axis)
     if spec.get("door_mass"):
         for b in u.bodies:
             if b.name == "door":
@@ -467,8 +483,9 @@ def normalized_joint(q, lo, hi):
 class Unit(object):
     """Indexes a compiled unit's controls (joints named as RoboCasa names them, prefixed u_)."""
 
-    def __init__(self, m, kind):
+    def __init__(self, m, kind, quirks=()):
         self.kind = kind
+        self.quirks = tuple(quirks)
         self.knobs = {}
         self.knob_hi = {}
         for loc in BURNERS:
@@ -488,6 +505,14 @@ class Unit(object):
             break
         self.temp_knob = self._joint(m, "u_knob_temp_joint")
         self.time_knob = self._joint(m, "u_knob_time_joint")
+        # push_to_turn: every knob joint (burners, temperature, timer) with its body, dof and axis joint id
+        self.locks = []
+        if "push_to_turn" in self.quirks:
+            for j in range(m.njnt):
+                if m.joint(j).name.startswith("u_knob_"):
+                    dof = int(m.jnt_dofadr[j])
+                    self.locks.append((j, int(m.jnt_bodyid[j]), dof, float(m.dof_frictionloss[dof]), float(m.dof_damping[dof])))
+        self.start_held = 0
         self.buttons = {}
         for b in ("start_button", "stop_button"):
             try:
@@ -560,6 +585,10 @@ class Unit(object):
                 m.site_size[sid, 0] = self.flame_size[loc][0] * (FLAME_SCALE[0] + (FLAME_SCALE[1] - FLAME_SCALE[0]) * level)
         if "start_button" in self.buttons:
             self._buttons(d, gripper_geoms)
+        for j, body, dof, free, damping in self.locks:
+            pushed = self._axial_push(m, d, j, body, gripper_geoms) >= PUSH_FORCE
+            m.dof_frictionloss[dof] = free if pushed else LOCK_FRICTIONLOSS
+            m.dof_damping[dof] = damping if pushed else LOCK_DAMPING
         if self.indicator is not None and self.kind in INDICATOR:
             if self.kind == "oven" and self.temp_knob is not None:
                 qa, lo, hi = self.temp_knob
@@ -567,6 +596,21 @@ class Unit(object):
             else:
                 lit = self.turned_on
             m.geom_rgba[self.indicator] = INDICATOR[self.kind]["on"] if lit else INDICATOR_OFF
+
+    @staticmethod
+    def _axial_push(m, d, j, body, gripper_geoms):
+        """|force along the knob's axis| from the gripper's contacts with the knob's body (N)."""
+        axis = d.xaxis[j]
+        f6 = np.zeros(6)
+        total = 0.0
+        for i in range(d.ncon):
+            c = d.contact[i]
+            if not ((c.geom1 in gripper_geoms and m.geom_bodyid[c.geom2] == body)
+                    or (c.geom2 in gripper_geoms and m.geom_bodyid[c.geom1] == body)):
+                continue
+            mujoco.mj_contactForce(m, d, i, f6)
+            total += float(np.dot(f6[:3] @ c.frame.reshape(3, 3), axis))
+        return abs(total)
 
     def _buttons(self, d, gripper_geoms):
         touching = set()
@@ -580,7 +624,11 @@ class Unit(object):
         elif self.turned_on and self.buttons["stop_button"] in touching:
             self.turned_on = False
         elif not self.turned_on and self.buttons["start_button"] in touching:
-            self.turned_on = True
+            self.start_held += 1
+            if "hold_start" not in self.quirks or self.start_held >= HOLD_START_STEPS:
+                self.turned_on = True
+        if self.buttons["start_button"] not in touching:
+            self.start_held = 0
 
     def state(self, d, grip_pos):
         s = {}
@@ -632,7 +680,7 @@ class ApplianceEnv(object):
         self.model, self.layout = build_model(self.assets, self.spec, jitter, self.mount)
         self._appearance(np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 13]))
         self.data = mujoco.MjData(self.model)
-        self.unit = Unit(self.model, self.spec["kind"])
+        self.unit = Unit(self.model, self.spec["kind"], self.spec.get("quirks", ()))
         self._index()
         self._init_state()
         self.t = 0

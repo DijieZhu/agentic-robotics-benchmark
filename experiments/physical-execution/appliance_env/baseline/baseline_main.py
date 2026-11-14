@@ -69,7 +69,8 @@ def main():
     a = ap.parse_args()
     units = json.load(open(a.units))
     base = os.path.dirname(os.path.abspath(a.units))
-    specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(base, c["dir"]))) for u, c in units.items()}
+    specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(base, c["dir"])), quirks=c.get("quirks"))
+             for u, c in units.items()}
     estimators = {}
     out = sys.stdout
 

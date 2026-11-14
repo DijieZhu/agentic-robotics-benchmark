@@ -399,7 +399,7 @@ def main():
         return
     with open(UNITS) as fh:
         units = json.load(fh)
-    specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(STAGE, c["dir"])))
+    specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(STAGE, c["dir"])), quirks=c.get("quirks"))
              for u, c in sorted(units.items())}
     try:
         workdir = stage_submission(uid, gid)

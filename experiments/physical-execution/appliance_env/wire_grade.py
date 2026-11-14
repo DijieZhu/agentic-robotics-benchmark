@@ -51,7 +51,7 @@ def run(a):
     results = []
     try:
         for uid in sorted(units):
-            spec = E.unit_spec(units[uid]["model"])
+            spec = E.unit_spec(units[uid]["model"], quirks=units[uid].get("quirks"))
             for seed in a.seeds:
                 ep = EP.Episode(E.ApplianceEnv(spec, os.path.expanduser(a.assets), render=True), seed)
                 t0 = time.time()
