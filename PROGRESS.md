@@ -42,15 +42,16 @@
   Trial 12 (same build, run 7f305f80) then scored **0.32**, the first run to use most of the time (68 of 120
   minutes); owner decision 2026-11-14: judged on the mean of the 2 h runs (0.27, 0.0, 0.32: 0.20), the task
   meets the target and the step stays closed.
-- **Next step:** what remains before the appliance task can go to `main`: the slug and its row in the
-  coordination sheet, depth images (open owner question), then a pull request from `task/physical-execution`.
+- **Next step:** what remains before the appliance task can go to `main`: its row in the coordination sheet
+  (the owner's), then a pull request from `task/physical-execution`. Settled 2026-11-14: the slug is
+  `kitchen_appliance_tending`; v1 has no depth images (design §10 P3).
   Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
   claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
   Owner decisions taken on 2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, turn
   the oven off, microwave start/stop (ranges and the range door dropped after the 20-seed recheck); the
-  reference gets the truth by token. Open: slug and sheet registration, depth images (the agent budget was
-  settled at 2 h on 2026-11-14).
+  reference gets the truth by token. Settled on 2026-11-14: the agent budget (2 h), the slug
+  (`kitchen_appliance_tending`), no depth images. Open: the sheet registration.
 
 ## Dated log
 

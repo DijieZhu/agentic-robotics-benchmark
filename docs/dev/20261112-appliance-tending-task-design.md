@@ -24,7 +24,7 @@ every other control of the appliance as it should be. The agent delivers a contr
 (`/home/user/submission/run.sh`) that the hidden grader drives over the closed_loop stdio wire on
 hidden appliances after the agent is gone.
 
-- Proposed slug: `kitchen_appliance_tending` **[owner: confirm; register it in the sheet]**.
+- Slug: `kitchen_appliance_tending` (owner, 2026-11-14; its row in the coordination sheet is the owner's).
   Platform `arm`. Verify pattern closed_loop; `environment_mode = "separate"`.
 - What it measures: finding small controls on an unseen appliance from images, contact-rich
   actuation with weak fingers (20 N per finger against a knob with 1.0 N m friction; a 6.6 kg
@@ -40,7 +40,7 @@ hidden appliances after the agent is gone.
 | A practice box with its ground truth (`env.gt()`) in the agent's home | Practice units (different models from the hidden ones) with ground truth |
 | A lab service (`/run/ale-lab/lab.sock`, started by `setup.sh`, dedicated `alelab` account) with **16 trials** on the hidden boxes; observations only, no scores | The same service and rules on the hidden units |
 | Fixed Panda; the box at a fresh pose each episode (±4 cm, ±5 cm, ±25° yaw) | Fixed Panda; the unit at a fresh pose (ranges from the reach study, P1) |
-| Observation: joints, end-effector pose, gripper, noisy wrist force/torque, wrist-camera pose; RGB from two fixed cameras and the wrist camera **on request** (bit mask in the action; images cost time); no depth, no box state | The same, plus `request` (`null` or `{"text", "deadline_t"}`) **[owner: add depth?]** |
+| Observation: joints, end-effector pose, gripper, noisy wrist force/torque, wrist-camera pose; RGB from two fixed cameras and the wrist camera **on request** (bit mask in the action; images cost time); no depth, no box state | The same, plus `request` (`null` or `{"text", "deadline_t"}`); no depth (owner, 2026-11-14, §10 P3) |
 | Action `[dx, dy, dz, drx, dry, drz, grip, cams]` at 10 Hz, clipped 0.03 m / 0.2 rad | The same |
 | Staged partial credit with a hold rule (3 steps) | §4 |
 | 8 episodes (2 per box), placements and noise from OS entropy (`seed_rng`); probe rate 1 %, at least 10 % of probe pairs must differ; 6000 s budget; seccomp network guard (`nonet_exec.py`); agent processes stopped first; 200 MiB / 5000-file submission cap; one controller process for the whole run (online adaptation allowed) | The same, with the counts in §6 |
@@ -595,3 +595,9 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
     0.0, 0.32 (2 h runs mean 0.20).
 - **Owner decision (2026-11-14, after trial 12): judged on the mean, the task meets the target**; 0.32 is
   read as single-run spread. The difficulty step stays closed on `86c3f40`.
+- **Owner decisions (2026-11-14): the slug is `kitchen_appliance_tending`; v1 has no depth images.** Depth
+  would remove the agents' most frequent failures on this build (a keypad assumed 3 cm off in trial 10, a
+  microwave front taken as an assumed plane and fingertips resting on the cooktop in trial 12) and so undo the
+  difficulty just measured; the task stays solvable without it (both fixed cameras' intrinsics and poses are in
+  every observation for triangulation, the wrist camera moves, and the wrist force/torque finds surfaces).
+  Depth stays a lever for a later version or if frontier scores fall to the floor (§7).
