@@ -39,6 +39,8 @@
   lighting / camera variation, setting and compositional requests, 10 lab trials (units + 1), 2 h agent time;
   anchor 0.9974, `full_at` 0.90; `validate-fec59fbd` passes. Opus 5.5 on the 10-trial build: 0.27 (trial 9),
   0.0 (trial 10, 1 h), 0.0 (trial 11); every agent stopped early, two believing the time was up (design §10 P3).
+  Trial 12 (same build, run 7f305f80) then scored **0.32**, the first run to use most of the time (68 of 120
+  minutes): owner decision pending on whether that reopens the step (2 h runs: 0.27, 0.0, 0.32, mean 0.20).
 - **Next step:** what remains before the appliance task can go to `main`: the slug and its row in the
   coordination sheet, depth images (open owner question), then a pull request from `task/physical-execution`.
   Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent

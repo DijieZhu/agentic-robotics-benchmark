@@ -574,3 +574,22 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   (trial 11, 2 h); all three agents stopped early (11 to 19 of 60 or 120 minutes), two of them believing the
   time was up. The two zeros come from agents that quit before building a working controller, not from a
   ceiling the task imposes (the reference scores 1.0 and the practice-unit skills worked in their dev sims).
+- **Frontier trial 12** (`ale run` 7f305f80, the final build `86c3f40`, 2 h, 10 trials): **reward 0.32**
+  (`mean_request_credit` 0.287, ratio 0.288; reward = ratio / `full_at` 0.90). Per unit: microwaves u1 0.17,
+  u4 0.67, u7 0.67; cooktops u0 0.17, u3 0.0, u6 0.67; ovens u2 0.08, u5 0.0, u8 0.17. Per request: microwave
+  start 0.71, stop 0.36, burners off 1.0, all off 0.5, burner off 0.5, burner level 0.25, burners on 0.25,
+  preheat 0.25, burner on 0.0, oven level 0.0. 504 of 504 probe pairs differed; no aborts or faults; verify
+  553 s.
+  - **The first run on this build to use the time:** agent phase 4059 of 7200 s; it ran `date` ten times and
+    stopped with about 50 minutes left, reporting itself done. Seven trials went on first-frame captures in
+    the first three minutes; two trials it held open for later testing were dropped by the lab's 900 s idle
+    timeout; the last, a full u0 episode, turned no knob (the fingertips rested on the cooktop surface). Its
+    controller scores 0.98 on the practice units.
+  - **What it built:** placement by fitting hand-marked image patches in both fixed cameras; knobs grasped
+    across the bar seen by the wrist camera, pushed about 13 N along the axis while turned, stops found by
+    stalls, on/off settled by flame and lamp; per-unit learning carried from a unit's first graded episode to
+    its second (knob direction, oven knob range and which knob is the temperature one); microwave presses
+    held 2 s around a guessed keypad spot, checked by the amber bar, the working spot remembered. Knob-to-burner
+    maps guessed from the practice cooktop; push-to-turn ovens not handled.
+  - **Reading:** just above the 0.3 target. The four Opus 5.5 runs on the 10-trial budget: 0.27, 0.0 (1 h),
+    0.0, 0.32 (2 h runs mean 0.20). Owner decision pending on whether 0.32 reopens the difficulty step.
