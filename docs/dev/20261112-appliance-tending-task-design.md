@@ -483,3 +483,15 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   at the indicator, retrying when the state was wrong. **Reading:** with visible state the task is easy; the
   indicators turned every lab trial into a fully observed experiment. Owner rule (2026-11-13): above 0.3,
   add per-episode lighting and camera variation (direction 2) and setting requests (direction 3).
+- **Directions 2 + 3** (`9a72828`, anchor `846a23d`): per-episode light (position, aim, strength 0.5-1.2x,
+  tint +-15 %), headlight and fixed-camera offsets (+-4 cm, about +-3 degrees; poses still in every
+  observation); burner settings (thirds of the on-range; the flame grows with the setting) and oven heat
+  settings (0.25-0.5 / 0.5-0.75 / 0.75-1.0); request categories simple 0.3 / compositional 0.35 / setting
+  0.35; deadlines 1000 steps (1500 compositional), lab step cap 4800. Reference: goal-angle turns, regrasp on a
+  stalled twist, at most 1.2 rad per grasp for a setting; 126 recheck episodes about 0.98. Anchor: 7 oracle
+  runs (`74fc7475`), mean 0.9802, worst 0.9352, `full_at` 0.90; `validate-5c621f96` passes. Practice
+  baseline (camera poses from the observation, edge-based comparison, 120 s step limit because its first
+  placement estimate takes 15-40 s): 0.81 on the practice units.
+- **Frontier trial 7** (`ale run` dee3156a): **void**. The subscription's rate limit rejected the agent's
+  calls (429) 49 minutes into the agent phase; the engine ended the episode with `env_error`
+  (`SubscriptionProviderLimitError`) and no verification ran.
