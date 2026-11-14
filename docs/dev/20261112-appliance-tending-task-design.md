@@ -473,3 +473,13 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   uses it, `_open_next` asserts membership, and `lab_check.py` runs the plugin through the server's own
   schema check (the pre-fix plugin reproduces the error; the fixed one passes 14 whole episodes past every
   deadline). The grader's behaviour and the anchor are unchanged.
+- **Frontier trial 6** (`ale run` 944638e3, the fixed lab, otherwise as trial 5): **reward 1.0**
+  (`mean_request_credit` 0.944, ratio 0.946 >= full_at). Eight of nine units 1.0 in both episodes; u1 lost one
+  episode (stop 0.73). Every request type 1.0 except microwave stop, compositional ones included. 111 of 113
+  probe pairs differed; verify 157 s; agent phase 3174 s, all 14 trials used. The agent recorded per-unit
+  knowledge from lab exploration (control positions, knob directions, knob-to-burner maps, where the flame,
+  lamp and display bar show), estimated each episode's placement against its reference images (wrist camera
+  for microwaves and ovens, fixed cameras for cooktops), and checked every action by looking for the colour
+  at the indicator, retrying when the state was wrong. **Reading:** with visible state the task is easy; the
+  indicators turned every lab trial into a fully observed experiment. Owner rule (2026-11-13): above 0.3,
+  add per-episode lighting and camera variation (direction 2) and setting requests (direction 3).

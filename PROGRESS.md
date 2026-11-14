@@ -34,9 +34,9 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** frontier trial 6 on the appliance task (nine units, state indicators, compositional
-  cooktop requests, 14 lab trials, 3 h; anchor 0.9987 / full_at 0.95). Trial 5 (reward 0.52) is void: the
-  lab rejected compositional request texts (fixed, design §10 P3). Target: frontier reward below 0.3 (owner).
+- **Next step:** the appliance task gets per-episode lighting and camera variation and burner / oven setting
+  requests (owner rule after trial 6 scored reward 1.0 on nine units with indicators; target below 0.3), then
+  re-anchor, validate and a frontier trial (design §10 P3).
   Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
   claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
