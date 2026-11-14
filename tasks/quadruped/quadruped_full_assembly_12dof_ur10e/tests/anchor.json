@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "assembly_score",
+ "note": "assembly_score is the episode mean of the fastened slots' weight / 22 times the gates, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own assembly_score: the privileged reference program fastens all 16 slots on the nominal layout (ale validate on vendor/ale 1cdbc02, validate-a12b69c2, 2026-11-09: 16 / 16 on each of the three oracle episodes, no safety event, no unplanned robot contact)",
+ "value": 1.0
+}

@@ -26,6 +26,10 @@ name = "grounded-intelligence-initiative/robotic_arm_cad_design_from_photos"
 platform = "arm"
 
 [environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
 cpus = 8
 memory_mb = 16384
 

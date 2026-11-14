@@ -22,10 +22,12 @@ platform = "arm"
 
 # The whole sandbox: OVRTX's first-render shader compile runs on up to 8 CPUs and peaks near 13 GB resident; the
 # agent's own MuJoCo work and an OVRTX render (about 3 GB of GPU memory at 1920 x 1080) run beside it.
+# The GPU models the task has been tested on, cheapest first: Daytona tries them in this order.
 [environment]
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090", "RTX-5090", "RTX-PRO-6000"]
 
 # setup: stage the givens (< 5 s), then fill OVRTX's shader cache with one warm-up render as the agent account (cold
 # compile measured 621-1371 s; capped at 1440 s, killed 30 s later; it never fails setup, the engine's setup limit is

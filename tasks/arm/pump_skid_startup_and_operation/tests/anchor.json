@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "operation_score",
+ "note": "operation_score is the mean over the hidden episodes of the shift's score (skidcell.episode: start-up 0.20, operation in band 0.25, the window's events 0.25, shutdown 0.15, the log sheet 0.15; a void scores the episode 0), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1).",
+ "source": "reference program (tests/reference: privileged eyes for the robot's motions only; its decisions use what an operator can see, the instruments' readings, lamps, sight glasses and drums, never the process's hidden state) on the fixed hidden set of cell version 0.6.0 (tests/hidden/seeds.json: 8 sites selected by the pre-registered rule of tests/hidden/selection.json, 20 of 24 candidates completed; the rule re-run on the v0.6 cell on 2026-11-10, hidden/selection.json amendments: the same 20 completed, the same eight sites): two full verifies on 2026-11-10 (tests/test.sh as root in a fresh container of the amended task image with only the oracle submission restored, one on apollo, one on apollo-pc-2) gave operation_score 0.97646 (episodes 0.956, 0.912, 1.000, 1.000, 0.962, 1.000, 0.982, 1.000; no void, no protective stop, every event credited), each episode equal to its selection run to four decimals and the two verifies bit for bit the same; full_at 0.98 (the episodes reproduce exactly, on two CPU generations; the margin covers a rounding difference on another CPU). v0.6 moved the value from 0.9779 because V-104 now starts open (the reference's line-up and its timing change on most sites). Before v0.5: anchor 0.965 / full_at 0.92 on fresh draws of seeds 1-64 of cell version 0.3.0; v0.1 0.988 / 0.95.",
+ "value": 0.9765
+}

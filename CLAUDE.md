@@ -200,8 +200,9 @@ task after it lands, so the copy a maintainer validated is the copy that scores.
   below 0.5, reached by raising the engineering or perception challenge, never by arbitrary
   penalties. Check runs for the pinned stack's own limits first (`docs/contributing-a-task.md`
   §7: a stream silent for 600 s is cut off; the CLI caps a response at 64k tokens and the
-  gateway a request at 30 minutes, which leave long-thinking models with empty turns). At
-  `1cdbc02` the agent's `PATH` keeps the image's `/opt/venv/bin`; `PROGRESS.md` §8.
+  gateway a request at 30 minutes, which leave long-thinking models with empty turns). The
+  pinned engine (`bfb7505`) keeps the image's `/opt/venv/bin` on the agent's `PATH`;
+  `PROGRESS.md` §8.
 - Maintainer flow: read `tests/` and `solution/`, check out the branch, re-run `ale lint` +
   `ale validate` from `vendor/ale`, fix the anchor on the branch if the measurement
   disagrees, merge, then export the registry (`scripts/export_registry.py`) and commit
@@ -278,9 +279,13 @@ uv run pytest -q
   misleading `ModuleNotFoundError`. Set `UV_PYTHON_INSTALL_DIR=/opt/uv-python` and keep the
   Dockerfile's agent-UID import self-check. **Rule: the agent UID must traverse (not only
   read) everything the venv points at.**
-- The engine stages `ale_verify` into `python3`, else `python3.12` (3.12+ required), and
-  names the one it used in `ALE_VERIFY_PYTHON`, set for the verify stage only:
+- The engine stages `ale_verify` into the image's `python3`, else its `python3.12` (3.12+),
+  else the framework's own Python, which lacks the task's packages, and names the one it used
+  in `ALE_VERIFY_PYTHON`, set for the verify stage only:
   `tests/test.sh` runs `exec "${ALE_VERIFY_PYTHON:-python3}" verify.py`, never a bare `python3`.
+- The desktop's size is a run setting at `bfb7505` (`desktop_resolution`, default 1024x768):
+  the docker provider overrides an image's `VNC_RESOLUTION`, and a task cannot declare it. The
+  three CAD tasks are 1440x900: run them with `--set desktop_resolution=1440x900`.
 - `reward` is rounded half-up to two decimals before any gate reads it: an oracle at 0.995
   passes as 1.0 and an untouched run at 0.004 reads as 0.0. The unrounded value is
   `metrics.reward_exact` in the episode's `verification.json`.

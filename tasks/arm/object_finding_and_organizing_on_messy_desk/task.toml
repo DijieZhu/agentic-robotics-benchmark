@@ -32,10 +32,12 @@ platform = "arm"
 # the build context; its FROM names the ALE base at an exact version (lint rejects `latest`
 # and an untagged FROM). A prebuilt image works too: `docker_image = "ghcr.io/...:tag"`
 # here, and delete environment/Dockerfile (an image named directly wins over a build).
+# The GPU models the task has been tested on, cheapest first: Daytona tries them in this order.
 [environment]
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090"]
 
 # Setup (environment/setup/setup.sh: staging the agent-visible material) has no field: the
 # engine bounds it at a fixed 1800 s. [agent] timeout_sec: the agent's whole budget, including
@@ -79,3 +81,4 @@ environment_mode = "separate"
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090"]

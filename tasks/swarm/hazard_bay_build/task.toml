@@ -21,10 +21,12 @@ name = "grounded-intelligence-initiative/hazard_bay_build"
 [metadata]
 platform = "swarm"
 
+# The GPU models the task has been tested on, cheapest first: Daytona tries them in this order.
 [environment]
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090", "RTX-5090", "RTX-PRO-6000"]
 
 # Setup (environment/setup/setup.sh: stage ~/given, < 1 min) has no field: the engine bounds it at a fixed 1800 s.
 # [agent] timeout_sec: 8 h. [verifier] timeout_sec: two canaries (physics; the real bay rendered, where the renderer's
@@ -55,3 +57,4 @@ environment_mode = "separate"
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090", "RTX-5090", "RTX-PRO-6000"]

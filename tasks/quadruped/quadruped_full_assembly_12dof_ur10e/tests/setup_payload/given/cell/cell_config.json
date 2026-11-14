@@ -1,0 +1,78 @@
+{
+ "agent_cameras": [
+  "top",
+  "wrist"
+ ],
+ "camera_budget_frames": 600,
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "note": "a unit pressed on the environment or another unit above part_force_N for `ticks` consecutive 10 ms ticks (0.2 s) is a safety violation (the normal forces summed per unit and body it presses on; the gripper's pads on a unit do not count)",
+  "pad_force_N": null,
+  "part_force_N": 150.0,
+  "report_N": {
+   "pad_force_N": 120.0,
+   "part_force_N": 150.0
+  },
+  "ticks": 20
+ },
+ "episodes": 3,
+ "held": {
+  "force_N": 1.0,
+  "ticks": 5
+ },
+ "layout": {
+  "stand": {
+   "nominal_xy": [
+    0.62,
+    0.0
+   ],
+   "yaw_deg": 90.0,
+   "jitter_m": 0.01
+  },
+  "bench_jitter": {
+   "xy_m": 0.03,
+   "yaw_deg": 30.0,
+   "edge_along_m": 0.03,
+   "edge_across_m": 0.01,
+   "edge_yaw_deg": 10.0,
+   "gap_m": 0.02,
+   "tries": 200,
+   "layouts": 50
+  },
+  "rotor_jitter_deg": 2.0,
+  "note": "the episode's physical draws: the stand +-10 mm (never turned); every unit moved by up to xy_m and turned about the vertical by up to yaw_deg around its place in the shop's layout of the kit, on the face that layout gives it (the lower legs at the side edges: edge_along_m along, edge_across_m across the edge, edge_yaw_deg); the output pulleys at their index +-2 deg"
+ },
+ "max_ticks_per_step": 500,
+ "note": "the cell's configuration as far as it is public (the camera mounts and the shop's layout of the kit are not)",
+ "reach_check": {
+  "enabled": true,
+  "max_draws": 8,
+  "note": "every episode's layout is checked on the built cell: every shoulder, support and upper leg can be picked from above where it lies and every lower leg's knee can be made there; else the layout is drawn again"
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "robot_force_N": 30.0,
+  "part_speed_m_s": 3.0
+ },
+ "silence_s": 120.0,
+ "sim_cap_s": 1200.0,
+ "wall_cap_s": 2400.0
+}

@@ -253,12 +253,20 @@ field.
    is one of the benchmark's platforms (`tasks/platforms.json`, listed in the manifest's
    comment) and names the `tasks/<platform>/` folder the task lands in. A new key needs a
    maintainer.
-2. Budgets and network. Size `[environment]` (`cpus`, `memory_mb`, and `gpus` when the
-   task needs them), `[agent].timeout_sec` (the agent's whole budget, training included)
-   and `[verifier].timeout_sec` (every scored episode plus probes). Keep
-   `network_mode = "no-network"` unless the task needs a host: `allowlist` names it in
-   `allowed_hosts`, and `public` needs `[metadata].network_justification`. Setup has no
-   field; the engine bounds it at 1800 s.
+2. Budgets and network. Size `[environment]` (`cpus`, `memory_mb`, and `gpus` when the task
+   needs them), `[agent].timeout_sec` (the agent's whole budget, training included) and
+   `[verifier].timeout_sec` (every scored episode plus probes). A GPU task names, in
+   `gpu_types` in `[environment]` and `[verifier.environment]`, the models it has been
+   tested on, cheapest first: Daytona tries them in that order, and a host without one of
+   them refuses the task before it starts. It leaves the key out only when every model
+   tested runs it. Test the H100 and Daytona's RTX 4090, RTX 5090, RTX PRO 6000 and H200 by
+   running what uses the GPU on each: the simulator's start, a frame compared with one from
+   a model already validated, and the agent's own GPU libraries. A model can lack a
+   library's kernels, render differently or run too slowly for the budgets, and rendering
+   also needs the graphics part of the host's NVIDIA driver, which compute-only installs
+   leave out. Keep `network_mode = "no-network"` unless the task needs a host: `allowlist`
+   names it in `allowed_hosts`, and `public` needs `[metadata].network_justification`. Setup
+   has no field; the engine bounds it at 1800 s.
 3. Image. Make `environment/Dockerfile` your environment: the simulator and every stable
    dependency, FROM the ALE base at an exact version; Python packages go in
    `environment/requirements.txt`. Keep the py3.12 `/opt/venv` with a world-traversable

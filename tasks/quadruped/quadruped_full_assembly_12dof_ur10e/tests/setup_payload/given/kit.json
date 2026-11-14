@@ -1,0 +1,118 @@
+{
+ "schema": "quad-kit/1",
+ "frames": "each STL is one unit as delivered: millimetres, resting on its most likely stable face on z = 0, its footprint's smallest enclosing rectangle centred on the origin with its long side along x; a unit's printed parts, its actuator module and its output pulley are in one file; com_mm = the unit's centre of mass in its STL's frame (from the CAD)",
+ "material": "printed parts: PA12, natural off-white (undyed), all one colour; actuator modules: dark housings with an aluminium output pulley",
+ "units": [
+  {
+   "id": "body",
+   "file": "parts/body.stl",
+   "quantity": 1,
+   "role": "the body with its four hip ab/ad actuator modules and their output pulleys (bolted on the stand in the cell)",
+   "size_mm": [
+    392.0,
+    219.0,
+    62.0
+   ]
+  },
+  {
+   "id": "shoulder_plain",
+   "file": "parts/shoulder_plain.stl",
+   "quantity": 2,
+   "role": "shoulder module: the hip flexion actuator in its shell with its output pulley; its key mounts on a hip ab/ad output pulley",
+   "size_mm": [
+    176.5,
+    39.6,
+    45.1
+   ],
+   "mass_g": 135,
+   "com_mm": [
+    10.5,
+    0.3,
+    20.8
+   ]
+  },
+  {
+   "id": "shoulder_adapter",
+   "file": "parts/shoulder_adapter.stl",
+   "quantity": 2,
+   "role": "shoulder module with the hip adapter: the hip flexion actuator in its shell with its output pulley; its key mounts on a hip ab/ad output pulley",
+   "size_mm": [
+    192.1,
+    39.6,
+    45.1
+   ],
+   "mass_g": 140,
+   "com_mm": [
+    5.7,
+    0.6,
+    20.7
+   ]
+  },
+  {
+   "id": "support",
+   "file": "parts/support.stl",
+   "quantity": 4,
+   "role": "hip ab/ad support: the bracket that closes over a shoulder module's journal and bolts onto the body",
+   "size_mm": [
+    75.2,
+    40.0,
+    27.9
+   ],
+   "mass_g": 21,
+   "com_mm": [
+    1.0,
+    0.0,
+    8.5
+   ]
+  },
+  {
+   "id": "upper_leg",
+   "file": "parts/upper_leg.stl",
+   "quantity": 4,
+   "role": "upper leg with the knee actuator and its output pulley; its key mounts on a shoulder's hip flexion output pulley",
+   "size_mm": [
+    199.6,
+    39.6,
+    45.1
+   ],
+   "mass_g": 139,
+   "com_mm": [
+    3.6,
+    0.4,
+    20.9
+   ]
+  },
+  {
+   "id": "lower_leg",
+   "file": "parts/lower_leg.stl",
+   "quantity": 4,
+   "role": "lower leg with its foot; its key mounts on an upper leg's knee output pulley",
+   "size_mm": [
+    190.5,
+    34.0,
+    20.0
+   ],
+   "mass_g": 23,
+   "com_mm": [
+    8.2,
+    0.0,
+    5.8
+   ]
+  }
+ ],
+ "actuator": {
+  "catalogue_id": "VK-BDJ-0945",
+  "files": [
+   "actuator/VK-BDJ-0945.step",
+   "actuator/VK-BDJ-0945_keepout.step",
+   "actuator/datasheet_VK-BDJ-0945.png",
+   "actuator/drawing_VK-BDJ-0945.png"
+  ],
+  "output_socket_mm": [
+   18.0,
+   10.0
+  ],
+  "note": "every hip ab/ad, hip flexion and knee joint is one of these modules; a unit's key fits its output pulley's socket in two orientations 180 deg apart"
+ },
+ "identical_units": "units with the same id are interchangeable"
+}

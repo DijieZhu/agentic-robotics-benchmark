@@ -1,0 +1,73 @@
+# quadruped_full_assembly_12dof_ur10e (assembly stage: the WHOLE quadruped from its body and 16 loose units; a UR10e-class arm
+# with a 2F-85-class gripper assembles a twelve-actuator quadruped physically: unpowered joints, a coupling state
+# machine per slot, every unit placed by the robot).
+#
+# The agent receives the units as delivered (STL files, kit.json), the actuator module's datasheet, drawing and STEP, the
+# lab's 25-photo picture manual with physical scale references, the cell's commissioning document and API, the robot
+# models and the cell library; no practice. It delivers assemble.py (solve(cell): a camera-only program that builds the
+# whole robot, 16 slots, from the body bolted on its stand), run as an unprivileged account on 3 OS-entropy episodes of
+# the grader's MuJoCo cell (tests/arm/assembly_quad: the units on the bench in stable orientations, placed and turned at
+# random around a hidden bench plan and checked for reach; the stand +-10 mm; the output pulleys at their index +-2 deg;
+# two uncalibrated RGB-D cameras, top and wrist, rendered by MuJoCo's Filament on CPU Vulkan in a baked factory hall;
+# noisy F/T, no unit poses, no fastening events). Score = the episode mean of the fastened slots' weight / 22. The
+# oracle submits the privileged reference program (tests/arm/assembly_quad/reference.py) with a 256-bit token: it runs
+# inside the cell on the bench plan's nominal layout. Grader knobs live in tests/grader_config.json; the cell's kit
+# (tests/gt/, the units' meshes and collision pieces) is not in the repository: the grader downloads it at verify start
+# from the benchmark's asset dataset, pinned there by commit and sha256.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/quadruped_full_assembly_12dof_ur10e"
+
+[metadata]
+platform = "quadruped"
+direction = "assembly"
+metric = {name = "assembly_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+info_tier = 1
+hidden_instance = "none"
+practice_instances = []
+render_backend = "filament"
+photo_set_version = "1"
+given_from = {stage = "hardware-design", adapter = "quad-kit"}
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "assembly-cell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "ur10e + 2f85", fastening = "coupling (keyed capture, pull home, lock at rest)", joints = "unpowered back-drivable", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["bench layout (place, yaw) per episode with a reach check", "stand +-10 mm", "output pulleys +-2 deg", "cameras (mount, intrinsics, distortion)", "lighting", "F/T bias"]
+expert_time_hours = 80
+siblings = ["robotic_arm_full_assembly_so101_panda", "robotic_arm_full_assembly_openarm_panda"]
+tags = ["assembly", "mujoco", "ur10e", "code-as-policy", "camera-only", "rgbd", "calibration", "picture-manual", "quadruped", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# [agent] timeout_sec: 6 h. [verifier] timeout_sec: an agent's program 3 x (cell build + reach check ~40 s + program
+# <= 2400 s wall); the oracle's verify 3 x the reference program (~300 s simulated, ~8 min wall each). The verifier
+# sandbox's start, tests/test.sh's copy of the givens and the kit's download count against it too.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself, and the grader downloads the cell's kit (verification has
+# network). The agent's program runs during verify, so the verifier gets the agent's resources (CPU rendering: no GPU).
+[verifier]
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

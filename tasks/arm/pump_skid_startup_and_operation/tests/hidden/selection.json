@@ -1,0 +1,1569 @@
+{
+ "rule": "Pre-registered on 2026-11-07, before any candidate was run. Candidates: 63-bit seeds drawn from os.urandom, in the order listed. The frozen reference program (commit 067329d; sha256 of every file it and the cell run under `frozen`) runs each candidate ONCE, in drawn order, as the grader drives the oracle submission (describe, one overview and one wrist frame, then reference_run; OPENBLAS_CORETYPE=Haswell and NPY_DISABLE_CPU_FEATURES as tests/test.sh sets them). A candidate is kept when the reference completes it: no void, start-up 0.20, shutdown 0.15, log sheet 0.15, all four of its events judged (none excluded) and each credited in full; the in-band fractions of the operating window (the operation part) are what the anchor measures and are not a criterion. The hidden set (seeds.json) is the first 8 kept candidates in drawn order. Should fewer than 8 of the 24 be kept, 16 more candidates are drawn the same way, appended and run, and so on. Every drop is recorded with its reason; the hollowing check compares the kept set's features (fault mix, arrangement, valve builds, gauge scales, demand step) with all candidates'.",
+ "frozen_commit": "067329d",
+ "frozen": {
+  "reference/controller.py": "78e65c813d77436e8adc6033031969b1306fd61a7028f40853f1145a15919691",
+  "reference/skills.py": "65aa18d93c28e4061ef5492327b259d163c98ad8b415db30c23b3a4419c7353d",
+  "skidcell/__init__.py": "077142e40115a93849295ae1e8ee5063e6c0870f30a452c6d0372d1c36152b01",
+  "skidcell/cameras.py": "69881a21d5893239099914f5faef89bba690c80f35969a5925185cf5de98226f",
+  "skidcell/client.py": "62082e458092568f96d4a20c49394448ebed05d5db333aecebfc4c2c0f427d8d",
+  "skidcell/control.py": "448e29afbbda04fa1e4df2e16e0c24f8797c807b7891d389b30763a0c62b413d",
+  "skidcell/devices.py": "c3f4490403a4f043f888b38e20d2fc74932c4d3c8ce4e042a619e1ea8a2d7b7d",
+  "skidcell/episode.py": "7f46b911bf97bfe5b004acb24254e7054fd88fb646c72301d75ebe895973507c",
+  "skidcell/grasp.py": "da1d1aefe9ca929a186e62cfd378acbeb19a3d597ee319b3813e0a5778bc0e75",
+  "skidcell/layout.py": "bb25cae68b20ff6a15d297fe6caab5433f06b944c4605b48fe542ca262db0c57",
+  "skidcell/physics.py": "b343e5585a5b7ee046d994d08ca8312333504be5c9c651ef1167d2d1b3019582",
+  "skidcell/process.py": "bd432c256f06945ab86cb03ca75a2e1e84e23968030dc8dde931aa8eaccdadf1",
+  "skidcell/server.py": "459141fefdfb4388ea4a180b3f2673135732d4b37b8006e4da6290d3cba5ea69",
+  "skidcell/textures.py": "7d3bcf092d549ae2a114d7c4225f5d4054cc9ef3cccbc8bd0c9e7f1aa690ee12"
+ },
+ "candidates": [
+  7122925475581344396,
+  551563798971541068,
+  2222850007174235125,
+  6480879240323771191,
+  8983285256934995579,
+  8508691780359653294,
+  3412221707657695962,
+  1084668040321652063,
+  5398795320436455565,
+  6032182316816315780,
+  7092257221440411340,
+  4957983229973701566,
+  4941533401989581625,
+  7593668493352801761,
+  1279390617732370046,
+  8799455996881898520,
+  4144123058496182251,
+  8044148485052336986,
+  2389249077177747252,
+  81479117856481482,
+  1365010907177760492,
+  6003520789912242784,
+  5421693190584377522,
+  8911851412285683029
+ ],
+ "selection_run": {
+  "date": "2026-11-07",
+  "where": "apollo, the task image (environment/Dockerfile), one process per candidate",
+  "runs": [
+   {
+    "i": 0,
+    "seed": 7122925475581344396,
+    "score": 0.8192,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1317,
+     "events": 0.1875,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": false,
+    "drop_reasons": [
+     "demand_step credited 0.00"
+    ]
+   },
+   {
+    "i": 1,
+    "seed": 551563798971541068,
+    "score": 0.9609,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2109,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 2,
+    "seed": 2222850007174235125,
+    "score": 0.9118,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1618,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "drum_empty",
+     "pump_trip"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 3,
+    "seed": 6480879240323771191,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 4,
+    "seed": 8983285256934995579,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 5,
+    "seed": 8508691780359653294,
+    "score": 0.9764,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2264,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 6,
+    "seed": 3412221707657695962,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 7,
+    "seed": 1084668040321652063,
+    "score": 0.9742,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2242,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "drum_empty",
+     "pump_trip"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 8,
+    "seed": 5398795320436455565,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": true,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 9,
+    "seed": 6032182316816315780,
+    "score": 0.8182,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1307,
+     "events": 0.1875,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": false,
+    "drop_reasons": [
+     "demand_step credited 0.00"
+    ]
+   },
+   {
+    "i": 10,
+    "seed": 7092257221440411340,
+    "score": 0.9307,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1807,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 11,
+    "seed": 4957983229973701566,
+    "score": 0.8677,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1959,
+     "events": 0.1719,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": false,
+    "drop_reasons": [
+     "pump_trip credited 0.75",
+     "dosing_airlock credited 0.00"
+    ]
+   },
+   {
+    "i": 12,
+    "seed": 4941533401989581625,
+    "score": 0.9601,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2101,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 13,
+    "seed": 7593668493352801761,
+    "score": 0.9733,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2233,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "drum_empty",
+     "filter_slug"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 14,
+    "seed": 1279390617732370046,
+    "score": 0.9944,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2444,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "filter_slug",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 15,
+    "seed": 8799455996881898520,
+    "score": 0.9285,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1785,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 16,
+    "seed": 4144123058496182251,
+    "score": 0.9138,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1638,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 17,
+    "seed": 8044148485052336986,
+    "score": 0.9806,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2306,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 18,
+    "seed": 2389249077177747252,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "filter_slug",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 19,
+    "seed": 81479117856481482,
+    "score": 0.9716,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2216,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "filter_slug",
+     "pump_trip",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 20,
+    "seed": 1365010907177760492,
+    "score": 1.0,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.25,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "drum_empty",
+     "filter_slug",
+     "supply_loss"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 21,
+    "seed": 6003520789912242784,
+    "score": 0.9227,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1727,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "filter_slug",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 22,
+    "seed": 5421693190584377522,
+    "score": 0.9587,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.2087,
+     "events": 0.25,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "drum_empty",
+     "filter_slug"
+    ],
+    "kept": false,
+    "complete": true,
+    "drop_reasons": []
+   },
+   {
+    "i": 23,
+    "seed": 8911851412285683029,
+    "score": 0.8307,
+    "parts": {
+     "startup": 0.2,
+     "operation": 0.1901,
+     "events": 0.1406,
+     "shutdown": 0.15,
+     "log": 0.15
+    },
+    "faults": [
+     "dosing_airlock",
+     "drum_empty",
+     "pump_trip"
+    ],
+    "kept": false,
+    "complete": false,
+    "drop_reasons": [
+     "dosing_airlock credited 0.00",
+     "pump_trip credited 0.25"
+    ]
+   }
+  ],
+  "kept": [
+   551563798971541068,
+   2222850007174235125,
+   6480879240323771191,
+   8983285256934995579,
+   8508691780359653294,
+   3412221707657695962,
+   1084668040321652063,
+   5398795320436455565
+  ],
+  "summary": "20 of 24 candidates completed; the hidden set is candidates 1, 2, 3, 4, 5, 6, 7, 8 (the first 8 completed); dropped before the 8th: 0 (demand_step credited 0.00)",
+  "kept_mean_score": 0.9779,
+  "hollowing_check": {
+   "FI-105:f_05_5_m3h": {
+    "kept": 0.625,
+    "all": 0.5
+   },
+   "FI-105:f_10_80_lpm": {
+    "kept": 0.375,
+    "all": 0.5
+   },
+   "PDI-111:d_0_100_kpa": {
+    "kept": 0.5,
+    "all": 0.375
+   },
+   "PDI-111:d_0_1_bar": {
+    "kept": 0.5,
+    "all": 0.625
+   },
+   "PI-101:c_m100_300_kpa": {
+    "kept": 0.25,
+    "all": 0.5
+   },
+   "PI-101:c_m1_3_bar": {
+    "kept": 0.75,
+    "all": 0.5
+   },
+   "PI-103:p_0_100_psi": {
+    "kept": 0.125,
+    "all": 0.292
+   },
+   "PI-103:p_0_10_bar": {
+    "kept": 0.25,
+    "all": 0.25
+   },
+   "PI-103:p_0_600_kpa": {
+    "kept": 0.5,
+    "all": 0.292
+   },
+   "PI-103:p_0_6_bar": {
+    "kept": 0.125,
+    "all": 0.167
+   },
+   "V-101:handwheel": {
+    "kept": 0.75,
+    "all": 0.583
+   },
+   "V-101:lever": {
+    "kept": 0.25,
+    "all": 0.417
+   },
+   "V-102:knob": {
+    "kept": 0.25,
+    "all": 0.375
+   },
+   "V-102:lever": {
+    "kept": 0.75,
+    "all": 0.625
+   },
+   "V-103:handwheel": {
+    "kept": 0.25,
+    "all": 0.375
+   },
+   "V-103:lever": {
+    "kept": 0.75,
+    "all": 0.625
+   },
+   "V-104:handwheel": {
+    "kept": 0.75,
+    "all": 0.5
+   },
+   "V-104:lever": {
+    "kept": 0.25,
+    "all": 0.5
+   },
+   "V-112:knob": {
+    "kept": 0.5,
+    "all": 0.458
+   },
+   "V-112:lever": {
+    "kept": 0.5,
+    "all": 0.542
+   },
+   "V-302:knob": {
+    "kept": 0.375,
+    "all": 0.542
+   },
+   "V-302:lever": {
+    "kept": 0.625,
+    "all": 0.458
+   },
+   "demand_step:down": {
+    "kept": 0.5,
+    "all": 0.583
+   },
+   "demand_step:up": {
+    "kept": 0.5,
+    "all": 0.417
+   },
+   "fault:dosing_airlock": {
+    "kept": 0.625,
+    "all": 0.625
+   },
+   "fault:drum_empty": {
+    "kept": 0.625,
+    "all": 0.458
+   },
+   "fault:filter_slug": {
+    "kept": 0.625,
+    "all": 0.75
+   },
+   "fault:pump_trip": {
+    "kept": 0.625,
+    "all": 0.667
+   },
+   "fault:supply_loss": {
+    "kept": 0.5,
+    "all": 0.5
+   },
+   "meter_first:False": {
+    "kept": 0.375,
+    "all": 0.375
+   },
+   "meter_first:True": {
+    "kept": 0.625,
+    "all": 0.625
+   },
+   "mirror:False": {
+    "kept": 0.5,
+    "all": 0.5
+   },
+   "mirror:True": {
+    "kept": 0.5,
+    "all": 0.5
+   },
+   "panel_p101_left:False": {
+    "kept": 0.375,
+    "all": 0.375
+   },
+   "panel_p101_left:True": {
+    "kept": 0.625,
+    "all": 0.625
+   },
+   "wrong_n:2": {
+    "kept": 0.25,
+    "all": 0.5
+   },
+   "wrong_n:3": {
+    "kept": 0.75,
+    "all": 0.5
+   }
+  }
+ },
+ "post_selection_changes": [
+  {
+   "file": "skidcell/episode.py",
+   "change": "LOG_TOL_FRAC 0.02 -> 0.01 (the log sheet's tolerance, 1 % of the instrument's span), after the selection run and the anchor verify",
+   "effect": "none on the selection or the anchor: the reference logs the instruments' true values, so its log part (0.15) and every completion are the same at any tolerance; the final validate verifies the oracle again",
+   "sha256": "147156a688c90e4054213611d291ca26d4b1ae0aae0f128253cacfdb747d132d"
+  }
+ ],
+ "amendments": [
+  {
+   "amended_utc": "2026-11-09T15:10:00Z",
+   "commit": "4166c71",
+   "what": "the agent cameras' renderer (render only; the owner's request of 2026-11-09, the OVRTX light baked into Filament, v0.5.3): the colour from MuJoCo's Filament renderer on a render twin of the cell in the dressed water-treatment room (skidcell/look.py, new), the depth from the classic renderer on a depth twin (the cell's own geometry plus the room); the rig gets the scene (physics.py: one argument; cameras.py: the rig routes to the twins); the package docstring names the module (__init__.py); the image adds Mesa's lavapipe and the render bundle (environment/Dockerfile, environment/assets.sha256). The physics model, the reference, the scoring and every random generator are untouched: the reference's privileged run reads two frames. The files changed since the frozen commit also include v0.5.2's visual-only carriage geometry (physics.py, devices.py, cameras.py's docstring: the compiled dynamics bit-identical) and the log tolerance recorded in post_selection_changes (episode.py); this amendment's check covers them all.",
+   "image": {
+    "tag": "pr53fil-task:ee681f0",
+    "id": "sha256:7c7eb6899f69f7430a9ce3689e8f176d330351dc782197f5a70865b599633ba7",
+    "built_from": "environment/ at ee681f0 (unchanged at 4166c71)",
+    "files": {
+     "environment/Dockerfile": "c2509cf7ddcb38d9e978a9d2438735c9ebee34b44dcc2b71c64d081e6b805fae",
+     "environment/assets.sha256": "ccf12657a34a4cf3f4987b1d8778bb2f9278037e9c47ddc0355adb7f2630a516",
+     "environment/fetch_assets.py": "8d16511241caa6aa0a0eb7dce60c0d6efffa4efdbfc222ddfa53722a569d4689",
+     "environment/requirements.txt": "74d90f9d919e2ca53e7b14c569a468eb94b44e2d5aa9baa3a585fb7f3be1d1e2"
+    }
+   },
+   "frozen": {
+    "reference/controller.py": "78e65c813d77436e8adc6033031969b1306fd61a7028f40853f1145a15919691",
+    "reference/skills.py": "65aa18d93c28e4061ef5492327b259d163c98ad8b415db30c23b3a4419c7353d",
+    "skidcell/__init__.py": "2a8ef5ef72b8204d3585152e7ac7d1d23cd03268e9b21a791b356c1b93cd692e",
+    "skidcell/cameras.py": "86e0ed1da983353b319cc6ce4777ab22bdb9aa4659310a3b7963bfe58fd4db9b",
+    "skidcell/client.py": "62082e458092568f96d4a20c49394448ebed05d5db333aecebfc4c2c0f427d8d",
+    "skidcell/control.py": "448e29afbbda04fa1e4df2e16e0c24f8797c807b7891d389b30763a0c62b413d",
+    "skidcell/devices.py": "42ce09826c3ca819936ba906105b145d0aec1c601200ed213691f68061234c4c",
+    "skidcell/episode.py": "147156a688c90e4054213611d291ca26d4b1ae0aae0f128253cacfdb747d132d",
+    "skidcell/grasp.py": "da1d1aefe9ca929a186e62cfd378acbeb19a3d597ee319b3813e0a5778bc0e75",
+    "skidcell/layout.py": "bb25cae68b20ff6a15d297fe6caab5433f06b944c4605b48fe542ca262db0c57",
+    "skidcell/physics.py": "621b8767d2e8e60e8bbc93fe2214717cf032f5d590bfb506f563f9666543281d",
+    "skidcell/process.py": "bd432c256f06945ab86cb03ca75a2e1e84e23968030dc8dde931aa8eaccdadf1",
+    "skidcell/server.py": "459141fefdfb4388ea4a180b3f2673135732d4b37b8006e4da6290d3cba5ea69",
+    "skidcell/textures.py": "7d3bcf092d549ae2a114d7c4225f5d4054cc9ef3cccbc8bd0c9e7f1aa690ee12",
+    "skidcell/look.py": "9a03c97554cca963db06a107182b99fc29d4bc02f0c299182938dad4bf2f4f66"
+   },
+   "changed": [
+    "skidcell/__init__.py",
+    "skidcell/cameras.py",
+    "skidcell/devices.py",
+    "skidcell/episode.py",
+    "skidcell/physics.py",
+    "skidcell/look.py"
+   ],
+   "check": {
+    "runs": [
+     "pr53fil-verify1 (ee681f0)",
+     "pr53fil-verify2 (4166c71)"
+    ],
+    "where": "apollo, a fresh container of the amended image per run (8 CPUs, 16 GB, no network), tests/test.sh as root with only the oracle submission restored",
+    "rule": "the reference's full verify of the fixed set on the amended image repeats every kept selection run: the same score and parts per episode (four decimals)",
+    "result": {
+     "operation_score": 0.9779,
+     "episodes": [
+      0.9609,
+      0.9118,
+      1.0,
+      1.0,
+      0.9764,
+      1.0,
+      0.9742,
+      1.0
+     ],
+     "equal_to_selection": true,
+     "two_runs_identical": "episode scores and ticks bit for bit",
+     "verify_wall_s": 691
+    }
+   }
+  },
+  {
+   "amended_utc": "2026-11-10T14:25:00Z",
+   "commit": "0b19f64",
+   "what": "v0.6 (the fairness review of 2026-11-10, approved by the owner): the safety watch makes a protective stop of a press past the limits (the arm and the carriage halt, motion refused for 5 s; a void only for damage-level contact, 400 N for 3 ticks, or a sixth stop in a shift: server.py); the wrist's external wrench estimate (physics.py external_wrench, server.py: read-only, its own random generator); V-104 starts open as the SOP's shutdown leaves it and a V-104 left out of place is shut (layout.py: every other random draw of a site is the one before); T-101's overflow runs to the drain and holds the level, no void (process.py), and costs the start-up's line-up credit (episode.py); the grip's slip limit written in physical units, the same decisions (physics.py WELD_ROT_ROWS); the client's commissioning connection (client.py); the cell version 0.6.0 (__init__.py). The reference is untouched. V-104's start state changes the reference's line-up work on most sites, so the pre-registered rule was re-run on all 24 candidates in drawn order (tests/review/select_set.py, the selection's harness, in a fresh container of the amended image per machine), on apollo and on apollo-pc-2.",
+   "image": {
+    "tag": "pr53comm-task:0b19f64",
+    "id": {
+     "apollo": "sha256:67301d42da4907ddc8af94397794b73d267a27075f560c8aff9e6aaf36fbefea",
+     "apollo-pc-2": "sha256:d10ec03327e385f6a429406f947888508024176f52ec01a51ae96b639f6338a2 (the same image, docker save | docker load into another storage driver)"
+    },
+    "built_from": "environment/ at 0b19f64 (a clean export)",
+    "files": {
+     "environment/Dockerfile": "24974068dc87bed6abda72632332fd2ac053c01386a9cf1954716747167c96e2",
+     "environment/assets.sha256": "ccf12657a34a4cf3f4987b1d8778bb2f9278037e9c47ddc0355adb7f2630a516",
+     "environment/fetch_assets.py": "8d16511241caa6aa0a0eb7dce60c0d6efffa4efdbfc222ddfa53722a569d4689",
+     "environment/requirements.txt": "74d90f9d919e2ca53e7b14c569a468eb94b44e2d5aa9baa3a585fb7f3be1d1e2",
+     "environment/commission_service/commissiond.py": "9517d54ff90e582c52af4ce25380a1521eace705c08dc03ba5c7ee8423651975",
+     "environment/commission_service/sites.json": "8d9e8cf958d813493bb9b0486bdad758aa37dceb494a144059decf6f79e4987f"
+    },
+    "note": "environment/commission_service/ is the agent's commissioning service: the grader never runs it"
+   },
+   "frozen": {
+    "reference/controller.py": "78e65c813d77436e8adc6033031969b1306fd61a7028f40853f1145a15919691",
+    "reference/skills.py": "65aa18d93c28e4061ef5492327b259d163c98ad8b415db30c23b3a4419c7353d",
+    "skidcell/__init__.py": "2bf358ee7b5d6b0cff0be4ee095208aeea4172de2b32596f0e65a8fb1376a1df",
+    "skidcell/cameras.py": "86e0ed1da983353b319cc6ce4777ab22bdb9aa4659310a3b7963bfe58fd4db9b",
+    "skidcell/client.py": "737212def2912f4704709ace4f4715f181c2b5abe43c2a77da8310db4333287e",
+    "skidcell/control.py": "448e29afbbda04fa1e4df2e16e0c24f8797c807b7891d389b30763a0c62b413d",
+    "skidcell/devices.py": "42ce09826c3ca819936ba906105b145d0aec1c601200ed213691f68061234c4c",
+    "skidcell/episode.py": "719b666045a8c91a78c20cf097781150bd78c28251afb18a754525c79cd8927d",
+    "skidcell/grasp.py": "da1d1aefe9ca929a186e62cfd378acbeb19a3d597ee319b3813e0a5778bc0e75",
+    "skidcell/layout.py": "d0ae67a736a48cc456f1f4f0db5252c2de84820eecbe9006906bdcda4df90681",
+    "skidcell/look.py": "9a03c97554cca963db06a107182b99fc29d4bc02f0c299182938dad4bf2f4f66",
+    "skidcell/physics.py": "316d9c65e5fd6ad4743af86400c1b6aa7feffb37c2bf70f9088e5be8f367e3d0",
+    "skidcell/process.py": "37136e69c245a6617971ddce0e633a2762f59268c041cdd8fc96aeb6c35e9f84",
+    "skidcell/server.py": "b62188aefc7de0c88300819f55e693f461b25b9fd1ecd38b101df4c3cf34251a",
+    "skidcell/textures.py": "7d3bcf092d549ae2a114d7c4225f5d4054cc9ef3cccbc8bd0c9e7f1aa690ee12"
+   },
+   "changed": [
+    "skidcell/__init__.py",
+    "skidcell/client.py",
+    "skidcell/episode.py",
+    "skidcell/layout.py",
+    "skidcell/physics.py",
+    "skidcell/process.py",
+    "skidcell/server.py"
+   ],
+   "selection_run": {
+    "date": "2026-11-10",
+    "rule": "the pre-registered rule of 2026-11-07 (this file's 'rule'), unchanged: each candidate once, in drawn order, as the grader drives the oracle; kept when the reference completes it; the hidden set is the first 8 kept",
+    "where": "apollo (AMD Ryzen Threadripper PRO 5975WX) and apollo-pc-2 (Threadripper PRO 9965WX), each all 24 candidates, one process per candidate (24 at a time), a fresh container of the amended image, no network, OPENBLAS_CORETYPE=Haswell and NPY_DISABLE_CPU_FEATURES as tests/test.sh sets them",
+    "tool_sha256": "d0e24b3214c4d5b0de74013ed03174e35b35b33bc176e0ca7d02e6bc03ea0298",
+    "runs": [
+     {
+      "i": 0,
+      "seed": 7122925475581344396,
+      "score": 0.8302,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1427,
+       "events": 0.1875,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "drum_empty",
+       "pump_trip",
+       "filter_slug"
+      ],
+      "kept": false,
+      "drop_reasons": [
+       "demand_step credited 0.00"
+      ],
+      "protective_stops": 0,
+      "ticks": 164805
+     },
+     {
+      "i": 1,
+      "seed": 551563798971541068,
+      "score": 0.9564,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2064,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "dosing_airlock",
+       "pump_trip",
+       "filter_slug"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 162178
+     },
+     {
+      "i": 2,
+      "seed": 2222850007174235125,
+      "score": 0.9118,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1618,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "pump_trip",
+       "dosing_airlock",
+       "drum_empty"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 164675
+     },
+     {
+      "i": 3,
+      "seed": 6480879240323771191,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "drum_empty",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 164913
+     },
+     {
+      "i": 4,
+      "seed": 8983285256934995579,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "drum_empty",
+       "supply_loss"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 169164
+     },
+     {
+      "i": 5,
+      "seed": 8508691780359653294,
+      "score": 0.9616,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2116,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "supply_loss",
+       "filter_slug",
+       "dosing_airlock"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 158063
+     },
+     {
+      "i": 6,
+      "seed": 3412221707657695962,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "supply_loss",
+       "pump_trip",
+       "drum_empty"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 163447
+     },
+     {
+      "i": 7,
+      "seed": 1084668040321652063,
+      "score": 0.9819,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2319,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "pump_trip",
+       "drum_empty",
+       "dosing_airlock"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 162011
+     },
+     {
+      "i": 8,
+      "seed": 5398795320436455565,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "dosing_airlock",
+       "supply_loss"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 168699
+     },
+     {
+      "i": 9,
+      "seed": 6032182316816315780,
+      "score": 0.7974,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1099,
+       "events": 0.1875,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "pump_trip",
+       "dosing_airlock"
+      ],
+      "kept": false,
+      "drop_reasons": [
+       "demand_step credited 0.00"
+      ],
+      "protective_stops": 0,
+      "ticks": 164777
+     },
+     {
+      "i": 10,
+      "seed": 7092257221440411340,
+      "score": 0.9664,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2164,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "drum_empty",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 161892
+     },
+     {
+      "i": 11,
+      "seed": 4957983229973701566,
+      "score": 0.8672,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1953,
+       "events": 0.1719,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "pump_trip",
+       "supply_loss",
+       "dosing_airlock"
+      ],
+      "kept": false,
+      "drop_reasons": [
+       "pump_trip credited 0.75",
+       "dosing_airlock credited 0.00"
+      ],
+      "protective_stops": 0,
+      "ticks": 160716
+     },
+     {
+      "i": 12,
+      "seed": 4941533401989581625,
+      "score": 0.9612,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2112,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "dosing_airlock",
+       "supply_loss",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 163850
+     },
+     {
+      "i": 13,
+      "seed": 7593668493352801761,
+      "score": 0.9728,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2228,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "drum_empty",
+       "dosing_airlock"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 171379
+     },
+     {
+      "i": 14,
+      "seed": 1279390617732370046,
+      "score": 0.9998,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2498,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "pump_trip",
+       "supply_loss"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 166366
+     },
+     {
+      "i": 15,
+      "seed": 8799455996881898520,
+      "score": 0.9283,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1783,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "dosing_airlock",
+       "pump_trip",
+       "filter_slug"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 170621
+     },
+     {
+      "i": 16,
+      "seed": 4144123058496182251,
+      "score": 0.9124,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1624,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "supply_loss",
+       "dosing_airlock"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 159179
+     },
+     {
+      "i": 17,
+      "seed": 8044148485052336986,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "dosing_airlock",
+       "supply_loss"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 168391
+     },
+     {
+      "i": 18,
+      "seed": 2389249077177747252,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "supply_loss",
+       "filter_slug",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 160075
+     },
+     {
+      "i": 19,
+      "seed": 81479117856481482,
+      "score": 0.9667,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2167,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "supply_loss",
+       "filter_slug",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 167639
+     },
+     {
+      "i": 20,
+      "seed": 1365010907177760492,
+      "score": 1.0,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.25,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "supply_loss",
+       "drum_empty",
+       "filter_slug"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 165483
+     },
+     {
+      "i": 21,
+      "seed": 6003520789912242784,
+      "score": 0.907,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.157,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "filter_slug",
+       "dosing_airlock",
+       "pump_trip"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 156815
+     },
+     {
+      "i": 22,
+      "seed": 5421693190584377522,
+      "score": 0.9585,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.2085,
+       "events": 0.25,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "drum_empty",
+       "filter_slug",
+       "dosing_airlock"
+      ],
+      "kept": true,
+      "drop_reasons": [],
+      "protective_stops": 0,
+      "ticks": 165221
+     },
+     {
+      "i": 23,
+      "seed": 8911851412285683029,
+      "score": 0.8305,
+      "parts": {
+       "startup": 0.2,
+       "operation": 0.1898,
+       "events": 0.1406,
+       "shutdown": 0.15,
+       "log": 0.15
+      },
+      "faults": [
+       "pump_trip",
+       "dosing_airlock",
+       "drum_empty"
+      ],
+      "kept": false,
+      "drop_reasons": [
+       "dosing_airlock credited 0.00",
+       "pump_trip credited 0.25"
+      ],
+      "protective_stops": 0,
+      "ticks": 170780
+     }
+    ],
+    "kept": [
+     551563798971541068,
+     2222850007174235125,
+     6480879240323771191,
+     8983285256934995579,
+     8508691780359653294,
+     3412221707657695962,
+     1084668040321652063,
+     5398795320436455565,
+     7092257221440411340,
+     4941533401989581625,
+     7593668493352801761,
+     1279390617732370046,
+     8799455996881898520,
+     4144123058496182251,
+     8044148485052336986,
+     2389249077177747252,
+     81479117856481482,
+     1365010907177760492,
+     6003520789912242784,
+     5421693190584377522
+    ],
+    "hidden_set": [
+     551563798971541068,
+     2222850007174235125,
+     6480879240323771191,
+     8983285256934995579,
+     8508691780359653294,
+     3412221707657695962,
+     1084668040321652063,
+     5398795320436455565
+    ],
+    "summary": "20 of 24 candidates completed; the hidden set is candidates 1, 2, 3, 4, 5, 6, 7, 8 (the first 8 completed); dropped before the 8th: 0 (demand_step credited 0.00)",
+    "kept_mean_score": 0.9765,
+    "hollowing_check": {
+     "FI-105:f_05_5_m3h": {
+      "kept": 0.625,
+      "all": 0.5
+     },
+     "FI-105:f_10_80_lpm": {
+      "kept": 0.375,
+      "all": 0.5
+     },
+     "PDI-111:d_0_100_kpa": {
+      "kept": 0.5,
+      "all": 0.375
+     },
+     "PDI-111:d_0_1_bar": {
+      "kept": 0.5,
+      "all": 0.625
+     },
+     "PI-101:c_m100_300_kpa": {
+      "kept": 0.25,
+      "all": 0.5
+     },
+     "PI-101:c_m1_3_bar": {
+      "kept": 0.75,
+      "all": 0.5
+     },
+     "PI-103:p_0_100_psi": {
+      "kept": 0.125,
+      "all": 0.292
+     },
+     "PI-103:p_0_10_bar": {
+      "kept": 0.25,
+      "all": 0.25
+     },
+     "PI-103:p_0_600_kpa": {
+      "kept": 0.5,
+      "all": 0.292
+     },
+     "PI-103:p_0_6_bar": {
+      "kept": 0.125,
+      "all": 0.167
+     },
+     "V-101:handwheel": {
+      "kept": 0.75,
+      "all": 0.583
+     },
+     "V-101:lever": {
+      "kept": 0.25,
+      "all": 0.417
+     },
+     "V-102:knob": {
+      "kept": 0.25,
+      "all": 0.375
+     },
+     "V-102:lever": {
+      "kept": 0.75,
+      "all": 0.625
+     },
+     "V-103:handwheel": {
+      "kept": 0.25,
+      "all": 0.375
+     },
+     "V-103:lever": {
+      "kept": 0.75,
+      "all": 0.625
+     },
+     "V-104:handwheel": {
+      "kept": 0.75,
+      "all": 0.5
+     },
+     "V-104:lever": {
+      "kept": 0.25,
+      "all": 0.5
+     },
+     "V-112:knob": {
+      "kept": 0.5,
+      "all": 0.458
+     },
+     "V-112:lever": {
+      "kept": 0.5,
+      "all": 0.542
+     },
+     "V-302:knob": {
+      "kept": 0.375,
+      "all": 0.542
+     },
+     "V-302:lever": {
+      "kept": 0.625,
+      "all": 0.458
+     },
+     "demand_step:down": {
+      "kept": 0.5,
+      "all": 0.583
+     },
+     "demand_step:up": {
+      "kept": 0.5,
+      "all": 0.417
+     },
+     "fault:dosing_airlock": {
+      "kept": 0.625,
+      "all": 0.625
+     },
+     "fault:drum_empty": {
+      "kept": 0.625,
+      "all": 0.458
+     },
+     "fault:filter_slug": {
+      "kept": 0.625,
+      "all": 0.75
+     },
+     "fault:pump_trip": {
+      "kept": 0.625,
+      "all": 0.667
+     },
+     "fault:supply_loss": {
+      "kept": 0.5,
+      "all": 0.5
+     },
+     "meter_first:False": {
+      "kept": 0.375,
+      "all": 0.375
+     },
+     "meter_first:True": {
+      "kept": 0.625,
+      "all": 0.625
+     },
+     "mirror:False": {
+      "kept": 0.5,
+      "all": 0.5
+     },
+     "mirror:True": {
+      "kept": 0.5,
+      "all": 0.5
+     },
+     "panel_p101_left:False": {
+      "kept": 0.375,
+      "all": 0.375
+     },
+     "panel_p101_left:True": {
+      "kept": 0.625,
+      "all": 0.625
+     },
+     "wrong_n:2": {
+      "kept": 0.25,
+      "all": 0.5
+     },
+     "wrong_n:3": {
+      "kept": 0.75,
+      "all": 0.5
+     }
+    },
+    "same_set_as_before": true,
+    "cross_machine": {
+     "compared": "apollo-pc-2's 24 runs against apollo's",
+     "differ_in_score_parts_or_ticks": [],
+     "final_physics_state_sha256_identical": "24 of 24"
+    }
+   },
+   "check": {
+    "runs": [
+     "pr53comm-verify-apollo (0b19f64)",
+     "pr53comm-verify-pc2 (0b19f64)"
+    ],
+    "where": "a fresh container of the amended image per run (8 CPUs, 16 GB, no network), tests/test.sh as root with only the oracle submission restored; one on apollo, one on apollo-pc-2",
+    "rule": "the reference's full verify of the fixed set on the amended image repeats every kept selection run: the same score and parts per episode (four decimals)",
+    "result": {
+     "operation_score": 0.9765,
+     "operation_score_float": 0.9764560763887232,
+     "episodes": [
+      0.9564,
+      0.9118,
+      1.0,
+      1.0,
+      0.9616,
+      1.0,
+      0.9819,
+      1.0
+     ],
+     "equal_to_selection": true,
+     "two_runs_identical": "episode scores and ticks bit for bit (apollo and apollo-pc-2)",
+     "protective_stops": 0,
+     "t101_overflows": 0,
+     "verify_wall_s": {
+      "apollo": 905,
+      "apollo-pc-2": 411
+     }
+    }
+   }
+  }
+ ]
+}

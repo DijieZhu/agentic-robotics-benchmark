@@ -1,0 +1,75 @@
+# pump_skid_startup_and_operation (Physical Execution, robotic arm; built 2026-11-05 by Yuanfang Peng; v0.3 2026-11-06;
+# v0.5 2026-11-07: maintainers' review fixes and a harder hidden set; v0.6 2026-11-10: commissioning on the series'
+# sister sites, protective stops, the wrist's 6-D wrench; tests/README.md section 6).
+#
+# A Franka Panda on a rail carriage with a lift is the field operator of a water-treatment transfer and dosing skid
+# (MuJoCo, CPU). Every hidden episode is a different site of the skid series: the site numbers its equipment its own
+# way (the tag plates and the control station show the site tags; the API hands over the site's equipment list) and
+# builds it its own way (handwheel or lever valves per function, the flow meter before or after the control valve, the
+# station's groups either way round, mirrored or not). From the shutdown state the previous shift left (two or three
+# valves out of place) and following the operating procedure (given/sop.md) and the series P&ID, the agent's program
+# finds the devices by their tag plates, lines the skid up, primes and starts the transfer pump, fills the product tank
+# and starts the chlorine dosing before the operating window opens at 600 s, holds the product tank's level and the
+# residual chlorine in their bands through the window, diagnoses and handles the window's hidden faults (always a
+# demand step, plus three of: a debris slug on the duplex strainer, a stuck float valve on the supply tank, an air lock
+# in the dosing pump, the duty dosing drum running dry, a pump trip; one common alarm lamp, pairs of faults with the
+# same first symptoms), logs six instrument readings in each of the log sheet's two rounds, and shuts the skid down
+# after the shift ends at 1500 s. The hidden set is fixed: eight sites pinned in tests/hidden/seeds.json, selected by a
+# pre-registered rule (tests/hidden/selection.json) among sites the reference program completes.
+# Nothing of the skid is on the wire: valve positions, gauges, the rotameter, level gauges, sight glasses, drums, lamps
+# and the analyser's display are read from a fixed overview RGB-D camera (too coarse for tags, dials or the display) and
+# a wrist camera; valves are turned through a documented grip rule. Score = the mean over the hidden episodes of the
+# procedure's checks (startup 0.20, operation 0.25, events 0.25, shutdown 0.15, the operator log 0.15); a deadheaded
+# pump, cavitation damage, the product tank overflowing, the emergency stop or the robot out of service (damage-level
+# contact or a sixth protective stop; a hard contact is a protective stop) voids the episode. The
+# oracle submits the reference program with a 256-bit token: it moves the robot with privileged eyes but decides only
+# on what an operator could see (instrument readings, lamps, sight glasses). Grader knobs: tests/grader_config.json.
+# Realism rule: the agent gets what an operator / automation engineer at a real site would have (the documents, the
+# robot model, the cell API, an instrument catalog) and nothing else. As the automation engineer it commissions its
+# program on sister sites of the series (v0.6: a commissioning service in its sandbox runs the cell on 9 development
+# sites, never a graded one, 12 shifts, the graded episode's budgets, no truth, no score, no debrief); the simulator's
+# code and every ground truth stay out of its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (operate.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/pump_skid_startup_and_operation"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/arm/<name>/. The metric
+# (operation_score, higher) lives in tests/anchor.json.
+platform = "arm"
+tags = ["process-plant", "valves", "gauges", "sop", "field-operator", "fault-diagnosis", "tag-plates", "panda", "rail", "mujoco", "code-as-policy", "camera-only",
+        "rgbd", "hidden-seed", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home (the grader's root-owned copy
+# is built by tests/test.sh in the verifier sandbox). [agent] timeout_sec: 4 h. [verifier] timeout_sec: the import
+# check (at most 120 s), the desktop settle (at most 60 s), then 8 hidden episodes, each a cell build (under a second)
+# plus the program within its 1200 s program-time cap, which does not count the cell's simulation (1800 s simulated at
+# most, about 1.5-2 min of wall clock here) and rendering (600 frames at most, 0.4-1.1 s each: Filament colour on lavapipe plus classic depth, measured on 8 CPUs; an episode's first frame about 3 s), plus up to about 80 s of
+# end and clean-up: at the bounds about 2000 s an episode, 16000 s for the eight, 18000 s with one episode run twice
+# after a cell failure; 6 h leaves 3600 s of margin. The oracle's episodes run the reference program inside one
+# privileged call (about 1.5-3 min each here).
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 21600
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

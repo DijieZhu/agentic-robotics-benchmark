@@ -1,0 +1,43 @@
+{
+ "camera_budget_frames": 600,
+ "commissioning": {
+  "development_sites": 9,
+  "open_at_a_time": 2,
+  "per_shift": "the graded episode's budgets: sim_cap_s, program_time_cap_s, camera_budget_frames, silence_s",
+  "shifts": 12
+ },
+ "cpu_cap_factor": 4.0,
+ "episodes": 8,
+ "max_ticks_per_step": 1000,
+ "note": "the cell's configuration as far as it is public (the grader's runner settings are not); safety: a press past robot_force_N / device_force_N for press_ticks ticks is a protective stop of stop_lock_s, more than max_stops stops or a press past damage_force_N for press_ticks ticks takes the robot out of service (a void); commissioning: the commissioning service's window (cell_manual.md section 8)",
+ "program_time_cap_s": 1200.0,
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "damage_force_N": 400.0,
+  "device_force_N": 150.0,
+  "max_stops": 5,
+  "press_ticks": 3,
+  "robot_force_N": 40.0,
+  "stop_lock_s": 5.0
+ },
+ "silence_s": 180.0,
+ "sim_cap_s": 1800.0
+}

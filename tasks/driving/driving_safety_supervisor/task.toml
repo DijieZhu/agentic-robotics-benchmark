@@ -17,10 +17,12 @@ platform = "driving"
 oracle_kind = "token-privileged"
 
 # One GPU renders CARLA (offscreen Vulkan) and runs whatever models the supervisor uses.
+# The GPU models the task has been tested on, cheapest first: Daytona tries them in this order.
 [environment]
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090", "H100"]
 
 [agent]
 timeout_sec = 3600
@@ -40,3 +42,4 @@ environment_mode = "separate"
 cpus = 8
 memory_mb = 32768
 gpus = 1
+gpu_types = ["RTX-4090", "H100"]
