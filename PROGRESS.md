@@ -34,12 +34,10 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** P4 for the appliance task (slug and sheet, final agent budget, pull request): trials 3 and 4
-  on the tightened budget scored 0.43 and 0.41.
-  After the budget was tightened (six scored units, 8 lab trials, 12 episodes; anchor 0.9911 / full_at 0.95;
-  validates), Opus 5.5 trial 3 scored reward **0.43** (cooktops 1.0, microwaves 0.0, ovens about 0.2; it
-  stopped after 29 min with its 8 trials spent). Earlier, on 3 units and 16 trials: 0.48 and 0.93 (design
-  §10, P3). Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
+- **Next step:** frontier trial 6 on the appliance task (nine units, state indicators, compositional
+  cooktop requests, 14 lab trials, 3 h; anchor 0.9987 / full_at 0.95). Trial 5 (reward 0.52) is void: the
+  lab rejected compositional request texts (fixed, design §10 P3). Target: frontier reward below 0.3 (owner).
+  Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
   claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
   Owner decisions taken on 2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, turn
@@ -574,6 +572,10 @@ scripted reference (simulator poses, joints and contacts).
 
 ## Gotchas
 
+- The appliance lab's reply schema lists every string as an enum (`request_text` included). A new request
+  text that episode.py can open but the schema lacks makes the lab answer "internal lab error" and still
+  charge the trial; the grader does not use that schema, so `ale validate` stays green. After any change to
+  requests or observations, run `experiments/physical-execution/appliance_env/lab_check.py`.
 - On the TASL host, `claude` is not on `PATH` and the system Node (v12) is too old to install it. The
   desktop app's CLI lives at `~/.claude/remote/ccd-cli/<version>` (2.1.321 on 2026-11-13); use it for
   `setup-token`: from `vendor/ale`, `CLAUDE_CONFIG_DIR="$PWD/.ale/auth/claude-code" ~/.claude/remote/ccd-cli/<version> setup-token`.

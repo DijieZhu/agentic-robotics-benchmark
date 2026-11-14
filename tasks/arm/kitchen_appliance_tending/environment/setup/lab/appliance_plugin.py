@@ -15,9 +15,7 @@ import appliance_env as E
 import episode as EP
 
 _U8 = "u8[*,*,3]"
-LOCS = sorted(set(EP.LOC_TEXT.values()))
-TEXTS = [""] + ["Turn on the %s burner." % s for s in LOCS] + ["Turn off the %s burner." % s for s in LOCS] + [
-    "Preheat the oven.", "Turn off the oven.", "Open the oven door.", "Start the microwave.", "Stop the microwave."]
+TEXTS = EP.request_texts()            # every text an episode can open (episode.py), and ""
 OBS_SCHEMA = {
     "t": "int",
     "unit": "enum:",
@@ -48,7 +46,8 @@ MESSAGES = {
 def _schema(ids):
     s = dict(OBS_SCHEMA)
     s["unit"] = "enum:" + "|".join(ids)
-    return {"info": {"control_dt": "float", "request_deadline_steps": "int"}, "reset": s, "step": s}
+    return {"info": {"control_dt": "float", "request_deadline_steps": "int", "compound_deadline_steps": "int"},
+            "reset": s, "step": s}
 
 
 class _Episode(object):
@@ -87,7 +86,8 @@ class ApplianceLab(object):
         return sorted(self.specs)
 
     def info(self):
-        return {"control_dt": E.CONTROL_DT, "request_deadline_steps": EP.DEADLINE}
+        return {"control_dt": E.CONTROL_DT, "request_deadline_steps": EP.DEADLINE,
+                "compound_deadline_steps": EP.DEADLINE_COMPOUND}
 
     def validate_action(self, action):
         # depends only on the request and public constants (never on the instance or hidden state)

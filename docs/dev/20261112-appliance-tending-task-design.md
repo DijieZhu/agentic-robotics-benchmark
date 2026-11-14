@@ -452,3 +452,24 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   - **Reading:** trials 3 and 4 agree (0.43, 0.41), both below the 0.5 target with the same pattern:
     cooktops calibrated and solved, microwaves and ovens under-tested for lack of trials. Time was not the
     limit (29 and 48 of 120 minutes); the 8 trials were. Proposed next: P4.
+- **Owner decisions (2026-11-13, after trial 4):** state indicators (a microwave's lit display bar while it
+  runs, an oven's lit lamp while preheated; RoboCasa shows neither, so the lab gave no feedback on them);
+  lab trials = units + 5; the frontier score should fall below 0.3 through other design. Changes (`f37a63a`):
+  indicators (visual only, 3 cm below the visible front's top edge, placed clear of every control);
+  compositional cooktop requests (two burners on, two off, all off; probability 0.5 when valid; credit over
+  every named control; 1000-step deadline); nine scored units, three per kind (u6 Stovetop025, u7
+  Microwave071, u8 Oven034, next in the draw order); 14 lab trials; 18 episodes; agent time 3 h. Reference:
+  48 in-process cooktop episodes with compositional requests and 12 wire episodes on new units, all 1.0.
+  Anchor (`6e5807d`): 7 oracle runs (126 episodes), mean 0.9987 (one request lost on u5), `full_at` 0.95;
+  `validate-0d5f702e` passes.
+- **Frontier trial 5** (`ale run` 2be5b9ac, Opus 5.5, 3 h): reward 0.52, **not a valid measurement**. The
+  lab's reply schema lists request texts as an enum and lacked the compositional ones, so a cooktop trial
+  whose open request was compositional failed with "internal lab error" (the trial still charged): u3 and u6
+  were never seen (three trials lost), two u0 trials crashed after a deadline. The grader does not use that
+  schema and scored normally. Per unit: u0 1.0, u1 1.0, u4 1.0 (microwaves now work with the indicator),
+  u7 0.0 (its buttons' contact areas are not where its keys appear), u2 0.17, u5 0.58, u8 0.67, u3 and u6
+  0.0 (no data); compositional requests: two off 0.0, two on 0.29. Agent phase 3917 s, all 14 trials used.
+  Fix (with this record): `episode.request_texts()` lists every text an episode can open, the lab's schema
+  uses it, `_open_next` asserts membership, and `lab_check.py` runs the plugin through the server's own
+  schema check (the pre-fix plugin reproduces the error; the fixed one passes 14 whole episodes past every
+  deadline). The grader's behaviour and the anchor are unchanged.

@@ -40,6 +40,22 @@ LOC_TEXT = {"rear_left": "rear left", "rear_center": "rear centre", "rear_right"
             "center": "centre", "left": "left", "right": "right"}
 
 
+def request_texts():
+    """Every request text an episode can open, and "" (no request open): the lab's reply schema lists exactly
+    these (its strings are enums)."""
+    locs = sorted(set(LOC_TEXT.values()))
+    out = [""]
+    for want in ("on", "off"):
+        out += ["Turn %s the %s burner." % (want, x) for x in locs]
+    for want in ("on", "off"):
+        out += ["Turn %s the %s and %s burners." % (want, a, b) for a in locs for b in locs if a != b]
+    return out + ["Turn off all the burners.", "Preheat the oven.", "Turn off the oven.", "Open the oven door.",
+                  "Start the microwave.", "Stop the microwave."]
+
+
+REQUEST_TEXTS = frozenset(request_texts())
+
+
 class Episode(object):
 
     def __init__(self, env, seed, k_max=K_MAX):
@@ -139,6 +155,7 @@ class Episode(object):
         else:
             text = {"preheat": "Preheat the oven.", "oven_off": "Turn off the oven.", "door_open": "Open the oven door.",
                     "start": "Start the microwave.", "stop": "Stop the microwave."}[what]
+        assert text in REQUEST_TEXTS, text           # the lab's reply schema must know every text
         r = {"id": len(self.requests), "what": what, "target": target, "text": text, "t_open": self.env.t,
              "deadline_t": self.env.t + (DEADLINE_COMPOUND if isinstance(target, tuple) else DEADLINE), "before": self.discrete(), "reached": False,
              "completed": False, "run_reach": 0, "run_complete": 0, "t_close": None}
