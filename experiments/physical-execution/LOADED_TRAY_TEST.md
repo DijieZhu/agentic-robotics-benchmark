@@ -3,7 +3,7 @@
 Historical experiment: the wide tray is no longer the preferred single-arm
 object. Follow-up heavy-load tests exposed unreliable rim contacts. The current
 small-box side-grasp tests are documented in
-[BOX_TRANSPORT_TEST.md](</Users/dijie/Desktop/ALE Robotic Benchmark/simulator-lab/BOX_TRANSPORT_TEST.md>).
+[BOX_TRANSPORT_TEST.md](BOX_TRANSPORT_TEST.md).
 The light-load evidence below is retained; it does not establish reliable heavy
 tray transport. Its original source snapshots remain beside the recorded video.
 
@@ -11,7 +11,8 @@ Run in the existing `arb-robocasa` environment:
 
 ```sh
 conda activate arb-robocasa
-python -I "/Users/dijie/Desktop/ALE Robotic Benchmark/simulator-lab/loaded_tray_transport.py" --seed 0
+cd "$SIMULATOR_LAB"   # the author's external RoboCasa workspace (`simulator-lab`), not in this repository
+python -I loaded_tray_transport.py --seed 0
 ```
 
 This is a privileged scripted reference in a fixed RoboCasa kitchen (layout 1,

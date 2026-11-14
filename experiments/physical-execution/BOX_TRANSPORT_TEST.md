@@ -2,7 +2,7 @@
 
 Final revised protocol on 2026-11-11: **45/45 passed**: 30/30 development and
 regression cases plus 15/15 new held-out cases. See the
-[audited results report](</Users/dijie/Desktop/ALE Robotic Benchmark/simulator-lab/outputs/box_v2_evaluation/report.md>)
+audited results report (`outputs/box_v2_evaluation/report.md` in the external `simulator-lab` workspace, not in this repository)
 for the frozen source hashes, per-mass metrics, retained failures, and video.
 This result covers preloaded-box transport only.
 
@@ -63,7 +63,7 @@ angular speed below 0.10 rad/s. The nominal horizontal transport is 0.42 m.
 
 ```sh
 conda activate arb-robocasa
-cd "/Users/dijie/Desktop/ALE Robotic Benchmark/simulator-lab"
+cd "$SIMULATOR_LAB"   # the author's external RoboCasa workspace (`simulator-lab`), not in this repository
 python -I empty_box_transport.py --seed 0
 python -I preloaded_box_transport.py --seed 0 --payload-mass-g 200
 ```

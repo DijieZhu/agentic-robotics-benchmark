@@ -37,7 +37,7 @@ episode.
 
 ```sh
 conda activate arb-robocasa
-cd "/Users/dijie/Desktop/ALE Robotic Benchmark/simulator-lab"
+cd "$SIMULATOR_LAB"   # the author's external RoboCasa workspace (`simulator-lab`), not in this repository
 python -I appliance_primitives_pilot.py --primitive all --seeds 0 1 2 3 4
 python -I appliance_primitives_pilot.py --primitive oven_door --seed 0 --layout 2 --style 1
 ```
