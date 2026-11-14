@@ -90,15 +90,19 @@ CAMERA_POS_JITTER = 0.04                  # m, +- per axis
 CAMERA_ROT_JITTER = 0.05                  # rad, +- per axis of a small rotation
 FLAME_SCALE = (0.6, 1.4)                  # a burner's flame radius scale from its lowest to its highest setting
 # Unit mechanisms (a unit has at most one; nothing reports it):
-#   push_to_turn  a knob turns only while pushed in along its axis with PUSH_FORCE or more (gas-cooker safety
-#                 knobs); otherwise its friction is LOCK_FRICTIONLOSS
+#   push_to_turn  a knob turns only while pushed in along its axis (unlocks at PUSH_FORCE, locks again over
+#                 1 s once the push is below RELOCK_FORCE; gas-cooker safety knobs)
 #   reversed      every knob of the unit turns the other way (the joint axis is flipped; settings unchanged)
 #   hold_start    the microwave's start button must be held HOLD_START_STEPS control steps (child lock)
 QUIRKS = ("push_to_turn", "reversed", "hold_start")
-PUSH_FORCE = 6.0                          # N, along the knob's axis, summed over the gripper's contacts with it
-LOCK_FRICTIONLOSS = 4.0                   # N m: far beyond what the arm can twist
-LOCK_DAMPING = 400.0                      # N m s / rad: MuJoCo's friction loss is soft and creeps under a steady
-                                          # torque; this damping holds the creep to a fraction of a degree a second
+PUSH_FORCE = 10.0                         # N, along the knob's axis, summed over the gripper's contacts with it
+RELOCK_FORCE = 5.0                       # N: an unlocked knob locks again only below this (hysteresis)
+LOCK_FRICTIONLOSS = 4.0                   # N m
+LOCK_DAMPING = 400.0                      # N m s / rad: MuJoCo's friction loss is soft and lets a light knob creep
+                                          # under a steady twist; this damping holds the creep to a fraction of a
+                                          # degree a second
+LOCK_RAMP = 0.1                           # per control step: a released knob locks over 10 steps (1 s), so a knob
+                                          # turning when the push drops is braked gradually, not stopped dead
 HOLD_START_STEPS = 15                     # control steps (1.5 s)
 INDICATOR_BELOW_TOP = 0.03        # m, centre below the front face's top edge
 INDICATOR_CLEAR = 0.02            # m, from any control (knob, button, handle) in the front view
@@ -511,7 +515,9 @@ class Unit(object):
             for j in range(m.njnt):
                 if m.joint(j).name.startswith("u_knob_"):
                     dof = int(m.jnt_dofadr[j])
-                    self.locks.append((j, int(m.jnt_bodyid[j]), dof, float(m.dof_frictionloss[dof]), float(m.dof_damping[dof])))
+                    self.locks.append((j, int(m.jnt_bodyid[j]), dof, float(m.dof_frictionloss[dof]),
+                                       float(m.dof_damping[dof])))
+        self.lock_level = {l[0]: 1.0 for l in self.locks}     # 0 unlocked ... 1 locked
         self.start_held = 0
         self.buttons = {}
         for b in ("start_button", "stop_button"):
@@ -586,9 +592,14 @@ class Unit(object):
         if "start_button" in self.buttons:
             self._buttons(d, gripper_geoms)
         for j, body, dof, free, damping in self.locks:
-            pushed = self._axial_push(m, d, j, body, gripper_geoms) >= PUSH_FORCE
-            m.dof_frictionloss[dof] = free if pushed else LOCK_FRICTIONLOSS
-            m.dof_damping[dof] = damping if pushed else LOCK_DAMPING
+            push = self._axial_push(m, d, j, body, gripper_geoms)
+            if push >= PUSH_FORCE:
+                self.lock_level[j] = 0.0
+            elif push < RELOCK_FORCE:
+                self.lock_level[j] = min(1.0, self.lock_level[j] + LOCK_RAMP)
+            k = self.lock_level[j]
+            m.dof_frictionloss[dof] = free + k * (LOCK_FRICTIONLOSS - free)
+            m.dof_damping[dof] = damping + k * (LOCK_DAMPING - damping)
         if self.indicator is not None and self.kind in INDICATOR:
             if self.kind == "oven" and self.temp_knob is not None:
                 qa, lo, hi = self.temp_knob

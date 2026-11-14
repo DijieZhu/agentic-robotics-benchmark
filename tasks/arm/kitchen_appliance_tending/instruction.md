@@ -36,8 +36,8 @@ request texts and the credit rule. Different: the appliance model (its size, loo
 they move), its mechanism and the placement draw.
 
 A unit may have one of these mechanisms (nothing reports which, if any; `units.json` lists the practice units'):
-- **push to turn**: every knob of the unit turns only while it is pushed in along its axis with 6 N or more
-  (as on gas cookers); otherwise it is locked;
+- **push to turn**: every knob of the unit turns only while it is pushed in along its axis with 10 N or more
+  (as on gas cookers); once the push drops below 5 N it locks again within about a second;
 - **reversed**: every knob of the unit turns the other way round (on / higher is the opposite rotation);
 - **hold to start**: the microwave starts only after its start button has been held for 15 steps (1.5 s).
 

@@ -27,11 +27,12 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 - Knob physics: friction loss 0.20 N m, armature 0.002 kg m^2. A burner is on while its knob angle `a` satisfies
   0.35 <= a mod 2 pi <= 2 pi - 0.35 (a flame marker shows while it is on). The oven is preheated while its
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
-- Mechanisms (`appliance_env.QUIRKS`; at most one per unit; a unit spec's `quirks`): `push_to_turn` (a knob is
-  locked, friction 4 N m plus heavy damping, unless the gripper pushes it along its axis with `PUSH_FORCE` 6 N or
-  more), `reversed` (every knob's joint axis is flipped: the same joint values, the opposite rotation),
-  `hold_start` (the start button must be held `HOLD_START_STEPS` 15 control steps). The practice units carry one
-  each (p0 push_to_turn, p1 hold_start, p2 reversed); the hidden units' are not reported.
+- Mechanisms (`appliance_env.QUIRKS`; at most one per unit; a unit spec's `quirks`): `push_to_turn` (a knob
+  unlocks while the gripper pushes it along its axis with `PUSH_FORCE` 10 N or more, and once the push drops below
+  `RELOCK_FORCE` 5 N locks again over about 1 s: friction 4 N m plus heavy damping), `reversed` (every knob's joint
+  axis is flipped: the same joint values, the opposite rotation), `hold_start` (the start button must be held
+  `HOLD_START_STEPS` 15 control steps). The practice units carry one each (p0 push_to_turn, p1 hold_start, p2
+  reversed); the hidden units' are not reported.
 - Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0, u3,
   u6 (cooktops), u1, u4, u7 (microwaves), u2, u5, u8 (ovens); you reach them only through the lab.
 - Settings: a burner's setting is its knob angle over its on-range, (a - 0.35) / (stop - 0.35), in thirds (low,
