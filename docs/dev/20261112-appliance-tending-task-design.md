@@ -592,4 +592,6 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
     held 2 s around a guessed keypad spot, checked by the amber bar, the working spot remembered. Knob-to-burner
     maps guessed from the practice cooktop; push-to-turn ovens not handled.
   - **Reading:** just above the 0.3 target. The four Opus 5.5 runs on the 10-trial budget: 0.27, 0.0 (1 h),
-    0.0, 0.32 (2 h runs mean 0.20). Owner decision pending on whether 0.32 reopens the difficulty step.
+    0.0, 0.32 (2 h runs mean 0.20).
+- **Owner decision (2026-11-14, after trial 12): judged on the mean, the task meets the target**; 0.32 is
+  read as single-run spread. The difficulty step stays closed on `86c3f40`.
