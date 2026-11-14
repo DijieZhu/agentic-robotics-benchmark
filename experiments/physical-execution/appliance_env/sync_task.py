@@ -19,7 +19,7 @@ CODE = {
     "environment/setup/payload": ["appliance_env.py", "episode.py"],
     "environment/setup/lab": ["appliance_env.py", "episode.py"],
     "tests": ["appliance_env.py", "episode.py"],
-    "solution/oracle": ["appliance_env.py", "reference.py", "oracle_main.py"],
+    "solution/oracle": ["appliance_env.py", "episode.py", "reference.py", "oracle_main.py"],
 }
 
 

@@ -29,7 +29,11 @@ request and credit logic. Read their docstrings. This card collects the numbers.
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
 - Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0, u3,
   u6 (cooktops), u1, u4, u7 (microwaves), u2, u5, u8 (ovens); you reach them only through the lab.
-- State shown on the unit: a burner's flame while it is on (RoboCasa's); a lit amber display bar (10 x 2 cm) while a
+- Settings: a burner's setting is its knob angle over its on-range, (a - 0.35) / (stop - 0.35), in thirds (low,
+  medium, high); the oven's heat is its normalized temperature knob in 0.25-0.5 (low), 0.5-0.75 (medium) or
+  0.75-1.0 (high).
+- State shown on the unit: a burner's flame while it is on (RoboCasa's; its radius grows from 0.6x to 1.4x from
+  the lowest to the highest setting); a lit amber display bar (10 x 2 cm) while a
   microwave runs and a lit red-orange lamp (3 x 3 cm) while an oven is preheated, both on the front face 3 cm
   below the top edge of its visible front (dark grey when off). Visual only: no contact, no mass.
 
@@ -49,7 +53,10 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 - `wrist`: on the hand, 256 x 192.
 - Every observation carries the intrinsics (`K_left`, `K_right`, `K_wrist`, pinhole, no distortion) and the poses
   (`T_world_left`, `T_world_right`, `T_world_wrist`; 4 x 4, OpenCV convention: x right, y down, z forward). The
-  fixed cameras' poses depend on the unit's model (not on the episode).
+  fixed cameras' nominal poses depend on the unit's model; each episode offsets them by up to +-4 cm and about
+  +-3 degrees (the observation carries the actual pose).
+- Lighting changes per episode: the scene light's position, aim, strength (0.5-1.2x) and tint (+-15 % per
+  channel), and the headlight; nothing reports it.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
   action asked for it; the first observation of an episode carries all three. Rendering costs wall time.
 
@@ -62,7 +69,8 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 
 - Initial state (drawn per episode): each burner on with probability 0.3 (knob at 0.8-1.6 rad), the microwave
   running with probability 0.5, the oven preheated with probability 0.4 (knob at 0.30-0.50 of its range).
-- Three requests, one at a time, each valid in the state it opens on, each with a deadline of 600 control steps
-  (1000 for a compositional cooktop request: two burners on, two off, or all off).
+- Three requests, one at a time, each valid in the state it opens on, each with a deadline of 1000 control steps
+  (1500 for a compositional cooktop request: two burners on, two off, or all off). A request's category is drawn
+  first (simple 0.3, compositional 0.35, setting 0.35, over the categories valid at the time), then a request.
 - Episodes end when the third request closes; the simulation is unstable (and the episode scores 0) if an arm
   joint moves faster than 8 rad/s or a unit joint faster than 30 rad/s.

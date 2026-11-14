@@ -6,10 +6,12 @@ adds what the grader will own in P4:
   * an initial state drawn per episode (burners on or off, the oven preheated or not, the microwave
     running or not), set before the first action;
   * K requests in sequence: burner on / off and, on a cooktop, compositional requests over several
-    burners (two on, two off, all off; drawn with probability COMPOUND_P when one is valid); preheat and
-    turn the oven off; microwave start / stop. Each request is valid in the state it opens on; one is open
+    burners (two on, two off, all off) and burner settings (low / medium / high: BURNER_BANDS); preheat,
+    turn the oven off and oven heat settings (low / medium / high: OVEN_BANDS); microwave start / stop. A
+    request's category (simple, compositional, setting) is drawn first by CATEGORY_WEIGHTS over the
+    categories valid now. Each request is valid in the state it opens on; one is open
     at a time; it closes when completed or at its deadline (DEADLINE steps, DEADLINE_COMPOUND for a
-    compositional one);
+    compositional request);
   * credit per request: **reached** 0.5 once the target state (every named control's, for a
     compositional request) has held 3 consecutive steps; **completed** 0.5 once it has held 20 consecutive
     steps with the hand at least 0.10 m from every named control while every other control keeps the
@@ -24,9 +26,26 @@ adds what the grader will own in P4:
 
 import numpy as np
 
-DEADLINE = 600                    # control steps per request (60 s at 10 Hz)
-DEADLINE_COMPOUND = 1000          # a compositional request (several burners)
-COMPOUND_P = 0.5                  # chance a cooktop request is compositional when one is valid
+DEADLINE = 1000                   # control steps per request (100 s at 10 Hz); a knob may need a long turn
+DEADLINE_COMPOUND = 1500          # a compositional request (several burners)
+COMPOUND_P = 0.5                  # (superseded by CATEGORY_WEIGHTS; kept for the record)
+# A request's category is drawn first, by these weights over the categories valid now, then a request within it.
+CATEGORY_WEIGHTS = {"simple": 0.3, "compound": 0.35, "level": 0.35}
+LEVELS = ("low", "medium", "high")
+# A burner's setting (Unit.burner_level, 0..1 over its on-range) and the oven's temperature (normalized
+# temperature knob, preheated from 0.25) in thirds.
+BURNER_BANDS = {"low": (0.0, 1 / 3), "medium": (1 / 3, 2 / 3), "high": (2 / 3, 1.0)}
+OVEN_BANDS = {"low": (0.25, 0.5), "medium": (0.5, 0.75), "high": (0.75, 1.0)}
+
+
+def band_of(value, bands):
+    """The band a value falls in (the top band includes 1.0), or None."""
+    if value is None:
+        return None
+    for name, (lo, hi) in bands.items():
+        if lo <= value < hi or (hi >= 1.0 and value >= hi):
+            return name
+    return None
 REACH_HOLD = 3
 COMPLETE_HOLD = 20
 CLEAR = 0.10                      # m, gripper site to the control
@@ -49,11 +68,14 @@ def request_texts():
         out += ["Turn %s the %s burner." % (want, x) for x in locs]
     for want in ("on", "off"):
         out += ["Turn %s the %s and %s burners." % (want, a, b) for a in locs for b in locs if a != b]
+    out += ["Turn the %s burner to %s." % (x, lv) for x in locs for lv in LEVELS]
+    out += ["Set the oven to %s heat." % lv for lv in LEVELS]
     return out + ["Turn off all the burners.", "Preheat the oven.", "Turn off the oven.", "Open the oven door.",
                   "Start the microwave.", "Stop the microwave."]
 
 
 REQUEST_TEXTS = frozenset(request_texts())
+COMPOUND = ("burners_on", "burners_off", "all_off")
 
 
 class Episode(object):
@@ -115,6 +137,20 @@ class Episode(object):
             out.append(("all_off", tuple(locs)))
         return out
 
+    def level_requests(self):
+        """A burner to a setting it is not at now (an off burner too), the oven to a heat it is not at now."""
+        u, kind = self.env.unit, self.env.spec["kind"]
+        d = self.env.data
+        out = []
+        if kind in ("stovetop", "stove"):
+            for loc in sorted(u.knobs):
+                now = band_of(u.burner_level(d, loc), BURNER_BANDS)
+                out += [("burner_level", (loc, lv)) for lv in LEVELS if lv != now]
+        if kind in ("stove", "oven") and u.temp_knob is not None:
+            now = band_of(u.temperature(d), OVEN_BANDS)
+            out += [("oven_level", ("temp", lv)) for lv in LEVELS if lv != now]
+        return out
+
     def valid_requests(self):
         u, kind = self.env.unit, self.env.spec["kind"]
         st = self.discrete()
@@ -135,10 +171,12 @@ class Episode(object):
         if len(self.requests) >= self.k_max:
             self.current = None
             return
-        options = self.valid_requests()
-        compound = self.compound_requests()
-        if compound and self.rng.random() < COMPOUND_P:
-            options = compound
+        cats = {"simple": self.valid_requests(), "compound": self.compound_requests(), "level": self.level_requests()}
+        names = [c for c in ("simple", "compound", "level") if cats[c]]
+        options = []
+        if names:
+            w = np.array([CATEGORY_WEIGHTS[c] for c in names])
+            options = cats[names[int(self.rng.choice(len(names), p=w / w.sum()))]]
         if not options:
             self.current = None
             return
@@ -152,12 +190,16 @@ class Episode(object):
                                                        name(target[1]))
         elif what == "all_off":
             text = "Turn off all the burners."
+        elif what == "burner_level":
+            text = "Turn the %s burner to %s." % (name(target[0]), target[1])
+        elif what == "oven_level":
+            text = "Set the oven to %s heat." % target[1]
         else:
             text = {"preheat": "Preheat the oven.", "oven_off": "Turn off the oven.", "door_open": "Open the oven door.",
                     "start": "Start the microwave.", "stop": "Stop the microwave."}[what]
         assert text in REQUEST_TEXTS, text           # the lab's reply schema must know every text
         r = {"id": len(self.requests), "what": what, "target": target, "text": text, "t_open": self.env.t,
-             "deadline_t": self.env.t + (DEADLINE_COMPOUND if isinstance(target, tuple) else DEADLINE), "before": self.discrete(), "reached": False,
+             "deadline_t": self.env.t + (DEADLINE_COMPOUND if what in COMPOUND else DEADLINE), "before": self.discrete(), "reached": False,
              "completed": False, "run_reach": 0, "run_complete": 0, "t_close": None}
         self.requests.append(r)
         self.current = r
@@ -166,8 +208,10 @@ class Episode(object):
     def control_pos(self, r):
         """The positions of the request's controls (one for a simple request)."""
         d, m = self.env.data, self.env.model
-        if isinstance(r["target"], tuple):
+        if r["what"] in COMPOUND:
             return [d.geom_xpos[m.geom("u_knob_%s_main" % x).id] for x in r["target"]]
+        if r["what"] in ("burner_level", "oven_level"):
+            return [d.geom_xpos[m.geom("u_knob_%s_main" % r["target"][0]).id]]
         return [self._control_pos(r)]
 
     def _control_pos(self, r):
@@ -185,6 +229,11 @@ class Episode(object):
             return st["burner_on_" + r["target"]]
         if w == "burner_off":
             return not st["burner_on_" + r["target"]]
+        if w == "burner_level":
+            loc, lv = r["target"]
+            return band_of(self.env.unit.burner_level(self.env.data, loc), BURNER_BANDS) == lv
+        if w == "oven_level":
+            return band_of(self.env.unit.temperature(self.env.data), OVEN_BANDS) == r["target"][1]
         if w == "burners_on":
             return all(st["burner_on_" + x] for x in r["target"])
         if w in ("burners_off", "all_off"):
@@ -200,7 +249,11 @@ class Episode(object):
         return not st["turned_on"]
 
     def others_unchanged(self, r):
-        if isinstance(r["target"], tuple):
+        if r["what"] in ("burner_level", "oven_level"):
+            own = {"burner_on_" + r["target"][0]} if r["what"] == "burner_level" else {"preheated"}
+            now = self.discrete()
+            return all(now.get(k) == v for k, v in r["before"].items() if k not in own)
+        if r["what"] in COMPOUND:
             own = {"burner_on_" + x for x in r["target"]}
             now = self.discrete()
             return all(now.get(k) == v for k, v in r["before"].items() if k not in own)

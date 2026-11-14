@@ -6,7 +6,9 @@ cameras with the unit's KNOWN model (an agent has the practice models in its hom
     resolution with the unit body (and its support and the back wall) moved to the candidate pose;
   * `PoseEstimator.knob_angle(obs, loc, jitter)`: a knob's angle from a window around its projection.
 
-Only observations go in: images, joint readings, the published camera matrices. No simulator state.
+Only observations go in: images, joint readings, the published camera poses and intrinsics (the fixed
+cameras move a little per episode, and the light changes: images are compared after normalization). No
+simulator state.
 """
 import math
 import os
@@ -19,17 +21,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import appliance_env as E  # noqa: E402
 
-SCALE = 2                              # render at half the camera resolution
+SCALE = 2                              # render at half the camera resolution (refinement, knob angles)
+COARSE = 4                             # the placement grid search at a quarter
 
 
 def gray(img):
     return np.asarray(img, np.float32).mean(axis=2)
 
 
-def down(img):
+def norm(g):
+    """Edges, normalized: gradient magnitude of the zero-mean, unit-spread image, so the comparison
+    ignores the episode's light strength, tint and (mostly) its direction."""
+    g = (g - g.mean()) / (g.std() + 1e-6)
+    gy, gx = np.gradient(g)
+    e = np.hypot(gx, gy)
+    return e / (e.mean() + 1e-6)
+
+
+def down(img, k=SCALE):
     g = gray(img)
     h, w = g.shape
-    return g[:h - h % SCALE, :w - w % SCALE].reshape(h // SCALE, SCALE, w // SCALE, SCALE).mean(axis=(1, 3))
+    return g[:h - h % k, :w - w % k].reshape(h // k, k, w // k, k).mean(axis=(1, 3))
 
 
 class PoseEstimator(object):
@@ -46,9 +58,19 @@ class PoseEstimator(object):
         self.lo, self.hi, self.mt = lay["bbox_lo"], lay["bbox_hi"], lay["mount"]
         self.sup_size0 = float(m.geom_size[self.support][0]) if self.support is not None else 0.0
         self.renderers = {}
+        for k in (SCALE, COARSE):
+            for cam in ("left", "right"):
+                _p, _t, _f, w, h = E.CAMERAS[cam]
+                self.renderers[cam, k] = (mujoco.Renderer(m, h // k, w // k), m.camera(cam).id)
+
+    def set_cameras(self, obs):
+        """Put this scene's fixed cameras where the observation says they are (T_world_*, OpenCV)."""
+        m = self.m
         for cam in ("left", "right"):
-            _p, _t, _f, w, h = E.CAMERAS[cam]
-            self.renderers[cam] = (mujoco.Renderer(m, h // SCALE, w // SCALE), m.camera(cam).id)
+            T = np.asarray(obs["T_world_" + cam], float)
+            cid = m.camera(cam).id
+            m.cam_pos[cid] = T[:3, 3]
+            m.cam_quat[cid] = E.quat_from_mat(T[:3, :3] @ np.diag([1.0, -1.0, -1.0]))
 
     def set_state(self, jitter, q, gripper, knobs=None):
         m, d, env = self.m, self.d, self.env
@@ -69,35 +91,39 @@ class PoseEstimator(object):
         mujoco.mj_forward(m, d)
         env.unit.update(m, d, set())                  # burner flames follow the hypothesized knob angles
 
-    def render(self, cam):
-        r, cid = self.renderers[cam]
+    def render(self, cam, k=SCALE):
+        r, cid = self.renderers[cam, k]
         r.update_scene(self.d, camera=cid)
         return gray(r.render())
 
-    def cost(self, targets, window=None):
+    def cost(self, targets, window=None, k=SCALE):
         c = 0.0
         for cam, tgt in targets.items():
-            img = self.render(cam)
+            img = self.render(cam, k)
             if window is not None:
                 (r0, r1, c0, c1) = window[cam]
                 img, tgt = img[r0:r1, c0:c1], tgt[r0:r1, c0:c1]
-            c += float(np.mean(np.abs(img - tgt)))
+            c += float(np.mean(np.abs(norm(img) - norm(tgt))))
         return c
 
     def estimate(self, obs, knobs=None):
+        self.set_cameras(obs)
         targets = {cam: down(E.decode_image(obs[cam])) for cam in ("left", "right")}
+        coarse = {cam: down(E.decode_image(obs[cam]), COARSE) for cam in ("left", "right")}
         q, g = np.asarray(obs["q"], float), float(obs["gripper"])
         span = np.array([0.03, 0.04, math.radians(10)])
         best, best_c = np.zeros(3), None
-        grid = np.linspace(-1, 1, 5)
+        grid = np.linspace(-1, 1, 7)
         for a in grid:
             for b in grid:
                 for c in grid:
                     j = np.array([a, b, c]) * span
                     self.set_state(j, q, g, knobs)
-                    cc = self.cost(targets)
+                    cc = self.cost(coarse, k=COARSE)
                     if best_c is None or cc < best_c:
                         best, best_c = j, cc
+        self.set_state(best, q, g, knobs)
+        best_c = self.cost(targets)
         step = span / 4
         for _ in range(4):
             centre = best.copy()
@@ -114,6 +140,7 @@ class PoseEstimator(object):
 
     def knob_angle(self, obs, loc, jitter, knobs=None, angles=None):
         """A knob's angle (rad) from the fixed cameras, comparing a window around its projection."""
+        self.set_cameras(obs)
         targets = {cam: down(E.decode_image(obs[cam])) for cam in ("left", "right")}
         q, g = np.asarray(obs["q"], float), float(obs["gripper"])
         knobs = dict(knobs or {})

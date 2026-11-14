@@ -77,6 +77,18 @@ FLAME_ALPHA = 0.5                 # RoboCasa Stove.update_state shows a burner's
 INDICATOR = {"microwave": {"size": (0.10, 0.02), "on": (1.0, 0.72, 0.2, 1.0)},
              "oven": {"size": (0.03, 0.03), "on": (1.0, 0.3, 0.08, 1.0)}}
 INDICATOR_OFF = (0.12, 0.12, 0.12, 1.0)
+# Appearance drawn per episode (from the seed; nothing reports it): the scene light's position, aim, strength
+# and tint, the headlight, and a small offset of each fixed camera's pose (the pose itself is in every
+# observation, T_world_left / T_world_right).
+LIGHT_POS_JITTER = (0.8, 1.0, 0.4)        # m, +- per axis around the nominal light
+LIGHT_AIM_JITTER = 0.3                    # m, +- per axis around the unit's front centre
+LIGHT_GAIN = (0.5, 1.2)                   # scale of the light's diffuse
+LIGHT_TINT = 0.15                         # +- per colour channel
+HEADLIGHT_DIFFUSE = (0.2, 0.6)
+HEADLIGHT_AMBIENT = (0.05, 0.2)
+CAMERA_POS_JITTER = 0.04                  # m, +- per axis
+CAMERA_ROT_JITTER = 0.05                  # rad, +- per axis of a small rotation
+FLAME_SCALE = (0.6, 1.4)                  # a burner's flame radius scale from its lowest to its highest setting
 INDICATOR_BELOW_TOP = 0.03        # m, centre below the front face's top edge
 INDICATOR_CLEAR = 0.02            # m, from any control (knob, button, handle) in the front view
 WRIST = {"fovy": 75.0, "width": 256, "height": 192}
@@ -115,6 +127,12 @@ def quat_from_mat(R):
     q = np.zeros(4)
     mujoco.mju_mat2Quat(q, np.asarray(R, float).reshape(9))
     return q
+
+
+def quat_to_mat(q):
+    R = np.zeros(9)
+    mujoco.mju_quat2Mat(R, np.asarray(q, float))
+    return R.reshape(3, 3)
 
 
 def axis_angle_mat(v):
@@ -452,12 +470,14 @@ class Unit(object):
     def __init__(self, m, kind):
         self.kind = kind
         self.knobs = {}
+        self.knob_hi = {}
         for loc in BURNERS:
             try:
                 j = m.joint("u_knob_%s_joint" % loc)
             except KeyError:
                 continue
             self.knobs[loc] = (int(j.qposadr[0]), int(j.dofadr[0]))
+            self.knob_hi[loc] = float(j.range[1])
         self.door = None
         for name in ("u_microjoint", "u_door_joint", "u_Door001_joint"):
             try:
@@ -485,6 +505,7 @@ class Unit(object):
                 self.flames[loc] = m.site("u_burner_on_%s" % loc).id
             except KeyError:
                 pass
+        self.flame_size = {loc: m.site_size[sid].copy() for loc, sid in self.flames.items()}
         self.indicator = None
         try:
             self.indicator = m.geom("u_indicator").id
@@ -513,12 +534,30 @@ class Unit(object):
         a = float(d.qpos[self.knobs[loc][0]]) % (2 * math.pi)
         return BURNER_ON_MIN <= a <= 2 * math.pi - BURNER_ON_MIN
 
+    def burner_level(self, d, loc):
+        """A burner's setting, 0 (just on) ... 1 (the knob's stop), over its on-range; None while off. Burner
+        knobs here turn from 0 (off) up to their joint's upper limit."""
+        if not self.burner_on(d, loc):
+            return None
+        a = float(d.qpos[self.knobs[loc][0]])
+        hi = self.knob_hi[loc]
+        return min(max((a - BURNER_ON_MIN) / max(hi - BURNER_ON_MIN, 1e-6), 0.0), 1.0)
+
+    def temperature(self, d):
+        if self.temp_knob is None:
+            return None
+        qa, lo, hi = self.temp_knob
+        return normalized_joint(float(d.qpos[qa]), lo, hi)
+
     def update(self, m, d, gripper_geoms):
         """RoboCasa Stove.update_state (a burner's flame shows while its knob is on) and
         Microwave.update_state (door open -> off; else a gripper touching start turns it on,
         touching stop turns it off)."""
         for loc, sid in self.flames.items():
-            m.site_rgba[sid, 3] = FLAME_ALPHA if self.burner_on(d, loc) else 0.0
+            level = self.burner_level(d, loc)
+            m.site_rgba[sid, 3] = FLAME_ALPHA if level is not None else 0.0
+            if level is not None:               # a bigger flame at a higher setting (radius only)
+                m.site_size[sid, 0] = self.flame_size[loc][0] * (FLAME_SCALE[0] + (FLAME_SCALE[1] - FLAME_SCALE[0]) * level)
         if "start_button" in self.buttons:
             self._buttons(d, gripper_geoms)
         if self.indicator is not None and self.kind in INDICATOR:
@@ -549,6 +588,8 @@ class Unit(object):
             a = float(d.qpos[qa]) % (2 * math.pi)
             s["knob_" + loc] = round(a if a <= math.pi else a - 2 * math.pi, 4)
             s["burner_on_" + loc] = bool(BURNER_ON_MIN <= a <= 2 * math.pi - BURNER_ON_MIN)
+            lv = self.burner_level(d, loc)
+            s["level_" + loc] = None if lv is None else round(lv, 4)
         if self.door is not None:
             f = self.door_fraction(d)
             s["door_fraction"] = round(f, 4)
@@ -589,6 +630,7 @@ class ApplianceEnv(object):
         jitter = place.uniform(-1, 1, 3) * self.jitter_scale if jitter is None else np.asarray(jitter, float)
         self.jitter = jitter
         self.model, self.layout = build_model(self.assets, self.spec, jitter, self.mount)
+        self._appearance(np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 13]))
         self.data = mujoco.MjData(self.model)
         self.unit = Unit(self.model, self.spec["kind"])
         self._index()
@@ -598,6 +640,26 @@ class ApplianceEnv(object):
         if self.render_enabled:
             self._renderers = {}
         return self.observation()
+
+    def _appearance(self, rng):
+        """The episode's light, headlight and fixed-camera offsets (see LIGHT_* and CAMERA_*)."""
+        m, lay = self.model, self.layout
+        lo, hi, mt = lay["bbox_lo"], lay["bbox_hi"], lay["mount"]
+        front = np.array([mt["front_x"], 0.0, mt["bottom_z"] + (hi[2] - lo[2]) / 2])
+        m.light_pos[0] = m.light_pos[0] + rng.uniform(-1, 1, 3) * np.asarray(LIGHT_POS_JITTER)
+        aim = front + rng.uniform(-1, 1, 3) * LIGHT_AIM_JITTER
+        v = aim - m.light_pos[0]
+        m.light_dir[0] = v / np.linalg.norm(v)
+        gain = rng.uniform(*LIGHT_GAIN)
+        tint = 1.0 + rng.uniform(-1, 1, 3) * LIGHT_TINT
+        m.light_diffuse[0] = np.clip(m.light_diffuse[0] * gain * tint, 0.0, 1.0)
+        m.vis.headlight.diffuse = [rng.uniform(*HEADLIGHT_DIFFUSE)] * 3
+        m.vis.headlight.ambient = [rng.uniform(*HEADLIGHT_AMBIENT)] * 3
+        for cam in CAMERAS:
+            cid = m.camera(cam).id
+            m.cam_pos[cid] = m.cam_pos[cid] + rng.uniform(-1, 1, 3) * CAMERA_POS_JITTER
+            R = axis_angle_mat(rng.uniform(-1, 1, 3) * CAMERA_ROT_JITTER) @ quat_to_mat(m.cam_quat[cid])
+            m.cam_quat[cid] = quat_from_mat(R)
 
     def _index(self):
         m = self.model

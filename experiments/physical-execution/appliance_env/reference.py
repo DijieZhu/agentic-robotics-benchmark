@@ -22,11 +22,15 @@ import mujoco
 import numpy as np
 
 import appliance_env as E
+import episode as EP
 
 IK_STARTS = np.random.default_rng(20261113).uniform(0.15, 0.85, (6, 7))   # fixed restarts for the IK check
 PRE = 0.12                     # m: pre-grasp stand-off along the approach
 KNOB_ON_TARGET = 0.60          # rad: commanded past RoboCasa's 0.35 on-threshold, for margin (pilot)
 KNOB_OFF_TARGET = 0.05         # rad: back towards the joint's lower limit
+SET_CHUNK = 1.2                # rad: the largest turn per grasp for a setting request
+SET_TOL = 0.08                 # rad: a setting is reached within this of its goal angle
+SET_WITHIN = {"low": 0.5, "medium": 0.5, "high": 0.35}    # where inside a setting's band to aim (fraction)
 TEMP_TARGET = 0.32             # normalized: past PreheatOven's 0.25, with margin (P2: 0.40 left too large a turn)
 HOLD_OK = 20                   # control steps the outcome must hold with the hand clear (design §4)
 CLEAR = 0.10                   # m: hand clearance from the control while it holds
@@ -429,9 +433,11 @@ class Driver(object):
         tip_point = centre + outward * (inner + 0.003 - float(np.dot(centre, outward)))
         return centre, gid, outward, finger0, is_bar, tip_point, width
 
-    def knob(self, loc, want, max_grasps=3):
-        """Turn a burner knob on/off, or the temperature knob ('temp') to preheat ('on') or zero ('off').
-        A turn the wrist cannot make in one grasp is made in up to `max_grasps` grasps."""
+    def knob(self, loc, want, max_grasps=3, setting=None):
+        """Turn a burner knob on/off, or the temperature knob ('temp') to preheat ('on') or zero ('off'); with
+        want 'set', to `setting` (low / medium / high: a burner's setting over its on-range, the oven's heat
+        over the preheated range). A turn the wrist cannot make in one grasp is made in up to `max_grasps`
+        grasps."""
         jname = "u_knob_%s_joint" % loc
         axis, anchor, adr, lo, hi = self.joint(jname)
         out = {"control": jname, "start_angle": round(self.qpos(adr), 4), "grasps": []}
@@ -439,7 +445,20 @@ class Driver(object):
         positive = hi > abs(lo)
         sign = 1.0 if positive else -1.0
         direction = sign if want == "on" else -np.sign(start or sign)
-        if loc == "temp":
+        if want == "set":
+            if loc == "temp":
+                b0, b1 = EP.OVEN_BANDS[setting]
+                goal = lo + (b0 + SET_WITHIN[setting] * (b1 - b0)) * (hi - lo)
+                final = lambda: EP.band_of(self.env.unit.temperature(self.d), EP.OVEN_BANDS) == setting  # noqa: E731
+            else:
+                b0, b1 = EP.BURNER_BANDS[setting]
+                goal = E.BURNER_ON_MIN + (b0 + SET_WITHIN[setting] * (b1 - b0)) * (hi - E.BURNER_ON_MIN)
+                final = lambda: EP.band_of(self.env.unit.burner_level(self.d, loc), EP.BURNER_BANDS) == setting  # noqa: E731
+            direction = 1.0 if goal > start else -1.0
+            max_grasps = max(max_grasps, 6)
+            is_done = lambda: abs(self.qpos(adr) - goal) <= SET_TOL  # noqa: E731
+            out["goal"] = round(goal, 4)
+        elif loc == "temp":
             is_done = (lambda: E.normalized_joint(self.qpos(adr), lo, hi) >= TEMP_TARGET - 0.02) if want == "on" \
                 else (lambda: abs(self.qpos(adr)) <= KNOB_OFF_TARGET + 0.02)
             final = (lambda: self.env.unit_state()["preheated"]) if want == "on" \
@@ -458,7 +477,8 @@ class Driver(object):
             self._knob_allow = self.body_geoms(gid)
             remaining = abs(goal - self.qpos(adr)) + 0.1
             plan = None
-            for chunk in (remaining, 1.0, 0.6):
+            first = min(remaining, SET_CHUNK) if want == "set" else remaining
+            for chunk in (first, 1.0, 0.6):
                 if chunk > remaining:
                     continue
                 R, grasp, margin, how = self._knob_grasp(axis, anchor, outward, finger0, is_bar, tip_point,
@@ -488,8 +508,8 @@ class Driver(object):
                 cmd = min(cmd + 0.03, abs(self.qpos(adr) - q0) + 0.35, chunk + 0.2)
                 Rot = E.axis_angle_mat(direction * cmd * axis)
                 self.tick(anchor + Rot @ (grasp - anchor), Rot @ R, 1.0, turn=0.2)
-            else:
-                raise PrimitiveError("twist", "knob at %.3f rad" % self.qpos(adr))
+            else:                                      # stalled: let go and grasp again (the next grasp)
+                out["grasps"][-1]["stalled_at"] = round(self.qpos(adr), 4)
             Rnow = self.site_R()
             self.hold("release", 12, -1.0, Rnow, self.site_pos())
             self.retreat("withdraw", -Rnow[:, 2], 0.14 if is_done() else 0.08, Rnow)

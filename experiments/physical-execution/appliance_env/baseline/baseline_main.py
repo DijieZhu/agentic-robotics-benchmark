@@ -3,7 +3,7 @@
 What it knows is what an agent can have: the practice units' models (units.json and units/ in the agent's
 home) and the observations. Per episode it estimates the unit's placement from the first images
 (perceive.PoseEstimator, render-and-compare), estimates a knob's angle from fixed-camera images before an
-"off" request, and keeps the unit's state itself between observations: a pinched knob turns with the hand,
+"off" or a setting request, and keeps the unit's state itself between observations: a pinched knob turns with the hand,
 and the microwave's flag follows RoboCasa's contact rule in its own copy of the scene. Speaks the grading
 wire like oracle_main.py.
 
@@ -143,8 +143,10 @@ def prepare(drv, sh, est, jitter, text, known):
     br = O.burner_request(text)
     if br is not None and br[0] == "off":
         locs = br[1] if br[1] is not None else sorted(env.unit.knobs)
-    elif t == "turn off the oven":
+    elif t == "turn off the oven" or t.startswith("set the oven to "):
         locs = ["temp"]
+    elif t.startswith("turn the ") and " burner to " in t:
+        locs = [O.LOCS[t[len("turn the "):].split(" burner to ")[0]]]
     fresh = False
     for loc in locs:
         adr = m.joint("u_knob_%s_joint" % loc).qposadr[0]

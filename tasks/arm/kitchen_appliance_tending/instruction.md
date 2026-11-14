@@ -44,16 +44,24 @@ done. The texts are exactly:
   as the cooktop has them, seen from the front;
 - compositional cooktop requests: `Turn on the <location> and <location> burners.`, `Turn off the <location> and
   <location> burners.` and `Turn off all the burners.`;
+- cooktop settings: `Turn the <location> burner to <setting>.`, where `<setting>` is `low`, `medium` or `high`:
+  the burner's knob in the lower, middle or upper third of its on-range (from 0.35 rad, where it lights, to the
+  knob's stop); an off burner is turned on to that setting;
 - `Start the microwave.` / `Stop the microwave.`;
 - `Preheat the oven.` / `Turn off the oven.` (the temperature knob: preheated at 0.25 of its range or more,
-  off below).
+  off below);
+- oven settings: `Set the oven to <setting> heat.`: the temperature knob in 0.25-0.5 (`low`), 0.5-0.75
+  (`medium`) or 0.75-1.0 (`high`) of its range.
 
 Each request is valid in the state it opens on (an "off" request names burners that are on; "all the burners" is
-asked while two or more are on). An episode has three requests; a request closes when it is completed or at its
-deadline (600 steps, 1000 for a compositional request), and the next one opens at once.
+asked while two or more are on; a setting request names a setting the control is not at). An episode has three
+requests; a request closes when it is completed or at its deadline (1000 steps, 1500 for a compositional request),
+and the next one opens at once.
 
-A burner shows a flame while it is on, a microwave a lit amber display bar while it runs, and an oven a lit
-red-orange lamp while it is preheated (both on the front, near the top; dark grey otherwise).
+A burner shows a flame while it is on (larger at a higher setting), a microwave a lit amber display bar while it
+runs, and an oven a lit red-orange lamp while it is preheated (both on the front, near the top; dark grey
+otherwise). The kitchen's light (its position, strength and tint) changes from episode to episode, and the two
+fixed cameras sit a little differently in each episode; their poses are in every observation.
 
 ## Credit
 
@@ -88,7 +96,7 @@ open ... +1 closed) and a camera bit mask for the next observation (1 = left, 2 
 **trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **14
 trials in total**, shared by all nine units, never refunded), then `step` with an action returns the next observation
 (steps are free) until the episode ends. A trial ends when its episode ends, when you start a new trial or close
-the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 3200 requests applies.
+the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies.
 Each trial draws a fresh placement, initial state, request queue and sensor noise. The lab never reports scores,
 credit or the unit's state: only observations. The lab units are exactly the units you are scored on. The lab is
 gone when grading starts.

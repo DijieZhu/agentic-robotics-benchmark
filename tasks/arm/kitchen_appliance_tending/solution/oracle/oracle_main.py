@@ -120,6 +120,11 @@ def run_request(drv, text):
     """Parse the request's text (episode.py's templates) and run the primitive (one knob turn per named
     burner; for 'all the burners', every burner that is on)."""
     t = text.lower().rstrip(".")
+    if t.startswith("turn the ") and " burner to " in t:
+        where, setting = t[len("turn the "):].split(" burner to ")
+        return drv.knob(LOCS[where], "set", setting=setting)
+    if t.startswith("set the oven to ") and t.endswith(" heat"):
+        return drv.knob("temp", "set", setting=t[len("set the oven to "):-len(" heat")])
     br = burner_request(text)
     if br is not None:
         want, locs = br
