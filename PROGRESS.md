@@ -34,7 +34,8 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** the owner decides between a confirming frontier trial and P4 for the appliance task.
+- **Next step:** P4 for the appliance task (slug and sheet, final agent budget, pull request): trials 3 and 4
+  on the tightened budget scored 0.43 and 0.41.
   After the budget was tightened (six scored units, 8 lab trials, 12 episodes; anchor 0.9911 / full_at 0.95;
   validates), Opus 5.5 trial 3 scored reward **0.43** (cooktops 1.0, microwaves 0.0, ovens about 0.2; it
   stopped after 29 min with its 8 trials spent). Earlier, on 3 units and 16 trials: 0.48 and 0.93 (design
@@ -535,7 +536,8 @@ scripted reference (simulator poses, joints and contacts).
   (u0 1.0, u1 0.78, u2 1.0; 70 min, all 16 lab trials), the same lab-calibration strategy: too easy as built.
   Owner: keep the calibration framing, tighten the budget: six scored units (two per kind), 8 lab trials, 12
   episodes (`12e02b3`); anchor re-measured 0.9911 / full_at 0.95 (`aab6476`; u5 Oven053 loses a request near
-  the jitter limit, the reference's grasp planner); validates. Trial 3 (run ed315672): reward 0.43.
+  the jitter limit, the reference's grasp planner); validates. Trial 3 (run ed315672): reward 0.43; trial 4
+  (run 322e0b17): 0.41.
   Design §10, P3.
 - **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
   `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on

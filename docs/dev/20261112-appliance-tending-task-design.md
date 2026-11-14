@@ -442,3 +442,13 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   - **Reading:** inside the target band, with the expected failure mode (too few trials to calibrate every
     unit, so the untested kinds fail). One run; trials 1-2 differed by 0.45 on the same task, so the spread
     of a single run is large.
+- **Frontier trial 4** (`ale run` 322e0b17, same settings as trial 3): **reward 0.41** (`mean_request_credit`
+  0.389, ratio 0.392). Per unit: u0 0.67, u3 1.0 (cooktops); u1 0.0, u4 0.5 (microwaves); u2 0.17, u5 0.0
+  (ovens). 142 of 142 probe pairs differed; no aborts or faults; verify 118 s. Agent phase 2881 s; all 8 trials
+  used. It mapped both cooktops' knobs in the lab (flames, knob symbols), found each oven's temperature knob
+  (one "Turn off the oven" closed on u2; on u5 every lab attempt failed to reach the knob), and guessed the
+  microwave buttons from wrist images (u4 taking the green button as start, which held in one of two
+  episodes); practice grader 1.0 on all six practice episodes.
+  - **Reading:** trials 3 and 4 agree (0.43, 0.41), both below the 0.5 target with the same pattern:
+    cooktops calibrated and solved, microwaves and ovens under-tested for lack of trials. Time was not the
+    limit (29 and 48 of 120 minutes); the 8 trials were. Proposed next: P4.
