@@ -6,7 +6,7 @@ to preheat or turn off the oven. The appliances are models you have not seen; yo
 cameras and feel them through the arm.
 
 Deliver a controller that carries out these requests from camera images, joint readings and the wrist
-force/torque sensor. You have **3 hours** of wall time for the whole job (exploring, lab trials, building and
+force/torque sensor. You have **2 hours** of wall time for the whole job (exploring, lab trials, building and
 testing the controller); have your controller in `/home/user/submission/` well before the time is up. A session
 still running at the limit is cut off.
 
@@ -100,7 +100,7 @@ open ... +1 closed) and a camera bit mask for the next observation (1 = left, 2 
 ## The lab (your only access to the nine scored units)
 
 `labclient.py` talks to a service on `/run/ale-lab/lab.sock` (JSON lines; `python3 labclient.py --help`). A
-**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **14
+**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **10
 trials in total**, shared by all nine units, never refunded), then `step` with an action returns the next observation
 (steps are free) until the episode ends. A trial ends when its episode ends, when you start a new trial or close
 the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies.
