@@ -557,3 +557,20 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   - **Reading:** a floor score from a short run on one appliance kind (11 of 60 minutes), not a measurement
     of the task's difficulty at 1 h. Trials 9 and 10 (0.27, 0.0) are both at or below the 0.3 target; the
     spread is the open question.
+- **Agent budget back to 2 h** (owner 2026-11-14, after trial 10; `86c3f40`); 10 lab trials stay;
+  `validate-fec59fbd` passes (untouched 0.0, oracle 1.0).
+- **Frontier trial 11** (`ale run` 8a96f820, Opus 5.5, 2 h, 10 trials): **reward 0.0** on every unit and
+  request type. 585 of 585 probe pairs differed; no aborts or faults; verify 334 s.
+  - **The agent stopped after 806 of 7200 s with 2 of 10 trials used**, reporting that it "couldn't get the arm
+    to work any hidden unit's controls in the time available" (it ran `date` once, at the start). Its
+    controller deliberately holds the start pose for every request.
+  - In the dev sim it turned the practice cooktop's knobs (push-to-turn included) and pressed the practice
+    microwave's buttons (hold-to-start included); its fingertips slipped on the practice oven's knob. In the
+    lab, u0's knob would not turn by press, grasp or grasp-plus-push (u0 is a push-to-turn unit), and a press
+    at u1's estimated button position met no surface. Seven units were never examined.
+- **Outcome (owner rule 2026-11-14: done if trial 11 scores below 0.3): the difficulty step is complete.**
+  Final build `86c3f40`: nine scored units with mechanisms, 10 lab trials, 2 h agent time; anchor 0.9974,
+  `full_at` 0.90. Frontier results on the 10-trial build: 0.27 (trial 9, 2 h), 0.0 (trial 10, 1 h), 0.0
+  (trial 11, 2 h); all three agents stopped early (11 to 19 of 60 or 120 minutes), two of them believing the
+  time was up. The two zeros come from agents that quit before building a working controller, not from a
+  ceiling the task imposes (the reference scores 1.0 and the practice-unit skills worked in their dev sims).
