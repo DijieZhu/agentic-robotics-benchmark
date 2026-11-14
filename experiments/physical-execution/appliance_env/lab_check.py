@@ -10,7 +10,6 @@ LAB = sys.argv[1]
 sys.path[:0] = [LAB, os.path.join(LAB, "alelab")]
 import server as SV
 import appliance_plugin as P
-import episode as EP
 
 class API:
     class BadRequest(Exception):
