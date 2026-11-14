@@ -163,7 +163,8 @@ a larger lab budget) before adding difficulty anywhere else.
   payload, instruction, `tests/NOTICE.md`, assets in the dataset. `ale lint`,
   `scripts/lint_domain.py`, `scripts/task_assets.py check`.
 - **P5 — gates and difficulty.** `ale validate` (untouched 0.0, oracle 1.0), anchor from fresh
-  oracle runs, frontier runs (`ale run`); target reward roughly below 0.5.
+  oracle runs, frontier runs (`ale run`); target: a frontier model (Opus 5.5) scores reward at most 0.3
+  (owner rule 2026-11-13, after trial 6; it replaces the project-wide "roughly below 0.5" for this task).
 
 ## 10. Results log
 
@@ -495,3 +496,27 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
 - **Frontier trial 7** (`ale run` dee3156a): **void**. The subscription's rate limit rejected the agent's
   calls (429) 49 minutes into the agent phase; the engine ended the episode with `env_error`
   (`SubscriptionProviderLimitError`) and no verification ran.
+- **Direction 1: hidden unit mechanisms** (owner 2026-11-14; `ba19db7`, `7c85eab`, anchor `915a96f`): a unit
+  may carry one mechanism, stated nowhere for the hidden units: push_to_turn (a knob unlocks only while the
+  gripper pushes along its axis; it relocks over 1 s with hysteresis), reversed (every knob turns the other
+  way), hold_start (the microwave starts after its button is held 15 steps). Six of nine scored units carry
+  one (u0, u5 push; u2, u3 reversed; u1, u4 hold); practice units one each. Anchor: 7 oracle runs
+  (`e92fb05d`, on `7c85eab`), mean 0.9974 (one lost request, u2), `full_at` 0.90; `validate-c70cab67`
+  passes.
+- **Frontier trial 8** (Opus 5.5, 3 h budget, the mechanisms build `915a96f`). The first attempt (`616e01ed`)
+  was void like trial 7: 429 after 4523 s of agent phase, `env_error`, no verification. Rerun on another
+  subscription token (`ale run` 1d5abaed): **reward 0.27** (`mean_request_credit` 0.241, ratio 0.241).
+  Per unit: cooktops u0 0.67, u3 0.83, u6 0.0; oven u2 0.67, u5 and u8 0.0; microwaves u1, u4, u7 0.0. Per
+  request: all off 1.0, burner off 1.0, burner level 0.5, burner on 0.33, burners on 0.33, oven level 0.3,
+  oven off 0.2, preheat 0.0, microwave start 0.0. 423 of 436 probe pairs differed (lock ok); no aborts, no
+  faults, seccomp guard on; verify 281 s.
+  - **The agent stopped after 1247 s of its 10800 s** (12 %) with **4 of its 14 lab trials used**, and
+    reported that "the 3 hours ran out". It ran `date` once, at the start, and never again; it briefed its
+    subagent to finish "in ~40 minutes". This is trial 1's clock misjudgment again.
+  - **What it built:** a controller for four units only (cooktops u0, u3; ovens u2, u5), parked on the other
+    five. Placement from the fixed cameras against reference images saved in the lab; knobs gripped and
+    pushed in at about 14 N along the axis (so push-to-turn unlocks), turned to the torque stop for "off" and
+    "high", by a measured amount from the off stop for the other settings. The microwave hold-to-start
+    failed on the practice unit and was never fixed.
+  - **Reading:** at or below the 0.3 target, but a lower bound: 88 % of the time and 10 of 14 trials were
+    unused, and five units were never attempted. It does not establish that the task meets the target.

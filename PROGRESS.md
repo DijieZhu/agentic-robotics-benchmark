@@ -14,7 +14,7 @@
 > physical-execution experiments and the appliance-tending task design; the messy-desk notes
 > that #12 had appended under Open items and Gotchas moved to Appendix A).
 
-## Current state (2026-11-13)
+## Current state (2026-11-14)
 
 - **Engine:** `vendor/ale` @ `1cdbc02` (engine 0.1.1, Harbor task format, §8).
 - **Tasks on `main` (22),** every one with `[verifier] environment_mode = "separate"`:
@@ -34,9 +34,12 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** the appliance task gets per-episode lighting and camera variation and burner / oven setting
-  requests (owner rule after trial 6 scored reward 1.0 on nine units with indicators; target below 0.3), then
-  re-anchor, validate and a frontier trial (design §10 P3).
+- **Next step:** decide how to get a full-budget frontier measurement of the appliance task. Target: Opus 5.5
+  reward at most 0.3 (owner rule after trial 6). Directions 2 + 3 (lighting / camera variation, setting
+  requests) and direction 1 (hidden unit mechanisms) have landed (anchor 0.9974, `validate-c70cab67`). Trial 8
+  (run 1d5abaed) scored 0.27, but the agent quit after 21 of 180 minutes with 10 of 14 lab trials unused
+  (it misjudged the clock, as in trial 1), so the score is a lower bound (design §10 P3).
+  Trials 7 and the first trial 8 attempt were void (subscription rate limit, 429).
   Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
   claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
