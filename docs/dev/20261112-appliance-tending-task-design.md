@@ -520,3 +520,23 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
     failed on the practice unit and was never fixed.
   - **Reading:** at or below the 0.3 target, but a lower bound: 88 % of the time and 10 of 14 trials were
     unused, and five units were never attempted. It does not establish that the task meets the target.
+- **Budget tightened** (owner 2026-11-14, `f8eecac`): **10 lab trials** (units + 1; was 14) and **2 h** of agent
+  time (was 3 h). The reference spends no lab trials and the grader is unchanged, so the anchor stands;
+  `validate-d3b7721a` passes (untouched 0.0, oracle 1.0).
+- **Frontier trial 9** (`ale run` 4abdc596, Opus 5.5, 2 h, 10 trials): **reward 0.27** (`mean_request_credit`
+  0.241, ratio 0.241). Per unit: cooktops u0 0.0, u3 0.67, u6 0.75; ovens u2 0.25, u5 0.17, u8 0.33; microwaves
+  u1, u4, u7 0.0. Per request: burner level 0.79, burner on 0.5, burners on 0.5, preheat 0.6, oven level 0.25;
+  all off, burner off, burners off, oven off, microwave start and stop 0.0. 502 of 511 probe pairs differed
+  (lock ok); no aborts or faults; verify 333 s.
+  - **All 10 trials were spent in the first 11 minutes** (one reference capture per unit, then one full
+    episode on u3); the agent stopped after 1156 of 7200 s because it had no trials left, not because it
+    misread the clock (it saved its start time). Practice grader on its controller: 0.81.
+  - **What it built:** placement from 11 wrist-camera views matched in 3D against each unit's lab capture;
+    knobs pinched and always pushed along the axis (push-to-turn), zeroed at the stop, then turned to the
+    target; "reversed" learned per unit from whether the flame or lamp lights after zeroing; buttons held
+    about 22 steps (hold-to-start). Controls of six units marked by hand from the captures; the cooktops'
+    knob-to-burner maps and the ovens' temperature knob assumed from the practice units; the microwaves left
+    out (it could not tell start from stop in the images).
+  - **Reading:** at or below the 0.3 target with the budget binding (trials, not time), the intended
+    limit. Trials 8 and 9 agree (0.27, 0.27) but trial 8 was a lower bound; one more run on this build would
+    show the spread.
