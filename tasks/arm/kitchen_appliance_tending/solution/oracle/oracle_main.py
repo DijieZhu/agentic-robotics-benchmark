@@ -97,13 +97,41 @@ LOCS = {"rear left": "rear_left", "rear centre": "rear_center", "rear right": "r
         "centre": "center", "left": "left", "right": "right"}
 
 
-def run_request(drv, text):
-    """Parse the request's text (episode.py's templates) and run the primitive."""
+def burner_request(text):
+    """A burner request's (want, locations): one or two named burners, or None for 'all the burners'.
+    None for any other request."""
     t = text.lower().rstrip(".")
-    if t.startswith("turn on the ") and t.endswith(" burner"):
-        return drv.knob(LOCS[t[len("turn on the "):-len(" burner")]], "on")
-    if t.startswith("turn off the ") and t.endswith(" burner"):
-        return drv.knob(LOCS[t[len("turn off the "):-len(" burner")]], "off")
+    if t == "turn off all the burners":
+        return "off", None
+    for want in ("on", "off"):
+        head = "turn %s the " % want
+        if not t.startswith(head):
+            continue
+        body = t[len(head):]
+        if body.endswith(" burners") and " and " in body:
+            a, b = body[:-len(" burners")].split(" and ")
+            return want, [LOCS[a], LOCS[b]]
+        if body.endswith(" burner"):
+            return want, [LOCS[body[:-len(" burner")]]]
+    return None
+
+
+def run_request(drv, text):
+    """Parse the request's text (episode.py's templates) and run the primitive (one knob turn per named
+    burner; for 'all the burners', every burner that is on)."""
+    t = text.lower().rstrip(".")
+    br = burner_request(text)
+    if br is not None:
+        want, locs = br
+        unit = drv.env.unit
+        if locs is None:
+            locs = sorted(unit.knobs)
+        out = None
+        for loc in locs:
+            if want == "off" and not unit.burner_on(drv.d, loc):
+                continue
+            out = drv.knob(loc, want)
+        return out
     if t == "preheat the oven":
         return drv.knob("temp", "on")
     if t == "turn off the oven":

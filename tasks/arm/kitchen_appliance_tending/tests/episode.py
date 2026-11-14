@@ -5,14 +5,16 @@ adds what the grader will own in P4:
 
   * an initial state drawn per episode (burners on or off, the oven preheated or not, the microwave
     running or not), set before the first action;
-  * K requests in sequence from the v1 list (design section 10, owner decisions 2026-11-12): burner on /
-    off (cooktop, range), preheat and turn the oven off (range, oven), range door open, microwave
-    start / stop. Each request is
-    valid in the state it opens on; one is open at a time; it closes when completed or at its deadline;
-  * credit per request (design section 4): **reached** 0.5 once the target state has held 3 consecutive
-    steps; **completed** 0.5 once it has held 20 consecutive steps with the hand at least 0.10 m from
-    the control while every other control keeps the discrete state it had when the request opened (doing
-    one request must not change anything else). A counted stage stays counted.
+  * K requests in sequence: burner on / off and, on a cooktop, compositional requests over several
+    burners (two on, two off, all off; drawn with probability COMPOUND_P when one is valid); preheat and
+    turn the oven off; microwave start / stop. Each request is valid in the state it opens on; one is open
+    at a time; it closes when completed or at its deadline (DEADLINE steps, DEADLINE_COMPOUND for a
+    compositional one);
+  * credit per request: **reached** 0.5 once the target state (every named control's, for a
+    compositional request) has held 3 consecutive steps; **completed** 0.5 once it has held 20 consecutive
+    steps with the hand at least 0.10 m from every named control while every other control keeps the
+    discrete state it had when the request opened (doing one request must not change anything else). A
+    counted stage stays counted.
 
     ep = Episode(ApplianceEnv(spec, assets), seed)
     obs = ep.reset()                  # obs["request_id"], ["request_text"], ["request_deadline_t"]
@@ -23,6 +25,8 @@ adds what the grader will own in P4:
 import numpy as np
 
 DEADLINE = 600                    # control steps per request (60 s at 10 Hz)
+DEADLINE_COMPOUND = 1000          # a compositional request (several burners)
+COMPOUND_P = 0.5                  # chance a cooktop request is compositional when one is valid
 REACH_HOLD = 3
 COMPLETE_HOLD = 20
 CLEAR = 0.10                      # m, gripper site to the control
@@ -62,6 +66,7 @@ class Episode(object):
             _qa, lo, hi = u.temp_knob
             f = float(self.rng.uniform(*PREHEATED_RANGE))
             env.set_joint("knob_temp_joint", lo + f * (hi - lo) if lo >= 0 else hi - f * (hi - lo))
+        env.unit.update(env.model, env.data, env.gripper_geoms)   # flames and indicators show the initial state
         self.requests = []
         self.current = None
         self.t_open = 0
@@ -75,6 +80,23 @@ class Episode(object):
         for k, v in s.items():
             if k.startswith("burner_on_") or k in ("preheated", "turned_on", "door_open", "door_closed"):
                 out[k] = bool(v)
+        return out
+
+    def compound_requests(self):
+        """Cooktop requests over several burners, each valid now: two burners on, two burners off, all off."""
+        u, kind = self.env.unit, self.env.spec["kind"]
+        if kind not in ("stovetop", "stove"):
+            return []
+        st = self.discrete()
+        locs = sorted(u.knobs)
+        on = [x for x in locs if st["burner_on_" + x]]
+        off = [x for x in locs if not st["burner_on_" + x]]
+        out = []
+        if len(off) >= 2:
+            out.append(("burners_on", tuple(off[i] for i in self.rng.choice(len(off), 2, replace=False))))
+        if len(on) >= 2:
+            out.append(("burners_off", tuple(on[i] for i in self.rng.choice(len(on), 2, replace=False))))
+            out.append(("all_off", tuple(locs)))
         return out
 
     def valid_requests(self):
@@ -98,24 +120,40 @@ class Episode(object):
             self.current = None
             return
         options = self.valid_requests()
+        compound = self.compound_requests()
+        if compound and self.rng.random() < COMPOUND_P:
+            options = compound
         if not options:
             self.current = None
             return
         what, target = options[int(self.rng.integers(len(options)))]
+        name = lambda x: LOC_TEXT.get(x, x.replace("_", " "))  # noqa: E731
         text = {"burner_on": "Turn on the %s burner.", "burner_off": "Turn off the %s burner."}.get(what)
         if text:
-            text = text % LOC_TEXT.get(target, target.replace("_", " "))
+            text = text % name(target)
+        elif what in ("burners_on", "burners_off"):
+            text = "Turn %s the %s and %s burners." % ("on" if what == "burners_on" else "off", name(target[0]),
+                                                       name(target[1]))
+        elif what == "all_off":
+            text = "Turn off all the burners."
         else:
             text = {"preheat": "Preheat the oven.", "oven_off": "Turn off the oven.", "door_open": "Open the oven door.",
                     "start": "Start the microwave.", "stop": "Stop the microwave."}[what]
         r = {"id": len(self.requests), "what": what, "target": target, "text": text, "t_open": self.env.t,
-             "deadline_t": self.env.t + DEADLINE, "before": self.discrete(), "reached": False,
+             "deadline_t": self.env.t + (DEADLINE_COMPOUND if isinstance(target, tuple) else DEADLINE), "before": self.discrete(), "reached": False,
              "completed": False, "run_reach": 0, "run_complete": 0, "t_close": None}
         self.requests.append(r)
         self.current = r
 
     # ---- per step -------------------------------------------------------------------
     def control_pos(self, r):
+        """The positions of the request's controls (one for a simple request)."""
+        d, m = self.env.data, self.env.model
+        if isinstance(r["target"], tuple):
+            return [d.geom_xpos[m.geom("u_knob_%s_main" % x).id] for x in r["target"]]
+        return [self._control_pos(r)]
+
+    def _control_pos(self, r):
         d, m = self.env.data, self.env.model
         if r["what"] in ("burner_on", "burner_off", "preheat", "oven_off"):
             return d.geom_xpos[m.geom("u_knob_%s_main" % r["target"]).id]
@@ -130,6 +168,10 @@ class Episode(object):
             return st["burner_on_" + r["target"]]
         if w == "burner_off":
             return not st["burner_on_" + r["target"]]
+        if w == "burners_on":
+            return all(st["burner_on_" + x] for x in r["target"])
+        if w in ("burners_off", "all_off"):
+            return not any(st["burner_on_" + x] for x in r["target"])
         if w == "preheat":
             return st["preheated"]
         if w == "oven_off":
@@ -141,6 +183,10 @@ class Episode(object):
         return not st["turned_on"]
 
     def others_unchanged(self, r):
+        if isinstance(r["target"], tuple):
+            own = {"burner_on_" + x for x in r["target"]}
+            now = self.discrete()
+            return all(now.get(k) == v for k, v in r["before"].items() if k not in own)
         own = {"burner_on": "burner_on_" + r["target"], "burner_off": "burner_on_" + r["target"],
                "preheat": "preheated", "oven_off": "preheated", "door_open": "door_", "start": "turned_on", "stop": "turned_on"}[r["what"]]
         now = self.discrete()
@@ -159,7 +205,8 @@ class Episode(object):
             r["run_reach"] = r["run_reach"] + 1 if holds else 0
             if r["run_reach"] >= REACH_HOLD:
                 r["reached"] = True
-            clear = np.linalg.norm(self.env.data.site_xpos[self.env.site] - self.control_pos(r)) >= CLEAR
+            hand = self.env.data.site_xpos[self.env.site]
+            clear = min(np.linalg.norm(hand - p) for p in self.control_pos(r)) >= CLEAR
             ok = holds and clear and self.others_unchanged(r)
             r["run_complete"] = r["run_complete"] + 1 if ok else 0
             if r["run_complete"] >= COMPLETE_HOLD:

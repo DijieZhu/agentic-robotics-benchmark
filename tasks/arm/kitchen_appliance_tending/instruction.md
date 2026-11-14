@@ -6,7 +6,7 @@ to preheat or turn off the oven. The appliances are models you have not seen; yo
 cameras and feel them through the arm.
 
 Deliver a controller that carries out these requests from camera images, joint readings and the wrist
-force/torque sensor. You have **2 hours** of wall time for the whole job (exploring, lab trials, building and
+force/torque sensor. You have **3 hours** of wall time for the whole job (exploring, lab trials, building and
 testing the controller); have your controller in `/home/user/submission/` well before the time is up. A session
 still running at the limit is cut off.
 
@@ -29,8 +29,8 @@ MuJoCo through OSMesa on the CPU.
 
 ## The scored units
 
-Six hidden units, two of each kind: `u0` and `u3` (cooktops), `u1` and `u4` (microwaves), `u2` and `u5` (ovens),
-each a different model from the practice units and from each other. Same as in your dev sim: the robot, the
+Nine hidden units, three of each kind: `u0`, `u3`, `u6` (cooktops), `u1`, `u4`, `u7` (microwaves) and `u2`, `u5`,
+`u8` (ovens), each a different model from the practice units and from each other. Same as in your dev sim: the robot, the
 controller, the action and observation formats, the cameras, the sensor noise, the physics settings, the request texts and the credit rule. Different:
 the appliance model (its size, look, where its controls are and how they move) and the placement draw.
 
@@ -42,19 +42,26 @@ done. The texts are exactly:
 - `Turn on the <location> burner.` / `Turn off the <location> burner.` (cooktop), where `<location>` is one of
   `rear left`, `rear centre`, `rear right`, `front left`, `front centre`, `front right`, `centre`, `left`, `right`
   as the cooktop has them, seen from the front;
+- compositional cooktop requests: `Turn on the <location> and <location> burners.`, `Turn off the <location> and
+  <location> burners.` and `Turn off all the burners.`;
 - `Start the microwave.` / `Stop the microwave.`;
 - `Preheat the oven.` / `Turn off the oven.` (the temperature knob: preheated at 0.25 of its range or more,
   off below).
 
-Each request is valid in the state it opens on (an "off" request names a burner that is on). An episode has three
-requests; a request closes when it is completed or at its deadline (600 steps), and the next one opens at once.
+Each request is valid in the state it opens on (an "off" request names burners that are on; "all the burners" is
+asked while two or more are on). An episode has three requests; a request closes when it is completed or at its
+deadline (600 steps, 1000 for a compositional request), and the next one opens at once.
+
+A burner shows a flame while it is on, a microwave a lit amber display bar while it runs, and an oven a lit
+red-orange lamp while it is preheated (both on the front, near the top; dark grey otherwise).
 
 ## Credit
 
 For each request:
-- **reached** (0.5): the requested state holds for 3 consecutive steps;
+- **reached** (0.5): the requested state (of every control a compositional request names) holds for 3
+  consecutive steps;
 - **completed** (0.5): the requested state holds for 20 consecutive steps with the gripper at least 0.10 m from
-  the control, while every other control of the unit keeps the state it had when the request opened (turning on
+  every control the request names, while every other control of the unit keeps the state it had when the request opened (turning on
   the wrong burner as well, or knocking one off on the way, costs the completion).
 
 A counted stage stays counted. The episode score is the mean over its three requests; your result is the mean
@@ -75,13 +82,13 @@ Action: a list of 8 numbers `[dx, dy, dz, drx, dry, drz, grip, cams]` at 10 Hz: 
 (world frame, clipped to 0.03 m), a world-frame rotation vector (clipped to 0.2 rad), the gripper command (-1
 open ... +1 closed) and a camera bit mask for the next observation (1 = left, 2 = right, 4 = wrist).
 
-## The lab (your only access to the six scored units)
+## The lab (your only access to the nine scored units)
 
 `labclient.py` talks to a service on `/run/ale-lab/lab.sock` (JSON lines; `python3 labclient.py --help`). A
-**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **8
-trials in total**, shared by all six units, never refunded), then `step` with an action returns the next observation
+**trial** is one episode on one unit: `reset` with the unit id starts it (and charges 1 trial; you have **14
+trials in total**, shared by all nine units, never refunded), then `step` with an action returns the next observation
 (steps are free) until the episode ends. A trial ends when its episode ends, when you start a new trial or close
-the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 2000 requests applies.
+the connection, after 3600 s of wall time or after 900 s without a request; a step cap of 3200 requests applies.
 Each trial draws a fresh placement, initial state, request queue and sensor noise. The lab never reports scores,
 credit or the unit's state: only observations. The lab units are exactly the units you are scored on. The lab is
 gone when grading starts.
@@ -100,7 +107,7 @@ gripper and wrist-camera pose, wrench; the images are unchanged), in a hidden or
 the real one. If fewer than 10 % of these pairs get two replies that differ (by more than 1e-4 in some number),
 the whole run scores 0: a controller that ignores its input, or answers a repeated `t` from a cache, fails.
 
-The grader runs 12 episodes: 2 on each unit with fresh hidden placements and requests, in a hidden order (the
+The grader runs 18 episodes: 2 on each unit with fresh hidden placements and requests, in a hidden order (the
 observation names the unit). An episode in which the controller crashes, answers late or malformed, or makes the
 simulation unstable (an arm joint faster than 8 rad/s or a unit joint faster than 30 rad/s) scores 0; after 3
 restarts of your controller the remaining episodes score 0. The whole grading run must finish within 6000 s; the

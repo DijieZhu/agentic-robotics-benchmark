@@ -27,8 +27,11 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 - Knob physics: friction loss 0.20 N m, armature 0.002 kg m^2. A burner is on while its knob angle `a` satisfies
   0.35 <= a mod 2 pi <= 2 pi - 0.35 (a flame marker shows while it is on). The oven is preheated while its
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
-- Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0 and
-  u3 (cooktops), u1 and u4 (microwaves), u2 and u5 (ovens); you reach them only through the lab.
+- Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0, u3,
+  u6 (cooktops), u1, u4, u7 (microwaves), u2, u5, u8 (ovens); you reach them only through the lab.
+- State shown on the unit: a burner's flame while it is on (RoboCasa's); a lit amber display bar (10 x 2 cm) while a
+  microwave runs and a lit red-orange lamp (3 x 3 cm) while an oven is preheated, both on the front face 3 cm
+  below the top edge of its visible front (dark grey when off). Visual only: no contact, no mass.
 
 ```python
 import sys; sys.path.insert(0, "/home/user")
@@ -59,6 +62,7 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 
 - Initial state (drawn per episode): each burner on with probability 0.3 (knob at 0.8-1.6 rad), the microwave
   running with probability 0.5, the oven preheated with probability 0.4 (knob at 0.30-0.50 of its range).
-- Three requests, one at a time, each valid in the state it opens on, each with a deadline of 600 control steps.
+- Three requests, one at a time, each valid in the state it opens on, each with a deadline of 600 control steps
+  (1000 for a compositional cooktop request: two burners on, two off, or all off).
 - Episodes end when the third request closes; the simulation is unstable (and the episode scores 0) if an arm
   joint moves faster than 8 rad/s or a unit joint faster than 30 rad/s.

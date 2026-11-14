@@ -15,6 +15,7 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import appliance_env as E  # noqa: E402
 import episode as EP  # noqa: E402
+import oracle_main as O  # noqa: E402
 import reference as R  # noqa: E402
 
 
@@ -38,7 +39,9 @@ def run(assets, model, seed, untouched=False, robot_z=None):
             ep.step([0, 0, 0, 0, 0, 0, -1, 0])
             continue
         try:
-            if r["what"] in ("burner_on", "burner_off"):
+            if r["what"] in ("burners_on", "burners_off", "all_off"):
+                O.run_request(drv, r["text"])
+            elif r["what"] in ("burner_on", "burner_off"):
                 drv.knob(r["target"], "on" if r["what"] == "burner_on" else "off")
             elif r["what"] == "preheat":
                 drv.knob("temp", "on")

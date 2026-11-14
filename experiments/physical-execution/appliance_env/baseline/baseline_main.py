@@ -139,20 +139,26 @@ def prepare(drv, sh, est, jitter, text, known):
     what the request implies."""
     t = text.lower().rstrip(".")
     env, m, d = sh.env, sh.env.model, sh.env.data
-    loc = None
-    if t.startswith("turn off the ") and t.endswith(" burner"):
-        loc = O.LOCS[t[len("turn off the "):-len(" burner")]]
+    locs = []
+    br = O.burner_request(text)
+    if br is not None and br[0] == "off":
+        locs = br[1] if br[1] is not None else sorted(env.unit.knobs)
     elif t == "turn off the oven":
-        loc = "temp"
-    if loc is not None:
+        locs = ["temp"]
+    fresh = False
+    for loc in locs:
         adr = m.joint("u_knob_%s_joint" % loc).qposadr[0]
         if loc in known and abs(known[loc]) > 0.3:
             d.qpos[adr] = known[loc]
         else:
-            obs = drv.tick(drv.site_pos(), drv.site_R(), -1.0, cams=3)      # ask for both fixed images
-            obs = drv.tick(drv.site_pos(), drv.site_R(), -1.0) if not obs.get("left", {}).get("shape", [0])[0] else obs
+            if not fresh:                            # ask for both fixed images once
+                obs = drv.tick(drv.site_pos(), drv.site_R(), -1.0, cams=3)
+                if not obs.get("left", {}).get("shape", [0])[0]:
+                    drv.tick(drv.site_pos(), drv.site_R(), -1.0)
+                fresh = True
             d.qpos[adr] = est.knob_angle(sh.obs, loc, jitter, knobs=known)
             log("knob %s angle estimate %.3f" % (loc, d.qpos[adr]))
+    if locs:
         mujoco.mj_forward(m, d)
     if t == "stop the microwave":
         env.unit.turned_on = True

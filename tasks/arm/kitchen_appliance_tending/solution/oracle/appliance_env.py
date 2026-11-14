@@ -72,6 +72,13 @@ CAMERAS = {
     "right": ((-0.45, -0.62, 0.45), (0.12, 0.0, 0.0), 55.0, 320, 240),
 }
 FLAME_ALPHA = 0.5                 # RoboCasa Stove.update_state shows a burner's flame site while it is on
+# State indicators (added here; RoboCasa shows no state on a microwave or an oven): a lit display bar while a
+# microwave runs, a lit lamp while an oven is preheated. Visual only, on the front face's top band.
+INDICATOR = {"microwave": {"size": (0.10, 0.02), "on": (1.0, 0.72, 0.2, 1.0)},
+             "oven": {"size": (0.03, 0.03), "on": (1.0, 0.3, 0.08, 1.0)}}
+INDICATOR_OFF = (0.12, 0.12, 0.12, 1.0)
+INDICATOR_BELOW_TOP = 0.03        # m, centre below the front face's top edge
+INDICATOR_CLEAR = 0.02            # m, from any control (knob, button, handle) in the front view
 WRIST = {"fovy": 75.0, "width": 256, "height": 192}
 
 BURNERS = ("rear_left", "rear_center", "rear_right", "front_left", "front_center", "front_right",
@@ -272,6 +279,50 @@ def unit_bbox(u_spec_compiled):
     return lo, hi
 
 
+def indicator_pose(m, lo, hi, kind):
+    """Where a microwave's or an oven's state indicator sits, in the unit's model frame: INDICATOR_BELOW_TOP
+    below the top edge of the visible front (found by rays from the front, scanning down), at the first
+    candidate across the width (centre, then a quarter either side, then further out) whose box clears every
+    control by INDICATOR_CLEAR in the front view; 1 mm in front of the surface a ray meets there. None for a
+    kind without one."""
+    if kind not in INDICATOR:
+        return None
+    w, h = INDICATOR[kind]["size"]
+    d = mujoco.MjData(m)
+    mujoco.mj_forward(m, d)
+    boxes = []                          # controls' x-z extents seen from the front
+    for g in range(m.ngeom):
+        name = m.geom(g).name
+        if not (name.startswith("knob") or name.endswith("_button") or name.startswith("door_handle")):
+            continue
+        R = d.geom_xmat[g].reshape(3, 3)
+        c = d.geom_xpos[g] + R @ m.geom_aabb[g, :3]
+        e = np.abs(R) @ m.geom_aabb[g, 3:]
+        boxes.append((c[0] - e[0], c[0] + e[0], c[2] - e[2], c[2] + e[2]))
+    width = hi[0] - lo[0]
+    cx = (lo[0] + hi[0]) / 2
+    geomid = np.zeros(1, np.int32)
+
+    def ray(x, z):
+        return mujoco.mj_ray(m, d, np.array([x, lo[1] - 0.5, z]), np.array([0.0, 1.0, 0.0]), None, 1, -1, geomid)
+
+    for f in (0.0, 0.25, -0.25, 0.35, -0.35, 0.1, -0.1):
+        x = cx + f * width
+        top = next((z for z in np.arange(hi[2], lo[2], -0.005) if ray(x, z) >= 0), None)
+        if top is None:
+            continue
+        z = top - INDICATOR_BELOW_TOP
+        x0, x1, z0, z1 = x - w / 2 - INDICATOR_CLEAR, x + w / 2 + INDICATOR_CLEAR, z - h / 2 - INDICATOR_CLEAR, \
+            z + h / 2 + INDICATOR_CLEAR
+        if any(bx0 < x1 and bx1 > x0 and bz0 < z1 and bz1 > z0 for bx0, bx1, bz0, bz1 in boxes):
+            continue
+        dist = ray(x, z)
+        if dist < 0:
+            continue
+        return np.array([x, lo[1] - 0.5 + dist - 0.001, z]), (w, h)
+    return None
+
+
 def mount_pose(kind, lo, hi, jitter=(0.0, 0.0, 0.0), mount=None):
     """World position + yaw of the unit's model frame so that its front face (model -y, turned to
     face -x) is front_x in front of the robot, centred on the robot, its bottom at bottom_z."""
@@ -290,8 +341,20 @@ def mount_pose(kind, lo, hi, jitter=(0.0, 0.0, 0.0), mount=None):
 # ----------------------------------------------------------------------------------------------
 def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     u = load_unit_spec(assets, spec)
-    lo, hi = unit_bbox(u.compile())
+    um = u.compile()
+    lo, hi = unit_bbox(um)
+    ind = indicator_pose(um, lo, hi, spec["kind"])
     u = load_unit_spec(assets, spec)            # compile() froze the spec; start from a fresh copy
+    if ind is not None:
+        g = u.body("object").add_geom()
+        g.name = "indicator"
+        g.type = mujoco.mjtGeom.mjGEOM_BOX
+        g.size = [ind[1][0] / 2, 0.001, ind[1][1] / 2]
+        g.pos = list(ind[0])
+        g.contype = 0
+        g.conaffinity = 0
+        g.mass = VISUAL_MASS
+        g.rgba = list(INDICATOR_OFF)
     pos, yaw, mt = mount_pose(spec["kind"], lo, hi, jitter, mount)
     robot_base = np.array([0.0, 0.0, mt["robot_z"]])
 
@@ -422,6 +485,11 @@ class Unit(object):
                 self.flames[loc] = m.site("u_burner_on_%s" % loc).id
             except KeyError:
                 pass
+        self.indicator = None
+        try:
+            self.indicator = m.geom("u_indicator").id
+        except KeyError:
+            pass
         self.turned_on = False
         self.dofs = [v[1] for v in self.knobs.values()]
         if self.door:
@@ -451,8 +519,17 @@ class Unit(object):
         touching stop turns it off)."""
         for loc, sid in self.flames.items():
             m.site_rgba[sid, 3] = FLAME_ALPHA if self.burner_on(d, loc) else 0.0
-        if "start_button" not in self.buttons:
-            return
+        if "start_button" in self.buttons:
+            self._buttons(d, gripper_geoms)
+        if self.indicator is not None and self.kind in INDICATOR:
+            if self.kind == "oven" and self.temp_knob is not None:
+                qa, lo, hi = self.temp_knob
+                lit = normalized_joint(float(d.qpos[qa]), lo, hi) >= PREHEAT_TH
+            else:
+                lit = self.turned_on
+            m.geom_rgba[self.indicator] = INDICATOR[self.kind]["on"] if lit else INDICATOR_OFF
+
+    def _buttons(self, d, gripper_geoms):
         touching = set()
         for i in range(d.ncon):
             c = d.contact[i]
