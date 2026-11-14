@@ -1,8 +1,8 @@
 {
   "metric": "mean_request_credit",
   "direction": "higher",
-  "value": 0.9802,
+  "value": 0.9974,
   "full_at": 0.9,
-  "source": "Own measurement, 2026-11-14 (nine scored units, state indicators, per-episode lighting and camera offsets, compositional and setting requests, 18 episodes per run): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds, engine 1cdbc02, the dev host's Docker: ale run --agent oracle run 74fc7475 on commit 9a72828, 7 runs (1.0, 1.0, 0.9907, 0.9907, 0.9815, 0.9630, 0.9352), mean 0.98016 over 126 episodes. Lost credit: ovens u2 / u5 (a high-heat setting or a turn back from it that outlasts its deadline, or no feasible grasp pose near the jitter limit) and one u3 episode. No aborts, seccomp guard on.",
-  "note": "Measured, not drawn. full_at 0.90: the worst oracle run (0.9352) is ratio 0.954; 0.90 lets the oracle lose about two more requests than that and still score 1.0."
+  "source": "Own measurement, 2026-11-14 (nine scored units, state indicators, per-episode lighting and camera offsets, compositional and setting requests, unit mechanisms, 18 episodes per run): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds, engine 1cdbc02, the dev host's Docker: ale run --agent oracle run e92fb05d on commit 7c85eab, 7 runs (1.0 x6, 0.9815), mean 0.99735 over 126 episodes; the one lost request is u2 (an oven setting). No aborts, seccomp guard on.",
+  "note": "Measured, not drawn. full_at 0.90 as on the build before the mechanisms (worst of 7 runs there 0.9352, ratio 0.954), so the oracle keeps a margin of several lost requests and still scores 1.0."
 }
