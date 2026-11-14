@@ -540,3 +540,20 @@ run`, add the practice-model baseline, validate, run one Opus 5.5 trial (subscri
   - **Reading:** at or below the 0.3 target with the budget binding (trials, not time), the intended
     limit. Trials 8 and 9 agree (0.27, 0.27) but trial 8 was a lower bound; one more run on this build would
     show the spread.
+- **Agent budget 1 h** (owner 2026-11-14, after trial 9; `bb32926`): the verifier's timeout and the grader's
+  own budget (6000 s, never close to binding: verify took 87-436 s so far) are unchanged; `validate-51561368`
+  passes (untouched 0.0, oracle 1.0).
+- **Frontier trial 10** (`ale run` d64acd2d, Opus 5.5, 1 h, 10 trials): **reward 0.0** (`mean_request_credit`
+  0.0 on all nine units and every request type). 580 of 580 probe pairs differed; no aborts or faults; verify
+  436 s.
+  - **All 10 trials spent in the first two minutes** (a reference capture of each unit, then one test on u7);
+    **the agent stopped after 628 of 3600 s** reporting that "the time ran out" (it ran `date` once, at the
+    start): the clock misjudgment of trials 1 and 8 again.
+  - **What it built:** a controller for the microwaves only (u1, u4, u7; it parks on cooktops and ovens):
+    placement from feature matching against the capture, a 3 x 7 grid of presses across a hand-marked
+    keypad, each held about 18 steps, checked by counting amber pixels at the display bar. Its only lab test
+    (u7, an earlier version) missed every button: the keypad was assumed 3 cm nearer than the arm found it.
+    The fix was never tested, and the display-bar check counted no amber pixels even in its dev sim.
+  - **Reading:** a floor score from a short run on one appliance kind (11 of 60 minutes), not a measurement
+    of the task's difficulty at 1 h. Trials 9 and 10 (0.27, 0.0) are both at or below the 0.3 target; the
+    spread is the open question.

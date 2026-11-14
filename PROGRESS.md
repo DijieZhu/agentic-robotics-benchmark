@@ -34,12 +34,12 @@
 - **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
   holds the appliance-tending experiments (§12), and `tasks/arm/kitchen_appliance_tending/` the draft
   task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Next step:** confirm the appliance task's difficulty with one more frontier run on `f8eecac` (target: Opus 5.5
-  reward at most 0.3, owner rule after trial 6). Landed: directions 2 + 3 (lighting / camera variation, setting
-  requests), direction 1 (hidden unit mechanisms; anchor 0.9974), then 10 lab trials (units + 1) and a 2 h
-  agent budget (`validate-d3b7721a`). Trial 9 (run 4abdc596) scored 0.27 with all 10 trials used (the binding
-  limit); trial 8 (0.27 on the 14-trial / 3 h build) was a lower bound, the agent having quit after 21 minutes.
-  Trial 7 and the first trial 8 attempt were void (subscription rate limit, 429). See design §10 P3.
+- **Next step:** owner decision on the appliance task's agent budget and further frontier runs (target: Opus
+  5.5 reward at most 0.3, owner rule after trial 6). Landed: directions 2 + 3 (lighting / camera variation,
+  setting requests), direction 1 (hidden unit mechanisms; anchor 0.9974), 10 lab trials (units + 1), and a 1 h
+  agent budget (`bb32926`, `validate-51561368`). Trial 9 (2 h, run 4abdc596) 0.27 with every trial used;
+  trial 10 (1 h, run d64acd2d) 0.0, microwaves only, the agent quitting after 11 minutes (clock misjudgment,
+  as in trials 1 and 8). Trial 7 and the first trial 8 attempt were void (429). See design §10 P3.
   Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
   claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
   artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
