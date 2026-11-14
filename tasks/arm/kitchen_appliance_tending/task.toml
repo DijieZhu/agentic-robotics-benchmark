@@ -16,9 +16,10 @@ platform = "arm"
 cpus = 4
 memory_mb = 12288
 
-# 1 h for the P3 frontier trials (owner 2026-11-14, after trial 9); the 10 lab trials (units + 1) are the other limit.
+# 2 h for the P3 frontier trials (owner 2026-11-14: back from 1 h after trial 10); the 10 lab trials (units + 1)
+# are the main limit.
 [agent]
-timeout_sec = 3600
+timeout_sec = 7200
 network_mode = "no-network"
 
 # 18 episodes (2 per hidden unit), each at most 3 x 1500 control steps; the grader's own budget is 6000 s

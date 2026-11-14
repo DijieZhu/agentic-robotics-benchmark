@@ -6,7 +6,7 @@ to preheat or turn off the oven. The appliances are models you have not seen; yo
 cameras and feel them through the arm.
 
 Deliver a controller that carries out these requests from camera images, joint readings and the wrist
-force/torque sensor. You have **1 hour** of wall time for the whole job (exploring, lab trials, building and
+force/torque sensor. You have **2 hours** of wall time for the whole job (exploring, lab trials, building and
 testing the controller); have your controller in `/home/user/submission/` well before the time is up. A session
 still running at the limit is cut off.
 
