@@ -9,5 +9,8 @@ dataset `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF` (revision
 - **Modifications:** none to the files. At load time appliance_env.py makes visual meshes massless (as robosuite
   does for its objects), hides collision geometry from the cameras and sets every burner and temperature knob's
   friction loss to 0.20 N m and armature to 0.002 kg m^2 (RoboCasa: 0.75-1.0 N m and 1.0; owner decision
-  2026-11-12, design section 10). RoboCasa's appliance predicates are re-implemented, not imported.
+  2026-11-12, design section 10). It also adds visual state indicators (a microwave's display bar, an oven's
+  lamp; RoboCasa shows neither) and applies a unit's declared mechanism (push to turn: knob friction and
+  damping released by an axial push; reversed: knob joint axes flipped; hold to start: a held start button).
+  RoboCasa's appliance predicates are re-implemented, not imported.
 - **The robot** is the Franka Panda model of robosuite 1.5.2 (MIT), installed unmodified in the task image.
