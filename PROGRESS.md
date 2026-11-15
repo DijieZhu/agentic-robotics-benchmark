@@ -7,56 +7,9 @@
 > before every hand-off. Where it disagrees with the code or `git log`, the code wins: fix
 > this file.
 >
-> Layout: "Current state" first, then the dated log (§0 onward, oldest first), Open items,
-> Gotchas, and Appendix A (a task's own working notes, kept for history).
->
-> Last updated: 2026-11-14 (merge of `main` at `b7b55ac` into `task/physical-execution`: §12 is
-> `main`'s 2026-11-09 engine pin, `vendor/ale` @ `bfb7505`; §13 the physical-execution experiments and
-> the appliance-tending task). Before that: 2026-11-12 (§11: what landed 2026-10-27 to 2026-11-09;
-> the messy-desk notes that #12 had appended under Open items and Gotchas moved to Appendix A).
-
-## Current state (2026-11-14)
-
-- **Engine:** `vendor/ale` @ `bfb7505` (engine 0.1.1, Harbor task format, §8; the pin moved in §12).
-- **Tasks on `main` (24),** every one with `[verifier] environment_mode = "separate"`:
-  - arm (13): `arm_hidden_mechanism_box`, `bimanual_cad_design_from_photos`,
-    `bimanual_requirements_replica_from_photos`, `novel_object_6dof_grasp_detection`,
-    `object_finding_and_organizing_on_messy_desk`, `pump_skid_startup_and_operation`,
-    `robocasa_object_dynamics_from_video`, `robotic_arm_cad_design_from_photos`,
-    `robotic_arm_environment_twin_from_real_photo`, `robotic_arm_full_assembly_openarm_panda`,
-    `robotic_arm_full_assembly_so101_panda`, `robotic_arm_requirements_replica_from_photos`,
-    `shoe_lacing_and_boxing`
-  - uav (4): `aerial_search_geolocation`, `uav_cad_design_from_photos`,
-    `uav_requirements_replica_from_photos`, `visual_low_level_flight_control`
-  - hand (2): `dexhand_shape_sorter_all_pieces`, `hot3d_sharpa_retarget`
-  - driving, humanoid, quadruped, space, swarm (1 each): `driving_safety_supervisor`,
-    `furniture_assembly_from_drawings`, `quadruped_full_assembly_12dof_ur10e`,
-    `fault_adaptive_spacecraft_docking` (the worked example), `hazard_bay_build`
-- **`identity-history.json`** records every task above (the last export on `main`: `b7b55ac`, after #53).
-- **Branch `task/physical-execution`** (this work, not merged): `experiments/physical-execution/`
-  holds the appliance-tending experiments (§13), and `tasks/arm/kitchen_appliance_tending/` the draft
-  task (validates: untouched 0.0, oracle 1.0). Design: `docs/dev/20261112-appliance-tending-task-design.md`.
-- **Appliance task: difficulty step done** (owner rule 2026-11-14: settled once trial 11 scored below 0.3).
-  Final build `86c3f40`: nine scored units (cooktop / microwave / oven, three each) with hidden mechanisms,
-  lighting / camera variation, setting and compositional requests, 10 lab trials (units + 1), 2 h agent time;
-  anchor 0.9974, `full_at` 0.90; `validate-fec59fbd` passes (engine `1cdbc02`, where trials 1-12 ran), and
-  `validate-4683c85b` on `bfb7505` after `main` was merged in (2026-11-14). Opus 5.5 on the 10-trial build: 0.27 (trial 9),
-  0.0 (trial 10, 1 h), 0.0 (trial 11); every agent stopped early, two believing the time was up (design §10 P3).
-  Trial 12 (same build, run 7f305f80) then scored **0.32**, the first run to use most of the time (68 of 120
-  minutes); owner decision 2026-11-14: judged on the mean of the 2 h runs (0.27, 0.0, 0.32: 0.20), the task
-  meets the target and the step stays closed.
-- **Next step:** the pull request from `task/physical-execution` to `main` (branch pushed 2026-11-14), then the
-  maintainer flow (review, merge, registry export). Settled 2026-11-14: the slug `kitchen_appliance_tending`
-  (registered in the coordination sheet by the owner), no depth images in v1 (design §10 P3).
-  Trial command: from `vendor/ale`, `ale run ../../tasks/arm/kitchen_appliance_tending --agent
-  claude-code --auth subscription --model claude-opus-5-5 --set agent.version=2.1.309 --set
-  artifacts.collect=host --runs-dir ~/arb-data/ale-runs` (the token is in `vendor/ale/.env`, git-ignored).
-  Owner decisions taken on 2026-11-12: knob friction 0.20 N m; v1 requests = burner on/off, preheat, turn
-  the oven off, microwave start/stop (ranges and the range door dropped after the 20-seed recheck); the
-  reference gets the truth by token. Settled on 2026-11-14: the agent budget (2 h), the slug
-  (`kitchen_appliance_tending`, registered in the sheet), no depth images.
-
-## Dated log
+> Last updated: 2026-11-09 (§11: `vendor/ale` @ `bfb7505`, a task names its GPU models).
+> Before that: 2026-11-07 (§10: the asset dataset is renamed `ale-robotics-assets`);
+> 2026-11-03 (§8: the tasks move to the Harbor-based engine, `vendor/ale` @ `1cdbc02`).
 
 ## 0. 2026-09-07 — created by the rebrand from "ALE Robotics"
 
@@ -427,13 +380,6 @@ Gotchas found on the way:
   benchmark; its success rate is 21--25%, versus the previous Opus 5.5 46--48/48 result.
 - Not yet validated on the Harbor-based engine (§8): PR #10's branch pins `vendor/ale` at
   `90a7c1c`, and §8's `validate-44ad164a` on `1cdbc02` ran the version before this hardening.
-- **2026-11-12 note:** PR #10 was merged on 2026-11-07 (`7aa5f4e`) in a later form than the
-  one above: the task was converted to the Harbor layout, the author's controller was replaced
-  as the reference by a privileged one (`solution/privileged/oracle.py`), and the grader moved
-  to a fixed hidden set of 48 episodes. `tests/anchor.json` now reads
-  `mean_docking_quality` 0.98355 with `full_at` 0.98 (48/48 docked, deterministic on the set);
-  the author's controller scores 0.540 on that set (reward 0.56). Its `source` says the
-  `ale validate` oracle pass on this version is still to be recorded (Open items).
 
 ## 10. 2026-11-07 — the asset dataset is renamed `ale-robotics-assets`
 
@@ -446,50 +392,7 @@ re-vendored the fetcher (its docstring names the dataset). File lists, hashes an
 are unchanged, since a Hub rename keeps the repository's history. Every task with assets has a new
 content digest, so the registry is re-exported after the merge.
 
-## 11. 2026-10-27 to 2026-11-09 — twenty tasks land; kit and verifier hardening
-
-Recorded on 2026-11-12 from `git log` (this file was not updated while it happened). Each task
-merge is followed by an `identity-history: record …` commit.
-
-- **Tasks merged before the Harbor move (§8):** `robotic_arm_cad_design_from_photos` (#15),
-  `robotic_arm_requirements_replica_from_photos` (#13), `robotic_arm_full_assembly_so101_panda`
-  (#16), `arm_hidden_mechanism_box` (#18), `robocasa_object_dynamics_from_video` (#17),
-  `visual_low_level_flight_control` (#19), `hot3d_sharpa_retarget` (#26),
-  `dexhand_shape_sorter_all_pieces` (#32). §8's conversion moved them with the rest.
-- **Tasks merged on the Harbor layout:** `bimanual_cad_design_from_photos` (#29),
-  `bimanual_requirements_replica_from_photos` (#43), `robotic_arm_full_assembly_openarm_panda`
-  (#45), `furniture_assembly_from_drawings` (#34), `driving_safety_supervisor` (#24),
-  `aerial_search_geolocation` (#28), `unmanned_aerial_vehicle_requirements_replica_from_photos`
-  (#23, renamed `uav_requirements_replica_from_photos` in #65), `shoe_lacing_and_boxing` (#48),
-  `hazard_bay_build` (#31), `novel_object_6dof_grasp_detection` (#51),
-  `uav_cad_design_from_photos` (#22), `robotic_arm_environment_twin_from_real_photo` (#63),
-  `object_finding_and_organizing_on_messy_desk` (#12; its working notes are Appendix A, its
-  final anchor `mean_episode_score` 0.908 with `full_at` 0.98 under S = O × R, measured by
-  `validate-57b10a4e` / `validate-afd10a26` on 2026-11-08).
-- **Kit (`59f6815`, 2026-11-04):** one wall-clock deadline per solver request (blank lines or a
-  trickle of output can no longer extend it); `deprivileged` resolves `runuser` by absolute path
-  and reclaims any non-root-owned directory on root's `PATH` before agent code runs (the base
-  image leaves `/usr/local/bin` agent-writable). Re-vendored into every task and the template.
-- **Separate verification:** five tasks moved to `environment_mode = "separate"` on 2026-11-04
-  (`robotic_arm_cad_design_from_photos`, `robotic_arm_full_assembly_so101_panda`,
-  `robotic_arm_requirements_replica_from_photos`, `fault_adaptive_spacecraft_docking`,
-  `visual_low_level_flight_control`); every task on `main` now verifies separately.
-- **`lint_domain` (`b564481`):** a grader's copy of the agent's givens must stay byte-identical
-  to the payload copy.
-- **Verify-start survivors (#64, 2026-11-08):** in the separate verifier the base image's
-  supervisord respawns the agent account's desktop as fast as a grader kills it. Ten graders
-  zeroed such runs; they now stop the survivors and fail only on a process still running after
-  3 s. Each has a test under `tests/test_verify_survivor_*.py`.
-- **Assets:** fetch in parallel (#54); `driving_safety_supervisor` and `aerial_search_geolocation`
-  fetch every build-time download from the asset dataset (#59); the dataset rename (§10, #58).
-- **Trajectories (#57):** `scripts/trajectories.py` and the `skills/agent-trajectory-archiving`
-  skill keep model runs in one shape (one trajectory per task and agent, `run.json` with score,
-  tokens and list-price cost).
-- **Spacecraft (#10, 2026-11-07):** see the note under §9.
-- Not rechecked here: which of these tasks have a recorded `ale validate` on `1cdbc02`. Each
-  task's `tests/anchor.json` (`source`, `recheck`) and its pull request carry that record.
-
-## 12. 2026-11-09 — the engine pin lets a task name its GPU models
+## 11. 2026-11-09 — the engine pin lets a task name its GPU models
 
 `vendor/ale` moves from `1cdbc02` to upstream `main` `bfb7505` (engine version still 0.1.1,
 eleven merged pull requests). AgentsLastExam/ale#108 lets a task name the GPU models it accepts
@@ -560,86 +463,26 @@ before it starts. `1cdbc02` refused the key as an unsupported Harbor field.
 - Next: run `hazard_bay_build`'s missions on an H100 on a quiet host, and add `H100` if they
   pass.
 
-## 13. 2026-11-11 to 2026-11-12 — physical-execution experiments; appliance-tending design
-
-Branch `task/physical-execution` (`1fc3b10`): `experiments/physical-execution/` holds RoboCasa
-feasibility pilots, run on the author's Mac and in a Linux aarch64 VM against a RoboCasa checkout
-outside this repository (`simulator-lab`, RoboCasa `3443cdf`, robosuite `5ce6643`, conda env
-`arb-robocasa`). They are not benchmark tasks, and every controller in them is a privileged
-scripted reference (simulator poses, joints and contacts).
-
-- **Small-box transport** (`BOX_TRANSPORT_TEST.md`): a preloaded box carried 0.42 m, 45/45 (30
-  development + 15 held-out cases, 50/100/200 g ballast). Robot loading plus transport has not
-  passed. The wide-tray rim grasp (`LOADED_TRAY_TEST.md`) is kept as history only: heavy loads
-  exposed unreliable rim contacts.
-- **Appliance primitives** (`APPLIANCE_PILOT_TEST.md`, 2026-11-12, physics only): stove knob on,
-  microwave start, oven door open, oven rack out. Tuned kitchen (layout 2, style 1): 20/20 dev and
-  20/20 holdout seeds. Unseen kitchens (one seed each): 17/28; the rack hook failed 0/7, the
-  other three mostly transfer. About 145 control steps/s on 4 cores, 1.9 GB, without cameras.
-  Only the forward direction of each control was tested.
-- **Design:** `docs/dev/20261112-appliance-tending-task-design.md`. Draft 1 used a mobile
-  `PandaOmron` in RoboCasa's full runtime. Draft 2 (owner direction, same day) drops locomotion,
-  because navigating from cameras would likely floor every frontier model at 0, and follows
-  `arm_hidden_mechanism_box`: a fixed Panda, one single-file MuJoCo environment shared by the dev
-  sim, the lab and the grader, appliance models extracted from RoboCasa's CC-BY-4.0 fixtures, hidden
-  units with a 16-trial lab, on-request RGB plus wrist F/T, two-stage credit per request (reached,
-  then completed with the hand clear and nothing else disturbed), a privileged reference. Phases P1
-  (environment) to P5 (gates and frontier runs); P3 checks the score does not floor at 0 before the
-  task is built. Open owner decisions are marked **[owner]** there.
-- **P1 done (2026-11-12):** `experiments/physical-execution/appliance_env/` (prototype environment,
-  inventory, reach, predicate and cost scripts; results in the design's §10). All 125 RoboCasa
-  stove / stovetop / microwave / oven models load in plain MuJoCo; their source is the CC-BY-4.0
-  dataset `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF`; a fixed Panda 0.55 m from
-  the unit front with its base 0.65 m high reaches every control of 123 of them (kinematically);
-  the re-implemented predicates pass, including physical microwave button presses; 183-231 control
-  steps per second without images, 0.014-0.06 s per OSMesa image, 1.27 GB peak.
-- **P2 first pass (2026-11-12):** `reference.py` (privileged primitives behind a collision-checked IK
-  planner), `run_reference.py`, `batch.sh`, `summarize.py`. Environment: unit-facing home pose, RoboCasa's
-  once-per-step state update and gripper-only contact, wrench in the world frame, and knob friction set
-  to 0.20 N m (RoboCasa's 0.75-1.0 N m exceeds what this controller delivers; approved by the owner).
-  Batch over 123 models: knobs 74-88 %, preheat 57-68 %, microwave start/stop 93-94 %, range door 75 %,
-  oven door 21 %, microwave door 0 % (not working yet). Results in the design's §10.
-- **P2 second pass (2026-11-12):** `episode.py` (initial state, three requests, two-stage credit),
-  `run_episodes.py`, `batch_episodes.sh`. Fixed two leaks (cameras and the home pose followed the
-  jittered unit). Untouched 0.00; reference episodes over 123 models x 5 seeds: cooktop 0.83, range
-  0.79, microwave 0.91, oven 0.70; models at 1.00 in every seed: 17 / 2 / 34 / 11. Selection rule for the
-  hidden and practice units proposed in the design's §10.
-  Then "turn the oven off" was added (owner): with a smaller preheat turn (target 0.32 of the knob's
-  range) ranges score 0.85 and ovens 0.67, with 2 and 8 models at 1.00 in every seed.
-- **P3 (2026-11-12 to 2026-11-13):** the reference speaks the grading wire (`reference.Shadow`); units drawn
-  (`tests/hidden/selection.json`; ranges failed the 20-seed recheck and are dropped for now, owner);
-  draft task `tasks/arm/kitchen_appliance_tending/` (after arm_hidden_mechanism_box; 9 graded episodes,
-  16 lab trials, 2 h agent budget for the trial); anchor 1.0 / full_at 1.0 from 7 oracle engine runs;
-  `ale validate` passes; practice-model baseline 0.926 on the practice units. Frontier trial 1 (Opus 5.5,
-  run e83a9535): reward 0.48 (u0 0.67, u1 0.11, u2 0.67), but the agent misjudged the clock and stopped after
-  934 of 7200 s with 4 of 16 lab trials used, so it is a lower bound. Trial 2 (run a9132c62): reward 0.93
-  (u0 1.0, u1 0.78, u2 1.0; 70 min, all 16 lab trials), the same lab-calibration strategy: too easy as built.
-  Owner: keep the calibration framing, tighten the budget: six scored units (two per kind), 8 lab trials, 12
-  episodes (`12e02b3`); anchor re-measured 0.9911 / full_at 0.95 (`aab6476`; u5 Oven053 loses a request near
-  the jitter limit, the reference's grasp planner); validates. Trial 3 (run ed315672): reward 0.43; trial 4
-  (run 322e0b17): 0.41.
-  Design §10, P3.
-- **Checked on 2026-11-12:** none of the public ALE repositories (`AgentsLastExam/ale`,
-  `AgentsLastExam/ale-tasks-base`, `rdi-berkeley/agents-last-exam`) holds a RoboCasa task; on
-  `main` here, `robocasa_object_dynamics_from_video` (RoboCasa assets, open loop) and
-  `arm_hidden_mechanism_box` (robosuite Panda, LIBERO scene, closed loop) are the related tasks.
-
 ## Open items
 
-- **Appliance-tending task (§13):** the owner decisions are settled (Current state); the task's pull request
-  is the next step.
-- **Spacecraft (#10):** `tests/anchor.json` says the `ale validate` oracle pass on the merged
-  version is still to be recorded.
-- **Website:** the display-only change (no backend, no leaderboard; `/submit` links the two
-  guidelines; the registry validated against `schemas/task-registry.schema.json`) and installing
-  a fresh export from a clean `main`. Status not tracked in this repository; check the website
-  repository.
-- **Pull request #4** (`ball_physics_stepper`), if still open: re-vendor the kit (the CI byte
-  comparison) and use 64-bit keyed-hash seeding if its agent holds a simulator copy. Not
-  rechecked on 2026-11-12 (`gh` is not installed on the dev host).
-- **The guidelines' example link** (a `task.yaml` on the `contrib/` branch, in the Google Doc)
+- Website, display-only pull request: remove the backend (API, database service, sign-in,
+  upload, review, admin), the leaderboard and the run pages; `/submit` links the two
+  guidelines; the registry is validated against this repository's schema; install a fresh
+  export made from a clean `main`. The production database volume is left untouched on the
+  server.
+- After this merges: export the registry from a clean `main`, commit `identity-history.json`
+  (the spacecraft task is new; the `drone_hover` record stays as history), and install the
+  export in the website.
+- Review PR #10's hybrid-wake, telescoping-boom and encoder-mux hardening (§9). The measured
+  GPT-6.1 Sol reward is 0.764 rather than the aspirational sub-0.5 target, but it no longer
+  saturates and only docks 21--25% of hidden episodes. Any further reduction should improve
+  the reference policy or add a new observable capability gap, not tighten penalties.
+- Pull request #4 (`ball_physics_stepper`) must re-vendor the kit from #6 (CI's byte
+  comparison), and should move to 64-bit, keyed-hash seeding if its agent holds a simulator
+  copy.
+- The guidelines' example link (a `task.yaml` on the `contrib/` branch, in the Google Doc)
   should point at the converted example's `task.toml` on `main`; the doc is the owner's.
-- **Engine (upstream) issues that skew agent runs:**
+- Engine (upstream) issues that skew agent runs:
   - the claude-code harness ends a model stream after 600 s without a byte (300 s before
     1cdbc02; the gateway's 15 s keep-alive covers silence inside a stream, not before its
     first byte);
@@ -647,53 +490,7 @@ scripted reference (simulator poses, joints and contacts).
     (`gateway/server.py`), which leaves long-thinking models with empty turns;
   - egress is opened before verify while a closed_loop solver runs.
 
-## Gotchas
-
-- The appliance lab's reply schema lists every string as an enum (`request_text` included). A new request
-  text that episode.py can open but the schema lacks makes the lab answer "internal lab error" and still
-  charge the trial; the grader does not use that schema, so `ale validate` stays green. After any change to
-  requests or observations, run `experiments/physical-execution/appliance_env/lab_check.py`.
-- On the TASL host, `claude` is not on `PATH` and the system Node (v12) is too old to install it. The
-  desktop app's CLI lives at `~/.claude/remote/ccd-cli/<version>` (2.1.321 on 2026-11-13); use it for
-  `setup-token`: from `vendor/ale`, `CLAUDE_CONFIG_DIR="$PWD/.ale/auth/claude-code" ~/.claude/remote/ccd-cli/<version> setup-token`.
-- `export_registry.py` refuses a dirty tree on purpose: `content_digest` covers every
-  regular file, ignored `__pycache__/` included. Export from a clean commit; `--allow-dirty`
-  is for throwaway exports and never writes the canonical `identity-history.json`.
-- The template and the worked example each validate in well under a minute.
-- Engine commands run from `vendor/ale` with `VIRTUAL_ENV=` cleared and
-  `DOCKER_HOST=unix:///var/run/docker.sock` pinned (two docker contexts on the dev machine).
-  `uvx ruff`, not `uv run ruff` (ruff is not a project dependency).
-- `uv venv --python 3.12` puts its managed interpreter under `/root/.local/share/uv`, which
-  the agent account cannot traverse; task images set `UV_PYTHON_INSTALL_DIR=/opt/uv-python`
-  and keep the Dockerfile's agent-UID import self-check. The agent UID must traverse (not
-  only read) everything the venv points at.
-- The engine stages `ale_verify` into the image's `python3`, else `python3.12` (3.12+), else
-  its own Python, which lacks the task's packages, and names it in `ALE_VERIFY_PYTHON`
-  (sections 8 and 12).
-- `ale validate` does not keep a stage's stderr; it is in the episode's
-  `trace.execution.jsonl`.
-- A null anchor is not an error: the engine fails the run with `oracle_not_full` and
-  `harness/ale_onboard.py` reads that as `needs_anchor` with the measured value.
-- A task that hands the agent a copy of its simulator must seed episodes with 64 bits and
-  draw hidden values through a keyed hash; an LCG or a 31-bit seed gives the episode away.
-- The dev host `TASL` (`ucrtasl`) has no `gh` and, as of 2026-11-12, no engine venv
-  (`vendor/ale/.venv`): run `cd vendor/ale && VIRTUAL_ENV= uv sync --frozen --all-groups` before
-  the gates. `ale-qemu-runner:0.1.1` is already built there. `uv` is a user install at
-  `~/.local/bin/uv` (not on the default `PATH`); the appliance P1 venv, Python and RoboCasa fixture
-  assets live in `~/arb-data/` (outside the repository).
-- `pgrep -f <pattern>` inside a `bash -c` wait loop matches the loop's own command line; select
-  by something only the target process carries.
-
-## Appendix A. `object_finding_and_organizing_on_messy_desk` working notes (PR #12, 2026-10-23 to 2026-10-24)
-
-These notes came in with #12, appended after Open items (as duplicate §7–§11) and under
-Gotchas; they moved here unchanged on 2026-11-12. They predate the task's Harbor conversion,
-so they use the old paths (`verify/` = `tests/`, `setup/payload/` = `environment/setup/payload/`,
-`oracle/` = `solution/`), and the anchors in them were superseded: the merged task scores
-S = O × R against a privileged reference, `mean_episode_score` 0.908 with `full_at` 0.98 (§11,
-`tests/anchor.json`).
-
-### A.1 2026-10-23 — messy-desk PR #12 diagram refinement
+## 7. 2026-10-23 — messy-desk PR #12 diagram refinement
 
 - Redrew the object and request automata as compact, color-coded Mermaid flowcharts
   in the task's scoring README and PR description. Kept state names, object values,
@@ -710,7 +507,7 @@ S = O × R against a privileged reference, `mean_episode_score` 0.908 with `full
 - Validation remains pending: stabilize oracle grasping, measure its anchor, run
   `ale validate`, and measure frontier-model difficulty before marking the PR ready.
 
-### A.2 2026-10-23 — first-target-hold request credit
+## 8. 2026-10-23 — first-target-hold request credit
 
 - Request points award +1 for the first current target hold per request, topped up
   to 2 points by verified delivery; a correct absence declaration also earns 2 points. Repeated
@@ -724,7 +521,7 @@ S = O × R against a privileged reference, `mean_episode_score` 0.908 with `full
 - Focused request-credit tests cover deduplication, completion, failure, absence, current
   holds and copy parity. Full Isaac rollout validation and anchor measurement remain pending.
 
-### A.3 2026-10-23 — messy desk: dev-wire live score, exact depth, oracle grasping (Claude session)
+## 9. 2026-10-23 — messy desk: dev-wire live score, exact depth, oracle grasping (Claude session)
 
 - Practice tools: every `step`/`reset` reply of the simulator carries the running score (the same
   `EpisodeScorer`), `{"cmd": "score"}` adds per-object value/baseline, `{"cmd": "request", ...}`
@@ -743,7 +540,7 @@ S = O × R against a privileged reference, `mean_episode_score` 0.908 with `full
   is running; refs.json must be rebuilt from `calib_collect2.py` output once grasps are stable.
 - Frontier run decided: Opus 5.5, claude-code harness, subscription auth, 1 episode first.
 
-### A.4 2026-10-23 — messy desk: scene physics fixes found while debugging the oracle (Claude session)
+## 10. 2026-10-23 — messy desk: scene physics fixes found while debugging the oracle (Claude session)
 
 - Every YCB object used to spawn lying on its side: the stock `Axis_Aligned` meshes are authored
   with their height along local Y and `_spawn` only applied a yaw. Desk arrivals now stand
@@ -770,7 +567,7 @@ S = O × R against a privileged reference, `mean_episode_score` 0.908 with `full
   width check keeps a 14 mm margin (the hand-camera cloud loses ~7 mm per side); tall objects are
   grasped mid-body; rim grasps go 22 mm deep; the behaviour loop restarts after any exception.
 
-### A.5 2026-10-23 — messy desk: arm motion, reach, piles, oracle search (Claude session)
+## 11. 2026-10-23 — messy desk: arm motion, reach, piles, oracle search (Claude session)
 
 Opus 5.5 frontier run in flight (`ale run ... --agent claude-code --model claude-opus-5-5 --set
 agent.version=2.1.309`; the harness default 2.1.227 is rejected by the model). `ale run` uploads
@@ -804,7 +601,30 @@ commit 2278f3f until that run is scored; the changes below live in `setup/payloa
 - Domain lint: the practice grader's live line no longer reads a `"score"` key (the lint's
   leaky-output pattern); only the two expected null-anchor problems remain.
 
-### A.6 2026-10-23 to 2026-10-24 — anchor, validate and oracle rounds
+## Gotchas
+
+- `export_registry.py` refuses a dirty tree on purpose: `content_digest` covers every
+  regular file, ignored `__pycache__/` included. Export from a clean commit; `--allow-dirty`
+  is for throwaway exports and never writes the canonical `identity-history.json`.
+- The template and the worked example each validate in well under a minute.
+- Engine commands run from `vendor/ale` with `VIRTUAL_ENV=` cleared and
+  `DOCKER_HOST=unix:///var/run/docker.sock` pinned (two docker contexts on the dev machine).
+  `uvx ruff`, not `uv run ruff` (ruff is not a project dependency).
+- `uv venv --python 3.12` puts its managed interpreter under `/root/.local/share/uv`, which
+  the agent account cannot traverse; task images set `UV_PYTHON_INSTALL_DIR=/opt/uv-python`
+  and keep the Dockerfile's agent-UID import self-check. The agent UID must traverse (not
+  only read) everything the venv points at.
+- The engine stages `ale_verify` into the image's `python3`, else `python3.12` (3.12+), else
+  its own Python, which lacks the task's packages, and names it in `ALE_VERIFY_PYTHON`
+  (sections 8 and 11).
+- `ale validate` does not keep a stage's stderr; it is in the episode's
+  `trace.execution.jsonl`.
+- A null anchor is not an error: the engine fails the run with `oracle_not_full` and
+  `harness/ale_onboard.py` reads that as `needs_anchor` with the measured value.
+- A task that hands the agent a copy of its simulator must seed episodes with 64 bits and
+  draw hidden values through a keyed hash; an LCG or a 31-bit seed gives the episode away.
+
+### 2026-10-23 — provisional anchor
 - Oracle a5c3982 measured through the task's verify stage (task image, network off): episode 0 S = 0.641 (O 0.72, R 0.56); episodes 1–2 running. Anchor recorded as 0.641058, full_at 0.8 (template default), marked provisional.
 - Opus 5.5 run 1 (old env build, timed out): submission graded offline on practice seed 11, 20000 steps: S = 0.353 (O 0.61, R 0.10). Run 2 on the current build in progress.
 - Open: full_at from the 3-episode spread; official `ale validate` once the GPU is free.
