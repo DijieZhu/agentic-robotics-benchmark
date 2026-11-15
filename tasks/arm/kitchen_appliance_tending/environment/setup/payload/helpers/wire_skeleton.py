@@ -4,19 +4,23 @@
     from wire_skeleton import serve
 
     class MyController(object):
-        def reset(self):            # called at the start of every episode
+        def reset(self):            # called at the start of every episode (optional)
             ...
         def act(self, obs):         # obs: the observation dict; return the 8-number action
             return [...]
 
-    serve(MyController)            # prints READY, then answers reset / act / close
+    serve(MyController)            # builds ONE controller, prints READY, then answers reset / act / close
+
+The controller is built once and serves the whole grading run (until a restart after a crash): its `reset`
+hook runs at the start of every episode, and whatever it keeps on itself (what it learned about a unit,
+`obs["unit"]`) carries into later episodes.
 
 Repeated step indices: the grader may query the same `t` more than once with different
 observations and applies only one reply (it does not say which). `serve` keeps a copy of the
 controller state from before the first query of each `t`, answers every query of that `t` from a
 fresh copy of it, and when step `t + 1` arrives keeps the candidate whose observation is closest
-to the new one (gripper position reading, ee_pos). Diagnostics go to stderr; stdout carries protocol
-messages only.
+to the new one (gripper position reading, ee_pos); when an episode ends on a repeated step, the copy from
+before that step is kept. Diagnostics go to stderr; stdout carries protocol messages only.
 """
 
 import copy
@@ -50,8 +54,12 @@ def serve(controller_factory):
         kind = req.get("type")
         try:
             if kind == "reset":
-                ctrl = controller_factory()
-                ctrl.reset()
+                if len(candidates) > 1:            # the last step was asked twice: which reply counted is unknown
+                    ctrl = snapshot
+                elif candidates:
+                    ctrl = candidates[0][1]
+                if hasattr(ctrl, "reset"):
+                    ctrl.reset()
                 cur_t, snapshot, candidates = None, None, []
                 print(json.dumps({"ok": True}), file=out, flush=True)
             elif kind == "act":

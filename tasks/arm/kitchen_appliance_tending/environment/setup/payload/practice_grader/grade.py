@@ -5,12 +5,15 @@
 
 Runs your controller (bash run.sh in --submission) against /home/user/appliance_env.py with the practice
 units (/home/user/units.json; models in /home/user/units/), the episodes and credit of
-/home/user/episode.py. It speaks the same wire as the hidden grader: READY within 120 s, each reply within
-30 s, repeated step indices with perturbed observations (only the reply to the real observation is
-applied), an aborted episode scores 0 and the controller is restarted (at most 3 restarts), and the
-controller runs with only AF_UNIX sockets (the same seccomp filter as at grading time). It reports
-whether the run stayed inside the grading time budget. It never touches the hidden units, does not know
-the reference value and prints no score.
+/home/user/episode.py. It speaks the same wire as the hidden grader: READY, each reply within 30 s,
+repeated step indices with perturbed observations (only the reply to the real observation is applied; a
+pair in which both replies command no motion is not counted, and fewer than 10 % of the counted pairs
+differing would fail the hidden grader's check), an aborted episode scores 0 and the controller is
+restarted (at most 3 restarts), and the controller runs with only AF_UNIX sockets (the same seccomp filter
+as at grading time). One difference: here each line printed before READY gets its own 120 s (at most 200
+lines), while the hidden grader allows 120 s for the whole start. It reports whether the run stayed inside
+the grading time budget. It never touches the hidden units, does not know the reference value and prints no
+score.
 """
 
 import argparse
@@ -173,6 +176,17 @@ def differ(a, b):
     return len(aa) != len(bb) or max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
 
 
+def still(action):
+    """The hidden grader's rule: a reply whose first six numbers are all within 1e-9 of zero commands no motion;
+    a pair of two such replies is not counted."""
+    if not isinstance(action, list) or len(action) < 6:
+        return False
+    for x in action[:6]:
+        if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or abs(x) > 1e-9:
+            return False
+    return True
+
+
 def valid_action(action):
     if not isinstance(action, list) or len(action) != 8:
         return False
@@ -199,7 +213,7 @@ def main():
     ids = a.units or sorted(table)
     seeds = a.seed if a.seed else PRACTICE_SEEDS[:max(1, min(a.episodes, len(PRACTICE_SEEDS)))]
     rng = random.Random(2026)
-    pairs = differed = 0
+    pairs = differed = idle = 0
     results = []
     t0 = time.monotonic()
     try:
@@ -230,8 +244,11 @@ def main():
                             else:
                                 act = wire.act(t, wobs)
                                 b = wire.act(t, other)
-                            pairs += 1
-                            differed += int(differ(act, b))
+                            if still(act) and still(b):
+                                idle += 1
+                            else:
+                                pairs += 1
+                                differed += int(differ(act, b))
                         else:
                             act = wire.act(t, wobs)
                         if not valid_action(act):
@@ -242,7 +259,8 @@ def main():
                             raise WireError("simulation unstable (an arm joint over 8 rad/s or a unit joint over 30 rad/s)")
                     sc = ep.score()
                     results.append({"unit": uid, "seed": seed, "episode_credit": round(sc["credit"], 5), "steps": t,
-                                    "requests": [{k: r[k] for k in ("text", "t_open", "t_close", "reached", "completed")}
+                                    "requests": [{k: r[k] for k in ("text", "t_open", "t_close", "reached", "completed",
+                                                                    "forfeited", "outcome")}
                                                  for r in sc["requests"]]})
                 except (WireError, ValueError, TypeError) as exc:
                     results.append({"unit": uid, "seed": seed, "episode_credit": 0.0, "aborted": str(exc)[:200]})
@@ -258,6 +276,8 @@ def main():
         "episodes": results,
         "repeated_t_pairs": pairs,
         "repeated_t_pairs_that_differed": differed,
+        "repeated_t_pairs_not_counted_no_motion": idle,
+        "repeated_t_check": "would pass" if pairs == 0 or differed >= 0.1 * pairs else "would FAIL (the whole run scores 0)",
         "wall_seconds": round(wall, 1),
         "within_grading_time_budget": wall <= BUDGET_PER_EPISODE * max(1, len(results)),
         "note": "dev sim with the practice units; this is not your score",
