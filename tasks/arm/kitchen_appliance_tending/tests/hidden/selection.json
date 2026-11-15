@@ -1,6 +1,6 @@
 {
  "drawn_utc": "2026-11-13T05:13:48+00:00",
- "rule": "Candidates: P2 models at 1.00 in all 5 seeds (ep_batch2 for cooktops and microwaves, ep_oven_t32 for ranges and ovens). Each candidate runs the in-process reference (run_episodes.py) on the 20 recheck seeds below, drawn with os.urandom before any run; survivors score 1.00 in all 20. Per kind, survivors are ordered by sha256(draw_key + model); the first is the hidden unit, the second the practice unit.",
+ "rule": "Candidates: the models on which an earlier screening of the in-process reference scored 1.00 in all of its 5 seeds. Each candidate runs the in-process reference on the 20 recheck seeds below, drawn with os.urandom before any run; survivors score 1.00 in all 20. Per kind, survivors are ordered by sha256(draw_key + model); the first is the hidden unit, the second the practice unit.",
  "recheck_seeds": [
   4211168605879038351,
   17995080575266839894,
@@ -333,7 +333,7 @@
    "mean": 0.8583
   }
  },
- "owner_decision": "2026-11-12: no range survived the recheck (Stove028 14/20, Stove075 15/20); ranges are dropped for now, so the units are one cooktop, one microwave and one oven, and 'Open the oven door' leaves v1.",
+ "ranges_dropped": "2026-11-12: no range survived the recheck (Stove028 14/20, Stove075 15/20); ranges were dropped, so the units are cooktops, microwaves and ovens, and the request 'Open the oven door' (ranges only) was removed.",
  "selected": {
   "cooktop": {
    "hidden": [
@@ -409,8 +409,8 @@
    ]
   }
  },
- "extension_2026_11_13": "Owner decision 2026-11-13, after frontier trials 1-2 (reward 0.48 and 0.93, both calibrating the scored units through the lab): keep the calibration framing and tighten the budget. Two scored units per kind: selected.<kind>.hidden is now a list; its first entry is the original draw, its second the next model in that kind's survivors_in_draw_order after the practice unit (no new draw). Ids: u0-u2 = cooktop, microwave, oven (first entries), u3-u5 = the second entries in the same kind order.",
- "extension_2026_11_13b": "Owner decision 2026-11-13 (second): state indicators on microwaves and ovens, compositional cooktop requests, three scored units per kind with lab trials = units + 5 (14). The third entry of selected.<kind>.hidden is the next model in that kind's survivors_in_draw_order (no new draw); ids u6-u8 = cooktop, microwave, oven.",
+ "extension_2026_11_13": "2026-11-13: more scored units, so that calibrating each of them through the lab takes most of the trial budget. Two scored units per kind: selected.<kind>.hidden is now a list; its first entry is the original draw, its second the next model in that kind's survivors_in_draw_order after the practice unit (no new draw). Ids: u0-u2 = cooktop, microwave, oven (first entries), u3-u5 = the second entries in the same kind order.",
+ "extension_2026_11_13b": "2026-11-13 (second extension): state indicators on microwaves and ovens, compositional cooktop requests, three scored units per kind. The third entry of selected.<kind>.hidden is the next model in that kind's survivors_in_draw_order (no new draw); ids u6-u8 = cooktop, microwave, oven.",
  "quirks": {
   "stovetops/Stovetop011": [
    "push_to_turn"
@@ -440,5 +440,5 @@
    "reversed"
   ]
  },
- "quirks_note": "Owner decision 2026-11-14 (direction 1): unit mechanisms (appliance_env.QUIRKS), at most one per unit, assigned by design rather than drawn: six of the nine scored units carry one (u0, u5 push_to_turn; u2, u3 reversed; u1, u4 hold_start), u7 (Microwave071) already has buttons whose contact areas sit away from their keys, u6 and u8 have none; so seven units call for more than one lab trial against five spare trials. Each practice unit carries one kind (p0 push_to_turn, p1 hold_start, p2 reversed) so every mechanism can be studied in the dev sim. The reference completes all three (in-process recheck about 0.97, 90 episodes)."
+ "quirks_note": "2026-11-14: unit mechanisms (appliance_env.QUIRKS), at most one per unit, assigned by design rather than drawn: six of the nine scored units carry one (u0, u5 push_to_turn; u2, u3 reversed; u1, u4 hold_start), u7 (Microwave071) already has buttons whose contact areas sit away from their keys, u6 and u8 have none; so seven units hide something a single trial may not show. Each practice unit carries one kind (p0 push_to_turn, p1 hold_start, p2 reversed) so every mechanism can be studied in the dev sim. The reference completes all three (in-process recheck about 0.97, 90 episodes)."
 }

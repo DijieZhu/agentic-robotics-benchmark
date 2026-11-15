@@ -1,10 +1,10 @@
-"""Appliance tending, P2: the privileged reference's primitives in the P1 environment.
+"""Kitchen appliance tending: the privileged reference's primitives.
 
 A scripted controller that reads the simulator's truth (control geometry, joint axes, joint values)
 and acts only through `ApplianceEnv.step` actions, the same 8 numbers a submission sends:
-`[dx, dy, dz, drx, dry, drz, grip, cams]`. Nothing is set directly after reset. It ports the
-RoboCasa pilot's primitives (`../appliance_primitives_pilot.py`) to this environment and adds the
-reverse directions.
+`[dx, dy, dz, drx, dry, drz, grip, cams]`. Nothing is set directly after reset. It ports
+RoboCasa's appliance primitives (a knob turn, a button press, a door pull) to this environment and adds
+the reverse directions.
 
     drv = Driver(env)
     drv.knob("front_left", "on")       # or "off"; "temp" for the temperature knob (preheat)
@@ -12,8 +12,8 @@ reverse directions.
     drv.door("open")                   # or "close"
 
 Every primitive ends with the hand withdrawn and returns a dict of measurements; failures raise
-PrimitiveError with the stage that failed. Camera pose estimation (the reference's only perception)
-is a later P2 step; here the unit's pose is read from the simulator.
+PrimitiveError with the stage that failed. It has no perception: the unit's pose and control states are
+read from the simulator (in a grading run, from the token truth).
 """
 
 import math
@@ -26,14 +26,14 @@ import episode as EP
 
 IK_STARTS = np.random.default_rng(20261113).uniform(0.15, 0.85, (6, 7))   # fixed restarts for the IK check
 PRE = 0.12                     # m: pre-grasp stand-off along the approach
-KNOB_ON_TARGET = 0.60          # rad: commanded past RoboCasa's 0.35 on-threshold, for margin (pilot)
+KNOB_ON_TARGET = 0.60          # rad: commanded past RoboCasa's 0.35 on-threshold, for margin
 KNOB_OFF_TARGET = 0.05         # rad: back towards the joint's lower limit
 PUSH_DEPTH = 0.020              # m: how far past the grasp the hand is commanded along a push-to-turn knob's axis
 SET_CHUNK = 1.2                # rad: the largest turn per grasp for a setting request
 SET_TOL = 0.08                 # rad: a setting is reached within this of its goal angle
 SET_WITHIN = {"low": 0.5, "medium": 0.5, "high": 0.35}    # where inside a setting's band to aim (fraction)
-TEMP_TARGET = 0.32             # normalized: past PreheatOven's 0.25, with margin (P2: 0.40 left too large a turn)
-HOLD_OK = 20                   # control steps the outcome must hold with the hand clear (design §4)
+TEMP_TARGET = 0.32             # normalized: past PreheatOven's 0.25, with margin (0.40 left too large a turn)
+HOLD_OK = 20                   # control steps the outcome must hold with the hand clear (episode.COMPLETE_HOLD)
 CLEAR = 0.10                   # m: hand clearance from the control while it holds
 
 
@@ -536,7 +536,7 @@ class Driver(object):
         down = np.array([0.0, 0.0, -1.0])
         perp = unit(down - np.dot(down, normal) * normal)
         best = None
-        for deg in (35, 20, 0, 50):                       # a level hand meets the counter first (P1)
+        for deg in (35, 20, 0, 50):                       # a level hand meets the counter first
             app = unit(-normal * math.cos(math.radians(deg)) + perp * math.sin(math.radians(deg)))
             for fname, fdir in (("across", np.cross(app, perp)), ("upright", perp)):
                 R = self.facing(app, fdir)                # the hand is ~20 cm wide along the finger axis
@@ -752,7 +752,7 @@ class Driver(object):
 
     def _drop_door(self, want):
         """Oven or range: drag the handle out from above with closed fingertips until the door's weight
-        takes over (pilot primitive); closing lifts the handle back up from below."""
+        takes over; closing lifts the handle back up from below."""
         jname, axis, anchor, adr, lo, hi, open_dir, handle, hR, hsize, hgid = self.door_frame()
         frac = lambda: E.normalized_joint(self.qpos(adr), lo, hi)  # noqa: E731
         out = {"control": jname, "start_fraction": round(frac(), 4)}
