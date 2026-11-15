@@ -99,6 +99,16 @@
    "key": "2d368f03b2f1fdfb57071571d3cbf83b63b7fca8b601ee6e6408228a7d3eaa48",
    "source": "os.urandom(32)",
    "frozen_commit": "864c472bc523705d428486b04abfb18d68658d27",
+   "status": "void",
+   "void_reason": "Coverage (step 5): the 54 requests of the 18 kept episodes hold no all_off request (burner_level 9, burner_off 3, burner_on 1, burners_off 2, burners_on 3, oven_level 5, oven_off 8, preheat 5, start 8, stop 10); 21 candidates tried, 18 kept.",
+   "voided_utc": "2026-11-15T22:02:01Z"
+  },
+  {
+   "draw": 4,
+   "drawn_utc": "2026-11-15T22:02:01Z",
+   "key": "b54bb77ae7274494d1136476ef3f4d2d998567544e0f07ae040c56b32037a028",
+   "source": "os.urandom(32)",
+   "frozen_commit": "864c472bc523705d428486b04abfb18d68658d27",
    "status": "open"
   }
  ],
@@ -7431,6 +7441,3652 @@
    ],
    "status": "kept",
    "draw": 2
+  },
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 16953738275930675749,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 412,
+    "jitter_m_m_rad": [
+     -0.019782,
+     0.036541,
+     -0.077082
+    ],
+    "initial": {
+     "burner_on_rear_center": false,
+     "burner_on_rear_right": false,
+     "burner_on_front_center": true,
+     "burner_on_front_right": true,
+     "burner_on_left": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burner_on",
+      "target": "rear_center",
+      "text": "Turn on the rear centre burner.",
+      "t_open": 0,
+      "t_close": 123,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burner_level",
+      "target": [
+       "rear_right",
+       "low"
+      ],
+      "text": "Turn the rear right burner to low.",
+      "t_open": 123,
+      "t_close": 261,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burner_off",
+      "target": "front_right",
+      "text": "Turn off the front right burner.",
+      "t_open": 261,
+      "t_close": 408,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 4.6
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 407,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_on",
+       "target": "rear_center",
+       "text": "Turn on the rear centre burner.",
+       "t_open": 0,
+       "t_close": 123,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "low"
+       ],
+       "text": "Turn the rear right burner to low.",
+       "t_open": 123,
+       "t_close": 260,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 260,
+       "t_close": 407,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 7.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 407,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 2,
+     "probes_passed": 2,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_on",
+       "target": "rear_center",
+       "text": "Turn on the rear centre burner.",
+       "t_open": 0,
+       "t_close": 123,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "low"
+       ],
+       "text": "Turn the rear right burner to low.",
+       "t_open": 123,
+       "t_close": 260,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 260,
+       "t_close": 407,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 14.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 407,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_on",
+       "target": "rear_center",
+       "text": "Turn on the rear centre burner.",
+       "t_open": 0,
+       "t_close": 123,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "low"
+       ],
+       "text": "Turn the rear right burner to low.",
+       "t_open": 123,
+       "t_close": 260,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 260,
+       "t_close": 407,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 13.5
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 3508248233790535880,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 833,
+    "jitter_m_m_rad": [
+     -0.018184,
+     0.028199,
+     -0.04276
+    ],
+    "initial": {
+     "burner_on_rear_center": false,
+     "burner_on_rear_right": true,
+     "burner_on_front_center": false,
+     "burner_on_front_right": false,
+     "burner_on_left": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burner_level",
+      "target": [
+       "rear_center",
+       "medium"
+      ],
+      "text": "Turn the rear centre burner to medium.",
+      "t_open": 0,
+      "t_close": 248,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burners_on",
+      "target": [
+       "front_center",
+       "front_right"
+      ],
+      "text": "Turn on the front centre and front right burners.",
+      "t_open": 248,
+      "t_close": 527,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burners_off",
+      "target": [
+       "front_right",
+       "rear_center"
+      ],
+      "text": "Turn off the front right and rear centre burners.",
+      "t_open": 527,
+      "t_close": 829,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 17.0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 829,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_center",
+        "medium"
+       ],
+       "text": "Turn the rear centre burner to medium.",
+       "t_open": 0,
+       "t_close": 248,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "front_center",
+        "front_right"
+       ],
+       "text": "Turn on the front centre and front right burners.",
+       "t_open": 248,
+       "t_close": 527,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burners_off",
+       "target": [
+        "front_right",
+        "rear_center"
+       ],
+       "text": "Turn off the front right and rear centre burners.",
+       "t_open": 527,
+       "t_close": 829,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 12.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 830,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_center",
+        "medium"
+       ],
+       "text": "Turn the rear centre burner to medium.",
+       "t_open": 0,
+       "t_close": 248,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "front_center",
+        "front_right"
+       ],
+       "text": "Turn on the front centre and front right burners.",
+       "t_open": 248,
+       "t_close": 527,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burners_off",
+       "target": [
+        "front_right",
+        "rear_center"
+       ],
+       "text": "Turn off the front right and rear centre burners.",
+       "t_open": 527,
+       "t_close": 830,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 12.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 829,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_center",
+        "medium"
+       ],
+       "text": "Turn the rear centre burner to medium.",
+       "t_open": 0,
+       "t_close": 248,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "front_center",
+        "front_right"
+       ],
+       "text": "Turn on the front centre and front right burners.",
+       "t_open": 248,
+       "t_close": 527,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burners_off",
+       "target": [
+        "front_right",
+        "rear_center"
+       ],
+       "text": "Turn off the front right and rear centre burners.",
+       "t_open": 527,
+       "t_close": 829,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 28.0
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 2553925033902203200,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 263,
+    "jitter_m_m_rad": [
+     -0.012519,
+     -0.020091,
+     -0.071553
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 0,
+      "t_close": 95,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 95,
+      "t_close": 167,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 167,
+      "t_close": 255,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 3.2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 255,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 95,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 95,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 167,
+       "t_close": 255,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 6.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 255,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 95,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 95,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 167,
+       "t_close": 255,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 255,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 2,
+     "probes_passed": 2,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 95,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 95,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 167,
+       "t_close": 255,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 5.1
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 16967469275104841239,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 244,
+    "jitter_m_m_rad": [
+     -0.010193,
+     0.030439,
+     0.111629
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 0,
+      "t_close": 77,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 77,
+      "t_close": 164,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 164,
+      "t_close": 236,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 5.2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 236,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 77,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 77,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 236,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 5.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 236,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 77,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 77,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 236,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 6.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 236,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 77,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 77,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 236,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.5
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 10924040279571271836,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 973,
+    "jitter_m_m_rad": [
+     -0.017789,
+     0.003052,
+     -0.163111
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 0,
+      "t_close": 374,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 374,
+      "t_close": 597,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 597,
+      "t_close": 968,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 12.5
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 961,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 371,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 371,
+       "t_close": 591,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 591,
+       "t_close": 961,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 17.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 963,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 371,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 371,
+       "t_close": 593,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 593,
+       "t_close": 963,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 19.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 963,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 371,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 371,
+       "t_close": 593,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 593,
+       "t_close": 963,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 18.6
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 16167984336517510860,
+   "in_process": {
+    "credit": 0.8333333333333334,
+    "unstable": false,
+    "steps": 1901,
+    "jitter_m_m_rad": [
+     -0.002356,
+     0.011953,
+     -0.111407
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "medium"
+      ],
+      "text": "Set the oven to medium heat.",
+      "t_open": 0,
+      "t_close": 1000,
+      "outcome": "reached",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "high"
+      ],
+      "text": "Set the oven to high heat.",
+      "t_open": 1000,
+      "t_close": 1292,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "low"
+      ],
+      "text": "Set the oven to low heat.",
+      "t_open": 1292,
+      "t_close": 1896,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 49.4
+   },
+   "wire": [],
+   "status": "rejected",
+   "lost": [
+    {
+     "id": 0,
+     "what": "oven_level",
+     "target": [
+      "temp",
+      "medium"
+     ],
+     "text": "Set the oven to medium heat.",
+     "t_open": 0,
+     "t_close": 1000,
+     "outcome": "reached",
+     "primitive": "ok"
+    }
+   ],
+   "draw": 3
+  },
+  {
+   "unit": "u2",
+   "index": 2,
+   "seed": 13205277346332208756,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 661,
+    "jitter_m_m_rad": [
+     -0.020422,
+     0.034237,
+     0.11213
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 0,
+      "t_close": 282,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 282,
+      "t_close": 468,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 468,
+      "t_close": 656,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 8.2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 656,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 282,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 282,
+       "t_close": 468,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 468,
+       "t_close": 656,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 12.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 656,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 282,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 282,
+       "t_close": 468,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 468,
+       "t_close": 656,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 15.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 657,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 282,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 282,
+       "t_close": 468,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 468,
+       "t_close": 657,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 15.6
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 17789875418097602987,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 805,
+    "jitter_m_m_rad": [
+     0.007287,
+     0.005017,
+     -0.005157
+    ],
+    "initial": {
+     "burner_on_rear_left": false,
+     "burner_on_rear_right": false,
+     "burner_on_front_left": true,
+     "burner_on_front_right": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burner_off",
+      "target": "front_right",
+      "text": "Turn off the front right burner.",
+      "t_open": 0,
+      "t_close": 168,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burner_level",
+      "target": [
+       "rear_left",
+       "high"
+      ],
+      "text": "Turn the rear left burner to high.",
+      "t_open": 168,
+      "t_close": 570,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burner_level",
+      "target": [
+       "rear_left",
+       "low"
+      ],
+      "text": "Turn the rear left burner to low.",
+      "t_open": 570,
+      "t_close": 800,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 7.7
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 798,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 0,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "high"
+       ],
+       "text": "Turn the rear left burner to high.",
+       "t_open": 167,
+       "t_close": 568,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "low"
+       ],
+       "text": "Turn the rear left burner to low.",
+       "t_open": 568,
+       "t_close": 798,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 10.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 798,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 0,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "high"
+       ],
+       "text": "Turn the rear left burner to high.",
+       "t_open": 167,
+       "t_close": 568,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "low"
+       ],
+       "text": "Turn the rear left burner to low.",
+       "t_open": 568,
+       "t_close": 798,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 14.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 798,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_off",
+       "target": "front_right",
+       "text": "Turn off the front right burner.",
+       "t_open": 0,
+       "t_close": 167,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "high"
+       ],
+       "text": "Turn the rear left burner to high.",
+       "t_open": 167,
+       "t_close": 568,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "rear_left",
+        "low"
+       ],
+       "text": "Turn the rear left burner to low.",
+       "t_open": 568,
+       "t_close": 798,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 9.6
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 7483302508168937150,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 713,
+    "jitter_m_m_rad": [
+     -0.007039,
+     0.037386,
+     0.082393
+    ],
+    "initial": {
+     "burner_on_rear_left": true,
+     "burner_on_rear_right": false,
+     "burner_on_front_left": false,
+     "burner_on_front_right": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burner_level",
+      "target": [
+       "rear_right",
+       "medium"
+      ],
+      "text": "Turn the rear right burner to medium.",
+      "t_open": 0,
+      "t_close": 286,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burner_level",
+      "target": [
+       "front_right",
+       "low"
+      ],
+      "text": "Turn the front right burner to low.",
+      "t_open": 286,
+      "t_close": 422,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burner_level",
+      "target": [
+       "front_left",
+       "medium"
+      ],
+      "text": "Turn the front left burner to medium.",
+      "t_open": 422,
+      "t_close": 708,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 6.7
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 707,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "medium"
+       ],
+       "text": "Turn the rear right burner to medium.",
+       "t_open": 0,
+       "t_close": 286,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "low"
+       ],
+       "text": "Turn the front right burner to low.",
+       "t_open": 286,
+       "t_close": 422,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "medium"
+       ],
+       "text": "Turn the front left burner to medium.",
+       "t_open": 422,
+       "t_close": 707,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 10.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 707,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "medium"
+       ],
+       "text": "Turn the rear right burner to medium.",
+       "t_open": 0,
+       "t_close": 286,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "low"
+       ],
+       "text": "Turn the front right burner to low.",
+       "t_open": 286,
+       "t_close": 422,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "medium"
+       ],
+       "text": "Turn the front left burner to medium.",
+       "t_open": 422,
+       "t_close": 707,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 12.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 707,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "rear_right",
+        "medium"
+       ],
+       "text": "Turn the rear right burner to medium.",
+       "t_open": 0,
+       "t_close": 286,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "low"
+       ],
+       "text": "Turn the front right burner to low.",
+       "t_open": 286,
+       "t_close": 422,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "medium"
+       ],
+       "text": "Turn the front left burner to medium.",
+       "t_open": 422,
+       "t_close": 707,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 11.3
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 7660101401724464914,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 246,
+    "jitter_m_m_rad": [
+     -0.020617,
+     -0.030491,
+     0.002029
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 0,
+      "t_close": 75,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 75,
+      "t_close": 164,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 164,
+      "t_close": 238,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 5.0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 238,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 0,
+     "probes_passed": 0,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 75,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 75,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 238,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 238,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 75,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 75,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 238,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 5.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 238,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 2,
+     "probes_passed": 2,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 75,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 75,
+       "t_close": 164,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 164,
+       "t_close": 238,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.2
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 10411675336160940974,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 242,
+    "jitter_m_m_rad": [
+     -0.029405,
+     0.025714,
+     0.011719
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 0,
+      "t_close": 71,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 71,
+      "t_close": 160,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 160,
+      "t_close": 234,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 5.8
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 234,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 71,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 71,
+       "t_close": 160,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 160,
+       "t_close": 234,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 5.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 234,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 71,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 71,
+       "t_close": 160,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 160,
+       "t_close": 234,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 234,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 71,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 71,
+       "t_close": 160,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 160,
+       "t_close": 234,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 4.3
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 15250471030064968306,
+   "in_process": {
+    "credit": 0.8333333333333334,
+    "unstable": false,
+    "steps": 1438,
+    "jitter_m_m_rad": [
+     0.010659,
+     -0.032657,
+     -0.142056
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 0,
+      "t_close": 293,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 293,
+      "t_close": 430,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "high"
+      ],
+      "text": "Set the oven to high heat.",
+      "t_open": 430,
+      "t_close": 1430,
+      "outcome": "reached",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 32.3
+   },
+   "wire": [],
+   "status": "rejected",
+   "lost": [
+    {
+     "id": 2,
+     "what": "oven_level",
+     "target": [
+      "temp",
+      "high"
+     ],
+     "text": "Set the oven to high heat.",
+     "t_open": 430,
+     "t_close": 1430,
+     "outcome": "reached",
+     "primitive": "ok"
+    }
+   ],
+   "draw": 3
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 3098523851356613717,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 697,
+    "jitter_m_m_rad": [
+     -0.002919,
+     -0.028267,
+     0.134568
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 0,
+      "t_close": 176,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 176,
+      "t_close": 552,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "low"
+      ],
+      "text": "Set the oven to low heat.",
+      "t_open": 552,
+      "t_close": 693,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 15.7
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 692,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 175,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 175,
+       "t_close": 551,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "low"
+       ],
+       "text": "Set the oven to low heat.",
+       "t_open": 551,
+       "t_close": 692,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 10.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 692,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 175,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 175,
+       "t_close": 551,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "low"
+       ],
+       "text": "Set the oven to low heat.",
+       "t_open": 551,
+       "t_close": 692,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 10.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 692,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 175,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 175,
+       "t_close": 551,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "low"
+       ],
+       "text": "Set the oven to low heat.",
+       "t_open": 551,
+       "t_close": 692,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 19.4
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u5",
+   "index": 2,
+   "seed": 10656978700168996056,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 1494,
+    "jitter_m_m_rad": [
+     -0.002174,
+     -0.027062,
+     -0.090961
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 0,
+      "t_close": 469,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "medium"
+      ],
+      "text": "Set the oven to medium heat.",
+      "t_open": 469,
+      "t_close": 1030,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "high"
+      ],
+      "text": "Set the oven to high heat.",
+      "t_open": 1030,
+      "t_close": 1362,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 53.0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1196,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 15,
+     "probes_passed": 15,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 465,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 465,
+       "t_close": 867,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 867,
+       "t_close": 1196,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 30.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1195,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 465,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 465,
+       "t_close": 867,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 867,
+       "t_close": 1195,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 38.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1195,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 0,
+       "t_close": 465,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 465,
+       "t_close": 867,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 867,
+       "t_close": 1195,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 41.3
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u6",
+   "index": 0,
+   "seed": 15990369391280124904,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 663,
+    "jitter_m_m_rad": [
+     0.015658,
+     -0.002854,
+     -0.111832
+    ],
+    "initial": {
+     "burner_on_rear_left": true,
+     "burner_on_rear_right": false,
+     "burner_on_front_left": false,
+     "burner_on_front_right": true,
+     "burner_on_center": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burners_on",
+      "target": [
+       "front_left",
+       "rear_right"
+      ],
+      "text": "Turn on the front left and rear right burners.",
+      "t_open": 0,
+      "t_close": 250,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burners_off",
+      "target": [
+       "rear_right",
+       "front_right"
+      ],
+      "text": "Turn off the rear right and front right burners.",
+      "t_open": 250,
+      "t_close": 507,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burner_off",
+      "target": "rear_left",
+      "text": "Turn off the rear left burner.",
+      "t_open": 507,
+      "t_close": 658,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 6.1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 658,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burners_on",
+       "target": [
+        "front_left",
+        "rear_right"
+       ],
+       "text": "Turn on the front left and rear right burners.",
+       "t_open": 0,
+       "t_close": 250,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_off",
+       "target": [
+        "rear_right",
+        "front_right"
+       ],
+       "text": "Turn off the rear right and front right burners.",
+       "t_open": 250,
+       "t_close": 507,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "rear_left",
+       "text": "Turn off the rear left burner.",
+       "t_open": 507,
+       "t_close": 658,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 8.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 658,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 2,
+     "probes_passed": 2,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burners_on",
+       "target": [
+        "front_left",
+        "rear_right"
+       ],
+       "text": "Turn on the front left and rear right burners.",
+       "t_open": 0,
+       "t_close": 250,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_off",
+       "target": [
+        "rear_right",
+        "front_right"
+       ],
+       "text": "Turn off the rear right and front right burners.",
+       "t_open": 250,
+       "t_close": 507,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "rear_left",
+       "text": "Turn off the rear left burner.",
+       "t_open": 507,
+       "t_close": 658,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 18.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 658,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burners_on",
+       "target": [
+        "front_left",
+        "rear_right"
+       ],
+       "text": "Turn on the front left and rear right burners.",
+       "t_open": 0,
+       "t_close": 250,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_off",
+       "target": [
+        "rear_right",
+        "front_right"
+       ],
+       "text": "Turn off the rear right and front right burners.",
+       "t_open": 250,
+       "t_close": 507,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_off",
+       "target": "rear_left",
+       "text": "Turn off the rear left burner.",
+       "t_open": 507,
+       "t_close": 658,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 9.1
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u6",
+   "index": 1,
+   "seed": 790414007099324961,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 600,
+    "jitter_m_m_rad": [
+     0.024094,
+     -0.029494,
+     0.093511
+    ],
+    "initial": {
+     "burner_on_rear_left": false,
+     "burner_on_rear_right": false,
+     "burner_on_front_left": false,
+     "burner_on_front_right": false,
+     "burner_on_center": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "burner_level",
+      "target": [
+       "front_left",
+       "low"
+      ],
+      "text": "Turn the front left burner to low.",
+      "t_open": 0,
+      "t_close": 124,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "burners_on",
+      "target": [
+       "rear_left",
+       "rear_right"
+      ],
+      "text": "Turn on the rear left and rear right burners.",
+      "t_open": 124,
+      "t_close": 368,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "burner_level",
+      "target": [
+       "front_right",
+       "medium"
+      ],
+      "text": "Turn the front right burner to medium.",
+      "t_open": 368,
+      "t_close": 595,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 12.1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 595,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "low"
+       ],
+       "text": "Turn the front left burner to low.",
+       "t_open": 0,
+       "t_close": 124,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "rear_left",
+        "rear_right"
+       ],
+       "text": "Turn on the rear left and rear right burners.",
+       "t_open": 124,
+       "t_close": 368,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "medium"
+       ],
+       "text": "Turn the front right burner to medium.",
+       "t_open": 368,
+       "t_close": 595,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 11.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 595,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "low"
+       ],
+       "text": "Turn the front left burner to low.",
+       "t_open": 0,
+       "t_close": 124,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "rear_left",
+        "rear_right"
+       ],
+       "text": "Turn on the rear left and rear right burners.",
+       "t_open": 124,
+       "t_close": 368,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "medium"
+       ],
+       "text": "Turn the front right burner to medium.",
+       "t_open": 368,
+       "t_close": 595,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 11.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 595,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "burner_level",
+       "target": [
+        "front_left",
+        "low"
+       ],
+       "text": "Turn the front left burner to low.",
+       "t_open": 0,
+       "t_close": 124,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "burners_on",
+       "target": [
+        "rear_left",
+        "rear_right"
+       ],
+       "text": "Turn on the rear left and rear right burners.",
+       "t_open": 124,
+       "t_close": 368,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "burner_level",
+       "target": [
+        "front_right",
+        "medium"
+       ],
+       "text": "Turn the front right burner to medium.",
+       "t_open": 368,
+       "t_close": 595,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 18.7
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u7",
+   "index": 0,
+   "seed": 188881379259606073,
+   "in_process": {
+    "credit": 0.6666666666666666,
+    "unstable": false,
+    "steps": 1257,
+    "jitter_m_m_rad": [
+     -0.007224,
+     0.039529,
+     -0.164429
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 0,
+      "t_close": 122,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 122,
+      "t_close": 1122,
+      "outcome": "missed",
+      "primitive": "fail: press"
+     },
+     {
+      "id": 2,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 1122,
+      "t_close": 1249,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 38.8
+   },
+   "wire": [],
+   "status": "rejected",
+   "lost": [
+    {
+     "id": 1,
+     "what": "stop",
+     "target": "stop_button",
+     "text": "Stop the microwave.",
+     "t_open": 122,
+     "t_close": 1122,
+     "outcome": "missed",
+     "primitive": "fail: press"
+    }
+   ],
+   "draw": 3
+  },
+  {
+   "unit": "u7",
+   "index": 1,
+   "seed": 4022333046537495432,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 233,
+    "jitter_m_m_rad": [
+     0.010464,
+     -0.004417,
+     0.113627
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": true
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 0,
+      "t_close": 76,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 76,
+      "t_close": 151,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 151,
+      "t_close": 225,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 4.8
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 225,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 76,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 76,
+       "t_close": 151,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 151,
+       "t_close": 225,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 14.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 225,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 2,
+     "probes_passed": 2,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 76,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 76,
+       "t_close": 151,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 151,
+       "t_close": 225,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 6.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 225,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 1,
+     "probes_passed": 1,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 0,
+       "t_close": 76,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 76,
+       "t_close": 151,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 151,
+       "t_close": 225,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 12.1
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u7",
+   "index": 2,
+   "seed": 8032418012040688756,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 424,
+    "jitter_m_m_rad": [
+     -0.023199,
+     -0.037058,
+     -0.007107
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "turned_on": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 0,
+      "t_close": 144,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "stop",
+      "target": "stop_button",
+      "text": "Stop the microwave.",
+      "t_open": 144,
+      "t_close": 275,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "start",
+      "target": "start_button",
+      "text": "Start the microwave.",
+      "t_open": 275,
+      "t_close": 416,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 6.7
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 416,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 144,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 144,
+       "t_close": 275,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 275,
+       "t_close": 416,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 11.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 416,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 144,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 144,
+       "t_close": 275,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 275,
+       "t_close": 416,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 15.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 416,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 0,
+       "t_close": 144,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "stop",
+       "target": "stop_button",
+       "text": "Stop the microwave.",
+       "t_open": 144,
+       "t_close": 275,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "start",
+       "target": "start_button",
+       "text": "Start the microwave.",
+       "t_open": 275,
+       "t_close": 416,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 9.3
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u8",
+   "index": 0,
+   "seed": 10002720515890879641,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 1207,
+    "jitter_m_m_rad": [
+     0.013582,
+     -0.011178,
+     -0.078926
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 0,
+      "t_close": 180,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "high"
+      ],
+      "text": "Set the oven to high heat.",
+      "t_open": 180,
+      "t_close": 474,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 474,
+      "t_close": 1071,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 36.7
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1070,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 16,
+     "probes_passed": 16,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 179,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 179,
+       "t_close": 472,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 472,
+       "t_close": 1070,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 24.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1070,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 179,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 179,
+       "t_close": 472,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 472,
+       "t_close": 1070,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 34.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1070,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 179,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "high"
+       ],
+       "text": "Set the oven to high heat.",
+       "t_open": 179,
+       "t_close": 472,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 472,
+       "t_close": 1070,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 21.4
+    }
+   ],
+   "status": "kept",
+   "draw": 3
+  },
+  {
+   "unit": "u8",
+   "index": 1,
+   "seed": 1214275632295167860,
+   "in_process": {
+    "credit": 1.0,
+    "unstable": false,
+    "steps": 501,
+    "jitter_m_m_rad": [
+     0.020363,
+     0.000594,
+     0.040644
+    ],
+    "initial": {
+     "door_open": false,
+     "door_closed": true,
+     "preheated": false
+    },
+    "requests": [
+     {
+      "id": 0,
+      "what": "preheat",
+      "target": "temp",
+      "text": "Preheat the oven.",
+      "t_open": 0,
+      "t_close": 176,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 1,
+      "what": "oven_level",
+      "target": [
+       "temp",
+       "medium"
+      ],
+      "text": "Set the oven to medium heat.",
+      "t_open": 176,
+      "t_close": 311,
+      "outcome": "completed",
+      "primitive": "ok"
+     },
+     {
+      "id": 2,
+      "what": "oven_off",
+      "target": "temp",
+      "text": "Turn off the oven.",
+      "t_open": 311,
+      "t_close": 496,
+      "outcome": "completed",
+      "primitive": "ok"
+     }
+    ],
+    "wall_s": 13.1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 496,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 176,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 176,
+       "t_close": 311,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 311,
+       "t_close": 496,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 7.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 496,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 176,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 176,
+       "t_close": 311,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 311,
+       "t_close": 496,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 7.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 495,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "requests": [
+      {
+       "id": 0,
+       "what": "preheat",
+       "target": "temp",
+       "text": "Preheat the oven.",
+       "t_open": 0,
+       "t_close": 176,
+       "outcome": "completed"
+      },
+      {
+       "id": 1,
+       "what": "oven_level",
+       "target": [
+        "temp",
+        "medium"
+       ],
+       "text": "Set the oven to medium heat.",
+       "t_open": 176,
+       "t_close": 311,
+       "outcome": "completed"
+      },
+      {
+       "id": 2,
+       "what": "oven_off",
+       "target": "temp",
+       "text": "Turn off the oven.",
+       "t_open": 311,
+       "t_close": 495,
+       "outcome": "completed"
+      }
+     ],
+     "wall_s": 8.4
+    }
+   ],
+   "status": "kept",
+   "draw": 3
   }
  ]
 }
