@@ -19,7 +19,9 @@ The rule, fixed before any candidate ran:
    it lost.
 5. Cover. The 54 requests of the 18 kept episodes (in process) must hold every request type the instruction lists
    (REQUEST_TYPES). If they do not, the draw is void: `draw --void REASON` records why, draws a new key, and `run`
-   starts again; the record keeps every draw.
+   starts again; the record keeps every draw. A draw is void too when a frozen file changes after it was made (the
+   grader's rule or the reference changed): `draw --void REASON --refreeze` records why, keeps that draw's frozen
+   hashes, commit and candidates with it, freezes the checkout's HEAD again (step 1) and draws a new key.
 6. Order. `make` shuffles the 18 (units in sorted order, each unit's two in candidate order; a Fisher-Yates in which
    position i swaps with int.from_bytes(blake2b(b"order|<i>", key=key, digest_size=8).digest(), "little") mod (i + 1),
    i from 17 down to 1) and writes tests/hidden/episodes.json in that order: the graded order.
@@ -246,23 +248,34 @@ def run_unit(args):
 # ------------------------------------------------------------------------------------------- commands
 def cmd_draw(a):
     rec = load(a.record) if os.path.exists(a.record) else None
-    if rec is not None:
-        last = rec["draws"][-1]
-        if last["status"] == "open":
-            if not a.void:
-                raise SystemExit("the latest draw is open: pass --void REASON to void it")
-            last["status"] = "void"
-            last["void_reason"] = a.void
     if not frozen_committed():
         raise SystemExit("commit the frozen files first: " + ", ".join(FROZEN))
     head = git("rev-parse", "HEAD").stdout.strip()
+    if rec is not None:
+        last = rec["draws"][-1]
+        if a.refreeze:
+            if not a.void or last["status"] not in ("open", "made"):
+                raise SystemExit("--refreeze voids the latest open or made draw: pass --void REASON")
+            last["frozen"], last["frozen_commit"] = rec["frozen"], rec["frozen_commit"]
+            if "after_selection" in rec:
+                last["after_selection"] = rec.pop("after_selection")
+            rec["frozen"], rec["frozen_commit"] = frozen_hashes(), head
+        elif last["status"] == "made":
+            raise SystemExit("the latest draw is made: after a frozen file changed, void it with --void REASON "
+                             "--refreeze")
+        elif last["status"] == "open" and not a.void:
+            raise SystemExit("the latest draw is open: pass --void REASON to void it")
+        if a.void and last["status"] != "void":
+            last["status"] = "void"
+            last["void_reason"] = a.void
+            last["voided_utc"] = utc_now()
     if rec is None:
         rec = {"format": FORMAT, "rule": "tests/review/select_set.py (module docstring)",
                "frozen": frozen_hashes(), "frozen_commit": head, "draws": [], "candidates": []}
     else:
         check_frozen(rec)
     rec["draws"].append({"draw": len(rec["draws"]) + 1, "drawn_utc": utc_now(), "key": os.urandom(32).hex(),
-                         "source": "os.urandom(32)", "status": "open"})
+                         "source": "os.urandom(32)", "frozen_commit": rec["frozen_commit"], "status": "open"})
     save(a.record, rec)
     print("draw %d written to %s" % (len(rec["draws"]), a.record))
 
@@ -347,6 +360,9 @@ def main():
     p = sub.add_parser("draw")
     p.add_argument("--record", required=True)
     p.add_argument("--void", default=None, help="void the open draw, with this reason")
+    p.add_argument("--refreeze", action="store_true",
+                   help="with --void: void the latest draw (open or made) because a frozen file changed, and freeze "
+                        "the checkout's HEAD again")
     p = sub.add_parser("run")
     p.add_argument("--record", required=True)
     p.add_argument("--work", required=True, help="a scratch folder for the oracle submissions")
