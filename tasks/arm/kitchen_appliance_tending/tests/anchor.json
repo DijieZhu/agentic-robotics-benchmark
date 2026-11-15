@@ -1,8 +1,8 @@
 {
   "metric": "mean_request_credit",
   "direction": "higher",
-  "value": 1.0,
+  "value": 0.9981,
   "full_at": 0.98,
-  "source": "Own measurement, 2026-11-15, on the fixed hidden set (tests/hidden/episodes.json: 18 episodes, 2 per unit) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505) on the maintainers' host Docker, five runs of 18 episodes: ale validate run validate-bc3f20d7 (1.0) and ale run --agent oracle -n 4 run pr81fix-oracle-r1 (1.0, 1.0, 1.0, 1.0); mean 1.0 over 90 episodes, no aborts, no simulation faults, seccomp guard on, probe pairs 624 of 626 differing.",
-  "note": "Measured, not drawn. The set holds only episodes on which the reference scored 1.0 in process and in three runs over the real wire when it was selected (tests/hidden/episode_selection.json), so the anchor sits at full. full_at 0.98: one request of the 54 lost (metric 0.9815) still gives the reference reward 1.0."
+  "source": "Own measurement, 2026-11-15, on the fixed hidden set (tests/hidden/episodes.json: draw 4, 18 episodes, 2 per unit) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505) on the maintainers' host Docker, five runs of 18 episodes on commit 91463f4 (task content digest 9a2750c6): ale validate run validate-52355107 (1.0) and ale run --agent oracle -n 4 run pr81fix2-oracle-r1 (1.0, 1.0, 0.99074, 1.0); mean 0.99815 over 90 episodes. The one request short of completion: u5, 'Set the oven to high heat.', reached at its deadline (credit 0.5). No aborts, no simulation faults, seccomp guard on, probe pairs 540 of 540 differing.",
+  "note": "Measured, not drawn. The set holds only episodes on which the reference scored 1.0 in process and in three runs over the real wire when it was selected (tests/hidden/episode_selection.json); over the wire the reference's u5 oven turns still vary from run to run. full_at 0.98: one request of the 54 lost (metric 0.98148, ratio 0.983) still gives the reference reward 1.0; two lost (0.96296) give 0.984."
 }
