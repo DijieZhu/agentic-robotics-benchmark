@@ -6,15 +6,17 @@ unlimited. It does not score grasps: there are no meshes here to score them agai
     /opt/grasp/bin/python ~/practice_check/check.py              # 2 views per practice scene
     /opt/grasp/bin/python ~/practice_check/check.py --views 8    # every practice view
 
-Like the graded run, it imports solver.py once with OMP_NUM_THREADS=1, the working directory set
-to the submission folder and the same network guard (no AF_INET/AF_INET6 sockets, so no localhost
-TCP either, and no io_uring), then calls predict() frame by frame. The graded run uses 8 such
-processes at once on 8 CPUs, so a call that is close to the limit here may run over there.
+Like the graded run, it imports solver.py once with OMP_NUM_THREADS=1 and OPENBLAS_CORETYPE=Haswell,
+the working directory set to the submission folder and the same network guard (no AF_INET/AF_INET6
+sockets, so no localhost TCP either, and no io_uring), then calls predict() frame by frame. The
+graded run uses 8 such processes at once on 8 CPUs, so a call that is close to the limit here may
+run over there.
 """
 import os
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OPENBLAS_CORETYPE", "Haswell")
 import argparse, ctypes, json, platform, signal, struct, sys, time
 
 import numpy as np

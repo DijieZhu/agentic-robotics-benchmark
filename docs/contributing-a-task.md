@@ -165,6 +165,15 @@ nowhere else: `metric` is the key your grader reports, `direction` is `higher` o
   scores lower. Report a negative reward as a positive cost with the anchor's `direction` set
   to `lower`.
 
+Hardware invariance also covers the libraries the grader computes with. A Python wheel can bundle its own
+OpenBLAS (numpy, scipy, opencv-python and cvxopt each do), each copy picks its kernels by CPU
+when it loads, and an old copy can compute wrong products on a newer CPU. If your task has to
+carry an old numpy, scipy, opencv-python or cvxopt wheel, check which OpenBLAS each one
+bundles, pin `OPENBLAS_CORETYPE` in the image and in every process the grader starts (solver
+and scoring alike), and let the verify stage check the products before it scores.
+`tasks/arm/novel_object_6dof_grasp_detection` is the worked example (`environment/Dockerfile`,
+`tests/verify.py`'s `NUMERICS_ENV`, `tests/numerics_check.py`; `PROGRESS.md` section 12).
+
 ## 6. The anchor bootstrap
 
 The scoring denominator is the reference implementation's own measured value, never a figure
