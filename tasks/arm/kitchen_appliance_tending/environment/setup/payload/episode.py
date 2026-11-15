@@ -1,7 +1,6 @@
-"""Appliance tending, P2: one episode = one unit, a queue of requests, the design's two-stage credit.
+"""Kitchen appliance tending: the episode logic. One episode = one unit, a queue of requests, a two-stage credit.
 
-Wraps an ApplianceEnv (attribute access passes through, so `reference.Driver(Episode(...))` works) and
-adds what the grader will own in P4:
+Wraps an ApplianceEnv (attribute access passes through, so `reference.Driver(Episode(...))` works) and adds:
 
   * an initial state drawn per episode (burners on or off, the oven preheated or not, the microwave
     running or not), set before the first action;
@@ -12,11 +11,19 @@ adds what the grader will own in P4:
     categories valid now. Each request is valid in the state it opens on; one is open
     at a time; it closes when completed or at its deadline (DEADLINE steps, DEADLINE_COMPOUND for a
     compositional request);
-  * credit per request: **reached** 0.5 once the target state (every named control's, for a
-    compositional request) has held 3 consecutive steps; **completed** 0.5 once it has held 20 consecutive
-    steps with the hand at least 0.10 m from every named control while every other control keeps the
-    discrete state it had when the request opened (doing one request must not change anything else). A
-    counted stage stays counted.
+  * credit per request, decided when it closes:
+      **reached** 0.5: when the request closes (completed, or at its deadline) the target state (every named
+      control's, for a compositional request) has held for the last REACH_HOLD (3) consecutive steps; a state
+      that was passed through and left earns nothing;
+      **completed** 0.5: the target state has held COMPLETE_HOLD (20) consecutive steps with the gripper site at
+      least CLEAR (0.10 m) from every named control while every other control keeps the discrete state it had
+      when the request opened (`discrete`, `others_unchanged`; compared during those 20 steps only); the
+      request closes at that step;
+      **forfeited** (setting requests only): the control has stood in a WRONG setting (a band that is neither the
+      requested one nor the one it was in when the request opened) for COMPLETE_HOLD consecutive steps with the
+      gripper clear of it; from then on the request cannot be completed ("reached" at its close still counts).
+      A wrong setting passed through, or held while the gripper is within CLEAR of the control (a regrasp),
+      costs nothing.
 
     ep = Episode(ApplianceEnv(spec, assets), seed)
     obs = ep.reset()                  # obs["request_id"], ["request_text"], ["request_deadline_t"]
@@ -28,7 +35,6 @@ import numpy as np
 
 DEADLINE = 1000                   # control steps per request (100 s at 10 Hz); a knob may need a long turn
 DEADLINE_COMPOUND = 1500          # a compositional request (several burners)
-COMPOUND_P = 0.5                  # (superseded by CATEGORY_WEIGHTS; kept for the record)
 # A request's category is drawn first, by these weights over the categories valid now, then a request within it.
 CATEGORY_WEIGHTS = {"simple": 0.3, "compound": 0.35, "level": 0.35}
 LEVELS = ("low", "medium", "high")
@@ -46,17 +52,20 @@ def band_of(value, bands):
         if lo <= value < hi or (hi >= 1.0 and value >= hi):
             return name
     return None
+
+
 REACH_HOLD = 3
 COMPLETE_HOLD = 20
 CLEAR = 0.10                      # m, gripper site to the control
 K_MAX = 3
 BURNER_ON_P = 0.3                 # chance a burner starts on
 RUNNING_P = 0.5                   # chance the microwave starts running
-PREHEATED_P = 0.4                 # chance the oven (range or wall oven) starts on, its knob at 30-50 % of range
+PREHEATED_P = 0.4                 # chance the oven starts on, its knob at 30-50 % of range
 PREHEATED_RANGE = (0.30, 0.50)
 LOC_TEXT = {"rear_left": "rear left", "rear_center": "rear centre", "rear_right": "rear right",
             "front_left": "front left", "front_center": "front centre", "front_right": "front right",
             "center": "centre", "left": "left", "right": "right"}
+SETTING = ("burner_level", "oven_level")
 
 
 def request_texts():
@@ -70,7 +79,7 @@ def request_texts():
         out += ["Turn %s the %s and %s burners." % (want, a, b) for a in locs for b in locs if a != b]
     out += ["Turn the %s burner to %s." % (x, lv) for x in locs for lv in LEVELS]
     out += ["Set the oven to %s heat." % lv for lv in LEVELS]
-    return out + ["Turn off all the burners.", "Preheat the oven.", "Turn off the oven.", "Open the oven door.",
+    return out + ["Turn off all the burners.", "Preheat the oven.", "Turn off the oven.",
                   "Start the microwave.", "Stop the microwave."]
 
 
@@ -112,7 +121,10 @@ class Episode(object):
         return self._obs(env.observation())
 
     def discrete(self):
-        """Every control's discrete state: what 'nothing else changed' compares."""
+        """Every control's discrete state: what 'nothing else changed' compares. A burner on or off, the oven
+        preheated or not, the microwave running or not, a door open (at least 0.90 of its range) and closed (at
+        most 0.005 of its range). Not part of it: a burner's setting, the oven's temperature beyond preheated,
+        the oven's timer knob."""
         s = self.env.unit_state()
         out = {}
         for k, v in s.items():
@@ -136,6 +148,14 @@ class Episode(object):
             out.append(("burners_off", tuple(on[i] for i in self.rng.choice(len(on), 2, replace=False))))
             out.append(("all_off", tuple(locs)))
         return out
+
+    def setting_band(self, what, target):
+        """The band a setting request's control is in now (None while the burner is off or the oven is not
+        preheated)."""
+        u, d = self.env.unit, self.env.data
+        if what == "burner_level":
+            return band_of(u.burner_level(d, target[0]), BURNER_BANDS)
+        return band_of(u.temperature(d), OVEN_BANDS)
 
     def level_requests(self):
         """A burner to a setting it is not at now (an off burner too), the oven to a heat it is not at now."""
@@ -161,8 +181,6 @@ class Episode(object):
                 out.append(("burner_off" if on else "burner_on", loc))
         if kind in ("stove", "oven") and u.temp_knob is not None:
             out.append(("oven_off", "temp") if st["preheated"] else ("preheat", "temp"))
-        if kind == "stove" and u.door is not None and st.get("door_closed", False):
-            out.append(("door_open", "door"))
         if kind == "microwave" and "start_button" in u.buttons and "stop_button" in u.buttons:
             out.append(("stop", "stop_button") if st["turned_on"] else ("start", "start_button"))
         return out
@@ -195,12 +213,14 @@ class Episode(object):
         elif what == "oven_level":
             text = "Set the oven to %s heat." % target[1]
         else:
-            text = {"preheat": "Preheat the oven.", "oven_off": "Turn off the oven.", "door_open": "Open the oven door.",
+            text = {"preheat": "Preheat the oven.", "oven_off": "Turn off the oven.",
                     "start": "Start the microwave.", "stop": "Stop the microwave."}[what]
         assert text in REQUEST_TEXTS, text           # the lab's reply schema must know every text
         r = {"id": len(self.requests), "what": what, "target": target, "text": text, "t_open": self.env.t,
-             "deadline_t": self.env.t + (DEADLINE_COMPOUND if what in COMPOUND else DEADLINE), "before": self.discrete(), "reached": False,
-             "completed": False, "run_reach": 0, "run_complete": 0, "t_close": None}
+             "deadline_t": self.env.t + (DEADLINE_COMPOUND if what in COMPOUND else DEADLINE),
+             "before": self.discrete(), "reached": False, "completed": False, "forfeited": False,
+             "t_forfeit": None, "run_reach": 0, "run_complete": 0, "run_wrong": 0, "t_close": None,
+             "start_band": self.setting_band(what, target) if what in SETTING else None}
         self.requests.append(r)
         self.current = r
 
@@ -210,7 +230,7 @@ class Episode(object):
         d, m = self.env.data, self.env.model
         if r["what"] in COMPOUND:
             return [d.geom_xpos[m.geom("u_knob_%s_main" % x).id] for x in r["target"]]
-        if r["what"] in ("burner_level", "oven_level"):
+        if r["what"] in SETTING:
             return [d.geom_xpos[m.geom("u_knob_%s_main" % r["target"][0]).id]]
         return [self._control_pos(r)]
 
@@ -218,9 +238,7 @@ class Episode(object):
         d, m = self.env.data, self.env.model
         if r["what"] in ("burner_on", "burner_off", "preheat", "oven_off"):
             return d.geom_xpos[m.geom("u_knob_%s_main" % r["target"]).id]
-        if r["what"] in ("start", "stop"):
-            return d.geom_xpos[self.env.unit.buttons[r["target"]]]
-        return d.geom_xpos[self.env.unit.handle]
+        return d.geom_xpos[self.env.unit.buttons[r["target"]]]
 
     def target_holds(self, r):
         st = self.discrete()
@@ -229,11 +247,8 @@ class Episode(object):
             return st["burner_on_" + r["target"]]
         if w == "burner_off":
             return not st["burner_on_" + r["target"]]
-        if w == "burner_level":
-            loc, lv = r["target"]
-            return band_of(self.env.unit.burner_level(self.env.data, loc), BURNER_BANDS) == lv
-        if w == "oven_level":
-            return band_of(self.env.unit.temperature(self.env.data), OVEN_BANDS) == r["target"][1]
+        if w in SETTING:
+            return self.setting_band(w, r["target"]) == r["target"][1]
         if w == "burners_on":
             return all(st["burner_on_" + x] for x in r["target"])
         if w in ("burners_off", "all_off"):
@@ -242,14 +257,16 @@ class Episode(object):
             return st["preheated"]
         if w == "oven_off":
             return not st["preheated"]
-        if w == "door_open":
-            return st["door_open"]
         if w == "start":
             return st["turned_on"]
         return not st["turned_on"]
 
     def others_unchanged(self, r):
-        if r["what"] in ("burner_level", "oven_level"):
+        """Every control the request does not name keeps the discrete state it had when the request opened
+        (`discrete`). A burner request (simple, compositional or setting) compares the other burners and a
+        door; an oven request a door and any burner; a microwave request nothing (its door is not compared,
+        and opening the door stops it)."""
+        if r["what"] in SETTING:
             own = {"burner_on_" + r["target"][0]} if r["what"] == "burner_level" else {"preheated"}
             now = self.discrete()
             return all(now.get(k) == v for k, v in r["before"].items() if k not in own)
@@ -258,7 +275,7 @@ class Episode(object):
             now = self.discrete()
             return all(now.get(k) == v for k, v in r["before"].items() if k not in own)
         own = {"burner_on": "burner_on_" + r["target"], "burner_off": "burner_on_" + r["target"],
-               "preheat": "preheated", "oven_off": "preheated", "door_open": "door_", "start": "turned_on", "stop": "turned_on"}[r["what"]]
+               "preheat": "preheated", "oven_off": "preheated", "start": "turned_on", "stop": "turned_on"}[r["what"]]
         now = self.discrete()
         for k, v in r["before"].items():
             if k.startswith(own) or (own == "turned_on" and k.startswith("door_")):
@@ -273,16 +290,22 @@ class Episode(object):
         if r is not None:
             holds = self.target_holds(r)
             r["run_reach"] = r["run_reach"] + 1 if holds else 0
-            if r["run_reach"] >= REACH_HOLD:
-                r["reached"] = True
             hand = self.env.data.site_xpos[self.env.site]
             clear = min(np.linalg.norm(hand - p) for p in self.control_pos(r)) >= CLEAR
+            if r["what"] in SETTING and not r["forfeited"]:
+                band = self.setting_band(r["what"], r["target"])
+                wrong = band is not None and band != r["target"][1] and band != r["start_band"]
+                r["run_wrong"] = r["run_wrong"] + 1 if (wrong and clear) else 0
+                if r["run_wrong"] >= COMPLETE_HOLD:
+                    r["forfeited"] = True
+                    r["t_forfeit"] = self.env.t
             ok = holds and clear and self.others_unchanged(r)
             r["run_complete"] = r["run_complete"] + 1 if ok else 0
-            if r["run_complete"] >= COMPLETE_HOLD:
+            if r["run_complete"] >= COMPLETE_HOLD and not r["forfeited"]:
                 r["completed"] = True
             if r["completed"] or self.env.t >= r["deadline_t"]:
                 r["t_close"] = self.env.t
+                r["reached"] = r["run_reach"] >= REACH_HOLD      # decided at the close: the state held then
                 self._open_next()
         done = self.current is None
         return self._obs(obs), done, info
@@ -296,10 +319,21 @@ class Episode(object):
         obs["request_deadline_t"] = -1 if r is None else r["deadline_t"]
         return obs
 
-    def score(self):
-        rs = self.requests
-        credit = [0.5 * r["reached"] + 0.5 * r["completed"] for r in rs]
-        return {"credit": float(np.mean(credit)) if credit else 0.0,
-                "requests": [{k: r[k] for k in ("id", "what", "target", "text", "t_open", "t_close", "reached",
-                                                "completed")} for r in rs]}
+    @staticmethod
+    def request_credit(r):
+        return 0.5 * r["reached"] + 0.5 * r["completed"]
 
+    def score(self):
+        """The mean request credit and, per request: its type and target, open and close steps, reached,
+        completed, forfeited (and the step it happened), its credit and its outcome ("completed", "reached"
+        or "missed")."""
+        rs = self.requests
+        credit = [self.request_credit(r) for r in rs]
+        out = []
+        for r in rs:
+            q = {k: r[k] for k in ("id", "what", "target", "text", "t_open", "t_close", "reached", "completed",
+                                   "forfeited", "t_forfeit")}
+            q["credit"] = self.request_credit(r)
+            q["outcome"] = "completed" if r["completed"] else ("reached" if r["reached"] else "missed")
+            out.append(q)
+        return {"credit": float(np.mean(credit)) if credit else 0.0, "requests": out}

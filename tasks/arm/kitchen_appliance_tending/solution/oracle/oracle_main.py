@@ -1,4 +1,4 @@
-"""The privileged reference as a submission: speaks the grading wire on stdin/stdout (P3).
+"""The privileged reference as a submission: speaks the grading wire on stdin/stdout.
 
 READY, then per episode: `reset` -> ok; `act` queries until the episode ends; `close` -> ok, exit. In a
 token run every observation carries `truth` (the unit's placement jitter, its joint values, the
@@ -142,8 +142,6 @@ def run_request(drv, text):
         return drv.knob("temp", "on")
     if t == "turn off the oven":
         return drv.knob("temp", "off")
-    if t == "open the oven door":
-        return drv.door("open")
     if t == "start the microwave":
         return drv.button("start_button")
     if t == "stop the microwave":
