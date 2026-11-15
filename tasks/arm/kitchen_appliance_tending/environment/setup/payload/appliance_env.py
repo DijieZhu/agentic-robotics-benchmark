@@ -1,4 +1,4 @@
-"""Appliance tending: prototype robot environment (P1 of docs/dev/20261112-appliance-tending-task-design.md).
+"""Kitchen appliance tending: the robot environment (the dev sim, the lab and the grader run this file).
 
 Modelled on tasks/arm/arm_hidden_mechanism_box/tests/box_env.py: plain MuJoCo 3.16, a fixed Panda
 (robosuite 1.5.2 model files, robosuite itself is not imported), an operational-space controller at
@@ -16,7 +16,7 @@ face -y; they are turned by -90 degrees about z). Metres, radians, seconds; quat
     obs, done, info = env.step([dx, dy, dz, drx, dry, drz, grip, cams])
     env.unit_state()          # every control of the unit, normalized, plus the predicates
 
-Prototype only: no request queue, no credit, no wire. Those come in P2-P4.
+The requests and the credit are episode.py's (it wraps this environment); the wire is the grader's.
 """
 
 import math
@@ -31,13 +31,16 @@ CONTROL_DT = TIMESTEP * SUBSTEPS
 MAX_DPOS = 0.03
 MAX_DROT = 0.2
 MAX_ARM_SPEED = 8.0               # rad/s: faster is an unstable simulation (box_env's rule)
-MAX_UNIT_SPEED = 30.0             # rad/s, any unit joint
+MAX_UNIT_SPEED = 30.0             # rad/s, a burner knob or a door joint (Unit.dofs)
+# MuJoCo's warnings of a bad state: any of them raised during an episode makes it unstable.
+BAD_STATE_WARNINGS = (mujoco.mjtWarning.mjWARN_BADQACC, mujoco.mjtWarning.mjWARN_BADQPOS,
+                      mujoco.mjtWarning.mjWARN_BADQVEL)
 WRENCH_NOISE = 0.3
 RGB_NOISE = 2.0
 HOME_Q = np.array([0.0, -0.55, 0.0, -2.45, 0.0, 1.95, math.pi / 4])
 NULLSPACE_Q = np.array([0.0, -0.3, 0.0, -2.2, 0.0, 1.9, math.pi / 4])
-HOME_SITE = np.array([0.45, 0.0, 0.55])  # the gripper site at home, relative to the robot base; P2 chose the
-                                         # candidate with the largest joint-limit margin over six units
+HOME_SITE = np.array([0.45, 0.0, 0.55])  # the gripper site at home, relative to the robot base: the candidate
+                                         # with the largest joint-limit margin over six units
 HOME_MIN_DOWN = math.radians(20)  # the home approach points at least this far below horizontal
 HOME_STARTS = [HOME_Q, np.array([0.0, -0.3, 0.0, -2.0, 0.0, 1.8, math.pi / 4]),
                np.array([0.0, 0.0, 0.0, -1.6, 0.0, 1.6, math.pi / 4]),
@@ -47,15 +50,14 @@ HOME_LOOK_BELOW_TOP = 0.15        # it points at the unit's front centre line th
 # Control physics. RoboCasa's knobs carry frictionloss 0.75-1.0 N m and armature 1.0 kg m^2, tuned for
 # its own controller; this environment's controller (box_env's: the target re-based each step, at most
 # 0.03 m / 0.2 rad ahead) delivers about 0.5-0.8 N m at the wrist, and a real cooker knob needs about
-# 0.1-0.3 N m. P2 sets knobs to a real knob's values (design doc section 10, P2).
+# 0.1-0.3 N m. The knobs here carry a real knob's values.
 KNOB_FRICTIONLOSS = 0.20          # N m
 KNOB_ARMATURE = 0.002             # kg m^2
 VISUAL_MASS = 1e-6                # visual meshes carry no mass (as robosuite does for its objects)
 
-# Mounting per kind: where the unit's bottom sits and the robot base height. P1's reach study tunes
-# these. FRONT_X: the unit's front face, metres in front of the robot base.
-# P1 reach study (docs/dev/20261112-appliance-tending-task-design.md section 10): front 0.55 m and a robot
-# base 0.65 m high reach every control of every model but two rear-panel stoves, kinematically.
+# Mounting per kind: where the unit's bottom sits and the robot base height. FRONT_X: the unit's front face,
+# metres in front of the robot base. A reach study chose them: front 0.55 m and a robot base 0.65 m high reach
+# every control of every model but two rear-panel stoves, kinematically.
 COUNTER_Z = 0.92
 MOUNTS = {
     "stovetop": {"bottom_z": COUNTER_Z, "front_x": 0.55, "robot_z": 0.65},
@@ -405,6 +407,9 @@ def build_model(assets, spec, jitter=(0.0, 0.0, 0.0), mount=None):
     w.option.integrator = mujoco.mjtIntegrator.mjINT_IMPLICITFAST
     w.option.cone = mujoco.mjtCone.mjCONE_ELLIPTIC
     w.option.impratio = 2.0
+    # No automatic reset on a bad acceleration: after one every knob would be back at zero (burners and oven off)
+    # and an open "off" request would be credited. A bad state is reported by unstable() instead.
+    w.option.disableflags = int(w.option.disableflags) | int(mujoco.mjtDisableBit.mjDSBL_AUTORESET)
     w.visual.global_.offwidth = 640
     w.visual.global_.offheight = 480
     wb = w.worldbody
@@ -695,6 +700,7 @@ class ApplianceEnv(object):
         self._index()
         self._init_state()
         self.t = 0
+        self._warnings0 = self.bad_state_warnings()
         self.render_next = ("left", "right", "wrist")
         if self.render_enabled:
             self._renderers = {}
@@ -839,11 +845,18 @@ class ApplianceEnv(object):
         self.t += 1
         return self.observation(), False, {}
 
+    def bad_state_warnings(self):
+        """MuJoCo's counters of the BAD_STATE_WARNINGS (bad acceleration, position, velocity)."""
+        return [int(self.data.warning[int(w)].number) for w in BAD_STATE_WARNINGS]
+
     def unstable(self):
-        """box_env's rule: a non-finite state, an arm joint faster than MAX_ARM_SPEED or a unit joint faster
-        than MAX_UNIT_SPEED (rad/s) ends the episode with score 0."""
+        """box_env's rule: a non-finite state, an arm joint faster than MAX_ARM_SPEED or a burner knob or door
+        joint faster than MAX_UNIT_SPEED (rad/s) ends the episode with score 0; so does a MuJoCo warning of a
+        bad state (BAD_STATE_WARNINGS) raised since the episode's reset."""
         d = self.data
         if not (np.all(np.isfinite(d.qpos)) and np.all(np.isfinite(d.qvel))):
+            return True
+        if any(n > n0 for n, n0 in zip(self.bad_state_warnings(), getattr(self, "_warnings0", [0, 0, 0]))):
             return True
         if np.max(np.abs(d.qvel[self.jv])) > MAX_ARM_SPEED:
             return True
@@ -914,7 +927,8 @@ class ApplianceEnv(object):
 
     def perturbed_observation(self, obs, rng):
         """A probe copy for the grader's lock (box_env's rule): joint readings offset by up to 0.001 rad,
-        with the gripper pose and wrist-camera pose recomputed consistently, and a small wrench offset."""
+        with the gripper pose and wrist-camera pose recomputed consistently, and a small wrench offset. Its
+        fields carry the decimals of the real observation's (q, ee_pos, ee_quat, T_world_wrist 6; wrench 4)."""
         f = mujoco.MjData(self.model)
         f.qpos[:] = self.data.qpos
         q = np.asarray(obs["q"], float) + rng.uniform(-0.001, 0.001, 7)
@@ -936,19 +950,19 @@ class ApplianceEnv(object):
         R = d.site_xmat[self.site].reshape(3, 3)
         obs = {
             "t": self.t,
-            "T_world_wrist": self.wrist_pose(),
+            "T_world_wrist": np.round(self.wrist_pose(), 6),
             "T_world_left": self.fixed_pose("left"),
             "T_world_right": self.fixed_pose("right"),
             "K_left": self.camera_matrix("left"),
             "K_right": self.camera_matrix("right"),
             "K_wrist": self.camera_matrix("wrist"),
-            "q": d.qpos[self.jq].copy(),
+            "q": np.round(d.qpos[self.jq], 6),
             "dq": d.qvel[self.jv].copy(),
-            "ee_pos": d.site_xpos[self.site].copy(),
-            "ee_quat": quat_from_mat(R),
+            "ee_pos": np.round(d.site_xpos[self.site], 6),
+            "ee_quat": np.round(quat_from_mat(R), 6),
             "gripper": float(d.qpos[self.gq[0]] - d.qpos[self.gq[1]]),
-            "wrench": self.wrench_world()
-            + self.rng.normal(0, 1, 6) * np.array([WRENCH_NOISE] * 3 + [WRENCH_NOISE / 10] * 3),
+            "wrench": np.round(self.wrench_world()
+                               + self.rng.normal(0, 1, 6) * np.array([WRENCH_NOISE] * 3 + [WRENCH_NOISE / 10] * 3), 4),
         }
         if self.render_enabled:
             for cam in CAMERA_NAMES:            # an image the previous action did not ask for is empty
