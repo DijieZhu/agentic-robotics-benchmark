@@ -3856,7 +3856,7 @@
    "frozen_sha256": "9e47a34c2cff4e2521b6ce48c0e428b6c8b527f4204725707cd72bfdaa292a61",
    "sha256": "19ab99dd6ff1b00c1c81167e152e078f3e5b40f91a414dfdf89ea64921bcde42",
    "change": "Driver.knob: when the close reapproach between two grasps of a setting turn cannot be made (the wrist meets a joint limit), the hand backs off and comes in the first grasp's way (the via path and the 0.12 m pre-grasp), as before the close regrasp; before, that request failed.",
-   "effect_on_the_set": "none: the new path runs only after a close reapproach fails, and none failed on the 18 kept episodes (each scored 1.0 in process and in three wire runs without it); the reference's validate on the final commit reproduces 1.0 (see tests/anchor.json)."
+   "effect_on_the_set": "none: the new path runs only after a close reapproach fails, and none failed on the 18 kept episodes (each scored 1.0 in process and in three wire runs without it); the reference's validate on the final commit reproduces 1.0 (ale validate validate-492a2f44 and ale run pr81check-oracle-w2, 2 runs, on 71d21e1: mean_request_credit 1.0 each)."
   }
  ]
 }

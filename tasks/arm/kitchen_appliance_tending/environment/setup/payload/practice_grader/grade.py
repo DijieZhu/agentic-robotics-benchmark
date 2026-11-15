@@ -256,7 +256,8 @@ def main():
                         obs, done, _info = ep.step(act)
                         t += 1
                         if ep.env.unstable():
-                            raise WireError("simulation unstable (an arm joint over 8 rad/s or a unit joint over 30 rad/s)")
+                            raise WireError("simulation unstable (an arm joint over 8 rad/s, a burner knob or a door "
+                                            "over 30 rad/s, or a MuJoCo bad-state warning)")
                     sc = ep.score()
                     results.append({"unit": uid, "seed": seed, "episode_credit": round(sc["credit"], 5), "steps": t,
                                     "requests": [{k: r[k] for k in ("text", "t_open", "t_close", "reached", "completed",

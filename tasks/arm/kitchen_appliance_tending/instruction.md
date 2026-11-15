@@ -149,7 +149,8 @@ would need a fourth restart and every later one score 0. The whole grading run m
 episode under way when it runs out, and the episodes after it, score 0. The 6000 s cover the simulator and the
 rendering as well as your controller: with the task's Python on 4 idle CPUs a step costs the grader about 10 ms
 without an image, and each image asked for adds about 35 ms (wrist) or 50 ms (a fixed camera), up to twice that on a
-busy machine; a run in which every request runs to its deadline has 56,000 steps (at most 63,000), so all three
+busy machine; a run in which every request runs to its deadline has between 54,000 and 63,000 steps, so all three
 images at every step of such a run do not fit. Your controller is one process for the whole grading run (it is
-started again only after a crash), so it may carry what it learned about a unit in one episode into later episodes
-on the same unit. Only the final controller is scored; trial usage is not.
+started again only after a crash, a late answer or a reply that breaks the protocol, at most 3 times), so it may
+carry what it learned about a unit in one episode into later episodes on the same unit. Only the final controller is
+scored; trial usage is not.

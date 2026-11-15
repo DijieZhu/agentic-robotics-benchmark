@@ -94,6 +94,6 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   warning (MuJoCo's automatic reset is off).
 - Graded episodes: a fixed hidden set of 18 (2 per scored unit), the same for every submission, in a hidden order;
   the lab draws a fresh episode at every trial. A grading run in which every request runs to its deadline has
-  56,000 control steps (at most 63,000).
+  between 54,000 and 63,000 control steps.
 - Sandbox: 4 CPUs and 12 GB of memory in the lab phase and at grading (`OMP_NUM_THREADS=1` is set, so `nproc`
   prints 1).
