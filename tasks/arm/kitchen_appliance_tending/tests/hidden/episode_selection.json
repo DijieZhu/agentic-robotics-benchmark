@@ -2,26 +2,26 @@
  "format": "kitchen_appliance_tending episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "80c36aed8c30c62ff9baf23ba648a8d693c1531e683abe5e9d46e90fef048b4f",
-  "tests/episode.py": "1d01c9b0faccc48d5faa682de2ce693ca5f5945e869c3f1f1e81f1b254656d26",
+  "tests/verify.py": "8124d59aa9781b46ef8f695f808492ecb46580ee2585e83c379c4b8b8bbb24e4",
+  "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "tests/appliance_env.py": "64139e8e43ae18d97811cc809f2aea38286f47723ca3d1db527ee6c0609af9b7",
   "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
   "solution/oracle/appliance_env.py": "64139e8e43ae18d97811cc809f2aea38286f47723ca3d1db527ee6c0609af9b7",
-  "solution/oracle/episode.py": "1d01c9b0faccc48d5faa682de2ce693ca5f5945e869c3f1f1e81f1b254656d26",
+  "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
-  "solution/oracle/reference.py": "9e47a34c2cff4e2521b6ce48c0e428b6c8b527f4204725707cd72bfdaa292a61",
+  "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
   "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
  },
- "frozen_commit": "fd4939849a86fbf58ada4526c8f356e6fcdd1efe",
+ "frozen_commit": "864c472bc523705d428486b04abfb18d68658d27",
  "draws": [
   {
    "draw": 1,
    "drawn_utc": "2026-11-15T19:42:39Z",
    "key": "6505640abe66d113251a8d3930fd1d3f1f035ac8deca391ce401db6108063a3b",
    "source": "os.urandom(32)",
-   "status": "made",
+   "status": "void",
    "made_utc": "2026-11-15T19:58:21Z",
    "request_types": {
     "all_off": 3,
@@ -55,7 +55,41 @@
     "u4#0",
     "u8#1",
     "u2#1"
-   ]
+   ],
+   "frozen": {
+    "tests/verify.py": "80c36aed8c30c62ff9baf23ba648a8d693c1531e683abe5e9d46e90fef048b4f",
+    "tests/episode.py": "1d01c9b0faccc48d5faa682de2ce693ca5f5945e869c3f1f1e81f1b254656d26",
+    "tests/appliance_env.py": "64139e8e43ae18d97811cc809f2aea38286f47723ca3d1db527ee6c0609af9b7",
+    "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
+    "solution/oracle/appliance_env.py": "64139e8e43ae18d97811cc809f2aea38286f47723ca3d1db527ee6c0609af9b7",
+    "solution/oracle/episode.py": "1d01c9b0faccc48d5faa682de2ce693ca5f5945e869c3f1f1e81f1b254656d26",
+    "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
+    "solution/oracle/reference.py": "9e47a34c2cff4e2521b6ce48c0e428b6c8b527f4204725707cd72bfdaa292a61",
+    "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
+   },
+   "frozen_commit": "fd4939849a86fbf58ada4526c8f356e6fcdd1efe",
+   "after_selection": [
+    {
+     "date": "2026-11-15",
+     "file": "solution/oracle/reference.py",
+     "frozen_sha256": "9e47a34c2cff4e2521b6ce48c0e428b6c8b527f4204725707cd72bfdaa292a61",
+     "sha256": "19ab99dd6ff1b00c1c81167e152e078f3e5b40f91a414dfdf89ea64921bcde42",
+     "change": "Driver.knob: when the close reapproach between two grasps of a setting turn cannot be made (the wrist meets a joint limit), the hand backs off and comes in the first grasp's way (the via path and the 0.12 m pre-grasp), as before the close regrasp; before, that request failed.",
+     "effect_on_the_set": "none: the new path runs only after a close reapproach fails, and none failed on the 18 kept episodes (each scored 1.0 in process and in three wire runs without it); the reference's validate on the final commit reproduces 1.0 (ale validate validate-492a2f44 and ale run pr81check-oracle-w2, 2 runs, on 71d21e1: mean_request_credit 1.0 each)."
+    }
+   ],
+   "void_reason": "Made under a rule the maintainers withdrew and with a reference adapted to it. tests/episode.py (all four copies) then forfeited a setting request's completion when its control stood for 20 steps, with the gripper 0.10 m clear, in a setting that was neither the requested one nor the one at open (F3b, 09f924a); it forfeited honest multi-grasp turns, and the maintainers withdrew it (9412749). The reference's regrasp had been adapted to that rule (a close regrasp, 3a9fd50, and its fallback, 71d21e1, recorded with this draw under after_selection); it was restored to the pull request's regrasp (fea0b71). The grader's episode.py and the reference changed after this draw was made, so its kept episodes and their scores do not describe the frozen files; the set is selected again by a new draw.",
+   "voided_utc": "2026-11-15T21:41:23Z"
+  },
+  {
+   "draw": 2,
+   "drawn_utc": "2026-11-15T21:41:23Z",
+   "key": "299493793adaf4822a4dcf02bc168f0407d6d7a8243c41eea50dd0c8cd4e6e89",
+   "source": "os.urandom(32)",
+   "frozen_commit": "864c472bc523705d428486b04abfb18d68658d27",
+   "status": "open"
   }
  ],
  "candidates": [
@@ -3847,16 +3881,6 @@
    ],
    "status": "kept",
    "draw": 1
-  }
- ],
- "after_selection": [
-  {
-   "date": "2026-11-15",
-   "file": "solution/oracle/reference.py",
-   "frozen_sha256": "9e47a34c2cff4e2521b6ce48c0e428b6c8b527f4204725707cd72bfdaa292a61",
-   "sha256": "19ab99dd6ff1b00c1c81167e152e078f3e5b40f91a414dfdf89ea64921bcde42",
-   "change": "Driver.knob: when the close reapproach between two grasps of a setting turn cannot be made (the wrist meets a joint limit), the hand backs off and comes in the first grasp's way (the via path and the 0.12 m pre-grasp), as before the close regrasp; before, that request failed.",
-   "effect_on_the_set": "none: the new path runs only after a close reapproach fails, and none failed on the 18 kept episodes (each scored 1.0 in process and in three wire runs without it); the reference's validate on the final commit reproduces 1.0 (ale validate validate-492a2f44 and ale run pr81check-oracle-w2, 2 runs, on 71d21e1: mean_request_credit 1.0 each)."
   }
  ]
 }
