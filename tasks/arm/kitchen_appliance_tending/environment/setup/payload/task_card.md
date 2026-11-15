@@ -27,11 +27,12 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 - Knob physics: friction loss 0.20 N m, armature 0.002 kg m^2. A burner is on while its knob angle `a` satisfies
   0.35 <= a mod 2 pi <= 2 pi - 0.35 (a flame marker shows while it is on). The oven is preheated while its
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
-- Mechanisms (`appliance_env.QUIRKS`; at most one per unit; a unit spec's `quirks`): `push_to_turn` (a knob
-  unlocks while the gripper pushes it along its axis with `PUSH_FORCE` 10 N or more, and once the push drops below
-  `RELOCK_FORCE` 5 N locks again over about 1 s: friction 4 N m plus heavy damping), `reversed` (every knob's joint
-  axis is flipped: the same joint values, the opposite rotation), `hold_start` (the start button must be held
-  `HOLD_START_STEPS` 15 control steps). The practice units carry one each (p0 push_to_turn, p1 hold_start, p2
+- Mechanisms (`appliance_env.QUIRKS`; at most one per unit; a unit spec's `quirks`): `push_to_turn` (a knob unlocks
+  while the gripper presses on it along its axis with `PUSH_FORCE` 10 N or more: the size of the sum of the gripper's
+  contact forces on the knob along the knob's axis, read once per control step after its physics steps; once that
+  drops below `RELOCK_FORCE` 5 N it locks again over about 1 s: friction 4 N m plus heavy damping), `reversed` (every
+  knob's joint axis is flipped: the same joint values, the opposite rotation), `hold_start` (the start button must be
+  held `HOLD_START_STEPS` 15 control steps). The practice units carry one each (p0 push_to_turn, p1 hold_start, p2
   reversed); the hidden units' are not reported.
 - Practice units in your home: `units.json` (ids p0, p1, p2) and `units/` (their models). Hidden units: u0, u3,
   u6 (cooktops), u1, u4, u7 (microwaves), u2, u5, u8 (ovens); you reach them only through the lab.
@@ -65,12 +66,17 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 - Lighting changes per episode: the scene light's position, aim, strength (0.5-1.2x) and tint (+-15 % per
   channel), and the headlight; nothing reports it.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
-  action asked for it; the first observation of an episode carries all three. Rendering costs wall time.
+  action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
+  grading run it counts against the grader's 6000 s: with the task's Python on 4 idle CPUs about 35 ms per wrist
+  image and 50 ms per fixed-camera image, against about 10 ms for a step without an image (up to twice that on a
+  busy machine).
 
 ## Sensors
 
 - `wrench`: force (N) and torque (N m) at the wrist sensor, world frame, with noise (force sigma 0.3 N, torque
   sigma 0.03 N m).
+- Decimals: `q`, `ee_pos`, `ee_quat` and `T_world_wrist` carry 6, `wrench` 4 (`dq`, `gripper` and the fixed
+  cameras' poses are not rounded).
 
 ## Episodes
 
@@ -79,5 +85,16 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 - Three requests, one at a time, each valid in the state it opens on, each with a deadline of 1000 control steps
   (1500 for a compositional cooktop request: two burners on, two off, or all off). A request's category is drawn
   first (simple 0.3, compositional 0.35, setting 0.35, over the categories valid at the time), then a request.
+- Credit (`episode.py`, the instruction's Credit section): "reached" is decided when a request closes (the state
+  has held its last 3 steps), "completed" needs 20 steps held with the gripper 0.10 m clear of the named controls
+  and every other control's on / off (a door's closed / open) state as it was; a setting request whose control
+  stands in a wrong setting for 20 steps with the gripper clear can no longer be completed.
 - Episodes end when the third request closes; the simulation is unstable (and the episode scores 0) if an arm
-  joint moves faster than 8 rad/s or a unit joint faster than 30 rad/s.
+  joint moves faster than 8 rad/s, a burner knob or a door joint faster than 30 rad/s (`MAX_UNIT_SPEED`; the oven's
+  knobs and the microwave's buttons are not checked), or MuJoCo raises a bad acceleration, position or velocity
+  warning (MuJoCo's automatic reset is off).
+- Graded episodes: a fixed hidden set of 18 (2 per scored unit), the same for every submission, in a hidden order;
+  the lab draws a fresh episode at every trial. A grading run in which every request runs to its deadline has
+  56,000 control steps (at most 63,000).
+- Sandbox: 4 CPUs and 12 GB of memory in the lab phase and at grading (`OMP_NUM_THREADS=1` is set, so `nproc`
+  prints 1).
