@@ -2,16 +2,21 @@
 
 Runs as root in a SEPARATE verifier sandbox: no lab and no agent process exist there; the engine restores only
 the declared artifact /home/user/submission. Structure and safeguards follow arm_hidden_mechanism_box's grader:
-it stops any lab or agent-UID process first, hands the restored submission (size-capped) to the agent account
-in place, starts `bash run.sh` through nonet_exec.py (a seccomp filter: only AF_UNIX sockets) at the agent's
-UID, and speaks the kit wire (Solver, per-request deadline, restarts; ProbeLock, repeated `t` with a perturbed
-copy in a hidden order).
+it reclaims root's PATH directories (robotics_grader.stage.secure_exec_path) before anything else, stops any lab
+or agent-UID process, hands the restored submission (size-capped) to the agent account in place, starts
+`bash run.sh` through nonet_exec.py (a seccomp filter: only AF_UNIX sockets) at the agent's UID, and speaks the
+kit wire (Solver, per-request deadline, restarts; a ProbeLock, repeated `t` with a perturbed copy in a hidden
+order, that does not count a pair in which both replies command no motion: IdleAwareProbeLock).
 
-Episodes: every hidden unit (tests/units.json, models in tests/units/) runs `episodes_per_unit` episodes in a
-keyed shuffled order, each from a 64-bit seed of the kit's `seed_rng` (OS entropy): unit placement, initial
-control states, request queue and sensor noise. episode.py owns the requests and the credit (byte-identical to
-the agent's copy); appliance_env.py is the environment (byte-identical too). The metric
-`mean_request_credit` is the mean over episodes of the mean request credit (reached 0.5 + completed 0.5).
+Episodes: the fixed hidden set tests/hidden/episodes.json, the same for every submission: `episodes_per_unit`
+episodes on every hidden unit (tests/units.json, models in tests/units/), each a 64-bit seed (unit placement,
+initial control states, request queue, lighting, camera offsets and sensor noise), run in the file's order
+(selected and shuffled by tests/review/select_set.py, the record in tests/hidden/episode_selection.json). The
+probe lock keeps its own randomness (the kit's `seed_rng`, OS entropy): which steps are probed, the order of a
+pair and the perturbation. episode.py owns the requests and the credit (byte-identical to the agent's copy);
+appliance_env.py is the environment (byte-identical too). The metric `mean_request_credit` is the mean over
+episodes of the mean request credit (reached 0.5 + completed 0.5). Each episode's requests and their outcomes are
+logged on stderr with the episode's index in the set (never its seed).
 
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference;
 only then does every observation also carry `truth` (the unit's placement jitter, its joint values, the
@@ -29,6 +34,7 @@ import stat
 import subprocess
 import sys
 import time
+from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,6 +55,7 @@ from robotics_grader import (  # noqa: E402
     write_verdict,
     zero_verdict,
 )
+from robotics_grader.stage import secure_exec_path  # noqa: E402
 
 STAGE = os.path.dirname(os.path.abspath(__file__))
 MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
@@ -56,6 +63,8 @@ MAX_SUBMISSION_FILES = 5000
 NONET = os.path.join(STAGE, "nonet_exec.py")
 UNITS = os.path.join(STAGE, "units.json")
 TOKEN_SHA = os.path.join(STAGE, "hidden", "oracle_token.sha256")
+EPISODES = os.path.join(STAGE, "hidden", "episodes.json")
+STILL = 1e-9                # a reply whose six motion numbers are all within this of zero commands no motion
 MAX_LINE = 1 << 22          # an observation with three images is about 1 MB; replies are short
 
 
@@ -288,13 +297,59 @@ def oracle_token_ok(workdir):
     return hashlib.sha256(data.strip()).hexdigest() == want
 
 
-def episode_plan(config, rng, ids):
-    reps = int(config.get("episodes_per_unit", 3))
-    plan = [j for j in sorted(ids) for _ in range(reps)]
-    for i in range(len(plan) - 1, 0, -1):          # Fisher-Yates with the keyed grader RNG
-        k = int(rng.random() * (i + 1))
-        plan[i], plan[k] = plan[k], plan[i]
-    return plan
+class IdleAwareProbeLock(ProbeLock):
+    """The kit's ProbeLock, except that a pair in which BOTH replies command no motion (the first six numbers all
+    within STILL of zero) is not counted, neither in the total nor as passed: a controller that holds still on a
+    unit it has given up shows nothing either way. Every other pair is the kit's (`ProbeLock.record`)."""
+
+    def __init__(self, *args, **kwargs):
+        ProbeLock.__init__(self, *args, **kwargs)
+        self.idle_skipped = 0
+
+    @staticmethod
+    def still(action):
+        if not isinstance(action, list) or len(action) < 6:
+            return False
+        for x in action[:6]:
+            if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or abs(x) > STILL:
+                return False
+        return True
+
+    def record(self, action_probe, action_real):
+        if self.still(action_probe) and self.still(action_real):
+            self.idle_skipped += 1
+            return False
+        return ProbeLock.record(self, action_probe, action_real)
+
+    def rewards(self):
+        out = ProbeLock.rewards(self)
+        out["probes_idle_skipped"] = float(self.idle_skipped)
+        return out
+
+
+def load_episode_set(config, units, path=EPISODES):
+    """The fixed hidden set: [(unit, seed)] in the graded order. `episodes_per_unit` and the units must agree
+    with it (a task error otherwise, never the agent's)."""
+    with open(path) as fh:
+        data = json.load(fh)
+    eps = [(str(e["unit"]), int(e["seed"])) for e in data["episodes"]]
+    reps = int(config.get("episodes_per_unit", 2))
+    counts = Counter(u for u, _s in eps)
+    if set(counts) != set(units) or any(n != reps for n in counts.values()):
+        raise RuntimeError("tests/hidden/episodes.json does not hold {} episodes on each of the units".format(reps))
+    if any(not 0 <= s < 2 ** 64 for _u, s in eps) or len(set(s for _u, s in eps)) != len(eps):
+        raise RuntimeError("tests/hidden/episodes.json: a seed outside 64 bits or a repeated seed")
+    return eps
+
+
+def log_requests(index, unit, sc):
+    """One line per request of an episode: what was asked and what came of it (never the seed)."""
+    for r in sc["requests"]:
+        target = r["target"]
+        target = "+".join(str(x) for x in target) if isinstance(target, (list, tuple)) else str(target)
+        log("  episode {} ({}) request {}: {} {} reached={} completed={} forfeited={} open={} close={} -> {}".format(
+            index, unit, r["id"], r["what"], target, int(bool(r["reached"])), int(bool(r["completed"])),
+            int(bool(r.get("forfeited"))), r["t_open"], r["t_close"], r.get("outcome", "")))
 
 
 def wire_obs(ep, obs, uid, truth):
@@ -314,27 +369,33 @@ def valid_action(action):
     return 0 <= action[7] <= 7 and float(action[7]).is_integer()
 
 
-def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth):
+def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, episodes):
+    """Run `episodes` ([(unit, seed)], the fixed set in its order) over one controller. Returns (scores, aborted,
+    faults, per_unit, per_request, egress_hits, budget_exhausted, lock, records); a record per episode: its index
+    in the set, unit, score, reason, steps and the requests' outcomes (episode.score())."""
     budget = float(config.get("grader_budget_s", 6000))
-    plan = episode_plan(config, rng, specs)
-    lock = ProbeLock(rng, rate=config.get("probe_rate", 0.01),
-                     pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
+    lock = IdleAwareProbeLock(rng, rate=config.get("probe_rate", 0.01),
+                              pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
     scores, aborted, faults = [], 0, 0
     per_unit, per_request = {}, {}
+    records = []
     egress_hits = 0
     budget_exhausted = False
     GuardedSolver.guard = egress_mode == "seccomp"
     GuardedSolver.nproc = int(config.get("solver_nproc_limit", 0))
     solver = GuardedSolver(step_timeout=config.get("step_timeout_s", 30), submission=workdir)
     try:
-        for n, unit in enumerate(plan):
+        for n, (unit, seed) in enumerate(episodes):
             if time.monotonic() - t_start > budget:
                 budget_exhausted = True
                 scores.append(0.0)
                 per_unit.setdefault(unit, []).append(0.0)
+                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "grader budget exhausted",
+                                "steps": 0, "requests": []})
+                log("episode {} ({}): score=0.0000 not run (grader budget exhausted)".format(n, unit))
                 continue
-            ep = EP.Episode(E.ApplianceEnv(specs[unit], None, render=True), rng.seed(bits=64))
-            score, reason = 0.0, "ok"
+            ep = EP.Episode(E.ApplianceEnv(specs[unit], None, render=True), seed)
+            score, reason, sc = 0.0, "ok", None
             try:
                 obs = ep.reset()
                 solver.reset()
@@ -361,7 +422,7 @@ def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth):
                 sc = ep.score()
                 score = sc["credit"]
                 for r in sc["requests"]:
-                    per_request.setdefault(r["what"], []).append(0.5 * r["reached"] + 0.5 * r["completed"])
+                    per_request.setdefault(r["what"], []).append(r["credit"])
             except (SolverAborted, ValueError, TypeError, OverflowError, KeyError, AttributeError,
                     RecursionError) as exc:
                 aborted += 1
@@ -373,17 +434,27 @@ def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth):
                 score = 0.0
             scores.append(score)
             per_unit.setdefault(unit, []).append(score)
-            log("episode {} ({}): score={:.4f} steps={} {}".format(n, unit, score, getattr(ep.env, "t", 0), reason))
+            steps = getattr(ep.env, "t", 0)
+            log("episode {} ({}): score={:.4f} steps={} {}".format(n, unit, score, steps, reason))
+            if sc is None:
+                try:
+                    sc = ep.score()            # the requests so far, for the log only: an aborted episode scores 0
+                except Exception:  # noqa: BLE001 - an episode that never started has no requests
+                    sc = {"requests": []}
+            log_requests(n, unit, sc)
+            records.append({"index": n, "unit": unit, "score": score, "reason": reason, "steps": steps,
+                            "requests": sc["requests"]})
     finally:
         try:
             solver.close()
         except Exception:  # noqa: BLE001 - closing a broken solver must not crash the grader
             pass
-    return scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted, lock
+    return scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted, lock, records
 
 
 def main():
     t_start = time.monotonic()
+    secured = {"root_path_dirs_secured": float(len(secure_exec_path()))}   # before anything else runs
     config = stage_config()
     lab_stopped = stop_lab()
     rng = seed_rng()
@@ -391,39 +462,41 @@ def main():
     try:
         uid, gid = _agent_ids()
     except KeyError:
-        write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None))
+        write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None, extra=secured))
         return
     if not stop_agent_processes(uid):
         write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
-                                   anchored=anchor is not None))
+                                   anchored=anchor is not None, extra=secured))
         return
     with open(UNITS) as fh:
         units = json.load(fh)
     specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(STAGE, c["dir"])), quirks=c.get("quirks"))
              for u, c in sorted(units.items())}
+    episodes = load_episode_set(config, specs)
     try:
         workdir = stage_submission(uid, gid)
     except OSError as exc:
         log("staging the submission failed: {}".format(type(exc).__name__))
         workdir = None
     if workdir is None:
-        write_verdict(zero_verdict(reason="no usable submission", anchored=anchor is not None))
+        write_verdict(zero_verdict(reason="no usable submission", anchored=anchor is not None, extra=secured))
         return
     truth = oracle_token_ok(workdir)
     egress_mode = "seccomp" if egress_self_test(uid, gid, int(config.get("solver_nproc_limit", 0))) else "detect"
-    log("egress guard: {}; oracle token: {}".format(egress_mode, truth))
+    log("egress guard: {}; oracle token: {}; {} episodes in the fixed set".format(egress_mode, truth, len(episodes)))
     try:
         (scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted,
-         lock) = run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth)
+         lock, _records) = run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, episodes)
     except (SolverMissing, SolverAborted) as exc:
         kill_agent_processes(uid)
-        write_verdict(zero_verdict(reason=str(exc)[:200], anchored=anchor is not None))
+        write_verdict(zero_verdict(reason=str(exc)[:200], anchored=anchor is not None, extra=secured))
         return
     cleanup_ok = stop_agent_processes(uid)
     measured = sum(scores) / len(scores) if scores else 0.0
     if egress_hits or not cleanup_ok or not math.isfinite(measured) or measured < 0:
         measured = 0.0
     extra = dict(lock.rewards(),
+                 episodes_in_set=float(len(episodes)),
                  episodes_scored=float(len(scores) - aborted),
                  episodes_aborted=float(aborted),
                  sim_faults=float(faults),
@@ -432,7 +505,8 @@ def main():
                  cleanup_failed=0.0 if cleanup_ok else 1.0,
                  lab_stopped=1.0 if lab_stopped else 0.0,
                  budget_exhausted=1.0 if budget_exhausted else 0.0,
-                 oracle_token=1.0 if truth else 0.0)
+                 oracle_token=1.0 if truth else 0.0,
+                 **secured)
     for unit, vals in sorted(per_unit.items()):
         extra["score_" + unit] = sum(vals) / len(vals)
     for what, vals in sorted(per_request.items()):
