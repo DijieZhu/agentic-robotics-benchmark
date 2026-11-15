@@ -347,9 +347,9 @@ def log_requests(index, unit, sc):
     for r in sc["requests"]:
         target = r["target"]
         target = "+".join(str(x) for x in target) if isinstance(target, (list, tuple)) else str(target)
-        log("  episode {} ({}) request {}: {} {} reached={} completed={} forfeited={} open={} close={} -> {}".format(
+        log("  episode {} ({}) request {}: {} {} reached={} completed={} open={} close={} -> {}".format(
             index, unit, r["id"], r["what"], target, int(bool(r["reached"])), int(bool(r["completed"])),
-            int(bool(r.get("forfeited"))), r["t_open"], r["t_close"], r.get("outcome", "")))
+            r["t_open"], r["t_close"], r.get("outcome", "")))
 
 
 def wire_obs(ep, obs, uid, truth):

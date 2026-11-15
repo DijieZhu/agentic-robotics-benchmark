@@ -145,7 +145,7 @@ def _req(r):
     t = r["target"]
     return {"id": r["id"], "what": r["what"], "target": list(t) if isinstance(t, (list, tuple)) else t, "text": r["text"],
             "t_open": int(r["t_open"]), "t_close": None if r["t_close"] is None else int(r["t_close"]),
-            "outcome": r["outcome"], "forfeited": bool(r["forfeited"])}
+            "outcome": r["outcome"]}
 
 
 def in_process(E, EP, O, R, spec, seed):

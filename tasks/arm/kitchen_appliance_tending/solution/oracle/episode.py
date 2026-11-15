@@ -18,12 +18,7 @@ Wraps an ApplianceEnv (attribute access passes through, so `reference.Driver(Epi
       **completed** 0.5: the target state has held COMPLETE_HOLD (20) consecutive steps with the gripper site at
       least CLEAR (0.10 m) from every named control while every other control keeps the discrete state it had
       when the request opened (`discrete`, `others_unchanged`; compared during those 20 steps only); the
-      request closes at that step;
-      **forfeited** (setting requests only): the control has stood in a WRONG setting (a band that is neither the
-      requested one nor the one it was in when the request opened) for COMPLETE_HOLD consecutive steps with the
-      gripper clear of it; from then on the request cannot be completed ("reached" at its close still counts).
-      A wrong setting passed through, or held while the gripper is within CLEAR of the control (a regrasp),
-      costs nothing.
+      request closes at that step.
 
     ep = Episode(ApplianceEnv(spec, assets), seed)
     obs = ep.reset()                  # obs["request_id"], ["request_text"], ["request_deadline_t"]
@@ -65,7 +60,6 @@ PREHEATED_RANGE = (0.30, 0.50)
 LOC_TEXT = {"rear_left": "rear left", "rear_center": "rear centre", "rear_right": "rear right",
             "front_left": "front left", "front_center": "front centre", "front_right": "front right",
             "center": "centre", "left": "left", "right": "right"}
-SETTING = ("burner_level", "oven_level")
 
 
 def request_texts():
@@ -149,14 +143,6 @@ class Episode(object):
             out.append(("all_off", tuple(locs)))
         return out
 
-    def setting_band(self, what, target):
-        """The band a setting request's control is in now (None while the burner is off or the oven is not
-        preheated)."""
-        u, d = self.env.unit, self.env.data
-        if what == "burner_level":
-            return band_of(u.burner_level(d, target[0]), BURNER_BANDS)
-        return band_of(u.temperature(d), OVEN_BANDS)
-
     def level_requests(self):
         """A burner to a setting it is not at now (an off burner too), the oven to a heat it is not at now."""
         u, kind = self.env.unit, self.env.spec["kind"]
@@ -218,9 +204,8 @@ class Episode(object):
         assert text in REQUEST_TEXTS, text           # the lab's reply schema must know every text
         r = {"id": len(self.requests), "what": what, "target": target, "text": text, "t_open": self.env.t,
              "deadline_t": self.env.t + (DEADLINE_COMPOUND if what in COMPOUND else DEADLINE),
-             "before": self.discrete(), "reached": False, "completed": False, "forfeited": False,
-             "t_forfeit": None, "run_reach": 0, "run_complete": 0, "run_wrong": 0, "t_close": None,
-             "start_band": self.setting_band(what, target) if what in SETTING else None}
+             "before": self.discrete(), "reached": False, "completed": False, "run_reach": 0, "run_complete": 0,
+             "t_close": None}
         self.requests.append(r)
         self.current = r
 
@@ -230,7 +215,7 @@ class Episode(object):
         d, m = self.env.data, self.env.model
         if r["what"] in COMPOUND:
             return [d.geom_xpos[m.geom("u_knob_%s_main" % x).id] for x in r["target"]]
-        if r["what"] in SETTING:
+        if r["what"] in ("burner_level", "oven_level"):
             return [d.geom_xpos[m.geom("u_knob_%s_main" % r["target"][0]).id]]
         return [self._control_pos(r)]
 
@@ -247,8 +232,11 @@ class Episode(object):
             return st["burner_on_" + r["target"]]
         if w == "burner_off":
             return not st["burner_on_" + r["target"]]
-        if w in SETTING:
-            return self.setting_band(w, r["target"]) == r["target"][1]
+        if w == "burner_level":
+            loc, lv = r["target"]
+            return band_of(self.env.unit.burner_level(self.env.data, loc), BURNER_BANDS) == lv
+        if w == "oven_level":
+            return band_of(self.env.unit.temperature(self.env.data), OVEN_BANDS) == r["target"][1]
         if w == "burners_on":
             return all(st["burner_on_" + x] for x in r["target"])
         if w in ("burners_off", "all_off"):
@@ -266,7 +254,7 @@ class Episode(object):
         (`discrete`). A burner request (simple, compositional or setting) compares the other burners and a
         door; an oven request a door and any burner; a microwave request nothing (its door is not compared,
         and opening the door stops it)."""
-        if r["what"] in SETTING:
+        if r["what"] in ("burner_level", "oven_level"):
             own = {"burner_on_" + r["target"][0]} if r["what"] == "burner_level" else {"preheated"}
             now = self.discrete()
             return all(now.get(k) == v for k, v in r["before"].items() if k not in own)
@@ -292,16 +280,9 @@ class Episode(object):
             r["run_reach"] = r["run_reach"] + 1 if holds else 0
             hand = self.env.data.site_xpos[self.env.site]
             clear = min(np.linalg.norm(hand - p) for p in self.control_pos(r)) >= CLEAR
-            if r["what"] in SETTING and not r["forfeited"]:
-                band = self.setting_band(r["what"], r["target"])
-                wrong = band is not None and band != r["target"][1] and band != r["start_band"]
-                r["run_wrong"] = r["run_wrong"] + 1 if (wrong and clear) else 0
-                if r["run_wrong"] >= COMPLETE_HOLD:
-                    r["forfeited"] = True
-                    r["t_forfeit"] = self.env.t
             ok = holds and clear and self.others_unchanged(r)
             r["run_complete"] = r["run_complete"] + 1 if ok else 0
-            if r["run_complete"] >= COMPLETE_HOLD and not r["forfeited"]:
+            if r["run_complete"] >= COMPLETE_HOLD:
                 r["completed"] = True
             if r["completed"] or self.env.t >= r["deadline_t"]:
                 r["t_close"] = self.env.t
@@ -325,14 +306,12 @@ class Episode(object):
 
     def score(self):
         """The mean request credit and, per request: its type and target, open and close steps, reached,
-        completed, forfeited (and the step it happened), its credit and its outcome ("completed", "reached"
-        or "missed")."""
+        completed, its credit and its outcome ("completed", "reached" or "missed")."""
         rs = self.requests
         credit = [self.request_credit(r) for r in rs]
         out = []
         for r in rs:
-            q = {k: r[k] for k in ("id", "what", "target", "text", "t_open", "t_close", "reached", "completed",
-                                   "forfeited", "t_forfeit")}
+            q = {k: r[k] for k in ("id", "what", "target", "text", "t_open", "t_close", "reached", "completed")}
             q["credit"] = self.request_credit(r)
             q["outcome"] = "completed" if r["completed"] else ("reached" if r["reached"] else "missed")
             out.append(q)

@@ -86,11 +86,6 @@ For each request, decided when it closes:
   microwave nothing else is compared (its door is not; opening it stops the microwave). Not compared: a burner's
   setting (only on or off), the oven's timer knob. They are compared during those 20 steps only: a control disturbed
   on the way (the wrong burner turned on, one knocked off) must be back in its state before the 20 steps count.
-- **A wrong setting forfeits the completion** (setting requests only): if the control stands in a wrong setting, one
-  that is neither the requested one nor the one it was in when the request opened (an off burner or an oven that is
-  not preheated is in none), for 20 consecutive steps with the gripper at least 0.10 m from it, the request can no
-  longer be completed ("reached" at its close still counts). A wrong setting passed through on the way, or held while
-  the gripper is within 0.10 m of the control (while regrasping it), costs nothing.
 
 The episode score is the mean over its three requests; your result is the mean over the graded episodes.
 

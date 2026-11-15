@@ -87,8 +87,7 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   first (simple 0.3, compositional 0.35, setting 0.35, over the categories valid at the time), then a request.
 - Credit (`episode.py`, the instruction's Credit section): "reached" is decided when a request closes (the state
   has held its last 3 steps), "completed" needs 20 steps held with the gripper 0.10 m clear of the named controls
-  and every other control's on / off (a door's closed / open) state as it was; a setting request whose control
-  stands in a wrong setting for 20 steps with the gripper clear can no longer be completed.
+  and every other control's on / off (a door's closed / open) state as it was.
 - Episodes end when the third request closes; the simulation is unstable (and the episode scores 0) if an arm
   joint moves faster than 8 rad/s, a burner knob or a door joint faster than 30 rad/s (`MAX_UNIT_SPEED`; the oven's
   knobs and the microwave's buttons are not checked), or MuJoCo raises a bad acceleration, position or velocity

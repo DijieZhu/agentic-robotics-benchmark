@@ -260,7 +260,7 @@ def main():
                     sc = ep.score()
                     results.append({"unit": uid, "seed": seed, "episode_credit": round(sc["credit"], 5), "steps": t,
                                     "requests": [{k: r[k] for k in ("text", "t_open", "t_close", "reached", "completed",
-                                                                    "forfeited", "outcome")}
+                                                                    "outcome")}
                                                  for r in sc["requests"]]})
                 except (WireError, ValueError, TypeError) as exc:
                     results.append({"unit": uid, "seed": seed, "episode_credit": 0.0, "aborted": str(exc)[:200]})
