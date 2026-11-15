@@ -1,8 +1,8 @@
 {
   "metric": "mean_request_credit",
   "direction": "higher",
-  "value": 0.9974,
-  "full_at": 0.9,
-  "source": "Own measurement, 2026-11-14 (nine scored units, state indicators, per-episode lighting and camera offsets, compositional and setting requests, unit mechanisms, 18 episodes per run): the privileged reference (solution/solve.sh, token truth) through this build's verify on fresh OS-entropy seeds, engine 1cdbc02, the dev host's Docker: ale run --agent oracle run e92fb05d on commit 7c85eab, 7 runs (1.0 x6, 0.9815), mean 0.99735 over 126 episodes; the one lost request is u2 (an oven setting). No aborts, seccomp guard on.",
-  "note": "Measured, not drawn. full_at 0.90 as on the build before the mechanisms (worst of 7 runs there 0.9352, ratio 0.954), so the oracle keeps a margin of several lost requests and still scores 1.0."
+  "value": 1.0,
+  "full_at": 0.98,
+  "source": "Own measurement, 2026-11-15, on the fixed hidden set (tests/hidden/episodes.json: 18 episodes, 2 per unit) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505) on the maintainers' host Docker, five runs of 18 episodes: ale validate run validate-bc3f20d7 (1.0) and ale run --agent oracle -n 4 run pr81fix-oracle-r1 (1.0, 1.0, 1.0, 1.0); mean 1.0 over 90 episodes, no aborts, no simulation faults, seccomp guard on, probe pairs 624 of 626 differing.",
+  "note": "Measured, not drawn. The set holds only episodes on which the reference scored 1.0 in process and in three runs over the real wire when it was selected (tests/hidden/episode_selection.json), so the anchor sits at full. full_at 0.98: one request of the 54 lost (metric 0.9815) still gives the reference reward 1.0."
 }
