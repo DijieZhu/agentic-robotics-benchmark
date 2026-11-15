@@ -491,31 +491,42 @@ class Driver(object):
             centre, gid, outward, finger0, is_bar, tip_point, width = self._knob_geometry(loc, axis, anchor)
             self._knob_allow = self.body_geoms(gid)
             remaining = abs(goal - self.qpos(adr)) + 0.1
-            plan = None
             first = min(remaining, SET_CHUNK) if want == "set" else remaining
-            for chunk in (first, 1.0, 0.6):
-                if chunk > remaining:
-                    continue
-                R, grasp, margin, how = self._knob_grasp(axis, anchor, outward, finger0, is_bar, tip_point,
-                                                         direction * chunk, width + 0.025,
-                                                         prefer=self.site_R() if (want == "set" and k > 0) else None)
-                if R is not None and margin > 0:
-                    plan = (R, grasp, margin, how, chunk)
-                    break
+
+            def plan_grasp(prefer):
+                for chunk in (first, 1.0, 0.6):
+                    if chunk > remaining:
+                        continue
+                    R, grasp, margin, how = self._knob_grasp(axis, anchor, outward, finger0, is_bar, tip_point,
+                                                             direction * chunk, width + 0.025, prefer=prefer)
+                    if R is not None and margin > 0:
+                        return R, grasp, margin, how, chunk
+                return None
+            close = want == "set" and k > 0              # a further grasp of a setting turn: stay close
+            plan = plan_grasp(self.site_R() if close else None)
             if plan is None:
                 raise PrimitiveError("plan", "no feasible grasp pose (grasp %d)" % (k + 1))
             R, grasp, margin, how, chunk = plan
             g_open = float(np.clip(1.0 - (width + 0.025) / 0.04, -1.0, 0.6))   # open a little wider than the part
             out["grasps"].append({"grasp": how, "ik_margin": round(margin, 3), "chunk": round(chunk, 2)})
-            if want == "set" and k > 0:                  # a further grasp of a setting turn: stay close
+            if close:
                 R0 = self.site_R()
                 rv = rotvec(R @ R0.T)
                 n_rot = max(1, int(math.ceil(np.linalg.norm(rv) / 0.8)))
-                for i in range(1, n_rot + 1):            # turn the hand in parts: the controller's orientation
-                    Ri = E.axis_angle_mat(rv * (i / n_rot)) @ R0     # error vanishes near a half turn
-                    self.move("reapproach_knob", grasp - R[:, 2] * REGRASP_PRE, Ri, g_open, max_steps=400,
-                              tol=0.008 if i == n_rot else 0.02, ang_tol=0.08 if i == n_rot else 0.2)
-            else:
+                try:
+                    for i in range(1, n_rot + 1):        # turn the hand in parts: the controller's orientation
+                        Ri = E.axis_angle_mat(rv * (i / n_rot)) @ R0     # error vanishes near a half turn
+                        self.move("reapproach_knob", grasp - R[:, 2] * REGRASP_PRE, Ri, g_open, max_steps=400,
+                                  tol=0.008 if i == n_rot else 0.02, ang_tol=0.08 if i == n_rot else 0.2)
+                except PrimitiveError:                   # the wrist cannot turn there (a joint limit): back off
+                    out["grasps"][-1]["close_reapproach_failed"] = True       # and come in the first grasp's way
+                    self.retreat("withdraw", -self.site_R()[:, 2], 0.06, self.site_R())
+                    plan = plan_grasp(None)
+                    if plan is None:
+                        raise PrimitiveError("plan", "no feasible grasp pose (grasp %d)" % (k + 1))
+                    R, grasp, margin, how, chunk = plan
+                    close = False
+            if not close:
                 self.follow_via(self._via, g_open)
                 self.move("approach_knob", grasp - R[:, 2] * PRE, R, g_open, max_steps=400, tol=0.008, ang_tol=0.08)
             self.move("to_knob", grasp, R, g_open, speed=0.01, tol=0.004)
