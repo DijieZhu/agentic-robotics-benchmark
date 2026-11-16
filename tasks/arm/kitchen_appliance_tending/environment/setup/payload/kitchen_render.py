@@ -408,7 +408,13 @@ def _contact_decals(parts, lo, hi, m, look):
                     "half": [(b[1] - a[1]) / 2, sh["half_height_m"]],
                     "margin": [sh["margin_m"], sh["margin_m"], sh.get("below_margin_m", sh["margin_m"]), 0.0],
                     "alpha": sh["alpha"]})
+    q = float(D.get("size_step_m", 0.02))
     for d in out:
+        if d["body"] is None:
+            # the floor's and the shelf's footprints move with the episode's jitter: their sizes are rounded to
+            # size_step_m (the falloff starts at most half a step off), so that the process-cached meshes (never
+            # freed by MuJoCo 3.16) stay a small fixed set
+            d["half"] = [max(q, round(float(h) / q) * q) for h in d["half"]]
         d["key"] = ("decal",) + tuple(np.round(list(d["half"]) + list(d["margin"]), 3))
     return out
 
