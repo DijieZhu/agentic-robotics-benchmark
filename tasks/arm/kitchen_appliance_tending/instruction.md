@@ -125,7 +125,7 @@ an integer from 0 to 7 (anything else is a malformed action).
 `labclient.py` talks to a service on `/run/ale-lab/lab.sock` (JSON lines; `python3 labclient.py --help`). This lab
 serves `hello`, `budget`, `reset`, `step` and `close` (the client's `execute`, an open-loop plan, is not served here:
 the lab answers `unsupported`). A **trial** is one episode on one unit: `reset` with the unit id starts it (and
-charges 1 trial; you have **10 trials in total**, shared by all nine units, never refunded), then `step` with an
+charges 1 trial; you have **3 trials in total**, shared by all nine units, never refunded), then `step` with an
 action returns the next observation (steps are free) until the episode ends. A trial ends when its episode ends (when
 its third request closes, or when the simulation becomes unstable), when you start a new trial or close the
 connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies. A
@@ -134,7 +134,8 @@ at a time, and a call it cannot answer within 120 s restarts its worker (a trial
 Each trial draws a fresh placement, initial state, request queue, lighting and sensor noise. A reset takes about 1 s
 and a step with all three images about 0.2 s (much less without images). The lab never reports scores, credit or the
 unit's state: only observations; but a request that closes before its deadline was completed. The lab units are
-exactly the units you are scored on. The lab is gone when grading starts.
+exactly the units you are scored on. With 3 trials you can visit at most three of the nine units: the others your
+controller meets for the first time in the graded episodes. The lab is gone when grading starts.
 
 ## Deliverable and grading
 
