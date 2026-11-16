@@ -27,9 +27,12 @@ Images: appliance_env.py draws the cameras with kitchen_render.py (MuJoCo's Fila
 the room bundle in KITCHEN_RENDER_DIR), exactly as the dev sim and the lab do. Before the first episode a render
 self-test draws the three cameras of one episode (the first unit of the set at a fixed seed, not a graded episode)
 and checks their shapes, that none is flat and that their brightness is sane; the metric `render_selftest` records
-that it passed. A renderer failure, in the self-test or at any later image (appliance_env.RenderError), is the
-grader's own error: the run ends as a task error (robotics_grader.stage.fail: no reward written, exit status 1),
-never as a controller fault or a 0 for the submission.
+that it passed. A renderer failure, in the self-test or at any later image (appliance_env.RenderError: a missing
+or broken room-bundle file, an error while drawing, a call that does not return), is the grader's own error: the
+run ends as a task error (robotics_grader.stage.fail: no reward written, exit status 1), never as a controller fault
+or a 0 for the submission. A Vulkan backend that cannot start at all aborts the grader's process inside Filament
+(SIGABRT, before Python can catch anything): no reward is written either; the image's build-time render check
+(environment/render_check/) proves the driver for every account that renders.
 """
 
 import hashlib
