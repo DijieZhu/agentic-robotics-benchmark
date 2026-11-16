@@ -1,0 +1,249 @@
+{
+ "seed": 6790790475345571576,
+ "stage_score": 0.9166666666666666,
+ "credit": 9.166666666666666,
+ "credit_by_part": {
+  "trash": 2.0,
+  "dishes": 1.0,
+  "books": 1.0,
+  "grease": 2.5,
+  "crumbs": 1.6667,
+  "sponge": 0.3,
+  "tools": 0.3,
+  "faucet": 0.2,
+  "lids": 0.2
+ },
+ "grease_removed_fraction": 0.9796,
+ "crumbs_binned_fraction": 0.6,
+ "safety_ok": true,
+ "violations": [],
+ "safety_peaks": {
+  "robot_contact_N": 0.0,
+  "object_speed": 1.6466983398129118,
+  "release_speed": 0.18744733413015913
+ },
+ "safety_peak_who": {},
+ "sim_time_s": 2544.62,
+ "broken": {},
+ "items": {
+  "can_red": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.265,
+    0.462,
+    0.162
+   ]
+  },
+  "can_green": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.231,
+    0.365,
+    0.04
+   ]
+  },
+  "bottle": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.263,
+    0.301,
+    0.04
+   ]
+  },
+  "napkin_1": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.25,
+    0.851,
+    0.063
+   ]
+  },
+  "napkin_2": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.261,
+    0.727,
+    0.063
+   ]
+  },
+  "napkin_3": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.235,
+    0.801,
+    0.063
+   ]
+  },
+  "apple_core": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.29,
+    0.796,
+    0.076
+   ]
+  },
+  "plate_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.221,
+    2.092,
+    0.904
+   ]
+  },
+  "plate_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.222,
+    2.091,
+    0.926
+   ]
+  },
+  "glass_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.415,
+    2.016,
+    0.904
+   ]
+  },
+  "glass_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.415,
+    2.165,
+    0.904
+   ]
+  },
+  "book_red": {
+   "x": 1.4913,
+   "y": 4.8002,
+   "z": 0.673,
+   "bottom_above_shelf_m": -0.0,
+   "top_z": 0.688,
+   "upright_cos": -0.0,
+   "held": false,
+   "ok": true
+  },
+  "book_blue": {
+   "x": 1.4924,
+   "y": 4.8037,
+   "z": 0.6999,
+   "bottom_above_shelf_m": 0.0299,
+   "top_z": 0.7119,
+   "upright_cos": -0.0,
+   "held": false,
+   "ok": true
+  }
+ },
+ "process": {
+  "grease_total0": 42.553,
+  "grease_residual": 0.866,
+  "grease_removed_fraction": 0.9796,
+  "grease_taken": 44.096,
+  "grease_smeared": 2.409,
+  "sponge": {
+   "soap": 0.072,
+   "wet": 1.0,
+   "load": 0.001,
+   "load_frac": 0.0,
+   "peak_load": 15.145,
+   "doses": 4,
+   "rinse_s": 18.26
+  },
+  "crumbs": {
+   "free": 24,
+   "pan": 0,
+   "bin_general": 36,
+   "bin_recycling": 0,
+   "sink": 0,
+   "lid": 0
+  },
+  "crumb_events": {
+   "captured": 36,
+   "spilled": 36,
+   "scattered": 0,
+   "binned_general": 36,
+   "binned_recycling": 0,
+   "to_floor": 14
+  },
+  "wipe_s": 170.78,
+  "sweep_s": 2479.19,
+  "soap_strokes": 4,
+  "soap_doses_missed": 0,
+  "water_s": 1153.06
+ },
+ "tools_clipped": {
+  "broom": true,
+  "dustpan": true
+ },
+ "lid_angles": {
+  "0": -0.0008,
+  "1": -0.0008
+ },
+ "bins": {
+  "0": "recycling",
+  "1": "general"
+ },
+ "render_errors": 0,
+ "internal_errors": 0,
+ "reference": {
+  "ok": true,
+  "sim_time": 2544.62,
+  "done": false,
+  "wall_s": 2127.399491786957,
+  "stage_score": 0.9166666666666666,
+  "credit_by_part": {
+   "trash": 2.0,
+   "dishes": 1.0,
+   "books": 1.0,
+   "grease": 2.5,
+   "crumbs": 1.6667,
+   "sponge": 0.3,
+   "tools": 0.3,
+   "faucet": 0.2,
+   "lids": 0.2
+  }
+ },
+ "harness_wall_s": 2148.419741630554,
+ "camera_frames_total": 4,
+ "faucet_off": true,
+ "sponge": {
+  "in_tray": true,
+  "rinsed": true,
+  "soap": 0.072,
+  "wet": 1.0,
+  "load": 0.001,
+  "load_frac": 0.0,
+  "peak_load": 15.145,
+  "doses": 4,
+  "rinse_s": 18.26
+ },
+ "damage": {
+  "broken": [],
+  "on_floor": []
+ },
+ "penalty": 0.0,
+ "credit_earned": 9.166666666666666
+}

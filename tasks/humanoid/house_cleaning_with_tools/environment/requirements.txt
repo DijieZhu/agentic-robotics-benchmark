@@ -1,0 +1,14 @@
+# house_cleaning_with_tools: the ONE list of Python dependencies of the task image (/opt/venv, Python 3.12).
+# furniture_assembly_from_drawings's list unchanged (the house cell is built on that task's cell: the same G1, the
+# same renderer), which pins the versions that cell was developed and tested against (2026-10-30), also the arm
+# chain's pins where they overlap (shared base: mujoco, numpy, scipy, pillow, matplotlib; photo layer: OpenCV).
+#
+# physics and rendering (the grader's cell and the practice lab; the agent may use them too). MuJoCo 3.16 (2026-11-03):
+# the cameras' Filament renderer (ModelResources, one model per context) is the 3.16 module's
+mujoco==3.16.0
+numpy==2.5.3
+# the agent's own tools: geometry, image processing (calibration, detection), plotting
+scipy==1.18.1
+pillow==12.3.0
+opencv-python-headless==5.0.0.93
+matplotlib==3.11.2

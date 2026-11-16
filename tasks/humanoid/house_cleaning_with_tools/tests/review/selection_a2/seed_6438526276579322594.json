@@ -1,0 +1,259 @@
+{
+ "seed": 6438526276579322594,
+ "stage_score": 0.752962962962963,
+ "credit": 7.529629629629629,
+ "credit_by_part": {
+  "trash": 2.0,
+  "dishes": 1.0,
+  "books": 1.0,
+  "grease": 2.5,
+  "crumbs": 0.8796,
+  "sponge": 0.0,
+  "tools": 0.0,
+  "faucet": 0.2,
+  "lids": 0.2
+ },
+ "grease_removed_fraction": 0.9699,
+ "crumbs_binned_fraction": 0.3167,
+ "safety_ok": true,
+ "violations": [],
+ "safety_peaks": {
+  "robot_contact_N": 1164.3572135120617,
+  "object_speed": 1.2407802894350446,
+  "release_speed": 0.17514384697028185
+ },
+ "safety_peak_who": {
+  "robot_contact_N": [
+   2246.26,
+   [
+    "a/right_ankle_roll_link",
+    "dustpan"
+   ]
+  ]
+ },
+ "sim_time_s": 2582.18,
+ "broken": {},
+ "items": {
+  "can_red": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.212,
+    0.33,
+    0.073
+   ]
+  },
+  "can_green": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.155,
+    0.289,
+    0.04
+   ]
+  },
+  "bottle": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.081,
+    0.316,
+    0.074
+   ]
+  },
+  "napkin_1": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.178,
+    0.724,
+    0.063
+   ]
+  },
+  "napkin_2": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.203,
+    0.774,
+    0.063
+   ]
+  },
+  "napkin_3": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.227,
+    0.822,
+    0.063
+   ]
+  },
+  "apple_core": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.139,
+    0.792,
+    0.059
+   ]
+  },
+  "plate_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.227,
+    2.077,
+    0.904
+   ]
+  },
+  "plate_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.228,
+    2.091,
+    0.926
+   ]
+  },
+  "glass_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.421,
+    2.014,
+    0.904
+   ]
+  },
+  "glass_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.42,
+    2.164,
+    0.904
+   ]
+  },
+  "book_red": {
+   "x": 1.4914,
+   "y": 4.8005,
+   "z": 0.673,
+   "bottom_above_shelf_m": -0.0,
+   "top_z": 0.688,
+   "upright_cos": 0.0,
+   "held": false,
+   "ok": true
+  },
+  "book_blue": {
+   "x": 1.4889,
+   "y": 4.8025,
+   "z": 0.6999,
+   "bottom_above_shelf_m": 0.0299,
+   "top_z": 0.7119,
+   "upright_cos": 0.0,
+   "held": false,
+   "ok": true
+  }
+ },
+ "process": {
+  "grease_total0": 22.951,
+  "grease_residual": 0.691,
+  "grease_removed_fraction": 0.9699,
+  "grease_taken": 23.475,
+  "grease_smeared": 1.215,
+  "sponge": {
+   "soap": 0.036,
+   "wet": 1.0,
+   "load": 0.0,
+   "load_frac": 0.0,
+   "peak_load": 13.81,
+   "doses": 3,
+   "rinse_s": 18.09
+  },
+  "crumbs": {
+   "free": 41,
+   "pan": 0,
+   "bin_general": 19,
+   "bin_recycling": 0,
+   "sink": 0,
+   "lid": 0
+  },
+  "crumb_events": {
+   "captured": 19,
+   "spilled": 19,
+   "scattered": 0,
+   "binned_general": 19,
+   "binned_recycling": 0,
+   "to_floor": 14
+  },
+  "wipe_s": 119.22,
+  "sweep_s": 2445.64,
+  "soap_strokes": 3,
+  "soap_doses_missed": 0,
+  "water_s": 930.49
+ },
+ "tools_clipped": {
+  "broom": true,
+  "dustpan": true
+ },
+ "lid_angles": {
+  "0": -0.0008,
+  "1": -0.0008
+ },
+ "bins": {
+  "0": "recycling",
+  "1": "general"
+ },
+ "render_errors": 0,
+ "internal_errors": 0,
+ "reference": {
+  "ok": true,
+  "sim_time": 2582.18,
+  "done": false,
+  "wall_s": 1511.0337796211243,
+  "stage_score": 0.752962962962963,
+  "credit_by_part": {
+   "trash": 2.0,
+   "dishes": 1.0,
+   "books": 1.0,
+   "grease": 2.5,
+   "crumbs": 0.8796,
+   "sponge": 0.0,
+   "tools": 0.0,
+   "faucet": 0.2,
+   "lids": 0.2
+  }
+ },
+ "harness_wall_s": 1529.0063354969025,
+ "camera_frames_total": 4,
+ "faucet_off": true,
+ "sponge": {
+  "in_tray": false,
+  "rinsed": true,
+  "soap": 0.036,
+  "wet": 1.0,
+  "load": 0.0,
+  "load_frac": 0.0,
+  "peak_load": 13.81,
+  "doses": 3,
+  "rinse_s": 18.09
+ },
+ "damage": {
+  "broken": [],
+  "on_floor": [
+   "sponge"
+  ]
+ },
+ "penalty": 0.25,
+ "credit_earned": 7.779629629629629
+}
