@@ -30,7 +30,7 @@ drawn by MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapi
 the same way in your dev sim, in the lab and in the grader. The cell stands in a furnished kitchen that is drawn
 only: the cabinets, walls, shelf and furniture in the images have no collision geometry, and the robot can touch
 exactly what the simulation holds (the unit, the box it stands on, the wall behind it and the floor). The first
-image of a process takes about 5 s (the renderer starts and compiles its shaders; a later episode's first images
+image of a process takes about 5-7 s (the renderer starts and compiles its shaders; a later episode's first images
 take well under a second), and each process that renders needs about 1 GB of memory. `mujoco.Renderer` (through
 OSMesa) still works for anything else you want to draw. The sandbox has 4 CPUs and 12 GB of memory, while grading
 too (the image sets `OMP_NUM_THREADS=1`, so `nproc` prints 1).
@@ -163,8 +163,8 @@ that breaks the protocol, the controller is started again before the next episod
 would need a fourth restart and every later one score 0. The whole grading run must finish within 6000 s; the
 episode under way when it runs out, and the episodes after it, score 0. The 6000 s cover the simulator and the
 rendering as well as your controller: measured over the grading wire on 4 CPUs of a busy machine (medians), a step
-costs the grader about 10 ms without an image, and each image asked for adds about 35 ms (wrist) or 60 ms (a fixed
-camera), so a step with all three images costs about 0.16 s; a run in which every request runs to its deadline has
+costs the grader about 10 ms without an image, and each image asked for adds about 30 ms (wrist) or 55 ms (a fixed
+camera), so a step with all three images costs about 0.15 s; a run in which every request runs to its deadline has
 between 54,000 and 63,000 steps, so all three images at every step of such a run do not fit. Before the first
 episode the grader draws one test image of each camera, which takes a few seconds of the 6000 s. Your controller is
 one process for the whole grading run (it is started again only after a crash, a late answer or a reply that breaks

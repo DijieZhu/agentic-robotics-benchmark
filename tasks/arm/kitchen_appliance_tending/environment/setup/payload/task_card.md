@@ -84,13 +84,14 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
 - Renderer: MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapipe), `kitchen_render.py` with the
   kitchen of `kitchen_scene.py`, the burners of `kitchen_fx.py` and the numbers of `kitchen_look.json`, reading the
   room bundle in `/opt/task-assets/payload/render` (`KITCHEN_RENDER_DIR`); the dev sim, the lab and the grader draw
-  the same way. A renderer failure raises `appliance_env.RenderError`. The first image of a process takes about 5 s
-  (the renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that renders
-  needs about 1 GB of memory.
+  the same way. A renderer failure raises `appliance_env.RenderError`. The first image of a process takes about
+  5-7 s (the renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that
+  renders needs about 1 GB of memory.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
   action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
   grading run it counts against the grader's 6000 s: over the grading wire on 4 CPUs of a busy machine (medians)
-  about 35 ms per wrist image and 60 ms per fixed-camera image, against about 10 ms for a step without an image.
+  about 30 ms per wrist image and 55 ms per fixed-camera image, against about 10 ms for a step without an image
+  (about 0.15 s for a step with all three).
 
 ## Sensors
 
