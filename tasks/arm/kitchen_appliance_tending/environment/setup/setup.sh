@@ -18,6 +18,11 @@ for entry in payload/* payload/.[!.]*; do
   [ -e "$entry" ] || continue
   chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/$(basename "$entry")"
 done
+# The practice units' models are task assets (environment/Dockerfile fetches them to /opt/task-assets/payload/units):
+# copied to ~/units beside units.json. The room bundle beside them (render/) is read in place by the cameras' renderer.
+mkdir -p "$HOME_DIR/units"
+cp -r /opt/task-assets/payload/units/. "$HOME_DIR/units/"
+chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/units"
 mkdir -p "$HOME_DIR/submission" && chown "$AGENT_USER:$AGENT_USER" "$HOME_DIR/submission"
 
 umask 077
