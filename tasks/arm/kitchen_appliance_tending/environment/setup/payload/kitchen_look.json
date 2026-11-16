@@ -142,12 +142,13 @@
  },
  "burner_fx": {
   "emissive_gain": 0.22,
-  "gas_inner_gain": 0.22,
+  "gas_inner_gain": 0.6,
   "gas_buckets": 5,
   "coat": true,
   "coat_margin_m": 0.004,
   "note": "the burners' visuals (kitchen_fx.py: gas = a ring of blue flame jets, glass-ceramic = the zone glowing under the glass, with a clear glossy coat over the glass top): emissive_gain scales the sheath, haze and glow emission of kitchen_fx.materials(), gas_inner_gain the inner cones' unlit colour; gas_buckets = level steps of the gas flames' shape",
-  "gain_note": "emissive_gain and gas_inner_gain 0.22: the display's exposure (+2.55 EV in the colour grading) would otherwise wash the zones' red / orange and the flames out"
+  "gain_note": "emissive_gain 0.22 (the glass-ceramic zones' glow) and gas_emissive_gain 0.6 (the gas flames' sheath and haze; gas_inner_gain the inner cones): the display's exposure (+2.55 EV in the colour grading) would otherwise wash the zones' red / orange out; the gas flames keep about the changed pixels they had (level test)",
+  "gas_emissive_gain": 0.6
  },
  "indicator": {
   "emissive_on": 0.006,

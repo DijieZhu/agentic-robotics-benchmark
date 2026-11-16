@@ -1288,7 +1288,7 @@ class _Filament(object):
         res = {"tex": [], "mat": {}}
         gain = float(fxl["emissive_gain"])
 
-        def textured(name, emission, roughness):
+        def textured(name, emission, roughness, gain=gain):
             t = tex[name]
             rgba = np.zeros(t["alpha"].shape + (4,), np.uint8)
             rgba[..., 3] = t["alpha"]                        # black, premultiplied: only the emission shows
@@ -1300,8 +1300,9 @@ class _Filament(object):
         g = mats["gas_inner"]
         res["mat"]["gas_inner"] = F.Material(
             color=np.array(list(np.asarray(g["color"], float) * fxl["gas_inner_gain"]) + [1.0], np.float32), decor=True)
-        for part in ("gas_sheath", "gas_haze"):
-            res["mat"][part] = textured(part, mats[part]["emission"], mats[part]["roughness"])
+        for part in ("gas_sheath", "gas_haze"):               # the gas flames' own gain (default: emissive_gain)
+            res["mat"][part] = textured(part, mats[part]["emission"], mats[part]["roughness"],
+                                        float(fxl.get("gas_emissive_gain", gain)))
         rg = mats["radiant_glow"]
         res["mat"]["radiant"] = [textured("radiant_%d" % b, rg["emission"], rg["roughness"]) for b in range(FX.RADIANT_LEVELS)]
         c = mats["glass_coat"]
