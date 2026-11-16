@@ -4,17 +4,17 @@
  "frozen": {
   "tests/verify.py": "c0c967734c50fc85003a896a1104a2b7239d8b7fa65a57472bfcdead0cc25738",
   "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
-  "tests/appliance_env.py": "84c33a2a40d3a4d057a354c0408d18038450fc2920b39a0556faeb29367f84a3",
+  "tests/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
   "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
-  "solution/oracle/appliance_env.py": "84c33a2a40d3a4d057a354c0408d18038450fc2920b39a0556faeb29367f84a3",
+  "solution/oracle/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
   "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
   "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
   "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
  },
- "frozen_commit": "7584b1fb08770b9b6c2669443da4eb5de149a31c",
+ "frozen_commit": "2b84271b66b2fca00f1cab3e265b570dcc5d4375",
  "draws": [
   {
    "draw": 1,
@@ -108,8 +108,8 @@
    "drawn_utc": "2026-11-15T22:02:01Z",
    "key": "b54bb77ae7274494d1136476ef3f4d2d998567544e0f07ae040c56b32037a028",
    "source": "os.urandom(32)",
-   "frozen_commit": "864c472bc523705d428486b04abfb18d68658d27",
-   "status": "made",
+   "frozen_commit": "7584b1fb08770b9b6c2669443da4eb5de149a31c",
+   "status": "void",
    "made_utc": "2026-11-15T22:14:34Z",
    "request_types": {
     "all_off": 1,
@@ -143,7 +143,30 @@
     "u7#0",
     "u8#0",
     "u1#1"
-   ]
+   ],
+   "frozen": {
+    "tests/verify.py": "c0c967734c50fc85003a896a1104a2b7239d8b7fa65a57472bfcdead0cc25738",
+    "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "tests/appliance_env.py": "84c33a2a40d3a4d057a354c0408d18038450fc2920b39a0556faeb29367f84a3",
+    "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
+    "solution/oracle/appliance_env.py": "84c33a2a40d3a4d057a354c0408d18038450fc2920b39a0556faeb29367f84a3",
+    "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
+    "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
+    "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
+   },
+   "void_reason": "A frozen file changed after this draw was made: tests/appliance_env.py and solution/oracle/appliance_env.py (commit f70483c, the maintainers' placement rule after the owner saw a cooktop askew on its counter: a cooktop and an oven keep their orientation, the placement draw's yaw is 0 for them, a microwave keeps its yaw draw; dx, dy and every later draw unchanged for a given seed). That changes the placement of the twelve cooktop and oven episodes of this set, so the set is drawn again (step 5: void, freeze the checkout's HEAD again, new key). Amendment 1 (the renderer-only change) stays recorded.",
+   "voided_utc": "2026-11-16T19:52:02Z"
+  },
+  {
+   "draw": 5,
+   "drawn_utc": "2026-11-16T19:52:02Z",
+   "key": "4de176d0de14e1a100619aa95a37e0f5404a5208a3101d1a164871b9a287d090",
+   "source": "os.urandom(32)",
+   "frozen_commit": "2b84271b66b2fca00f1cab3e265b570dcc5d4375",
+   "status": "open"
   }
  ],
  "candidates": [
