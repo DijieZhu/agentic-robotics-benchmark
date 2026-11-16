@@ -1,0 +1,98 @@
+{
+ "format": "kitchen-look/1",
+ "note": "The numbers of the cameras' look (kitchen_render.py beside this file). The room bundle (KITCHEN_RENDER_DIR) holds the room's meshes, textures and materials and the two panoramas; the rest is here. Units: the image light multiplies the panorama (path tracer W/m2/sr, x 683 -> cd/m2); the lamps are in candela from their lumens (kitchen_scene.lights()); exposure_scale multiplies every light and the image light (a camera exposure relative to Filament's default EV100 15); emissive values are Filament material emission (not scaled by exposure_scale).",
+ "exposure_scale": 50.0,
+ "ibl": {
+  "file": "ibl.ktx",
+  "sky_file": "sky.ktx",
+  "intensity": 683.0,
+  "panorama": "a Cycles panorama of the kitchen with an empty cell at (0.35, 0, 1.10), daylight only (the sky and a low sun through the terrace door and the window; the lamps are Filament lights here), 512 x 256 equirectangular, filtered to a 128 px cube map; the same panorama is the sky behind the windows"
+ },
+ "lamps": {
+  "key": "work_light",
+  "key_offset_scale": 0.5,
+  "key_shadow": false,
+  "key_shadow_map": 256,
+  "key_bulb_m": 0.15,
+  "softness": 0.3,
+  "line_spots": 3,
+  "line_cutoff_deg": 80.0,
+  "gain": {},
+  "key_shadow_note": "true: the key lamp casts PCF shadows; on 4 CPUs that adds about 50 ms to a fixed camera's image and 45 ms to a wrist image"
+ },
+ "headlight": {
+  "lux_at_0.4": 40.0,
+  "ambient_to_ibl": 1.0
+ },
+ "room": {
+  "albedo_gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "emissive": 1.0,
+  "cast_shadow": false
+ },
+ "dressing": {
+  "albedo_gain": 1.0,
+  "emitter_emissive": 1.0,
+  "cast_shadow": false
+ },
+ "model_materials": {
+  "legacy_specular_max": 0.3,
+  "legacy_shininess_max": 0.5,
+  "default": {
+   "roughness": 0.45,
+   "metallic": 0.0
+  },
+  "by_prefix": [
+   [
+    "r_",
+    {
+     "roughness": 0.35,
+     "metallic": 0.0
+    }
+   ],
+   [
+    "u_",
+    {
+     "roughness": 0.45,
+     "metallic": 0.0
+    }
+   ]
+  ]
+ },
+ "flame": {
+  "alpha": 0.85,
+  "emissive": 0.012,
+  "height_scale": 1.0,
+  "lift_m": 0.002,
+  "white_mix": 0.2,
+  "note": "colour = the flame site's rgb (gas burners blue, electric red) scaled to a brightest channel of 1 and mixed white_mix toward white (a hotter core), read every frame; the radius is the site's"
+ },
+ "indicator": {
+  "emissive_on": 0.04,
+  "off_srgb": [
+   0.12,
+   0.12,
+   0.12
+  ],
+  "roughness": 0.4,
+  "min_half_depth_m": 0.001,
+  "note": "a lit indicator glows with emissive_on; off it is off_srgb (dark grey) like the model's"
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 0,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "post_processing": true,
+  "shadows": true,
+  "reflections": false,
+  "msaa": 0,
+  "lavapipe_threads": 4
+ }
+}

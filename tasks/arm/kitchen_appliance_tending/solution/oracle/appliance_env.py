@@ -17,6 +17,13 @@ face -y; they are turned by -90 degrees about z). Metres, radians, seconds; quat
     env.unit_state()          # every control of the unit, normalized, plus the predicates
 
 The requests and the credit are episode.py's (it wraps this environment); the wire is the grader's.
+
+The cameras are drawn by kitchen_render.py (beside this file): MuJoCo's Filament renderer (physically based) on
+Vulkan, which is Mesa's lavapipe on the CPU in the task image, with the apartment around the cell (the room bundle
+in KITCHEN_RENDER_DIR, default /opt/task-assets/payload/render) and the dressing of kitchen_scene.py, both drawn
+only. The renderer only reads the model and the data: the physics, the credit and every other observation are the
+same with images or without them. A renderer failure raises RenderError (an error of the environment, not of a
+controller).
 """
 
 import math
@@ -24,6 +31,16 @@ import os
 
 import mujoco
 import numpy as np
+
+try:                                # the cameras' renderer; an environment built with render=False never needs it
+    import kitchen_render as _KR
+    RenderError = _KR.RenderError
+    _KR_ERROR = None
+except ImportError as _exc:
+    _KR, _KR_ERROR = None, "kitchen_render.py cannot be imported beside appliance_env.py: {}".format(_exc)
+
+    class RenderError(RuntimeError):
+        """The renderer failed: an error of the environment, not of a controller."""
 
 TIMESTEP = 0.002
 SUBSTEPS = 50                     # -> 10 Hz control
@@ -683,7 +700,7 @@ class ApplianceEnv(object):
         self.mount = mount
         self.jitter_scale = np.asarray(jitter_scale, float)
         self.model = None
-        self._renderers = {}
+        self._view = None
 
     def reset(self, seed, jitter=None):
         """A fresh episode. `jitter` (dx, dy, dyaw) overrides the seed's unit placement: a controller's
@@ -693,6 +710,7 @@ class ApplianceEnv(object):
         self.rng = np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 11])
         jitter = place.uniform(-1, 1, 3) * self.jitter_scale if jitter is None else np.asarray(jitter, float)
         self.jitter = jitter
+        self.close()                                # the previous episode's images (its drawn model) are freed
         self.model, self.layout = build_model(self.assets, self.spec, jitter, self.mount)
         self._appearance(np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 13]))
         self.data = mujoco.MjData(self.model)
@@ -702,8 +720,6 @@ class ApplianceEnv(object):
         self.t = 0
         self._warnings0 = self.bad_state_warnings()
         self.render_next = ("left", "right", "wrist")
-        if self.render_enabled:
-            self._renderers = {}
         return self.observation()
 
     def _appearance(self, rng):
@@ -873,18 +889,13 @@ class ApplianceEnv(object):
         return self.unit.state(self.data, self.data.site_xpos[self.site])
 
     def render(self, cam):
-        m, d = self.model, self.data
-        if cam == "wrist":
-            w, h, cid = WRIST["width"], WRIST["height"], self.wrist_cam
-        else:
-            _p, _t, _f, w, h = CAMERAS[cam]
-            cid = m.camera(cam).id
-        key = (w, h)
-        if key not in self._renderers:
-            self._renderers[key] = mujoco.Renderer(m, h, w)
-        r = self._renderers[key]
-        r.update_scene(d, camera=cid)
-        img = r.render().astype(np.float32)
+        """`cam`'s 8-bit RGB image now (kitchen_render.py: the episode's drawn model is built at the first image),
+        with the sensor noise. Raises RenderError."""
+        if self._view is None:
+            if _KR is None:
+                raise RenderError(_KR_ERROR)
+            self._view = _KR.open_view(self)
+        img = self._view.render(cam).astype(np.float32)
         img += self.rng.normal(0, RGB_NOISE, img.shape)
         return np.clip(img, 0, 255).astype(np.uint8)
 
@@ -970,6 +981,7 @@ class ApplianceEnv(object):
         return obs
 
     def close(self):
-        for r in self._renderers.values():
-            r.close()
-        self._renderers = {}
+        """Free the episode's renderer resources (also done when the environment is garbage-collected)."""
+        if getattr(self, "_view", None) is not None:
+            self._view.close()
+            self._view = None
