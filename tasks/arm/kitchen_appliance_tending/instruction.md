@@ -41,7 +41,8 @@ Nine hidden units, three of each kind: `u0`, `u3`, `u6` (cooktops), `u1`, `u4`, 
 `u8` (ovens), each a different model from the practice units and from each other. Same as in your dev sim: the
 robot, the controller, the action and observation formats, the cameras, the sensor noise, the physics settings, the
 request texts and the credit rule. Different: the appliance model (its size, look, where its controls are and how
-they move), its mechanism and the placement draw.
+they move), its mechanism and the placement draw (each episode shifts the unit by a few centimetres; a microwave may
+also stand turned by up to 10 degrees, while a cooktop or an oven is never turned: `task_card.md`).
 
 A unit may have one of these mechanisms (nothing reports which, if any; `units.json` lists the practice units'):
 - **push to turn**: every knob of the unit turns only while the gripper presses on it along its axis with 10 N or

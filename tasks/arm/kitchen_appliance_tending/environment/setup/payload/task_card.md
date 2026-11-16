@@ -18,7 +18,9 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 
 - One appliance per episode, its front face towards the robot (-x). Nominal placement: the centre of the front
   face 0.55 m in front of the robot base (x), centred (y). Each episode adds a uniform offset of up to +-0.03 m in
-  x, +-0.04 m in y and +-10 degrees of yaw about the vertical; nothing reports it.
+  x and +-0.04 m in y; a microwave, which stands free on the counter, is also turned by up to +-10 degrees of yaw
+  about the vertical, while a cooktop and an oven, built into the counter or the cabinet column, keep the nominal
+  orientation (yaw 0, square to the counter and cabinets, which never turn); nothing reports the offset.
 - Kinds and mounts: a **cooktop** set into a counter (counter top at z = 0.92), a **microwave** standing on the
   counter, a wall **oven** in a cabinet column (oven bottom at z = 0.55).
 - The cell stands in a furnished kitchen that is drawn only. In the simulation there are the unit, the box under it

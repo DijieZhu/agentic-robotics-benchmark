@@ -83,6 +83,11 @@ MOUNTS = {
     "stove": {"bottom_z": 0.0, "front_x": 0.55, "robot_z": 0.65},
 }
 KIND_OF_FOLDER = {"stovetops": "stovetop", "microwaves": "microwave", "ovens": "oven", "stoves": "stove"}
+# Placement draw (ApplianceEnv.reset): every unit is shifted by up to (0.03 m, 0.04 m) in (x, y), and a microwave,
+# which stands free on its counter, is also turned by up to 10 degrees about z. A cooktop set into its counter and
+# an oven in its cabinet column are built in: they keep the nominal orientation (yaw 0), like the support under
+# them and the drawn counter and cabinets, which never turn.
+BUILT_IN_KINDS = ("stovetop", "oven")
 
 CAMERAS = {
     # name: (position, look-at point; both relative to the centre of the unit's front face), fovy, w, h.
@@ -703,12 +708,20 @@ class ApplianceEnv(object):
         self._view = None
 
     def reset(self, seed, jitter=None):
-        """A fresh episode. `jitter` (dx, dy, dyaw) overrides the seed's unit placement: a controller's
-        own copy of the scene (reference.Shadow) is built at a pose it was told or estimated."""
+        """A fresh episode. The seed's unit placement (dx, dy, dyaw): three uniform draws in [-1, 1] times
+        `jitter_scale` (0.03 m, 0.04 m, 10 degrees); for a built-in unit (BUILT_IN_KINDS: a cooktop, an oven)
+        the yaw is then set to 0, so its dx and dy are the same draws as a microwave's. `jitter` (dx, dy, dyaw)
+        overrides the seed's placement and is used as given: a controller's own copy of the scene
+        (reference.Shadow) is built at a pose it was told or estimated."""
         self.seed = int(seed) & (2 ** 64 - 1)
         place = np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 7])
         self.rng = np.random.default_rng([self.seed & 0xFFFFFFFF, self.seed >> 32, 11])
-        jitter = place.uniform(-1, 1, 3) * self.jitter_scale if jitter is None else np.asarray(jitter, float)
+        if jitter is None:
+            jitter = place.uniform(-1, 1, 3) * self.jitter_scale
+            if self.spec["kind"] in BUILT_IN_KINDS:
+                jitter[2] = 0.0                     # built in: shifted only, never turned
+        else:
+            jitter = np.asarray(jitter, float)
         self.jitter = jitter
         self.close()                                # the previous episode's images (its drawn model) are freed
         self.model, self.layout = build_model(self.assets, self.spec, jitter, self.mount)
