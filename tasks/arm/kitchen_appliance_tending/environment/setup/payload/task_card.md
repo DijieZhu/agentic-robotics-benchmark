@@ -90,9 +90,9 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   renders needs about 1 GB of memory.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
   action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
-  grading run it counts against the grader's 6000 s: over the grading wire on 4 CPUs of a busy machine (medians)
-  about 30 ms per wrist image and 55 ms per fixed-camera image, against about 10 ms for a step without an image
-  (about 0.15 s for a step with all three).
+  grading run it counts against the grader's 6000 s: over the grading wire with the task's Python on 4 CPUs
+  (medians of two runs) about 30-35 ms per wrist image and 15-20 ms per fixed-camera image, against about 4-6 ms for
+  a step without an image (about 0.08-0.1 s for a step with all three), up to several times that on a busy machine.
 
 ## Sensors
 

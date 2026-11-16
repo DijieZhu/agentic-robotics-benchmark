@@ -163,11 +163,13 @@ or a door faster than 30 rad/s, or a MuJoCo warning of a bad state) scores 0. Af
 that breaks the protocol, the controller is started again before the next episode, at most 3 times: the episode that
 would need a fourth restart and every later one score 0. The whole grading run must finish within 6000 s; the
 episode under way when it runs out, and the episodes after it, score 0. The 6000 s cover the simulator and the
-rendering as well as your controller: measured over the grading wire on 4 CPUs of a busy machine (medians), a step
-costs the grader about 10 ms without an image, and each image asked for adds about 30 ms (wrist) or 55 ms (a fixed
-camera), so a step with all three images costs about 0.15 s; a run in which every request runs to its deadline has
-between 54,000 and 63,000 steps, so all three images at every step of such a run do not fit. Before the first
-episode the grader draws one test image of each camera, which takes a few seconds of the 6000 s. Your controller is
-one process for the whole grading run (it is started again only after a crash, a late answer or a reply that breaks
-the protocol, at most 3 times), so it may carry what it learned about a unit in one episode into later episodes on
-the same unit. Only the final controller is scored; trial usage is not.
+rendering as well as your controller: measured over the grading wire with the task's Python on 4 CPUs (medians of
+two runs), a step costs the grader about 4-6 ms without an image, and an image asked for adds about 30-35 ms (wrist)
+or 15-20 ms (a fixed camera), up to several times that on a busy machine; a step with all three images costs about
+0.08-0.1 s. A run in which every request runs to its deadline has between 54,000 and 63,000 steps: all three images
+at every step of such a run cost the grader about 4,100 to 6,100 s, which leaves little of the 6000 s for your
+controller (nothing on a busy machine), while one fixed image at every step costs about 1,000 to 1,500 s. Before
+the first episode the grader draws one test image of each camera, which takes a few seconds of the 6000 s. Your
+controller is one process for the whole grading run (it is started again only after a crash, a late answer or a reply
+that breaks the protocol, at most 3 times), so it may carry what it learned about a unit in one episode into later
+episodes on the same unit. Only the final controller is scored; trial usage is not.
