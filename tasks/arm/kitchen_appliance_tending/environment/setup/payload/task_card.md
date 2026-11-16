@@ -29,7 +29,7 @@ request and credit logic. Read their docstrings. This card collects the numbers.
   front panel; RoboCasa's rule: touching start switches it on, touching stop switches it off, opening the door
   switches it off); oven temperature knob (horizontal axis, on the front panel).
 - Knob physics: friction loss 0.20 N m, armature 0.002 kg m^2. A burner is on while its knob angle `a` satisfies
-  0.35 <= a mod 2 pi <= 2 pi - 0.35 (a flame marker shows while it is on). The oven is preheated while its
+  0.35 <= a mod 2 pi <= 2 pi - 0.35 (its flame shows while it is on). The oven is preheated while its
   temperature knob is at 0.25 or more of its range (normalized as RoboCasa does).
 - Mechanisms (`appliance_env.QUIRKS`; at most one per unit; a unit spec's `quirks`): `push_to_turn` (a knob unlocks
   while the gripper presses on it along its axis with `PUSH_FORCE` 10 N or more: the size of the sum of the gripper's
@@ -43,9 +43,14 @@ request and credit logic. Read their docstrings. This card collects the numbers.
 - Settings: a burner's setting is its knob angle over its on-range, (a - 0.35) / (stop - 0.35), in thirds (low,
   medium, high); the oven's heat is its normalized temperature knob in 0.25-0.5 (low), 0.5-0.75 (medium) or
   0.75-1.0 (high).
-- State shown on the unit: a burner's flame while it is on (RoboCasa's; its radius grows from 0.6x to 1.4x from
-  the lowest to the highest setting); a lit amber display bar (10 x 2 cm) while a
-  microwave runs and a lit red-orange lamp (3 x 3 cm) while an oven is preheated, both on the front face 3 cm
+- State shown on the unit: while a burner is on, RoboCasa's flame site is lit (its radius grows from 0.6x to 1.4x
+  from the lowest to the highest setting) and the cameras draw it as the burner's flame (`kitchen_fx.py`): a gas
+  burner (blue site) as a ring of blue flame jets around the burner head, 0.2x to 0.6x the burner's radius long
+  and leaning 36 to 56 degrees out from vertical from the lowest to the highest setting (in five steps; they
+  flicker); a glass-ceramic zone (red site) as concentric rings glowing under the glass out to 1.3x the site's
+  radius, from dull dark red at the lowest to bright orange-red at the highest setting (in six colour steps); a
+  glass-ceramic top is drawn with a clear glossy coat. A microwave shows a lit amber display bar (10 x 2 cm)
+  while it runs and an oven a lit red-orange lamp (3 x 3 cm) while it is preheated, both on the front face 3 cm
   below the top edge of its visible front (dark grey when off). Visual only: no contact, no mass.
 
 ```python
@@ -71,11 +76,11 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   and tint (+-15 % per channel) of all the kitchen's light (its lamps and the daylight), and a light along each
   camera's view (the headlight); nothing reports it.
 - Renderer: MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapipe), `kitchen_render.py` with the
-  kitchen of `kitchen_scene.py` and the numbers of `kitchen_look.json`, reading the room bundle in
-  `/opt/task-assets/payload/render` (`KITCHEN_RENDER_DIR`); the dev sim, the lab and the grader draw the same way.
-  A renderer failure raises `appliance_env.RenderError`. The first image of a process takes about 5 s (the
-  renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that renders needs
-  about 1 GB of memory.
+  kitchen of `kitchen_scene.py`, the burners of `kitchen_fx.py` and the numbers of `kitchen_look.json`, reading the
+  room bundle in `/opt/task-assets/payload/render` (`KITCHEN_RENDER_DIR`); the dev sim, the lab and the grader draw
+  the same way. A renderer failure raises `appliance_env.RenderError`. The first image of a process takes about 5 s
+  (the renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that renders
+  needs about 1 GB of memory.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
   action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
   grading run it counts against the grader's 6000 s: over the grading wire on 4 CPUs of a busy machine (medians)

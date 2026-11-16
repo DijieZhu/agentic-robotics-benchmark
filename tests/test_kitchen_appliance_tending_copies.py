@@ -1,9 +1,9 @@
 """kitchen_appliance_tending: the agent practises with exactly the environment the lab and the grader run.
 
 The environment (appliance_env.py), the episode logic (episode.py) and the cameras' renderer beside them
-(kitchen_render.py, kitchen_scene.py, kitchen_look.json) live in four byte-identical copies: tests/ (the grader),
-environment/setup/payload/ (the agent's home), environment/setup/lab/ (the lab service) and solution/oracle/ (the
-reference). environment/render_check/ holds one more copy of the environment and the renderer for the image's
+(kitchen_render.py, kitchen_fx.py, kitchen_scene.py, kitchen_look.json) live in four byte-identical copies: tests/
+(the grader), environment/setup/payload/ (the agent's home), environment/setup/lab/ (the lab service) and
+solution/oracle/ (the reference). environment/render_check/ holds one more copy of the environment and the renderer for the image's
 build-time render check (the image's build context is environment/ less setup/). The vendored grading kit is the
 canonical one. The practice units' models and the room bundle are task assets (docs/task-assets.md): listed in
 environment/assets.sha256, not in git, and the renderer reads the bundle where the image puts it.
@@ -20,8 +20,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "tasks/arm/kitchen_appliance_tending"
 COPIES = ("tests", "environment/setup/payload", "environment/setup/lab", "solution/oracle")
-SHARED = ("appliance_env.py", "episode.py", "kitchen_render.py", "kitchen_scene.py", "kitchen_look.json")
-RENDER_CHECK = ("appliance_env.py", "kitchen_render.py", "kitchen_scene.py", "kitchen_look.json")
+SHARED = ("appliance_env.py", "episode.py", "kitchen_render.py", "kitchen_fx.py", "kitchen_scene.py",
+          "kitchen_look.json")
+RENDER_CHECK = ("appliance_env.py", "kitchen_render.py", "kitchen_fx.py", "kitchen_scene.py", "kitchen_look.json")
 BUNDLE = ("render/room.npz", "render/room.json", "render/ibl.ktx", "render/sky.ktx")
 RENDER_DIR = "/opt/task-assets/payload/render"
 
@@ -50,7 +51,7 @@ class Copies(unittest.TestCase):
 
     def test_the_look_parses(self):
         look = json.loads((TASK / "tests/kitchen_look.json").read_text())
-        for key in ("exposure_scale", "ibl", "lamps", "headlight", "room", "dressing", "model_materials", "flame",
+        for key in ("exposure_scale", "ibl", "lamps", "headlight", "room", "dressing", "model_materials", "burner_fx",
                     "indicator", "filament_numeric", "filament_text", "render"):
             self.assertIn(key, look)
 

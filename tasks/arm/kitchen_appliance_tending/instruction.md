@@ -15,7 +15,7 @@ still running at the limit is cut off.
 | Path | What it is |
 |---|---|
 | `appliance_env.py` | The complete robot environment: the cell, the Panda arm and gripper (robosuite models), the operational-space controller, cameras, sensor noise. The lab and the grader run this exact file; only the unit differs. Read its docstrings. |
-| `kitchen_render.py`, `kitchen_scene.py`, `kitchen_look.json` | The cameras' renderer and the kitchen around the cell: `appliance_env.py` draws every image with them, and the lab and the grader run these exact files. They read the kitchen's room bundle in `/opt/task-assets/payload/render` (read-only). |
+| `kitchen_render.py`, `kitchen_scene.py`, `kitchen_fx.py`, `kitchen_look.json` | The cameras' renderer, the kitchen around the cell and the burners' flames: `appliance_env.py` draws every image with them, and the lab and the grader run these exact files. They read the kitchen's room bundle in `/opt/task-assets/payload/render` (read-only). |
 | `episode.py` | The exact episode logic the lab and the grader run: initial states, requests, deadlines and the credit rule. |
 | `task_card.md` | Frames, mounts, the units, the cameras, the sensors and the numbers. |
 | `units.json`, `units/` | Three practice units (p0 cooktop, p1 microwave, p2 oven) with their models and mechanisms (`quirks`); `env.unit_state()` and `env.truth()` give their ground truth in your dev sim. They are examples of the kinds, not the scored units. |
@@ -74,11 +74,13 @@ asked while two or more are on; a setting request names a setting the control is
 requests; a request closes when it is completed (see Credit) or at its deadline (1000 steps, 1500 for a
 compositional request), and the next one opens at once.
 
-A burner shows a flame while it is on (larger at a higher setting), a microwave a lit amber display bar while it
-runs, and an oven a lit red-orange lamp while it is preheated (both on the front, near the top; dark grey
+A burner shows its flame while it is on: a gas burner a ring of small blue flames around the burner head, longer and
+leaning further out at a higher setting; a glass-ceramic zone, rings glowing under the glass, dull dark red at the
+lowest setting and larger, brighter and more orange at a higher one. A microwave shows a lit amber display bar while
+it runs, and an oven a lit red-orange lamp while it is preheated (both on the front, near the top; dark grey
 otherwise). The kitchen's light (where the work light over the unit sits and points, and the strength and tint of
-all the light) changes from episode to episode, and the two fixed cameras sit a little differently in each
-episode; their poses are in every observation.
+all the light) changes from episode to episode, and the two fixed cameras sit a little differently in each episode;
+their poses are in every observation.
 
 ## Credit
 

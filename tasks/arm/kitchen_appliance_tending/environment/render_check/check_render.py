@@ -2,7 +2,7 @@
 lab's account): practice unit p0 (stovetops/Stovetop018, from the task assets) is reset with a fixed seed and its
 three images are drawn from the room bundle (KITCHEN_RENDER_DIR, default /opt/task-assets/payload/render) by the
 task's own modules beside this file (copies of environment/setup/payload's appliance_env.py, kitchen_render.py,
-kitchen_scene.py and kitchen_look.json). Exits non-zero, and so fails the build, when an image is missing, has the
+kitchen_fx.py, kitchen_scene.py and kitchen_look.json). Exits non-zero, and so fails the build, when an image is missing, has the
 wrong shape, is flat or is far too dark or too bright.
 """
 

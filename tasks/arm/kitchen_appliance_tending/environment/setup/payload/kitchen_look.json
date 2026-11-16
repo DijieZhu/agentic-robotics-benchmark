@@ -34,7 +34,8 @@
  "dressing": {
   "albedo_gain": 1.0,
   "emitter_emissive": 1.0,
-  "cast_shadow": false
+  "cast_shadow": false,
+  "tint": {}
  },
  "model_materials": {
   "legacy_specular_max": 0.3,
@@ -60,13 +61,13 @@
    ]
   ]
  },
- "flame": {
-  "alpha": 0.85,
-  "emissive": 0.012,
-  "height_scale": 1.0,
-  "lift_m": 0.002,
-  "white_mix": 0.2,
-  "note": "colour = the flame site's rgb (gas burners blue, electric red) scaled to a brightest channel of 1 and mixed white_mix toward white (a hotter core), read every frame; the radius is the site's"
+ "burner_fx": {
+  "emissive_gain": 1.0,
+  "gas_inner_gain": 1.0,
+  "gas_buckets": 5,
+  "coat": true,
+  "coat_margin_m": 0.004,
+  "note": "the burners' visuals (kitchen_fx.py: gas = a ring of blue flame jets, glass-ceramic = the zone glowing under the glass, with a clear glossy coat over the glass top): emissive_gain scales the sheath, haze and glow emission of kitchen_fx.materials(), gas_inner_gain the inner cones' unlit colour; gas_buckets = level steps of the gas flames' shape"
  },
  "indicator": {
   "emissive_on": 0.04,

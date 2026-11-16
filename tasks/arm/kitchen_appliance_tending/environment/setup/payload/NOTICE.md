@@ -19,4 +19,4 @@ dataset `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF` (revision
   the benchmark's owner for distribution with the benchmark: only what the cameras can see, meshes decimated,
   textures reduced to 256-512 px, and an image light path-traced from that scene. The station, the cabinets beside
   it, the shelf and the pedestal drawn around the cell are made by `kitchen_scene.py` (original to this task) with
-  the pack's oak texture.
+  the pack's oak texture; the burners' flames are drawn by `kitchen_fx.py` (original to this task).

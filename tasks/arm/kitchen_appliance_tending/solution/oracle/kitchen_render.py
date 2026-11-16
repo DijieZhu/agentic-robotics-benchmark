@@ -9,9 +9,12 @@ What is drawn
   * the apartment around the cell (room.npz / room.json of the room bundle in KITCHEN_RENDER_DIR, default
     /opt/task-assets/payload/render), placed per episode at kitchen_scene.room_pose();
   * the dressing of this unit and episode: kitchen_scene.all_parts() (station, fillers, pedestal, shelf), drawn only;
-  * the unit's state, read from the simulator before every image: each burner's flame (the flame site's colour,
-    visibility and radius, RoboCasa's Stove.update_state as appliance_env.Unit.update sets them) and the indicator
-    geom's colour (lit or INDICATOR_OFF); they are lit emitters here.
+  * the unit's state, read from the simulator before every image: each burner's flame site (its colour, visibility
+    and radius, RoboCasa's Stove.update_state as appliance_env.Unit.update sets them) and the indicator geom's colour
+    (lit or INDICATOR_OFF).  A lit burner is drawn by kitchen_fx.py (beside this file): a gas burner (blue site) as
+    a ring of blue flame jets around the burner head, a glass-ceramic zone (red site) as concentric rings glowing
+    dark red to orange under the glass, with a clear glossy coat over the glass top; both grow with the setting
+    (the site's radius).  The indicator is a lit emitter.
 The room and the dressing are drawn only: nothing of them is in the simulated model, so the robot touches only what
 appliance_env.build_model builds (the pedestal, the unit and its support).
 Light: an image light (ibl.ktx of the bundle: a path-traced panorama of the kitchen at the station, daylight only;
@@ -27,11 +30,12 @@ random numbers (the sensor noise stays the environment's).
 
 Filament runs in one dedicated thread per process (its engine is thread-bound; a forked child starts its own).
 Objects that live for the process: the context, the room (meshes, textures, materials, renderables), the image
-light, the lamps, the scene, one render target per image size.  Per episode: the copy of the model and its
-ModelResources / ModelRenderables, the dressing.  MuJoCo 3.16's Filament module serves one model's resources at a
-time per context, so only the episode rendered last is live; rendering another one first frees the live one's
-model resources (the room stays).  The first image of a process takes several seconds (lavapipe compiles the
-shaders); later episodes start in about 0.1 s.
+light, the lamps, the scene, one render target per image size, and every mesh made here (MuJoCo 3.16's binding never
+releases a Filament mesh: the dressing's and the burners' meshes are built once per unit and cached).  Per episode:
+the copy of the model and its ModelResources / ModelRenderables.  MuJoCo 3.16's Filament module serves one
+model's resources at a time per context, so only the episode rendered last is live; rendering another one first
+frees the live one's model resources (the room stays).  The first image of a process takes several seconds
+(lavapipe compiles the shaders); later episodes start in about 0.1 s.
 
     view = open_view(env)          # after env.reset(): builds the episode's drawn model (no Filament work yet)
     rgb = view.render("left")      # uint8 (240, 320, 3), rows top-down, no noise
@@ -106,7 +110,8 @@ import mujoco  # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
-import kitchen_scene  # noqa: E402  (imported now: a process that drops privileges later, the lab, has it already)
+import kitchen_fx  # noqa: E402  (imported now: a process that drops privileges later, the lab, has them already)
+import kitchen_scene  # noqa: E402
 
 RENDER_DIR = os.environ.get("KITCHEN_RENDER_DIR", "/opt/task-assets/payload/render")
 LOOK_FILE = os.path.join(HERE, "kitchen_look.json")
@@ -253,7 +258,7 @@ class Episode(object):
         self.live = m                                  # the simulator's model: flames and indicator are read from it
         self.model = _drawn_model(m, look)
         self.room_pose = KS.room_pose(kind, lo, hi, jit)
-        self.parts = KS.all_parts(kind, lo, hi, jit)
+        self.dressing = _dressing_plan(KS, kind, lo, hi, jit)
         self.materials = KS.materials()
         self.app = _appearance(m, lay, look)
         self.lights = _rig(KS, kind, lo, hi, jit, look, self.app)
@@ -264,11 +269,43 @@ class Episode(object):
         self.head_lux = look["headlight"]["lux_at_0.4"] * self.app["head_diffuse"] / 0.4 * look["exposure_scale"]
         u = env.unit
         self.flames = sorted(u.flames.items())         # [(loc, site id)]
+        self.fx = _fx_episode(env, m, lo, hi)          # burner visuals: base sizes, kinds, the unit's box
         self.indicator = u.indicator                   # geom id or None
         self.indicator_kind = kind
         self.wrist_cam = env.wrist_cam
         self.fixed_cam = {c: m.camera(c).id for c in ("left", "right")}
         self.seconds = time.perf_counter() - t0
+
+
+RIGID_GROUPS = (("station", "st_"), ("shelf", "shelf_"), ("pedestal", "ped_"))
+
+
+def _dressing_plan(KS, kind, lo, hi, jit):
+    """The dressing of this episode as what the renderer caches for the process.  The station, the shelf and the
+    pedestal move rigidly with the unit's placement (their parts are the placement-free parts shifted): such a group
+    is drawn from merged meshes built once per unit (key) and placed by the shift.  The filler cabinets' widths
+    follow the placement: each of their parts is a single shape (a shared unit box or cylinder, scaled)."""
+    parts = KS.all_parts(kind, lo, hi, jit)
+    parts0 = {p["name"]: p for p in KS.all_parts(kind, lo, hi, (0.0, 0.0, 0.0))}
+    key = (kind,) + tuple(np.round(np.concatenate([lo, hi]), 6))
+    rigid, single = [], []
+    for group, prefix in RIGID_GROUPS:
+        mine = [p for p in parts if p["name"].startswith(prefix)]
+        if not mine:
+            continue
+        base = [parts0.get(p["name"]) for p in mine]
+        shift = None
+        if all(b is not None and b["shape"] == p["shape"] and np.allclose(b["size"], p["size"], atol=1e-9)
+               for b, p in zip(base, mine)) and len(base) == sum(1 for n in parts0 if n.startswith(prefix)):
+            d = np.array([np.subtract(p["center"], b["center"]) for b, p in zip(base, mine)])
+            if np.allclose(d, d[0], atol=1e-9):
+                shift = d[0]
+        if shift is None:
+            single += mine
+        else:
+            rigid.append({"key": (group,) + key, "parts": base, "shift": shift.tolist()})
+    single += [p for p in parts if not p["name"].startswith(tuple(pr for _g, pr in RIGID_GROUPS))]
+    return {"rigid": rigid, "single": single}
 
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -349,6 +386,23 @@ def _cyl_mesh(c, r, hl, axis, seg=16):
         side = 6 * seg
         I[:side] = I[:side].reshape(-1, 3)[:, ::-1].ravel()
     return V, N, U, I
+
+
+# ----------------------------------------------------------------------------------------------------------------
+# Burner visuals (kitchen_fx): what of the episode they need, in the caller's thread
+# ----------------------------------------------------------------------------------------------------------------
+def _fx_episode(env, m, lo, hi):
+    """Per burner: its kind (from the site's colour), base radius and half-height (Unit.flame_size, the sizes before
+    any setting scaled them), key; the unit's body and box (for the glass coat of glass-ceramic tops)."""
+    FX = kitchen_fx
+    u = env.unit
+    burners = {}
+    for loc, sid in sorted(u.flames.items()):
+        r0, hl = (float(x) for x in u.flame_size[loc][:2])
+        burners[loc] = {"site": int(sid), "kind": FX.burner_kind(m.site_rgba[sid, :3]), "r0": r0, "hl": hl,
+                        "key": FX.burner_key(loc)}
+    return {"burners": burners, "body": int(m.body("u_object").id), "lo": np.asarray(lo, float).copy(),
+            "hi": np.asarray(hi, float).copy()}
 
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -607,8 +661,8 @@ class _Filament(object):
         self.room_pose = None
 
     def _unit_meshes(self):
-        V, N, U, I = _cyl_mesh([0, 0, 0], 1.0, 1.0, "z", 32)
-        self.flame_mesh = (self._mesh(V, N, U, I), len(I))
+        self.dress_cache, self.dress_mats = {}, {}
+        self._fx_start()
         V, N, U, I = _box_mesh([-1, -1, -1], [1, 1, 1], 1.0, None)
         self.box_mesh = (self._mesh(V, N, U, I), len(I))
 
@@ -626,7 +680,8 @@ class _Filament(object):
 
     def _evict(self):
         L = self.live
-        for r in L.get("dressing", []) + [x[0] for x in L.get("flames", []) if x[2]]:
+        self._fx_evict(L)
+        for r in L.get("dressing", []):
             self.scn.remove_renderable(r[0] if isinstance(r, tuple) else r)
         if L.get("indicator") is not None and L["indicator"][2]:
             self.scn.remove_renderable(L["indicator"][0])
@@ -652,7 +707,7 @@ class _Filament(object):
         opt.geomgroup[GEOM_GROUP] = 1
         opt.sitegroup[:] = 0
         rends.set_options(opt)
-        L = {"res": res, "rends": rends, "dressing": [], "keep": []}
+        L = {"res": res, "rends": rends, "dressing": []}
         # the room at this episode's pose
         T = ep.room_pose
         if self.room_pose is None or not np.allclose(self.room_pose, T):
@@ -660,47 +715,12 @@ class _Filament(object):
             for _m, _mat, r in self.room:
                 r.set_pose(p, R)
             self.room_pose = T.copy()
-        # the dressing: one mesh per material
-        groups = {}
-        for part in ep.parts:
-            groups.setdefault(part["material"], []).append(part)
-        dl = look["dressing"]
-        for mname, parts in sorted(groups.items()):
-            mdef = ep.materials.get(mname, {"base": [0.7, 0.7, 0.7], "roughness": 0.5, "metallic": 0.0})
-            tile = float(mdef.get("tile_m", 1.0))
-            VV, NN, UU, II = [], [], [], []
-            n0 = 0
-            for part in parts:
-                if part["shape"] == "box":
-                    c, s = np.asarray(part["center"]), np.asarray(part["size"]) / 2
-                    V, N, U, I = _box_mesh(c - s, c + s, tile, part.get("grain"))
-                else:
-                    V, N, U, I = _cyl_mesh(part["center"], part["size"][0], part["size"][1], part["axis"], 12)
-                VV.append(V); NN.append(N); UU.append(U); II.append(I + n0)
-                n0 += len(V)
-            V, N, U, I = np.concatenate(VV), np.concatenate(NN), np.concatenate(UU), np.concatenate(II)
-            mesh = self._mesh(V, N, U, I)
-            tex = self.dressing_tex.get(mname)
-            base = np.asarray(mdef.get("base", [0.7, 0.7, 0.7]), float) * dl["albedo_gain"]
-            rgba = np.concatenate([srgb_from_linear(base), [1.0]]).astype(np.float32)
-            emissive = 0.0
-            if mdef.get("emission_K"):
-                emissive = dl["emitter_emissive"]
-            mat = F.Material(color=rgba, roughness=float(mdef.get("roughness", 0.5)), metallic=float(mdef.get("metallic", 0.0)),
-                             emissive=emissive, color_texture=tex)
-            r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=bool(dl["cast_shadow"]), receive_shadow=True))
-            r.set_mesh(mesh, 0, len(I))
-            r.set_material(mat)
-            r.set_pose(np.zeros(3, np.float32), np.eye(3, dtype=np.float32).reshape(9))
+        # the dressing, from meshes and materials that live for the process (see _dressing_mesh)
+        for r in self._dressing(ep):
             self.scn.add_renderable(r)
             L["dressing"].append(r)
-            L["keep"].append((mesh, mat))
         # the unit's state: flames and indicator (added to the scene while lit)
-        L["flames"] = []
-        for loc, site in ep.flames:
-            r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=False, receive_shadow=False))
-            r.set_mesh(self.flame_mesh[0], 0, self.flame_mesh[1])
-            L["flames"].append([r, site, False, None, None])        # renderable, site, shown, material, its colour
+        L["flames"] = self._fx_activate(ep)
         L["indicator"] = None
         if ep.indicator is not None:
             r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=False, receive_shadow=True))
@@ -714,6 +734,92 @@ class _Filament(object):
         self.active = sid
         self.stats["activations"] += 1
         self.last_activation_s = time.perf_counter() - t0
+
+    # -- the dressing: MuJoCo 3.16's binding never releases a Filament mesh (nor the data uploaded into one), so
+    # no mesh is made per episode: a rigid group (station, shelf, pedestal; _dressing_plan) is one merged mesh per
+    # material, built the first time its unit is drawn and placed by the episode's shift; a single part (the filler
+    # cabinets) is a shared unit box (untextured) or unit cylinder scaled to it.  Bounded by the units a process
+    # serves; materials are made once per material.
+    def _dressing_material(self, mname, mdef):
+        if mname not in self.dress_mats:
+            F = self.F
+            dl = self.look["dressing"]
+            tint = np.asarray(dl.get("tint", {}).get(mname, [1.0, 1.0, 1.0]), float)
+            base = np.asarray(mdef.get("base", [0.7, 0.7, 0.7]), float) * dl["albedo_gain"] * tint
+            rgba = np.concatenate([srgb_from_linear(base), [1.0]]).astype(np.float32)
+            emissive = float(dl["emitter_emissive"]) if mdef.get("emission_K") else 0.0
+            self.dress_mats[mname] = F.Material(color=rgba, roughness=float(mdef.get("roughness", 0.5)),
+                                                metallic=float(mdef.get("metallic", 0.0)), emissive=emissive,
+                                                color_texture=self.dressing_tex.get(mname))
+        return self.dress_mats[mname]
+
+    def _dressing_renderable(self, mesh, n, mat, p, R):
+        F = self.F
+        r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=bool(self.look["dressing"]["cast_shadow"]),
+                                                          receive_shadow=True))
+        r.set_mesh(mesh, 0, n)
+        r.set_material(mat)
+        r.set_pose(np.asarray(p, np.float32), np.asarray(R, np.float32).reshape(9))
+        return r
+
+    def _dressing(self, ep):
+        mats = ep.materials
+        dflt = {"base": [0.7, 0.7, 0.7], "roughness": 0.5, "metallic": 0.0}
+        out = []
+        for g in ep.dressing["rigid"]:
+            if g["key"] not in self.dress_cache:
+                groups = {}
+                for part in g["parts"]:
+                    groups.setdefault(part["material"], []).append(part)
+                built = []
+                for mname, parts in sorted(groups.items()):
+                    tile = float(mats.get(mname, dflt).get("tile_m", 1.0))
+                    VV, NN, UU, II = [], [], [], []
+                    n0 = 0
+                    for part in parts:
+                        if part["shape"] == "box":
+                            c, s = np.asarray(part["center"]), np.asarray(part["size"]) / 2
+                            V, N, U, I = _box_mesh(c - s, c + s, tile, part.get("grain"))
+                        else:
+                            V, N, U, I = _cyl_mesh(part["center"], part["size"][0], part["size"][1], part["axis"], 12)
+                        VV.append(V); NN.append(N); UU.append(U); II.append(I + n0)
+                        n0 += len(V)
+                    I = np.concatenate(II)
+                    built.append((mname, self._mesh(np.concatenate(VV), np.concatenate(NN), np.concatenate(UU), I),
+                                  len(I)))
+                self.dress_cache[g["key"]] = built
+            for mname, mesh, n in self.dress_cache[g["key"]]:
+                out.append(self._dressing_renderable(mesh, n, self._dressing_material(mname, mats.get(mname, dflt)),
+                                                     g["shift"], np.eye(3)))
+        for part in ep.dressing["single"]:
+            mname = part["material"]
+            mdef = mats.get(mname, dflt)
+            c = np.asarray(part["center"], float)
+            if part["shape"] == "box":
+                size = np.asarray(part["size"], float)
+                if self.dressing_tex.get(mname) is None:
+                    k, S = ("unit_box",), np.diag(size)
+                else:                                   # a textured box keeps its uvs in metres: its own size
+                    k, S = ("box", mname, part.get("grain")) + tuple(np.round(size, 4)), np.eye(3)
+                if k not in self.dress_cache:
+                    if k[0] == "unit_box":
+                        V, N, U, I = _box_mesh([-0.5] * 3, [0.5] * 3, 1.0, None)
+                    else:
+                        h = np.asarray(k[3:], float) / 2
+                        V, N, U, I = _box_mesh(-h, h, float(mdef.get("tile_m", 1.0)), part.get("grain"))
+                    self.dress_cache[k] = (self._mesh(V, N, U, I), len(I))
+            else:
+                k = ("unit_cyl", part["axis"])
+                ax = "xyz".index(part["axis"])
+                sc = np.full(3, float(part["size"][0]))
+                sc[ax] = float(part["size"][1])
+                S = np.diag(sc)
+                if k not in self.dress_cache:
+                    V, N, U, I = _cyl_mesh([0.0, 0.0, 0.0], 1.0, 1.0, part["axis"], 12)
+                    self.dress_cache[k] = (self._mesh(V, N, U, I), len(I))
+            mesh, n = self.dress_cache[k]
+            out.append(self._dressing_renderable(mesh, n, self._dressing_material(mname, mdef), c, S))
+        return out
 
     def _lamps(self, ep):
         F = self.F
@@ -764,29 +870,7 @@ class _Filament(object):
         F = self.F
         m = ep.live
         look = self.look
-        fl = look["flame"]
-        for rec in self.live["flames"]:
-            r, sid, shown, _mat, last = rec
-            a = float(m.site_rgba[sid, 3])
-            if a > 0.0:
-                rgb = tuple(np.round(m.site_rgba[sid, :3], 4))
-                if rgb != last:                     # the site's own colour (RoboCasa: gas blue, electric red), lit
-                    c = np.asarray(rgb, float) / max(float(np.max(rgb)), 1e-6)
-                    c = (1.0 - fl.get("white_mix", 0.0)) * c + fl.get("white_mix", 0.0)   # a hotter core
-                    mat = F.Material(color=np.array(list(c) + [fl["alpha"]], np.float32), roughness=1.0, metallic=0.0,
-                                     emissive=float(fl["emissive"]))
-                    r.set_material(mat)
-                    rec[3], rec[4] = mat, rgb
-                rad, hl = float(m.site_size[sid, 0]), float(m.site_size[sid, 1])
-                R = data.site_xmat[sid].reshape(3, 3) @ np.diag([rad, rad, max(hl, 1e-4) * look["flame"]["height_scale"]])
-                p = data.site_xpos[sid] + data.site_xmat[sid].reshape(3, 3)[:, 2] * look["flame"]["lift_m"]
-                r.set_pose(p.astype(np.float32), R.astype(np.float32).reshape(9))
-                if not shown:
-                    self.scn.add_renderable(r)
-                    rec[2] = True
-            elif shown:
-                self.scn.remove_renderable(r)
-                rec[2] = False
+        self._fx_state(ep, data)
         ind = self.live["indicator"]
         if ind is not None:
             r, gid, shown, last, _mat = ind
@@ -833,6 +917,192 @@ class _Filament(object):
         self.stats["frames"] += 1
         return buf.copy()
 
+    # -- burner visuals (kitchen_fx) ----------------------------------------------------------------------------------
+    # Gas burners: three renderables per burner (inner cones: MuJoCo's unlit decor material, opaque; sheaths and haze:
+    # transparent PBR, black base colour, alpha from an RGBA texture, emission from an emission texture).  Their
+    # meshes: for each level bucket the burner reaches, one Filament mesh holding every flicker phase
+    # (kitchen_fx.FLICKER_PHASES) of every part, built the first time the bucket is drawn; a frame only points the
+    # renderables at the (bucket, phase) index ranges.  Glass-ceramic zones: one glow disk per zone (one material per
+    # level bucket, shared by the zones), scaled to the site's radius; one clear glossy coat over the glass top.
+    # Textures, materials and meshes live for the process: MuJoCo 3.16's binding does not release a Filament mesh when
+    # its Python object is dropped (measured: 13 MB per episode with one bucket, 75 MB with nine), so the meshes are
+    # cached by what they depend on (a burner's base size, key and level bucket; a glass top's box), bounded by the
+    # units a process serves.  Images depend only on the model, the data and data.time (no clock, no random numbers).
+
+    def _fx_texture(self, img, fmt):
+        F = self.F
+        h, w = img.shape[:2]
+        tc = F.TextureConfig()
+        tc.width, tc.height, tc.format = w, h, fmt
+        tc.sampler_type, tc.color_space = F.SamplerType.TEXTURE_2D, F.ColorSpace.COLORSPACE_SRGB
+        t = self.ctx.create_texture(tc)
+        td = F.TextureData()
+        td.set_image(np.ascontiguousarray(img, np.uint8).tobytes())
+        t.upload(td)
+        return t
+
+    def _fx_start(self):
+        F = self.F
+        FX = kitchen_fx
+        self.FX = FX
+        fxl = self.look["burner_fx"]
+        self.fx_look = fxl
+        tex, mats = FX.textures(), FX.materials()
+        res = {"tex": [], "mat": {}}
+        gain = float(fxl["emissive_gain"])
+
+        def textured(name, emission, roughness):
+            t = tex[name]
+            rgba = np.zeros(t["alpha"].shape + (4,), np.uint8)
+            rgba[..., 3] = t["alpha"]                        # black, premultiplied: only the emission shows
+            ta = self._fx_texture(rgba, F.PixelFormat.PIXEL_FORMAT_RGBA8)
+            te = self._fx_texture(t["emission"], F.PixelFormat.PIXEL_FORMAT_RGB8)
+            res["tex"] += [ta, te]
+            return F.Material(color=np.array([1.0, 1.0, 1.0, 0.999], np.float32), roughness=float(roughness),
+                              metallic=0.0, emissive=float(emission) * gain, color_texture=ta, emissive_texture=te)
+        g = mats["gas_inner"]
+        res["mat"]["gas_inner"] = F.Material(
+            color=np.array(list(np.asarray(g["color"], float) * fxl["gas_inner_gain"]) + [1.0], np.float32), decor=True)
+        for part in ("gas_sheath", "gas_haze"):
+            res["mat"][part] = textured(part, mats[part]["emission"], mats[part]["roughness"])
+        rg = mats["radiant_glow"]
+        res["mat"]["radiant"] = [textured("radiant_%d" % b, rg["emission"], rg["roughness"]) for b in range(FX.RADIANT_LEVELS)]
+        c = mats["glass_coat"]
+        res["mat"]["glass_coat"] = F.Material(color=np.array(list(c["color"]) + [c["alpha"]], np.float32),
+                                              roughness=float(c["roughness"]), metallic=float(c["metallic"]))
+        V, N, U, I = FX.radiant_mesh()["radiant_glow"]
+        res["radiant_mesh"] = (self._mesh(V, N, U, I), len(I))
+        res["meshes"] = {}                                   # process-wide mesh cache (see above)
+        self.fx_res = res
+
+    def _fx_renderable(self, blend_order):
+        rp = self.F.RenderableParams(cast_shadow=False, receive_shadow=False)
+        rp.blend_order = int(blend_order)
+        return self.ctx.create_renderable(rp)
+
+    def _fx_activate(self, ep):
+        res = self.fx_res
+        out = {"burners": [], "coat": None}
+        for loc, b in sorted(ep.fx["burners"].items()):
+            rec = {"loc": loc, "b": b, "shown": False, "last": None, "parts": {}}
+            if b["kind"] == "gas":
+                for part, bo in (("gas_inner", 0), ("gas_sheath", 1), ("gas_haze", 2)):
+                    r = self._fx_renderable(bo)
+                    r.set_material(res["mat"][part])
+                    rec["parts"][part] = r
+            else:
+                r = self._fx_renderable(1)
+                r.set_mesh(res["radiant_mesh"][0], 0, res["radiant_mesh"][1])
+                r.set_material(res["mat"]["radiant"][0])
+                rec["parts"]["radiant_glow"] = r
+                rec["last"] = 0
+            out["burners"].append(rec)
+        if self.fx_look["coat"] and any(b["kind"] == "radiant" for b in ep.fx["burners"].values()):
+            out["coat"] = {"shown": False, "rend": None, "mesh": None}
+        return out
+
+    def _fx_gas_mesh(self, b, level):
+        """One mesh with every flicker phase of every part at this level; index ranges per phase and part."""
+        V, N, U, I, ranges = [], [], [], [], []
+        nv = ni = 0
+        for var in self.FX.gas_variants(b["r0"], b["hl"], level, b["key"]):
+            rr = {}
+            for part in ("gas_inner", "gas_sheath", "gas_haze"):
+                v, n, u, i = var[part]
+                V.append(v); N.append(n); U.append(u); I.append(i + nv)
+                rr[part] = (ni, len(i))
+                nv += len(v)
+                ni += len(i)
+            ranges.append(rr)
+        return self._mesh(np.concatenate(V), np.concatenate(N), np.concatenate(U), np.concatenate(I)), ranges
+
+    def _fx_coat(self, ep, data, coat):
+        """The clear coat over the glass top: the unit's box (x / y, less a margin) at the zones' plane."""
+        FX = self.FX
+        bid = ep.fx["body"]
+        pb, Rb = data.xpos[bid], data.xmat[bid].reshape(3, 3)
+        zs = [float(Rb[:, 2] @ (data.site_xpos[b["site"]] - pb)) for b in ep.fx["burners"].values() if b["kind"] == "radiant"]
+        mg = float(self.fx_look["coat_margin_m"])
+        lo, hi = ep.fx["lo"][:2] + mg, ep.fx["hi"][:2] - mg
+        z = float(np.mean(zs)) + FX.COAT_LIFT
+        mk = ("coat",) + tuple(np.round(np.concatenate([lo, hi, [z]]), 5))
+        if mk not in self.fx_res["meshes"]:
+            V, N, U, I = FX.glass_coat_mesh(lo, hi, z=z)["glass_coat"]
+            self.fx_res["meshes"][mk] = (self._mesh(V, N, U, I), len(I))
+        coat["mesh"], n = self.fx_res["meshes"][mk]
+        r = self._fx_renderable(3)
+        r.set_mesh(coat["mesh"], 0, n)
+        r.set_material(self.fx_res["mat"]["glass_coat"])
+        coat["rend"] = r
+
+    def _fx_state(self, ep, data):
+        FX = self.FX
+        m = ep.live
+        fl = self.live["flames"]
+        for rec in fl["burners"]:
+            b = rec["b"]
+            sid = b["site"]
+            if float(m.site_rgba[sid, 3]) <= 0.0:
+                if rec["shown"]:
+                    for r in rec["parts"].values():
+                        self.scn.remove_renderable(r)
+                    rec["shown"] = False
+                continue
+            level = FX.burner_level(m.site_size[sid, 0], b["r0"])
+            p = data.site_xpos[sid].astype(np.float32)
+            R = data.site_xmat[sid].reshape(3, 3)
+            if b["kind"] == "gas":
+                nb = int(self.fx_look["gas_buckets"])
+                key = (FX.gas_bucket(level, nb), FX.gas_phase(data.time))
+                if key != rec["last"]:
+                    mk = ("gas", round(b["r0"], 6), round(b["hl"], 6), b["key"], nb, key[0])
+                    if mk not in self.fx_res["meshes"]:
+                        self.fx_res["meshes"][mk] = self._fx_gas_mesh(b, key[0] / (nb - 1.0))
+                    mesh, ranges = self.fx_res["meshes"][mk]
+                    for part, r in rec["parts"].items():
+                        off, cnt = ranges[key[1]][part]
+                        r.set_mesh(mesh, off, cnt)
+                    rec["last"] = key
+                Rf = R.astype(np.float32).reshape(9)
+                for r in rec["parts"].values():
+                    r.set_pose(p, Rf)
+            else:
+                bucket = FX.radiant_bucket(level)
+                r = rec["parts"]["radiant_glow"]
+                if bucket != rec["last"]:
+                    r.set_material(self.fx_res["mat"]["radiant"][bucket])
+                    rec["last"] = bucket
+                rad = float(m.site_size[sid, 0]) * FX.RADIANT_HALO
+                r.set_pose((data.site_xpos[sid] + R[:, 2] * FX.RADIANT_LIFT).astype(np.float32),
+                           (R @ np.diag([rad, rad, 1.0])).astype(np.float32).reshape(9))
+            if not rec["shown"]:
+                for r in rec["parts"].values():
+                    self.scn.add_renderable(r)
+                rec["shown"] = True
+        coat = fl["coat"]
+        if coat is not None:
+            if coat["rend"] is None:
+                self._fx_coat(ep, data, coat)
+            bid = ep.fx["body"]
+            coat["rend"].set_pose(data.xpos[bid].astype(np.float32), data.xmat[bid].astype(np.float32).reshape(9))
+            if not coat["shown"]:
+                self.scn.add_renderable(coat["rend"])
+                coat["shown"] = True
+
+    def _fx_evict(self, L):
+        fl = L.get("flames")
+        if not fl:
+            return
+        for rec in fl["burners"]:
+            if rec["shown"]:
+                for r in rec["parts"].values():
+                    self.scn.remove_renderable(r)
+                rec["shown"] = False
+        if fl.get("coat") and fl["coat"]["shown"]:
+            self.scn.remove_renderable(fl["coat"]["rend"])
+            fl["coat"]["shown"] = False
+    # -- end of the burner visuals -------------------------------------------------------------------------------------
+
     def info(self):
         return {"stats": dict(self.stats), "start_s": self.start_s, "room": self.room_stats,
                 "last_activation_s": getattr(self, "last_activation_s", None), "targets": len(self.targets),
@@ -858,7 +1128,9 @@ class _Filament(object):
         self.room = []
         self.room_textures = []
         self.dressing_tex = {}
-        self.flame_mesh = self.box_mesh = None
+        self.fx_res = None
+        self.dress_cache = self.dress_mats = None
+        self.box_mesh = None
         self.head = self.ibl = None
         self.scn = None
         self.look_model = None

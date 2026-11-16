@@ -54,8 +54,8 @@ RUN python3 -c "import numpy, scipy, cv2, mujoco; print('[image] mujoco', mujoco
 # The cameras' renderer works for every account that draws images: root (the grader), the agent account (the dev sim,
 # the practice grader) and the lab's account (the lab worker starts rendering as root and serves as alelab, with the
 # lab's clean environment). Each draws the three images of practice unit p0 from the room bundle through the task's own
-# modules (render_check/: copies of appliance_env.py, kitchen_render.py, kitchen_scene.py, kitchen_look.json, mounted for
-# this step only, so nothing of them stays in the image).
+# modules (render_check/: copies of appliance_env.py, kitchen_render.py, kitchen_fx.py, kitchen_scene.py and
+# kitchen_look.json, mounted for this step only, so nothing of them stays in the image).
 RUN --mount=type=bind,source=render_check,target=/tmp/render_check \
     MESA_SHADER_CACHE_DISABLE=true python3 -I -B /tmp/render_check/check_render.py \
     && runuser -u user -- env HOME=/tmp MESA_SHADER_CACHE_DISABLE=true /opt/venv/bin/python3 -I -B /tmp/render_check/check_render.py \
