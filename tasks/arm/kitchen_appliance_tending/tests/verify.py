@@ -12,8 +12,15 @@ Episodes: the fixed hidden set tests/hidden/episodes.json, the same for every su
 episodes on every hidden unit (tests/units.json, models in tests/units/), each a 64-bit seed (unit placement,
 initial control states, request queue, lighting, camera offsets and sensor noise), run in the file's order
 (selected and shuffled by tests/review/select_set.py, the record in tests/hidden/episode_selection.json). The
-probe lock keeps its own randomness (the kit's `seed_rng`, OS entropy): which steps are probed, the order of a
-pair and the perturbation. episode.py owns the requests and the credit (byte-identical to the agent's copy);
+probe lock draws which steps are probed, the order of a pair and the perturbation from one stream per episode
+(probe_stream): the kit's `seed_rng` keyed by a BLAKE2b hash of a domain tag, the episode's index in the set and
+its hidden seed. An episode's probe schedule is therefore a function of the episode alone, not of the controller's
+replies, of how many steps earlier episodes took, of the clock or of the process, so one submission gets one
+result: with one OS-entropy stream for the whole run, where the lock probed changed from run to run, and a
+controller that advanced its state on the probe copy scored between 0.278 and 0.407 in seven gradings of one
+fixed set. The hidden seed stays the only secret; the tag keeps the stream apart from everything the environment
+draws from the seed. The lock's counts are run-wide and are the only thing about it that is logged or written.
+episode.py owns the requests and the credit (byte-identical to the agent's copy);
 appliance_env.py is the environment (byte-identical too). The metric `mean_request_credit` is the mean over
 episodes of the mean request credit (reached 0.5 + completed 0.5). Each episode's requests and their outcomes are
 logged on stderr with the episode's index in the set (never its seed).
@@ -79,6 +86,7 @@ STILL = 1e-9                # a reply whose six motion numbers are all within th
 MAX_LINE = 1 << 22          # an observation with three images is about 1 MB; replies are short
 SELFTEST_SEED = 1           # the render self-test's episode (not one of the graded seeds)
 SELFTEST_SHAPES = {"left": (240, 320, 3), "right": (240, 320, 3), "wrist": (192, 256, 3)}
+PROBE_TAG = b"kitchen_appliance_tending verify probe schedule 1"   # probe_stream's domain tag
 
 
 def log(msg):
@@ -340,6 +348,31 @@ class IdleAwareProbeLock(ProbeLock):
         return out
 
 
+def probe_stream(index, seed):
+    """The probe lock's stream for episode `index` of the set (its position in the graded order), whose hidden 64-bit
+    seed is `seed`: the kit's seed_rng keyed by BLAKE2b over PROBE_TAG, the index and the seed, so a function of
+    (index, seed) alone. The environment and the episode draw from the seed only through NumPy generators seeded
+    with its two 32-bit halves and a small tag (ApplianceEnv.reset, Episode.__init__); this hash shares nothing with
+    them. The kit's documented use of `entropy` is its self-test; the verify stages of
+    fault_adaptive_spacecraft_docking and object_finding_and_organizing_on_messy_desk key per-episode lock streams
+    the same way."""
+    digest = hashlib.blake2b(b"%s|%d|%d" % (PROBE_TAG, int(index), int(seed)), digest_size=32).digest()
+    return seed_rng(entropy=int.from_bytes(digest, "little"))
+
+
+def ask(lock, solver, ep, t, obs, unit, truth):
+    """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
+    the stream (lock.due); a probed step draws twice more, both before either request is written: the seed of the
+    perturbation, then the order of the pair (ProbeLock.probe). The draws a step consumes never depend on the
+    replies, and a pair that is not counted (both replies command no motion) has consumed the same draws as a
+    counted one."""
+    w = wire_obs(ep, obs, unit, truth)
+    if lock.due():
+        other = ep.env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
+        return lock.probe(solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
+    return solver.act(t, w)
+
+
 def render_selftest(spec, seed=SELFTEST_SEED):
     """The three cameras of one episode, before any episode is graded: the right shapes, not flat (a standard
     deviation of at least 8 levels; the sensor noise alone gives 2) and a mean brightness of 20-235 levels. Raises
@@ -400,12 +433,13 @@ def valid_action(action):
     return 0 <= action[7] <= 7 and float(action[7]).is_integer()
 
 
-def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, episodes):
+def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes):
     """Run `episodes` ([(unit, seed)], the fixed set in its order) over one controller. Returns (scores, aborted,
     faults, per_unit, per_request, egress_hits, budget_exhausted, lock, records); a record per episode: its index
-    in the set, unit, score, reason, steps and the requests' outcomes (episode.score())."""
+    in the set, unit, score, reason, steps and the requests' outcomes (episode.score()). During episode n the
+    probe lock draws from probe_stream(n, seed); its counts run over all episodes."""
     budget = float(config.get("grader_budget_s", 6000))
-    lock = IdleAwareProbeLock(rng, rate=config.get("probe_rate", 0.01),
+    lock = IdleAwareProbeLock(None, rate=config.get("probe_rate", 0.01),
                               pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
     scores, aborted, faults = [], 0, 0
     per_unit, per_request = {}, {}
@@ -425,6 +459,7 @@ def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, 
                                 "steps": 0, "requests": []})
                 log("episode {} ({}): score=0.0000 not run (grader budget exhausted)".format(n, unit))
                 continue
+            lock.rng = probe_stream(n, seed)
             ep = EP.Episode(E.ApplianceEnv(specs[unit], None, render=True), seed)
             score, reason, sc = 0.0, "ok", None
             try:
@@ -437,12 +472,7 @@ def run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, 
                         raise SolverAborted("grader budget exhausted")
                     if egress_mode == "detect" and agent_inet_sockets(uid):
                         egress_hits += 1
-                    w = wire_obs(ep, obs, unit, truth)
-                    if lock.due():
-                        other = ep.env.perturbed_observation(obs, np.random.default_rng(rng.seed(bits=64)))
-                        action = lock.probe(solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
-                    else:
-                        action = solver.act(t, w)
+                    action = ask(lock, solver, ep, t, obs, unit, truth)
                     if not valid_action(action):
                         raise SolverAborted("malformed action")
                     obs, done, _info = ep.step(action)
@@ -488,7 +518,6 @@ def main():
     secured = {"root_path_dirs_secured": float(len(secure_exec_path()))}   # before anything else runs
     config = stage_config()
     lab_stopped = stop_lab()
-    rng = seed_rng()
     anchor, meta = read_anchor()
     try:
         uid, gid = _agent_ids()
@@ -524,7 +553,7 @@ def main():
     log("egress guard: {}; oracle token: {}; {} episodes in the fixed set".format(egress_mode, truth, len(episodes)))
     try:
         (scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted,
-         lock, _records) = run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, episodes)
+         lock, _records) = run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes)
     except E.RenderError as exc:
         kill_agent_processes(uid)
         fail("the cameras' renderer failed during the episodes: {}".format(exc))

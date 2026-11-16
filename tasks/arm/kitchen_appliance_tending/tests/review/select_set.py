@@ -214,10 +214,13 @@ def over_wire(V, specs, unit, seed, work):
                                 stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, universal_newlines=True,
                                 bufsize=1, start_new_session=True)
     V.GuardedSolver._spawn = spawn
+    # step 3: each wire run with a fresh OS-entropy stream, not the grader's per-episode stream (verify.probe_stream
+    # keys on the episode's index in the graded order, which `make` decides later)
+    V.probe_stream = lambda _index, _seed: seed_rng()
     config = load(os.path.join(TESTS, "grader_config.json"))
     t0 = time.monotonic()
     (scores, aborted, faults, _pu, _pr, _eg, _be, lock, records) = V.run_episodes(
-        config, seed_rng(), os.getuid(), "none", t0, specs, work, True, [(unit, seed)])
+        config, os.getuid(), "none", t0, specs, work, True, [(unit, seed)])
     rec = records[0]
     return {"credit": float(scores[0]), "reason": rec["reason"], "steps": int(rec["steps"]), "aborted": int(aborted),
             "sim_faults": int(faults), "probes": int(lock.total), "probes_passed": int(lock.passed),
