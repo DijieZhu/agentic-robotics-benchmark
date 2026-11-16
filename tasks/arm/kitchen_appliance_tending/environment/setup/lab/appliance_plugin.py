@@ -6,6 +6,13 @@ Instance file (environment/setup/ref/units.json): {unit id: {model, kind, dir}};
 scored units. Every trial starts from a fresh 64-bit seed from OS entropy (placement, initial control
 states, request queue, sensor noise). Replies carry the observation only (images, proprioception, wrench,
 the open request), never the units' state or any credit; an episode ends when its last request closes.
+
+Images: appliance_env.py draws them with kitchen_render.py beside it (imported with appliance_env, at module load,
+before the worker drops privileges; the room bundle in /opt/task-assets/payload/render is world-readable). The
+worker's start-up validation resets every unit, so the renderer starts (its first image takes several seconds) and
+is proven before the lab serves; a renderer that cannot start fails the lab's start. A renderer failure later, in a
+reset or a step (appliance_env.RenderError), is the lab's own error: the server answers `internal` and logs the
+traceback lab-side; it is never reported as anything the agent's action caused.
 """
 
 import os
@@ -71,6 +78,8 @@ class _Episode(object):
 
 class ApplianceLab(object):
     def __init__(self, instances, api):
+        if E._KR is None:                           # the renderer must be importable before the privilege drop
+            raise E.RenderError(E._KR_ERROR)
         self.api = api
         base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ref")
         self.specs = {}

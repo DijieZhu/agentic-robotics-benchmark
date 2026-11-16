@@ -22,6 +22,14 @@ Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_tok
 only then does every observation also carry `truth` (the unit's placement jitter, its joint values, the
 microwave's flag). An untokened submission never sees it. Every path agent behaviour can reach is charged as
 a score, never a crash.
+
+Images: appliance_env.py draws the cameras with kitchen_render.py (MuJoCo's Filament renderer on Mesa's lavapipe,
+the room bundle in KITCHEN_RENDER_DIR), exactly as the dev sim and the lab do. Before the first episode a render
+self-test draws the three cameras of one episode (the first unit of the set at a fixed seed, not a graded episode)
+and checks their shapes, that none is flat and that their brightness is sane; the metric `render_selftest` records
+that it passed. A renderer failure, in the self-test or at any later image (appliance_env.RenderError), is the
+grader's own error: the run ends as a task error (robotics_grader.stage.fail: no reward written, exit status 1),
+never as a controller fault or a 0 for the submission.
 """
 
 import hashlib
@@ -55,7 +63,7 @@ from robotics_grader import (  # noqa: E402
     write_verdict,
     zero_verdict,
 )
-from robotics_grader.stage import secure_exec_path  # noqa: E402
+from robotics_grader.stage import fail, secure_exec_path  # noqa: E402
 
 STAGE = os.path.dirname(os.path.abspath(__file__))
 MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
@@ -66,6 +74,8 @@ TOKEN_SHA = os.path.join(STAGE, "hidden", "oracle_token.sha256")
 EPISODES = os.path.join(STAGE, "hidden", "episodes.json")
 STILL = 1e-9                # a reply whose six motion numbers are all within this of zero commands no motion
 MAX_LINE = 1 << 22          # an observation with three images is about 1 MB; replies are short
+SELFTEST_SEED = 1           # the render self-test's episode (not one of the graded seeds)
+SELFTEST_SHAPES = {"left": (240, 320, 3), "right": (240, 320, 3), "wrist": (192, 256, 3)}
 
 
 def log(msg):
@@ -327,6 +337,24 @@ class IdleAwareProbeLock(ProbeLock):
         return out
 
 
+def render_selftest(spec, seed=SELFTEST_SEED):
+    """The three cameras of one episode, before any episode is graded: the right shapes, not flat (a standard
+    deviation of at least 8 levels; the sensor noise alone gives 2) and a mean brightness of 20-235 levels. Raises
+    E.RenderError. The first image of a process also pays the renderer's start (several seconds), so the graded
+    episodes do not."""
+    env = E.ApplianceEnv(spec, None, render=True)
+    try:
+        obs = env.reset(seed)
+        for cam, shape in sorted(SELFTEST_SHAPES.items()):
+            img = obs[cam]
+            mean, std = float(img.mean()), float(img.std())
+            if tuple(img.shape) != shape or img.dtype != np.uint8 or std < 8.0 or not 20.0 <= mean <= 235.0:
+                raise E.RenderError("{} image: shape {}, dtype {}, mean {:.1f}, std {:.1f}".format(
+                    cam, tuple(img.shape), img.dtype, mean, std))
+    finally:
+        env.close()
+
+
 def load_episode_set(config, units, path=EPISODES):
     """The fixed hidden set: [(unit, seed)] in the graded order. `episodes_per_unit` and the units must agree
     with it (a task error otherwise, never the agent's)."""
@@ -473,6 +501,13 @@ def main():
     specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(STAGE, c["dir"])), quirks=c.get("quirks"))
              for u, c in sorted(units.items())}
     episodes = load_episode_set(config, specs)
+    t_self = time.monotonic()
+    try:
+        render_selftest(specs[episodes[0][0]])
+    except E.RenderError as exc:
+        fail("the cameras' renderer failed its self-test: {}".format(exc))
+    log("render self-test passed ({:.1f} s, three cameras)".format(time.monotonic() - t_self))
+    secured["render_selftest"] = 1.0
     try:
         workdir = stage_submission(uid, gid)
     except OSError as exc:
@@ -487,6 +522,9 @@ def main():
     try:
         (scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted,
          lock, _records) = run_episodes(config, rng, uid, egress_mode, t_start, specs, workdir, truth, episodes)
+    except E.RenderError as exc:
+        kill_agent_processes(uid)
+        fail("the cameras' renderer failed during the episodes: {}".format(exc))
     except (SolverMissing, SolverAborted) as exc:
         kill_agent_processes(uid)
         write_verdict(zero_verdict(reason=str(exc)[:200], anchored=anchor is not None, extra=secured))

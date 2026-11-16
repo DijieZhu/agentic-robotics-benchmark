@@ -13,7 +13,8 @@ restarted (at most 3 restarts), and the controller runs with only AF_UNIX socket
 as at grading time). One difference: here each line printed before READY gets its own 120 s (at most 200
 lines), while the hidden grader allows 120 s for the whole start. It reports whether the run stayed inside
 the grading time budget. It never touches the hidden units, does not know the reference value and prints no
-score.
+score. A failure of the cameras' renderer (appliance_env.RenderError) is the environment's error, as in the
+hidden grader: the run stops with an error that says so (exit status 3), never as an aborted episode.
 """
 
 import argparse
@@ -267,6 +268,11 @@ def main():
                     results.append({"unit": uid, "seed": seed, "episode_credit": 0.0, "aborted": str(exc)[:200]})
                 finally:
                     ep.env.close()
+    except E.RenderError as exc:
+        print(json.dumps({"error": "the cameras' renderer failed (an error of the environment, not of your "
+                                   "controller; no metric): {}".format(str(exc)[:300]),
+                          "episodes_before_the_failure": results}, indent=1))
+        return 3
     finally:
         wire.close()
     wall = time.monotonic() - t0
