@@ -19,7 +19,8 @@ What is drawn
     stands on, the station's, the fillers' and the pedestal's on the floor and under the shelf, and a soft shadow of
     the hand and forearm straight below them on the unit's top or the support's top (from the robot bodies' poses).
 The room and the dressing are drawn only: nothing of them is in the simulated model, so the robot touches only what
-appliance_env.build_model builds (the pedestal, the unit and its support).
+appliance_env.build_model makes collidable (the unit, its support, the wall behind it and the floor; the robot's
+pedestal there is visual only).
 Light: an image light (ibl.ktx of the bundle: the mean of three path-traced probes of the kitchen at the work area,
 all of the task's lights on; its diffuse part also carries the direct light of the lamps that are not drawn, its
 reflections do not; sky.ktx, the same probes, is the sky behind the windows) and one Filament light per lamp of
@@ -43,15 +44,18 @@ releases a Filament mesh: the dressing's and the burners' meshes are built once 
 the copy of the model and its ModelResources / ModelRenderables.  MuJoCo 3.16's Filament module serves one
 model's resources at a time per context, so only the episode rendered last is live; rendering another one first
 frees the live one's model resources (the room stays).  The first image of a process takes several seconds
-(lavapipe compiles the shaders); later episodes start in about 0.1 s.
+(lavapipe compiles the shaders); a later episode's first image takes well under a second.
 
     view = open_view(env)          # after env.reset(): builds the episode's drawn model (no Filament work yet)
     rgb = view.render("left")      # uint8 (240, 320, 3), rows top-down, no noise
     view.close()                   # or let it be garbage-collected
 
-Every failure of the renderer (a missing bundle file, a Vulkan error, a call that does not return within
-KITCHEN_RENDER_TIMEOUT seconds, default 300) is raised as RenderError: an error of the environment, never of a
-controller.  A renderer that failed once stays failed in that process.
+Every failure of the renderer that Python sees (a missing or broken file of the room bundle, an error while an
+episode is built or an image drawn, a call that does not return within KITCHEN_RENDER_TIMEOUT seconds, default 300)
+is raised as RenderError: an error of the environment, never of a controller.  A renderer that failed once stays
+failed in that process.  A Vulkan backend that cannot start at all (no usable driver) aborts the whole process
+inside Filament (SIGABRT) before Python can catch anything; the task image's build draws the three cameras through
+these modules for every account that renders, so the image proves its driver.
 """
 import atexit
 import copy

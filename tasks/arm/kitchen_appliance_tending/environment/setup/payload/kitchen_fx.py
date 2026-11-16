@@ -1,5 +1,5 @@
-"""Burner visuals of the kitchen task (PR #81): the single source of the gas flames and of the radiant glass-ceramic
-zones for both renderers of the project (the Filament agent cameras, kitchen_render.py, and the path-traced USD demo).
+"""Burner visuals of the kitchen task: the single source of the gas flames and of the radiant glass-ceramic zones that
+the task's cameras (kitchen_render.py) draw.
 
 Pure numpy, no renderer imports, no random numbers: every output is a deterministic function of the arguments.
 
@@ -85,10 +85,6 @@ RADIANT_LIFT = 0.0004             # m above the site's centre plane (the glass t
 COAT_LIFT = 0.0008                # m: the glass coat, above the glow
 RADIANT_SEG = 64
 
-# What the Filament agent cameras show (sRGB, close-ups at 960 x 720, filmic tone mapping, exposure_scale 50), for a
-# renderer that matches its emission scale by eye: gas inner cones ~ (120, 165, 245), sheaths ~ (80, 80, 170) over the
-# dark hob, the haze a blue tint ~ (90, 100, 180) at the port ring; radiant on black glass (u3): low ~ (184, 12, 9),
-# high ~ (241, 92, 23), brightest coil ~ (235, 129, 84); on p0's brown-grey glass low ~ (130, 53, 42).
 MATERIALS = {
     # Filament path in kitchen_render: "unlit" = MuJoCo decor material (unlit, opaque), colour may exceed 1 (HDR);
     # "emissive_translucent" = PBR transparent, base colour black, alpha from the alpha texture, emission = emission
