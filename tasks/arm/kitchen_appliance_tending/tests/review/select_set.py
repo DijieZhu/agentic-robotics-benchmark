@@ -43,8 +43,8 @@ The rule, fixed before any candidate ran:
    hashes and that commit, so `run` / `make` check against them again; tests/hidden/episodes.json is not touched. A
    later change of a frozen file needs a new amendment (or a new draw).
 
-`run` needs the task image's Python (3.12, MuJoCo 3.16, NumPy, SciPy, robosuite 1.5.2's model files) and MuJoCo
-rendering (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names this interpreter, and the
+`run` needs the task image's Python (3.12, MuJoCo 3.16, NumPy, SciPy, robosuite 1.5.2's model files) and the cameras'
+renderer (kitchen_render.py: MuJoCo's Filament on Vulkan, lavapipe in the image, with the room bundle). Outside the image the oracle submission's run.sh names this interpreter, and the
 controller is started directly rather than through nonet_exec.py (which needs root to change user); everything else is
 verify.run_episodes as the grader runs it.
 """

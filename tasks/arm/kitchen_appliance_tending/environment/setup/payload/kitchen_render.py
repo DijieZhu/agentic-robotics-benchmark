@@ -12,9 +12,13 @@ What is drawn
   * the unit's state, read from the simulator before every image: each burner's flame site (its colour, visibility
     and radius, RoboCasa's Stove.update_state as appliance_env.Unit.update sets them) and the indicator geom's colour
     (lit or INDICATOR_OFF).  A lit burner is drawn by kitchen_fx.py (beside this file): a gas burner (blue site) as
-    a ring of blue flame jets around the burner head, a glass-ceramic zone (red site) as concentric rings glowing
-    dark red to orange under the glass, with a clear glossy coat over the glass top; both grow with the setting
-    (the site's radius).  The indicator is a lit emitter.
+    a ring of blue flame jets with bright inner cones around the burner head, longer, brighter and leaning further
+    out at a higher setting; a glass-ceramic zone (red site) as a coil pattern (a double spiral of soft bands with a
+    halo) glowing under the glass, dull dark red at the lowest setting to bright orange-red at the highest, with a
+    dark glossy coat over the glass top; both grow with the setting (the site's radius).  A lit indicator is an
+    unlit emitter in the model's colour (the microwave's amber bar, the oven's red-orange lamp);
+  * the unit's see-through parts (a door's glass) darker and less transparent than in the model: the image light
+    has no occlusion, so a closed cavity behind the glass would otherwise look lit like the room;
   * grounding, drawn only: soft contact shadows (dark decals that fade out) around the unit's footprint on what it
     stands on, the station's, the fillers' and the pedestal's on the floor and under the shelf, and a soft shadow of
     the hand and forearm straight below them on the unit's top or the support's top (from the robot bodies' poses).
@@ -220,6 +224,15 @@ def _drawn_model(m, look):
             if name.startswith(prefix):
                 d.mat_rgba[i, :3] = srgb_from_linear(linear_from_srgb(d.mat_rgba[i, :3]) * np.asarray(t, float))
                 break
+    # the unit's see-through parts (a door's glass: alpha < 1): the image light has no occlusion, so a closed
+    # cavity behind the glass is lit like the room; a darker, less transmissive glass makes a closed door read closed
+    gl = rules.get("glass")
+    if gl:
+        for i in range(d.nmat):
+            if d.mat(i).name.startswith(gl.get("prefix", "u_")) and float(d.mat_rgba[i, 3]) < 1.0:
+                a = float(d.mat_rgba[i, 3])
+                d.mat_rgba[i, :3] = srgb_from_linear(linear_from_srgb(d.mat_rgba[i, :3]) * float(gl["rgb_scale"]))
+                d.mat_rgba[i, 3] = 1.0 - (1.0 - a) * float(gl["transmission"])
     d.light_intensity[:] = 0.0
     d.light_castshadow[:] = 0
     return d
@@ -1232,8 +1245,16 @@ class _Filament(object):
                     c = linear_from_srgb(col[:3])
                     y = float(np.dot(c, LUMA))
                     col[:3] = srgb_from_linear(np.clip(y + (c - y) * float(il["lit_saturation"]), 0.0, 1.0))
-                mat = F.Material(color=col, roughness=il["roughness"], metallic=0.0,
-                                 emissive=float(il["emissive_on"] if lit else 0.0))
+                if lit and il.get("lit_unlit"):
+                    # a lit indicator is an emitter: unlit (no reflection of the room over its colour), its own
+                    # colour (the model's) times lit_gain, whatever the room's light
+                    g = il["lit_gain"]
+                    g = float(g.get(ep.indicator_kind, 1.0) if isinstance(g, dict) else g)
+                    mat = F.Material(color=np.array(list(np.asarray(col[:3], float) * g) + [1.0], np.float32),
+                                     decor=True)
+                else:
+                    mat = F.Material(color=col, roughness=il["roughness"], metallic=0.0,
+                                     emissive=float(il["emissive_on"] if lit else 0.0))
                 r.set_material(mat)
                 ind[3], ind[4] = rgba, mat
             s = m.geom_size[gid]
@@ -1302,21 +1323,35 @@ class _Filament(object):
         res = {"tex": [], "mat": {}}
         gain = float(fxl["emissive_gain"])
 
+        texs = {}
+
         def textured(name, emission, roughness, gain=gain):
-            t = tex[name]
-            rgba = np.zeros(t["alpha"].shape + (4,), np.uint8)
-            rgba[..., 3] = t["alpha"]                        # black, premultiplied: only the emission shows
-            ta = self._fx_texture(rgba, F.PixelFormat.PIXEL_FORMAT_RGBA8)
-            te = self._fx_texture(t["emission"], F.PixelFormat.PIXEL_FORMAT_RGB8)
-            res["tex"] += [ta, te]
+            if name not in texs:
+                t = tex[name]
+                rgba = np.zeros(t["alpha"].shape + (4,), np.uint8)
+                rgba[..., 3] = t["alpha"]                    # black, premultiplied: only the emission shows
+                ta = self._fx_texture(rgba, F.PixelFormat.PIXEL_FORMAT_RGBA8)
+                te = self._fx_texture(t["emission"], F.PixelFormat.PIXEL_FORMAT_RGB8)
+                res["tex"] += [ta, te]
+                texs[name] = (ta, te)
+            ta, te = texs[name]
             return F.Material(color=np.array([1.0, 1.0, 1.0, 0.999], np.float32), roughness=float(roughness),
                               metallic=0.0, emissive=float(emission) * gain, color_texture=ta, emissive_texture=te)
+        # the gas flames: one material set per level bucket (the jets get brighter with the setting: FX.gas_glow);
+        # their own gain (default: emissive_gain)
         g = mats["gas_inner"]
-        res["mat"]["gas_inner"] = F.Material(
-            color=np.array(list(np.asarray(g["color"], float) * fxl["gas_inner_gain"]) + [1.0], np.float32), decor=True)
-        for part in ("gas_sheath", "gas_haze"):               # the gas flames' own gain (default: emissive_gain)
-            res["mat"][part] = textured(part, mats[part]["emission"], mats[part]["roughness"],
-                                        float(fxl.get("gas_emissive_gain", gain)))
+        gg = float(fxl.get("gas_emissive_gain", gain))
+        nb = int(fxl["gas_buckets"])
+        res["mat"]["gas"] = []
+        for k in range(nb):
+            glow = FX.gas_glow(k / (nb - 1.0))
+            inner = np.asarray(g["color"], float) * fxl["gas_inner_gain"] * glow
+            res["mat"]["gas"].append({
+                "gas_inner": F.Material(color=np.array(list(inner) + [1.0], np.float32), decor=True),
+                "gas_sheath": textured("gas_sheath", mats["gas_sheath"]["emission"], mats["gas_sheath"]["roughness"],
+                                       gg * glow),
+                "gas_haze": textured("gas_haze", mats["gas_haze"]["emission"], mats["gas_haze"]["roughness"],
+                                     gg * math.sqrt(glow))})
         rg = mats["radiant_glow"]
         res["mat"]["radiant"] = [textured("radiant_%d" % b, rg["emission"], rg["roughness"]) for b in range(FX.RADIANT_LEVELS)]
         c = mats["glass_coat"]
@@ -1340,8 +1375,9 @@ class _Filament(object):
             if b["kind"] == "gas":
                 for part, bo in (("gas_inner", 0), ("gas_sheath", 1), ("gas_haze", 2)):
                     r = self._fx_renderable(bo)
-                    r.set_material(res["mat"][part])
+                    r.set_material(res["mat"]["gas"][0][part])
                     rec["parts"][part] = r
+                rec["mat_bucket"] = 0
             else:
                 r = self._fx_renderable(1)
                 r.set_mesh(res["radiant_mesh"][0], 0, res["radiant_mesh"][1])
@@ -1414,6 +1450,10 @@ class _Filament(object):
                     for part, r in rec["parts"].items():
                         off, cnt = ranges[key[1]][part]
                         r.set_mesh(mesh, off, cnt)
+                    if key[0] != rec["mat_bucket"]:
+                        for part, r in rec["parts"].items():
+                            r.set_material(self.fx_res["mat"]["gas"][key[0]][part])
+                        rec["mat_bucket"] = key[0]
                     rec["last"] = key
                 Rf = R.astype(np.float32).reshape(9)
                 for r in rec["parts"].values():

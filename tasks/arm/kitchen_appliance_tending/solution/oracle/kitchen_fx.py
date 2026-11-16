@@ -24,15 +24,16 @@ GAS (gas_mesh): a ring of separate flame jets around the burner head (the head's
 radius on RoboCasa's burners): per jet an opaque bright inner cone ("gas_inner") and a longer translucent emissive
 sheath ("gas_sheath", blue, violet towards the tip), leaning outwards; 16 ... 36 jets by radius; a second inner ring
 on large burners (base radius >= INNER_RING_MIN_R); a faint blue glow over the head and around the jets'
-roots ("gas_haze").  Length and lean grow with the level; each jet flickers (length and lean, FLICKER_AMP percent)
+roots ("gas_haze").  Length, lean, width and brightness (gas_glow) grow with the level; each jet flickers (length and lean, FLICKER_AMP percent)
 as a smooth function of (t, key, jet), periodic with FLICKER_PERIOD, so that a renderer may precompute
 FLICKER_PHASES variants (t = k * FLICKER_STEP) and switch them per frame (gas_phase(t)).
 
 RADIANT (radiant_mesh, radiant_texture): a disk at the glass top carrying the heating zone's glow (coil pattern, soft
 halo fading into the glass) as an emission texture and an alpha texture; the disk's radius is RADIANT_HALO times the
-site's current radius (the zone follows the site); the colour goes from dull dark red (level 0) to bright orange-red
-(level 1).  glass_coat_mesh: a clear glossy layer over the whole glass top, drawn after the glow, so that the room's
-reflections lie over the glow (the glow reads as under the glass).
+site's current radius (the zone follows the site); the colour goes from dull dark red (level 0: darker than the
+glass around it, plainly red) to bright orange-red (level 1).  glass_coat_mesh: a dark glossy layer over the whole
+glass top (it darkens the top to dark glass), drawn after the glow, so that the room's reflections lie over the glow
+(the glow reads as under the glass).
 
 materials() is the material table (per part: shading, colours, emission, alpha, which textures); textures() returns
 the textures it names.  python kitchen_fx.py <dir> writes preview OBJ / PNG / JSON files for checking another
@@ -53,15 +54,16 @@ JETS_R = (0.025, 0.070)           # JETS_MIN at or below JETS_R[0] m, JETS_MAX a
 PORT_R = 0.93                     # outer ring of ports: radius / base radius (just under the head's rim)
 PORT_Z = 0.3                      # port height: fraction of the site's half-height above the site's centre
 INNER_RING_MIN_R = 1.0            # m: burners at least this large get an inner ring (dual crown); off: RoboCasa's
-                                  # large caps are mostly solid (u6), and the site does not say which have one
+                                  # large caps are mostly solid, and the site does not say which have one
 INNER_RING_R = 0.45               # its radius / base radius
 INNER_RING_FRACTION = 0.5         # its jets / the outer ring's
 INNER_RING_LENGTH = 0.55          # its jet length / the outer ring's
-JET_LENGTH = (0.20, 0.60)         # jet length / base radius at level 0 ... 1
-JET_LEAN_DEG = (36.0, 56.0)       # jet axis from the vertical (outwards) at the root, level 0 ... 1
+JET_LENGTH = (0.12, 1.05)         # jet length / base radius at level 0 ... 1
+JET_LEAN_DEG = (30.0, 64.0)       # jet axis from the vertical (outwards) at the root, level 0 ... 1
 JET_BEND_DEG = 22.0               # the axis turns up by this much from root to tip (buoyancy)
 JET_WIDTH = (0.0014, 0.0030)      # m, sheath half-width at its widest, smallest ... largest burner
-JET_WIDTH_LEVEL = (0.9, 1.55)     # width factor at level 0 ... 1
+JET_WIDTH_LEVEL = (0.8, 1.9)      # width factor at level 0 ... 1
+GAS_GLOW = (0.5, 2.2)             # brightness of the jets (sheath emission, inner cone colour) at level 0 ... 1
 INNER_LENGTH = 0.38               # inner cone length / jet length
 FLICKER_PERIOD = 1.6              # s: the flicker repeats exactly after this
 FLICKER_STEP = 0.1                # s: the control step (10 Hz cameras); FLICKER_PHASES = PERIOD / STEP variants
@@ -99,8 +101,8 @@ MATERIALS = {
     "radiant_glow": {"shading": "emissive_translucent", "emission": 0.42, "texture": "radiant_<bucket>",
                      "roughness": 1.0,
                      "note": "the heating zone seen through dark glass; one texture / material per level bucket"},
-    "glass_coat": {"shading": "clear_coat", "color": [0.0, 0.0, 0.0], "alpha": 0.30, "roughness": 0.12,
-                   "metallic": 0.0, "note": "dark glossy glass over the whole top (alpha 0.3 darkens what is under it, "
+    "glass_coat": {"shading": "clear_coat", "color": [0.0, 0.0, 0.0], "alpha": 0.60, "roughness": 0.12,
+                   "metallic": 0.0, "note": "dark glossy glass over the whole top (alpha 0.6 darkens what is under it, "
                                             "the glow included): the room's reflections lie over the glow"},
 }
 
@@ -162,6 +164,12 @@ def gas_phase(t):
 
 def gas_phase_time(k):
     return k * FLICKER_STEP
+
+
+def gas_glow(level):
+    """Brightness factor of a gas burner's jets at a level (GAS_GLOW, linear in the level)."""
+    s = float(min(max(level, 0.0), 1.0))
+    return GAS_GLOW[0] + s * (GAS_GLOW[1] - GAS_GLOW[0])
 
 
 def gas_bucket(level, n=5):
@@ -366,8 +374,8 @@ def radiant_mesh():
 
 def radiant_colour(level):
     """Linear RGB of the hottest coil at a level: dull dark red (0) ... bright orange-red (1)."""
-    lo = np.array([0.32, 0.014, 0.006])
-    hi = np.array([1.00, 0.085, 0.014])
+    lo = np.array([0.19, 0.015, 0.006])
+    hi = np.array([1.00, 0.32, 0.050])
     s = float(min(max(level, 0.0), 1.0))
     w = np.array([s ** 0.8, s ** 1.8, s ** 1.8])        # orange comes in late: medium is still red
     return lo + (hi - lo) * w

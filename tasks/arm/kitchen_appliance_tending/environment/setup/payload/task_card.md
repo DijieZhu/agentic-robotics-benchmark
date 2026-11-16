@@ -45,12 +45,12 @@ request and credit logic. Read their docstrings. This card collects the numbers.
   0.75-1.0 (high).
 - State shown on the unit: while a burner is on, RoboCasa's flame site is lit (its radius grows from 0.6x to 1.4x
   from the lowest to the highest setting) and the cameras draw it as the burner's flame (`kitchen_fx.py`): a gas
-  burner (blue site) as a ring of blue flame jets around the burner head, 0.2x to 0.6x the burner's radius long
-  and leaning 36 to 56 degrees out from vertical from the lowest to the highest setting (in five steps; they
-  flicker); a glass-ceramic zone (red site) as a glowing coil pattern under the glass (a double spiral of soft
-  bands with a halo) out to 1.3x the site's radius, so it grows with the setting, from dull dark red at the lowest
-  to brighter orange-red at the highest setting (in six steps); a glass-ceramic top is drawn with a clear glossy
-  coat. A microwave shows a lit pale amber display bar (10 x 2 cm) while it runs and an oven a lit salmon-red lamp
+  burner (blue site) as a ring of blue flame jets around the burner head, 0.12x to 1.05x the burner's radius long,
+  leaning 30 to 64 degrees out from vertical and about four times as bright from the lowest to the highest setting
+  (in five steps; they flicker); a glass-ceramic zone (red site) as a glowing coil pattern under the glass (a double
+  spiral of soft bands with a halo) out to 1.3x the site's radius, so it grows with the setting, from dull dark red
+  at the lowest to bright orange-red at the highest setting (in six steps); a glass-ceramic top is drawn with a dark
+  glossy coat. A microwave shows a lit amber display bar (10 x 2 cm) while it runs and an oven a lit red-orange lamp
   (3 x 3 cm) while it is preheated, both on the front face 3 cm below the top edge of its visible front (dark grey
   when off). Visual only: no contact, no mass.
 
