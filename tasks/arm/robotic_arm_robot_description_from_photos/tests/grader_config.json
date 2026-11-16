@@ -1,0 +1,161 @@
+{
+ "format": "rd-grader-config/1",
+ "grader": {
+  "collision": {
+   "bloat_mm": [
+    15.0,
+    4.0
+   ],
+   "bloat_samples": 600,
+   "clean_min_coverage": 0.5,
+   "clean_tol_mm": 2.0,
+   "cover_mm": 2.0,
+   "coverage": [
+    0.6,
+    0.92
+   ],
+   "gt_dense_samples": 20000,
+   "inset_mm": 0.5,
+   "samples": 600,
+   "w": [
+    0.4,
+    0.3,
+    0.3
+   ]
+  },
+  "criterion_timeout_s": 300.0,
+  "downstream": {
+   "approach_deg": [
+    0.3,
+    10.0
+   ],
+   "contact_tol_mm": 1.0,
+   "envelope": {
+    "azimuth_deg": 100.0,
+    "r_m": [
+     0.12,
+     0.3
+    ],
+    "z_m": [
+     0.02,
+     0.25
+    ]
+   },
+   "ik": {
+    "fallback_tol_pos_m": 0.003,
+    "fallback_tol_rot_deg": 2.0,
+    "max_iters": 100,
+    "restarts": 24,
+    "tol_pos_m": 0.0001,
+    "tol_rot_deg": 0.1
+   },
+   "pos_mm": [
+    1.0,
+    30.0
+   ],
+   "w": [
+    0.7,
+    0.3
+   ]
+  },
+  "fk_axes": {
+   "angle_deg": [
+    0.25,
+    10.0
+   ],
+   "dist_mm": [
+    0.5,
+    20.0
+   ],
+   "w": [
+    0.5,
+    0.5
+   ]
+  },
+  "fk_tcp": {
+   "approach_deg": [
+    0.25,
+    10.0
+   ],
+   "closing_deg": [
+    0.25,
+    10.0
+   ],
+   "pos_mm": [
+    0.5,
+    30.0
+   ],
+   "w": [
+    0.6,
+    0.25,
+    0.15
+   ]
+  },
+  "gripper": {
+   "dist_mm": [
+    0.3,
+    10.0
+   ],
+   "jaw_tip_mm": [
+    0.5,
+    30.0
+   ],
+   "w": [
+    0.5,
+    0.5
+   ]
+  },
+  "gt_sampling": {
+   "max_candidates": 160000,
+   "table_tol_mm": 0.0
+  },
+  "inertial": {
+   "com_mm": [
+    1.0,
+    20.0
+   ],
+   "combine": "geomean",
+   "inertia_rel": [
+    0.15,
+    1.0
+   ],
+   "mass_rel": [
+    0.03,
+    0.3
+   ],
+   "total_rel": [
+    0.01,
+    0.1
+   ]
+  },
+  "limits": {
+   "iou": [
+    0.8,
+    0.99
+   ],
+   "w": [
+    0.6,
+    0.4
+   ]
+  },
+  "n_bloat": 8,
+  "n_clean": 64,
+  "n_collision": 32,
+  "n_fk": 200,
+  "n_inertial": 16,
+  "n_jaw": 5,
+  "n_jaw_configs": 8,
+  "n_targets": 48
+ },
+ "grader_version": "rd-info-grade/1.1.0",
+ "note": "rd-info-grade/1.1.0 weights and every band / count of the grader (rd_info_grade.DEFAULT_CONFIG), with gt_sampling.max_candidates = 160000: a larger budget for the Halton search of collision-free readings and downstream targets (the search stops as soon as it has them; the draws are those of the default)",
+ "weights": {
+  "collision": 0.1,
+  "downstream_reach": 0.2,
+  "fk_axes": 0.15,
+  "fk_tcp": 0.3,
+  "gripper": 0.1,
+  "inertial": 0.1,
+  "limits_actuators": 0.05
+ }
+}

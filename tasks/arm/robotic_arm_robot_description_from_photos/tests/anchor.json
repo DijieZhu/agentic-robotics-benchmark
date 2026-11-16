@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "description_score",
+ "note": "description_score is the weighted mean of the seven gated criteria, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own measured description_score under ale validate: the static grader normalises every band by the ground truth, so the oracle submission (the photographed arm's own description) scores exactly 1.0 on every criterion at every hidden draw, on every run",
+ "value": 1.0
+}

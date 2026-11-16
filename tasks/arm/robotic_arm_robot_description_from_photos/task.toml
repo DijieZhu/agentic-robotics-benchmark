@@ -1,0 +1,57 @@
+# robotic_arm_robot_description_from_photos: the robot-description stage of the robotic-arm full-stack workflow (an
+# atomic task). A lab inherited a customised build of a published six-servo desktop arm (the beams lengthened or
+# shortened, the base and shoulder possibly taller, the shoulder offset possibly changed, possibly a longer or shorter
+# wrist, longer or shorter fingers, possibly printed spacers in servo pockets, the build's own small errors, arbitrary
+# servo calibration, cover plates over the pitch-axis brackets); the arm has been shipped. The engineer has one fixed
+# photo session of it in a photo cove (21 photos path-traced, a seamless grey background, one uncalibrated phone lens,
+# no calibration target, a steel rule, a can and a card in a few photos only) with the exact per-photo servo readings,
+# the published parts, the servo datasheet, the EEPROM dump, slicer masses and the weighed total, qualitative build
+# notes and the contract, and writes the MJCF + calibration of the real arm. No other build of the arm and no checker
+# that knows the real arm.
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json; static, no agent code runs): gate model_loads (the
+# contract, incl. the verify-start lockdown's late-write rule) x fk_tcp 0.30, fk_axes 0.15, downstream_reach 0.20 (the
+# grader's IK on the submitted model executed on the true arm), gripper 0.10, limits_actuators 0.05, inertial 0.10,
+# collision 0.10, all in the world frame through the composite bus -> pose map at hidden readings; description_score =
+# the weighted mean; reward = description_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/robotic_arm_robot_description_from_photos"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup: stage the payload (the photo session, the published parts, the documents) into the agent home (< 30 s). agent:
+# camera calibration without a target, arm segmentation, model fitting to the photos, the MJCF writer (6 h).
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root in
+# the agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead of
+# /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The
+# verifier has everything the grader reads: tests/ (gt/ with the photographed arm's description, grader_config.json,
+# anchor.json, the grading modules, the kit), the image's /opt/venv and the restored submission. setup.sh does not run
+# there and verify reads nothing it stages. Its machine: the grader runs the contract gate, 264 true readings, 48 IK
+# solves on the submitted model and the collision tests single-threaded (test.sh pins the BLAS threads to 1); measured
+# on the oracle submission in a container of the task image (2 CPUs, 4 GB) it peaked at 817 MB RSS and used 9 s of CPU
+# (8 s of wall time with the lockdown), and under ale validate the oracle's whole verify phase took 19 s, so 2 CPUs and
+# 4 GB, no GPU. timeout_sec also covers the verifier's start, the restore of the submission and the stage upload, far
+# inside 1800 s.
+[verifier]
+timeout_sec = 1800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

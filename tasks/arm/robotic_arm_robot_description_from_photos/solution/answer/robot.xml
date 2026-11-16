@@ -1,0 +1,426 @@
+<mujoco model="gt_arm">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <default>
+    <default class="arm">
+      <joint damping="0.6" armature="0.028" frictionloss="0.052"/>
+      <position kp="998.22" kv="2.731" forcerange="-2.94 2.94"/>
+      <default class="visual"><geom type="mesh" contype="0" conaffinity="0" group="2" mass="0"/></default>
+      <default class="collision"><geom group="3" mass="0" condim="3"/></default>
+    </default>
+  </default>
+  <asset>
+    <mesh name="P01" file="P01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P02" file="P02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P03" file="P03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P04" file="P04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P05" file="P05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P06" file="P06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P07" file="P07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P08" file="P08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P09" file="P09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="P10" file="P10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="servo" file="servo.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_00" file="hull_P01_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_01" file="hull_P01_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_02" file="hull_P01_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_03" file="hull_P01_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_04" file="hull_P01_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_05" file="hull_P01_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_06" file="hull_P01_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_07" file="hull_P01_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_08" file="hull_P01_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_09" file="hull_P01_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_10" file="hull_P01_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_11" file="hull_P01_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_12" file="hull_P01_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_13" file="hull_P01_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_14" file="hull_P01_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P01_15" file="hull_P01_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_00" file="hull_P02_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_01" file="hull_P02_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_02" file="hull_P02_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_03" file="hull_P02_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_04" file="hull_P02_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_05" file="hull_P02_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_06" file="hull_P02_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_07" file="hull_P02_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_08" file="hull_P02_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_09" file="hull_P02_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_10" file="hull_P02_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_11" file="hull_P02_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_12" file="hull_P02_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_13" file="hull_P02_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_14" file="hull_P02_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P02_15" file="hull_P02_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_00" file="hull_P03_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_01" file="hull_P03_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_02" file="hull_P03_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_03" file="hull_P03_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_04" file="hull_P03_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_05" file="hull_P03_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_06" file="hull_P03_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_07" file="hull_P03_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_08" file="hull_P03_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_09" file="hull_P03_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_10" file="hull_P03_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_11" file="hull_P03_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_12" file="hull_P03_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_13" file="hull_P03_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_14" file="hull_P03_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P03_15" file="hull_P03_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_00" file="hull_P04_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_01" file="hull_P04_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_02" file="hull_P04_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_03" file="hull_P04_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_04" file="hull_P04_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_05" file="hull_P04_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_06" file="hull_P04_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_07" file="hull_P04_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_08" file="hull_P04_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_09" file="hull_P04_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_10" file="hull_P04_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_11" file="hull_P04_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_12" file="hull_P04_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_13" file="hull_P04_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_14" file="hull_P04_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P04_15" file="hull_P04_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_00" file="hull_P05_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_01" file="hull_P05_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_02" file="hull_P05_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_03" file="hull_P05_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_04" file="hull_P05_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_05" file="hull_P05_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_06" file="hull_P05_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_07" file="hull_P05_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_08" file="hull_P05_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_09" file="hull_P05_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_10" file="hull_P05_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_11" file="hull_P05_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_12" file="hull_P05_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_13" file="hull_P05_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_14" file="hull_P05_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P05_15" file="hull_P05_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_00" file="hull_P06_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_01" file="hull_P06_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_02" file="hull_P06_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_03" file="hull_P06_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_04" file="hull_P06_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_05" file="hull_P06_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_06" file="hull_P06_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_07" file="hull_P06_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_08" file="hull_P06_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_09" file="hull_P06_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_10" file="hull_P06_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_11" file="hull_P06_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_12" file="hull_P06_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_13" file="hull_P06_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_14" file="hull_P06_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P06_15" file="hull_P06_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_00" file="hull_P07_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_01" file="hull_P07_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_02" file="hull_P07_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_03" file="hull_P07_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_04" file="hull_P07_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_05" file="hull_P07_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_06" file="hull_P07_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_07" file="hull_P07_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_08" file="hull_P07_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_09" file="hull_P07_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_10" file="hull_P07_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_11" file="hull_P07_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_12" file="hull_P07_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_13" file="hull_P07_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_14" file="hull_P07_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P07_15" file="hull_P07_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_00" file="hull_P08_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_01" file="hull_P08_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_02" file="hull_P08_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_03" file="hull_P08_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_04" file="hull_P08_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_05" file="hull_P08_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_06" file="hull_P08_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_07" file="hull_P08_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_08" file="hull_P08_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_09" file="hull_P08_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_10" file="hull_P08_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_11" file="hull_P08_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_12" file="hull_P08_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_13" file="hull_P08_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_14" file="hull_P08_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P08_15" file="hull_P08_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_00" file="hull_P09_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_01" file="hull_P09_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_02" file="hull_P09_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_03" file="hull_P09_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_04" file="hull_P09_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_05" file="hull_P09_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_06" file="hull_P09_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_07" file="hull_P09_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_08" file="hull_P09_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_09" file="hull_P09_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_10" file="hull_P09_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_11" file="hull_P09_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_12" file="hull_P09_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_13" file="hull_P09_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_14" file="hull_P09_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P09_15" file="hull_P09_15.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_00" file="hull_P10_00.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_01" file="hull_P10_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_02" file="hull_P10_02.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_03" file="hull_P10_03.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_04" file="hull_P10_04.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_05" file="hull_P10_05.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_06" file="hull_P10_06.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_07" file="hull_P10_07.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_08" file="hull_P10_08.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_09" file="hull_P10_09.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_10" file="hull_P10_10.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_11" file="hull_P10_11.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_12" file="hull_P10_12.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_13" file="hull_P10_13.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_14" file="hull_P10_14.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hull_P10_15" file="hull_P10_15.stl" scale="0.001 0.001 0.001"/>
+    <material name="printed_P01" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P02" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P03" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P04" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P05" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P06" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P07" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P08" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P09" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="printed_P10" rgba="0.72 0.73 0.74 1" specular="0.25" shininess="0.3"/>
+    <material name="servo" rgba="0.12 0.12 0.13 1" specular="0.4" shininess="0.5"/>
+  </asset>
+  <worldbody>
+    <body name="base" childclass="arm">
+      <inertial pos="0.00002473 -0.023486291 0.037326575" mass="0.180640704" fullinertia="1.839922460070e-04 1.855491527744e-04 1.732252514547e-04 3.264271075072e-07 -6.101235229875e-08 -4.019350002925e-08"/>
+      <geom name="vis_P01" class="visual" mesh="P01" material="printed_P01"/>
+      <geom name="col_P01_00" class="collision" type="mesh" mesh="hull_P01_00"/>
+      <geom name="col_P01_01" class="collision" type="mesh" mesh="hull_P01_01"/>
+      <geom name="col_P01_02" class="collision" type="mesh" mesh="hull_P01_02"/>
+      <geom name="col_P01_03" class="collision" type="mesh" mesh="hull_P01_03"/>
+      <geom name="col_P01_04" class="collision" type="mesh" mesh="hull_P01_04"/>
+      <geom name="col_P01_05" class="collision" type="mesh" mesh="hull_P01_05"/>
+      <geom name="col_P01_06" class="collision" type="mesh" mesh="hull_P01_06"/>
+      <geom name="col_P01_07" class="collision" type="mesh" mesh="hull_P01_07"/>
+      <geom name="col_P01_08" class="collision" type="mesh" mesh="hull_P01_08"/>
+      <geom name="col_P01_09" class="collision" type="mesh" mesh="hull_P01_09"/>
+      <geom name="col_P01_10" class="collision" type="mesh" mesh="hull_P01_10"/>
+      <geom name="col_P01_11" class="collision" type="mesh" mesh="hull_P01_11"/>
+      <geom name="col_P01_12" class="collision" type="mesh" mesh="hull_P01_12"/>
+      <geom name="col_P01_13" class="collision" type="mesh" mesh="hull_P01_13"/>
+      <geom name="col_P01_14" class="collision" type="mesh" mesh="hull_P01_14"/>
+      <geom name="col_P01_15" class="collision" type="mesh" mesh="hull_P01_15"/>
+      <geom name="vis_P02" class="visual" mesh="P02" material="printed_P02"/>
+      <geom name="col_P02_00" class="collision" type="mesh" mesh="hull_P02_00"/>
+      <geom name="col_P02_01" class="collision" type="mesh" mesh="hull_P02_01"/>
+      <geom name="col_P02_02" class="collision" type="mesh" mesh="hull_P02_02"/>
+      <geom name="col_P02_03" class="collision" type="mesh" mesh="hull_P02_03"/>
+      <geom name="col_P02_04" class="collision" type="mesh" mesh="hull_P02_04"/>
+      <geom name="col_P02_05" class="collision" type="mesh" mesh="hull_P02_05"/>
+      <geom name="col_P02_06" class="collision" type="mesh" mesh="hull_P02_06"/>
+      <geom name="col_P02_07" class="collision" type="mesh" mesh="hull_P02_07"/>
+      <geom name="col_P02_08" class="collision" type="mesh" mesh="hull_P02_08"/>
+      <geom name="col_P02_09" class="collision" type="mesh" mesh="hull_P02_09"/>
+      <geom name="col_P02_10" class="collision" type="mesh" mesh="hull_P02_10"/>
+      <geom name="col_P02_11" class="collision" type="mesh" mesh="hull_P02_11"/>
+      <geom name="col_P02_12" class="collision" type="mesh" mesh="hull_P02_12"/>
+      <geom name="col_P02_13" class="collision" type="mesh" mesh="hull_P02_13"/>
+      <geom name="col_P02_14" class="collision" type="mesh" mesh="hull_P02_14"/>
+      <geom name="col_P02_15" class="collision" type="mesh" mesh="hull_P02_15"/>
+      <geom name="vis_S1" class="visual" mesh="servo" material="servo" pos="0 0 0.041171" quat="0.707106781187 0 0 0.707106781187"/>
+      <geom name="col_S1" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="0 -0.0125 0.055571" quat="0.707106781187 0 0 0.707106781187"/>
+      <body name="shoulder" pos="-0.000224 -0.000514 0.073404">
+        <joint name="base_yaw" type="hinge" axis="0 0 1" range="-1.388202162 1.695099222" frictionloss="0.03915964"/>
+        <inertial pos="-0.000098749 0.027762955 0.021909716" mass="0.109266085" fullinertia="1.022509704223e-04 1.026485593209e-04 2.293983253805e-05 3.229728805598e-08 4.322254845719e-07 -6.999830871838e-07"/>
+        <geom name="vis_P03" class="visual" mesh="P03" material="printed_P03"/>
+        <geom name="col_P03_00" class="collision" type="mesh" mesh="hull_P03_00"/>
+        <geom name="col_P03_01" class="collision" type="mesh" mesh="hull_P03_01"/>
+        <geom name="col_P03_02" class="collision" type="mesh" mesh="hull_P03_02"/>
+        <geom name="col_P03_03" class="collision" type="mesh" mesh="hull_P03_03"/>
+        <geom name="col_P03_04" class="collision" type="mesh" mesh="hull_P03_04"/>
+        <geom name="col_P03_05" class="collision" type="mesh" mesh="hull_P03_05"/>
+        <geom name="col_P03_06" class="collision" type="mesh" mesh="hull_P03_06"/>
+        <geom name="col_P03_07" class="collision" type="mesh" mesh="hull_P03_07"/>
+        <geom name="col_P03_08" class="collision" type="mesh" mesh="hull_P03_08"/>
+        <geom name="col_P03_09" class="collision" type="mesh" mesh="hull_P03_09"/>
+        <geom name="col_P03_10" class="collision" type="mesh" mesh="hull_P03_10"/>
+        <geom name="col_P03_11" class="collision" type="mesh" mesh="hull_P03_11"/>
+        <geom name="col_P03_12" class="collision" type="mesh" mesh="hull_P03_12"/>
+        <geom name="col_P03_13" class="collision" type="mesh" mesh="hull_P03_13"/>
+        <geom name="col_P03_14" class="collision" type="mesh" mesh="hull_P03_14"/>
+        <geom name="col_P03_15" class="collision" type="mesh" mesh="hull_P03_15"/>
+        <geom name="vis_P04" class="visual" mesh="P04" material="printed_P04"/>
+        <geom name="col_P04_00" class="collision" type="mesh" mesh="hull_P04_00"/>
+        <geom name="col_P04_01" class="collision" type="mesh" mesh="hull_P04_01"/>
+        <geom name="col_P04_02" class="collision" type="mesh" mesh="hull_P04_02"/>
+        <geom name="col_P04_03" class="collision" type="mesh" mesh="hull_P04_03"/>
+        <geom name="col_P04_04" class="collision" type="mesh" mesh="hull_P04_04"/>
+        <geom name="col_P04_05" class="collision" type="mesh" mesh="hull_P04_05"/>
+        <geom name="col_P04_06" class="collision" type="mesh" mesh="hull_P04_06"/>
+        <geom name="col_P04_07" class="collision" type="mesh" mesh="hull_P04_07"/>
+        <geom name="col_P04_08" class="collision" type="mesh" mesh="hull_P04_08"/>
+        <geom name="col_P04_09" class="collision" type="mesh" mesh="hull_P04_09"/>
+        <geom name="col_P04_10" class="collision" type="mesh" mesh="hull_P04_10"/>
+        <geom name="col_P04_11" class="collision" type="mesh" mesh="hull_P04_11"/>
+        <geom name="col_P04_12" class="collision" type="mesh" mesh="hull_P04_12"/>
+        <geom name="col_P04_13" class="collision" type="mesh" mesh="hull_P04_13"/>
+        <geom name="col_P04_14" class="collision" type="mesh" mesh="hull_P04_14"/>
+        <geom name="col_P04_15" class="collision" type="mesh" mesh="hull_P04_15"/>
+        <geom name="vis_S2" class="visual" mesh="servo" material="servo" pos="-0.014822241 0.0271222 0.0542" quat="0 -0.707106781187 0 -0.707106781187"/>
+        <geom name="col_S2" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="-0.000422241 0.0271222 0.0417" quat="0 -0.707106781187 0 -0.707106781187"/>
+        <body name="upper_arm" pos="0.0183778 0.0262382 0.054427">
+          <joint name="shoulder_pitch" type="hinge" axis="0.999995296711 0.000628315658 -0.003001961805" range="-1.371806703 1.397028619" frictionloss="0.05468528"/>
+          <inertial pos="-0.018401429 -0.013826459 0.090380954" mass="0.148044663" fullinertia="2.725219971223e-04 2.893450123488e-04 5.778588499343e-05 2.288731259510e-07 8.187803217331e-08 1.874988182513e-05"/>
+          <geom name="vis_P05" class="visual" mesh="P05" material="printed_P05"/>
+          <geom name="col_P05_00" class="collision" type="mesh" mesh="hull_P05_00"/>
+          <geom name="col_P05_01" class="collision" type="mesh" mesh="hull_P05_01"/>
+          <geom name="col_P05_02" class="collision" type="mesh" mesh="hull_P05_02"/>
+          <geom name="col_P05_03" class="collision" type="mesh" mesh="hull_P05_03"/>
+          <geom name="col_P05_04" class="collision" type="mesh" mesh="hull_P05_04"/>
+          <geom name="col_P05_05" class="collision" type="mesh" mesh="hull_P05_05"/>
+          <geom name="col_P05_06" class="collision" type="mesh" mesh="hull_P05_06"/>
+          <geom name="col_P05_07" class="collision" type="mesh" mesh="hull_P05_07"/>
+          <geom name="col_P05_08" class="collision" type="mesh" mesh="hull_P05_08"/>
+          <geom name="col_P05_09" class="collision" type="mesh" mesh="hull_P05_09"/>
+          <geom name="col_P05_10" class="collision" type="mesh" mesh="hull_P05_10"/>
+          <geom name="col_P05_11" class="collision" type="mesh" mesh="hull_P05_11"/>
+          <geom name="col_P05_12" class="collision" type="mesh" mesh="hull_P05_12"/>
+          <geom name="col_P05_13" class="collision" type="mesh" mesh="hull_P05_13"/>
+          <geom name="col_P05_14" class="collision" type="mesh" mesh="hull_P05_14"/>
+          <geom name="col_P05_15" class="collision" type="mesh" mesh="hull_P05_15"/>
+          <geom name="vis_S3" class="visual" mesh="servo" material="servo" pos="-0.033100018 0.000000006 0.129402103" quat="0.442611716569 0.551447468516 0.442611595146 0.551448577535"/>
+          <geom name="col_S3" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="-0.0187 -0.012203866 0.126697348" quat="0.442611716569 0.551447468516 0.442611595146 0.551448577535"/>
+          <body name="forearm" pos="0.000853 0.000075 0.129979094">
+            <joint name="elbow_pitch" type="hinge" axis="0.999963435803 0.008412377848 0.001535889138" range="-2.032157479 0.129221451" frictionloss="0.04185428"/>
+            <inertial pos="-0.018279183 0.0008374 0.084552757" mass="0.123206417" fullinertia="1.699055224919e-04 1.892240431526e-04 3.430277645335e-05 9.152214810988e-09 2.135246912210e-06 2.551408390818e-06"/>
+            <geom name="vis_P06" class="visual" mesh="P06" material="printed_P06"/>
+            <geom name="col_P06_00" class="collision" type="mesh" mesh="hull_P06_00"/>
+            <geom name="col_P06_01" class="collision" type="mesh" mesh="hull_P06_01"/>
+            <geom name="col_P06_02" class="collision" type="mesh" mesh="hull_P06_02"/>
+            <geom name="col_P06_03" class="collision" type="mesh" mesh="hull_P06_03"/>
+            <geom name="col_P06_04" class="collision" type="mesh" mesh="hull_P06_04"/>
+            <geom name="col_P06_05" class="collision" type="mesh" mesh="hull_P06_05"/>
+            <geom name="col_P06_06" class="collision" type="mesh" mesh="hull_P06_06"/>
+            <geom name="col_P06_07" class="collision" type="mesh" mesh="hull_P06_07"/>
+            <geom name="col_P06_08" class="collision" type="mesh" mesh="hull_P06_08"/>
+            <geom name="col_P06_09" class="collision" type="mesh" mesh="hull_P06_09"/>
+            <geom name="col_P06_10" class="collision" type="mesh" mesh="hull_P06_10"/>
+            <geom name="col_P06_11" class="collision" type="mesh" mesh="hull_P06_11"/>
+            <geom name="col_P06_12" class="collision" type="mesh" mesh="hull_P06_12"/>
+            <geom name="col_P06_13" class="collision" type="mesh" mesh="hull_P06_13"/>
+            <geom name="col_P06_14" class="collision" type="mesh" mesh="hull_P06_14"/>
+            <geom name="col_P06_15" class="collision" type="mesh" mesh="hull_P06_15"/>
+            <geom name="vis_P07" class="visual" mesh="P07" material="printed_P07"/>
+            <geom name="col_P07_00" class="collision" type="mesh" mesh="hull_P07_00"/>
+            <geom name="col_P07_01" class="collision" type="mesh" mesh="hull_P07_01"/>
+            <geom name="col_P07_02" class="collision" type="mesh" mesh="hull_P07_02"/>
+            <geom name="col_P07_03" class="collision" type="mesh" mesh="hull_P07_03"/>
+            <geom name="col_P07_04" class="collision" type="mesh" mesh="hull_P07_04"/>
+            <geom name="col_P07_05" class="collision" type="mesh" mesh="hull_P07_05"/>
+            <geom name="col_P07_06" class="collision" type="mesh" mesh="hull_P07_06"/>
+            <geom name="col_P07_07" class="collision" type="mesh" mesh="hull_P07_07"/>
+            <geom name="col_P07_08" class="collision" type="mesh" mesh="hull_P07_08"/>
+            <geom name="col_P07_09" class="collision" type="mesh" mesh="hull_P07_09"/>
+            <geom name="col_P07_10" class="collision" type="mesh" mesh="hull_P07_10"/>
+            <geom name="col_P07_11" class="collision" type="mesh" mesh="hull_P07_11"/>
+            <geom name="col_P07_12" class="collision" type="mesh" mesh="hull_P07_12"/>
+            <geom name="col_P07_13" class="collision" type="mesh" mesh="hull_P07_13"/>
+            <geom name="col_P07_14" class="collision" type="mesh" mesh="hull_P07_14"/>
+            <geom name="col_P07_15" class="collision" type="mesh" mesh="hull_P07_15"/>
+            <geom name="vis_S4" class="visual" mesh="servo" material="servo" pos="-0.0331 0 0.125585789" quat="0.014641892628 0.706955171832 0.014641892628 0.706955171832"/>
+            <geom name="col_S4" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="-0.0187 -0.000517558 0.113096501" quat="0.014641892628 0.706955171832 0.014641892628 0.706955171832"/>
+            <body name="wrist" pos="-0.00072 -0.000978 0.125677789">
+              <joint name="wrist_pitch" type="hinge" axis="0.999978564035 0.002530678569 0.006038802508" range="-1.637949233 1.213721051" frictionloss="0.04618432"/>
+              <inertial pos="-0.027827989 -0.000100384 0.038443001" mass="0.08089621" fullinertia="2.006318903807e-05 3.607983549067e-05 2.600781190627e-05 5.025284357185e-08 3.775881866957e-06 -1.641118411859e-08"/>
+              <geom name="vis_P08" class="visual" mesh="P08" material="printed_P08"/>
+              <geom name="col_P08_00" class="collision" type="mesh" mesh="hull_P08_00"/>
+              <geom name="col_P08_01" class="collision" type="mesh" mesh="hull_P08_01"/>
+              <geom name="col_P08_02" class="collision" type="mesh" mesh="hull_P08_02"/>
+              <geom name="col_P08_03" class="collision" type="mesh" mesh="hull_P08_03"/>
+              <geom name="col_P08_04" class="collision" type="mesh" mesh="hull_P08_04"/>
+              <geom name="col_P08_05" class="collision" type="mesh" mesh="hull_P08_05"/>
+              <geom name="col_P08_06" class="collision" type="mesh" mesh="hull_P08_06"/>
+              <geom name="col_P08_07" class="collision" type="mesh" mesh="hull_P08_07"/>
+              <geom name="col_P08_08" class="collision" type="mesh" mesh="hull_P08_08"/>
+              <geom name="col_P08_09" class="collision" type="mesh" mesh="hull_P08_09"/>
+              <geom name="col_P08_10" class="collision" type="mesh" mesh="hull_P08_10"/>
+              <geom name="col_P08_11" class="collision" type="mesh" mesh="hull_P08_11"/>
+              <geom name="col_P08_12" class="collision" type="mesh" mesh="hull_P08_12"/>
+              <geom name="col_P08_13" class="collision" type="mesh" mesh="hull_P08_13"/>
+              <geom name="col_P08_14" class="collision" type="mesh" mesh="hull_P08_14"/>
+              <geom name="col_P08_15" class="collision" type="mesh" mesh="hull_P08_15"/>
+              <geom name="vis_S5" class="visual" mesh="servo" material="servo" pos="-0.0181 0 0.028000035" quat="1 0 0 0"/>
+              <geom name="col_S5" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="-0.0306 0 0.042400052" quat="1 0 0 0"/>
+              <body name="gripper" pos="-0.017695 -0.000702 0.060632076">
+                <joint name="wrist_roll" type="hinge" axis="0 0 1" range="-2.838073352 2.263946749" frictionloss="0.03729856"/>
+                <inertial pos="-0.000160796 0.000884478 0.026577171" mass="0.097897618" fullinertia="5.942531131662e-05 3.876434851299e-05 3.913921687288e-05 -2.284814622417e-07 -9.273308603307e-08 -9.076712137286e-06"/>
+                <geom name="vis_P09" class="visual" mesh="P09" material="printed_P09"/>
+                <geom name="col_P09_00" class="collision" type="mesh" mesh="hull_P09_00"/>
+                <geom name="col_P09_01" class="collision" type="mesh" mesh="hull_P09_01"/>
+                <geom name="col_P09_02" class="collision" type="mesh" mesh="hull_P09_02"/>
+                <geom name="col_P09_03" class="collision" type="mesh" mesh="hull_P09_03"/>
+                <geom name="col_P09_04" class="collision" type="mesh" mesh="hull_P09_04"/>
+                <geom name="col_P09_05" class="collision" type="mesh" mesh="hull_P09_05"/>
+                <geom name="col_P09_06" class="collision" type="mesh" mesh="hull_P09_06"/>
+                <geom name="col_P09_07" class="collision" type="mesh" mesh="hull_P09_07"/>
+                <geom name="col_P09_08" class="collision" type="mesh" mesh="hull_P09_08"/>
+                <geom name="col_P09_09" class="collision" type="mesh" mesh="hull_P09_09"/>
+                <geom name="col_P09_10" class="collision" type="mesh" mesh="hull_P09_10"/>
+                <geom name="col_P09_11" class="collision" type="mesh" mesh="hull_P09_11"/>
+                <geom name="col_P09_12" class="collision" type="mesh" mesh="hull_P09_12"/>
+                <geom name="col_P09_13" class="collision" type="mesh" mesh="hull_P09_13"/>
+                <geom name="col_P09_14" class="collision" type="mesh" mesh="hull_P09_14"/>
+                <geom name="col_P09_15" class="collision" type="mesh" mesh="hull_P09_15"/>
+                <geom name="vis_S6" class="visual" mesh="servo" material="servo" pos="0.014300017 -0.020199986 0.02340001" quat="0.499999976726 0.499999044029 -0.500000360345 -0.500000618898"/>
+                <geom name="col_S6" class="collision" type="box" size="0.0227 0.0124 0.0144" pos="-0.000099978 -0.007699995 0.023400006" quat="0.499999976726 0.499999044029 -0.500000360345 -0.500000618898"/>
+                <site name="tcp" pos="0.000218208 0.007899898 0.104886305" quat="0.707106781187 0 0 -0.707106781187" size="0.003" rgba="1 0 0 1" group="4"/>
+                <body name="jaw" pos="-0.019713961 -0.020447986 0.023089988">
+                  <joint name="jaw" type="hinge" axis="1 0 0" range="-0.168076571 1.500894527" frictionloss="0.0401206"/>
+                  <inertial pos="0.019228574 0.001483975 0.034388603" mass="0.014809607" fullinertia="8.394715634326e-06 9.855532602854e-06 2.138536028607e-06 5.934878617111e-09 1.399462059429e-07 -4.126660269447e-07"/>
+                  <geom name="vis_P10" class="visual" mesh="P10" material="printed_P10"/>
+                  <geom name="col_P10_00" class="collision" type="mesh" mesh="hull_P10_00"/>
+                  <geom name="col_P10_01" class="collision" type="mesh" mesh="hull_P10_01"/>
+                  <geom name="col_P10_02" class="collision" type="mesh" mesh="hull_P10_02"/>
+                  <geom name="col_P10_03" class="collision" type="mesh" mesh="hull_P10_03"/>
+                  <geom name="col_P10_04" class="collision" type="mesh" mesh="hull_P10_04"/>
+                  <geom name="col_P10_05" class="collision" type="mesh" mesh="hull_P10_05"/>
+                  <geom name="col_P10_06" class="collision" type="mesh" mesh="hull_P10_06"/>
+                  <geom name="col_P10_07" class="collision" type="mesh" mesh="hull_P10_07"/>
+                  <geom name="col_P10_08" class="collision" type="mesh" mesh="hull_P10_08"/>
+                  <geom name="col_P10_09" class="collision" type="mesh" mesh="hull_P10_09"/>
+                  <geom name="col_P10_10" class="collision" type="mesh" mesh="hull_P10_10"/>
+                  <geom name="col_P10_11" class="collision" type="mesh" mesh="hull_P10_11"/>
+                  <geom name="col_P10_12" class="collision" type="mesh" mesh="hull_P10_12"/>
+                  <geom name="col_P10_13" class="collision" type="mesh" mesh="hull_P10_13"/>
+                  <geom name="col_P10_14" class="collision" type="mesh" mesh="hull_P10_14"/>
+                  <geom name="col_P10_15" class="collision" type="mesh" mesh="hull_P10_15"/>
+                  <site name="jaw_tip" pos="0.018899978 0.01208595 0.082461037" quat="0.707106781187 0 0 0.707106781187" size="0.003" rgba="0 0 1 1" group="4"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <exclude name="adj_base_yaw" body1="base" body2="shoulder"/>
+    <exclude name="adj_shoulder_pitch" body1="shoulder" body2="upper_arm"/>
+    <exclude name="adj_elbow_pitch" body1="upper_arm" body2="forearm"/>
+    <exclude name="adj_wrist_pitch" body1="forearm" body2="wrist"/>
+    <exclude name="adj_wrist_roll" body1="wrist" body2="gripper"/>
+    <exclude name="adj_jaw" body1="gripper" body2="jaw"/>
+  </contact>
+  <actuator>
+    <position name="act_base_yaw" joint="base_yaw" class="arm" kp="1009.4300106" ctrlrange="-1.388202162 1.695099222"/>
+    <position name="act_shoulder_pitch" joint="shoulder_pitch" class="arm" kp="883.8838812" ctrlrange="-1.371806703 1.397028619"/>
+    <position name="act_elbow_pitch" joint="elbow_pitch" class="arm" kp="956.893692" ctrlrange="-2.032157479 0.129221451"/>
+    <position name="act_wrist_pitch" joint="wrist_pitch" class="arm" kp="902.4008622" ctrlrange="-1.637949233 1.213721051"/>
+    <position name="act_wrist_roll" joint="wrist_roll" class="arm" kp="945.2744112" ctrlrange="-2.838073352 2.263946749"/>
+    <position name="act_jaw" joint="jaw" class="arm" kp="919.9196232" ctrlrange="-0.168076571 1.500894527"/>
+  </actuator>
+  <keyframe><key name="home" qpos="0 0 0 0 0 0" ctrl="0 0 0 0 0 0"/></keyframe>
+</mujoco>

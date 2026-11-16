@@ -1,0 +1,70 @@
+{
+ "bus": {
+  "baud": 1000000,
+  "model": "BUS-SERVO-12V-A"
+ },
+ "format": "servo-eeprom-dump/1",
+ "read_with": "the vendor's bus tool after the build (EEPROM registers, exact)",
+ "registers": {
+  "drive_mode": "0 = normal, 1 = inverted direction of the reading",
+  "max_torque_permille": "torque limit, 1000 = full",
+  "min_angle_limit / max_angle_limit": "firmware angle limits in encoder ticks (0 .. 4095); the servo refuses commands outside them",
+  "offset": "zero-offset register (ticks; 0 = unused)"
+ },
+ "servos": [
+  {
+   "drive_mode": 0,
+   "id": 1,
+   "joint": "base_yaw",
+   "max_angle_limit": 3026,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 1016,
+   "offset": 0
+  },
+  {
+   "drive_mode": 0,
+   "id": 2,
+   "joint": "shoulder_pitch",
+   "max_angle_limit": 2790,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 985,
+   "offset": 0
+  },
+  {
+   "drive_mode": 0,
+   "id": 3,
+   "joint": "elbow_pitch",
+   "max_angle_limit": 2278,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 869,
+   "offset": 0
+  },
+  {
+   "drive_mode": 0,
+   "id": 4,
+   "joint": "wrist_pitch",
+   "max_angle_limit": 2998,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 1139,
+   "offset": 0
+  },
+  {
+   "drive_mode": 0,
+   "id": 5,
+   "joint": "wrist_roll",
+   "max_angle_limit": 3606,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 280,
+   "offset": 0
+  },
+  {
+   "drive_mode": 0,
+   "id": 6,
+   "joint": "jaw",
+   "max_angle_limit": 2899,
+   "max_torque_permille": 1000,
+   "min_angle_limit": 1811,
+   "offset": 0
+  }
+ ]
+}
