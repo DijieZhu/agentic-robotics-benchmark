@@ -1,12 +1,18 @@
 {
  "format": "kitchen-look/1",
  "note": "The numbers of the cameras' look (kitchen_render.py beside this file). The room bundle (KITCHEN_RENDER_DIR) holds the room's meshes, textures and materials and the two panoramas; the rest is here. Units: the image light multiplies the panorama (path tracer W/m2/sr, x 683 -> cd/m2); the lamps are in candela from their lumens (kitchen_scene.lights()); exposure_scale multiplies every light and the image light (a camera exposure relative to Filament's default EV100 15); emissive values are Filament material emission (not scaled by exposure_scale).",
- "exposure_scale": 50.0,
+ "exposure_scale": 19.7839,
+ "white_balance_rgb": [
+  0.635,
+  1.0,
+  1.767
+ ],
+ "white_balance_note": "the display's white balance as linear gains per channel (the references' AgX view at 3863 K / tint -10.2: a warm input r/g 1.576, b/g 0.566 comes out neutral): baked into ibl.ktx and sky.ktx, and applied here to the lamps and the headlight; emitters (burners, indicators) are not balanced",
  "ibl": {
   "file": "ibl.ktx",
   "sky_file": "sky.ktx",
   "intensity": 683.0,
-  "panorama": "a Cycles panorama of the kitchen with an empty cell at (0.35, 0, 1.10), daylight only (the sky and a low sun through the terrace door and the window; the lamps are Filament lights here), 512 x 256 equirectangular, filtered to a 128 px cube map; the same panorama is the sky behind the windows"
+  "panorama": "the mean of three OVRTX path-traced probes at the work area (robot, unit and dressing hidden; all of the task's lights on; Blender scene-linear = HdrColor / 0.939), 128 px cube map by Filament's cmgen. ibl.ktx: the reflections from that mean, the diffuse light (its spherical harmonics) from the same mean with the lamps that are not drawn painted in as 5-degree disks carrying their direct light at the probe points; sky.ktx (behind the windows) from the mean"
  },
  "lamps": {
   "key": "work_light",
@@ -18,7 +24,11 @@
   "line_spots": 3,
   "line_cutoff_deg": 80.0,
   "gain": {},
-  "key_shadow_note": "true: the key lamp casts PCF shadows; on 4 CPUs that adds about 50 ms to a fixed camera's image and 45 ms to a wrist image"
+  "key_shadow_note": "true: the key lamp casts PCF shadows; on 4 CPUs that adds about 50 ms to a fixed camera's image and 45 ms to a wrist image",
+  "drawn": [
+   "work_light"
+  ],
+  "drawn_note": "the lamps drawn as Filament lights; the others (ceiling spots, pendants, shelf and under-cabinet LEDs) are in the image light's diffuse part (each lamp costs per-pixel time)"
  },
  "headlight": {
   "lux_at_0.4": 40.0,
@@ -29,13 +39,63 @@
   "roughness_scale": 1.0,
   "metallic_scale": 1.0,
   "emissive": 1.0,
-  "cast_shadow": false
+  "cast_shadow": false,
+  "tint": {
+   "Tiles_Kitchen_Wall": [
+    0.5095,
+    0.4752,
+    0.3718
+   ],
+   "Wood_Parquet": [
+    1.12,
+    1.2773,
+    1.5445
+   ],
+   "Wall_Stucco_c": [
+    0.7812,
+    0.7672,
+    0.677
+   ],
+   "Kitchen_8d": [
+    0.5804,
+    0.5196,
+    0.4242
+   ]
+  },
+  "tint_note": "linear per-channel gains per material name prefix (textures: applied to the texture), fitted so that each class's mean linear colour matches the path-traced references over 12 home states x 3 cameras"
  },
  "dressing": {
   "albedo_gain": 1.0,
-  "emitter_emissive": 1.0,
+  "emitter_emissive": 0.22,
   "cast_shadow": false,
-  "tint": {}
+  "tint": {
+   "station_stone": [
+    0.8195,
+    0.8734,
+    0.7988
+   ],
+   "counter_stone": [
+    0.5925,
+    0.6615,
+    0.6573
+   ],
+   "station_oak": [
+    1.0117,
+    1.0522,
+    1.1396
+   ],
+   "pack_white": [
+    0.7449,
+    0.7173,
+    0.6413
+   ],
+   "pack_plinth": [
+    0.7449,
+    0.7173,
+    0.6413
+   ]
+  },
+  "tint_note": "linear per-channel gains per material name prefix (textures: applied to the texture), fitted so that each class's mean linear colour matches the path-traced references over 12 home states x 3 cameras"
  },
  "model_materials": {
   "legacy_specular_max": 0.3,
@@ -59,18 +119,38 @@
      "metallic": 0.0
     }
    ]
-  ]
+  ],
+  "tint": [
+   [
+    "u_",
+    [
+     0.9584,
+     0.9949,
+     0.8915
+    ]
+   ],
+   [
+    "r_",
+    [
+     1.0174,
+     1.0411,
+     0.928
+    ]
+   ]
+  ],
+  "tint_note": "linear gains on the unit's (u_) and the robot's (r_) materials, same fit"
  },
  "burner_fx": {
-  "emissive_gain": 1.0,
-  "gas_inner_gain": 1.0,
+  "emissive_gain": 0.22,
+  "gas_inner_gain": 0.22,
   "gas_buckets": 5,
   "coat": true,
   "coat_margin_m": 0.004,
-  "note": "the burners' visuals (kitchen_fx.py: gas = a ring of blue flame jets, glass-ceramic = the zone glowing under the glass, with a clear glossy coat over the glass top): emissive_gain scales the sheath, haze and glow emission of kitchen_fx.materials(), gas_inner_gain the inner cones' unlit colour; gas_buckets = level steps of the gas flames' shape"
+  "note": "the burners' visuals (kitchen_fx.py: gas = a ring of blue flame jets, glass-ceramic = the zone glowing under the glass, with a clear glossy coat over the glass top): emissive_gain scales the sheath, haze and glow emission of kitchen_fx.materials(), gas_inner_gain the inner cones' unlit colour; gas_buckets = level steps of the gas flames' shape",
+  "gain_note": "emissive_gain and gas_inner_gain 0.22: the display's exposure (+2.55 EV in the colour grading) would otherwise wash the zones' red / orange and the flames out"
  },
  "indicator": {
-  "emissive_on": 0.04,
+  "emissive_on": 0.006,
   "off_srgb": [
    0.12,
    0.12,
@@ -78,13 +158,32 @@
   ],
   "roughness": 0.4,
   "min_half_depth_m": 0.001,
-  "note": "a lit indicator glows with emissive_on; off it is off_srgb (dark grey) like the model's"
+  "note": "a lit indicator glows with emissive_on in its own colour, made more saturated by lit_saturation (linear, about the luminance) ahead of the display's desaturation; off it is off_srgb (dark grey) like the model's",
+  "lit_saturation": 1.8
  },
  "filament_numeric": {
   "filament.ao.enabled": 0,
   "filament.bloom.enabled": 0,
   "filament.vignette.enabled": 0,
-  "filament.shadows.type": 0
+  "filament.shadows.type": 0,
+  "filament.cg.exposure": 2.5482,
+  "filament.cg.contrast": 0.7308,
+  "filament.cg.saturation": 0.6714,
+  "filament.cg.shadow_gamma": [
+   0.9704,
+   0.9704,
+   0.9704
+  ],
+  "filament.cg.mid_point": [
+   1.0218,
+   1.0218,
+   1.0218
+  ],
+  "filament.cg.highlight_scale": [
+   1.3712,
+   1.3712,
+   1.3712
+  ]
  },
  "filament_text": {
   "filament.cg.tone_mapping": "filmic"
@@ -95,5 +194,82 @@
   "reflections": false,
   "msaa": 0,
   "lavapipe_threads": 4
- }
+ },
+ "contact_shadows": {
+  "enabled": true,
+  "unit": {
+   "alpha": 0.6,
+   "margin_m": 0.05,
+   "inset": 0.97,
+   "lift_m": 0.0006,
+   "front_margin_m": 0.12,
+   "full_height_m": 0.3,
+   "min_scale": 0.3
+  },
+  "floor": {
+   "lift_m": 0.0005,
+   "default": {
+    "alpha": 0.5,
+    "margin_m": 0.1
+   },
+   "station": {
+    "alpha": 0.55,
+    "margin_m": 0.1
+   },
+   "fill": {
+    "alpha": 0.5,
+    "margin_m": 0.1
+   },
+   "pedestal": {
+    "alpha": 0.5,
+    "margin_m": 0.08
+   }
+  },
+  "shelf": {
+   "alpha": 0.45,
+   "margin_m": 0.1,
+   "lift_m": 0.0008,
+   "below_m": 0.0,
+   "half_height_m": 0.01
+  },
+  "note": "static soft shadows: black decals (a black metal: no diffuse, no specular) that darken by alpha and fade out over margin_m (9-slice quads, process-cached meshes): the unit's footprint on its support (front = model -y; margins x clip(height / full_height_m, min_scale, 1)), the station's, the fillers' and the pedestal's footprints on the floor, the wall under the shelf; power = the falloff's exponent",
+  "power": 1.6
+ },
+ "hand_shadow": {
+  "enabled": true,
+  "casters": [
+   [
+    "r_link5",
+    0.06
+   ],
+   [
+    "r_link6",
+    0.06
+   ],
+   [
+    "r_link7",
+    0.05
+   ],
+   [
+    "r_right_hand",
+    0.05
+   ],
+   [
+    "r_g_eef",
+    0.035
+   ]
+  ],
+  "alpha": 0.6,
+  "alpha_buckets": 9,
+  "fade_height_m": 0.45,
+  "fade_power": 1.5,
+  "radius_scale": 1.3,
+  "spread": 0.35,
+  "lift_m": 0.0012,
+  "profile_power": 1.5,
+  "note": "a soft blob per caster (robot body, radius m) straight below it on the unit's top or the support's top: alpha fades to 0 at fade_height_m above the plane, the radius grows by spread x height and stops at the plane's edge; alpha_buckets materials; drawn after the glass coat (blend_order)"
+ },
+ "episode_tint_in_grading": true,
+ "filament_note": "the display transform: filmic tone mapping with exposure, contrast, saturation and curves (shadow gamma, mid point, highlight scale) fitted to the references' display images (AgX Base Contrast) on 8 home states x 3 cameras: per-class mean colours and per-image luminance quantiles",
+ "episode_tint_note": "episode_tint_in_grading: the episode's tint (appliance_env._appearance) is a per-channel gain in the colour grading (filament.cg.offset = log2(tint) / 17.52), so it reaches the image light too, whose colour MuJoCo 3.16's binding ignores; the lamps and the headlight then carry the white balance only"
 }

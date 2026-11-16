@@ -15,15 +15,21 @@ What is drawn
     a ring of blue flame jets around the burner head, a glass-ceramic zone (red site) as concentric rings glowing
     dark red to orange under the glass, with a clear glossy coat over the glass top; both grow with the setting
     (the site's radius).  The indicator is a lit emitter.
+  * grounding, drawn only: soft contact shadows (dark decals that fade out) around the unit's footprint on what it
+    stands on, the station's, the fillers' and the pedestal's on the floor and under the shelf, and a soft shadow of
+    the hand and forearm straight below them on the unit's top or the support's top (from the robot bodies' poses).
 The room and the dressing are drawn only: nothing of them is in the simulated model, so the robot touches only what
 appliance_env.build_model builds (the pedestal, the unit and its support).
-Light: an image light (ibl.ktx of the bundle: a path-traced panorama of the kitchen at the station, daylight only;
-the same panorama is the sky behind the windows, sky.ktx) and one Filament light per lamp of kitchen_scene.lights()
-(spots, points; a linear LED as a row of spots), photometric: candela from lumens.  The episode's light draw
-(appliance_env._appearance, read from the model: the scene light's position, aim, diffuse, the headlight) moves and
-aims the key lamp, scales every light and the image light by the strength, tints them by the tint, and adds a
-headlight (a directional light along the camera's view).  Every number of the look is in kitchen_look.json beside
-this file; the bundle holds the room's meshes, textures and materials and the two panoramas.
+Light: an image light (ibl.ktx of the bundle: the mean of three path-traced probes of the kitchen at the work area,
+all of the task's lights on; its diffuse part also carries the direct light of the lamps that are not drawn, its
+reflections do not; sky.ktx, the same probes, is the sky behind the windows) and one Filament light per lamp of
+kitchen_scene.lights() that the look draws (lamps.drawn: the work light, the key lamp), photometric: candela from
+lumens.  The episode's light draw (appliance_env._appearance, read from the model: the scene light's position, aim,
+diffuse, the headlight) moves and aims the key lamp, scales every light and the image light by the strength, tints
+them by the tint, and adds a headlight (a directional light along the camera's view); the look's white balance is
+one more gain per channel on every light.  The display transform (exposure, tone mapping, colour grading) and every
+other number of the look are in kitchen_look.json beside this file, calibrated against path-traced references; the
+bundle holds the room's meshes, textures and materials and the two panoramas.
 
 Nothing here changes the simulation: the renderer reads the model and the data, it writes neither, and it draws no
 random numbers (the sensor noise stays the environment's).
@@ -122,6 +128,8 @@ CAMERA_NAMES = ("left", "right", "wrist")
 NOMINAL_LIGHT_POS = np.array([-0.5, 0.0, 2.6])    # appliance_env.build_model's scene light
 NOMINAL_LIGHT_DIFFUSE = 0.8
 GEOM_GROUP = 1                                     # robot and unit visual geoms; the env's own scenery is group 0
+LUMA = np.array([0.2126, 0.7152, 0.0722])
+ACESCCT_STOPS = 17.52                                  # filament.cg.offset o = a linear gain of 2 ** (17.52 o)
 
 
 class RenderError(RuntimeError):
@@ -143,6 +151,29 @@ except (OSError, ValueError) as _exc:
 def srgb_from_linear(c):
     c = np.clip(np.asarray(c, float), 0.0, 1.0)
     return np.where(c <= 0.0031308, 12.92 * c, 1.055 * np.power(c, 1 / 2.4) - 0.055)
+
+
+def linear_from_srgb(c):
+    c = np.asarray(c, float)
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+
+def _tint_for(name, table):
+    """The look's gain for a room material: the entry whose key the material's name starts with."""
+    for prefix, t in table.items():
+        if name.startswith(prefix):
+            return np.asarray(t, float)
+    return None
+
+
+def _gain_srgb8(img, gain):
+    """An sRGB 8-bit image times a linear per-channel gain (one lookup table per channel)."""
+    x = linear_from_srgb(np.arange(256) / 255.0)
+    out = np.empty_like(img)
+    for c in range(3):
+        lut = np.round(srgb_from_linear(np.clip(x * float(gain[c]), 0.0, 1.0)) * 255.0).astype(np.uint8)
+        out[..., c] = lut[img[..., c]]
+    return out
 
 
 def spot_candela(lumens, half_deg):
@@ -177,6 +208,12 @@ def _drawn_model(m, look):
                 break
         d.mat_roughness[i] = r["roughness"]
         d.mat_metallic[i] = r["metallic"]
+    for i in range(d.nmat):                            # the look's colour gains (linear) per material name prefix
+        name = d.mat(i).name
+        for prefix, t in rules.get("tint", []):
+            if name.startswith(prefix):
+                d.mat_rgba[i, :3] = srgb_from_linear(linear_from_srgb(d.mat_rgba[i, :3]) * np.asarray(t, float))
+                break
     d.light_intensity[:] = 0.0
     d.light_castshadow[:] = 0
     return d
@@ -186,14 +223,20 @@ def _appearance(m, layout, look):
     """The episode's light draw as appliance_env._appearance left it in the model (read only)."""
     diffuse = np.asarray(m.light_diffuse[0], float) / NOMINAL_LIGHT_DIFFUSE
     gain = float(np.mean(diffuse))
-    tint = diffuse / max(gain, 1e-6)
+    # the look's white balance: a gain per channel on the lamps and the headlight (the image light has it baked in:
+    # MuJoCo 3.16's binding ignores an image light's colour).  The episode's tint goes into the colour grading as a
+    # per-channel gain on everything drawn (look["episode_tint_in_grading"]), so it reaches the image light too;
+    # otherwise it multiplies the lamps and the headlight only.
+    raw = diffuse / max(gain, 1e-6)
+    wb = np.asarray(look.get("white_balance_rgb", [1.0, 1.0, 1.0]), float)
+    tint = wb if look.get("episode_tint_in_grading") else raw * wb
     pos = np.asarray(m.light_pos[0], float)
     ldir = np.asarray(m.light_dir[0], float)
     lo, hi, mt = layout["bbox_lo"], layout["bbox_hi"], layout["mount"]
     front = np.array([mt["front_x"], 0.0, mt["bottom_z"] + (hi[2] - lo[2]) / 2])
     t = max(float(np.dot(front - pos, ldir)), 0.5)
     aim = pos + t * ldir                               # the point of the light's axis nearest the unit's front
-    return {"gain": gain, "tint": tint.tolist(), "offset": (pos - NOMINAL_LIGHT_POS).tolist(), "aim": aim.tolist(),
+    return {"gain": gain, "tint": tint.tolist(), "episode_tint": raw.tolist(), "offset": (pos - NOMINAL_LIGHT_POS).tolist(), "aim": aim.tolist(),
             "head_diffuse": float(m.vis.headlight.diffuse[0]), "head_ambient": float(m.vis.headlight.ambient[0])}
 
 
@@ -210,9 +253,10 @@ def _rig(KS, kind, lo, hi, jitter, look, app):
     tint = np.asarray(app["tint"])
     out = []
     for l in lights:
-        if l["type"] in ("sky", "sun") or l.get("demo_only"):
-            continue                                   # daylight is in the image light
-        rgb = np.asarray(l["rgb"], float) * tint
+        if l["type"] in ("sky", "sun") or l.get("demo_only") or l["name"] not in L["drawn"]:
+            continue                                   # daylight and the other lamps are in the image light
+        rgb = np.asarray(l["rgb"], float)
+        rgb = rgb / float(np.dot(rgb, LUMA)) * tint    # a lamp's colour keeps its luminance (lumens as given)
         lm = float(l.get("lumens", 0.0)) * L["gain"].get(l["name"], L["gain"].get(l["type"], 1.0))
         pos = np.asarray(l["pos"], float)
         d = np.asarray(l.get("dir", [0, 0, -1.0]), float)
@@ -259,14 +303,20 @@ class Episode(object):
         self.model = _drawn_model(m, look)
         self.room_pose = KS.room_pose(kind, lo, hi, jit)
         self.dressing = _dressing_plan(KS, kind, lo, hi, jit)
+        self.decals = _contact_decals(KS.all_parts(kind, lo, hi, jit), lo, hi, m, look)
+        self.hand_shadow = _hand_shadow_plan(m, lo, hi, look)
         self.materials = KS.materials()
         self.app = _appearance(m, lay, look)
         self.lights = _rig(KS, kind, lo, hi, jit, look, self.app)
         ibl = look["ibl"]
         self.ibl_intensity = (ibl["intensity"] * look["exposure_scale"] * self.app["gain"]
                               * (1.0 + look["headlight"]["ambient_to_ibl"] * (self.app["head_ambient"] - 0.125)))
-        self.ibl_color = np.clip(np.asarray(self.app["tint"]), 0.0, 2.0).tolist()
+        self.ibl_color = np.clip(np.asarray(self.app["tint"]), 0.0, 8.0).tolist()
         self.head_lux = look["headlight"]["lux_at_0.4"] * self.app["head_diffuse"] / 0.4 * look["exposure_scale"]
+        self.grade_offset = None
+        if look.get("episode_tint_in_grading"):
+            t = np.clip(np.asarray(self.app["episode_tint"], float), 0.05, 20.0)
+            self.grade_offset = tuple(round(float(x), 6) for x in np.log2(t) / ACESCCT_STOPS)
         u = env.unit
         self.flames = sorted(u.flames.items())         # [(loc, site id)]
         self.fx = _fx_episode(env, m, lo, hi)          # burner visuals: base sizes, kinds, the unit's box
@@ -306,6 +356,159 @@ def _dressing_plan(KS, kind, lo, hi, jit):
             rigid.append({"key": (group,) + key, "parts": base, "shift": shift.tolist()})
     single += [p for p in parts if not p["name"].startswith(tuple(pr for _g, pr in RIGID_GROUPS))]
     return {"rigid": rigid, "single": single}
+
+
+def _contact_decals(parts, lo, hi, m, look):
+    """Static contact shadows (soft dark decals, shaped after the path-traced references' soft shadows): around the
+    unit's footprint on what it stands on, around the station's, the fillers' and the pedestal's footprints on the
+    floor, and on the wall under the shelf.  Each: a frame (rotation, origin; the unit's moves with its body), the
+    inner half-size, the falloff margin and the darkness; drawn as a 9-slice quad (_decal_mesh)."""
+    D = look.get("contact_shadows")
+    if not D or not D.get("enabled"):
+        return []
+    out = []
+    Rz = np.eye(3)
+
+    def box_xy(ps):
+        b = [KR_part_bounds(p) for p in ps]
+        a = np.min([x[0] for x in b], 0)
+        c = np.max([x[1] for x in b], 0)
+        return a, c
+    # the unit on its support (frame: the unit's body; its box bottom is what touches)
+    u = D["unit"]
+    c = (np.asarray(lo, float) + np.asarray(hi, float)) / 2
+    h = (np.asarray(hi, float) - np.asarray(lo, float)) / 2
+    # (the unit's model frame: its front is model -y); a low unit (a cooktop) casts a narrower shadow than a tall one
+    k = float(np.clip(2 * h[2] / float(u.get("full_height_m", 0.3)), float(u.get("min_scale", 0.3)), 1.0))
+    out.append({"body": int(m.body("u_object").id), "R": Rz, "p": [c[0], c[1], lo[2] + u["lift_m"]],
+                "half": [h[0] * u["inset"], h[1] * u["inset"]],
+                "margin": [k * u["margin_m"], k * u["margin_m"], k * u.get("front_margin_m", u["margin_m"]), k * u["margin_m"]],
+                "alpha": u["alpha"]})
+    f = D["floor"]
+    groups = {}
+    for p in parts:
+        if p["name"].startswith("st_") and p.get("role") == "body":
+            groups.setdefault("station", []).append(p)
+        elif p.get("role") == "filler" and p["name"].endswith(("_plinth", "_carcass")):
+            groups.setdefault(p["name"].rsplit("_", 1)[0], []).append(p)
+        elif p["name"] == "ped_base":
+            groups.setdefault("pedestal", []).append(p)
+    for name, ps in sorted(groups.items()):
+        a, b = box_xy(ps)
+        g = f.get(name.split("_")[0] if name.startswith("fill") else name, f["default"])
+        out.append({"body": None, "R": Rz, "p": [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, f["lift_m"]],
+                    "half": [(b[0] - a[0]) / 2, (b[1] - a[1]) / 2], "margin": [g["margin_m"]] * 4, "alpha": g["alpha"]})
+    sh = D.get("shelf")
+    board = [p for p in parts if p["name"] == "shelf_board"]
+    if sh and board:
+        a, b = KR_part_bounds(board[0])
+        # on the wall (the board's back face, x = b[0]) just under the board; facing the room (-x)
+        R = np.array([[0.0, 0.0, -1.0], [-1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+        out.append({"body": None, "R": R, "p": [b[0] - sh["lift_m"], (a[1] + b[1]) / 2, a[2] + sh["below_m"]],
+                    "half": [(b[1] - a[1]) / 2, sh["half_height_m"]],
+                    "margin": [sh["margin_m"], sh["margin_m"], sh.get("below_margin_m", sh["margin_m"]), 0.0],
+                    "alpha": sh["alpha"]})
+    for d in out:
+        d["key"] = ("decal",) + tuple(np.round(list(d["half"]) + list(d["margin"]), 3))
+    return out
+
+
+def KR_part_bounds(p):
+    c = np.asarray(p["center"], float)
+    if p["shape"] == "box":
+        hh = np.asarray(p["size"], float) / 2
+    else:
+        r, hl = p["size"][0], p["size"][1]
+        hh = np.array([r, r, r])
+        hh["xyz".index(p["axis"])] = hl
+    return c - hh, c + hh
+
+
+def _hand_shadow_plan(m, lo, hi, look):
+    """The soft shadow of the hand and forearm (look["hand_shadow"]): casters = robot bodies (name, radius), drawn
+    straight down onto the first known plane below each: the unit's top (its model box, in the unit body's frame)
+    or the top of the support it stands on (the simulator's "support" geom).  None when off."""
+    H = look.get("hand_shadow")
+    if not H or not H.get("enabled"):
+        return None
+    casters = []
+    for name, r in H["casters"]:
+        try:
+            casters.append((int(m.body(name).id), float(r)))
+        except KeyError:
+            pass
+    sup = None
+    try:
+        g = m.geom("support")
+        sup = (np.asarray(m.geom_pos[g.id], float).copy(), np.asarray(m.geom_size[g.id], float).copy())
+    except KeyError:
+        pass
+    return {"casters": casters, "unit_body": int(m.body("u_object").id), "lo": np.asarray(lo, float),
+            "hi": np.asarray(hi, float), "support": sup}
+
+
+def _hand_shadow_poses(plan, data, H):
+    """Per caster: (position of the blob on its plane, radius, alpha bucket) or None (too high, nothing below)."""
+    out = []
+    b = plan["unit_body"]
+    Rb = data.xmat[b].reshape(3, 3)
+    pb = data.xpos[b]
+    lo, hi = plan["lo"], plan["hi"]
+    nb = int(H["alpha_buckets"])
+    for body, r in plan["casters"]:
+        c = data.xpos[body]
+        q = Rb.T @ (c - pb)                            # the caster in the unit's model frame
+        z = None
+        if lo[0] <= q[0] <= hi[0] and lo[1] <= q[1] <= hi[1] and q[2] > hi[2]:
+            z = float(pb[2] + Rb[2] @ np.array([q[0], q[1], hi[2]]))
+            edge = min(q[0] - lo[0], hi[0] - q[0], q[1] - lo[1], hi[1] - q[1])
+        elif plan["support"] is not None:
+            sp, ss = plan["support"]
+            if abs(c[0] - sp[0]) <= ss[0] and abs(c[1] - sp[1]) <= ss[1] and c[2] > sp[2] + ss[2]:
+                z = float(sp[2] + ss[2])
+                edge = min(ss[0] - abs(c[0] - sp[0]), ss[1] - abs(c[1] - sp[1]))
+        if z is None:
+            out.append(None)
+            continue
+        h = max(float(c[2]) - z - r, 0.0)
+        a = float(H["alpha"]) * max(0.0, 1.0 - h / float(H["fade_height_m"])) ** float(H["fade_power"])
+        k = int(round(a / float(H["alpha"]) * (nb - 1)))
+        if k <= 0:
+            out.append(None)
+            continue
+        rad = min(r * float(H["radius_scale"]) + h * float(H["spread"]), edge * 1.1)   # not past the plane's edge
+        if rad < 0.01:
+            out.append(None)
+            continue
+        out.append((np.array([c[0], c[1], z + float(H["lift_m"])], np.float32), rad, k))
+    return out
+
+
+def _decal_mesh(hx, hy, m):
+    """A 9-slice quad in its frame's xy plane (normal +z): the inner rectangle +-hx, +-hy maps to the texture's
+    centre square (0.25 .. 0.75), the margins m = (-x, +x, -y, +y) around it to the texture's border, so the falloff
+    keeps its width in metres whatever the size."""
+    xs = [-hx - m[0], -hx, hx, hx + m[1]]
+    ys = [-hy - m[2], -hy, hy, hy + m[3]]
+    uv = [0.0, 0.25, 0.75, 1.0]
+    V, N, U, I = [], [], [], []
+    for j in range(4):
+        for i in range(4):
+            V.append([xs[i], ys[j], 0.0]); N.append([0.0, 0.0, 1.0]); U.append([uv[i], uv[j]])
+    for j in range(3):
+        for i in range(3):
+            a = j * 4 + i
+            I += [a, a + 1, a + 5, a, a + 5, a + 4]
+    return np.array(V), np.array(N), np.array(U), np.array(I)
+
+
+def _decal_alpha(n=64, power=1.6):
+    """The decal texture's alpha: 1 in the centre square, falling smoothly to 0 at the border (rounded corners)."""
+    t = (np.arange(n) + 0.5) / n
+    d = np.maximum(np.abs(t - 0.5) - 0.25, 0.0) / 0.25
+    r = np.clip(np.sqrt(d[:, None] ** 2 + d[None, :] ** 2), 0.0, 1.0)
+    a = (1.0 - r * r * (3.0 - 2.0 * r)) ** power
+    return a
 
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -556,16 +759,9 @@ class _Filament(object):
         self.ctx.set_clear_color([0.0, 0.0, 0.0])
         self.ibl_tex = self._ktx(look["ibl"]["file"], F.SamplerType.TEXTURE_CUBE)
         self.sky_tex = self._ktx(look["ibl"]["sky_file"], F.SamplerType.TEXTURE_SKYBOX) if look["ibl"].get("sky_file") else None
-        # the look's view options travel as custom fields of a tiny model (MuJoCo reads filament.* from them)
-        spec = mujoco.MjSpec()
-        for k, v in sorted(look["filament_numeric"].items()):
-            spec.add_numeric(name=k, data=[float(v)])
-        for k, v in sorted(look["filament_text"].items()):
-            spec.add_text(name=k, data=str(v))
-        spec.worldbody.add_geom(type=mujoco.mjtGeom.mjGEOM_SPHERE, size=[0.01, 0, 0], pos=[0, 0, -50])
-        self.look_model = spec.compile()
         self.scn = self.ctx.create_scene(F.SceneParams())
-        self.scn.configure_from_model(self.look_model)
+        self.grade = "unset"
+        self._configure(None)
         lp = F.LightParams()
         lp.type, lp.texture, lp.color, lp.intensity = F.LightType.LIGHT_IMAGE, self.ibl_tex, [1.0, 1.0, 1.0], 1.0
         self.ibl = self.ctx.create_light(lp)
@@ -582,6 +778,27 @@ class _Filament(object):
         self._load_room()
         self._unit_meshes()
         self.start_s = time.perf_counter() - t0
+
+    def _configure(self, offset):
+        """The look's view options (they travel as custom fields of a tiny model: MuJoCo reads filament.* from them),
+        with the colour grading's offset = the episode's tint (None: no offset)."""
+        if offset == self.grade:
+            return
+        look = self.look
+        num = dict(look["filament_numeric"])
+        if offset is not None:
+            num["filament.cg.offset"] = list(offset)
+        spec = mujoco.MjSpec()
+        for k, v in sorted(num.items()):                # a number or a list (curves, offset: r, g, b)
+            spec.add_numeric(name=k, data=[float(x) for x in (v if isinstance(v, (list, tuple)) else [v])])
+        for k, v in sorted(look["filament_text"].items()):
+            spec.add_text(name=k, data=str(v))
+        spec.worldbody.add_geom(type=mujoco.mjtGeom.mjGEOM_SPHERE, size=[0.01, 0, 0], pos=[0, 0, -50])
+        self.look_model = spec.compile()
+        for _ in range(2):                             # MuJoCo 3.16 applies the colour grading one configure late
+            self.scn.configure_from_model(self.look_model)
+        self.grade = offset
+        self.stats["regrades"] = self.stats.get("regrades", 0) + 1
 
     def _ktx(self, name, sampler):
         F = self.F
@@ -635,7 +852,23 @@ class _Filament(object):
         z = np.load(os.path.join(RENDER_DIR, "room.npz"))
         V, N, U, I, tex = z["V"], z["N"], z["UV"], z["I"], z["tex"]
         tex_ofs, tw, th = z["tex_ofs"], z["tex_w"], z["tex_h"]
-        texs = [self._texture(tex[o:o + w * h * 3].reshape(h, w, 3)) for o, w, h in zip(tex_ofs, tw, th)]
+        # the look's per-material colour gains (linear, per channel) go into the texture where a material has one
+        # (a gain above 1 cannot go into a material's colour); a texture is one material's
+        gains = {}
+        for mm in meta["materials"]:
+            t = _tint_for(mm["name"], self.look["room"].get("tint", {}))
+            if t is not None and mm["tex"] >= 0:
+                gains[mm["tex"]] = t
+        for name, i in meta.get("dressing_textures", {}).items():
+            t = self.look["dressing"].get("tint", {}).get(name)
+            if t is not None:
+                gains[i] = np.asarray(t, float)
+        texs = []
+        for k, (o, w, h) in enumerate(zip(tex_ofs, tw, th)):
+            img = tex[o:o + w * h * 3].reshape(h, w, 3)
+            if k in gains:
+                img = _gain_srgb8(img, gains[k])
+            texs.append(self._texture(img))
         self.room_textures = texs
         self.dressing_tex = {k: texs[i] for k, i in meta.get("dressing_textures", {}).items()}
         self.room = []
@@ -647,7 +880,9 @@ class _Filament(object):
             mesh = self._mesh(V[v0:v0 + vc], N[v0:v0 + vc], U[v0:v0 + vc], I[i0:i0 + ic])
             rgba = np.array(mm["rgba"], np.float32)
             g = rl["albedo_gain"]
-            rgba[:3] = srgb_from_linear(np.power(np.clip(rgba[:3], 0, 1), 2.2) * g) if g != 1.0 else rgba[:3]
+            t = _tint_for(mm["name"], rl.get("tint", {})) if mm["tex"] < 0 else None
+            if g != 1.0 or t is not None:
+                rgba[:3] = srgb_from_linear(np.power(np.clip(rgba[:3], 0, 1), 2.2) * g * (1.0 if t is None else t))
             mat = F.Material(color=rgba, roughness=float(np.clip(mm["roughness"] * rl["roughness_scale"], 0.05, 1.0)),
                              metallic=float(mm["metallic"]) * rl["metallic_scale"],
                              emissive=float(mm["emissive"]) * rl["emissive"],
@@ -683,6 +918,10 @@ class _Filament(object):
         self._fx_evict(L)
         for r in L.get("dressing", []):
             self.scn.remove_renderable(r[0] if isinstance(r, tuple) else r)
+        for r, _dc in L.get("decals", []):
+            self.scn.remove_renderable(r)
+        for r, _k in L.get("hand", []):
+            self.scn.remove_renderable(r)
         if L.get("indicator") is not None and L["indicator"][2]:
             self.scn.remove_renderable(L["indicator"][0])
         for k in ("rends", "res"):                      # renderables before the resources they draw
@@ -719,6 +958,21 @@ class _Filament(object):
         for r in self._dressing(ep):
             self.scn.add_renderable(r)
             L["dressing"].append(r)
+        # contact shadows: process-cached meshes (by size), one shared material per darkness
+        L["decals"] = []
+        for dc in ep.decals:
+            r = self._decal(dc)
+            if dc["body"] is None:
+                r.set_pose(np.asarray(dc["p"], np.float32), np.asarray(dc["R"], np.float32).reshape(9))
+            self.scn.add_renderable(r)
+            L["decals"].append((r, dc))
+        L["hand"] = []
+        if ep.hand_shadow is not None:
+            for _c in ep.hand_shadow["casters"]:
+                r = self._hand_blob()
+                r.set_pose(np.array([0.0, 0.0, -20.0], np.float32), np.eye(3, dtype=np.float32).reshape(9))
+                self.scn.add_renderable(r)
+                L["hand"].append([r, 0])
         # the unit's state: flames and indicator (added to the scene while lit)
         L["flames"] = self._fx_activate(ep)
         L["indicator"] = None
@@ -729,7 +983,9 @@ class _Filament(object):
         # lamps of this episode
         self._lamps(ep)
         self.ibl.set_intensity(float(ep.ibl_intensity))
-        self.ibl.set_color(np.asarray(ep.ibl_color, np.float32))
+        self.ibl.set_color(np.asarray(ep.ibl_color, np.float32))   # (ignored by MuJoCo 3.16's binding: see _appearance)
+        if ep.grade_offset is not None:
+            self._configure(ep.grade_offset)
         self.live = L
         self.active = sid
         self.stats["activations"] += 1
@@ -745,6 +1001,8 @@ class _Filament(object):
             F = self.F
             dl = self.look["dressing"]
             tint = np.asarray(dl.get("tint", {}).get(mname, [1.0, 1.0, 1.0]), float)
+            if self.dressing_tex.get(mname) is not None:
+                tint = np.ones(3)                       # a textured material's gain is in its texture (_load_room)
             base = np.asarray(mdef.get("base", [0.7, 0.7, 0.7]), float) * dl["albedo_gain"] * tint
             rgba = np.concatenate([srgb_from_linear(base), [1.0]]).astype(np.float32)
             emissive = float(dl["emitter_emissive"]) if mdef.get("emission_K") else 0.0
@@ -760,6 +1018,63 @@ class _Filament(object):
         r.set_mesh(mesh, 0, n)
         r.set_material(mat)
         r.set_pose(np.asarray(p, np.float32), np.asarray(R, np.float32).reshape(9))
+        return r
+
+    def _hand_blob(self):
+        """A renderable of the hand's shadow: a unit disc (a quad with a radial falloff texture), process-cached mesh,
+        texture and per-bucket materials."""
+        F = self.F
+        H = self.look["hand_shadow"]
+        if "hand_blob" not in self.dress_cache:
+            V = np.array([[-1, -1, 0], [1, -1, 0], [1, 1, 0], [-1, 1, 0]], float)
+            N = np.array([[0, 0, 1.0]] * 4)
+            U = np.array([[0, 0], [1, 0], [1, 1], [0, 1.0]])
+            self.dress_cache["hand_blob"] = (self._mesh(V, N, U, np.array([0, 1, 2, 0, 2, 3])), 6)
+            n = 64
+            t = (np.arange(n) + 0.5) / n * 2 - 1
+            rr = np.clip(np.sqrt(t[:, None] ** 2 + t[None, :] ** 2), 0, 1)
+            a = (1.0 - rr * rr * (3.0 - 2.0 * rr)) ** float(H["profile_power"])
+            rgba = np.zeros((n, n, 4), np.uint8)
+            rgba[..., 3] = np.round(a * 255).astype(np.uint8)
+            tex = self._fx_texture(rgba, F.PixelFormat.PIXEL_FORMAT_RGBA8)
+            self.dress_mats["hand_blob_tex"] = tex             # a material does not keep its texture alive
+            nb = int(H["alpha_buckets"])
+            self.dress_mats["hand_blob"] = [None] + [
+                F.Material(color=np.array([0.0, 0.0, 0.0, float(H["alpha"]) * k / (nb - 1)], np.float32), roughness=1.0,
+                           metallic=1.0, reflectance=0.0, color_texture=tex) for k in range(1, nb)]
+        mesh, n = self.dress_cache["hand_blob"]
+        rp = F.RenderableParams(cast_shadow=False, receive_shadow=False)
+        # after the glass coat (3): a blended layer writes depth, so a blob drawn before the coat would cut the coat
+        # out over its whole quad; the flames stand in front of it in depth and stay undarkened
+        rp.blend_order = int(H.get("blend_order", 4))
+        r = self.ctx.create_renderable(rp)
+        r.set_mesh(mesh, 0, n)
+        r.set_material(self.dress_mats["hand_blob"][1])
+        return r
+
+    def _decal(self, dc):
+        F = self.F
+        if dc["key"] not in self.dress_cache:
+            V, N, U, I = _decal_mesh(dc["half"][0], dc["half"][1], dc["margin"])
+            self.dress_cache[dc["key"]] = (self._mesh(V, N, U, I), len(I))
+        mk = ("decal_mat", round(float(dc["alpha"]), 3))
+        if mk not in self.dress_mats:
+            if "decal_tex" not in self.dress_mats:
+                rgba = np.zeros((64, 64, 4), np.uint8)
+                rgba[..., 3] = np.round(_decal_alpha(power=float(self.look["contact_shadows"].get("power", 1.6)))
+                                        * 255).astype(np.uint8)
+                self.dress_mats["decal_tex"] = self._fx_texture(rgba, F.PixelFormat.PIXEL_FORMAT_RGBA8)
+            # transparent PBR is premultiplied and its specular is not faded by alpha: a black metal has no diffuse
+            # and no specular (f0 = f90 = 0), so the layer only darkens what is behind it, by alpha
+            self.dress_mats[mk] = F.Material(color=np.array([0.0, 0.0, 0.0, float(dc["alpha"])], np.float32),
+                                             roughness=1.0, metallic=1.0, reflectance=0.0,
+                                             color_texture=self.dress_mats["decal_tex"])
+        mesh, n = self.dress_cache[dc["key"]]
+        rp = F.RenderableParams(cast_shadow=False, receive_shadow=False)
+        rp.blend_order = 0
+        r = self.ctx.create_renderable(rp)
+        r.set_mesh(mesh, 0, n)
+        r.set_material(self.dress_mats[mk])
         return r
 
     def _dressing(self, ep):
@@ -871,6 +1186,24 @@ class _Filament(object):
         m = ep.live
         look = self.look
         self._fx_state(ep, data)
+        for r, dc in self.live.get("decals", []):
+            if dc["body"] is not None:                 # on the unit's body (it sits still; read like the flames)
+                b = dc["body"]
+                Rb = data.xmat[b].reshape(3, 3)
+                r.set_pose((data.xpos[b] + Rb @ np.asarray(dc["p"])).astype(np.float32),
+                           (Rb @ dc["R"]).astype(np.float32).reshape(9))
+        if self.live.get("hand"):
+            H = look["hand_shadow"]
+            for slot, pose in zip(self.live["hand"], _hand_shadow_poses(ep.hand_shadow, data, H)):
+                r = slot[0]
+                if pose is None:
+                    r.set_pose(np.array([0.0, 0.0, -20.0], np.float32), np.eye(3, dtype=np.float32).reshape(9))
+                    continue
+                p, rad, k = pose
+                if k != slot[1]:
+                    r.set_material(self.dress_mats["hand_blob"][k])
+                    slot[1] = k
+                r.set_pose(p, (np.eye(3) * rad).astype(np.float32).reshape(9))
         ind = self.live["indicator"]
         if ind is not None:
             r, gid, shown, last, _mat = ind
@@ -881,6 +1214,10 @@ class _Filament(object):
                 col = np.array(list(rgba[:3]) + [1.0], np.float32)
                 if not lit:
                     col[:3] = il["off_srgb"]
+                elif il.get("lit_saturation", 1.0) != 1.0:  # ahead of the display's desaturation (its saturation)
+                    c = linear_from_srgb(col[:3])
+                    y = float(np.dot(c, LUMA))
+                    col[:3] = srgb_from_linear(np.clip(y + (c - y) * float(il["lit_saturation"]), 0.0, 1.0))
                 mat = F.Material(color=col, roughness=il["roughness"], metallic=0.0,
                                  emissive=float(il["emissive_on"] if lit else 0.0))
                 r.set_material(mat)
