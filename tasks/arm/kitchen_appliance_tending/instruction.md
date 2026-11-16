@@ -6,7 +6,7 @@ to preheat, set or turn off the oven. The appliances are models you have not see
 cameras and feel them through the arm.
 
 Deliver a controller that carries out these requests from camera images, joint readings and the wrist
-force/torque sensor. You have **2 hours** of wall time for the whole job (exploring, lab trials, building and
+force/torque sensor. You have **2 hours** of wall time for the whole job (exploring, the lab trial, building and
 testing the controller); have your controller in `/home/user/submission/` well before the time is up. A session
 still running at the limit is cut off.
 
@@ -126,16 +126,17 @@ an integer from 0 to 7 (anything else is a malformed action).
 `labclient.py` talks to a service on `/run/ale-lab/lab.sock` (JSON lines; `python3 labclient.py --help`). This lab
 serves `hello`, `budget`, `reset`, `step` and `close` (the client's `execute`, an open-loop plan, is not served here:
 the lab answers `unsupported`). A **trial** is one episode on one unit: `reset` with the unit id starts it (and
-charges 1 trial; you have **3 trials in total**, shared by all nine units, never refunded), then `step` with an
+charges 1 trial; you have **1 trial in total**, for one of the nine units, never refunded), then `step` with an
 action returns the next observation (steps are free) until the episode ends. A trial ends when its episode ends (when
-its third request closes, or when the simulation becomes unstable), when you start a new trial or close the
+its third request closes, or when the simulation becomes unstable), when you send another `reset` or close the
 connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies. A
-`reset` on a connection that has a trial ends that trial and charges another. The lab serves at most two connections
+`reset` on a connection that has a trial ends that trial; once your trial is charged, every further `reset` is
+refused (`budget_exhausted`). The lab serves at most two connections
 at a time, and a call it cannot answer within 120 s restarts its worker (a trial already charged is not refunded).
 Each trial draws a fresh placement, initial state, request queue, lighting and sensor noise. A reset takes about 1 s
 and a step with all three images about 0.2 s (much less without images). The lab never reports scores, credit or the
 unit's state: only observations; but a request that closes before its deadline was completed. The lab units are
-exactly the units you are scored on. With 3 trials you can visit at most three of the nine units: the others your
+exactly the units you are scored on. With 1 trial you can visit one of the nine units: the other eight your
 controller meets for the first time in the graded episodes. The lab is gone when grading starts.
 
 ## Deliverable and grading
