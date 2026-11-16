@@ -74,13 +74,17 @@ asked while two or more are on; a setting request names a setting the control is
 requests; a request closes when it is completed (see Credit) or at its deadline (1000 steps, 1500 for a
 compositional request), and the next one opens at once.
 
-A burner shows its flame while it is on: a gas burner a ring of small blue flames around the burner head, longer and
-leaning further out at a higher setting; a glass-ceramic zone, rings glowing under the glass, dull dark red at the
-lowest setting and larger, brighter and more orange at a higher one. A microwave shows a lit amber display bar while
-it runs, and an oven a lit red-orange lamp while it is preheated (both on the front, near the top; dark grey
-otherwise). The kitchen's light (where the work light over the unit sits and points, and the strength and tint of
-all the light) changes from episode to episode, and the two fixed cameras sit a little differently in each episode;
-their poses are in every observation.
+A burner shows its flame while it is on: a gas burner a ring of small blue flame jets around the burner head, longer
+and leaning further out at a higher setting; a glass-ceramic zone a glowing coil pattern under the glass (a double
+spiral with a soft halo), dull dark red at the lowest setting and larger, brighter and more orange at a higher one.
+A microwave shows a lit pale amber display bar while it runs, and an oven a lit salmon-red lamp while it is
+preheated (both on the front, near the top; dark grey otherwise). Nothing in the images casts a real shadow: the
+shadows you see are drawn, soft dark patches around the foot of the unit and of the furniture and a soft round
+shadow straight below the hand and forearm on the unit's top or on the top the unit stands on (fading out as the
+hand rises). The kitchen's light (where the work light over the unit sits and points, and the strength of all the
+light) changes from episode to episode, the whole image (the flames and the lit displays included) carries a colour
+tint of up to 15 % per channel that changes too, and the two fixed cameras sit a little differently in each
+episode; their poses are in every observation.
 
 ## Credit
 

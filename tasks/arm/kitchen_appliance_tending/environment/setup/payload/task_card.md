@@ -47,11 +47,12 @@ request and credit logic. Read their docstrings. This card collects the numbers.
   from the lowest to the highest setting) and the cameras draw it as the burner's flame (`kitchen_fx.py`): a gas
   burner (blue site) as a ring of blue flame jets around the burner head, 0.2x to 0.6x the burner's radius long
   and leaning 36 to 56 degrees out from vertical from the lowest to the highest setting (in five steps; they
-  flicker); a glass-ceramic zone (red site) as concentric rings glowing under the glass out to 1.3x the site's
-  radius, from dull dark red at the lowest to bright orange-red at the highest setting (in six colour steps); a
-  glass-ceramic top is drawn with a clear glossy coat. A microwave shows a lit amber display bar (10 x 2 cm)
-  while it runs and an oven a lit red-orange lamp (3 x 3 cm) while it is preheated, both on the front face 3 cm
-  below the top edge of its visible front (dark grey when off). Visual only: no contact, no mass.
+  flicker); a glass-ceramic zone (red site) as a glowing coil pattern under the glass (a double spiral of soft
+  bands with a halo) out to 1.3x the site's radius, so it grows with the setting, from dull dark red at the lowest
+  to brighter orange-red at the highest setting (in six steps); a glass-ceramic top is drawn with a clear glossy
+  coat. A microwave shows a lit pale amber display bar (10 x 2 cm) while it runs and an oven a lit salmon-red lamp
+  (3 x 3 cm) while it is preheated, both on the front face 3 cm below the top edge of its visible front (dark grey
+  when off). Visual only: no contact, no mass.
 
 ```python
 import sys; sys.path.insert(0, "/home/user")
@@ -73,8 +74,13 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   fixed cameras' nominal poses depend on the unit's model; each episode offsets them by up to +-4 cm and about
   +-3 degrees (the observation carries the actual pose).
 - Lighting changes per episode: where the work light over the station sits and points, the strength (0.5-1.2x)
-  and tint (+-15 % per channel) of all the kitchen's light (its lamps and the daylight), and a light along each
+  of all the kitchen's light (its lamps and the daylight), a colour tint of the whole image (+-15 % per channel,
+  applied in the display's colour grading, so the flames and the lit displays carry it too), and a light along each
   camera's view (the headlight); nothing reports it.
+- Shadows are drawn, not cast (no light casts a shadow): soft dark patches that fade out around the unit's
+  footprint on what it stands on (wider at its front), around the station, the cabinets beside it and the robot's
+  pedestal on the floor, on the wall under the shelf, and a soft round shadow straight below the hand and forearm
+  on the unit's top (or, beside the unit, on the top it stands on), fading out by 0.45 m above it.
 - Renderer: MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapipe), `kitchen_render.py` with the
   kitchen of `kitchen_scene.py`, the burners of `kitchen_fx.py` and the numbers of `kitchen_look.json`, reading the
   room bundle in `/opt/task-assets/payload/render` (`KITCHEN_RENDER_DIR`); the dev sim, the lab and the grader draw
