@@ -74,9 +74,10 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   fixed cameras' nominal poses depend on the unit's model; each episode offsets them by up to +-4 cm and about
   +-3 degrees (the observation carries the actual pose).
 - Lighting changes per episode: where the work light over the station sits and points, the strength (0.5-1.2x)
-  of all the kitchen's light (its lamps and the daylight), a colour tint of the whole image (+-15 % per channel,
-  applied in the display's colour grading, so the flames and the lit displays carry it too), and a light along each
-  camera's view (the headlight); nothing reports it.
+  of all the kitchen's light (its lamps and the daylight), a colour tint of the whole image (each channel's gain
+  drawn within +-15 % and divided by the three gains' mean, so up to about +-20 %; applied in the display's colour
+  grading, so the flames and the lit displays carry it too), and a light along each camera's view (the headlight);
+  nothing reports it.
 - Shadows are drawn, not cast (no light casts a shadow): soft dark patches that fade out around the unit's
   footprint on what it stands on (wider at its front), around the station, the cabinets beside it and the robot's
   pedestal on the floor, on the wall under the shelf, and a soft round shadow straight below the hand and forearm

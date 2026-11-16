@@ -83,7 +83,7 @@ shadows you see are drawn, soft dark patches around the foot of the unit and of 
 shadow straight below the hand and forearm on the unit's top or on the top the unit stands on (fading out as the
 hand rises). The kitchen's light (where the work light over the unit sits and points, and the strength of all the
 light) changes from episode to episode, the whole image (the flames and the lit displays included) carries a colour
-tint of up to 15 % per channel that changes too, and the two fixed cameras sit a little differently in each
+tint of up to about 20 % per channel that changes too, and the two fixed cameras sit a little differently in each
 episode; their poses are in every observation.
 
 ## Credit
