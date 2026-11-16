@@ -26,10 +26,12 @@ reflections do not; sky.ktx, the same probes, is the sky behind the windows) and
 kitchen_scene.lights() that the look draws (lamps.drawn: the work light, the key lamp), photometric: candela from
 lumens.  The episode's light draw (appliance_env._appearance, read from the model: the scene light's position, aim,
 diffuse, the headlight) moves and aims the key lamp, scales every light and the image light by the strength, tints
-them by the tint, and adds a headlight (a directional light along the camera's view); the look's white balance is
-one more gain per channel on every light.  The display transform (exposure, tone mapping, colour grading) and every
-other number of the look are in kitchen_look.json beside this file, calibrated against path-traced references; the
-bundle holds the room's meshes, textures and materials and the two panoramas.
+the whole image by the tint (a gain per channel in the colour grading, since MuJoCo 3.16's binding ignores an image
+light's colour), and adds a headlight (a directional light along the camera's view).  The look's white balance is
+baked into the bundle's panoramas and is a gain per channel on the lamps and the headlight.  The display transform
+(exposure, tone mapping, colour grading) and every other number of the look are in kitchen_look.json beside this
+file, calibrated against path-traced references; the bundle holds the room's meshes, textures and materials and the
+two panoramas.
 
 Nothing here changes the simulation: the renderer reads the model and the data, it writes neither, and it draws no
 random numbers (the sensor noise stays the environment's).
@@ -236,7 +238,8 @@ def _appearance(m, layout, look):
     front = np.array([mt["front_x"], 0.0, mt["bottom_z"] + (hi[2] - lo[2]) / 2])
     t = max(float(np.dot(front - pos, ldir)), 0.5)
     aim = pos + t * ldir                               # the point of the light's axis nearest the unit's front
-    return {"gain": gain, "tint": tint.tolist(), "episode_tint": raw.tolist(), "offset": (pos - NOMINAL_LIGHT_POS).tolist(), "aim": aim.tolist(),
+    return {"gain": gain, "tint": tint.tolist(), "episode_tint": raw.tolist(),
+            "offset": (pos - NOMINAL_LIGHT_POS).tolist(), "aim": aim.tolist(),
             "head_diffuse": float(m.vis.headlight.diffuse[0]), "head_ambient": float(m.vis.headlight.ambient[0])}
 
 
@@ -382,7 +385,8 @@ def _contact_decals(parts, lo, hi, m, look):
     k = float(np.clip(2 * h[2] / float(u.get("full_height_m", 0.3)), float(u.get("min_scale", 0.3)), 1.0))
     out.append({"body": int(m.body("u_object").id), "R": Rz, "p": [c[0], c[1], lo[2] + u["lift_m"]],
                 "half": [h[0] * u["inset"], h[1] * u["inset"]],
-                "margin": [k * u["margin_m"], k * u["margin_m"], k * u.get("front_margin_m", u["margin_m"]), k * u["margin_m"]],
+                "margin": [k * u["margin_m"], k * u["margin_m"], k * u.get("front_margin_m", u["margin_m"]),
+                           k * u["margin_m"]],
                 "alpha": u["alpha"]})
     f = D["floor"]
     groups = {}
