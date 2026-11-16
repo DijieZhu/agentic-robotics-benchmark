@@ -14,3 +14,9 @@ dataset `nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF` (revision
   damping released by an axial push; reversed: knob joint axes flipped; hold to start: a held start button).
   RoboCasa's appliance predicates are re-implemented, not imported.
 - **The robot** is the Franka Panda model of robosuite 1.5.2 (MIT), installed unmodified in the task image.
+- **The kitchen around the cell** (the cameras' room bundle in `/opt/task-assets/payload/render`) is a reduced
+  derivative of the apartment of **ArchVizPRO Interior Vol.8 (URP)** by ArchVizPRO (Unity Asset Store), licensed to
+  the benchmark's owner for distribution with the benchmark: only what the cameras can see, meshes decimated,
+  textures reduced to 256-512 px, and an image light path-traced from that scene. The station, the cabinets beside
+  it, the shelf and the pedestal drawn around the cell are made by `kitchen_scene.py` (original to this task) with
+  the pack's oak texture.

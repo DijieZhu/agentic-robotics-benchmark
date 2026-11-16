@@ -15,6 +15,7 @@ still running at the limit is cut off.
 | Path | What it is |
 |---|---|
 | `appliance_env.py` | The complete robot environment: the cell, the Panda arm and gripper (robosuite models), the operational-space controller, cameras, sensor noise. The lab and the grader run this exact file; only the unit differs. Read its docstrings. |
+| `kitchen_render.py`, `kitchen_scene.py`, `kitchen_look.json` | The cameras' renderer and the kitchen around the cell: `appliance_env.py` draws every image with them, and the lab and the grader run these exact files. They read the kitchen's room bundle in `/opt/task-assets/payload/render` (read-only). |
 | `episode.py` | The exact episode logic the lab and the grader run: initial states, requests, deadlines and the credit rule. |
 | `task_card.md` | Frames, mounts, the units, the cameras, the sensors and the numbers. |
 | `units.json`, `units/` | Three practice units (p0 cooktop, p1 microwave, p2 oven) with their models and mechanisms (`quirks`); `env.unit_state()` and `env.truth()` give their ground truth in your dev sim. They are examples of the kinds, not the scored units. |
@@ -24,9 +25,15 @@ still running at the limit is cut off.
 | `helpers/wire_skeleton.py` | Optional boilerplate for the grading wire (READY / reset / act / close, repeated step indices; one controller object for the whole run, with a reset hook per episode). |
 | `NOTICE.md` | Where the appliance models come from (CC-BY-4.0). |
 
-Run Python as `/opt/venv/bin/python3` (Python 3.12 with NumPy, SciPy, OpenCV, Pillow, MuJoCo 3.16). Rendering is
-MuJoCo through OSMesa on the CPU. The sandbox has 4 CPUs and 12 GB of memory, while grading too (the image sets
-`OMP_NUM_THREADS=1`, so `nproc` prints 1).
+Run Python as `/opt/venv/bin/python3` (Python 3.12 with NumPy, SciPy, OpenCV, Pillow, MuJoCo 3.16). The cameras are
+drawn by MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapipe Vulkan driver; there is no GPU),
+the same way in your dev sim, in the lab and in the grader. The cell stands in a furnished kitchen that is drawn
+only: the cabinets, walls, shelf and furniture in the images have no collision geometry, and the robot can touch
+exactly what the simulation holds (the unit, the box it stands on, the wall behind it and the floor). The first
+image of a process takes about 5 s (the renderer starts and compiles its shaders; a later episode's first images
+take well under a second), and each process that renders needs about 1 GB of memory. `mujoco.Renderer` (through
+OSMesa) still works for anything else you want to draw. The sandbox has 4 CPUs and 12 GB of memory, while grading
+too (the image sets `OMP_NUM_THREADS=1`, so `nproc` prints 1).
 
 ## The scored units
 
@@ -69,8 +76,9 @@ compositional request), and the next one opens at once.
 
 A burner shows a flame while it is on (larger at a higher setting), a microwave a lit amber display bar while it
 runs, and an oven a lit red-orange lamp while it is preheated (both on the front, near the top; dark grey
-otherwise). The kitchen's light (its position, strength and tint) changes from episode to episode, and the two
-fixed cameras sit a little differently in each episode; their poses are in every observation.
+otherwise). The kitchen's light (where the work light over the unit sits and points, and the strength and tint of
+all the light) changes from episode to episode, and the two fixed cameras sit a little differently in each
+episode; their poses are in every observation.
 
 ## Credit
 
@@ -117,9 +125,10 @@ its third request closes, or when the simulation becomes unstable), when you sta
 connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies. A
 `reset` on a connection that has a trial ends that trial and charges another. The lab serves at most two connections
 at a time, and a call it cannot answer within 120 s restarts its worker (a trial already charged is not refunded).
-Each trial draws a fresh placement, initial state, request queue, lighting and sensor noise. The lab never reports
-scores, credit or the unit's state: only observations; but a request that closes before its deadline was completed.
-The lab units are exactly the units you are scored on. The lab is gone when grading starts.
+Each trial draws a fresh placement, initial state, request queue, lighting and sensor noise. A reset takes about 1 s
+and a step with all three images about 0.2 s (much less without images). The lab never reports scores, credit or the
+unit's state: only observations; but a request that closes before its deadline was completed. The lab units are
+exactly the units you are scored on. The lab is gone when grading starts.
 
 ## Deliverable and grading
 
@@ -147,10 +156,11 @@ or a door faster than 30 rad/s, or a MuJoCo warning of a bad state) scores 0. Af
 that breaks the protocol, the controller is started again before the next episode, at most 3 times: the episode that
 would need a fourth restart and every later one score 0. The whole grading run must finish within 6000 s; the
 episode under way when it runs out, and the episodes after it, score 0. The 6000 s cover the simulator and the
-rendering as well as your controller: with the task's Python on 4 idle CPUs a step costs the grader about 10 ms
-without an image, and each image asked for adds about 35 ms (wrist) or 50 ms (a fixed camera), up to twice that on a
-busy machine; a run in which every request runs to its deadline has between 54,000 and 63,000 steps, so all three
-images at every step of such a run do not fit. Your controller is one process for the whole grading run (it is
-started again only after a crash, a late answer or a reply that breaks the protocol, at most 3 times), so it may
-carry what it learned about a unit in one episode into later episodes on the same unit. Only the final controller is
-scored; trial usage is not.
+rendering as well as your controller: measured over the grading wire on 4 CPUs of a busy machine (medians), a step
+costs the grader about 10 ms without an image, and each image asked for adds about 35 ms (wrist) or 60 ms (a fixed
+camera), so a step with all three images costs about 0.16 s; a run in which every request runs to its deadline has
+between 54,000 and 63,000 steps, so all three images at every step of such a run do not fit. Before the first
+episode the grader draws one test image of each camera, which takes a few seconds of the 6000 s. Your controller is
+one process for the whole grading run (it is started again only after a crash, a late answer or a reply that breaks
+the protocol, at most 3 times), so it may carry what it learned about a unit in one episode into later episodes on
+the same unit. Only the final controller is scored; trial usage is not.

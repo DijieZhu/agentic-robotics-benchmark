@@ -21,6 +21,10 @@ request and credit logic. Read their docstrings. This card collects the numbers.
   x, +-0.04 m in y and +-10 degrees of yaw about the vertical; nothing reports it.
 - Kinds and mounts: a **cooktop** set into a counter (counter top at z = 0.92), a **microwave** standing on the
   counter, a wall **oven** in a cabinet column (oven bottom at z = 0.55).
+- The cell stands in a furnished kitchen that is drawn only. In the simulation there are the unit, the box under it
+  (drawn as a cabinet with a stone top), the wall behind it (drawn as the kitchen's tiled wall), the floor and the
+  robot; the robot's pedestal, the cabinets beside the unit, the shelf and the rest of the room are in the images
+  only and have no collision geometry.
 - Controls: cooktop burner knobs (vertical axis, on the top surface); microwave start and stop buttons (on the
   front panel; RoboCasa's rule: touching start switches it on, touching stop switches it off, opening the door
   switches it off); oven temperature knob (horizontal axis, on the front panel).
@@ -63,13 +67,19 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   (`T_world_left`, `T_world_right`, `T_world_wrist`; 4 x 4, OpenCV convention: x right, y down, z forward). The
   fixed cameras' nominal poses depend on the unit's model; each episode offsets them by up to +-4 cm and about
   +-3 degrees (the observation carries the actual pose).
-- Lighting changes per episode: the scene light's position, aim, strength (0.5-1.2x) and tint (+-15 % per
-  channel), and the headlight; nothing reports it.
+- Lighting changes per episode: where the work light over the station sits and points, the strength (0.5-1.2x)
+  and tint (+-15 % per channel) of all the kitchen's light (its lamps and the daylight), and a light along each
+  camera's view (the headlight); nothing reports it.
+- Renderer: MuJoCo's Filament renderer (physically based) on the CPU (Mesa's lavapipe), `kitchen_render.py` with the
+  kitchen of `kitchen_scene.py` and the numbers of `kitchen_look.json`, reading the room bundle in
+  `/opt/task-assets/payload/render` (`KITCHEN_RENDER_DIR`); the dev sim, the lab and the grader draw the same way.
+  A renderer failure raises `appliance_env.RenderError`. The first image of a process takes about 5 s (the
+  renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that renders needs
+  about 1 GB of memory.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
   action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
-  grading run it counts against the grader's 6000 s: with the task's Python on 4 idle CPUs about 35 ms per wrist
-  image and 50 ms per fixed-camera image, against about 10 ms for a step without an image (up to twice that on a
-  busy machine).
+  grading run it counts against the grader's 6000 s: over the grading wire on 4 CPUs of a busy machine (medians)
+  about 35 ms per wrist image and 60 ms per fixed-camera image, against about 10 ms for a step without an image.
 
 ## Sensors
 
