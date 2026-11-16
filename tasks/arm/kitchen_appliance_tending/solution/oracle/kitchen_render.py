@@ -39,7 +39,10 @@ file, calibrated against path-traced references; the bundle holds the room's mes
 two panoramas.
 
 Nothing here changes the simulation: the renderer reads the model and the data, it writes neither, and it draws no
-random numbers (the sensor noise stays the environment's).
+random numbers (the sensor noise stays the environment's).  An image is a function of the model, the data and
+data.time alone: the same camera in the same state gives the same bytes however often it is drawn, whatever was drawn
+before it and in whichever process of the same image (Filament's temporal dithering, a new noise per frame, is off:
+_undither).
 
 Filament runs in one dedicated thread per process (its engine is thread-bound; a forked child starts its own).
 Objects that live for the process: the context, the room (meshes, textures, materials, renderables), the image
@@ -69,6 +72,7 @@ import json
 import math
 import os
 import queue
+import struct
 import sys
 import threading
 import time
@@ -716,6 +720,7 @@ class _Filament(object):
         self.live = {}
         self.targets = {}
         self.next_sid = 0
+        self.view = None                               # the filament::View, once its dithering is off (_undither)
         self.stats = {"activations": 0, "frames": 0, "targets_created": 0}
         self.thread = threading.Thread(target=self._loop, name="kitchen-filament", daemon=True)
         self.thread.start()
@@ -1287,7 +1292,64 @@ class _Filament(object):
         req.viewport.left, req.viewport.bottom, req.viewport.width, req.viewport.height = 0, 0, width, height
         self.ctx.wait_for_frame(self.ctx.render([req], [read]))
         self.stats["frames"] += 1
+        if self.view is None:                          # the process's first image: switch the dithering off, again
+            self._undither(width, height, bool(rv["shadows"]), bool(rv["post_processing"]))
+            self.ctx.wait_for_frame(self.ctx.render([req], [read]))
         return buf.copy()
+
+    # Filament's view adds a new noise to every frame before the 8-bit output (temporal dithering, +-1 level; the
+    # FXAA pass after it turns that into differences of up to ~150 levels along edges), so without this an image
+    # depended on how many frames the process had drawn before.  MuJoCo 3.16 has no option for it (no filament.*
+    # field, nothing in the binding) and draws every camera through one filament::View; Filament's exported
+    # View::setDithering(Dithering::NONE) is called on that view.  The view is found from the binding's Scene object
+    # (pointers followed, each read by write(2) into a pipe: a wrong guess cannot crash, and a process that is not
+    # dumpable, the lab, may do it) by its state after the first image: viewport (0, 0, width, height) at +0x268,
+    # anti-aliasing FXAA, dithering TEMPORAL, shadowing and post-processing as requested at +0x2b1..+0x2b5 (Filament
+    # as linked into MuJoCo 3.16).  FXAA stays on: on an image without the noise it is a function of the image.
+    VIEW_SET_DITHERING = "_ZN8filament4View12setDitheringENS_9DitheringE"
+    VIEW_GET_DITHERING = "_ZNK8filament4View12getDitheringEv"
+
+    def _undither(self, width, height, shadows, post):
+        lib = ctypes.CDLL(self.F.__file__)
+        try:
+            setd, getd = getattr(lib, self.VIEW_SET_DITHERING), getattr(lib, self.VIEW_GET_DITHERING)
+        except AttributeError as exc:
+            raise RenderError("renderer: MuJoCo's Filament module exports no View::setDithering: %s" % exc)
+        setd.restype, setd.argtypes = None, [ctypes.c_void_p, ctypes.c_uint8]
+        getd.restype, getd.argtypes = ctypes.c_uint8, [ctypes.c_void_p]
+        want = (0, 0, width, height, 1, 1, int(shadows), 1, int(post))
+        found, seen = set(), set()
+        libc = ctypes.CDLL(None, use_errno=True)
+        libc.write.restype, libc.write.argtypes = ctypes.c_ssize_t, [ctypes.c_int, ctypes.c_void_p, ctypes.c_size_t]
+        rfd, wfd = os.pipe()
+
+        def read(addr, n):                             # write(2) from an unreadable address fails (EFAULT)
+            k = libc.write(wfd, addr, n)
+            return os.read(rfd, k) if k > 0 else None
+
+        def walk(addr, n, depth):                      # pointers within n bytes of addr, three levels deep
+            b = read(addr, n)
+            for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
+                if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
+                    continue
+                seen.add(p)
+                v = None if p % 16 else read(p + 0x268, 0x4e)
+                if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
+                    found.add(p)
+                if depth < 3:
+                    walk(p, 512, depth + 1)
+        try:
+            walk(id(self.scn), 64, 1)
+        finally:
+            os.close(rfd)
+            os.close(wfd)
+        if len(found) != 1:
+            raise RenderError("renderer: cannot find the Filament view to switch its dithering off (%d candidates)"
+                              % len(found))
+        self.view = found.pop()
+        setd(self.view, 0)                             # filament::View::Dithering::NONE
+        if getd(self.view) != 0:
+            raise RenderError("renderer: Filament's dithering did not switch off")
 
     # -- burner visuals (kitchen_fx) ----------------------------------------------------------------------------------
     # Gas burners: three renderables per burner (inner cones: MuJoCo's unlit decor material, opaque; sheaths and haze:
