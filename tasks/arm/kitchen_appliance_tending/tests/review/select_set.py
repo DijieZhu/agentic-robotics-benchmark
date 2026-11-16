@@ -29,6 +29,19 @@ The rule, fixed before any candidate ran:
     python3 -B tests/review/select_set.py draw --record tests/hidden/episode_selection.json
     python3 -B tests/review/select_set.py run --record tests/hidden/episode_selection.json --work DIR [--workers 3]
     python3 -B tests/review/select_set.py make --record tests/hidden/episode_selection.json --out tests/hidden/episodes.json
+    python3 -B tests/review/select_set.py amend --record tests/hidden/episode_selection.json --reason TEXT \
+        --evidence EVIDENCE.json [--workers 3]
+
+7. Amend (a maintainer's decision to keep a made set when a frozen file changed in a way that cannot change what the
+   reference does or how it is scored, the renderer-only amendment of shoe_lacing_and_boxing's selection): `amend`
+   refuses while a frozen file differs from the checkout's HEAD, re-runs the privileged reference in process (step 3)
+   on every episode of the made draw with the files as they are now (each must score 1.0 again, with the same steps
+   and per-request outcomes as when it was kept; otherwise it refuses and the draw must be voided), and appends to the
+   record's `amendments`: the reason, the frozen files that changed (their recorded and their new sha256), the commit
+   that holds them (the last commit that changed any frozen file), the re-run per episode and the maintainer's
+   evidence (a JSON file: e.g. the physics comparison and the validate run). Then it pins the frozen files' new
+   hashes and that commit, so `run` / `make` check against them again; tests/hidden/episodes.json is not touched. A
+   later change of a frozen file needs a new amendment (or a new draw).
 
 `run` needs the task image's Python (3.12, MuJoCo 3.16, NumPy, SciPy, robosuite 1.5.2's model files) and MuJoCo
 rendering (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names this interpreter, and the
@@ -354,6 +367,67 @@ def cmd_make(a):
     print("wrote %d episodes to %s" % (len(graded), a.out))
 
 
+def _amend_one(args):
+    """Step 3's in-process run of one episode of the made draw (a worker of `amend`)."""
+    name, unit, seed = args
+    E, EP, O, R, _V = _modules()
+    specs = _specs(E)
+    return name, in_process(E, EP, O, R, specs[unit], seed)
+
+
+def cmd_amend(a):
+    rec = load(a.record)
+    if not frozen_committed():
+        raise SystemExit("commit the frozen files first: " + ", ".join(FROZEN))
+    made = [d for d in rec["draws"] if d["status"] == "made"]
+    if not made or rec["draws"][-1] is not made[-1]:
+        raise SystemExit("amend keeps the latest draw, which must be made")
+    d = made[-1]
+    now = frozen_hashes()
+    changed = {p: {"recorded": rec["frozen"].get(p), "now": now[p]} for p in FROZEN if rec["frozen"].get(p) != now[p]}
+    if not changed:
+        raise SystemExit("no frozen file changed since the record's hashes: nothing to amend")
+    with open(a.evidence) as f:
+        evidence = json.load(f)
+    # the commit that holds the frozen files as they are now: the last one that changed any of them (later commits
+    # touch other files only, so this one stays valid when they are reordered)
+    commit = git("log", "-1", "--format=%H", "--", *FROZEN).stdout.strip()
+    by_name = {"%s#%d" % (c["unit"], c["index"]): c for c in rec["candidates"] if c["draw"] == d["draw"]}
+    jobs = [(name, by_name[name]["unit"], by_name[name]["seed"]) for name in d["graded_order"]]
+    with multiprocessing.get_context("spawn").Pool(a.workers) as pool:
+        results = dict(pool.imap_unordered(_amend_one, jobs))
+    rerun, bad = [], []
+    for name, _unit, seed in jobs:
+        r, was = results[name], by_name[name]["in_process"]
+        same = (r["credit"] == 1.0 and r["steps"] == was["steps"]
+                and [(q["what"], q["outcome"], q["t_close"]) for q in r["requests"]]
+                == [(q["what"], q["outcome"], q["t_close"]) for q in was["requests"]])
+        rerun.append({"episode": name, "seed": seed, "credit": r["credit"], "steps": r["steps"],
+                      "outcomes": [q["outcome"] for q in r["requests"]], "t_close": [q["t_close"] for q in r["requests"]],
+                      "same_as_kept": same, "wall_s": r["wall_s"]})
+        print("[amend] %s: credit %.3f, %d steps, same as when kept: %s" % (name, r["credit"], r["steps"], same),
+              file=sys.stderr, flush=True)
+        if not same:
+            bad.append(name)
+    if bad:
+        raise SystemExit("the reference no longer repeats its kept runs on %s: void the draw instead" % ", ".join(bad))
+    amendments = rec.setdefault("amendments", [])
+    amendments.append({
+        "amendment": len(amendments) + 1, "amended_utc": utc_now(), "draw": d["draw"], "commit": commit,
+        "reason": a.reason, "changed": changed, "frozen_before": rec["frozen"],
+        "frozen_commit_before": rec["frozen_commit"],
+        "rerun_in_process": {"rule": "step 3's in-process run of the privileged reference on every episode of the made "
+                                     "draw, with the frozen files of the commit; each scored 1.0 with the steps and "
+                                     "the per-request outcomes and closing steps recorded when it was kept",
+                             "episodes": rerun},
+        "evidence": evidence})
+    rec["frozen"], rec["frozen_commit"] = now, commit
+    save(a.record, rec)
+    check_frozen(rec)
+    print("amendment %d written to %s (%d frozen files re-pinned at %s)" % (len(amendments), a.record, len(changed),
+                                                                          commit[:12]))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -370,8 +444,13 @@ def main():
     p = sub.add_parser("make")
     p.add_argument("--record", required=True)
     p.add_argument("--out", required=True)
+    p = sub.add_parser("amend")
+    p.add_argument("--record", required=True)
+    p.add_argument("--reason", required=True, help="why the made set is kept although frozen files changed")
+    p.add_argument("--evidence", required=True, help="a JSON file of the maintainer's evidence (physics, validate)")
+    p.add_argument("--workers", type=int, default=3)
     a = ap.parse_args()
-    {"draw": cmd_draw, "run": cmd_run, "make": cmd_make}[a.cmd](a)
+    {"draw": cmd_draw, "run": cmd_run, "make": cmd_make, "amend": cmd_amend}[a.cmd](a)
 
 
 if __name__ == "__main__":
