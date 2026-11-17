@@ -264,7 +264,8 @@ field.
    a model already validated, and the agent's own GPU libraries. A model can lack a
    library's kernels, render differently or run too slowly for the budgets, and rendering
    also needs the graphics part of the host's NVIDIA driver, which compute-only installs
-   leave out. Keep `network_mode = "no-network"` unless the task needs a host: `allowlist`
+   leave out. CI checks that each name accepts a real model (`scripts/gpu_types.py check`;
+   `list` prints every GPU task's models). Keep `network_mode = "no-network"` unless the task needs a host: `allowlist`
    names it in `allowed_hosts`, and `public` needs `[metadata].network_justification`. Setup
    has no field; the engine bounds it at 1800 s.
 3. Image. Make `environment/Dockerfile` your environment: the simulator and every stable

@@ -269,7 +269,12 @@ few confirmations. Nothing else belongs in the pull request: no notes, no `__pyc
 
 CI (`.github/workflows/pr-checks.yml`) runs `ale lint` over `tasks/` and `templates/`, the
 domain lint (metric, anchor, visible surface, image hygiene, placement), the kit comparison,
-the registry identity cross-check (a new slug is a notice) and the test suite. It needs no
+the registry identity cross-check (a new slug is a notice), the GPU-model check (every
+`gpu_types` name accepts a real model), the task-card check and the test suite. Before the merge a maintainer adds the task's card to `tasks/cards.toml`: its readable
+title, a one-sentence summary, the platforms it involves and the stages it covers
+([`task-cards.md`](task-cards.md)), then labels the pull request `ready-to-merge`, which makes
+the card check strict. Suggest a title in the pull request if you like; the card is no part of
+the task's identity. It needs no
 secrets, so it runs on forks too. It does not build your image or run `ale validate`.
 
 A maintainer then reads `tests/` and `solution/`, re-runs `ale lint` and `ale validate` on

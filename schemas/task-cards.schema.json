@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Grounded-Intelligence-Initiative/agentic-robotics-benchmark/schemas/task-cards.schema.json",
+  "title": "Task cards (tasks/cards.toml, parsed)",
+  "description": "One card per task, by the task's slug: how displays name and file it. scripts/task_cards.py checks these rules and the ones a schema cannot state (each card names a task on the tree, its first platform is the folder's, its stages are in workflow order, titles are unique). See docs/task-cards.md.",
+  "type": "object",
+  "propertyNames": {"pattern": "^[a-z0-9][a-z0-9_-]*$"},
+  "additionalProperties": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["title", "platforms", "stages"],
+    "properties": {
+      "title": {"type": "string", "minLength": 1, "maxLength": 48, "pattern": "^[A-Z0-9].*[^.]$"},
+      "summary": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Z0-9].*\\.$"},
+      "platforms": {
+        "type": "array", "minItems": 1, "uniqueItems": true,
+        "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"}
+      },
+      "stages": {
+        "type": "array", "minItems": 1, "uniqueItems": true,
+        "items": {"enum": ["requirements", "hardware-design", "assembly", "robot-description", "control", "environment", "behavior", "end-to-end"]}
+      }
+    }
+  }
+}

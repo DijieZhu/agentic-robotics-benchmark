@@ -76,7 +76,13 @@ tasks/<platform>/<slug>/
   folder name, the registry `slug` and the sheet's Task Name. `[metadata].platform` is the only
   metadata field anything here reads: one of the fixed keys in `tasks/platforms.json` (this
   repository owns the vocabulary; the registry export hands it to the website, which only
-  displays it). Older tasks may still carry retired keys there, which nothing reads. A landed
+  displays it). Older tasks may still carry retired keys there, which nothing reads. How a
+  task is named and filed for display (title, summary, the platforms it involves, the stages
+  it covers) is its card in `tasks/cards.toml`, outside every task folder and so no part of
+  its identity; maintainers add it before the merge and label the pull request
+  `ready-to-merge`, which makes CI's card check strict (`docs/task-cards.md`,
+  `scripts/task_cards.py`). `scripts/gpu_types.py check` (CI, in the engine's environment)
+  checks every `gpu_types` name against known GPU models with the engine's own rule. A landed
   task sits at exactly `tasks/<platform>/<slug>/` (`scripts/lint_domain.py` battery 7 checks
   the key and the placement; a contribution's pull request puts the folder there directly).
   The metric and its direction live only in `tests/anchor.json` (`metric`, `direction`).

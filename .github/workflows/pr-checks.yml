@@ -29,8 +29,11 @@
 #     domain lint, task assets).
 name: pr-checks
 
+# `labeled` / `unlabeled` re-run the checks when a maintainer sets or lifts `ready-to-merge`:
+# with that label the task-card check is strict (the merge gate, docs/task-cards.md).
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   push:
     branches: [main]
 
@@ -57,6 +60,14 @@ jobs:
           cd vendor/ale
           uv run ale lint ../../tasks
           uv run ale lint ../../templates
+
+      # Every `gpu_types` name a GPU task lists accepts a known GPU model, by the engine's own
+      # rule (a mistyped name would make the engine refuse the task on every host). A GPU task
+      # without the key is a notice: it accepts every model (templates/README.md).
+      - name: GPU models (gpu_types)
+        run: |
+          cd vendor/ale
+          VIRTUAL_ENV= uv run python ../../scripts/gpu_types.py check
 
       # The committed identity history must describe THIS tree for every task it knows:
       # re-export with the engine's loader into throwaway paths (--allow-dirty never writes
@@ -162,6 +173,20 @@ jobs:
       # disagrees with either is a failure: run 'python3 scripts/task_assets.py sync'.
       - name: Task assets match task-assets.toml and the canonical fetcher
         run: /usr/bin/python3 scripts/task_assets.py check
+
+      # Every card in tasks/cards.toml (how displays name and file a task) is well formed and
+      # names a task on the tree. A task without a card is a warning while a pull request is
+      # under review, so a contributor's checks stay green. It is an error on main, and on a pull
+      # request a maintainer has labelled `ready-to-merge`: the merge gate (docs/task-cards.md).
+      - name: Task cards
+        env:
+          STRICT: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'ready-to-merge') }}
+        run: |
+          if [ "$STRICT" = "true" ]; then
+            uv run python scripts/task_cards.py check --strict
+          else
+            uv run python scripts/task_cards.py check
+          fi
 
       - name: Pytest
         run: uv run pytest -q

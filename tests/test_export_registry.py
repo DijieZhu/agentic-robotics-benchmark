@@ -310,7 +310,7 @@ def test_history_revert_dedupes_the_pair_and_keeps_current_first(tmp_path):
 def test_platforms_come_from_this_repository(tmp_path):
     platforms = xr.load_platforms()
     assert [entry["key"] for entry in platforms] == [
-        "arm", "hand", "quadruped", "humanoid", "uav", "driving", "underwater", "space",
+        "arm", "hand", "quadruped", "humanoid", "uav", "driving", "ground", "underwater", "space",
         "soft", "surgical", "swarm", "subsystems"]
     assert all(set(entry) == {"key", "label"} and entry["label"] for entry in platforms)
     bad = tmp_path / "platforms.json"

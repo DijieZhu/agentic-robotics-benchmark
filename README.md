@@ -100,6 +100,7 @@ task, is [`docs/contributing-a-task.md`](docs/contributing-a-task.md).
 vendor/ale/                     upstream engine (submodule, pinned commit) — do not reimplement it
 tasks/<platform>/<slug>/        the tasks, one folder each
 tasks/platforms.json            the platform vocabulary: the `[metadata].platform` keys, with labels
+tasks/cards.toml                each task's card: title, summary, platforms, stages (docs/task-cards.md)
 tasks/README.md                 a note: which task is the worked example
 templates/task/                 ONE template, gates green as shipped (null anchor by design)
 templates/README.md             the task contract, file by file (source of truth for the task form)
