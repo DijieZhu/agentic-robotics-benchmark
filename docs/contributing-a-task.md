@@ -271,7 +271,7 @@ CI (`.github/workflows/pr-checks.yml`) runs `ale lint` over `tasks/` and `templa
 domain lint (metric, anchor, visible surface, image hygiene, placement), the kit comparison,
 the registry identity cross-check (a new slug is a notice), the GPU-model check (every
 `gpu_types` name accepts a real model), the task-card check and the test suite. Before the merge a maintainer adds the task's card to `tasks/cards.toml`: its readable
-title, a one-sentence summary, the platforms it involves and the stages it covers
+title, a one-sentence summary, the platforms it involves and the one stage it is filed under
 ([`task-cards.md`](task-cards.md)), then labels the pull request `ready-to-merge`, which makes
 the card check strict. Suggest a title in the pull request if you like; the card is no part of
 the task's identity. It needs no

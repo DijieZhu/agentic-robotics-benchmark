@@ -2,7 +2,8 @@
 """Task cards: each task's display card in `tasks/cards.toml`, checked against the task tree.
 
 A card names and files a task for the website and other displays: a readable `title`, a one-sentence `summary`, the
-`platforms` the task involves (the first one is its folder's) and the workflow `stages` it covers. Maintainers keep
+`platforms` the task involves (the first one is its folder's) and its one workflow stage (`stages`, a list of exactly
+one entry: the last stage of the workflow that the task's score depends on). Maintainers keep
 the file; it sits outside every task folder, so a card is no part of a task's identity (`spec_hash`,
 `content_digest`).
 
@@ -30,7 +31,8 @@ ROOT = Path(__file__).resolve().parent.parent
 CARDS = Path("tasks") / "cards.toml"
 PLATFORMS = Path("tasks") / "platforms.json"
 
-#: The stages of the workflow, in order; "end-to-end" is a category of its own and stands alone.
+#: The stages of the workflow, in order, and "end-to-end", the category of a task that runs the whole chain. A card
+#: files its task under exactly one of them (owner, 2026-11-17).
 STAGES = ("requirements", "hardware-design", "assembly", "robot-description", "control", "environment", "behavior")
 END_TO_END = "end-to-end"
 FIELDS = {"title", "summary", "platforms", "stages"}
@@ -114,21 +116,13 @@ def card_problems(slug: str, card: object, tasks: dict[str, str], platforms: tup
 
     stages = card.get("stages")
     if "stages" in card:
-        if not isinstance(stages, list) or not stages or not all(isinstance(s, str) for s in stages):
-            problems.append(f"{where}: stages is a non-empty list of stage keys")
-        elif END_TO_END in stages:
-            if stages != [END_TO_END]:
-                problems.append(f"{where}: {END_TO_END!r} stands alone (a task that covers some stages lists them)")
-        else:
-            unknown = [s for s in stages if s not in STAGES]
-            for s in unknown:
-                problems.append(f"{where}: stage {s!r} is not one of {', '.join(STAGES)} or {END_TO_END!r}")
-            if not unknown:
-                order = [STAGES.index(s) for s in stages]
-                if len(set(order)) != len(order):
-                    problems.append(f"{where}: stages lists a stage twice")
-                elif order != sorted(order):
-                    problems.append(f"{where}: stages are in workflow order ({', '.join(STAGES)})")
+        if not isinstance(stages, list) or not all(isinstance(s, str) for s in stages):
+            problems.append(f"{where}: stages is a list of one stage key")
+        elif len(stages) != 1:
+            problems.append(f"{where}: stages holds exactly one stage, not {len(stages)} (a task is filed under the "
+                            f"last stage of the workflow that its score depends on)")
+        elif stages[0] not in STAGES + (END_TO_END,):
+            problems.append(f"{where}: stage {stages[0]!r} is not one of {', '.join(STAGES)} or {END_TO_END!r}")
     return problems
 
 

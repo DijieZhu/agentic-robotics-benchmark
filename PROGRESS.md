@@ -7,8 +7,9 @@
 > before every hand-off. Where it disagrees with the code or `git log`, the code wins: fix
 > this file.
 >
-> Last updated: 2026-11-16 (§13: task cards in `tasks/cards.toml`, the `ground` platform, the
-> merge gate and the GPU-model check). Before that: 2026-11-14 (§12: the grasp task pins OpenBLAS
+> Last updated: 2026-11-17 (§14: one stage per task card; `driving` and `ground` become one
+> platform, `ground` "Ground vehicle"). Before that: 2026-11-16 (§13: task cards in
+> `tasks/cards.toml`, the `ground` platform, the merge gate and the GPU-model check); 2026-11-14 (§12: the grasp task pins OpenBLAS
 > to its Haswell kernels); 2026-11-09 (§11: `vendor/ale` @ `bfb7505`, a task names its GPU
 > models); 2026-11-07 (§10: the asset dataset is renamed `ale-robotics-assets`).
 
@@ -586,6 +587,34 @@ wrong matrix products, not rounding. The fix is the pull request from branch
   `docs/task-cards.md`.
 - **Next**: with branch protection on `main` (required checks `engine-lint` and
   `static-checks`), nothing merges around the gate; it is off today.
+
+## 14. 2026-11-17 — one stage per task; `driving` and `ground` become one platform
+
+Owner decisions of 2026-11-17; they supersede the stage rule and the `driving` / `ground` claim
+order of §13 (§5's platform list predates both).
+
+- **One stage per task.** A card's `stages` is a list of exactly one entry: the last stage of the
+  workflow that the task's score depends on. A job task that also has the agent rebuild a scene
+  or pick hardware on the way is filed by the job; `assembly` means building the robot's own
+  body, and assembling furniture or parts with a robot is `behavior`. `end-to-end` stays the
+  category of a task that runs the whole chain (no task uses it). `scripts/task_cards.py check`
+  fails any other `stages`, and the schema says the same (`minItems` = `maxItems` = 1).
+  `hazard_bay_build` (was hardware-design + environment + behavior) is `behavior`.
+- **Ground vehicle.** `driving` ("Autonomous driving") and `ground` ("Ground robot (UGV/AMR)")
+  are one platform, key `ground`, label "Ground vehicle", in `driving`'s place after `uav`: any
+  wheeled or tracked ground vehicle or robot (a car at any scale on a road or a track, AMR /
+  AGV / UGV, rovers, wheeled mobile manipulators). The key `driving` is gone:
+  `driving_safety_supervisor` moves to `tasks/ground/driving_safety_supervisor/` with
+  `[metadata].platform = "ground"`, and its card's platforms are `["ground"]`. The new
+  platform value and the new asset pin change the task's `spec_hash` and `content_digest`
+  (the slug is unchanged); `identity-history.json` keeps its old records and carries the new
+  one, exported from a clean work tree of the branch. An asset list's `# prefix:` must name the
+  task's folder (`scripts/task_assets.py check`), so the task's 19 files were copied server
+  side to `tasks/ground/driving_safety_supervisor/payload/` on the asset dataset (commit
+  `4c7c4d8b`, every sha256 unchanged) and the list is re-pinned there. The old folder stays on
+  the dataset until this merges; then it is deleted and the dataset card's rows are fixed.
+- `tasks/arm/object_finding_and_organizing_on_messy_desk/task.toml` still lists `driving` in a
+  comment; it is left as it is, since editing it would change that task's identity.
 
 ## Open items
 

@@ -71,7 +71,7 @@ Files the agent home never gets (a simulator release, a scene archive, model wei
 their sources) are fetched by the image step that unpacks or moves them, into a scratch folder that the same step
 removes, so no layer keeps the download. A step that needs only the files under one folder of the list fetches a
 filtered copy of it, for example
-`grep -E '^(#|[0-9a-f]{64}  carla/)' assets.sha256 > carla.sha256` (`tasks/driving/driving_safety_supervisor` and
+`grep -E '^(#|[0-9a-f]{64}  carla/)' assets.sha256 > carla.sha256` (`tasks/ground/driving_safety_supervisor` and
 `tasks/uav/aerial_search_geolocation` work this way).
 
 ## 3. Adding or updating a task's assets
