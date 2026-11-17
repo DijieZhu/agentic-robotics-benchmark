@@ -69,9 +69,24 @@ RUN mkdir -p /home/user/submission && chown -R user:user /home/user/submission
 
 ENV MPLBACKEND=Agg
 ENV GRASPNET_DATA=/data/graspnet
+# numpy 1.23.5 bundles OpenBLAS 0.3.20, which picks its kernels by CPU when it loads: on Intel CPUs with AVX512_BF16
+# (Cooper Lake, Sapphire Rapids and later) its Cooperlake kernels, whose DGEMM returns wrong products (the one in
+# graspnetAPI's transform_points among them). OPENBLAS_CORETYPE=Haswell pins every OpenBLAS copy in /opt/grasp to its
+# Haswell kernels, correct on any x86-64 CPU with AVX2 and FMA; tests/ sets the same value for the graded processes.
+# The ENV covers every interpreter started with this image's environment; the .pth covers /opt/grasp/bin/python when
+# the variable is absent (env -i, a launcher with an environment of its own). An explicit value still wins.
+ENV OPENBLAS_CORETYPE=Haswell
+RUN printf '%s\n' 'import os; os.environ.setdefault("OPENBLAS_CORETYPE", "Haswell")' \
+      > /opt/grasp/lib/python3.10/site-packages/openblas_coretype.pth \
+    && chmod 0644 /opt/grasp/lib/python3.10/site-packages/openblas_coretype.pth
 
 # Fail the build early if either interpreter is broken, and prove the AGENT account can use
-# both: python3 must be the 3.12 venv, and the grasp stack must import with the pinned numpy.
+# both: python3 must be the 3.12 venv, the grasp stack must import with the pinned numpy, and
+# its matrix products must agree with einsum in the layout of graspnetAPI's transform_points,
+# with OPENBLAS_CORETYPE from the image and, through the .pth, with the variable removed.
 RUN python3 -c "import sys, numpy; assert sys.version_info >= (3, 12); print('[image] python3', sys.version.split()[0], 'numpy', numpy.__version__)" \
     && runuser -u user -- python3 -c "import numpy; print('[image] agent-UID /opt/venv OK')" \
-    && runuser -u user -- /opt/grasp/bin/python -c "import numpy, sklearn, open3d, cv2, torch, graspnetAPI; from graspnetAPI.utils.eval_utils import eval_grasp; assert numpy.__version__ == '1.23.5'; print('[image] agent-UID /opt/grasp OK')"
+    && runuser -u user -- /opt/grasp/bin/python -c "import numpy, sklearn, open3d, cv2, torch, graspnetAPI; from graspnetAPI.utils.eval_utils import eval_grasp; assert numpy.__version__ == '1.23.5'; print('[image] agent-UID /opt/grasp OK')" \
+    && products="import os, sys, numpy as np; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell'; r = np.random.default_rng(0); T = r.normal(size=(4, 4)); X = [r.normal(size=(n, 4)) for n in (193, 255, 1000, 4096)]; R = [np.einsum('ij,nj->in', T, x) for x in X]; e = max(np.abs(np.matmul(T, x.T) - y).max() / np.abs(y).max() for x, y in zip(X, R)); assert e < 1e-9, e; print('[image] agent-UID OPENBLAS_CORETYPE=Haswell (%s), products OK' % sys.argv[1])" \
+    && runuser -u user -- /opt/grasp/bin/python -c "$products" "from the image" \
+    && runuser -u user -- env -u OPENBLAS_CORETYPE /opt/grasp/bin/python -c "$products" "variable removed, from the .pth"

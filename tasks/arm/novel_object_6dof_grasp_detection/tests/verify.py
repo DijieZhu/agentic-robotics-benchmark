@@ -8,9 +8,12 @@ whose predict(rgb, depth, intrinsics, depth_scale) returns grasps. This stage:
      as that account as fast as it is killed, so one that outlives the kill is frozen and recorded (only one still
      running once frozen voids the run), and every process of the account this stage did not start stays stopped
      until the verdict is written;
-  3. fetches the hidden frames (28 GraspNet-1Billion novel-object scenes x 16 views, meshes and
+  3. checks that /opt/grasp computes matrix products correctly on this machine (numerics_check.py,
+     once in the solver processes' environment and once in the scoring's; both pin the OpenBLAS
+     kernels with NUMERICS_ENV) and ends as a task error, before anything is fetched, if it does not;
+  4. fetches the hidden frames (28 GraspNet-1Billion novel-object scenes x 16 views, meshes and
      poses for their 26 objects; pinned and hash-checked) into this root-only stage folder;
-  4. runs the detector in 8 processes as the agent's account, offline (seccomp, see
+  5. runs the detector in 8 processes as the agent's account, offline (seccomp, see
      predict_child.py), each on a block of 56 frames of one fixed shuffle (grader_config
      frame_order_seed), handing a process one frame's inputs (colour, depth, intrinsics) at a
      time over a pipe, and only after it has answered the previous frame. Every call is timed on
@@ -18,14 +21,14 @@ whose predict(rgb, depth, intrinsics, depth_scale) returns grasps. This stage:
      accepted, and the process is killed and restarted (a fresh import) for the next frame, within
      the block's time budget. The arrays received in time go to a root-only folder; no frame is
      ever on disk where the agent's account could read it;
-  5. stops the agent's account again and scores the accepted arrays as root with graspnetAPI's
+  6. stops the agent's account again and scores the accepted arrays as root with graspnetAPI's
      own force-closure evaluation (score_frames.py), which never imports submitted code;
-  6. reports the AP the submission adds over the provided starting detector, RE-Bench style:
+  7. reports the AP the submission adds over the provided starting detector, RE-Bench style:
      ap_gain = max(0, mean AP over all 448 frames - the starting detector's own mean AP on them)
      (a frame without a valid array counts 0), as a ratio to the reference implementation's own
      measured gain. Copying the starting detector therefore scores 0 and the reference 1.
 
-Everything here except the two helper scripts runs on the 3.12 /opt/venv interpreter with the
+Everything here except the three helper scripts runs on the 3.12 /opt/venv interpreter with the
 standard library and the vendored kit; graspnetAPI lives on /opt/grasp (Python 3.10).
 """
 import hashlib
@@ -52,6 +55,13 @@ HOME = os.environ.get("ALE_HOME", "/home/user")
 SUBMISSION = os.path.join(HOME, "submission")
 # Set by make_workdir().
 WORK = RESULTS = None
+# numpy 1.23.5 bundles OpenBLAS 0.3.20, which picks its kernels by CPU when it loads; on Intel CPUs with AVX512_BF16
+# (Cooper Lake, Sapphire Rapids and later) it picks its Cooperlake kernels, whose DGEMM returns wrong products (the
+# one in graspnetAPI's transform_points among them). With this variable every OpenBLAS copy in /opt/grasp uses its
+# Haswell kernels, which are correct on any x86-64 CPU with AVX2 and FMA. Both the solver processes and the scoring
+# need it.
+NUMERICS_ENV = {"OPENBLAS_CORETYPE": "Haswell"}
+NUMERICS_TIMEOUT_S = 300
 CHILD_ENV = {
     # subprocess resolves `runuser` (in /usr/sbin) through this PATH, not the grader's own
     "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
@@ -62,7 +72,14 @@ CHILD_ENV = {
     "OMP_NUM_THREADS": "1",
     "OPENBLAS_NUM_THREADS": "1",
     "MKL_NUM_THREADS": "1",
+    **NUMERICS_ENV,
 }
+
+
+def scoring_env():
+    """The environment of the scoring subprocess (score_frames.py; its Pool workers inherit it): this stage's own,
+    with NUMERICS_ENV."""
+    return dict(os.environ, **NUMERICS_ENV)
 
 
 def log(msg):
@@ -208,6 +225,48 @@ class AccountFreezer(threading.Thread):
             except Exception:                              # the freezer must never take the grader down
                 pass
             self.halt.wait(self.period_s)
+
+
+# --------------------------------------------------------------------------- numerics
+def _numerics_report(env):
+    """Run numerics_check.py once in `env`, as root from this stage folder. Returns (line, problems): the JSON line it
+    printed (None when it printed none) and what is wrong (empty: it passed)."""
+    argv = [GRASP_PY, "-I", os.path.join(stage_dir(), "numerics_check.py")]
+    try:
+        proc = subprocess.run(argv, cwd=stage_dir(), env=env, stdout=subprocess.PIPE, timeout=NUMERICS_TIMEOUT_S)
+    except subprocess.TimeoutExpired:
+        return None, ["numerics_check.py did not finish in %ds" % NUMERICS_TIMEOUT_S]
+    lines = (proc.stdout or b"").decode(errors="replace").strip().splitlines()
+    try:
+        report = json.loads(lines[-1])
+    except (IndexError, ValueError):
+        report = None
+    if not isinstance(report, dict):
+        return None, ["numerics_check.py exited %d without a report" % proc.returncode]
+    problems = [str(p) for p in report.get("problems") or []]
+    if proc.returncode != 0 or report.get("ok") is not True:
+        problems = problems or ["numerics_check.py exited %d with ok=%r" % (proc.returncode, report.get("ok"))]
+    return lines[-1], problems
+
+
+def check_numerics():
+    """End the stage as a task error, before the hidden frames are fetched, unless /opt/grasp computes matrix products
+    correctly on this machine: numerics_check.py (which never imports submitted code) runs once in the solver
+    processes' environment and once in the scoring's, and both runs must pass. Both get a throwaway root-owned HOME
+    (the stage's own HOME is the agent's, as the image sets it), so that importing the libraries as root leaves no
+    root-owned cache or config file (matplotlib's) in the agent's home before the solvers run."""
+    home = tempfile.mkdtemp(prefix="grasp_numerics_home_")
+    failed = []
+    try:
+        for label, env in (("solver", CHILD_ENV), ("scoring", scoring_env())):
+            line, problems = _numerics_report(dict(env, HOME=home))
+            log("numerics check, %s environment: %s" % (label, line or "no report"))
+            if problems:
+                failed.append("%s environment: %s" % (label, "; ".join(problems)))
+    finally:
+        shutil.rmtree(home, ignore_errors=True)
+    require(not failed, "matrix products on /opt/grasp are wrong or unchecked here, so nothing can be scored (%s)"
+            % " | ".join(failed))
 
 
 # --------------------------------------------------------------------------- hidden frames
@@ -575,6 +634,7 @@ def main():
     outlived = len(stop_account(account.pw_uid))
     freezer = AccountFreezer(account.pw_uid)
     freezer.start()
+    check_numerics()
     sealed = fetch_hidden(cfg)
     frames = hidden_frames(sealed)
     require(len(frames) == cfg["expected_frames"],
@@ -596,7 +656,7 @@ def main():
     t0 = time.time()
     rc = subprocess.call([GRASP_PY, "-I", os.path.join(stage_dir(), "score_frames.py"),
                           sealed, RESULTS, out_json, str(cfg["score_workers"])],
-                         cwd=stage_dir())
+                         cwd=stage_dir(), env=scoring_env())
     require(rc == 0, "score_frames.py exited %d" % rc)
     scores = json.load(open(out_json))
     score_wall = time.time() - t0

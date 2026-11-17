@@ -1,0 +1,8 @@
+{
+ "metric": "cleaning_score",
+ "direction": "higher",
+ "value": 0.9306,
+ "full_at": 0.98,
+ "source": "Measured: the privileged reference cleaner (tests/house_cell/reference.py, frozen at commit 4549238 by amendment 4; sha256 of every file the oracle runs in tests/review/hidden_set.md) on the three scenes of the fixed hidden set (tests/hidden/seeds.json), each run once in the pre-registered selection (2026-11-11, apollo, the task image built from environment/ at 296e8d1): stage scores 0.9167, 0.9537 and 0.9213, mean 0.9306 (no safety violation, no damage; trash, dishes, books, grease and the finishing credit full on all three; 60, 73 and 62 % of the crumbs binned). `ale validate`'s oracle pass on the same scenes is the full-verify measurement (recorded in tests/review/hidden_set.md).",
+ "note": "cleaning_score is already on [0, 1]: the episode mean of the cell's stage score (the checklist's credit, less the damage charges, over its total weight of 10), an episode with a safety violation scoring 0. The oracle runs the same three fixed scenes as the agents, privileged (true poses) but through the cell's own controller, grip rule, safety watch and cleaning processes. A scene replays the same numbers (the layout, the crumbs' motion and the noise are drawn from its seed; the grader's BLAS is pinned), so full_at 0.98 only absorbs a last-digit difference between machines. The reference sweeps the crumb groups its broom and dustpan reach in the open (60-73 % of the crumbs on the hidden scenes); the rest of the floor's 2.5 is credit above the anchor."
+}

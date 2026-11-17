@@ -1,0 +1,144 @@
+{
+ "bus_zero_deg": {
+  "base_yaw": 11.165,
+  "elbow_pitch": -12.811,
+  "jaw": 11.2,
+  "shoulder_pitch": 14.829,
+  "wrist_pitch": -13.955,
+  "wrist_roll": -7.219
+ },
+ "convention": "b = sign x (q - zero_offset_rad); b = (ticks - 2048) x 2 pi / 4096; q = design angle, q = 0 straight up (T12, Q14); no ref",
+ "firmware_limits_rad": {
+  "base_yaw": [
+   -1.3882021621128149,
+   1.695099221537324
+  ],
+  "elbow_pitch": [
+   -2.0321574793901642,
+   0.12922145074070393
+  ],
+  "jaw": [
+   -0.16807657050553204,
+   1.5008945267140457
+  ],
+  "shoulder_pitch": [
+   -1.3718067027441976,
+   1.3970286193893848
+  ],
+  "wrist_pitch": [
+   -1.6379492333038566,
+   1.2137210513755505
+  ],
+  "wrist_roll": [
+   -2.8380733516832843,
+   2.2639467488243583
+  ]
+ },
+ "format": "gt-calibration/1",
+ "joints": {
+  "base_yaw": {
+   "bus_zero_deg": 11.165,
+   "firmware_limits_deg": [
+    -79.53812500000001,
+    97.12203125
+   ],
+   "firmware_limits_rad": [
+    -1.3882021621128149,
+    1.695099221537324
+   ],
+   "firmware_max_ticks": 3026,
+   "firmware_min_ticks": 1016,
+   "servo_id": 1,
+   "sign": 1,
+   "zero_offset_rad": 0.19486601098516687
+  },
+  "elbow_pitch": {
+   "bus_zero_deg": -12.811,
+   "firmware_limits_deg": [
+    -116.43404687499998,
+    7.403843750000001
+   ],
+   "firmware_limits_rad": [
+    -2.0321574793901642,
+    0.12922145074070393
+   ],
+   "firmware_max_ticks": 2278,
+   "firmware_min_ticks": 869,
+   "servo_id": 3,
+   "sign": 1,
+   "zero_offset_rad": -0.22359413047299356
+  },
+  "jaw": {
+   "bus_zero_deg": 11.2,
+   "firmware_limits_deg": [
+    -9.630078124999999,
+    85.994921875
+   ],
+   "firmware_limits_rad": [
+    -0.16807657050553204,
+    1.5008945267140457
+   ],
+   "firmware_max_ticks": 2899,
+   "firmware_min_ticks": 1811,
+   "servo_id": 6,
+   "sign": 1,
+   "zero_offset_rad": 0.1954768762233649
+  },
+  "shoulder_pitch": {
+   "bus_zero_deg": 14.829,
+   "firmware_limits_deg": [
+    -78.598734375,
+    80.04384375
+   ],
+   "firmware_limits_rad": [
+    -1.3718067027441976,
+    1.3970286193893848
+   ],
+   "firmware_max_ticks": 2790,
+   "firmware_min_ticks": 985,
+   "servo_id": 2,
+   "sign": 1,
+   "zero_offset_rad": 0.2588148747782391
+  },
+  "wrist_pitch": {
+   "bus_zero_deg": -13.955,
+   "firmware_limits_deg": [
+    -93.847578125,
+    69.54109375
+   ],
+   "firmware_limits_rad": [
+    -1.6379492333038566,
+    1.2137210513755505
+   ],
+   "firmware_max_ticks": 2998,
+   "firmware_min_ticks": 1139,
+   "servo_id": 4,
+   "sign": 1,
+   "zero_offset_rad": -0.2435606971158087
+  },
+  "wrist_roll": {
+   "bus_zero_deg": -7.219,
+   "firmware_limits_deg": [
+    -162.609625,
+    129.71459375
+   ],
+   "firmware_limits_rad": [
+    -2.8380733516832843,
+    2.2639467488243583
+   ],
+   "firmware_max_ticks": 3606,
+   "firmware_min_ticks": 280,
+   "servo_id": 5,
+   "sign": 1,
+   "zero_offset_rad": -0.12599531870147065
+  }
+ },
+ "sign": {
+  "base_yaw": 1,
+  "elbow_pitch": 1,
+  "jaw": 1,
+  "shoulder_pitch": 1,
+  "wrist_pitch": 1,
+  "wrist_roll": 1
+ }
+}

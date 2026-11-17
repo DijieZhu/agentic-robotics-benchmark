@@ -1,0 +1,257 @@
+{
+ "seed": 6790790475345571576,
+ "stage_score": 0.9537037037037036,
+ "credit": 9.537037037037036,
+ "credit_by_part": {
+  "trash": 2.0,
+  "dishes": 1.0,
+  "books": 1.0,
+  "grease": 2.5,
+  "crumbs": 2.037,
+  "sponge": 0.3,
+  "tools": 0.3,
+  "faucet": 0.2,
+  "lids": 0.2
+ },
+ "grease_removed_fraction": 0.9791,
+ "crumbs_binned_fraction": 0.7333,
+ "safety_ok": false,
+ "violations": [
+  {
+   "t": 1463.94,
+   "what": "robot_contact:a/right_wrist_pitch_link/kitchen",
+   "value": 164.36
+  }
+ ],
+ "safety_peaks": {
+  "robot_contact_N": 187.33951627825547,
+  "object_speed": 1.4302437268163688,
+  "release_speed": 0.1627415729802284
+ },
+ "safety_peak_who": {
+  "robot_contact_N": [
+   1463.91,
+   [
+    "a/right_wrist_pitch_link",
+    "kitchen"
+   ]
+  ]
+ },
+ "sim_time_s": 3461.81,
+ "broken": {},
+ "items": {
+  "can_red": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.061,
+    0.457,
+    0.073
+   ]
+  },
+  "can_green": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.168,
+    0.363,
+    0.04
+   ]
+  },
+  "bottle": {
+   "bin": "recycling",
+   "want": "recycling",
+   "ok": true,
+   "pos": [
+    0.239,
+    0.385,
+    0.04
+   ]
+  },
+  "napkin_1": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.154,
+    0.783,
+    0.064
+   ]
+  },
+  "napkin_2": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.118,
+    0.833,
+    0.064
+   ]
+  },
+  "napkin_3": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.199,
+    0.755,
+    0.063
+   ]
+  },
+  "apple_core": {
+   "bin": "general",
+   "want": "general",
+   "ok": true,
+   "pos": [
+    0.2,
+    0.843,
+    0.06
+   ]
+  },
+  "plate_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.226,
+    2.089,
+    0.904
+   ]
+  },
+  "plate_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.228,
+    2.093,
+    0.926
+   ]
+  },
+  "glass_1": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.422,
+    2.015,
+    0.904
+   ]
+  },
+  "glass_2": {
+   "on_tray": true,
+   "broken": null,
+   "ok": true,
+   "pos": [
+    0.416,
+    2.162,
+    0.904
+   ]
+  },
+  "book_red": {
+   "x": 1.4889,
+   "y": 4.8039,
+   "z": 0.673,
+   "bottom_above_shelf_m": -0.0,
+   "top_z": 0.688,
+   "upright_cos": 0.0,
+   "held": false,
+   "ok": true
+  },
+  "book_blue": {
+   "x": 1.4886,
+   "y": 4.8039,
+   "z": 0.6999,
+   "bottom_above_shelf_m": 0.0299,
+   "top_z": 0.7119,
+   "upright_cos": 0.0,
+   "held": false,
+   "ok": true
+  }
+ },
+ "process": {
+  "grease_total0": 42.553,
+  "grease_residual": 0.888,
+  "grease_removed_fraction": 0.9791,
+  "grease_taken": 43.301,
+  "grease_smeared": 1.635,
+  "sponge": {
+   "soap": 0.091,
+   "wet": 1.0,
+   "load": 0.022,
+   "load_frac": 0.001,
+   "peak_load": 15.647,
+   "doses": 4,
+   "rinse_s": 21.66
+  },
+  "crumbs": {
+   "free": 16,
+   "pan": 0,
+   "bin_general": 44,
+   "bin_recycling": 0,
+   "sink": 0,
+   "lid": 0
+  },
+  "crumb_events": {
+   "captured": 44,
+   "spilled": 44,
+   "scattered": 0,
+   "binned_general": 44,
+   "binned_recycling": 0,
+   "to_floor": 14
+  },
+  "wipe_s": 176.53,
+  "sweep_s": 3302.0,
+  "soap_strokes": 4,
+  "soap_doses_missed": 0,
+  "water_s": 1460.55
+ },
+ "tools_clipped": {
+  "broom": true,
+  "dustpan": true
+ },
+ "lid_angles": {
+  "0": -0.0008,
+  "1": -0.0008
+ },
+ "bins": {
+  "0": "recycling",
+  "1": "general"
+ },
+ "render_errors": 0,
+ "internal_errors": 0,
+ "reference": {
+  "ok": true,
+  "sim_time": 3461.81,
+  "done": false,
+  "wall_s": 1496.93404006958,
+  "stage_score": 0.9537037037037036,
+  "credit_by_part": {
+   "trash": 2.0,
+   "dishes": 1.0,
+   "books": 1.0,
+   "grease": 2.5,
+   "crumbs": 2.037,
+   "sponge": 0.3,
+   "tools": 0.3,
+   "faucet": 0.2,
+   "lids": 0.2
+  }
+ },
+ "harness_wall_s": 1531.344604730606,
+ "camera_frames_total": 4,
+ "faucet_off": true,
+ "sponge": {
+  "in_tray": true,
+  "rinsed": true,
+  "soap": 0.091,
+  "wet": 1.0,
+  "load": 0.022,
+  "load_frac": 0.001,
+  "peak_load": 15.647,
+  "doses": 4,
+  "rinse_s": 21.66
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "convention": "b = sign x (q - zero_offset_rad); b = (ticks - 2048) x 2 pi / 4096; q = design angle, q = 0 straight up (T12, Q14); no ref",
+ "format": "calibration/1",
+ "joints": {
+  "base_yaw": {
+   "sign": 1,
+   "zero_offset_rad": 0.194866010985
+  },
+  "elbow_pitch": {
+   "sign": 1,
+   "zero_offset_rad": -0.223594130473
+  },
+  "jaw": {
+   "sign": 1,
+   "zero_offset_rad": 0.195476876223
+  },
+  "shoulder_pitch": {
+   "sign": 1,
+   "zero_offset_rad": 0.258814874778
+  },
+  "wrist_pitch": {
+   "sign": 1,
+   "zero_offset_rad": -0.243560697116
+  },
+  "wrist_roll": {
+   "sign": 1,
+   "zero_offset_rad": -0.125995318701
+  }
+ },
+ "units": {
+  "angle": "rad"
+ }
+}

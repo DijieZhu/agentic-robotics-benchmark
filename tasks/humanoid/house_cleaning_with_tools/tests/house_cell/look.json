@@ -1,0 +1,489 @@
+{
+ "format": "furniture-cell-look/1",
+ "note": "The agent cameras' look (render.py), distilled from the approved OVRTX path-traced look of this apartment (the owner's Unity packs ArchVizPRO Interior Vol.8 and House Props Furniture Vol 2 on the task's room, the review's demo scene): Filament view options; the image light (ibl.ktx in the decor folder: the mean of two OVRTX light probes at z = 1.0 m, at (1.6, 3.6) and (4.4, 3.6), the room without the robot and the loose objects, the sun off: the sky through the window, the ceiling panels, the pendant and the strip under the wall cabinets with their bounce); the explicit lights in physical units (the sun in lux with its shadows, the ceiling panels and the pendant as shadow-casting spots, the warm strip under the wall cabinets, the sunlit patches' bounce as upward spots), every light and the image light carrying the OVRTX look's white balance (tint); the materials' PBR terms and per-material colour gains on the linear albedo (texture data of a textured material), fitted in four rounds against OVRTX stills of the four agent cameras at 17 states of a development episode (linear light, per material, pooled): the main classes within 5 % of OVRTX (floor 0.94, walls 1.03, cabinets 1.00, dining table 1.01, counter 1.00, robot 1.01).",
+ "view": {
+  "numeric": {
+   "filament.ao.enabled": 0,
+   "filament.shadows.type": 3,
+   "filament.shadows.map_size": 2048,
+   "filament.phong.specular_multiplier": 0.2
+  },
+  "text": {
+   "filament.cg.tone_mapping": "filmic"
+  }
+ },
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 9049.1,
+  "color": [
+   1.1735,
+   0.9652,
+   0.8342
+  ]
+ },
+ "clear_color": [
+  0.85,
+  0.88,
+  0.92
+ ],
+ "tint": [
+  1.1735,
+  0.9652,
+  0.8342
+ ],
+ "lights": {
+  "sun": {
+   "intensity": 3276927.1,
+   "color": [
+    1.1735,
+    0.9073,
+    0.7091
+   ],
+   "shadow": true
+  },
+  "panel0": {
+   "intensity": 163297.2,
+   "color": [
+    1.1735,
+    0.9169,
+    0.7341
+   ],
+   "shadow": true,
+   "bulb_m": 0.45,
+   "shadow_map": 256,
+   "cutoff": 75.0,
+   "range": 20.0
+  },
+  "panel1": {
+   "intensity": 163297.2,
+   "color": [
+    1.1735,
+    0.9169,
+    0.7341
+   ],
+   "shadow": true,
+   "bulb_m": 0.45,
+   "shadow_map": 256,
+   "cutoff": 75.0,
+   "range": 20.0
+  },
+  "bounce_floor0": {
+   "intensity": 83601.3,
+   "color": [
+    1.1735,
+    0.5322,
+    0.2285
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_floor1": {
+   "intensity": 33051.7,
+   "color": [
+    1.1735,
+    0.5322,
+    0.2285
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_floor2": {
+   "intensity": 89758.3,
+   "color": [
+    1.1735,
+    0.5322,
+    0.2285
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_floor3": {
+   "intensity": 99155.0,
+   "color": [
+    1.1735,
+    0.5322,
+    0.2285
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_floor4": {
+   "intensity": 78416.7,
+   "color": [
+    1.1735,
+    0.5322,
+    0.2285
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_table0": {
+   "intensity": 91336.8,
+   "color": [
+    1.1735,
+    0.5326,
+    0.1884
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_table1": {
+   "intensity": 97955.6,
+   "color": [
+    1.1735,
+    0.5326,
+    0.1884
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "bounce_table2": {
+   "intensity": 75893.2,
+   "color": [
+    1.1735,
+    0.5326,
+    0.1884
+   ],
+   "shadow": false,
+   "cutoff": 50.0,
+   "range": 20.0
+  },
+  "undercabinet": {
+   "intensity": 22000.0,
+   "color": [
+    1.1735,
+    0.6949,
+    0.3754
+   ],
+   "shadow": false,
+   "cutoff": 80.0,
+   "range": 6.0
+  },
+  "pendant": {
+   "intensity": 15000.0,
+   "color": [
+    1.1735,
+    0.7722,
+    0.5005
+   ],
+   "shadow": true,
+   "shadow_map": 256,
+   "bulb_m": 0.05,
+   "cutoff": 70.0,
+   "range": 8.0
+  }
+ },
+ "materials": {
+  "a/metal": {
+   "roughness": 0.38
+  },
+  "a/black": {
+   "roughness": 0.45
+  },
+  "decor_CouchLeather_7f134b": {
+   "specular": 0.25
+  },
+  "decor_Plant_Inside_59c9d1": {
+   "specular": 0.2
+  },
+  "decor_Carpets_373494": {
+   "specular": 0.3
+  },
+  "pendant_glow": {
+   "emission": 0.03
+  },
+  "bin_blue_inner": {
+   "specular": 0.0
+  },
+  "bin_grey_inner": {
+   "specular": 0.0
+  },
+  "bin_inside": {
+   "specular": 0.0
+  }
+ },
+ "gains": {
+  "a/black": [
+   0.2718,
+   0.2155,
+   0.1999
+  ],
+  "a/metal": [
+   0.6722,
+   0.5369,
+   0.4501
+  ],
+  "badge_mat": [
+   1.0799,
+   1.0068,
+   1.0672
+  ],
+  "bin_blue_lid": [
+   1.0248,
+   1.3511,
+   1.5373
+  ],
+  "bin_blue_mat": [
+   0.4912,
+   0.654,
+   0.6843
+  ],
+  "bin_grey_lid": [
+   1.1658,
+   1.2756,
+   1.3381
+  ],
+  "bin_grey_mat": [
+   0.8077,
+   0.6715,
+   0.5961
+  ],
+  "birch": [
+   0.7936,
+   0.6447,
+   0.5334
+  ],
+  "black_steel": [
+   1.598,
+   2.1186,
+   2.397
+  ],
+  "broom_alu": [
+   0.7697,
+   0.6108,
+   0.5131
+  ],
+  "broom_red": [
+   0.7926,
+   0.5965,
+   0.5965
+  ],
+  "cabinet_offwhite": [
+   1.2616,
+   1.1735,
+   1.1078
+  ],
+  "cabinet_sage": [
+   1.0574,
+   0.9398,
+   0.8317
+  ],
+  "chrome": [
+   1.5065,
+   1.1775,
+   1.0438
+  ],
+  "clip_black": [
+   0.1446,
+   0.1118,
+   0.0964
+  ],
+  "cover_book_blue": [
+   0.8015,
+   0.6194,
+   0.6002
+  ],
+  "cover_book_red": [
+   0.8262,
+   0.6208,
+   0.6208
+  ],
+  "crock": [
+   1.4189,
+   1.1346,
+   0.9555
+  ],
+  "decor_Carpets_373494": [
+   0.6178,
+   0.5085,
+   0.4355
+  ],
+  "decor_CouchLeather_7f134b": [
+   0.4441,
+   0.3471,
+   0.2961
+  ],
+  "decor_Curtains_AB_8b8e18": [
+   1.0886,
+   1.0608,
+   1.0313
+  ],
+  "decor_Paintings_set_a76948": [
+   1.691,
+   1.5558,
+   1.4732
+  ],
+  "decor_Plant_2_2e1cff": [
+   1.0643,
+   1.0736,
+   1.1669
+  ],
+  "decor_Plant_Inside_59c9d1": [
+   1.1193,
+   1.0255,
+   0.8226
+  ],
+  "decor_Sockets_81dc19_e0": [
+   0.933,
+   0.7895,
+   0.6788
+  ],
+  "decor_Wall_Frames_9cf87f": [
+   12.0,
+   12.0,
+   12.0
+  ],
+  "decor_parquet": [
+   0.5764,
+   0.4444,
+   0.3843
+  ],
+  "decor_wall_paint": [
+   1.4389,
+   1.1986,
+   1.1262
+  ],
+  "decor_white_trim": [
+   0.8686,
+   0.7389,
+   0.6503
+  ],
+  "decor_window_board": [
+   1.2964,
+   1.3066,
+   1.438
+  ],
+  "decor_window_frame": [
+   1.3837,
+   1.3554,
+   1.3318
+  ],
+  "fireclay": [
+   1.1769,
+   0.9221,
+   0.8292
+  ],
+  "glass": [
+   0.4155,
+   0.3581,
+   0.2921
+  ],
+  "grip_black": [
+   0.2032,
+   0.1577,
+   0.1354
+  ],
+  "herb_pot": [
+   1.282,
+   0.9979,
+   0.9462
+  ],
+  "hob_glass": [
+   2.8296,
+   2.193,
+   1.9699
+  ],
+  "napkin_paper": [
+   0.866,
+   0.701,
+   0.6495
+  ],
+  "oak": [
+   1.3015,
+   1.492,
+   1.6473
+  ],
+  "pan_grey": [
+   0.5128,
+   0.4319,
+   0.3981
+  ],
+  "photo_frame": [
+   0.5548,
+   0.4288,
+   0.3699
+  ],
+  "plinth_dark": [
+   0.1779,
+   0.1372,
+   0.1186
+  ],
+  "porcelain": [
+   0.9509,
+   0.7512,
+   0.6339
+  ],
+  "quartz": [
+   1.2053,
+   0.9568,
+   0.8153
+  ],
+  "seat_fabric": [
+   0.3337,
+   0.2794,
+   0.2795
+  ],
+  "soap_green": [
+   1.5169,
+   1.1582,
+   1.1229
+  ],
+  "spines_a_mat": [
+   1.026,
+   0.8375,
+   0.6922
+  ],
+  "spines_b_mat": [
+   1.0454,
+   0.8184,
+   0.7085
+  ],
+  "steel": [
+   0.4497,
+   0.3535,
+   0.2998
+  ],
+  "tiles": [
+   1.1597,
+   0.9268,
+   0.7832
+  ],
+  "tray_rubber": [
+   0.3815,
+   0.2963,
+   0.2543
+  ],
+  "vase": [
+   1.3802,
+   1.3504,
+   1.2719
+  ],
+  "walnut": [
+   0.6836,
+   0.5138,
+   0.5121
+  ],
+  "bin_blue_inner": [
+   0.1007,
+   0.3467,
+   0.3972
+  ],
+  "bin_grey_inner": [
+   0.4378,
+   0.411,
+   0.3863
+  ],
+  "bin_inside": [
+   0.1196,
+   0.1139,
+   0.2851
+  ]
+ }
+}

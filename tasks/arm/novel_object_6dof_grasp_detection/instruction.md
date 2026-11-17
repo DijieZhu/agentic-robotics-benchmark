@@ -17,6 +17,7 @@ predict(rgb, depth, intrinsics, depth_scale) -> numpy.ndarray   # shape (N, 17)
 ## Environment
 
 - Python: use `/opt/grasp/bin/python` (Python 3.10). It has numpy 1.23.5, scipy, scikit-learn 1.6.1, scikit-image, open3d 0.18, trimesh, opencv-python, pillow, matplotlib, h5py, torch 2.4.1 (CPU) and graspnetAPI 1.2.11. Your solver is graded on exactly this interpreter and these packages; nothing else can be installed. `python3` on `PATH` is a different interpreter without these packages.
+- `OPENBLAS_CORETYPE=Haswell` is set in this environment and in the graded run, and `/opt/grasp/bin/python` falls back to it when the variable is missing from its environment (not with `-S`). Do not set another value: the OpenBLAS inside this numpy then uses other kernels, and the ones it picks by itself on some recent Intel CPUs return wrong matrix products.
 - 8 CPUs, 64 GB of memory, no GPU, and no network, both while you work and while your solver is graded.
 - You have 4 hours.
 

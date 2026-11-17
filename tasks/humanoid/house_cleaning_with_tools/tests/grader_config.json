@@ -1,0 +1,26 @@
+{
+ "episodes": 3,
+ "sim_cap_s": 4800.0,
+ "program_time_cap_s": 3600.0,
+ "silence_s": 120.0,
+ "camera_budget_frames": 1500,
+ "max_ticks_per_step": 500,
+ "settle_s": 0.6,
+ "cpu_cap_factor": 4.0,
+ "runner_account": "nobody",
+ "privileged_program_time_cap_s": 10800.0,
+ "socket_sample_s": 0.5,
+ "route_gate": {
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb"
+  ],
+  "max_submission_mb": 60
+ },
+ "note": "the whole dict is the cell's config (house_cell.cell.Cell reads sim_cap_s, camera_budget_frames, max_ticks_per_step, settle_s, program_time_cap_s, silence_s; the instruction and cell_manual.md section 10 state them); verify.py reads episodes, the caps, cpu_cap_factor (x program_time_cap_s = the program's CPU seconds), runner_account (the account the program runs as), privileged_program_time_cap_s (the oracle's episodes: the reference cleaner runs inside one call), socket_sample_s and route_gate (model-weight files by extension and the submission's size cap, both stated in the instruction). program_time_cap_s caps the program's own time per episode: the wall clock minus the cell's simulation (step) and rendering (get_camera), which the sim cap and the frame budget bound (cellkit.wire); silence_s caps the time from a reply to the next request"
+}
