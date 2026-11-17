@@ -1,0 +1,621 @@
+{
+ "audit": {
+  "T-01": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 4,
+   "n_units": 132
+  },
+  "T-02+O-PK18+O-TL150": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 4,
+   "n_units": 132
+  },
+  "T-05": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 4,
+   "n_units": 132
+  },
+  "T-05+O-TL200": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 4,
+   "n_units": 132
+  },
+  "T-07": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 6,
+   "n_units": 132
+  },
+  "T-07+O-DOME": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 44,
+    "W4": 44
+   },
+   "n_phi_plus": 6,
+   "n_units": 132
+  },
+  "T-07+O-DOME+O-TL200": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 44,
+    "W4": 44
+   },
+   "n_phi_plus": 6,
+   "n_units": 132
+  },
+  "T-07+O-TL200": {
+   "n_fail": {
+    "W1": 120,
+    "W3": 66,
+    "W4": 44
+   },
+   "n_phi_plus": 6,
+   "n_units": 132
+  }
+ },
+ "audit_note": "P20 I-SEP audit: for every OK configuration (truth_table.json sets.ok) its own-family band at the frozen delta x 1.0, Part D rule for W1 (n01_as_delivered): n_units, |Phi+| (every band row >= 2 delta) and |F_k| (row < -delta); verify recomputes it",
+ "bids": {
+  "T-01": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    },
+    "PK-20": {
+     "A": "PK-20",
+     "B": "PK-20/B",
+     "C": "PK-20/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-02": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-15E": {
+     "A": "PK-15E",
+     "B": "PK-15E/B",
+     "C": "PK-15E/C"
+    },
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-03": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-04": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-05": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    },
+    "PK-20": {
+     "A": "PK-20",
+     "B": "PK-20/B",
+     "C": "PK-20/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_sea"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-06": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    },
+    "PK-20": {
+     "A": "PK-20",
+     "B": "PK-20/B",
+     "C": "PK-20/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-07": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-18": {
+     "A": "PK-18",
+     "B": "PK-18/B",
+     "C": "PK-18/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  },
+  "T-08": {
+   "dims": {
+    "ballast_pieces": [
+     0,
+     10
+    ],
+    "grades": [
+     "A",
+     "B",
+     "C"
+    ],
+    "presets_a": [
+     42.0,
+     54.0,
+     66.0,
+     72.0
+    ]
+   },
+   "ease_order": "ballast closest to the works practice, grade C before B before A, preset low to high",
+   "ease_rule": {
+    "ballast": "closest to the works practice first; equally close: fewer pieces first",
+    "grade": [
+     "C",
+     "B",
+     "A"
+    ],
+    "preset": "ascending"
+   },
+   "envelope": {
+    "chamber_c": [
+     10.0,
+     35.0
+    ],
+    "hold_min": [
+     0.0,
+     240.0
+    ],
+    "load_w": [
+     60.0,
+     720.0
+    ],
+    "speed_mps": [
+     0.2,
+     1.0
+    ],
+    "supply_v": [
+     11.0,
+     17.0
+    ]
+   },
+   "grades_by_pack": {
+    "PK-22": {
+     "A": "PK-22",
+     "B": "PK-22/B",
+     "C": "PK-22/C"
+    }
+   },
+   "grades_note": "A = new pack of the configuration's own family (reference lot); B = same-lot stock pack (capacity 95 %, resistance +10 %); C = alternate cell lot",
+   "works_practice": {
+    "ballast_pieces": {
+     "digest": "n_nom"
+    },
+    "rule": "ballast as the tendered unit, trimmed near neutral in the bidder's own tank"
+   }
+  }
+ },
+ "schema": "uw-req-delivery/1",
+ "unit": "a deliverable unit = (n_ballast int, grade str, preset_a float); order = ballast ascending, grade A < B < C, preset ascending"
+}

@@ -1,0 +1,1062 @@
+{
+ "acceptance_schedule": {
+  "$defs": {
+   "clause": {
+    "additionalProperties": false,
+    "allOf": [
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "air_mass_kg"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">=",
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "kg"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "tank_net_buoyancy_n"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">=",
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "N"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "displaced_volume_l"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">=",
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "L"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "bollard_thrust_n"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "axis": {
+           "enum": [
+            "surge_ahead",
+            "surge_astern"
+           ]
+          },
+          "limiter": {
+           "enum": [
+            "on",
+            "off"
+           ]
+          },
+          "supply_v": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "axis",
+          "supply_v",
+          "limiter"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "N"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "bollard_bus_current_a"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "axis": {
+           "enum": [
+            "surge_ahead",
+            "surge_astern"
+           ]
+          },
+          "limiter": {
+           "enum": [
+            "on",
+            "off"
+           ]
+          },
+          "supply_v": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "axis",
+          "supply_v",
+          "limiter"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "A"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "battery_delivered_energy_wh"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "chamber_c": {
+           "type": "number"
+          },
+          "cutoff_v": {
+           "type": "number"
+          },
+          "load_w": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "load_w",
+          "chamber_c",
+          "cutoff_v"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "Wh"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "pack_dcir_mohm"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "chamber_c": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "chamber_c"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "mOhm"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "hotel_power_w"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "lights_pct": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "lights_pct"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "W"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "proof_pressure_bar"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "hold_min": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "hold_min"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "bar"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "tow_drag_n"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "speed_mps": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "speed_mps"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "N"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "tether_length_m"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "m"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "tether_diameter_mm"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "mm"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "camera_hfov_deg"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {
+          "medium": {
+           "enum": [
+            "air",
+            "tank_water"
+           ]
+          }
+         },
+         "required": [
+          "medium"
+         ],
+         "type": "object"
+        },
+        "unit": {
+         "const": "deg"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "sonar_min_range_m"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          "<="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "m"
+        }
+       }
+      }
+     },
+     {
+      "if": {
+       "properties": {
+        "quantity": {
+         "const": "gripper_opening_mm"
+        }
+       },
+       "required": [
+        "quantity"
+       ]
+      },
+      "then": {
+       "properties": {
+        "comparator": {
+         "enum": [
+          ">="
+         ]
+        },
+        "conditions": {
+         "additionalProperties": false,
+         "properties": {},
+         "required": [],
+         "type": "object"
+        },
+        "unit": {
+         "const": "mm"
+        }
+       }
+      }
+     }
+    ],
+    "properties": {
+     "bound": {
+      "type": "number"
+     },
+     "comparator": {
+      "enum": [
+       ">=",
+       "<="
+      ]
+     },
+     "conditions": {
+      "type": "object"
+     },
+     "id": {
+      "pattern": "^AC-[0-9]{2}$",
+      "type": "string"
+     },
+     "quantity": {
+      "enum": [
+       "air_mass_kg",
+       "tank_net_buoyancy_n",
+       "displaced_volume_l",
+       "bollard_thrust_n",
+       "bollard_bus_current_a",
+       "battery_delivered_energy_wh",
+       "pack_dcir_mohm",
+       "hotel_power_w",
+       "proof_pressure_bar",
+       "tow_drag_n",
+       "tether_length_m",
+       "tether_diameter_mm",
+       "camera_hfov_deg",
+       "sonar_min_range_m",
+       "gripper_opening_mm"
+      ]
+     },
+     "unit": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "quantity",
+     "comparator",
+     "bound",
+     "unit",
+     "conditions"
+    ],
+    "type": "object"
+   }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+   "clauses": {
+    "items": {
+     "$ref": "#/$defs/clause"
+    },
+    "maxItems": 24,
+    "type": "array"
+   },
+   "for_bid": {
+    "oneOf": [
+     {
+      "enum": [
+       "T-01",
+       "T-02",
+       "T-03",
+       "T-04",
+       "T-05",
+       "T-06",
+       "T-07",
+       "T-08"
+      ]
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "for_options": {
+    "items": {
+     "pattern": "^O-[A-Z0-9]{1,6}$",
+     "type": "string"
+    },
+    "maxItems": 2,
+    "type": "array",
+    "uniqueItems": true
+   }
+  },
+  "required": [
+   "for_bid",
+   "for_options",
+   "clauses"
+  ],
+  "title": "acceptance_schedule.json",
+  "type": "object"
+ },
+ "evaluation": {
+  "$defs": {
+   "accept": {
+    "additionalProperties": false,
+    "properties": {
+     "options": {
+      "items": {
+       "pattern": "^O-[A-Z0-9]{1,6}$",
+       "type": "string"
+      },
+      "maxItems": 2,
+      "type": "array",
+      "uniqueItems": true
+     },
+     "site": {
+      "additionalProperties": false,
+      "properties": {
+       "as_tendered_net_buoyancy_n": {
+        "type": "number"
+       },
+       "depth_rating_margin_m": {
+        "type": "number"
+       },
+       "dive_energy_reserve_frac": {
+        "type": "number"
+       },
+       "launch_mass_margin_kg": {
+        "type": "number"
+       },
+       "pitch_authority_ratio": {
+        "type": "number"
+       },
+       "station_thrust_ratio": {
+        "type": "number"
+       },
+       "tether_reach_margin_m": {
+        "type": "number"
+       },
+       "wet_temperature_margin_c": {
+        "type": "number"
+       }
+      },
+      "required": [
+       "as_tendered_net_buoyancy_n",
+       "depth_rating_margin_m",
+       "station_thrust_ratio",
+       "dive_energy_reserve_frac",
+       "tether_reach_margin_m",
+       "pitch_authority_ratio",
+       "wet_temperature_margin_c",
+       "launch_mass_margin_kg"
+      ],
+      "type": "object"
+     },
+     "verdict": {
+      "const": "accept"
+     }
+    },
+    "required": [
+     "verdict",
+     "options",
+     "site"
+    ],
+    "type": "object"
+   },
+   "bid": {
+    "oneOf": [
+     {
+      "$ref": "#/$defs/accept"
+     },
+     {
+      "$ref": "#/$defs/reject"
+     }
+    ]
+   },
+   "reject": {
+    "additionalProperties": false,
+    "properties": {
+     "grounds": {
+      "items": {
+       "enum": [
+        "N-01",
+        "N-02",
+        "N-03",
+        "N-04",
+        "N-05",
+        "N-06",
+        "N-07",
+        "N-08",
+        "N-09",
+        "N-10",
+        "N-11",
+        "N-12"
+       ]
+      },
+      "maxItems": 2,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+     },
+     "verdict": {
+      "const": "reject"
+     }
+    },
+    "required": [
+     "verdict",
+     "grounds"
+    ],
+    "type": "object"
+   }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+   "award": {
+    "oneOf": [
+     {
+      "enum": [
+       "T-01",
+       "T-02",
+       "T-03",
+       "T-04",
+       "T-05",
+       "T-06",
+       "T-07",
+       "T-08"
+      ]
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "bids": {
+    "additionalProperties": false,
+    "properties": {
+     "T-01": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-02": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-03": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-04": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-05": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-06": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-07": {
+      "$ref": "#/$defs/bid"
+     },
+     "T-08": {
+      "$ref": "#/$defs/bid"
+     }
+    },
+    "required": [
+     "T-01",
+     "T-02",
+     "T-03",
+     "T-04",
+     "T-05",
+     "T-06",
+     "T-07",
+     "T-08"
+    ],
+    "type": "object"
+   }
+  },
+  "required": [
+   "bids",
+   "award"
+  ],
+  "title": "evaluation.json",
+  "type": "object"
+ },
+ "spec_review": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+   "clauses": {
+    "additionalProperties": false,
+    "properties": {
+     "B-01": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-02": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-03": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-04": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-05": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-06": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-07": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-08": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-09": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-10": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-11": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-12": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-13": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-14": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-15": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-16": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-17": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-18": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-19": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-20": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-21": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-22": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-23": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     },
+     "B-24": {
+      "enum": [
+       "keep",
+       "lax",
+       "strict",
+       "lax_and_strict"
+      ]
+     }
+    },
+    "required": [
+     "B-01",
+     "B-02",
+     "B-03",
+     "B-04",
+     "B-05",
+     "B-06",
+     "B-07",
+     "B-08",
+     "B-09",
+     "B-10",
+     "B-11",
+     "B-12",
+     "B-13",
+     "B-14",
+     "B-15",
+     "B-16",
+     "B-17",
+     "B-18",
+     "B-19",
+     "B-20",
+     "B-21",
+     "B-22",
+     "B-23",
+     "B-24"
+    ],
+    "type": "object"
+   }
+  },
+  "required": [
+   "clauses"
+  ],
+  "title": "spec_review.json",
+  "type": "object"
+ }
+}

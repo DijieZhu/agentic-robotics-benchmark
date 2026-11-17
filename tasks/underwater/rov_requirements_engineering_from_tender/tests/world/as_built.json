@@ -1,0 +1,691 @@
+{
+ "bids": {
+  "T-01": {
+   "hidden": {
+    "b_ship": 0.055,
+    "cam_built": null,
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.0,
+    "m_air": {
+     "delta_kg": 0.05,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.05,
+      "camera": 0.0,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": 0.0,
+      "pack": 0.0,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 0,
+    "tank": "fresh_cold",
+    "tank_stated": false,
+    "tr2": [
+     12.0,
+     72.0
+    ],
+    "tr2_stated": false,
+    "xu": 8.87,
+    "xu_tested": 8.87,
+    "xuu": 50.6,
+    "xuu_tested": 50.6
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-PK20": {
+      "price": 720,
+      "slots": {
+       "pack": "PK-20"
+      }
+     },
+     "O-XL": {
+      "price": 640,
+      "variant": {
+       "e_tube_len": "400"
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 11700,
+    "slots": {
+     "ballast": "potted",
+     "camera": "dome-internal",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "6.8/200",
+     "thruster": "TH-A"
+    },
+    "tank_stated": null,
+    "tr2_stated_conditions": null,
+    "variant": {
+     "cam_housing": null,
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 90.0
+    }
+   }
+  },
+  "T-02": {
+   "hidden": {
+    "b_ship": 0.024,
+    "cam_built": null,
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.0,
+    "m_air": {
+     "delta_kg": -0.4706666666666667,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.0,
+      "camera": 0.0,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": -0.236,
+      "pack": -0.2346666666666667,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 5,
+    "tank": "fresh",
+    "tank_stated": true,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 8.87,
+    "xu_tested": 8.87,
+    "xuu": 50.6,
+    "xuu_tested": 50.6
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-PK18": {
+      "price": 610,
+      "slots": {
+       "pack": "PK-18"
+      }
+     },
+     "O-TL150": {
+      "price": 460,
+      "slots": {
+       "tether": "6.8/150"
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 9950,
+    "slots": {
+     "ballast": "removable",
+     "camera": "dome-internal",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 2,
+     "pack": "PK-15E",
+     "tether": "6.8/138",
+     "thruster": "TH-A"
+    },
+    "tank_stated": "fresh",
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": null,
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 90.0
+    }
+   }
+  },
+  "T-03": {
+   "hidden": {
+    "b_ship": 0.041,
+    "cam_built": "L",
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.07,
+    "m_air": {
+     "delta_kg": 0.33,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.0,
+      "camera": 0.33,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": 0.0,
+      "pack": 0.0,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 5,
+    "tank": "fresh",
+    "tank_stated": true,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 9.4909,
+    "xu_tested": 9.4909,
+    "xuu": 54.142,
+    "xuu_tested": 54.142
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-DVL": {
+      "price": 880
+     },
+     "O-L6": {
+      "price": 380,
+      "slots": {
+       "lights": 6
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 10600,
+    "slots": {
+     "ballast": "removable",
+     "camera": "flat-external",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "6.8/200",
+     "thruster": "TH-A"
+    },
+    "tank_stated": "fresh",
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": "series",
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 100.0
+    }
+   }
+  },
+  "T-04": {
+   "hidden": {
+    "b_ship": 0.05,
+    "cam_built": null,
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.0,
+    "m_air": {
+     "delta_kg": 0.05,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.05,
+      "camera": 0.0,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": 0.0,
+      "pack": 0.0,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 0,
+    "tank": "sea",
+    "tank_stated": false,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 8.87,
+    "xu_tested": 8.87,
+    "xuu": 50.6,
+    "xuu_tested": 50.6
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-DVL": {
+      "price": 910
+     },
+     "O-L6": {
+      "price": 390,
+      "slots": {
+       "lights": 6
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 9800,
+    "slots": {
+     "ballast": "potted",
+     "camera": "dome-internal",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "6.8/200",
+     "thruster": "TH-A"
+    },
+    "tank_stated": null,
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": null,
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 90.0
+    }
+   }
+  },
+  "T-05": {
+   "hidden": {
+    "cam_built": null,
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.0,
+    "m_air": {
+     "derive": "reference_as_tendered_mass"
+    },
+    "n_fit": {
+     "derive": "reference_works_ballast"
+    },
+    "n_spare": 3,
+    "tank": "sea",
+    "tank_stated": true,
+    "tr2": [
+     14.8,
+     72.0
+    ],
+    "tr2_stated": false,
+    "vol_l": {
+     "derive": "reference_as_tendered_volume"
+    },
+    "xu": 8.87,
+    "xu_tested": 8.87,
+    "xuu": 50.6,
+    "xuu_tested": 50.6
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-PK20": {
+      "price": 700,
+      "slots": {
+       "pack": "PK-20"
+      }
+     },
+     "O-TL200": {
+      "price": 520,
+      "slots": {
+       "tether": "6.8/200"
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 10900,
+    "slots": {
+     "ballast": "removable",
+     "camera": "dome-internal",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "6.8/150",
+     "thruster": "TH-A"
+    },
+    "tank_stated": "sea",
+    "tr2_stated_conditions": null,
+    "variant": {
+     "cam_housing": null,
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 90.0
+    }
+   }
+  },
+  "T-06": {
+   "hidden": {
+    "b_ship": 0.046,
+    "cam_built": "S",
+    "cam_hotel_w": 0.0,
+    "eta": 0.95,
+    "eta_tested": 0.95,
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.07,
+    "m_air": {
+     "delta_kg": 0.33,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.0,
+      "camera": 0.33,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": 0.0,
+      "pack": 0.0,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 5,
+    "tank": "fresh",
+    "tank_stated": true,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 9.4909,
+    "xu_tested": 9.4909,
+    "xuu": 54.142,
+    "xuu_tested": 54.142
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-L8": {
+      "price": 420,
+      "slots": {
+       "lights": 8
+      }
+     },
+     "O-PK20": {
+      "price": 690,
+      "slots": {
+       "pack": "PK-20"
+      }
+     }
+    },
+    "paper_speed": 1.3,
+    "price": 10300,
+    "slots": {
+     "ballast": "removable",
+     "camera": "flat-external",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "6.8/200",
+     "thruster": "TH-C"
+    },
+    "tank_stated": "fresh",
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": "series",
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 60.0
+    }
+   }
+  },
+  "T-07": {
+   "hidden": {
+    "b_ship": 0.041,
+    "cam_built": "S",
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference"
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.0,
+    "k_eta": 1.0,
+    "k_ext": 1.07,
+    "m_air": {
+     "delta_kg": 0.33,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.0,
+      "camera": 0.33,
+      "e_tube": 0.0,
+      "frame": 0.0,
+      "lights": 0.0,
+      "pack": 0.0,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 5,
+    "tank": "fresh",
+    "tank_stated": true,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 9.4909,
+    "xu_tested": 9.4909,
+    "xuu": 54.142,
+    "xuu_tested": 54.142
+   },
+   "tendered": {
+    "declares_asbuilt_rating": true,
+    "options": {
+     "O-DOME": {
+      "price": 600,
+      "slots": {
+       "camera": "dome-internal"
+      },
+      "variant": {
+       "cam_housing": null,
+       "lens": 90.0
+      }
+     },
+     "O-TL200": {
+      "price": 500,
+      "slots": {
+       "tether": "3.5/200"
+      }
+     }
+    },
+    "paper_speed": 1.7,
+    "price": 12100,
+    "slots": {
+     "ballast": "removable",
+     "camera": "flat-external",
+     "e_tube": "acrylic",
+     "frame": "open",
+     "lights": 4,
+     "pack": "PK-18",
+     "tether": "3.5/150",
+     "thruster": "TH-A"
+    },
+    "tank_stated": "fresh",
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": "series",
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 120.0
+    }
+   }
+  },
+  "T-08": {
+   "hidden": {
+    "b_ship": 0.044,
+    "cam_built": null,
+    "cam_hotel_w": 0.0,
+    "eta": {
+     "derive": "eta_reference",
+     "factor": 0.76
+    },
+    "eta_tested": {
+     "derive": "eta_reference"
+    },
+    "i_preset": 72.0,
+    "k_drag": 1.5,
+    "k_eta": 0.76,
+    "k_ext": 1.0,
+    "m_air": {
+     "delta_kg": 1.362,
+     "derive": "digest_mass_plus",
+     "parts_kg": {
+      "ballast": 0.05,
+      "camera": 0.0,
+      "e_tube": 0.0,
+      "frame": 0.8,
+      "lights": 0.0,
+      "pack": 0.512,
+      "tether": 0.0,
+      "thruster": 0.0
+     }
+    },
+    "n_fit": {
+     "derive": "nominal_ballast"
+    },
+    "n_spare": 0,
+    "tank": "fresh",
+    "tank_stated": true,
+    "tr2": [
+     16.8,
+     null
+    ],
+    "tr2_stated": true,
+    "xu": 13.305,
+    "xu_tested": 8.87,
+    "xuu": 75.9,
+    "xuu_tested": 50.6
+   },
+   "tendered": {
+    "declares_asbuilt_rating": false,
+    "options": {
+     "O-DVL": {
+      "price": 900
+     },
+     "O-XL": {
+      "price": 660,
+      "variant": {
+       "e_tube_len": "400"
+      }
+     }
+    },
+    "paper_speed": 1.4,
+    "price": 9300,
+    "slots": {
+     "ballast": "potted",
+     "camera": "dome-internal",
+     "e_tube": "acrylic",
+     "frame": "caged",
+     "lights": 4,
+     "pack": "PK-22",
+     "tether": "6.8/200",
+     "thruster": "TH-A"
+    },
+    "tank_stated": "fresh",
+    "tr2_stated_conditions": [
+     16.8,
+     null
+    ],
+    "variant": {
+     "cam_housing": null,
+     "e_tube_len": "300",
+     "foam": "R300",
+     "lens": 90.0
+    }
+   }
+  }
+ },
+ "reference": {
+  "eta_loss": 0.968,
+  "n_works": {
+   "digest": "n_sea"
+  }
+ },
+ "schema": "uw-req-as-built/1",
+ "tanks": {
+  "fresh": {
+   "label": "fresh-water tank",
+   "t_c": 20.0
+  },
+  "fresh_cold": {
+   "label": "cold fresh-water tank",
+   "t_c": 8.0
+  },
+  "sea": {
+   "label": "sea-water tank",
+   "rho": 1024.6,
+   "t_c": 20.0
+  }
+ }
+}

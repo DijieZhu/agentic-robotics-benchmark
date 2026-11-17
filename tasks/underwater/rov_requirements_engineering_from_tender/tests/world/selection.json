@@ -1,0 +1,62 @@
+{
+ "arm": "c1m",
+ "basis_revision": {
+  "frozen": {
+   "buoy_hi": 0.01,
+   "buoy_lo": 0.0,
+   "contingency_s": 60.0
+  },
+  "frozen_sha256": "65dc058c2a52c7e4817b6e8e88b986943e71c795ec6cd5231659e955c8b82119",
+  "installed": true,
+  "keys": [
+   "buoy_lo",
+   "buoy_hi",
+   "contingency_s"
+  ],
+  "note": "P02-5 / PREREG 4.4 and ruling O5: the revision is installed in all three copies (D/src/uw_req/basis.py, T/tests/evaluation_basis.py, the payload's tender/evaluation_basis.py): P19's revised bytes (only these POLICY literals changed) with the docstring wording of crane_swl_kg and of n08_launch_mass_margin_kg made neutral (no 'launch crane'), so its sha256 differs from P19's",
+  "p19_revision_sha256": "0e4f458ca06f87865c69973cd3d43fd23d97dbbd025153fc88599c6b18af4411",
+  "revised_sha256": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
+  "world": {
+   "buoy_hi": 0.0095,
+   "buoy_lo": -0.0005,
+   "contingency_s": 120.0
+  }
+ },
+ "candidate": "c1-113-c1m",
+ "inputs": {
+  "D/CONTRACTS.md": "0b6b452d1f535e38d76b55e6a18a121178f0af89862291cf114cda100801166b",
+  "D/gen/world/PREREG_WORLD.md": "24f5d0018ba9b15bb7d12891000f901293e2eab2d2cd52a458e40a9dd923931a",
+  "D/gen/world/instance.py": "b75ce4e588425249149feba2e61e4ef9b9409665d9788ff5193028ec7ebb2a07",
+  "D/gen/world/params/calibrated.json": "cc4a1464e76f07adea253a31c89f62dfeebdfc2bfdecc4a2ec76443a34d806db",
+  "D/gen/world/prereg_world.json": "62932f278dbd50d17dfcd930288df907e0f504918b908b42478b1e15d8c1d786",
+  "D/gen/world/rules_v13.json": "f3b19645d66a9851deb99e049a98b64956e9d16b7d52b8349816b59848594bf1",
+  "D/gen/world/solve.py": "3ef998ad1be6ed4022eff3346ad4fc4295f6e914db5da8cf8400027da6f05ea5",
+  "D/src/uw_req/basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
+  "D/src/uw_req/evidence.py": "a5d533f4528d695fb0afb2186f08a35aa248169eacf4cdb3c541362e142c50b0",
+  "UW/shared/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "digest/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "evaluation_basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
+  "world/as_built.json": "10d11e40a63bd5a50b4c90b35b34ea3652268621855626a750cdde3fde6ce30b",
+  "world/catalogue.json": "ffcb22b9dce1d1f0cef29bf15d43fef4ccbae5cb1d3d9fabad963554602e350c",
+  "world/rows.json": "a00975c5bbc23a23fa199df6fee58afe0350fdc6871cb507af4cd9958f34c264",
+  "world/site.json": "1ade03b1986e7da9213b5bcd86914009a80a60eb9e12c66423ac21b2310e05f6",
+  "world/truth_table.json": "6205ca72ba2b0b80ed177556bbd25426a78e1e57672a6ad5b651d4000a339fb9"
+ },
+ "keys_note": "inputs keyed by a path relative to tests/ are checked by grade.py (Stage._check_selection); 'UW/...' and 'D/...' keys are the dev-side inputs (UW = docs/plan/underwater, D = its -dev directory), recorded only; world/clause_map.json and world/delivery_ranges.json are P20's and are not pinned here",
+ "ladder_level": 1,
+ "overrides": {
+  "site.t_min_c": 5.1
+ },
+ "overrides_note": "ruling O6 (UW/shared/DECISIONS.md, 2026-11-15): the lowest water temperature of the inspection month is 5.1 degC, the value the shipped CTD casts give under the Part A rule; applied on top of the calibrated parameters (gen/world/solve.py world_of(..., overrides)); only site.json (t_min_c, public_site_record) and the K2 column of truth_table.json change, the sets do not",
+ "round": "c1",
+ "schema": "uw-req-selection/1",
+ "supersedes": "D/evidence/world/superseded/P19_selection.json",
+ "supersedes_sha256": "5af9e323b95e54b30756ca4ba080be8c1a28a4f2b3a8d6a17b721b22551ccc22",
+ "world_of_record": {
+  "calibrated_proto_world_sha256": "3dec34fa012c2c726f5a84b420dc23b51f708643f1f8406cd3fac0075e7d9db7",
+  "calibrated_truth_sha256_proto_form": "19ce63f8958a97488246700378b0eb8f4c744202ca932bcf5aa59ceb27b7771a",
+  "proto_world_sha256": "a92d55ff7d3859716f4345ea67f5559eb677866f325b61f4c58a49892020d0f2",
+  "truth_configs_sha256": "263ce03077a58338c7ad153f0064f428f0ba814382a5f131838c037ce2d25b14",
+  "truth_sha256_proto_form": "bf6b3e973e00df58c328d426a213bdc533ecb3a31ad2450021bb8c10ff77b1b2"
+ }
+}

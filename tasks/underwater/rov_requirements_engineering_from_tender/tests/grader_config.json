@@ -1,0 +1,198 @@
+{
+ "award_ramp_B_frac_of_Jstar": 0.08,
+ "band_rows": [
+  "W1",
+  "W3",
+  "W4"
+ ],
+ "basis": {
+  "file": "evaluation_basis.py",
+  "sha256": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2"
+ },
+ "bids": [
+  "T-01",
+  "T-02",
+  "T-03",
+  "T-04",
+  "T-05",
+  "T-06",
+  "T-07",
+  "T-08"
+ ],
+ "delta_scale": 1.0,
+ "digest": {
+  "file": "digest/spec_values.json",
+  "sha256": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "version": "v3"
+ },
+ "dir_allowed": {
+  "air_mass_kg": [
+   ">=",
+   "<="
+  ],
+  "battery_delivered_energy_wh": [
+   ">="
+  ],
+  "bollard_bus_current_a": [
+   ">="
+  ],
+  "bollard_thrust_n": [
+   ">="
+  ],
+  "camera_hfov_deg": [
+   ">="
+  ],
+  "displaced_volume_l": [
+   ">=",
+   "<="
+  ],
+  "gripper_opening_mm": [
+   ">="
+  ],
+  "hotel_power_w": [
+   "<="
+  ],
+  "pack_dcir_mohm": [
+   "<="
+  ],
+  "proof_pressure_bar": [
+   ">="
+  ],
+  "sonar_min_range_m": [
+   "<="
+  ],
+  "tank_net_buoyancy_n": [
+   ">=",
+   "<="
+  ],
+  "tether_diameter_mm": [
+   "<="
+  ],
+  "tether_length_m": [
+   ">="
+  ],
+  "tow_drag_n": [
+   "<="
+  ]
+ },
+ "envelope_keys": [
+  "supply_v",
+  "chamber_c",
+  "load_w",
+  "speed_mps",
+  "hold_min"
+ ],
+ "f_gate": "c_a in OK",
+ "fail_delta_mult": 1.0,
+ "full_at": 0.98,
+ "grades": [
+  "A",
+  "B",
+  "C"
+ ],
+ "max_clauses": 24,
+ "metrics_whitelist": [
+  "acceptance_ba",
+  "acceptance_contractable",
+  "acceptance_g",
+  "acceptance_guard:N-01",
+  "acceptance_guard:N-03",
+  "acceptance_guard:N-04",
+  "acceptance_in_envelope",
+  "acceptance_schedule",
+  "agent_processes_killed",
+  "agent_processes_left",
+  "anchor_recorded",
+  "award",
+  "award_g",
+  "award_ok",
+  "delivered_unit_fit",
+  "gate_g0_structure",
+  "gate_g1_submission_integrity",
+  "lab_stopped",
+  "n_accepted",
+  "n_clauses",
+  "n_rejected",
+  "ratio",
+  "s_acc",
+  "s_rej",
+  "site_prediction",
+  "spec_review",
+  "tender_evaluation_score",
+  "verdicts"
+ ],
+ "n01_rules": {
+  "part_c": "n01_trim_reachable",
+  "part_d": "n01_as_delivered"
+ },
+ "n_options_per_bid": 2,
+ "note": "grader constants of rov_requirements_engineering_from_tender (hidden side). Scoring v1.2 (DESIGN v1.3 sec. 5, rulings L8, J10); rows / site keys / dictionary from CONTRACTS uw-req-contract/1.0 with the 1.1 revision of P02 (15 quantities, two surge axes). Written by package P09.",
+ "phi_plus_delta_mult": 2.0,
+ "reward_key": "tender_evaluation_score",
+ "row_order": [
+  "W1",
+  "W2",
+  "W3",
+  "W4",
+  "W5",
+  "K1",
+  "K2",
+  "K3",
+  "K4",
+  "K5",
+  "K6",
+  "K7"
+ ],
+ "rows": {
+  "N-01": "W1",
+  "N-02": "W2",
+  "N-03": "W3",
+  "N-04": "W4",
+  "N-05": "W5",
+  "N-06": "K1",
+  "N-07": "K2",
+  "N-08": "K3",
+  "N-09": "K4",
+  "N-10": "K5",
+  "N-11": "K6",
+  "N-12": "K7"
+ },
+ "schema": "uw-req-grader-config/1",
+ "schemas_file": "schemas.json",
+ "site_key_order": [
+  "as_tendered_net_buoyancy_n",
+  "depth_rating_margin_m",
+  "station_thrust_ratio",
+  "dive_energy_reserve_frac",
+  "tether_reach_margin_m",
+  "pitch_authority_ratio",
+  "wet_temperature_margin_c",
+  "launch_mass_margin_kg"
+ ],
+ "site_key_rows": {
+  "as_tendered_net_buoyancy_n": "W1",
+  "depth_rating_margin_m": "W2",
+  "dive_energy_reserve_frac": "W4",
+  "launch_mass_margin_kg": "K3",
+  "pitch_authority_ratio": "K1",
+  "station_thrust_ratio": "W3",
+  "tether_reach_margin_m": "W5",
+  "wet_temperature_margin_c": "K2"
+ },
+ "submission": {
+  "files": [
+   "evaluation.json",
+   "spec_review.json",
+   "acceptance_schedule.json"
+  ],
+  "max_bytes": 131072
+ },
+ "weights": {
+  "A": 0.15,
+  "F": 0.2,
+  "P": 0.15,
+  "Q": 0.05,
+  "V": 0.45
+ },
+ "world_dir": "world"
+}
