@@ -1,0 +1,66 @@
+# quadruped_cad_design_from_photos: the hardware-design (CAD) stage of a 12-DoF quadruped (an atomic task). A mechanical
+# designer re-creates the lost CAD of a modified quadruped in FreeCAD 1.1, known only from one fixed photo set (Blender
+# Cycles renders in a lab room: the 42 printed parts on a cutting mat in seven groups, both sides, close-ups, the
+# re-assembled robot standing and in two other poses, two legs in front of a checker board) and the bought actuator unit's
+# and foot pad's datasheets, drawings and STEP files. No topology, no templates, no practice units. It delivers one FreeCAD
+# document, /home/user/submission/quadruped.FCStd: 42 PartDesign Bodies labelled with the part tags, 12 actuator units and
+# 4 foot pads, one Assembly with Grounded / Fixed / Revolute joints and limits, saved in configuration Z.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available,
+# and verify records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; knobs in tests/grader_config.json; no
+# agent code runs): headless FreeCAD reads the document as an unprivileged account; the mechanism (a tree: body and four legs of three revolute joints) is inferred, each leg
+# judged valid or not, the body aligned with the robot's body; gates cad_valid, public_model_reuse x kinematic_fidelity
+# 0.30, feature_fidelity 0.25, shape_fidelity 0.25, mass_properties 0.10, component_fit 0.05, interference_free 0.05,
+# with a shape floor and per-leg foot-point floors. design_score = the weighted mean; reward = design_score
+# (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/quadruped_cad_design_from_photos"
+
+[metadata]
+platform = "quadruped"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set and the components' documents (< 30 s). agent: re-model the robot in FreeCAD (6 h). verify:
+# lockdown, the document read by headless FreeCAD, the mechanism inference and conversion, the grader (the oracle takes a
+# few minutes on 8 CPUs; the budget covers heavy documents).
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root.
+# setup.sh does not run there, and verify needs nothing it staged: the givens the grader reads (the bought components'
+# STEP files and data, the public-model blocklist) are its own copies in tests/given/. The verifier runs the image's
+# own desktop as the agent account; verify stops it first. The verifier has the agent's machine.
+[verifier]
+timeout_sec = 2700
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

@@ -1,0 +1,128 @@
+{
+ "counts": {
+  "cores": 12,
+  "feet": 4,
+  "joints": 12,
+  "links": 13,
+  "part_files": 16,
+  "parts": 42
+ },
+ "family": "solo12_family_v1",
+ "files": {
+  "assembly.json": {
+   "bytes": 26657,
+   "sha256": "ac0644123bbe63ace4ee4bb8f8905b15952f22e45350be203ffa795cfabde3ab"
+  },
+  "features.json": {
+   "bytes": 35413,
+   "sha256": "87075e7dc0e5a83f26773b576cd6f215f553cc7a53b2db1b43de4690509e743f"
+  },
+  "gt.json": {
+   "bytes": 81474,
+   "sha256": "8a74e284a140a0fd59b4236dd0adf780f43d940727e8b96790ba4099f40d6af0"
+  },
+  "key_quantities.json": {
+   "bytes": 30896,
+   "sha256": "14c6a2d49275246d4e812c3c139b9f967fddb2771053b0f84016f433c4c1304c"
+  },
+  "mass_properties.json": {
+   "bytes": 7946,
+   "sha256": "d7c0d0a383c403721adb7ca01852ad77dc47e78c0dd61d46b82e9a73e0f29131"
+  },
+  "parts/body_back.step": {
+   "bytes": 91701,
+   "sha256": "abb8c8e74653d4914e12038555ab53c15d38e7f91098a133d0ae0d4315e72e89"
+  },
+  "parts/body_center.step": {
+   "bytes": 305100,
+   "sha256": "7a0bf5fdfb63b4326eac78575eb6b3dd2775f5632931bd354f90aec073de3077"
+  },
+  "parts/body_front.step": {
+   "bytes": 54936,
+   "sha256": "813e637cf9ba69a0ce93a95f6e468e356d6b26b27f68a96c4d77f89967331023"
+  },
+  "parts/body_side.step": {
+   "bytes": 198116,
+   "sha256": "23b9e481e6d5fa203d7b60dda83defee55fa68d352bac03d9fc95ce1030a9e55"
+  },
+  "parts/haa_shell_base.step": {
+   "bytes": 1097922,
+   "sha256": "71032507039acb3b87b26f17081b0b127e18189148fe22e693aa110d7bda4a77"
+  },
+  "parts/haa_shell_cover.step": {
+   "bytes": 614072,
+   "sha256": "a48e44ac5f534ca9b2a89316c062759025023effed7bd84db36ad172f0569aaf"
+  },
+  "parts/haa_support.step": {
+   "bytes": 232111,
+   "sha256": "fb904f434daced70262f86dcd438abbd956356240f3b4575e645b0376ee7a87f"
+  },
+  "parts/hfe_shell_base.step": {
+   "bytes": 643665,
+   "sha256": "65bc3d8b8645352cdf7536db121b4dddbdf98db2510e091d5670e800a31afa7e"
+  },
+  "parts/hfe_shell_cover.step": {
+   "bytes": 563710,
+   "sha256": "f295b24a074be521008cc32bff24057f23238de19899134c9b7ac2c2d4e80336"
+  },
+  "parts/hip_adapter.step": {
+   "bytes": 65302,
+   "sha256": "1ce04e1e52410818e5488d83e8a9eadd91088af6cffa9fa792abca58e3a7b2e1"
+  },
+  "parts/lower_leg_front.step": {
+   "bytes": 265802,
+   "sha256": "1edd2730d33437321dea35f952ae3f6f0bdb182c8692c19f30121ee50a68974b"
+  },
+  "parts/lower_leg_hind.step": {
+   "bytes": 247052,
+   "sha256": "c17536768a98bb1d1808118eec4444552f7106eb6905288140a59a779028cf86"
+  },
+  "parts/upper_shell_base_front.step": {
+   "bytes": 2826969,
+   "sha256": "8ed847c63b911864436ee69991fdbad27168cf1eed6c7c3814bff0b731052d26"
+  },
+  "parts/upper_shell_base_hind.step": {
+   "bytes": 2821414,
+   "sha256": "335571a2af5f8c6a5e55d0f6b6c83c3efcaaf100cb40f6d64657369c0eec8caa"
+  },
+  "parts/upper_shell_cover_front.step": {
+   "bytes": 859751,
+   "sha256": "f72732fcd7e9d555e51fb83fcb8327b5d84afd3e00e8a946f3bc2e998083b529"
+  },
+  "parts/upper_shell_cover_hind.step": {
+   "bytes": 858815,
+   "sha256": "98492b4f6ae194b1b8d55fe734928fdc699ab2d014ee387e73c7b2659314036a"
+  }
+ },
+ "format": "quad-manifest/1",
+ "generator": "gt-quad/1.0.0",
+ "kind": "reference",
+ "note": "the GT folder without its photo-only files (robot.xml, perturbation.json, meshes/core.stl, meshes/core_collision.stl, meshes/foot.stl, meshes/collision)",
+ "sources_sha256": {
+  "common.py": "87cc91163e89286bb6d92dff1a26c1e9654716a05283979a40c0eda7a19aa503",
+  "core.py": "83c426b7a2fcd0aca760ae83d7fec0d26c25145e573cc3a9119bbb48f4540bde",
+  "features.py": "4bcb5e82e6e2cd2d8f69d252ea6670e31c638cfef101d0c8563942b28709d12f",
+  "foot.py": "04eb4e12108bce3274334d8f174b7c4fde87b6c4f1a17c77050e4e8f98abffea",
+  "gt_writer.py": "a2ccd0315eebaad4e26774e7a4d8fc4a570858032d686843c322aed7296f95c8",
+  "nominal.py": "d153b3f260969bb782035cc6a0c39cbef2166dc67cb0c4f34eedb1799042ce88",
+  "nominal_placements.json": "4becc83276ea14a1909e3306f2ed5f63d60de18e0662a8bd7f04e52c9577e4bd",
+  "opbox.py": "b616ec470ff9e3ea5c17cd8add4a0ac15a431f3b93527aeb4f7331ac2ed3865f",
+  "parts/body_back.py": "0721d2079338277c8089227c8a75935e8678c984588c08fda3b6106fff6f372e",
+  "parts/body_center.py": "ce6f84d78eb1b7f8454085c05f208fe6957cbbc0f6657ff7524a90d1b8c9b166",
+  "parts/body_front.py": "6b4cb656c7be630548a42baff4e24d61dbe9be57ad6f0cdde95a32ae32171aa9",
+  "parts/body_side.py": "d3a2dc2567bdbe8be0c5f351f99c55bc869565c0196966f2a71a24d74800ec73",
+  "parts/haa_shell_base.py": "056d38478b31c7a9bbb6ad5d7e8fd94af16ae52aed463998144bc8dd5e80479b",
+  "parts/haa_shell_cover.py": "67686dd172582b98f3766ef394a625eb0a3d74aa95d6aa39c6fcfa16a2bb4066",
+  "parts/haa_support.py": "d9300f8ef7dde6adf1df3730e53970be3deb10e79bd1305472ecea6fef106d7c",
+  "parts/hfe_shell_base.py": "49f87bd59c1535b54d4d1d8ded7a77660ac248f32d96d39f04ff81b263a7e03d",
+  "parts/hfe_shell_cover.py": "732e61e87d0d0a9549afbfd5729e5f9ebdb4df821420c3c41071d60f486e00a2",
+  "parts/hip_adapter.py": "11b7577e99990dd5f2974429c57c0417ae398b4713ed7e75200b524e3fd1da47",
+  "parts/lower_leg.py": "e61c21946c0e07f6603c7558f535468b770ea9d19adfa9e8ac4f897a73670585",
+  "parts/upper_shell_base.py": "3f0c6fb07ce9a2d0113f7b84c78bf246eccdb2b39a89a1049842376f47b957b6",
+  "parts/upper_shell_cover.py": "483e5afb1916e133455b5a534bbab7db9ad89a2929867965f0da5c24414c2da6",
+  "variant.py": "30a21e75dbb9b5be4e6b50a3db983bf2d894a357b6b362b297f253be4b1f1015"
+ },
+ "spec_sha256": "9636a63bb7e420625943b008c8a4dcf0c12b332cae25c2f7bc1eadcd38fe19fe",
+ "variant_id": "H_q01",
+ "writer": "gt_quad.gt_writer/1.0"
+}
