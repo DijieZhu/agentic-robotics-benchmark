@@ -1,0 +1,17 @@
+{
+ "plugin": "appliance_plugin.py",
+ "instances": "../ref/units.json",
+ "budget": 1,
+ "trial_step_cap": 4800,
+ "trial_wall_s": 3600.0,
+ "idle_timeout_s": 900,
+ "max_connections": 2,
+ "call_timeout_s": 120.0,
+ "env": {
+  "OMP_NUM_THREADS": "1",
+  "MUJOCO_GL": "osmesa",
+  "PYOPENGL_PLATFORM": "osmesa",
+  "LP_NUM_THREADS": "2",
+  "MESA_SHADER_CACHE_DISABLE": "true"
+ }
+}

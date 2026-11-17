@@ -1,0 +1,35 @@
+# Kitchen appliance tending: a fixed Panda in front of a kitchen appliance it has not seen (a cooktop, a microwave or
+# a wall oven) turns burners on, off and to a setting, preheats, sets and turns off the oven and starts and stops the
+# microwave, on text requests, from its cameras and wrist force sensor. The agent reaches the nine scored units only
+# through one lab trial and leaves a controller that the grader drives over a stdio wire on a fixed hidden set of 18
+# episodes. Structure after tasks/arm/arm_hidden_mechanism_box.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/kitchen_appliance_tending"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h: exploring the practice units in the dev sim, one lab trial on the nine scored units (one of them can be
+# visited before grading: the controller meets the other eight unseen), writing and testing the controller.
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 18 episodes (2 per hidden unit), each at most 3 x 1500 control steps; the grader's own budget is 6000 s
+# (grader_config.json), and starting the solver, the egress self-test and the stops need a little more.
+[verifier]
+timeout_sec = 7200
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
