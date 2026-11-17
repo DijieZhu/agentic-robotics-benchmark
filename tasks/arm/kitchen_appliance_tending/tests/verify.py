@@ -15,11 +15,13 @@ initial control states, request queue, lighting, camera offsets and sensor noise
 probe lock draws which steps are probed, the order of a pair and the perturbation from one stream per episode
 (probe_stream): the kit's `seed_rng` keyed by a BLAKE2b hash of a domain tag, the episode's index in the set and
 its hidden seed. An episode's probe schedule is therefore a function of the episode alone, not of the controller's
-replies, of how many steps earlier episodes took, of the clock or of the process, so one submission gets one
-result: with one OS-entropy stream for the whole run, where the lock probed changed from run to run, and a
-controller that advanced its state on the probe copy scored between 0.278 and 0.407 in seven gradings of one
-fixed set. The hidden seed stays the only secret; the tag keeps the stream apart from everything the environment
-draws from the seed. The lock's counts are run-wide and are the only thing about it that is logged or written.
+replies, of how many steps earlier episodes took, of the clock or of the process. The grader adds no run-to-run
+randomness of its own, so a deterministic controller that stays inside the time limits (the step deadline, which
+also bounds the controller's start, and the grader budget are wall-clock) gets one result: with one OS-entropy
+stream for the whole run, where the lock probed changed from run to run, and a controller that advanced its state
+on the probe copy scored between 0.278 and 0.407 in seven gradings of one fixed set. The hidden seed stays the only
+secret; the tag keeps the stream apart from everything the environment draws from the seed. The lock's counts are
+run-wide and are the only thing about it that is logged or written.
 episode.py owns the requests and the credit (byte-identical to the agent's copy);
 appliance_env.py is the environment (byte-identical too). The metric `mean_request_credit` is the mean over
 episodes of the mean request credit (reached 0.5 + completed 0.5). Each episode's requests and their outcomes are
@@ -352,10 +354,13 @@ def probe_stream(index, seed):
     """The probe lock's stream for episode `index` of the set (its position in the graded order), whose hidden 64-bit
     seed is `seed`: the kit's seed_rng keyed by BLAKE2b over PROBE_TAG, the index and the seed, so a function of
     (index, seed) alone. The environment and the episode draw from the seed only through NumPy generators seeded
-    with its two 32-bit halves and a small tag (ApplianceEnv.reset, Episode.__init__); this hash shares nothing with
-    them. The kit's documented use of `entropy` is its self-test; the verify stages of
-    fault_adaptive_spacecraft_docking and object_finding_and_organizing_on_messy_desk key per-episode lock streams
-    the same way."""
+    with its two 32-bit halves and a small tag (ApplianceEnv.reset, Episode.reset); this hash shares nothing with
+    them. The kit's documented use of `entropy` is its self-test. Four other verify stages on main also pass
+    per-episode entropy to seed_rng, but they take it from a separate hidden key in their fixed hidden set:
+    fault_adaptive_spacecraft_docking and object_finding_and_organizing_on_messy_desk mix the set's probe_key with
+    the episode's seed ((probe_key << 64) | seed); driving_safety_supervisor and hazard_bay_build use each
+    episode's (mission's) own lock_key. This task needs no such key, because its only secret is the episode's
+    seed: PROBE_TAG is a domain separator, not a secret."""
     digest = hashlib.blake2b(b"%s|%d|%d" % (PROBE_TAG, int(index), int(seed)), digest_size=32).digest()
     return seed_rng(entropy=int.from_bytes(digest, "little"))
 

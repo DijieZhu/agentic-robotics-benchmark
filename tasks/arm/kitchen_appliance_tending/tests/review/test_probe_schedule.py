@@ -2,7 +2,7 @@
 
     python3 -B test_probe_schedule.py [--tests DIR] [--work DIR]
 
-DIR defaults: the task's tests/ (this file's parent directory when it sits in tests/review/, else /task/tests);
+DIR defaults: the task's tests/ (the parent of this file's directory when it sits in tests/review/, else /task/tests);
 --work: a scratch directory for the stub controllers (default: a new temporary directory, removed at the end).
 An episode's schedule is what the grader's lock draws from probe_stream(n, seed) through verify.ask: the steps that
 carry a repeated t, the order of each pair and the seed of each perturbation. Checks:
