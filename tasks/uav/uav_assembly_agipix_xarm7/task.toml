@@ -1,0 +1,76 @@
+# uav_assembly_agipix_xarm7 (assembly stage: a quadrotor airframe from 23 loose components with an xArm 7; built from
+# 2026-10-27, the UAV sibling of the arm assembly tasks; kit moved to the source CAD meshes 2026-10-29; renamed from
+# unmanned_aerial_vehicle_assembly_agipix_xarm7 on 2026-11-09).
+#
+# The agent receives the adapted AGiPix kit (CC0 source: every component's source meshes, the convex collision pieces the
+# cell simulates, quantities, masses, rest orientations and manufacturing notes, given/kit/kit.json), the stock xArm 7 +
+# gripper model (MuJoCo Menagerie), the 27-diagram picture manual, the cell's commissioning document (given/cell.md), the
+# connection client and the cameras' scenery; no practice cell. It delivers assemble.py (solve(cell): a camera-only
+# program that mounts the 23 components, 23 mates, onto the lower chassis clamped on a raised fixture), run as `nobody`
+# on 3 OS-entropy episodes of the grader's MuJoCo cell (tests/cell.py: free-jointed components with convex collision
+# pieces, staged on the bench at drawn slots and yaws, the fixture and the cameras jittered; uncalibrated top and wrist
+# RGB-D, RGB rendered by MuJoCo's Filament on CPU Vulkan in a baked workshop, depth by OSMesa; joint encoders and a
+# biased, noisy wrist wrench; no part poses, no mate events). Fastening is an at-rest coupling: a component held still
+# for 0.5 s within 1.5 mm and 8 deg of its mate is welded at the pose it reached, never pulled to the nominal one, and
+# counts within 3 deg. Score = the episode mean of the counted mates / 23, an unsafe episode scoring 0 (non-pad robot
+# contact > 30 N, a component > 3 m/s, a component load > 150 N for 0.2 s). The oracle submits a 256-bit token:
+# the privileged physical reference (tests/reference.py, tests/motion.py) runs inside the cell on the nominal layout; it
+# reads ground-truth poses to plan and moves the components only through the arm's bounded actuators and pad friction.
+# Grader knobs live in tests/grader_config.json.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/uav_assembly_agipix_xarm7"
+
+[metadata]
+platform = "uav"
+direction = "assembly"
+metric = {name = "assembly_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+info_tier = 1
+practice_instances = []
+render_backend = "filament"
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "workcell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "xarm7 (stock parallel gripper)", fastening = "coupling (on-feature hold, at-rest weld at the reached pose)", joints = "four unpowered rotor hinges (propellers mount on the rotors)", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["bench layout (slot, +-4 mm, yaw +-0.2 rad) per episode", "fixture +-10 mm", "cameras (mount, orientation, focal length)", "F/T bias"]
+expert_time_hours = 80
+siblings = ["robotic_arm_full_assembly_so101_panda", "robotic_arm_full_assembly_openarm_panda"]
+tags = ["assembly", "mujoco", "xarm7", "agipix", "quadrotor", "code-as-policy", "camera-only", "rgbd", "calibration", "picture-manual", "contact", "planning", "oracle-token"]
+source_platform = "AGiPix-derived mechanical assembly kit"
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# [agent] timeout_sec: 6 h. [verifier] timeout_sec 25200 s (7 h): an agent's verify is 3 workcells x (the cell build and
+# camera session, under a minute, + the program's <= 7200 s wall cap) = at most ~21800 s; the oracle's is 3 x the
+# privileged reference, ~25-80 min each by host load (a fresh 23/23 run: 1132 s simulated, 1438 s wall on an idle
+# 24-core host, about 3x that on a loaded one), each capped at 10800 s (a cap for one runaway episode, not for three).
+# The verifier sandbox's start and tests/test.sh's copy of the givens count against it too.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+[verifier]
+timeout_sec = 25200
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0
