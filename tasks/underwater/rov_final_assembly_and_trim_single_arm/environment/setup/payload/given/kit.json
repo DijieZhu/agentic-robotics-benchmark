@@ -1,0 +1,179 @@
+{
+ "schema": "rov-kit/1",
+ "vehicle": "an inspection-class remotely operated vehicle at the station for propulsion, electronics and trim",
+ "frames": "every file of parts/ is in millimetres, in the frame its unit's `frame` names; size_mm = the extent of the file along its x, y and z",
+ "geometry": "the files show the units as they are drawn; the cell's collision shapes differ from them: cell/cell_manual.md, Collision model",
+ "mass": "mass_g = the mass the cell simulates for one unit, rounded to whole grams. It includes the screws with which this station fastens the unit (the part files do not show them; the trim sheet lists them with their unit or, for the vertical thrusters, in a row of their own). base_vehicle: the vehicle as the trim sheet tabulates it; the vehicle on the fork in a run differs from it within the range the trim sheet states",
+ "identical_units": "units with the same id are interchangeable; which file carries which kind of propeller is for you to find out (docs/propeller_datasheet.png, the photographs)",
+ "documents": {
+  "drawings": [
+   {
+    "file": "drawings/general_arrangement.png",
+    "number": "ROV-ASM-01",
+    "title": "General arrangement at this station"
+   },
+   {
+    "file": "drawings/keel_hole_map.png",
+    "number": "ROV-ASM-02",
+    "title": "Bottom plate: ballast holes"
+   },
+   {
+    "file": "drawings/propulsion_layout.png",
+    "number": "ROV-ASM-03",
+    "title": "Propulsion: sense of rotation and nose direction"
+   },
+   {
+    "file": "drawings/enclosure_mounting.png",
+    "number": "ROV-ASM-04",
+    "title": "Electronics enclosure: mounting"
+   },
+   {
+    "file": "drawings/guard_and_brackets.png",
+    "number": "ROV-ASM-05",
+    "title": "Thruster guard and guard brackets"
+   },
+   {
+    "file": "drawings/positioner_and_cells.png",
+    "number": "ROV-ASM-06",
+    "title": "Turnover positioner and load cells"
+   },
+   {
+    "file": "drawings/trays_and_racks.png",
+    "number": "ROV-ASM-07",
+    "title": "Ballast box, thruster tray, enclosure rack, guard racks"
+   }
+  ],
+  "docs": [
+   {
+    "file": "docs/trim_sheet.png",
+    "number": "ROV-TRM-01",
+    "title": "Trim sheet: mass and displacement of the vehicle as delivered"
+   },
+   {
+    "file": "docs/water_density_chart.png",
+    "number": "ROV-TRM-02",
+    "title": "Water density chart"
+   },
+   {
+    "file": "docs/propeller_datasheet.png",
+    "number": "ROV-PRP-01",
+    "title": "Ducted thruster: propellers and sense of rotation"
+   },
+   {
+    "file": "docs/station_scope.md",
+    "title": "Station scope: what is fitted where"
+   },
+   {
+    "file": "docs/work_order_example.json",
+    "title": "the form of a work order (illustrative values)"
+   }
+  ],
+  "manual": {
+   "index": "manual/photos.json",
+   "photos": "manual/photo_01.jpg .. manual/photo_16.jpg"
+  },
+  "cell": [
+   "cell/cell_manual.md",
+   "cell/cell_api.md",
+   "cell/cell_config.json"
+  ]
+ },
+ "units": [
+  {
+   "id": "electronics_enclosure",
+   "file": "parts/electronics_enclosure.stl",
+   "quantity": 1,
+   "name": "electronics enclosure, complete",
+   "material": "a transparent acrylic tube closed by a transparent acrylic dome at one end and an aluminium end cap at the other; anodised aluminium fittings; circuit boards, cables and plastic parts inside",
+   "presented": "enclosure_rack",
+   "presentation": "on the two V-blocks of the enclosure rack, its tube axis level; how far it is turned about its tube axis from the attitude in which it is mounted and which end of the rack its dome points to are drawn anew in every run (cell_manual.md)",
+   "frame": "x along the tube axis, +x towards the dome, the origin on the tube axis",
+   "mass_g": 2388,
+   "size_mm": [
+    396.8,
+    120.3,
+    127.7
+   ]
+  },
+  {
+   "id": "thruster_a",
+   "file": "parts/thruster_a.stl",
+   "quantity": 2,
+   "name": "vertical thruster (ducted thruster), file a",
+   "material": "a plastic duct and housing, a plastic propeller",
+   "presented": "thruster_tray",
+   "presentation": "standing nose cone down in a nest of the thruster tray; which nest, which way its mounting block points and at which angle its propeller stands are drawn anew in every run (cell_manual.md)",
+   "frame": "the thrusters' common frame: the origin on the duct's axis, level with the middle of the mounting holes; +z from the nose cone to the outlet; the mounting face on the -y side",
+   "mass_g": 348,
+   "size_mm": [
+    96.6,
+    97.3,
+    112.7
+   ]
+  },
+  {
+   "id": "thruster_b",
+   "file": "parts/thruster_b.stl",
+   "quantity": 2,
+   "name": "vertical thruster (ducted thruster), file b",
+   "material": "a plastic duct and housing, a plastic propeller",
+   "presented": "thruster_tray",
+   "presentation": "standing nose cone down in a nest of the thruster tray; which nest, which way its mounting block points and at which angle its propeller stands are drawn anew in every run (cell_manual.md)",
+   "frame": "the thrusters' common frame: the origin on the duct's axis, level with the middle of the mounting holes; +z from the nose cone to the outlet; the mounting face on the -y side",
+   "mass_g": 348,
+   "size_mm": [
+    96.6,
+    97.3,
+    112.7
+   ]
+  },
+  {
+   "id": "thruster_guard",
+   "file": "parts/thruster_guard.stl",
+   "quantity": 2,
+   "name": "thruster guard",
+   "material": "a flat black HDPE plate with a cut-out for each thruster's duct",
+   "presented": "guard_racks",
+   "presentation": "flat on the shelf of a guard rack, one rack on each side of the vehicle, the face up that is up on the vehicle at deck_up (cell_manual.md)",
+   "frame": "the x axis along one long edge of the guard, the whole outline on the side of -y; the xy plane in one flat face, the plate on the side of +z",
+   "mass_g": 190,
+   "size_mm": [
+    434.5,
+    118.4,
+    12.7
+   ]
+  },
+  {
+   "id": "ballast_block",
+   "file": "parts/ballast_block.stl",
+   "quantity": 12,
+   "name": "ballast block",
+   "material": "a steel block with a through hole for its screw",
+   "presented": "ballast_box",
+   "presentation": "in the pockets of the ballast box, one in each, flat on the face that goes against the bottom plate (cell_manual.md)",
+   "frame": "the origin on the screw hole's axis in the face that goes against the bottom plate, z along the hole's axis, the block on the side of -z; the block's outline is turned about the hole's axis against the file's x and y axes by about 1 deg, as in the original model",
+   "mass_g": 193,
+   "size_mm": [
+    42.7,
+    58.4,
+    11.2
+   ]
+  },
+  {
+   "id": "base_vehicle",
+   "file": "parts/base_vehicle.stl",
+   "quantity": 1,
+   "name": "the vehicle as it arrives from upstream (station_scope.md)",
+   "material": "a frame of black HDPE plates with aluminium fittings, the battery enclosure (an acrylic tube), the horizontal ducted thrusters, the work gripper and the velocity log; steel screws",
+   "presented": "positioner",
+   "presentation": "clamped in the turnover positioner's fork (cell_manual.md); every run starts at keel_up",
+   "frame": "the vehicle frame of the drawings: x forward, y to port, z up",
+   "mass_g": 6923,
+   "size_mm": [
+    571.8,
+    378.0,
+    253.8
+   ]
+  }
+ ]
+}

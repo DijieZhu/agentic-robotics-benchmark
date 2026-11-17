@@ -1,0 +1,100 @@
+{
+ "agent_cameras": [
+  "top",
+  "wrist"
+ ],
+ "camera_budget_frames": 600,
+ "cameras": {
+  "note": "nominal: each run's camera units differ (cell_manual.md, Cameras)",
+  "top": {
+   "depth": true,
+   "hfov_deg": 70.0,
+   "size_px": [
+    1280,
+    960
+   ]
+  },
+  "wrist": {
+   "depth": true,
+   "hfov_deg": 80.0,
+   "size_px": [
+    640,
+    480
+   ]
+  }
+ },
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "note": "a loose unit pressed on the environment or on another unit with a contact force above part_force_N for `ticks` consecutive control ticks zeroes the episode; the force of a (unit, body it presses on) pair is the magnitude of the vector sum of that pair's contact forces; the gripper's pads, the robot's links and the force with which the cell holds or fastens a captured unit do not count (cell_manual.md, Safety)",
+  "part_force_N": 150.0,
+  "ticks": 20
+ },
+ "episodes": 4,
+ "fixture": {
+  "load_cells": {
+   "bias_N": 0.02,
+   "sigma_N": 0.4
+  },
+  "max_turns": 4,
+  "note": "the turnover positioner: at most max_turns turns per run, turn_s per turn; the load cells: white noise sigma_N per sample and cell, a zero offset of up to bias_N per cell that is constant through a run",
+  "turn_s": 6.0
+ },
+ "grip_force_N": 100.0,
+ "handling": {
+  "joint_acc_rad_s2": 8.0,
+  "note": "the station's handling procedure for a unit in the gripper; the cell does not enforce it",
+  "tcp_speed_m_s": 0.25
+ },
+ "max_ticks_per_step": 500,
+ "note": "the cell's configuration as far as it is public; not public: the cameras' exact mounts and their per-run spreads, the lights, the layout's draws",
+ "program_threads": 2,
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "dome_force_N": 20.0,
+  "dome_ticks": 5,
+  "note": "robot_force_N: a robot link other than the gripper's pads pressing on one body harder than this zeroes the episode (the normal forces of that link's contacts with that body added up); part_speed_m_s: a loose unit faster than this is scrapped; dome_force_N for dome_ticks ticks on the enclosure's dome scraps the enclosure",
+  "part_speed_m_s": 3.0,
+  "robot_force_N": 30.0
+ },
+ "schema": "rov-cell-config/1",
+ "score": {
+  "note": "stage = (the weights of the places that count + trim_weight x trim) / total_weight; trim = share_net_buoyancy [net buoyancy in its window] + share_pitch [and |pitch| <= the angle] + share_roll [and |roll| <= the angle]",
+  "total_weight": 15.5,
+  "trim": {
+   "angle_window_deg": 3.0,
+   "net_buoyancy_window_N": [
+    0.2,
+    3.0
+   ],
+   "share_net_buoyancy": 0.4,
+   "share_pitch": 0.3,
+   "share_roll": 0.3
+  },
+  "trim_weight": 4.5
+ },
+ "scrap": {
+  "below_bench_m": 0.05,
+  "note": "a loose unit whose centre of mass is more than below_bench_m below the bench top is scrapped"
+ },
+ "silence_s": 120.0,
+ "sim_cap_s": 1200.0,
+ "wall_cap_s": 2400.0
+}

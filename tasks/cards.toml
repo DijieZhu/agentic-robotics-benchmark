@@ -185,6 +185,12 @@ summary = "Fly a Crazyflie through four coloured gates in order and hover at a g
 platforms = ["uav"]
 stages = ["control"]
 
+[rov_final_assembly_and_trim_single_arm]
+title = "Assemble and trim an ROV with a 6-DoF arm"
+summary = "Program a 6-DoF arm to ballast an inspection ROV for the water on its work order, weighing it on load cells, and to fit its enclosure, vertical thrusters and guards by camera."
+platforms = ["underwater", "arm"]
+stages = ["assembly"]
+
 [rov_requirements_engineering_from_tender]
 title = "Evaluate eight bids for an inspection ROV"
 summary = "Evaluate eight bids for an inspection ROV at a cold, deep reservoir intake from site records, datasheets and a budgeted enquiry desk, award one and write its factory acceptance schedule."

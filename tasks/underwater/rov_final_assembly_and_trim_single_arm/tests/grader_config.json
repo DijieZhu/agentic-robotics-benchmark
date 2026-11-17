@@ -1,0 +1,233 @@
+{
+ "agent_cameras": [
+  "top",
+  "wrist"
+ ],
+ "agent_renderer": "filament",
+ "budgets_note": "DESIGN v1.2 sections 1.3 and 13: per episode 1200 s of sim, 2400 s of wall clock (rendering counted), 600 camera frames, step(n <= 500), 4 turns; the privileged reference program runs inside one call under the same wall cap. P26 measures the sandbox's tick and frame times and the verifier's time limit against these caps",
+ "camera_budget_frames": 600,
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "note": "hard rule H2 (zeroes the episode): a loose unit pressed on the environment or another unit with a CONTACT force above part_force_N for `ticks` consecutive 10 ms ticks (0.2 s); the force of a (unit, body it presses on) pair is the magnitude of the vector sum of that pair's contact forces on the unit (normal and tangential components together), not the sum of their normal forces (which a unit wedged in its V-blocks inflates); the pads' contacts, a robot link's contacts (H1) and the welds' constraint forces do not count (rulings L19, P15-1 / P16-1 of group Q; cell.py watch)",
+  "part_force_N": 150.0,
+  "ticks": 20
+ },
+ "episode_trace": {
+  "agent": true,
+  "every_ticks": 4,
+  "note": "maintainers' replay record of every agent episode under /opt/arb-verify/out/trace (root-only); never a scoring input"
+ },
+ "episodes": 4,
+ "fixture": {
+  "load_cells": {
+   "bias_N": 0.02,
+   "sigma_N": 0.4
+  },
+  "max_turns": 4,
+  "note": "the turnover positioner (positioner.py): max_turns accepted turns per episode, turn_s per turn; the load cells' white noise sigma_N per sample and cell and the bound bias_N of each cell's per-episode zero offset (rulings L12, M9); bias_N must equal layout.cell_bias_max_N (the layout draws the offsets; checked by the server)",
+  "turn_s": 6.0
+ },
+ "grip_force_N": 100.0,
+ "handling": {
+  "joint_acc_rad_s2": 8.0,
+  "note": "the station's handling procedure for a unit in the gripper (ruling M8), printed in describe(); not enforced",
+  "tcp_speed_m_s": 0.25
+ },
+ "hidden_gt": {
+  "backoff_s": 5.0,
+  "files": 1144,
+  "note": "the cell's hidden kit (gt/: kit.json + meshes/), never in the repository: verify.py fetch_hidden_gt uses the development copy tests/assets/gt.tar.xz (an engine asset root) when present, else downloads this URL; either way the sha256 and the file count must match. The URL names the asset dataset's commit that holds verifier/gt.tar.xz",
+  "sha256": "fde8e991a1c35203346df1184459dcf93d0213d284734a3e02f615a47be8cc45",
+  "tries": 4,
+  "url": "https://huggingface.co/datasets/grounded-intelligence-initiative/ale-robotics-assets/resolve/6fe8700b70c06b1177a6c79f0500da5fe6990c97/tasks/underwater/rov_final_assembly_and_trim_single_arm/verifier/gt.tar.xz"
+ },
+ "info_layout": {
+  "camera_draw": {
+   "c_rel": 0.02,
+   "f_rel": 0.03,
+   "k1": [
+    -0.08,
+    0.02
+   ],
+   "k2": [
+    -0.02,
+    0.02
+   ],
+   "mount_ang_deg": 3.0,
+   "mount_pos_m": 0.03,
+   "p": 0.001,
+   "wrist_ang_deg": 1.0,
+   "wrist_pos_m": 0.002
+  },
+  "cameras": {
+   "top": {
+    "depth": true,
+    "eye": [
+     0.45,
+     0.0,
+     1.6
+    ],
+    "hfov_deg": 70.0,
+    "size": [
+     1280,
+     960
+    ],
+    "target": [
+     0.45,
+     0.0,
+     0.0
+    ],
+    "up": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   },
+   "wrist": {
+    "depth": true,
+    "hfov_deg": 80.0,
+    "mount": "robot",
+    "offset_m": 0.058,
+    "size": [
+     640,
+     480
+    ],
+    "tilt_deg": 11.743684,
+    "z_m": 0.0252
+   }
+  },
+  "lights": {
+   "dome": 0.22,
+   "fill": {
+    "diffuse": 0.3,
+    "pos": [
+     -0.4,
+     1.4,
+     1.8
+    ],
+    "target": [
+     0.45,
+     0.0,
+     0.0
+    ]
+   },
+   "jitter_rel": 0.2,
+   "key": {
+    "diffuse": 0.62,
+    "pos": [
+     1.25,
+     -0.9,
+     2.4
+    ],
+    "target": [
+     0.45,
+     0.0,
+     0.0
+    ]
+   }
+  }
+ },
+ "info_layout_note": "the cameras, their per-episode spreads and the lights (render_twin.INFO_LAYOUT); the wrist camera is mounted as the robot model mounts it (mount robot): offset_m, z_m and tilt_deg are that mount, stated for the documents and checked against the built robot at every reset",
+ "layout": {
+  "arm_base_clear_m": 0.2,
+  "cell_bias_max_N": 0.02,
+  "fov_margin_px": 0.0,
+  "lmag": false,
+  "redraw_tries": 200,
+  "station_gap_m": 0.03,
+  "sweep_margin_m": 0.01,
+  "top_camera": {
+   "eye": [
+    0.45,
+    0.0,
+    1.6
+   ],
+   "hfov_deg": 70.0,
+   "size": [
+    1280,
+    960
+   ],
+   "target": [
+    0.45,
+    0.0,
+    0.0
+   ],
+   "up": [
+    0.0,
+    1.0,
+    0.0
+   ]
+  },
+  "vehicle_mount": {
+   "rv_deg": 0.1,
+   "t_mm": 0.3
+  }
+ },
+ "layout_note": "the episode's physical draws (arm/assembly_rov/layout.py DEFAULT_LAYOUT, copied here; any change changes every layout digest and the fixed hidden set must be selected again). lmag false: ruling J8 / M10 (L-mag not opened in advance)",
+ "max_ticks_per_step": 500,
+ "oracle_nominal_layout": false,
+ "physics": {},
+ "physics_note": "overrides of the cell's physics (cell.py CELL_CONFIG['physics']); empty = the designed physics: ruling M8 (0.5 ms implicitfast, 20 steps per 10 ms tick, pad solref 0.001, elliptic cones, impratio 100, noslip 5) and MuJoCo's sleeping of resting loose units (sleep true, tolerance 1e-5 m/s, the positioner and the robot never sleep; rulings P08-1 / P14-1 of group Q)",
+ "privileged_wall_cap_s": 2400.0,
+ "program_threads": 2,
+ "robot": {
+  "model": "ur10e",
+  "pos": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "yaw_deg": 0.0
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "runner_account": "nobody",
+ "safety": {
+  "dome_force_N": 20.0,
+  "dome_ticks": 5,
+  "note": "H1: a robot link other than the gripper's four pads pressing on one body harder than robot_force_N (the normal forces of that (link, body) pair's contacts summed; unlike H2 not a vector sum) zeroes the episode; part_speed_m_s: a loose unit faster than this is scrapped; H3: anything pressing on the dome above dome_force_N for dome_ticks ticks scraps the enclosure (the episode goes on)",
+  "part_speed_m_s": 3.0,
+  "robot_force_N": 30.0
+ },
+ "score": {
+  "note": "DESIGN v1.2 section 3.1: stage = (counted structural weight + trim_weight x trim) / total_weight, total_weight = 11.0 + trim_weight; the trim block must equal tests/trim_table.json's acceptance (checked by the server and by the dev tests); trim = share_net_buoyancy [dB in window] + share_pitch [and |pitch| <= angle] + share_roll [and |roll| <= angle]",
+  "total_weight": 15.5,
+  "trim": {
+   "angle_window_deg": 3.0,
+   "net_buoyancy_window_N": [
+    0.2,
+    3.0
+   ],
+   "share_net_buoyancy": 0.4,
+   "share_pitch": 0.3,
+   "share_roll": 0.3
+  },
+  "trim_weight": 4.5
+ },
+ "scrap": {
+  "below_bench_m": 0.05,
+  "note": "a loose unit whose centre of mass is more than this below the bench top (off the bench) is scrapped"
+ },
+ "settle_s": 1.0,
+ "silence_s": 120.0,
+ "sim_cap_s": 1200.0,
+ "socket_sample_s": 0.5,
+ "wall_cap_s": 2400.0
+}
