@@ -1,0 +1,42 @@
+{
+ "format": "scene-description/1",
+ "frame": "cell (the table's reference corner): x, y >= 0 on the table, z up; metres, degrees",
+ "robot_base": {"pos": [0.258185, 0.359614, 0.0], "yaw_deg": -95.5439},
+ "objects": [
+  {
+   "name": "shelf",
+   "kind": "shelf",
+   "pose": {"pos": [0.531973, 0.151721, 0.0], "yaw_deg": -126.439},
+   "primitives": [
+    {"name": "shelf_plinth", "type": "box", "size": [0.10079, 0.03461, 0.01763], "pos": [0.0, 0.0, 0.01763], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_back", "type": "box", "size": [0.10079, 0.002, 0.1251], "pos": [0.0, 0.03261, 0.16035], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_board0", "type": "box", "size": [0.10079, 0.03461, 0.002], "pos": [0.0, 0.0, 0.03725], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_board1", "type": "box", "size": [0.10079, 0.03461, 0.002], "pos": [0.0, 0.0, 0.16035], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_board2", "type": "box", "size": [0.10079, 0.03461, 0.002], "pos": [0.0, 0.0, 0.28346], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_wall0", "type": "box", "size": [0.002, 0.03461, 0.1251], "pos": [-0.09879, 0.0, 0.16035], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_wall1", "type": "box", "size": [0.002, 0.03461, 0.1251], "pos": [0.0, 0.0, 0.16035], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "shelf_wall2", "type": "box", "size": [0.002, 0.03461, 0.1251], "pos": [0.09879, 0.0, 0.16035], "quat": [1.0, 0.0, 0.0, 0.0]}
+   ]
+  },
+  {
+   "name": "fixture",
+   "kind": "fixture",
+   "pose": {"pos": [0.467252, 0.474454, 0.0], "yaw_deg": 170.0179},
+   "primitives": [{"name": "fixture", "type": "box", "size": [0.04156, 0.03424, 0.01775], "pos": [0.0, 0.0, 0.01775], "quat": [1.0, 0.0, 0.0, 0.0]}]
+  },
+  {
+   "name": "post",
+   "kind": "post",
+   "pose": {"pos": [0.277356, 0.178146, 0.0], "yaw_deg": -124.4797},
+   "primitives": [{"name": "post", "type": "cylinder", "size": [0.01821, 0.10953], "pos": [0.0, 0.0, 0.10953], "quat": [1.0, 0.0, 0.0, 0.0]}]
+  },
+  {
+   "name": "post2",
+   "kind": "post",
+   "pose": {"pos": [0.258987, 0.585209, 0.0], "yaw_deg": 173.7981},
+   "primitives": [{"name": "post2", "type": "cylinder", "size": [0.01455, 0.11264], "pos": [0.0, 0.0, 0.11264], "quat": [1.0, 0.0, 0.0, 0.0]}]
+  }
+ ],
+ "table": {"z": 0.0, "note": "the robot base stands on the table; the table top is z = 0"},
+ "survey_tolerance": {"objects_mm": 2.0, "objects_deg": 1.0, "robot_base_mm": 1.0, "robot_base_deg": 0.3}
+}

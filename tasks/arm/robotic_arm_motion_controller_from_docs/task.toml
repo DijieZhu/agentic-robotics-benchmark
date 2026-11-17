@@ -1,0 +1,72 @@
+# robotic_arm_motion_controller_from_docs: the control stage of the robotic-arm full-stack workflow (an atomic task).
+#
+# The agent is the controls engineer of a lab that runs a six-servo desktop arm (the arm the published assembly task
+# builds, never named) in three desktop cells: shelf picking, bin placement with a clamped part, adhesive dispensing
+# with a clamped needle. It receives what such an arm ships with: the kinematics sheet (a modified-DH table, joint
+# types, limits), the drawings, the link CAD and its collision envelope, the mass table, the servo datasheet, the
+# calibration-record format, the bus interface manual, the cells' documentation and the lab's acceptance specification;
+# no robot description file, no practice arm, no time on the robot. It delivers submission/controller/controller.py
+# (class Controller: setup / plan / step on a 10 ms bus cycle).
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json; the runtime contract is
+# tests/arm/motion_ctl/CONTRACT.md): the grader runs the controller, as an unprivileged account under a no-network
+# filter, on the fixed hidden set tests/hidden/scenarios: three units (calibration-record error +-0.5 deg, geometric
+# tolerances, mass spread, servo dynamics inside the datasheet's ranges), each in its three cells, about 42 jobs per
+# unit (reaches, held-part placements, dispensing paths, requests that cannot be done and must be refused). A contact
+# fails the cell. Run score = 0.5 reach + 0.4 path + 0.1 infeasibility J, a job = completed x no_contact x clearance x
+# conditioning x accuracy x (0.6 + 0.2 time + 0.2 smoothness), with the accuracy bands of a well-calibrated arm
+# (position 1.2 -> 3 mm); reward = the gates x the mean of the three runs. The oracle submits the privileged reference
+# controller with a 256-bit token: the grader then adds the truth payloads (every job's exact tick trajectory).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/robotic_arm_motion_controller_from_docs"
+
+[metadata]
+platform = "arm"
+direction = "control"
+metric = {name = "acceptance_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "control"
+stage_key = "control"
+info_tier = 1
+hidden_instance = "a fixed hidden set of three units, each with its three cells and jobs (tests/hidden/scenarios)"
+practice_instances = []
+given_from = {stage = "assembly", adapter = "the assembled arm's documents"}
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["controls engineer", "motion programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+observation_tier = "proprioceptive"
+randomisation = ["unit (calibration-record error, geometry, masses, servo dynamics)", "cells (layout, objects, survey error)", "jobs", "clamped part (mass, centre)"]
+expert_time_hours = 40
+tags = ["control", "motion-planning", "inverse-kinematics", "collision-avoidance", "singularity", "mujoco", "servo", "code-as-policy", "info-tier", "oracle-token", "no-practice"]
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+# [agent] timeout_sec: 6 h; an episode cut by this limit is not graded. [verifier] timeout_sec: three runs of the
+# fixed hidden set (nothing is generated at verify), about 126 jobs in 9 cells. Measured: the oracle's whole verify
+# takes 37 s of wall time. A controller that uses its full CPU budgets (60 s per setup, 20 s per plan) needs about
+# 9 x 60 + 126 x 20 s = 51 min plus the motion; one that also sits at the wall caps (120 s per setup, 60 s per plan)
+# needs about 9 x 120 + 126 x 60 s = 2.4 h plus the motion (under 10 min). 4 h covers both with margin.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it. environment/setup/setup.sh does not run
+# there: tests/test.sh builds the grader's root-owned copy of the givens itself.
+[verifier]
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 8192
+gpus = 0

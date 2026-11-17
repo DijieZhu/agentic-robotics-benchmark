@@ -1,0 +1,53 @@
+{
+ "format": "calibration-record/1",
+ "serial": "MU-DEMO1",
+ "convention": "q = direction x (ticks - zero_ticks) x 2 pi / 4096 (q = design angle of the kinematics sheet)",
+ "uncertainty_deg": {
+  "arm joints": 0.5,
+  "jaw": 1.0
+ },
+ "servos": {
+  "base_yaw": {
+   "id": 1,
+   "direction": 1,
+   "zero_ticks": 1714,
+   "min_ticks": 517,
+   "max_ticks": 2933
+  },
+  "shoulder_pitch": {
+   "id": 2,
+   "direction": 1,
+   "zero_ticks": 1844,
+   "min_ticks": 744,
+   "max_ticks": 2801
+  },
+  "elbow_pitch": {
+   "id": 3,
+   "direction": 1,
+   "zero_ticks": 2535,
+   "min_ticks": 1373,
+   "max_ticks": 2744
+  },
+  "wrist_pitch": {
+   "id": 4,
+   "direction": -1,
+   "zero_ticks": 1892,
+   "min_ticks": 945,
+   "max_ticks": 2827
+  },
+  "wrist_roll": {
+   "id": 5,
+   "direction": 1,
+   "zero_ticks": 2168,
+   "min_ticks": 379,
+   "max_ticks": 3660
+  },
+  "jaw": {
+   "id": 6,
+   "direction": 1,
+   "zero_ticks": 1687,
+   "min_ticks": 1629,
+   "max_ticks": 2758
+  }
+ }
+}

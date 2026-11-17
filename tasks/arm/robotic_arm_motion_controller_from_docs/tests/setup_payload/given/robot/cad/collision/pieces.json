@@ -1,0 +1,1279 @@
+{
+ "format": "DA-6 collision envelope / piece index 1",
+ "units": "metres; every piece in its link's CAD frame (kinematics sheet, section 6)",
+ "pieces": "each piece is one closed convex shell, triangles [first_triangle, first_triangle + triangles) of the link's file; the link's envelope is the union of its solid pieces; a box piece also as a primitive: centre_m, half_m and axes (the box's x, y, z directions in the link frame)",
+ "links": {
+  "base": {
+   "file": "base.stl",
+   "triangles": 10224,
+   "pieces": [
+    {
+     "name": "P01_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 618
+    },
+    {
+     "name": "P01_01",
+     "kind": "hull",
+     "first_triangle": 618,
+     "triangles": 532
+    },
+    {
+     "name": "P01_02",
+     "kind": "hull",
+     "first_triangle": 1150,
+     "triangles": 216
+    },
+    {
+     "name": "P01_03",
+     "kind": "hull",
+     "first_triangle": 1366,
+     "triangles": 222
+    },
+    {
+     "name": "P01_04",
+     "kind": "hull",
+     "first_triangle": 1588,
+     "triangles": 238
+    },
+    {
+     "name": "P01_05",
+     "kind": "hull",
+     "first_triangle": 1826,
+     "triangles": 546
+    },
+    {
+     "name": "P01_06",
+     "kind": "hull",
+     "first_triangle": 2372,
+     "triangles": 338
+    },
+    {
+     "name": "P01_07",
+     "kind": "hull",
+     "first_triangle": 2710,
+     "triangles": 244
+    },
+    {
+     "name": "P01_08",
+     "kind": "hull",
+     "first_triangle": 2954,
+     "triangles": 614
+    },
+    {
+     "name": "P01_09",
+     "kind": "hull",
+     "first_triangle": 3568,
+     "triangles": 118
+    },
+    {
+     "name": "P01_10",
+     "kind": "hull",
+     "first_triangle": 3686,
+     "triangles": 448
+    },
+    {
+     "name": "P01_11",
+     "kind": "hull",
+     "first_triangle": 4134,
+     "triangles": 360
+    },
+    {
+     "name": "P01_12",
+     "kind": "hull",
+     "first_triangle": 4494,
+     "triangles": 424
+    },
+    {
+     "name": "P01_13",
+     "kind": "hull",
+     "first_triangle": 4918,
+     "triangles": 530
+    },
+    {
+     "name": "P01_14",
+     "kind": "hull",
+     "first_triangle": 5448,
+     "triangles": 162
+    },
+    {
+     "name": "P01_15",
+     "kind": "hull",
+     "first_triangle": 5610,
+     "triangles": 620
+    },
+    {
+     "name": "P02_00",
+     "kind": "hull",
+     "first_triangle": 6230,
+     "triangles": 442
+    },
+    {
+     "name": "P02_01",
+     "kind": "hull",
+     "first_triangle": 6672,
+     "triangles": 224
+    },
+    {
+     "name": "P02_02",
+     "kind": "hull",
+     "first_triangle": 6896,
+     "triangles": 268
+    },
+    {
+     "name": "P02_03",
+     "kind": "hull",
+     "first_triangle": 7164,
+     "triangles": 18
+    },
+    {
+     "name": "P02_04",
+     "kind": "hull",
+     "first_triangle": 7182,
+     "triangles": 164
+    },
+    {
+     "name": "P02_05",
+     "kind": "hull",
+     "first_triangle": 7346,
+     "triangles": 176
+    },
+    {
+     "name": "P02_06",
+     "kind": "hull",
+     "first_triangle": 7522,
+     "triangles": 368
+    },
+    {
+     "name": "P02_07",
+     "kind": "hull",
+     "first_triangle": 7890,
+     "triangles": 192
+    },
+    {
+     "name": "P02_08",
+     "kind": "hull",
+     "first_triangle": 8082,
+     "triangles": 140
+    },
+    {
+     "name": "P02_09",
+     "kind": "hull",
+     "first_triangle": 8222,
+     "triangles": 418
+    },
+    {
+     "name": "P02_10",
+     "kind": "hull",
+     "first_triangle": 8640,
+     "triangles": 120
+    },
+    {
+     "name": "P02_11",
+     "kind": "hull",
+     "first_triangle": 8760,
+     "triangles": 194
+    },
+    {
+     "name": "P02_12",
+     "kind": "hull",
+     "first_triangle": 8954,
+     "triangles": 384
+    },
+    {
+     "name": "P02_13",
+     "kind": "hull",
+     "first_triangle": 9338,
+     "triangles": 222
+    },
+    {
+     "name": "P02_14",
+     "kind": "hull",
+     "first_triangle": 9560,
+     "triangles": 286
+    },
+    {
+     "name": "P02_15",
+     "kind": "hull",
+     "first_triangle": 9846,
+     "triangles": 366
+    },
+    {
+     "name": "S1",
+     "kind": "box",
+     "first_triangle": 10212,
+     "triangles": 12,
+     "centre_m": [
+      0.0,
+      -0.0125000002,
+      0.0517739997
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0
+      ]
+     ]
+    }
+   ]
+  },
+  "shoulder": {
+   "file": "shoulder.stl",
+   "triangles": 8778,
+   "pieces": [
+    {
+     "name": "P03_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 220
+    },
+    {
+     "name": "P03_01",
+     "kind": "hull",
+     "first_triangle": 220,
+     "triangles": 40
+    },
+    {
+     "name": "P03_02",
+     "kind": "hull",
+     "first_triangle": 260,
+     "triangles": 24
+    },
+    {
+     "name": "P03_03",
+     "kind": "hull",
+     "first_triangle": 284,
+     "triangles": 22
+    },
+    {
+     "name": "P03_04",
+     "kind": "hull",
+     "first_triangle": 306,
+     "triangles": 532
+    },
+    {
+     "name": "P03_05",
+     "kind": "hull",
+     "first_triangle": 838,
+     "triangles": 38
+    },
+    {
+     "name": "P03_06",
+     "kind": "hull",
+     "first_triangle": 876,
+     "triangles": 136
+    },
+    {
+     "name": "P03_07",
+     "kind": "hull",
+     "first_triangle": 1012,
+     "triangles": 40
+    },
+    {
+     "name": "P03_08",
+     "kind": "hull",
+     "first_triangle": 1052,
+     "triangles": 512
+    },
+    {
+     "name": "P03_09",
+     "kind": "hull",
+     "first_triangle": 1564,
+     "triangles": 116
+    },
+    {
+     "name": "P03_10",
+     "kind": "hull",
+     "first_triangle": 1680,
+     "triangles": 132
+    },
+    {
+     "name": "P03_11",
+     "kind": "hull",
+     "first_triangle": 1812,
+     "triangles": 242
+    },
+    {
+     "name": "P03_12",
+     "kind": "hull",
+     "first_triangle": 2054,
+     "triangles": 344
+    },
+    {
+     "name": "P03_13",
+     "kind": "hull",
+     "first_triangle": 2398,
+     "triangles": 264
+    },
+    {
+     "name": "P03_14",
+     "kind": "hull",
+     "first_triangle": 2662,
+     "triangles": 32
+    },
+    {
+     "name": "P03_15",
+     "kind": "hull",
+     "first_triangle": 2694,
+     "triangles": 268
+    },
+    {
+     "name": "P04_00",
+     "kind": "hull",
+     "first_triangle": 2962,
+     "triangles": 302
+    },
+    {
+     "name": "P04_01",
+     "kind": "hull",
+     "first_triangle": 3264,
+     "triangles": 550
+    },
+    {
+     "name": "P04_02",
+     "kind": "hull",
+     "first_triangle": 3814,
+     "triangles": 340
+    },
+    {
+     "name": "P04_03",
+     "kind": "hull",
+     "first_triangle": 4154,
+     "triangles": 148
+    },
+    {
+     "name": "P04_04",
+     "kind": "hull",
+     "first_triangle": 4302,
+     "triangles": 364
+    },
+    {
+     "name": "P04_05",
+     "kind": "hull",
+     "first_triangle": 4666,
+     "triangles": 200
+    },
+    {
+     "name": "P04_06",
+     "kind": "hull",
+     "first_triangle": 4866,
+     "triangles": 80
+    },
+    {
+     "name": "P04_07",
+     "kind": "hull",
+     "first_triangle": 4946,
+     "triangles": 246
+    },
+    {
+     "name": "P04_08",
+     "kind": "hull",
+     "first_triangle": 5192,
+     "triangles": 154
+    },
+    {
+     "name": "P04_09",
+     "kind": "hull",
+     "first_triangle": 5346,
+     "triangles": 218
+    },
+    {
+     "name": "P04_10",
+     "kind": "hull",
+     "first_triangle": 5564,
+     "triangles": 396
+    },
+    {
+     "name": "P04_11",
+     "kind": "hull",
+     "first_triangle": 5960,
+     "triangles": 506
+    },
+    {
+     "name": "P04_12",
+     "kind": "hull",
+     "first_triangle": 6466,
+     "triangles": 200
+    },
+    {
+     "name": "P04_13",
+     "kind": "hull",
+     "first_triangle": 6666,
+     "triangles": 546
+    },
+    {
+     "name": "P04_14",
+     "kind": "hull",
+     "first_triangle": 7212,
+     "triangles": 780
+    },
+    {
+     "name": "P04_15",
+     "kind": "hull",
+     "first_triangle": 7992,
+     "triangles": 774
+    },
+    {
+     "name": "S2",
+     "kind": "box",
+     "first_triangle": 8766,
+     "triangles": 12,
+     "centre_m": [
+      -0.0007722413,
+      0.0303992,
+      0.0489949998
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       0.0,
+       0.0,
+       1.0
+      ],
+      [
+       0.0,
+       -1.0,
+       0.0
+      ],
+      [
+       1.0,
+       0.0,
+       0.0
+      ]
+     ]
+    }
+   ]
+  },
+  "upper_arm": {
+   "file": "upper_arm.stl",
+   "triangles": 3936,
+   "pieces": [
+    {
+     "name": "P05_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 538
+    },
+    {
+     "name": "P05_01",
+     "kind": "hull",
+     "first_triangle": 538,
+     "triangles": 424
+    },
+    {
+     "name": "P05_02",
+     "kind": "hull",
+     "first_triangle": 962,
+     "triangles": 180
+    },
+    {
+     "name": "P05_03",
+     "kind": "hull",
+     "first_triangle": 1142,
+     "triangles": 126
+    },
+    {
+     "name": "P05_04",
+     "kind": "hull",
+     "first_triangle": 1268,
+     "triangles": 44
+    },
+    {
+     "name": "P05_05",
+     "kind": "hull",
+     "first_triangle": 1312,
+     "triangles": 192
+    },
+    {
+     "name": "P05_06",
+     "kind": "hull",
+     "first_triangle": 1504,
+     "triangles": 108
+    },
+    {
+     "name": "P05_07",
+     "kind": "hull",
+     "first_triangle": 1612,
+     "triangles": 196
+    },
+    {
+     "name": "P05_08",
+     "kind": "hull",
+     "first_triangle": 1808,
+     "triangles": 226
+    },
+    {
+     "name": "P05_09",
+     "kind": "hull",
+     "first_triangle": 2034,
+     "triangles": 106
+    },
+    {
+     "name": "P05_10",
+     "kind": "hull",
+     "first_triangle": 2140,
+     "triangles": 362
+    },
+    {
+     "name": "P05_11",
+     "kind": "hull",
+     "first_triangle": 2502,
+     "triangles": 336
+    },
+    {
+     "name": "P05_12",
+     "kind": "hull",
+     "first_triangle": 2838,
+     "triangles": 168
+    },
+    {
+     "name": "P05_13",
+     "kind": "hull",
+     "first_triangle": 3006,
+     "triangles": 154
+    },
+    {
+     "name": "P05_14",
+     "kind": "hull",
+     "first_triangle": 3160,
+     "triangles": 362
+    },
+    {
+     "name": "P05_15",
+     "kind": "hull",
+     "first_triangle": 3522,
+     "triangles": 402
+    },
+    {
+     "name": "S3",
+     "kind": "box",
+     "first_triangle": 3924,
+     "triangles": 12,
+     "centre_m": [
+      -0.0190500046,
+      -0.0121105221,
+      0.12152695
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       -1.099482e-06,
+       0.968843120786,
+       0.247675205269
+      ],
+      [
+       -1.099483e-06,
+       -0.24767520527,
+       0.968843120785
+      ],
+      [
+       0.999999999999,
+       7.92911e-07,
+       1.337541e-06
+      ]
+     ]
+    }
+   ]
+  },
+  "forearm": {
+   "file": "forearm.stl",
+   "triangles": 7386,
+   "pieces": [
+    {
+     "name": "P06_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 432
+    },
+    {
+     "name": "P06_01",
+     "kind": "hull",
+     "first_triangle": 432,
+     "triangles": 318
+    },
+    {
+     "name": "P06_02",
+     "kind": "hull",
+     "first_triangle": 750,
+     "triangles": 296
+    },
+    {
+     "name": "P06_03",
+     "kind": "hull",
+     "first_triangle": 1046,
+     "triangles": 194
+    },
+    {
+     "name": "P06_04",
+     "kind": "hull",
+     "first_triangle": 1240,
+     "triangles": 138
+    },
+    {
+     "name": "P06_05",
+     "kind": "hull",
+     "first_triangle": 1378,
+     "triangles": 140
+    },
+    {
+     "name": "P06_06",
+     "kind": "hull",
+     "first_triangle": 1518,
+     "triangles": 104
+    },
+    {
+     "name": "P06_07",
+     "kind": "hull",
+     "first_triangle": 1622,
+     "triangles": 132
+    },
+    {
+     "name": "P06_08",
+     "kind": "hull",
+     "first_triangle": 1754,
+     "triangles": 116
+    },
+    {
+     "name": "P06_09",
+     "kind": "hull",
+     "first_triangle": 1870,
+     "triangles": 186
+    },
+    {
+     "name": "P06_10",
+     "kind": "hull",
+     "first_triangle": 2056,
+     "triangles": 206
+    },
+    {
+     "name": "P06_11",
+     "kind": "hull",
+     "first_triangle": 2262,
+     "triangles": 130
+    },
+    {
+     "name": "P06_12",
+     "kind": "hull",
+     "first_triangle": 2392,
+     "triangles": 246
+    },
+    {
+     "name": "P06_13",
+     "kind": "hull",
+     "first_triangle": 2638,
+     "triangles": 186
+    },
+    {
+     "name": "P06_14",
+     "kind": "hull",
+     "first_triangle": 2824,
+     "triangles": 160
+    },
+    {
+     "name": "P06_15",
+     "kind": "hull",
+     "first_triangle": 2984,
+     "triangles": 674
+    },
+    {
+     "name": "P07_00",
+     "kind": "hull",
+     "first_triangle": 3658,
+     "triangles": 210
+    },
+    {
+     "name": "P07_01",
+     "kind": "hull",
+     "first_triangle": 3868,
+     "triangles": 262
+    },
+    {
+     "name": "P07_02",
+     "kind": "hull",
+     "first_triangle": 4130,
+     "triangles": 242
+    },
+    {
+     "name": "P07_03",
+     "kind": "hull",
+     "first_triangle": 4372,
+     "triangles": 82
+    },
+    {
+     "name": "P07_04",
+     "kind": "hull",
+     "first_triangle": 4454,
+     "triangles": 174
+    },
+    {
+     "name": "P07_05",
+     "kind": "hull",
+     "first_triangle": 4628,
+     "triangles": 254
+    },
+    {
+     "name": "P07_06",
+     "kind": "hull",
+     "first_triangle": 4882,
+     "triangles": 144
+    },
+    {
+     "name": "P07_07",
+     "kind": "hull",
+     "first_triangle": 5026,
+     "triangles": 442
+    },
+    {
+     "name": "P07_08",
+     "kind": "hull",
+     "first_triangle": 5468,
+     "triangles": 218
+    },
+    {
+     "name": "P07_09",
+     "kind": "hull",
+     "first_triangle": 5686,
+     "triangles": 38
+    },
+    {
+     "name": "P07_10",
+     "kind": "hull",
+     "first_triangle": 5724,
+     "triangles": 164
+    },
+    {
+     "name": "P07_11",
+     "kind": "hull",
+     "first_triangle": 5888,
+     "triangles": 282
+    },
+    {
+     "name": "P07_12",
+     "kind": "hull",
+     "first_triangle": 6170,
+     "triangles": 110
+    },
+    {
+     "name": "P07_13",
+     "kind": "hull",
+     "first_triangle": 6280,
+     "triangles": 292
+    },
+    {
+     "name": "P07_14",
+     "kind": "hull",
+     "first_triangle": 6572,
+     "triangles": 380
+    },
+    {
+     "name": "P07_15",
+     "kind": "hull",
+     "first_triangle": 6952,
+     "triangles": 422
+    },
+    {
+     "name": "S4",
+     "kind": "box",
+     "first_triangle": 7374,
+     "triangles": 12,
+     "centre_m": [
+      -0.0190500003,
+      -0.000434629,
+      0.137068076
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       0.0,
+       0.034770319747,
+       0.999395329619
+      ],
+      [
+       0.0,
+       -0.999395329619,
+       0.034770319747
+      ],
+      [
+       1.0,
+       0.0,
+       0.0
+      ]
+     ]
+    }
+   ]
+  },
+  "wrist": {
+   "file": "wrist.stl",
+   "triangles": 3790,
+   "pieces": [
+    {
+     "name": "P08_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 208
+    },
+    {
+     "name": "P08_01",
+     "kind": "hull",
+     "first_triangle": 208,
+     "triangles": 172
+    },
+    {
+     "name": "P08_02",
+     "kind": "hull",
+     "first_triangle": 380,
+     "triangles": 296
+    },
+    {
+     "name": "P08_03",
+     "kind": "hull",
+     "first_triangle": 676,
+     "triangles": 180
+    },
+    {
+     "name": "P08_04",
+     "kind": "hull",
+     "first_triangle": 856,
+     "triangles": 124
+    },
+    {
+     "name": "P08_05",
+     "kind": "hull",
+     "first_triangle": 980,
+     "triangles": 528
+    },
+    {
+     "name": "P08_06",
+     "kind": "hull",
+     "first_triangle": 1508,
+     "triangles": 382
+    },
+    {
+     "name": "P08_07",
+     "kind": "hull",
+     "first_triangle": 1890,
+     "triangles": 168
+    },
+    {
+     "name": "P08_08",
+     "kind": "hull",
+     "first_triangle": 2058,
+     "triangles": 82
+    },
+    {
+     "name": "P08_09",
+     "kind": "hull",
+     "first_triangle": 2140,
+     "triangles": 86
+    },
+    {
+     "name": "P08_10",
+     "kind": "hull",
+     "first_triangle": 2226,
+     "triangles": 182
+    },
+    {
+     "name": "P08_11",
+     "kind": "hull",
+     "first_triangle": 2408,
+     "triangles": 224
+    },
+    {
+     "name": "P08_12",
+     "kind": "hull",
+     "first_triangle": 2632,
+     "triangles": 214
+    },
+    {
+     "name": "P08_13",
+     "kind": "hull",
+     "first_triangle": 2846,
+     "triangles": 198
+    },
+    {
+     "name": "P08_14",
+     "kind": "hull",
+     "first_triangle": 3044,
+     "triangles": 158
+    },
+    {
+     "name": "P08_15",
+     "kind": "hull",
+     "first_triangle": 3202,
+     "triangles": 576
+    },
+    {
+     "name": "S5",
+     "kind": "box",
+     "first_triangle": 3778,
+     "triangles": 12,
+     "centre_m": [
+      -0.0306000002,
+      0.0,
+      0.0497130347
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0
+      ]
+     ]
+    }
+   ]
+  },
+  "gripper": {
+   "file": "gripper.stl",
+   "triangles": 3512,
+   "pieces": [
+    {
+     "name": "P09_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 316
+    },
+    {
+     "name": "P09_01",
+     "kind": "hull",
+     "first_triangle": 316,
+     "triangles": 172
+    },
+    {
+     "name": "P09_02",
+     "kind": "hull",
+     "first_triangle": 488,
+     "triangles": 104
+    },
+    {
+     "name": "P09_03",
+     "kind": "hull",
+     "first_triangle": 592,
+     "triangles": 188
+    },
+    {
+     "name": "P09_04",
+     "kind": "hull",
+     "first_triangle": 780,
+     "triangles": 128
+    },
+    {
+     "name": "P09_05",
+     "kind": "hull",
+     "first_triangle": 908,
+     "triangles": 82
+    },
+    {
+     "name": "P09_06",
+     "kind": "hull",
+     "first_triangle": 990,
+     "triangles": 184
+    },
+    {
+     "name": "P09_07",
+     "kind": "hull",
+     "first_triangle": 1174,
+     "triangles": 568
+    },
+    {
+     "name": "P09_08",
+     "kind": "hull",
+     "first_triangle": 1742,
+     "triangles": 54
+    },
+    {
+     "name": "P09_09",
+     "kind": "hull",
+     "first_triangle": 1796,
+     "triangles": 208
+    },
+    {
+     "name": "P09_10",
+     "kind": "hull",
+     "first_triangle": 2004,
+     "triangles": 124
+    },
+    {
+     "name": "P09_11",
+     "kind": "hull",
+     "first_triangle": 2128,
+     "triangles": 560
+    },
+    {
+     "name": "P09_12",
+     "kind": "hull",
+     "first_triangle": 2688,
+     "triangles": 168
+    },
+    {
+     "name": "P09_13",
+     "kind": "hull",
+     "first_triangle": 2856,
+     "triangles": 176
+    },
+    {
+     "name": "P09_14",
+     "kind": "hull",
+     "first_triangle": 3032,
+     "triangles": 98
+    },
+    {
+     "name": "P09_15",
+     "kind": "hull",
+     "first_triangle": 3130,
+     "triangles": 370
+    },
+    {
+     "name": "S6",
+     "kind": "box",
+     "first_triangle": 3500,
+     "triangles": 12,
+     "centre_m": [
+      0.0002500418,
+      -0.0076999582,
+      0.0234000183
+     ],
+     "half_m": [
+      0.0229000001,
+      0.0125999994,
+      0.0192499997
+     ],
+     "axes": [
+      [
+       -1.958488e-06,
+       -0.999999999998,
+       6.74145e-07
+      ],
+      [
+       1.191251e-06,
+       6.74143e-07,
+       0.999999999999
+      ],
+      [
+       -0.999999999997,
+       1.958488e-06,
+       1.191249e-06
+      ]
+     ]
+    }
+   ]
+  },
+  "jaw": {
+   "file": "jaw.stl",
+   "triangles": 2646,
+   "pieces": [
+    {
+     "name": "P10_00",
+     "kind": "hull",
+     "first_triangle": 0,
+     "triangles": 496
+    },
+    {
+     "name": "P10_01",
+     "kind": "hull",
+     "first_triangle": 496,
+     "triangles": 146
+    },
+    {
+     "name": "P10_02",
+     "kind": "hull",
+     "first_triangle": 642,
+     "triangles": 192
+    },
+    {
+     "name": "P10_03",
+     "kind": "hull",
+     "first_triangle": 834,
+     "triangles": 224
+    },
+    {
+     "name": "P10_04",
+     "kind": "hull",
+     "first_triangle": 1058,
+     "triangles": 142
+    },
+    {
+     "name": "P10_05",
+     "kind": "hull",
+     "first_triangle": 1200,
+     "triangles": 274
+    },
+    {
+     "name": "P10_06",
+     "kind": "hull",
+     "first_triangle": 1474,
+     "triangles": 78
+    },
+    {
+     "name": "P10_07",
+     "kind": "hull",
+     "first_triangle": 1552,
+     "triangles": 56
+    },
+    {
+     "name": "P10_08",
+     "kind": "hull",
+     "first_triangle": 1608,
+     "triangles": 198
+    },
+    {
+     "name": "P10_09",
+     "kind": "hull",
+     "first_triangle": 1806,
+     "triangles": 70
+    },
+    {
+     "name": "P10_10",
+     "kind": "hull",
+     "first_triangle": 1876,
+     "triangles": 50
+    },
+    {
+     "name": "P10_11",
+     "kind": "hull",
+     "first_triangle": 1926,
+     "triangles": 46
+    },
+    {
+     "name": "P10_12",
+     "kind": "hull",
+     "first_triangle": 1972,
+     "triangles": 32
+    },
+    {
+     "name": "P10_13",
+     "kind": "hull",
+     "first_triangle": 2004,
+     "triangles": 50
+    },
+    {
+     "name": "P10_14",
+     "kind": "hull",
+     "first_triangle": 2054,
+     "triangles": 136
+    },
+    {
+     "name": "P10_15",
+     "kind": "hull",
+     "first_triangle": 2190,
+     "triangles": 456
+    }
+   ]
+  }
+ },
+ "contact_not_checked": [
+  [
+   "base",
+   "shoulder"
+  ],
+  [
+   "shoulder",
+   "upper_arm"
+  ],
+  [
+   "upper_arm",
+   "forearm"
+  ],
+  [
+   "forearm",
+   "wrist"
+  ],
+  [
+   "wrist",
+   "gripper"
+  ],
+  [
+   "gripper",
+   "jaw"
+  ]
+ ],
+ "base": "welded to the table: its pieces count against the moving links (except the shoulder), not against the table and the cell objects",
+ "clamped_tools": {
+  "frame": "TCP frame (kinematics sheet, section 5)",
+  "part": {
+   "shape": "box",
+   "half": "the part's half sizes [hx, hy, hz]",
+   "centre_tcp_m": "[-0.007841 + hx, 0, seat z]"
+  },
+  "needle_holder": {
+   "shape": "box",
+   "half_m": [
+    0.00784,
+    0.006,
+    0.009
+   ],
+   "centre_tcp_m": [
+    -1e-06,
+    0.0,
+    -0.003
+   ]
+  },
+  "needle": {
+   "shape": "capsule",
+   "radius_m": 0.0012,
+   "axis_from_tcp_m": [
+    -1e-06,
+    0.0,
+    0.006
+   ],
+   "axis_to_tcp_m": [
+    -1e-06,
+    0.0,
+    0.0438
+   ],
+   "tip_tcp_m": [
+    -1e-06,
+    0.0,
+    0.045
+   ]
+  },
+  "not_checked_against": [
+   "gripper",
+   "jaw",
+   "wrist"
+  ]
+ }
+}

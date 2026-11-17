@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "acceptance_score",
+ "note": "acceptance_score is the mean over the acceptance runs of the episode score (0.5 reach + 0.4 path + 0.1 infeasibility J) times the gates, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the privileged reference controller (solution/) replays the truth trajectories of every job: 1.0 under ale validate",
+ "value": 1.0
+}

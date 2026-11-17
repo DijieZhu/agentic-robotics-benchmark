@@ -1,0 +1,37 @@
+{
+ "format": "scene-description/1",
+ "frame": "cell (the table's reference corner): x, y >= 0 on the table, z up; metres, degrees",
+ "robot_base": {"pos": [0.250737, 0.284934, 0.0], "yaw_deg": -92.6047},
+ "objects": [
+  {
+   "name": "board",
+   "kind": "board",
+   "pose": {"pos": [0.505891, 0.284992, 0.0], "yaw_deg": -90.52},
+   "primitives": [
+    {
+     "name": "board",
+     "type": "box",
+     "size": [0.07047, 0.06212, 0.003],
+     "pos": [0.0, 0.00116, 0.03741],
+     "quat": [0.980438, 0.196827, 0.0, 0.0]
+    },
+    {"name": "board_rail0", "type": "box", "size": [0.06343, 0.005, 0.00567], "pos": [0.0, -0.04699, 0.00567], "quat": [1.0, 0.0, 0.0, 0.0]},
+    {"name": "board_rail1", "type": "box", "size": [0.06343, 0.005, 0.02533], "pos": [0.0, 0.04699, 0.02533], "quat": [1.0, 0.0, 0.0, 0.0]}
+   ]
+  },
+  {
+   "name": "cup",
+   "kind": "cup",
+   "pose": {"pos": [0.215367, 0.54862, 0.0], "yaw_deg": 176.0525},
+   "primitives": [{"name": "cup", "type": "cylinder", "size": [0.02275, 0.0288], "pos": [0.0, 0.0, 0.0288], "quat": [1.0, 0.0, 0.0, 0.0]}]
+  },
+  {
+   "name": "clamp",
+   "kind": "fixture",
+   "pose": {"pos": [0.33014, 0.461272, 0.0], "yaw_deg": 101.3853},
+   "primitives": [{"name": "clamp", "type": "box", "size": [0.04002, 0.03151, 0.03537], "pos": [0.0, 0.0, 0.03537], "quat": [1.0, 0.0, 0.0, 0.0]}]
+  }
+ ],
+ "table": {"z": 0.0, "note": "the robot base stands on the table; the table top is z = 0"},
+ "survey_tolerance": {"objects_mm": 2.0, "objects_deg": 1.0, "robot_base_mm": 1.0, "robot_base_deg": 0.3}
+}
