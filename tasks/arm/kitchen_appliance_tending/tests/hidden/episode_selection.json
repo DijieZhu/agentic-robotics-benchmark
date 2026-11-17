@@ -2,7 +2,7 @@
  "format": "kitchen_appliance_tending episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c",
+  "tests/verify.py": "04f11c9df8a12b7c6a8fd88b908ccc10b8c03e3342c7af4607bc991c2db3125b",
   "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "tests/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
   "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
@@ -14,7 +14,7 @@
   "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
  },
- "frozen_commit": "aa26e1de1e3eb7604e5752b0ec3bedd0d7c59dea",
+ "frozen_commit": "e64e977716aedb47d7c67c18edaf74543e742834",
  "draws": [
   {
    "draw": 1,
@@ -22715,6 +22715,408 @@
      "spec_hash": "sha256:a7b468a63ef51fb16a67f51e6f44777636bf8a4e5e0dfdf3940c1393dffecef9",
      "oracle_lock_digest": "sha256:c4bb3b2709d13948c760263d463f519bd84737d4e032ea5ae091b074db44fa9f",
      "tree": "the task at aa26e1d with tests/review/test_probe_schedule.py (not read by the grader) and the TEMPORARY local-asset build of 8052481 on top (the files the grader reads are those of aa26e1d); image 1ef57d0ff623; engine vendor/ale bfb7505 on apollo-pc-2's Docker"
+    }
+   }
+  },
+  {
+   "amendment": 3,
+   "amended_utc": "2026-11-17T01:10:04Z",
+   "draw": 6,
+   "commit": "e64e977716aedb47d7c67c18edaf74543e742834",
+   "reason": "Wording only, after the independent check of review/pr81-final4 (verdict 'pass with findings'): tests/verify.py's docstrings now say exactly what the per-episode probe stream guarantees (the grader adds no run-to-run randomness of its own, so a deterministic controller that stays inside the time limits, which are wall-clock, gets one result; the four other verify stages that pass per-episode entropy to seed_rng take it from a separate hidden key, which this task does not need; the episode's generator is seeded in Episode.reset). No code change: the ast of tests/verify.py with every docstring removed is identical before and after (sha256 54bbfaf77d27209fc591ea372011e0f316e1dfc54c8bd5ec69ec0c121b04c38f; the evidence holds the proof). No new draw; tests/hidden/episodes.json and tests/anchor.json unchanged.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c",
+     "now": "04f11c9df8a12b7c6a8fd88b908ccc10b8c03e3342c7af4607bc991c2db3125b"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c",
+    "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "tests/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
+    "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
+    "solution/oracle/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
+    "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
+    "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
+    "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
+   },
+   "frozen_commit_before": "aa26e1de1e3eb7604e5752b0ec3bedd0d7c59dea",
+   "rerun_in_process": {
+    "rule": "step 3's in-process run of the privileged reference on every episode of the made draw, with the frozen files of the commit; each scored 1.0 with the steps and the per-request outcomes and closing steps recorded when it was kept",
+    "episodes": [
+     {
+      "episode": "u7#1",
+      "seed": 12218416849694862617,
+      "credit": 1.0,
+      "steps": 256,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       81,
+       166,
+       248
+      ],
+      "same_as_kept": true,
+      "wall_s": 22.3
+     },
+     {
+      "episode": "u0#0",
+      "seed": 3659038031876901525,
+      "credit": 1.0,
+      "steps": 532,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       132,
+       386,
+       528
+      ],
+      "same_as_kept": true,
+      "wall_s": 37.1
+     },
+     {
+      "episode": "u8#1",
+      "seed": 20503753265692410,
+      "credit": 1.0,
+      "steps": 602,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       176,
+       472,
+       597
+      ],
+      "same_as_kept": true,
+      "wall_s": 13.0
+     },
+     {
+      "episode": "u0#1",
+      "seed": 2433537977515057068,
+      "credit": 1.0,
+      "steps": 1065,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       283,
+       633,
+       1061
+      ],
+      "same_as_kept": true,
+      "wall_s": 29.3
+     },
+     {
+      "episode": "u2#1",
+      "seed": 16259500198639530817,
+      "credit": 1.0,
+      "steps": 642,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       236,
+       481,
+       637
+      ],
+      "same_as_kept": true,
+      "wall_s": 27.8
+     },
+     {
+      "episode": "u3#1",
+      "seed": 15605881240720506975,
+      "credit": 1.0,
+      "steps": 1295,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       396,
+       556,
+       1290
+      ],
+      "same_as_kept": true,
+      "wall_s": 22.0
+     },
+     {
+      "episode": "u5#1",
+      "seed": 11289930795897151125,
+      "credit": 1.0,
+      "steps": 1039,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       177,
+       476,
+       1034
+      ],
+      "same_as_kept": true,
+      "wall_s": 44.0
+     },
+     {
+      "episode": "u8#0",
+      "seed": 11375561797344878862,
+      "credit": 1.0,
+      "steps": 650,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       257,
+       396,
+       645
+      ],
+      "same_as_kept": true,
+      "wall_s": 25.0
+     },
+     {
+      "episode": "u2#0",
+      "seed": 16177700516589911371,
+      "credit": 1.0,
+      "steps": 741,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       312,
+       499,
+       736
+      ],
+      "same_as_kept": true,
+      "wall_s": 18.0
+     },
+     {
+      "episode": "u5#0",
+      "seed": 14023197352194698727,
+      "credit": 1.0,
+      "steps": 1392,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       187,
+       602,
+       1387
+      ],
+      "same_as_kept": true,
+      "wall_s": 54.8
+     },
+     {
+      "episode": "u1#2",
+      "seed": 603871317898819319,
+      "credit": 1.0,
+      "steps": 243,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       78,
+       164,
+       235
+      ],
+      "same_as_kept": true,
+      "wall_s": 12.3
+     },
+     {
+      "episode": "u6#1",
+      "seed": 5474728899677097721,
+      "credit": 1.0,
+      "steps": 393,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       125,
+       257,
+       388
+      ],
+      "same_as_kept": true,
+      "wall_s": 7.4
+     },
+     {
+      "episode": "u3#0",
+      "seed": 12124688175895452785,
+      "credit": 1.0,
+      "steps": 985,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       406,
+       863,
+       980
+      ],
+      "same_as_kept": true,
+      "wall_s": 22.8
+     },
+     {
+      "episode": "u1#1",
+      "seed": 12221698076534752065,
+      "credit": 1.0,
+      "steps": 262,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       95,
+       167,
+       254
+      ],
+      "same_as_kept": true,
+      "wall_s": 8.6
+     },
+     {
+      "episode": "u4#0",
+      "seed": 5918157982911667440,
+      "credit": 1.0,
+      "steps": 260,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       90,
+       164,
+       252
+      ],
+      "same_as_kept": true,
+      "wall_s": 9.2
+     },
+     {
+      "episode": "u6#0",
+      "seed": 15125693244157032466,
+      "credit": 1.0,
+      "steps": 648,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       145,
+       382,
+       643
+      ],
+      "same_as_kept": true,
+      "wall_s": 17.0
+     },
+     {
+      "episode": "u7#0",
+      "seed": 1726653658657273486,
+      "credit": 1.0,
+      "steps": 447,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       111,
+       277,
+       439
+      ],
+      "same_as_kept": true,
+      "wall_s": 13.0
+     },
+     {
+      "episode": "u4#1",
+      "seed": 15548475382162886622,
+      "credit": 1.0,
+      "steps": 259,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       80,
+       171,
+       251
+      ],
+      "same_as_kept": true,
+      "wall_s": 3.0
+     }
+    ]
+   },
+   "evidence": {
+    "change": {
+     "commit": "e64e977716aedb47d7c67c18edaf74543e742834 (kitchen_appliance_tending: verify.py docstrings say exactly what the per-episode probe stream guarantees)",
+     "frozen_file": "tests/verify.py",
+     "what": "Docstrings only: the module docstring's 'so one submission gets one result' now reads 'the grader adds no run-to-run randomness of its own, so a deterministic controller that stays inside the time limits (the step deadline, which also bounds the controller's start, and the grader budget are wall-clock) gets one result'; probe_stream's claim that two other tasks 'key per-episode lock streams the same way' is replaced by what their verify stages on main do (per-episode entropy to seed_rng from a separate hidden key: probe_key mixed with the seed in fault_adaptive_spacecraft_docking and object_finding_and_organizing_on_messy_desk, each episode's / mission's own lock_key in driving_safety_supervisor and hazard_bay_build) and why this task needs no such key; probe_stream names Episode.reset (not Episode.__init__) as where the episode's generator is seeded. The same commit corrects one docstring sentence of tests/review/test_probe_schedule.py (not a frozen file).",
+     "reason": "The independent check of review/pr81-final4 (verdict 'pass with findings') found the wording inaccurate: 'probe_stream docstring says two other tasks key their streams \"the same way\"; they do not'; '\"One submission gets one result\" needs a condition'."
+    },
+    "no_code_change": {
+     "rule": "the ast of the file with every docstring removed (module, class and function docstrings: the first statement when it is a string constant), ast.dump without attributes, sha256; Python 3.12.9 (the maintainers' host venv)",
+     "tests/verify.py": {
+      "before (9c8dee8, the file amendment 2 pinned)": {
+       "file_sha256": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c",
+       "ast_without_docstrings_sha256": "54bbfaf77d27209fc591ea372011e0f316e1dfc54c8bd5ec69ec0c121b04c38f",
+       "docstrings_removed": 18
+      },
+      "after (e64e977)": {
+       "file_sha256": "04f11c9df8a12b7c6a8fd88b908ccc10b8c03e3342c7af4607bc991c2db3125b",
+       "ast_without_docstrings_sha256": "54bbfaf77d27209fc591ea372011e0f316e1dfc54c8bd5ec69ec0c121b04c38f",
+       "docstrings_removed": 18
+      }
+     },
+     "tests/review/test_probe_schedule.py": {
+      "before (9c8dee8)": {
+       "file_sha256": "a8eeb90d15506673174163180eef57737300a752a8f4baf47690a8ca4710ae84",
+       "ast_without_docstrings_sha256": "a76827ee90165d57c16c37c4743b8fc00a64d11756b57e7733aaac9b0414253b",
+       "docstrings_removed": 4
+      },
+      "after (e64e977)": {
+       "file_sha256": "0cea7a5ca7c1aaa1db768542691dcf20a62b539c173517c4bf20da19e5262111",
+       "ast_without_docstrings_sha256": "a76827ee90165d57c16c37c4743b8fc00a64d11756b57e7733aaac9b0414253b",
+       "docstrings_removed": 4
+      }
+     },
+     "git_diff_9c8dee8_e64e977": "tests/verify.py and tests/review/test_probe_schedule.py only"
+    },
+    "set_and_anchor": {
+     "no_new_draw": true,
+     "tests/hidden/episodes.json_sha256": "e850b3de1f161223fc67e6c4ad9267b5ee05178b58e3ba51622207987860adb2",
+     "tests/anchor.json_sha256": "5611754b1667c1c8d05cdade4ec67c330f62990a68d483442fe65fc2b8a484cd",
+     "note": "both unchanged (episodes.json as at 545b41c and amendment 2; anchor.json 1.0, full_at 0.98)"
+    },
+    "validate": {
+     "amendment_2_tree": "validate-d9ae0411 ran the grader of amendment 2 (verify.py bbd4162d..., the same code by the AST proof above): lint ok; oracle 1.0, probes 121, 120 differing, 0 idle-skipped; untouched 0.0.",
+     "this_verify_py": "validate-902c83e2 (apollo-pc-2, engine bfb7505, 2026-11-17T01:04:09Z-01:06:20Z) ran this tests/verify.py (sha256 04f11c9d...) in a tree that differs from this commit's only in the selection record (an earlier attempt at this amendment, discarded because a commit message had to be reworded) and the TEMPORARY local-asset build on top: lint ok; oracle 1.0 (mean_request_credit 1.0, 18 of 18 scored, 0 aborted, 0 sim faults, render_selftest 1, probes 121, 120 differing, 0 idle-skipped, match lock ok); untouched 0.0; the oracle's 18 episode lines (score, steps: 11,602 in all) and 54 request lines (outcome, open and close steps) of the grader's log are identical to validate-d9ae0411's."
     }
    }
   }
