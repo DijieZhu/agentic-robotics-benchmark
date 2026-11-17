@@ -2,7 +2,7 @@
  "format": "kitchen_appliance_tending episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "c0c967734c50fc85003a896a1104a2b7239d8b7fa65a57472bfcdead0cc25738",
+  "tests/verify.py": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c",
   "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "tests/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
   "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
@@ -14,7 +14,7 @@
   "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
  },
- "frozen_commit": "2b84271b66b2fca00f1cab3e265b570dcc5d4375",
+ "frozen_commit": "aa26e1de1e3eb7604e5752b0ec3bedd0d7c59dea",
  "draws": [
   {
    "draw": 1,
@@ -22108,6 +22108,613 @@
      "spec_hash": "sha256:cc5ce54cf077e7e41e94a01bd89f06dda3c991be08eeaf80e311bc61938621a4",
      "oracle_lock_digest": "sha256:85b7845e8c6c28dc3e1e17f12dfc573d0c3aebc6abd37ae1fefee59102211300",
      "tree": "the task as committed at 7584b1f plus tests/anchor.json's note (the files the grader reads are those of 7584b1f), the image built from the TEMPORARY local copy of the task assets (the staged upload tree, assets.sha256 at revision 000...0); the engine vendor/ale bfb7505 on the maintainers' host Docker"
+    }
+   }
+  },
+  {
+   "amendment": 2,
+   "amended_utc": "2026-11-17T00:18:50Z",
+   "draw": 6,
+   "commit": "aa26e1de1e3eb7604e5752b0ec3bedd0d7c59dea",
+   "reason": "The grader's probe lock now draws from one stream per episode (tests/verify.py probe_stream: the kit's seed_rng keyed by BLAKE2b over a domain tag, the episode's index in the set and its hidden seed; used through verify.ask) instead of one OS-entropy stream for the whole run (the maintainers' decision, 2026-11-16: one submission, one result; one submission had scored 0.278 to 0.407 in seven gradings of one fixed set, and 0.148 / 0.204 on this set, only because where the lock probed changed from run to run). Of the frozen files only tests/verify.py changed, and only in where the lock probes (which steps, the order of a pair, the seed of the perturbation) plus docstrings; the lock's rate, pass fraction, tolerance, idle rule and perturbation, the physics, the reference, the episode logic, the credit, the wire, the budget and the set are unchanged. It cannot have influenced the selection of draw 6 (drawn, run and made before the change; its wire runs used fresh OS-entropy streams, which select_set.py's wire runs keep), it changes no episode (tests/hidden/episodes.json byte-identical; the stream shares nothing with the environment's draws from the seed) and no credit, and the reference's result is unchanged (1.0 in validate-5f839296 and in two re-grades, 121 probe pairs with 120 differing each time). No new draw; tests/anchor.json stays.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "c0c967734c50fc85003a896a1104a2b7239d8b7fa65a57472bfcdead0cc25738",
+     "now": "bbd4162d6631670e7c4a18978e806ff53b5c956ef971de2210f4026e2e451c8c"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "c0c967734c50fc85003a896a1104a2b7239d8b7fa65a57472bfcdead0cc25738",
+    "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "tests/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
+    "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "tests/grader_config.json": "1bd9feeb4d3b76b60abde9d29fac8df5c0de85401623bd35f2fb67735f7b47fe",
+    "solution/oracle/appliance_env.py": "5768096132d694a96e188ea178645cee5610fcdb3fddc85d0b1f3b017a41dddf",
+    "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
+    "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
+    "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
+   },
+   "frozen_commit_before": "2b84271b66b2fca00f1cab3e265b570dcc5d4375",
+   "rerun_in_process": {
+    "rule": "step 3's in-process run of the privileged reference on every episode of the made draw, with the frozen files of the commit; each scored 1.0 with the steps and the per-request outcomes and closing steps recorded when it was kept",
+    "episodes": [
+     {
+      "episode": "u7#1",
+      "seed": 12218416849694862617,
+      "credit": 1.0,
+      "steps": 256,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       81,
+       166,
+       248
+      ],
+      "same_as_kept": true,
+      "wall_s": 5.7
+     },
+     {
+      "episode": "u0#0",
+      "seed": 3659038031876901525,
+      "credit": 1.0,
+      "steps": 532,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       132,
+       386,
+       528
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.0
+     },
+     {
+      "episode": "u8#1",
+      "seed": 20503753265692410,
+      "credit": 1.0,
+      "steps": 602,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       176,
+       472,
+       597
+      ],
+      "same_as_kept": true,
+      "wall_s": 20.5
+     },
+     {
+      "episode": "u0#1",
+      "seed": 2433537977515057068,
+      "credit": 1.0,
+      "steps": 1065,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       283,
+       633,
+       1061
+      ],
+      "same_as_kept": true,
+      "wall_s": 14.7
+     },
+     {
+      "episode": "u2#1",
+      "seed": 16259500198639530817,
+      "credit": 1.0,
+      "steps": 642,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       236,
+       481,
+       637
+      ],
+      "same_as_kept": true,
+      "wall_s": 11.1
+     },
+     {
+      "episode": "u3#1",
+      "seed": 15605881240720506975,
+      "credit": 1.0,
+      "steps": 1295,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       396,
+       556,
+       1290
+      ],
+      "same_as_kept": true,
+      "wall_s": 17.8
+     },
+     {
+      "episode": "u5#1",
+      "seed": 11289930795897151125,
+      "credit": 1.0,
+      "steps": 1039,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       177,
+       476,
+       1034
+      ],
+      "same_as_kept": true,
+      "wall_s": 17.7
+     },
+     {
+      "episode": "u8#0",
+      "seed": 11375561797344878862,
+      "credit": 1.0,
+      "steps": 650,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       257,
+       396,
+       645
+      ],
+      "same_as_kept": true,
+      "wall_s": 16.6
+     },
+     {
+      "episode": "u2#0",
+      "seed": 16177700516589911371,
+      "credit": 1.0,
+      "steps": 741,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       312,
+       499,
+       736
+      ],
+      "same_as_kept": true,
+      "wall_s": 9.4
+     },
+     {
+      "episode": "u5#0",
+      "seed": 14023197352194698727,
+      "credit": 1.0,
+      "steps": 1392,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       187,
+       602,
+       1387
+      ],
+      "same_as_kept": true,
+      "wall_s": 42.8
+     },
+     {
+      "episode": "u1#2",
+      "seed": 603871317898819319,
+      "credit": 1.0,
+      "steps": 243,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       78,
+       164,
+       235
+      ],
+      "same_as_kept": true,
+      "wall_s": 5.2
+     },
+     {
+      "episode": "u6#1",
+      "seed": 5474728899677097721,
+      "credit": 1.0,
+      "steps": 393,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       125,
+       257,
+       388
+      ],
+      "same_as_kept": true,
+      "wall_s": 7.1
+     },
+     {
+      "episode": "u3#0",
+      "seed": 12124688175895452785,
+      "credit": 1.0,
+      "steps": 985,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       406,
+       863,
+       980
+      ],
+      "same_as_kept": true,
+      "wall_s": 9.3
+     },
+     {
+      "episode": "u1#1",
+      "seed": 12221698076534752065,
+      "credit": 1.0,
+      "steps": 262,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       95,
+       167,
+       254
+      ],
+      "same_as_kept": true,
+      "wall_s": 4.7
+     },
+     {
+      "episode": "u4#0",
+      "seed": 5918157982911667440,
+      "credit": 1.0,
+      "steps": 260,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       90,
+       164,
+       252
+      ],
+      "same_as_kept": true,
+      "wall_s": 10.4
+     },
+     {
+      "episode": "u6#0",
+      "seed": 15125693244157032466,
+      "credit": 1.0,
+      "steps": 648,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       145,
+       382,
+       643
+      ],
+      "same_as_kept": true,
+      "wall_s": 18.0
+     },
+     {
+      "episode": "u7#0",
+      "seed": 1726653658657273486,
+      "credit": 1.0,
+      "steps": 447,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       111,
+       277,
+       439
+      ],
+      "same_as_kept": true,
+      "wall_s": 11.0
+     },
+     {
+      "episode": "u4#1",
+      "seed": 15548475382162886622,
+      "credit": 1.0,
+      "steps": 259,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       80,
+       171,
+       251
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.9
+     }
+    ]
+   },
+   "evidence": {
+    "change": {
+     "commit": "aa26e1d (kitchen_appliance_tending: the probe lock draws from one stream per episode, keyed by its index and hidden seed)",
+     "frozen_file": "tests/verify.py",
+     "what": "run_episodes keeps one IdleAwareProbeLock but, at the start of episode n of the set (hidden 64-bit seed s), sets lock.rng = probe_stream(n, s) = seed_rng(entropy=int.from_bytes(blake2b(PROBE_TAG|n|s, digest_size=32), 'little')), PROBE_TAG b'kitchen_appliance_tending verify probe schedule 1'; the three draws of a step (probed?, the perturbation's seed, the pair's order) come from it through ask(); before, one seed_rng() stream (os.urandom) served the whole run. main() no longer draws seed_rng(); run_episodes lost its rng parameter; the module docstring says so. The lock's counters, rate (0.01), pass fraction (0.1), tolerance, idle rule, the perturbation itself (appliance_env.perturbed_observation) and everything the grader logs or writes are unchanged.",
+     "reason": "One submission, one result: with the set fixed, the run-wide OS-entropy stream was the grader's only run-to-run randomness; a controller that advanced its state on the probe copy (pr81-final's Opus 5.5 submission) scored 0.278-0.407 in seven gradings of one fixed set and 0.148 / 0.204 on this set."
+    },
+    "cannot_have_influenced_the_selection": "Draw 6 was drawn, run and made (key from os.urandom, candidates, kept, graded order) before this change, with the frozen verify.py c0c96773 whose wire runs used fresh OS-entropy streams; nothing of it is re-drawn or re-run except the in-process reference that amend itself repeats. select_set.py's wire runs keep a fresh OS-entropy stream per run (over_wire replaces probe_stream with seed_rng()), so step 3 of the rule holds as written for any later draw. The schedule now depends on the set's order, which `make` fixed before this change; no episode was chosen, kept or ordered with this stream.",
+    "changes_no_episode": "tests/hidden/episodes.json is byte-identical (sha256 e850b3de1f161223fc67e6c4ad9267b5ee05178b58e3ba51622207987860adb2, as at 545b41c); appliance_env.py, episode.py, units.json, grader_config.json and the oracle are unchanged; the environment and the episode draw from the seed only through NumPy generators seeded with its two halves and the tags 7, 11, 13, 23, and the probe stream is a keyed BLAKE2b of a domain tag, n and s: it shares no state with them. A probe reply is never applied to the simulator.",
+    "changes_no_credit": "The credit is episode.py's (unchanged) from the simulator's state; the lock only gates the run (a failed lock scores 0) by the same counts and threshold as before. For a controller whose replies do not depend on the probe copies the episodes are the same as under the old grader; for one that does, every grading now gives the same result instead of a draw from a spread.",
+    "reference_result": "unchanged: 1.0 in ale validate (validate-5f839296) and in both re-grades below, the same 121 probe pairs (120 differing) each time; tests/anchor.json (1.0, full_at 0.98) unchanged.",
+    "regrades": {
+     "method": "apollo-pc-2, containers pr81f4-lane* on the task image 1ef57d0ff623 (the runtime_ref of validate-5f839296 and of the final3 engine run), --cpus 4, --memory 12g, --network none, --user 1000, nice 10; tests/ of the branch mounted read-only; the grader's own verify.run_episodes (grade4.py of the maintainers' scratch: the controller started directly as the container user with the whitelist env, its stderr kept; a copy mark and a request / reply log in the grader's process that change nothing the controller receives); token truth as verify.main gives it",
+     "reference": {
+      "submission": "solution/solve.sh's reference (token truth)",
+      "runs": [
+       "ref_r1",
+       "ref_r2"
+      ],
+      "mean_request_credit": [
+       1.0,
+       1.0
+      ],
+      "probes_total": [
+       121,
+       121
+      ],
+      "probes_passed": [
+       120,
+       120
+      ],
+      "probes_idle_skipped": [
+       0,
+       0
+      ],
+      "aborted": [
+       0,
+       0
+      ],
+      "sim_faults": [
+       0,
+       0
+      ],
+      "steps_total": [
+       11602,
+       11602
+      ],
+      "episode_scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "episodes_identical": "18 of 18",
+      "identical_fields": "score, reason, steps, request outcomes and open / close steps, probe pairs / counted / passed / idle-skipped, requests sent, sha256 chain of every request written and of every reply"
+     },
+     "S3": {
+      "submission": "pr81-final3 Opus 5.5 episode's submission (engine 0.0741)",
+      "runs": [
+       "S3_r1",
+       "S3_r2",
+       "S3_r3"
+      ],
+      "mean_request_credit": [
+       0.074074,
+       0.074074,
+       0.074074
+      ],
+      "probes_total": [
+       542,
+       542,
+       542
+      ],
+      "probes_passed": [
+       542,
+       542,
+       542
+      ],
+      "probes_idle_skipped": [
+       0,
+       0,
+       0
+      ],
+      "aborted": [
+       0,
+       0,
+       0
+      ],
+      "sim_faults": [
+       0,
+       0,
+       0
+      ],
+      "steps_total": [
+       54875,
+       54875,
+       54875
+      ],
+      "episode_scores": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.3333,
+       0.0,
+       0.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      "episodes_identical": "18 of 18",
+      "identical_fields": "score, reason, steps, request outcomes and open / close steps, probe pairs / counted / passed / idle-skipped, requests sent, sha256 chain of every request written and of every reply"
+     },
+     "S1": {
+      "submission": "pr81-final Opus 5.5 episode's submission (the state-advancing controller; old grader on this set 0.148 / 0.204)",
+      "runs": [
+       "S1_r1",
+       "S1_r2",
+       "S1_r3"
+      ],
+      "mean_request_credit": [
+       0.148148,
+       0.148148,
+       0.148148
+      ],
+      "probes_total": [
+       496,
+       496,
+       496
+      ],
+      "probes_passed": [
+       495,
+       495,
+       495
+      ],
+      "probes_idle_skipped": [
+       0,
+       0,
+       0
+      ],
+      "aborted": [
+       0,
+       0,
+       0
+      ],
+      "sim_faults": [
+       0,
+       0,
+       0
+      ],
+      "steps_total": [
+       49519,
+       49519,
+       49519
+      ],
+      "episode_scores": [
+       0.0,
+       0.3333,
+       0.0,
+       0.3333,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0,
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      "episodes_identical": "18 of 18",
+      "identical_fields": "score, reason, steps, request outcomes and open / close steps, probe pairs / counted / passed / idle-skipped, requests sent, sha256 chain of every request written and of every reply"
+     }
+    },
+    "test_probe_schedule": {
+     "a": {
+      "pass": true,
+      "detail": "18 episodes x 4500 steps, 81794 requests, 794 probed steps; process 1 digest 31d8ec82e3fd8a9f, process 2 31d8ec82e3fd8a9f"
+     },
+     "b": {
+      "pass": true,
+      "detail": "18 distinct schedules of 18; probed steps per episode 34-53 (of 4500); largest overlap of two episodes' probed steps 0.039 (Jaccard)"
+     },
+     "c": {
+      "pass": true,
+      "detail": "at the reference's in-process lengths (11711 steps over 18 episodes) 122 probed steps = 1.042 % (probe_rate 1.0 %, 3 sd = 0.276 %); over the full 4500 steps per episode 0.980 %; record matches the set: True"
+     },
+     "d": {
+      "pass": true,
+      "detail": "episode steps per stub {\"mover\": [900, 1500, 1200], \"reader\": [400, 1200, 1500], \"still\": [1300, 1500, 700]}; every pair met is the schedule's (pairs met: {\"mover\": 35, \"reader\": 29, \"still\": 35}): True; in the [400, 1200, 700] steps all ran, the same 22 probes (steps, order, perturbation seed): True; mover and reader: 2322 requests byte-identical, copies included: True; still vs mover: q offsets equal within 1.5e-06 (max 4.4e-16), force offsets within 1.5e-04 (max 8.9e-16), torques unperturbed, offsets within 0.001 rad / 0.2 N: True"
+     },
+     "e": {
+      "pass": true,
+      "detail": "mover 0 of 35 pairs differ, lock ok False; reader 29 of 29, ok True; still: 35 pairs, replies differ in 35 of the 35 answered with an action, counted 0, not counted 35, ok True"
+     },
+     "result": "PASS"
+    },
+    "validate": {
+     "engine": {
+      "commit": "bfb75050aca2c54b45c5ab23bae6028a834a468a",
+      "version": "0.1.1"
+     },
+     "run": "validate-5f839296 (apollo-pc-2 ~/arb_pr81/runs; fetched to the maintainers' ale runs directory)",
+     "passed": true,
+     "oracle_reward": 1.0,
+     "untouched_reward": 0.0,
+     "oracle_metrics": {
+      "mean_request_credit": 1.0,
+      "episodes_scored": 18.0,
+      "episodes_aborted": 0.0,
+      "sim_faults": 0.0,
+      "render_selftest": 1.0,
+      "probes_total": 121.0,
+      "probes_passed": 120.0,
+      "probes_idle_skipped": 0.0,
+      "match_lock_ok": 1.0,
+      "oracle_token": 1.0
+     },
+     "lint": "ok",
+     "spec_hash": "sha256:a7b468a63ef51fb16a67f51e6f44777636bf8a4e5e0dfdf3940c1393dffecef9",
+     "oracle_lock_digest": "sha256:c4bb3b2709d13948c760263d463f519bd84737d4e032ea5ae091b074db44fa9f",
+     "tree": "the task at aa26e1d with tests/review/test_probe_schedule.py (not read by the grader) and the TEMPORARY local-asset build of 8052481 on top (the files the grader reads are those of aa26e1d); image 1ef57d0ff623; engine vendor/ale bfb7505 on apollo-pc-2's Docker"
     }
    }
   }
