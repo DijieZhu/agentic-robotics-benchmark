@@ -1,0 +1,26 @@
+# arb-base-mujoco: the ONE list of Python dependencies of the arm chain's shared base image
+# (CHAIN_PLAN.md section 2.7 "Base image arb-base-mujoco"; build order step 0, section 4.9).
+# Pinned to the versions the chain infrastructure (shared/arm, shared/common, shared/tests) was
+# developed and tested against on 2026-09-26 in /data/xiatao/venvs/arb-chain (python 3.12).
+#
+# physics + kinematics
+mujoco==3.14.0
+mink==1.3.0
+pin==4.1.0
+gymnasium==1.3.0
+# meshes: tessellation, booleans, convex decomposition
+trimesh==5.1.0
+manifold3d==3.5.3
+rtree==1.4.1
+coacd==1.0.14
+# numerics + data
+numpy==2.5.3
+scipy==1.18.1
+jsonschema==4.26.0
+pyyaml==6.0.3
+pillow==12.3.0
+matplotlib==3.11.2
+# CAD kernel (B-rep + STEP). cadquery declares vtk / casadi / numba / trame as hard
+# dependencies (~1.2 GB together); they are the price of one image for every stage.
+cadquery==2.8.0
+cadquery-ocp==7.9.3.1.1

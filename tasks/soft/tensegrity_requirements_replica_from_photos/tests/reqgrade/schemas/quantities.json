@@ -1,0 +1,372 @@
+{
+  "description": "The quantity names an entry of requirements.yaml may carry. unit: the unit the definition is stated in; any unit of the same dimension in units.json is accepted. domain: number, integer, or enumeration (then values lists every token and its meaning). The vocabulary is wider than what the evidence of this robot fixes.",
+  "format": "requirement vocabulary v1",
+  "quantities": {
+    "actuated_cables_per_robot": {
+      "definition": "Number of actuated cables (one per winch) in one robot.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "battery_endurance": {
+      "definition": "Time one robot keeps rolling on a full charge.",
+      "domain": "number",
+      "unit": "min"
+    },
+    "battery_packs_per_strut": {
+      "definition": "Number of battery packs carried by one strut. A battery pack is a set of cells wired together (in series, in parallel or both) that feeds a supply as one source; a cell that feeds a supply on its own is a pack of one cell.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "breakout_boards_on_shared_i2c_bus": {
+      "definition": "Number of bought breakout boards mounted on the main board (in a socket or soldered) whose I2C data pin and I2C clock pin are connected to the I2C data net and the I2C clock net of the control board. The control board itself is not counted; devices on the control board's own circuit or on a breakout board's own circuit are not counted.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "cable_breaking_load": {
+      "definition": "Tension at which an actuated cable breaks.",
+      "domain": "number",
+      "unit": "N"
+    },
+    "cable_diameter": {
+      "definition": "Diameter of an actuated cable.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "cable_length_command_min": {
+      "definition": "Shortest cable length the host software commands, with the values its constructor sets.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "cable_length_command_range": {
+      "definition": "Difference between the longest and the shortest cable length the host software commands, with the values its constructor sets.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "cable_material": {
+      "definition": "Material and construction of an actuated cable.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "aramid_cord": "a cord of aramid fibres",
+        "braided_polyethylene": "a braid of polyethylene fibres",
+        "elastic_cord": "a cord with an elastic core",
+        "nylon_monofilament": "a single nylon filament",
+        "steel_wire_rope": "a stranded steel rope"
+      }
+    },
+    "cable_pretension": {
+      "definition": "Tension in an actuated cable when the robot rests in its neutral shape.",
+      "domain": "number",
+      "unit": "N"
+    },
+    "cable_stiffness": {
+      "definition": "Axial stiffness of one actuated cable at its working length.",
+      "domain": "number",
+      "unit": "N/m"
+    },
+    "calibration_lines_per_file": {
+      "definition": "Number of sensor calibration lines (one slope and one offset each) in one calibration file.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "capacitance_channels_per_controller": {
+      "definition": "Number of capacitance channels the firmware of one controller samples in each cycle.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "cell_capacity": {
+      "definition": "Rated capacity of one battery cell.",
+      "domain": "number",
+      "unit": "mAh"
+    },
+    "cell_discharge_current_max": {
+      "definition": "Largest continuous current one battery cell may deliver.",
+      "domain": "number",
+      "unit": "A"
+    },
+    "cells_in_series_per_pack": {
+      "definition": "Number of cells connected in series in one battery pack (battery pack as defined under battery_packs_per_strut).",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "charge_connector_balance_groups": {
+      "definition": "Number of pin groups on the charge connector of the main board, a group being the pins that lead to one battery pack (its two terminals and the taps between its cells). The charge connector is the connector through which the cells are charged while they stay on the strut.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "charge_current_max": {
+      "definition": "Largest current with which the cells of one strut may be charged.",
+      "domain": "number",
+      "unit": "A"
+    },
+    "charge_time": {
+      "definition": "Time to charge the cells of one strut from empty to full.",
+      "domain": "number",
+      "unit": "min"
+    },
+    "controllers_per_robot": {
+      "definition": "Number of controllers the host software exchanges messages with in one robot.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "drop_height_max": {
+      "definition": "Greatest height from which the robot may fall onto a hard floor and still work.",
+      "domain": "number",
+      "unit": "m"
+    },
+    "encoder_counts_per_motor_revolution": {
+      "definition": "Encoder counts per revolution of the motor shaft, as the software uses it to turn counts into cable length.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "encoder_supply_voltage": {
+      "definition": "Voltage of the supply that powers the motor encoders, taken at the supply pin of a motor connector on the main board.",
+      "domain": "number",
+      "unit": "V"
+    },
+    "footprint_area": {
+      "definition": "Area of the convex outline of the robot's ground contact points when it rests in its neutral shape.",
+      "domain": "number",
+      "unit": "m2"
+    },
+    "ingress_protection_rating": {
+      "definition": "Protection of the electronics against dust and water.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "dust_protected": "protected against dust, not against water",
+        "immersion_proof": "protected against dust and temporary immersion",
+        "splash_proof": "protected against dust and splashing water",
+        "unprotected": "no protection is claimed"
+      }
+    },
+    "long_sensor_cut_length": {
+      "definition": "Overall length of one long strain sensor as cut: the extent of its outline along its long direction.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "long_sensor_hole_spacing": {
+      "definition": "Distance between the centres of the attachment holes at the two ends of one long strain sensor.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "long_sensors_per_cut_sheet": {
+      "definition": "Number of long strain sensors in one cut sheet (one cut file is one sheet).",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "long_strain_sensors_per_robot": {
+      "definition": "Number of long strain sensors in one robot.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "main_switch_scope": {
+      "definition": "Which supplies the on/off switch of a strut interrupts. The logic supply is the supply at the input-voltage pin of the control board; the motor supply is the supply at the motor-voltage pin of the motor driver.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "all_supplies": "the switch interrupts the logic supply and the motor supply",
+        "logic_supply_only": "the switch interrupts the logic supply and not the motor supply",
+        "motor_supply_only": "the switch interrupts the motor supply and not the logic supply",
+        "no_switch": "no switch interrupts either supply"
+      }
+    },
+    "motor_gearbox_ratio": {
+      "definition": "Reduction ratio of the gearbox of the cable-drive gearmotor: revolutions of the motor shaft for one revolution of the output shaft.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "motor_stall_current": {
+      "definition": "Current the cable-drive gearmotor draws when stalled at its rated voltage.",
+      "domain": "number",
+      "unit": "A"
+    },
+    "motor_supply_source": {
+      "definition": "Where the motor supply (the supply at the motor-voltage pin of the motor driver) takes its power from.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "dedicated_pack": "a battery pack on the strut that does not feed the logic supply",
+        "external": "a source that is not on the strut, reached through a connector",
+        "logic_pack": "the battery pack that also feeds the logic supply"
+      }
+    },
+    "motor_winding_class": {
+      "definition": "Power class of the winding of the cable-drive gearmotor within its vendor's family.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "high_power": "the family's high-power winding",
+        "high_power_long_life_brushes": "the family's high-power winding with long-life brushes",
+        "low_power": "the family's low-power winding",
+        "medium_power": "the family's medium-power winding"
+      }
+    },
+    "no_load_line_speed": {
+      "definition": "Speed at which a winch takes in cable with no tension on it.",
+      "domain": "number",
+      "unit": "m/s"
+    },
+    "obstacle_height_max": {
+      "definition": "Tallest step the robot rolls over.",
+      "domain": "number",
+      "unit": "m"
+    },
+    "operating_temperature_max": {
+      "definition": "Highest ambient temperature at which the robot is to work.",
+      "domain": "number",
+      "unit": "degC"
+    },
+    "operating_temperature_min": {
+      "definition": "Lowest ambient temperature at which the robot is to work.",
+      "domain": "number",
+      "unit": "degC"
+    },
+    "pads_per_sensor_connector": {
+      "definition": "Number of pads of one strain-sensor connector on the main board.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "payload_mass": {
+      "definition": "Mass the robot carries in addition to its own.",
+      "domain": "number",
+      "unit": "kg"
+    },
+    "position_loop_derivative_gain": {
+      "definition": "Derivative gain of the cable position loop of the host software, with the value its constructor sets.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "position_loop_integral_gain": {
+      "definition": "Integral gain of the cable position loop of the host software, with the value its constructor sets.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "position_loop_proportional_gain": {
+      "definition": "Proportional gain of the cable position loop of the host software, with the value its constructor sets.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "position_loop_tolerance": {
+      "definition": "Error of the normalised cable position below which the host software treats a motor as having reached its target, with the value its constructor sets.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "pwm_duty_full_scale": {
+      "definition": "Largest drive value the controller firmware passes to the motor driver (full duty).",
+      "domain": "integer",
+      "unit": "none"
+    },
+    "resting_height": {
+      "definition": "Height of the highest point of the robot above the floor when it rests in its neutral shape.",
+      "domain": "number",
+      "unit": "m"
+    },
+    "robot_mass": {
+      "definition": "Mass of one complete robot, cells included.",
+      "domain": "number",
+      "unit": "kg"
+    },
+    "rolling_speed": {
+      "definition": "Average speed of the robot's centre while it rolls on a level floor.",
+      "domain": "number",
+      "unit": "m/s"
+    },
+    "rolling_step_length": {
+      "definition": "Distance the robot's centre moves in one rolling step.",
+      "domain": "number",
+      "unit": "m"
+    },
+    "sensor_hysteresis": {
+      "definition": "Hysteresis of a strain sensor over one stretch cycle, as a fraction of its full-scale change of capacitance.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "short_sensor_cut_length": {
+      "definition": "Overall length of one short strain sensor as cut: the extent of its outline along its long direction.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "short_sensor_hole_spacing": {
+      "definition": "Distance between the centres of the attachment holes at the two ends of one short strain sensor.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "short_sensors_per_cut_sheet": {
+      "definition": "Number of short strain sensors in one cut sheet (one cut file is one sheet).",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "short_strain_sensors_per_robot": {
+      "definition": "Number of short strain sensors in one robot.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "slope_max": {
+      "definition": "Steepest slope the robot rolls up.",
+      "domain": "number",
+      "unit": "deg"
+    },
+    "speed_command_cap": {
+      "definition": "Largest speed command the host software sends to a controller, with the value its constructor sets.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "speed_command_full_scale": {
+      "definition": "Speed command that the controller firmware turns into full duty.",
+      "domain": "number",
+      "unit": "none"
+    },
+    "stall_line_force": {
+      "definition": "Cable tension a winch produces with its gearmotor stalled.",
+      "domain": "number",
+      "unit": "N"
+    },
+    "strain_sensors_per_robot": {
+      "definition": "Number of strain sensors, short and long together, in one robot.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "strut_mass": {
+      "definition": "Mass of one complete strut, cells included.",
+      "domain": "number",
+      "unit": "kg"
+    },
+    "telemetry_fields_per_message": {
+      "definition": "Number of fields in one telemetry message that a controller sends to the host.",
+      "domain": "integer",
+      "unit": "count"
+    },
+    "telemetry_udp_port": {
+      "definition": "UDP port on which the host and the controllers exchange messages.",
+      "domain": "integer",
+      "unit": "none"
+    },
+    "terrain_class": {
+      "definition": "Roughest ground the robot is to roll on.",
+      "domain": "enumeration",
+      "unit": "none",
+      "values": {
+        "carpet": "soft indoor floor coverings",
+        "loose_granular_ground": "sand, gravel and similar loose ground",
+        "outdoor_hard_ground": "pavement and packed earth",
+        "smooth_indoor_floor": "hard, level indoor floors"
+      }
+    },
+    "turning_radius": {
+      "definition": "Smallest radius of the path the robot's centre follows while it turns.",
+      "domain": "number",
+      "unit": "m"
+    },
+    "winch_drum_diameter": {
+      "definition": "Diameter of the winch drum on which the cable winds.",
+      "domain": "number",
+      "unit": "mm"
+    },
+    "wireless_range": {
+      "definition": "Greatest distance between the robot and the host at which the wireless link holds.",
+      "domain": "number",
+      "unit": "m"
+    }
+  }
+}

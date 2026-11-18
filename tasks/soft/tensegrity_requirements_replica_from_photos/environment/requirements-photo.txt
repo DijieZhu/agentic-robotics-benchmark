@@ -1,0 +1,8 @@
+# tensegrity_requirements_replica_from_photos: photogrammetry and drawing tools on top of the shared base (numpy 2.5.3
+# pinned there). The two pins below are the bimanual requirements task's, unchanged.
+opencv-python-headless==5.0.0.93
+scikit-image==0.26.0
+# Added for this task: ezdxf, which reads the two sensor cut-outline drawings (sensors/*.dxf). The base venv already
+# has it as a dependency of cadquery (1.4.5 at this task's build); the pin names it as a tool of the task and holds that
+# version, so nothing installed above moves.
+ezdxf==1.4.5

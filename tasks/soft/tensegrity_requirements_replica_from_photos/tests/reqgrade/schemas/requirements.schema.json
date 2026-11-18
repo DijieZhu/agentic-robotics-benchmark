@@ -1,0 +1,926 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Traced requirements sheet. items: one entry per requirement the evidence fixes (quantity from quantities.json, comparator, bound, unit from units.json, one or more source ids). derived: the derived quantities of docs/conventions.md. Names, comparators, units, source ids and formulas are defined in docs/conventions.md. An entry or a section that is left out earns nothing and is not an error.",
+  "properties": {
+    "derived": {
+      "items": {
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "long_sensor_sheets_for_order",
+                    "pwm_8bit_at_speed_cap",
+                    "short_sensor_sheets_for_order"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "mean_short_sensor_sensitivity"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "F/m",
+                    "pF/mm"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "encoder_counts_over_command_range",
+                    "long_sensor_sheets_for_order",
+                    "pwm_8bit_at_speed_cap",
+                    "short_sensor_sheets_for_order",
+                    "short_sensor_strain_at_max_command",
+                    "short_sensor_strain_at_min_command",
+                    "winch_turns_over_command_range"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "none",
+                    "count",
+                    "percent"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "derivation": {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^DER-[A-Za-z0-9_.-]{1,36}$",
+            "type": "string"
+          },
+          "inputs": {
+            "items": {
+              "pattern": "^(PH-[0-9]{3}|FW|HOST|CFG|CAL|FAB|DXF|VD-[0-9]{2}|(REQ|DER)-[A-Za-z0-9_.-]{1,36})$",
+              "type": "string"
+            },
+            "maxItems": 16,
+            "type": "array"
+          },
+          "quantity": {
+            "enum": [
+              "encoder_counts_over_command_range",
+              "long_sensor_sheets_for_order",
+              "mean_short_sensor_sensitivity",
+              "pwm_8bit_at_speed_cap",
+              "short_sensor_sheets_for_order",
+              "short_sensor_strain_at_max_command",
+              "short_sensor_strain_at_min_command",
+              "winch_turns_over_command_range"
+            ],
+            "type": "string"
+          },
+          "unit": {
+            "enum": [
+              "A",
+              "Ah",
+              "F/m",
+              "N",
+              "N/m",
+              "N/mm",
+              "V",
+              "cm",
+              "cm2",
+              "count",
+              "deg",
+              "degC",
+              "g",
+              "h",
+              "in",
+              "kg",
+              "m",
+              "m/s",
+              "m2",
+              "mA",
+              "mAh",
+              "mN",
+              "mV",
+              "min",
+              "mm",
+              "mm/s",
+              "mm2",
+              "ms",
+              "none",
+              "pF/mm",
+              "percent",
+              "rad",
+              "s"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "maximum": 1000000000,
+            "minimum": -1000000000,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "quantity",
+          "value",
+          "unit"
+        ],
+        "type": "object"
+      },
+      "maxItems": 20,
+      "type": "array"
+    },
+    "items": {
+      "items": {
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "else": {
+              "properties": {
+                "bound": {
+                  "type": "number"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "cable_material",
+                    "ingress_protection_rating",
+                    "main_switch_scope",
+                    "motor_supply_source",
+                    "motor_winding_class",
+                    "terrain_class"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "type": "string"
+                },
+                "comparator": {
+                  "enum": [
+                    "=",
+                    "=="
+                  ]
+                },
+                "unit": {
+                  "const": "none"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "cable_material"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "aramid_cord",
+                    "braided_polyethylene",
+                    "elastic_cord",
+                    "nylon_monofilament",
+                    "steel_wire_rope"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "ingress_protection_rating"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "dust_protected",
+                    "immersion_proof",
+                    "splash_proof",
+                    "unprotected"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "main_switch_scope"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "all_supplies",
+                    "logic_supply_only",
+                    "motor_supply_only",
+                    "no_switch"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "motor_supply_source"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "dedicated_pack",
+                    "external",
+                    "logic_pack"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "motor_winding_class"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "high_power",
+                    "high_power_long_life_brushes",
+                    "low_power",
+                    "medium_power"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "terrain_class"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "enum": [
+                    "carpet",
+                    "loose_granular_ground",
+                    "outdoor_hard_ground",
+                    "smooth_indoor_floor"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "actuated_cables_per_robot",
+                    "battery_packs_per_strut",
+                    "breakout_boards_on_shared_i2c_bus",
+                    "calibration_lines_per_file",
+                    "capacitance_channels_per_controller",
+                    "cells_in_series_per_pack",
+                    "charge_connector_balance_groups",
+                    "controllers_per_robot",
+                    "encoder_counts_per_motor_revolution",
+                    "long_sensors_per_cut_sheet",
+                    "long_strain_sensors_per_robot",
+                    "pads_per_sensor_connector",
+                    "pwm_duty_full_scale",
+                    "short_sensors_per_cut_sheet",
+                    "short_strain_sensors_per_robot",
+                    "strain_sensors_per_robot",
+                    "telemetry_fields_per_message",
+                    "telemetry_udp_port"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "bound": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "slope_max"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "rad",
+                    "deg"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "footprint_area"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "m2",
+                    "cm2",
+                    "mm2"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "cell_capacity"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "Ah",
+                    "mAh"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "cell_discharge_current_max",
+                    "charge_current_max",
+                    "motor_stall_current"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "A",
+                    "mA"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "actuated_cables_per_robot",
+                    "battery_packs_per_strut",
+                    "breakout_boards_on_shared_i2c_bus",
+                    "calibration_lines_per_file",
+                    "capacitance_channels_per_controller",
+                    "cells_in_series_per_pack",
+                    "charge_connector_balance_groups",
+                    "controllers_per_robot",
+                    "encoder_counts_per_motor_revolution",
+                    "long_sensors_per_cut_sheet",
+                    "long_strain_sensors_per_robot",
+                    "motor_gearbox_ratio",
+                    "pads_per_sensor_connector",
+                    "position_loop_derivative_gain",
+                    "position_loop_integral_gain",
+                    "position_loop_proportional_gain",
+                    "position_loop_tolerance",
+                    "pwm_duty_full_scale",
+                    "sensor_hysteresis",
+                    "short_sensors_per_cut_sheet",
+                    "short_strain_sensors_per_robot",
+                    "speed_command_cap",
+                    "speed_command_full_scale",
+                    "strain_sensors_per_robot",
+                    "telemetry_fields_per_message",
+                    "telemetry_udp_port"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "none",
+                    "count",
+                    "percent"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "cable_breaking_load",
+                    "cable_pretension",
+                    "stall_line_force"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "N",
+                    "mN"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "cable_diameter",
+                    "cable_length_command_min",
+                    "cable_length_command_range",
+                    "drop_height_max",
+                    "long_sensor_cut_length",
+                    "long_sensor_hole_spacing",
+                    "obstacle_height_max",
+                    "resting_height",
+                    "rolling_step_length",
+                    "short_sensor_cut_length",
+                    "short_sensor_hole_spacing",
+                    "turning_radius",
+                    "winch_drum_diameter",
+                    "wireless_range"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "m",
+                    "cm",
+                    "mm",
+                    "in"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "payload_mass",
+                    "robot_mass",
+                    "strut_mass"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "kg",
+                    "g"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "no_load_line_speed",
+                    "rolling_speed"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "m/s",
+                    "mm/s"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "cable_stiffness"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "N/m",
+                    "N/mm"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "operating_temperature_max",
+                    "operating_temperature_min"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "degC"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "enum": [
+                    "battery_endurance",
+                    "charge_time"
+                  ]
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "s",
+                    "ms",
+                    "min",
+                    "h"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "quantity": {
+                  "const": "encoder_supply_voltage"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            },
+            "then": {
+              "properties": {
+                "unit": {
+                  "enum": [
+                    "V",
+                    "mV"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "bound": {
+            "maxLength": 120,
+            "maximum": 1000000000,
+            "minimum": -1000000000,
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "comparator": {
+            "enum": [
+              "=",
+              "==",
+              "<=",
+              "<",
+              ">=",
+              ">"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^REQ-[A-Za-z0-9_.-]{1,36}$",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          "quantity": {
+            "enum": [
+              "actuated_cables_per_robot",
+              "battery_endurance",
+              "battery_packs_per_strut",
+              "breakout_boards_on_shared_i2c_bus",
+              "cable_breaking_load",
+              "cable_diameter",
+              "cable_length_command_min",
+              "cable_length_command_range",
+              "cable_material",
+              "cable_pretension",
+              "cable_stiffness",
+              "calibration_lines_per_file",
+              "capacitance_channels_per_controller",
+              "cell_capacity",
+              "cell_discharge_current_max",
+              "cells_in_series_per_pack",
+              "charge_connector_balance_groups",
+              "charge_current_max",
+              "charge_time",
+              "controllers_per_robot",
+              "drop_height_max",
+              "encoder_counts_per_motor_revolution",
+              "encoder_supply_voltage",
+              "footprint_area",
+              "ingress_protection_rating",
+              "long_sensor_cut_length",
+              "long_sensor_hole_spacing",
+              "long_sensors_per_cut_sheet",
+              "long_strain_sensors_per_robot",
+              "main_switch_scope",
+              "motor_gearbox_ratio",
+              "motor_stall_current",
+              "motor_supply_source",
+              "motor_winding_class",
+              "no_load_line_speed",
+              "obstacle_height_max",
+              "operating_temperature_max",
+              "operating_temperature_min",
+              "pads_per_sensor_connector",
+              "payload_mass",
+              "position_loop_derivative_gain",
+              "position_loop_integral_gain",
+              "position_loop_proportional_gain",
+              "position_loop_tolerance",
+              "pwm_duty_full_scale",
+              "resting_height",
+              "robot_mass",
+              "rolling_speed",
+              "rolling_step_length",
+              "sensor_hysteresis",
+              "short_sensor_cut_length",
+              "short_sensor_hole_spacing",
+              "short_sensors_per_cut_sheet",
+              "short_strain_sensors_per_robot",
+              "slope_max",
+              "speed_command_cap",
+              "speed_command_full_scale",
+              "stall_line_force",
+              "strain_sensors_per_robot",
+              "strut_mass",
+              "telemetry_fields_per_message",
+              "telemetry_udp_port",
+              "terrain_class",
+              "turning_radius",
+              "winch_drum_diameter",
+              "wireless_range"
+            ],
+            "type": "string"
+          },
+          "source_ids": {
+            "items": {
+              "pattern": "^(PH-[0-9]{3}|FW|HOST|CFG|CAL|FAB|DXF|VD-[0-9]{2})$",
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "unit": {
+            "enum": [
+              "A",
+              "Ah",
+              "F/m",
+              "N",
+              "N/m",
+              "N/mm",
+              "V",
+              "cm",
+              "cm2",
+              "count",
+              "deg",
+              "degC",
+              "g",
+              "h",
+              "in",
+              "kg",
+              "m",
+              "m/s",
+              "m2",
+              "mA",
+              "mAh",
+              "mN",
+              "mV",
+              "min",
+              "mm",
+              "mm/s",
+              "mm2",
+              "ms",
+              "none",
+              "pF/mm",
+              "percent",
+              "rad",
+              "s"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "quantity",
+          "comparator",
+          "bound",
+          "unit",
+          "source_ids"
+        ],
+        "type": "object"
+      },
+      "maxItems": 60,
+      "type": "array"
+    },
+    "notes": {
+      "maxLength": 2000,
+      "type": "string"
+    }
+  },
+  "required": [
+    "items"
+  ],
+  "title": "requirements.yaml",
+  "type": "object"
+}

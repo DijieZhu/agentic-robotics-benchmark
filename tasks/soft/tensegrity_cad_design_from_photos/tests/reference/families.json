@@ -1,0 +1,1334 @@
+{
+ "schema": "tensegrity_cad_design_from_photos/reference/families v1",
+ "units": "mm",
+ "frame": "strut frame: rod axis = +z, rod midpoint = origin; the frame of the edge-connected split of the source mesh",
+ "source_mesh_sha256": "8dc4caff1efa26468660f30d5e2d91f7d927d6b287480ecd3b06b351f88a4614",
+ "pose_convention": "pose maps the family file's coordinates to the instance's coordinates in the strut frame (x_instance = R x_file + t; 4 x 4, row-major, last row 0 0 0 1)",
+ "families": [
+  {
+   "key": "F-EA",
+   "what_hidden_side_only": "electronics enclosure, half that carries the board and the inserts",
+   "file": "parts/F-EA.ply",
+   "sha256": "86141554087331400d6db16ff67d4fabe488842e1e498f13324ae6cd8a607cf0",
+   "bytes": 65229,
+   "source_piece": "c001",
+   "source_piece_sha256": "86141554087331400d6db16ff67d4fabe488842e1e498f13324ae6cd8a607cf0",
+   "triangles": 3428,
+   "vertices": 1704,
+   "volume_mm3": 24671.419,
+   "area_mm2": 15872.666,
+   "genus": 6,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    32.677,
+    27.224,
+    143.0
+   ],
+   "obb_extents_mm": [
+    143.0,
+    33.0,
+    18.65
+   ],
+   "size_class": "large",
+   "size_class_margin_mm": 98.0,
+   "symmetry": {
+    "group": "C1",
+    "description": "none"
+   },
+   "material": "printed_pla",
+   "tags": [
+    "P01"
+   ],
+   "frame": "coordinates of the middle instance (P01) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-EB",
+   "what_hidden_side_only": "electronics enclosure, cover half with the connector windows",
+   "file": "parts/F-EB.ply",
+   "sha256": "d2f42be190b98721c39f5c3c41f31d885f7501331f3cf5cf3094ec650ae1f40d",
+   "bytes": 32486,
+   "source_piece": "c000",
+   "source_piece_sha256": "d2f42be190b98721c39f5c3c41f31d885f7501331f3cf5cf3094ec650ae1f40d",
+   "triangles": 1706,
+   "vertices": 841,
+   "volume_mm3": 26651.738,
+   "area_mm2": 20313.075,
+   "genus": 7,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    35.947,
+    31.747,
+    143.0
+   ],
+   "obb_extents_mm": [
+    143.0,
+    33.0,
+    18.334
+   ],
+   "size_class": "large",
+   "size_class_margin_mm": 98.0,
+   "symmetry": {
+    "group": "C1",
+    "description": "none"
+   },
+   "material": "printed_pla",
+   "tags": [
+    "P02"
+   ],
+   "frame": "coordinates of the middle instance (P02) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-PB",
+   "what_hidden_side_only": "main board, bare board only",
+   "file": "parts/F-PB.ply",
+   "sha256": "6b0cec7d82f98aa36e82de49efc2105e8a99b110bf9e63448e8ae48df62efbdc",
+   "bytes": 15067,
+   "source_piece": "c004",
+   "source_piece_sha256": "6b0cec7d82f98aa36e82de49efc2105e8a99b110bf9e63448e8ae48df62efbdc",
+   "triangles": 788,
+   "vertices": 384,
+   "volume_mm3": 6504.024,
+   "area_mm2": 8820.887,
+   "genus": 6,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    27.199,
+    15.579,
+    140.0
+   ],
+   "obb_extents_mm": [
+    140.0,
+    30.0,
+    1.6
+   ],
+   "size_class": "large",
+   "size_class_margin_mm": 95.0,
+   "symmetry": {
+    "group": "C1",
+    "description": "none"
+   },
+   "material": "board_laminate",
+   "tags": [
+    "P03"
+   ],
+   "frame": "coordinates of the middle instance (P03) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-MA",
+   "what_hidden_side_only": "motor enclosure A",
+   "file": "parts/F-MA.ply",
+   "sha256": "a61ff89372e543807dd6a1e1ed6a5e1e95c33ec4cb462c389018848dab470abc",
+   "bytes": 39403,
+   "source_piece": "c002",
+   "source_piece_sha256": "a61ff89372e543807dd6a1e1ed6a5e1e95c33ec4cb462c389018848dab470abc",
+   "triangles": 2070,
+   "vertices": 1023,
+   "volume_mm3": 43095.279,
+   "area_mm2": 18342.883,
+   "genus": 7,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    39.952,
+    39.98,
+    55.0
+   ],
+   "obb_extents_mm": [
+    55.0,
+    39.967,
+    38.786
+   ],
+   "size_class": "large",
+   "size_class_margin_mm": 10.0,
+   "symmetry": {
+    "group": "C1",
+    "description": "none"
+   },
+   "material": "printed_pla",
+   "tags": [
+    "P04",
+    "P05"
+   ],
+   "frame": "coordinates of the +z instance (P04) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-MB",
+   "what_hidden_side_only": "motor enclosure B",
+   "file": "parts/F-MB.ply",
+   "sha256": "0ec26b554e83d3ed6359fef178308e2587430d80e63230d341340220972aec41",
+   "bytes": 27186,
+   "source_piece": "c014",
+   "source_piece_sha256": "0ec26b554e83d3ed6359fef178308e2587430d80e63230d341340220972aec41",
+   "triangles": 1422,
+   "vertices": 707,
+   "volume_mm3": 3043.883,
+   "area_mm2": 2231.208,
+   "genus": 3,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    17.652,
+    27.368,
+    21.0
+   ],
+   "obb_extents_mm": [
+    24.186,
+    21.0,
+    16.952
+   ],
+   "size_class": "small",
+   "size_class_margin_mm": 20.814,
+   "symmetry": {
+    "group": "C1",
+    "description": "none"
+   },
+   "material": "printed_pla",
+   "tags": [
+    "P06",
+    "P07"
+   ],
+   "frame": "coordinates of the +z instance (P06) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-WI",
+   "what_hidden_side_only": "winch",
+   "file": "parts/F-WI.ply",
+   "sha256": "8b3449d597088c8f69e8450f503703903485270b63cf56995339ec0399ef4543",
+   "bytes": 119527,
+   "source_piece": "c032",
+   "source_piece_sha256": "8b3449d597088c8f69e8450f503703903485270b63cf56995339ec0399ef4543",
+   "triangles": 6282,
+   "vertices": 3137,
+   "volume_mm3": 408.17,
+   "area_mm2": 695.218,
+   "genus": 3,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    12.698,
+    12.697,
+    9.5
+   ],
+   "obb_extents_mm": [
+    12.698,
+    12.695,
+    9.5
+   ],
+   "size_class": "small",
+   "size_class_margin_mm": 32.302,
+   "symmetry": {
+    "axis_point_mm": [
+     -8.33654,
+     -3.89129,
+     124.15001
+    ],
+    "axis_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "axis_fit": {
+     "rim_radius_mm": 6.347865468243149,
+     "fits": [
+      {
+       "z_mean_mm": 119.55150836447011,
+       "centre_xy_mm": [
+        -8.336540114851426,
+        -3.8912850273789963
+       ],
+       "radius_mm": 6.347865468243143,
+       "max_residual_mm": 0.005156347996988053,
+       "n_vertices": 276
+      },
+      {
+       "z_mean_mm": 128.74851376077405,
+       "centre_xy_mm": [
+        -8.336540114851426,
+        -3.8912850273789967
+       ],
+       "radius_mm": 6.347865468243143,
+       "max_residual_mm": 0.005156347996988053,
+       "n_vertices": 276
+      }
+     ],
+     "tilt_between_fits_deg": 2.766600252505415e-15
+    },
+    "group": "D_inf (approximate)",
+    "description": "any angle about its own axis and end for end, up to the small features",
+    "design_time_record": "spin: p90 0.003-0.004 mm, p99 0.54-0.56 mm, max 1.05-1.08 mm; flip (best phase): p90 0.0044 mm"
+   },
+   "material": "printed_pla",
+   "tags": [
+    "P08",
+    "P09"
+   ],
+   "frame": "coordinates of the +z instance (P08) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-EC",
+   "what_hidden_side_only": "end cap",
+   "file": "parts/F-EC.ply",
+   "sha256": "23e27e8a640f530abd928e93832eddf9b8c9f0bf48d9f4da4a7669763d4be099",
+   "bytes": 120701,
+   "source_piece": "c006",
+   "source_piece_sha256": "23e27e8a640f530abd928e93832eddf9b8c9f0bf48d9f4da4a7669763d4be099",
+   "triangles": 6340,
+   "vertices": 3172,
+   "volume_mm3": 8175.423,
+   "area_mm2": 3249.233,
+   "genus": 0,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    29.675,
+    29.689,
+    29.0
+   ],
+   "obb_extents_mm": [
+    29.564,
+    28.711,
+    27.811
+   ],
+   "size_class": "small",
+   "size_class_margin_mm": 15.436,
+   "symmetry": {
+    "axis_point_mm": [
+     -0.0,
+     1e-05,
+     145.90001
+    ],
+    "axis_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "axis_fit": {
+     "rim_radius_mm": 14.84490739068289,
+     "fits": [
+      {
+       "z_mean_mm": 147.3638916015625,
+       "centre_xy_mm": [
+        -1.7416907370473038e-06,
+        8.820657221519923e-06
+       ],
+       "radius_mm": 14.84490739068289,
+       "max_residual_mm": 1.7671844465994013e-05,
+       "n_vertices": 78
+      }
+     ],
+     "tilt_between_fits_deg": null
+    },
+    "group": "C4",
+    "description": "four-fold about its own axis",
+    "design_time_record": "rot 90 / 180: p99 0.018 mm; rot 45: p99 3.45 mm"
+   },
+   "material": "printed_resin",
+   "tags": [
+    "P10",
+    "P11"
+   ],
+   "frame": "coordinates of the +z instance (P10) in the strut frame, unchanged"
+  },
+  {
+   "key": "F-CO",
+   "what_hidden_side_only": "end cap cover",
+   "file": "parts/F-CO.ply",
+   "sha256": "84c49339b739378b65df09fea1210a455f7a7cb5f7b89cdd365469959798d8b5",
+   "bytes": 125033,
+   "source_piece": "c007",
+   "source_piece_sha256": "84c49339b739378b65df09fea1210a455f7a7cb5f7b89cdd365469959798d8b5",
+   "triangles": 6568,
+   "vertices": 3286,
+   "volume_mm3": 4148.407,
+   "area_mm2": 3588.936,
+   "genus": 0,
+   "watertight": true,
+   "winding_consistent": true,
+   "manifold3d_status": "Error.NoError",
+   "extents_strut_frame_mm": [
+    35.0,
+    34.994,
+    17.5
+   ],
+   "obb_extents_mm": [
+    34.994,
+    34.963,
+    18.141
+   ],
+   "size_class": "small",
+   "size_class_margin_mm": 10.006,
+   "symmetry": {
+    "axis_point_mm": [
+     -0.0,
+     0.0,
+     154.15001
+    ],
+    "axis_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "axis_fit": {
+     "rim_radius_mm": 17.500000574831144,
+     "fits": [
+      {
+       "z_mean_mm": 145.40000915527344,
+       "centre_xy_mm": [
+        -2.768744602362454e-07,
+        3.975433571667963e-06
+       ],
+       "radius_mm": 17.500000574831144,
+       "max_residual_mm": 1.4102995546494412e-05,
+       "n_vertices": 84
+      }
+     ],
+     "tilt_between_fits_deg": null
+    },
+    "group": "C_inf",
+    "description": "any angle about its own axis",
+    "design_time_record": "any angle: p99 0.015-0.016 mm"
+   },
+   "material": "silicone",
+   "tags": [
+    "P12",
+    "P13"
+   ],
+   "frame": "coordinates of the +z instance (P12) in the strut frame, unchanged"
+  }
+ ],
+ "instances": [
+  {
+   "tag": "P01",
+   "family": "F-EA",
+   "end": "middle",
+   "source_piece": "c001",
+   "source_piece_sha256": "86141554087331400d6db16ff67d4fabe488842e1e498f13324ae6cd8a607cf0",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P02",
+   "family": "F-EB",
+   "end": "middle",
+   "source_piece": "c000",
+   "source_piece_sha256": "d2f42be190b98721c39f5c3c41f31d885f7501331f3cf5cf3094ec650ae1f40d",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P03",
+   "family": "F-PB",
+   "end": "middle",
+   "source_piece": "c004",
+   "source_piece_sha256": "6b0cec7d82f98aa36e82de49efc2105e8a99b110bf9e63448e8ae48df62efbdc",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P04",
+   "family": "F-MA",
+   "end": "+z",
+   "source_piece": "c002",
+   "source_piece_sha256": "a61ff89372e543807dd6a1e1ed6a5e1e95c33ec4cb462c389018848dab470abc",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P05",
+   "family": "F-MA",
+   "end": "-z",
+   "source_piece": "c003",
+   "source_piece_sha256": "0a01792231d0cb117c91ab3fac14b9699a3d70c319a992bd3470bd85ad66372c",
+   "pose": [
+    [
+     0.849705210184,
+     -0.527258054264,
+     4.6635e-08,
+     -2.152319e-06
+    ],
+    [
+     -0.527258054264,
+     -0.849705210184,
+     1.2354e-08,
+     8.484882e-06
+    ],
+    [
+     3.3112e-08,
+     -3.5086e-08,
+     -1.0,
+     1.1243052e-05
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "vertex_order_kabsch",
+    "max_residual_mm": 3.658189961865947e-05,
+    "rms_residual_mm": 1.4522713178705493e-05,
+    "det_R": 1.0000000000000002,
+    "det_free_fit": 1.0000000000000002,
+    "angle_to_module_flip_deg": 0.0,
+    "translation_to_module_flip_mm": 0.0,
+    "surface_distance_p99_mm": 1.970318146192085e-05,
+    "surface_distance_max_mm": 2.171294753743305e-05,
+    "pass": true
+   }
+  },
+  {
+   "tag": "P06",
+   "family": "F-MB",
+   "end": "+z",
+   "source_piece": "c014",
+   "source_piece_sha256": "0ec26b554e83d3ed6359fef178308e2587430d80e63230d341340220972aec41",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P07",
+   "family": "F-MB",
+   "end": "-z",
+   "source_piece": "c012",
+   "source_piece_sha256": "62de0113d311f87894919cff4f8e6a64f036de550c6f1229189ce006d40cb40f",
+   "pose": [
+    [
+     0.849705255754,
+     -0.527257980825,
+     2.02848e-07,
+     -2.133356e-05
+    ],
+    [
+     -0.527257980825,
+     -0.849705255755,
+     4.7341e-08,
+     5.259722e-06
+    ],
+    [
+     1.47401e-07,
+     -1.47179e-07,
+     -1.0,
+     1.4666675e-05
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "vertex_order_kabsch",
+    "max_residual_mm": 3.069104963165721e-05,
+    "rms_residual_mm": 1.4569608690143754e-05,
+    "det_R": 1.0000000000000009,
+    "det_free_fit": 1.0000000000000009,
+    "angle_to_module_flip_deg": 1.024528375501914e-05,
+    "translation_to_module_flip_mm": 1.9749502565835237e-05,
+    "surface_distance_p99_mm": 1.924000123807487e-05,
+    "surface_distance_max_mm": 2.455654010877331e-05,
+    "pass": true
+   }
+  },
+  {
+   "tag": "P08",
+   "family": "F-WI",
+   "end": "+z",
+   "source_piece": "c032",
+   "source_piece_sha256": "8b3449d597088c8f69e8450f503703903485270b63cf56995339ec0399ef4543",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P09",
+   "family": "F-WI",
+   "end": "-z",
+   "source_piece": "c031",
+   "source_piece_sha256": "e0d7af0ad97ba2fcac27ae865a25b286ab884eb6433a9383522a0fc5484d6f6e",
+   "pose": [
+    [
+     0.849705188506,
+     -0.5272580892,
+     3.0558e-08,
+     -1.328378e-06
+    ],
+    [
+     -0.5272580892,
+     -0.849705188506,
+     1.2479e-08,
+     7.734158e-06
+    ],
+    [
+     1.9385e-08,
+     -2.6716e-08,
+     -1.0,
+     1.3124145e-05
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "vertex_order_kabsch",
+    "max_residual_mm": 3.23385182448872e-05,
+    "rms_residual_mm": 1.5190279220505824e-05,
+    "det_R": 0.9999999999999999,
+    "det_free_fit": 0.9999999999999999,
+    "angle_to_module_flip_deg": 2.4148365394514667e-06,
+    "translation_to_module_flip_mm": 2.186544824569958e-06,
+    "surface_distance_p99_mm": 1.7633260534068995e-05,
+    "surface_distance_max_mm": 2.419649754474935e-05,
+    "pass": true
+   }
+  },
+  {
+   "tag": "P10",
+   "family": "F-EC",
+   "end": "+z",
+   "source_piece": "c006",
+   "source_piece_sha256": "23e27e8a640f530abd928e93832eddf9b8c9f0bf48d9f4da4a7669763d4be099",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P11",
+   "family": "F-EC",
+   "end": "-z",
+   "source_piece": "c005",
+   "source_piece_sha256": "a6b877b2a4dd9dd4fabcc5efc8bed347924a959ad43e0b00a8e17ef1180646c7",
+   "pose": [
+    [
+     -0.55386664062,
+     -0.832605395376,
+     -6.294e-09,
+     3.68056e-06
+    ],
+    [
+     -0.832605395376,
+     0.55386664062,
+     -3.636e-09,
+     2.019117e-06
+    ],
+    [
+     6.513e-09,
+     3.226e-09,
+     -1.0,
+     2.3109468e-05
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "vertex_bijection_kabsch",
+    "max_residual_mm": 2.885854065240171e-05,
+    "rms_residual_mm": 1.4359314677855495e-05,
+    "det_R": 0.9999999999999988,
+    "det_free_fit": 0.9999999999999988,
+    "angle_to_module_flip_deg": 91.81230811859757,
+    "translation_to_module_flip_mm": 1.4718709927839323e-05,
+    "distinct_exact_solutions": 1,
+    "surface_distance_p99_mm": 1.4982553985154062e-05,
+    "surface_distance_max_mm": 2.3222218484828525e-05,
+    "pass": true
+   }
+  },
+  {
+   "tag": "P12",
+   "family": "F-CO",
+   "end": "+z",
+   "source_piece": "c007",
+   "source_piece_sha256": "84c49339b739378b65df09fea1210a455f7a7cb5f7b89cdd365469959798d8b5",
+   "pose": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "identity (the design file is this instance's piece)",
+    "max_residual_mm": 0.0
+   }
+  },
+  {
+   "tag": "P13",
+   "family": "F-CO",
+   "end": "-z",
+   "source_piece": "c008",
+   "source_piece_sha256": "d0276fa29438dab6fba42a76b12f887eaad957a955598cd0c5a1c9e4c6abbcbc",
+   "pose": [
+    [
+     -0.924995000367,
+     0.379979274825,
+     2.29e-09,
+     -4.158624e-06
+    ],
+    [
+     0.379979274825,
+     0.924995000367,
+     1.033e-09,
+     7.42764e-07
+    ],
+    [
+     -1.726e-09,
+     1.825e-09,
+     -1.0,
+     2.3073936e-05
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "registration": {
+    "method": "vertex_bijection_kabsch",
+    "max_residual_mm": 3.068631357146446e-05,
+    "rms_residual_mm": 1.4746237064285936e-05,
+    "det_R": 1.0000000000000002,
+    "det_free_fit": 1.0000000000000002,
+    "angle_to_module_flip_deg": 170.5120197828428,
+    "translation_to_module_flip_mm": 1.4280597399669628e-05,
+    "distinct_exact_solutions": 1,
+    "surface_distance_p99_mm": 1.6196911340016387e-05,
+    "surface_distance_max_mm": 2.5843957782927984e-05,
+    "pass": true
+   }
+  }
+ ],
+ "materials": {
+  "printed_pla": {
+   "density_g_cm3": 1.24,
+   "basis": "solid material density; design value",
+   "material_of_the_real_part": "PLA filament (FFF print), maker named in the bill of materials: Hatchbox",
+   "vendor_check": "not verified: the vendor's public product page answered a plain HTTP GET with 403 on 2026-11-16; design value kept",
+   "verified": false,
+   "used_by": [
+    "F-EA",
+    "F-EB",
+    "F-MA",
+    "F-MB",
+    "F-WI"
+   ]
+  },
+  "printed_resin": {
+   "density_g_cm3": 1.2,
+   "basis": "solid material density; design value",
+   "material_of_the_real_part": "Formlabs Tough 2000 (SLA); the bill of materials' supplies list says Tough 1500",
+   "vendor_check": "not verified: the vendor's public technical data sheet URL answered a plain HTTP GET with 403 on 2026-11-16; design value kept",
+   "verified": false,
+   "used_by": [
+    "F-EC"
+   ]
+  },
+  "silicone": {
+   "density_g_cm3": 1.08,
+   "basis": "solid material density; design value",
+   "material_of_the_real_part": "Smooth-On Dragon Skin 20 (cast); one caption names Dragon Skin 30",
+   "vendor_check": "verified: Smooth-On Dragon Skin Series technical bulletin, https://www.smooth-on.com/tb/files/DRAGON_SKIN_SERIES_TB.pdf (sha256 c2c51fa9d983b29fec22d5ae0b211c88bbe59f461af86b8e23a8c06ed9599754, retrieved 2026-11-16): specific gravity 1.08 g/cc for Dragon Skin 20 and for Dragon Skin 30",
+   "verified": true,
+   "used_by": [
+    "F-CO"
+   ]
+  },
+  "board_laminate": {
+   "density_g_cm3": 1.85,
+   "basis": "solid material density; design value",
+   "material_of_the_real_part": "FR4 two-layer board, 1.6 mm; the fabricator is not named in the sources",
+   "vendor_check": "not verified: no vendor to check against; design value kept",
+   "verified": false,
+   "used_by": [
+    "F-PB"
+   ]
+  }
+ },
+ "symmetry_tests": {
+  "F-EA": [
+   {
+    "op": "half_turn_principal_axis_0",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 0.5996836179829999,
+    "p90_mm": 2.864291688559593,
+    "p99_mm": 10.54113469546558,
+    "max_mm": 12.128282136267288
+   },
+   {
+    "op": "half_turn_principal_axis_1",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 0.6475677150282442,
+    "p90_mm": 5.24453773569446,
+    "p99_mm": 11.72552117395706,
+    "max_mm": 12.243769963361956
+   },
+   {
+    "op": "half_turn_principal_axis_2",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 0.2640060286291782,
+    "p90_mm": 3.619799934951813,
+    "p99_mm": 11.623865464711642,
+    "max_mm": 11.631479976498209
+   }
+  ],
+  "F-EB": [
+   {
+    "op": "half_turn_principal_axis_0",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 3.6023430425635,
+    "p90_mm": 8.580017935626374,
+    "p99_mm": 10.903572922467328,
+    "max_mm": 12.081421834147525
+   },
+   {
+    "op": "half_turn_principal_axis_1",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.990458154109727,
+    "p90_mm": 7.592337056863962,
+    "p99_mm": 10.723249569104656,
+    "max_mm": 15.016249897991836
+   },
+   {
+    "op": "half_turn_principal_axis_2",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 3.186784636114914,
+    "p90_mm": 7.12667881066106,
+    "p99_mm": 10.95422425583146,
+    "max_mm": 11.547716277028503
+   }
+  ],
+  "F-PB": [
+   {
+    "op": "half_turn_principal_axis_0",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 6.1074238797225505e-06,
+    "p90_mm": 0.007208423898205038,
+    "p99_mm": 1.676825606475968,
+    "max_mm": 3.6726180170382356
+   },
+   {
+    "op": "half_turn_principal_axis_1",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 3.6022983397977265e-06,
+    "p90_mm": 0.016906174487984385,
+    "p99_mm": 1.6388779059875844,
+    "max_mm": 3.4784491679749023
+   },
+   {
+    "op": "half_turn_principal_axis_2",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 6.739564898564553e-06,
+    "p90_mm": 0.1267027521014303,
+    "p99_mm": 1.6707293665598828,
+    "max_mm": 3.6780654932369874
+   }
+  ],
+  "F-MA": [
+   {
+    "op": "half_turn_principal_axis_0",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.4330716412539233,
+    "p90_mm": 3.727022364443211,
+    "p99_mm": 6.325779008650678,
+    "max_mm": 8.156107997704025
+   },
+   {
+    "op": "half_turn_principal_axis_1",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.7758644841073754,
+    "p90_mm": 3.724589704353645,
+    "p99_mm": 6.696940037782332,
+    "max_mm": 9.918511169895329
+   },
+   {
+    "op": "half_turn_principal_axis_2",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.4794478590094633,
+    "p90_mm": 3.818207591078679,
+    "p99_mm": 6.868774208727389,
+    "max_mm": 9.944431262556657
+   }
+  ],
+  "F-MB": [
+   {
+    "op": "half_turn_principal_axis_0",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.1122908059067296,
+    "p90_mm": 3.77063128979523,
+    "p99_mm": 7.487227733014176,
+    "max_mm": 8.61280114615639
+   },
+   {
+    "op": "half_turn_principal_axis_1",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.202248876704486,
+    "p90_mm": 3.250291814671144,
+    "p99_mm": 6.437350125663528,
+    "max_mm": 7.450859936312062
+   },
+   {
+    "op": "half_turn_principal_axis_2",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 1.1068265187618946,
+    "p90_mm": 3.3839235485191317,
+    "p99_mm": 5.262427893182096,
+    "max_mm": 6.307011711534355
+   }
+  ],
+  "F-WI": [
+   {
+    "op": "spin_37",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.00045556086559958976,
+    "p90_mm": 0.003499775218794237,
+    "p99_mm": 0.5231641769038227,
+    "max_mm": 1.0635492137027887
+   },
+   {
+    "op": "spin_90",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 2.6076315989929656e-05,
+    "p90_mm": 0.0025605673103504616,
+    "p99_mm": 0.5546906728811539,
+    "max_mm": 1.0529723157700794
+   },
+   {
+    "op": "spin_180",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 5.4234056012755614e-05,
+    "p90_mm": 0.0030929539754853278,
+    "p99_mm": 0.5339742730202462,
+    "max_mm": 1.1085850025620008
+   },
+   {
+    "op": "flip_best_phase_25",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.00010825221673889759,
+    "p90_mm": 0.003718644765642996,
+    "p99_mm": 0.6775268411673778,
+    "max_mm": 0.7919347977038383
+   }
+  ],
+  "F-EC": [
+   {
+    "op": "spin_90",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 1.089434454017065e-05,
+    "p90_mm": 0.006418766091278994,
+    "p99_mm": 0.010470621995769707,
+    "max_mm": 0.012006557568599719
+   },
+   {
+    "op": "spin_180",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 3.300353967751213e-06,
+    "p90_mm": 1.3002738315358956e-05,
+    "p99_mm": 1.7767380984609283e-05,
+    "max_mm": 0.000821471823163296
+   },
+   {
+    "op": "spin_270",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 1.1080042613854298e-05,
+    "p90_mm": 0.006421220369684157,
+    "p99_mm": 0.01046691258742273,
+    "max_mm": 0.011994319884864206
+   },
+   {
+    "op": "spin_45",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 0.0034650293925858992,
+    "p90_mm": 1.3677057769857999,
+    "p99_mm": 3.3769981558995057,
+    "max_mm": 4.333666756699065
+   },
+   {
+    "op": "spin_30",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 0.0030131377753173233,
+    "p90_mm": 1.3900926648056235,
+    "p99_mm": 3.768342683262625,
+    "max_mm": 4.636517764370095
+   }
+  ],
+  "F-CO": [
+   {
+    "op": "spin_7",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.003038460332738431,
+    "p90_mm": 0.008641393658227178,
+    "p99_mm": 0.011377366043465254,
+    "max_mm": 0.01240047635839897
+   },
+   {
+    "op": "spin_33.3",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.0019404907093811597,
+    "p90_mm": 0.006576310193250822,
+    "p99_mm": 0.009919643649887318,
+    "max_mm": 0.010934090446113398
+   },
+   {
+    "op": "spin_90",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.0023515061387357904,
+    "p90_mm": 0.006704494470792267,
+    "p99_mm": 0.0087578789917115,
+    "max_mm": 0.009393055086542035
+   },
+   {
+    "op": "spin_137",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.002843767166851771,
+    "p90_mm": 0.00815286529673517,
+    "p99_mm": 0.011071084701284753,
+    "max_mm": 0.012139628173292939
+   },
+   {
+    "op": "spin_180",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.003144535549412384,
+    "p90_mm": 0.008888232669835777,
+    "p99_mm": 0.011721684203122496,
+    "max_mm": 0.012507487381137465
+   },
+   {
+    "op": "spin_251",
+    "in_group": true,
+    "n": 20000,
+    "seed": 11,
+    "p50_mm": 0.0018451029985522972,
+    "p90_mm": 0.005567140689493412,
+    "p99_mm": 0.009591018243680227,
+    "max_mm": 0.01070196993038764
+   },
+   {
+    "op": "flip_about_x",
+    "in_group": false,
+    "n": 5000,
+    "seed": 11,
+    "p50_mm": 3.4644179812978866,
+    "p90_mm": 7.1618090636325915,
+    "p99_mm": 11.977625241783521,
+    "max_mm": 14.597802227540853
+   }
+  ]
+ },
+ "module_flip_from_motor_enclosure_pair": {
+  "R": [
+   [
+    0.849705210184,
+    -0.527258054264,
+    4.6635e-08
+   ],
+   [
+    -0.527258054264,
+    -0.849705210184,
+    1.2354e-08
+   ],
+   [
+    3.3112e-08,
+    -3.5086e-08,
+    -1.0
+   ]
+  ],
+  "t_mm": [
+   -2.152e-06,
+   8.485e-06,
+   1.1243e-05
+  ],
+  "angle_deg": 179.99999852122068,
+  "max_residual_mm": 3.658189961865947e-05
+ }
+}

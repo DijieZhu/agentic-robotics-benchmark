@@ -1,0 +1,437 @@
+{
+ "schema": "tensegrity_cad_design_from_photos/reference/purchased v1",
+ "units": "mm",
+ "frame": "strut frame (as families.json): rod axis = +z, rod midpoint = origin",
+ "pose_convention": "local_to_strut maps the type's local (STEP) coordinates to the strut frame (x_strut = R x_local + t; 4 x 4, row-major, last row 0 0 0 1)",
+ "recognition_note": "recognise by full shape, not by label (volume within 1 %, then rigid registration); constituent order = OCC STEPControl_Reader / OneShape / unique solid map",
+ "types": {
+  "GEARMOTOR": {
+   "part_number": "POLOLU-5192",
+   "vendor": "Pololu",
+   "name": "150:1 Micro Metal Gearmotor HPCB 6V with 12 CPR Encoder, Back Connector",
+   "mass_g": 11.0,
+   "mass_source": "[R] vendor specs page, 'Weight: 11 g' (https://www.pololu.com/product/5192/specs, fetched 2026-11-17T04:31:32Z)",
+   "payload_dir": "purchased/POLOLU-5192",
+   "step": "POLOLU-5192/POLOLU-5192.step",
+   "step_sha256": "db5532e79fb01e7838d55692b3fc35844e406970fc0c6f87ac53e1f8d23234a5",
+   "frame": "origin on the output shaft axis, in the plane of the gearbox front face (the mounting face that carries the two 1.6 mm holes and from which the shaft emerges); +z along the output shaft, out of the gearbox; +y across the gearbox's 10 mm dimension, toward the side on which the encoder end stands out furthest beyond the 10 x 12 mm gearbox section; +x across the 12 mm dimension (x = y cross z)",
+   "constituents": [
+    {
+     "id": "GEARMOTOR.c1",
+     "index": 0,
+     "volume_mm3": 2768.582037243167,
+     "area_mm2": 3328.776363768679,
+     "centroid_local_mm": [
+      0.022798192885893135,
+      0.142523318799227,
+      -16.538780362715087
+     ],
+     "faces": 2787,
+     "source_role": "whole gearmotor (gearbox, motor, encoder and back connector are one solid in the vendor file)"
+    }
+   ],
+   "anchor": "GEARMOTOR.c1",
+   "symmetry": {
+    "axis_local": [
+     0,
+     0,
+     1
+    ],
+    "order": 1,
+    "continuous": false,
+    "flip_symmetric": false,
+    "tolerance_mm": 0.05,
+    "near_symmetry_p99_mm": {
+     "rot_z_180": 2.4486988449188156,
+     "rot_z_90": 1.8010001182556152,
+     "flip_x_mid": 6.240318944218458
+    }
+   },
+   "output_axis_local": {
+    "point_mm": [
+     0,
+     0,
+     0
+    ],
+    "dir": [
+     0,
+     0,
+     1
+    ]
+   },
+   "output_shaft": {
+    "diameter_mm": 3.0,
+    "d_flat_distance_from_axis_mm": 0.9999999999999809,
+    "tip_z_mm": 10.000000511099
+   },
+   "local_bounds_mm": [
+    [
+     -6.800000000000001,
+     -5.1,
+     -32.0
+    ],
+    [
+     6.800000000000001,
+     8.0,
+     10.000000511099
+    ]
+   ],
+   "weight_in_position_score": 2.0
+  },
+  "ROD": {
+   "part_number": "MCMASTER-8974K19",
+   "vendor": "McMaster-Carr",
+   "name": "aluminium rod, 1/8 in diameter x 12 in long, used uncut",
+   "mass_g": 6.483,
+   "mass_source": "faceted-solid volume x 2.70 g/cm3 (6061)",
+   "payload_dir": "purchased/MCMASTER-8974K19",
+   "step": "MCMASTER-8974K19/MCMASTER-8974K19.step",
+   "step_sha256": "44dca7360bc1bc8fb3b4fb5aa8fb05abc9cf4b2f8e1af3619d78621a2c832853",
+   "frame": "origin at the rod's midpoint on its axis; +z along the axis; +x toward one corner of the faceted section (the section is a regular 36-gon; the faces are flat)",
+   "constituents": [
+    {
+     "id": "ROD.c1",
+     "index": 0,
+     "volume_mm3": 2400.9645480265963,
+     "area_mm2": 3052.144030960282,
+     "centroid_local_mm": [
+      -4.580961748391863e-07,
+      1.0824513634715266e-05,
+      3.5650701609139905e-11
+     ],
+     "faces": 144,
+     "source_role": "whole rod (faceted: one planar face per mesh triangle)"
+    }
+   ],
+   "anchor": "ROD.c1",
+   "symmetry": {
+    "axis_local": [
+     0,
+     0,
+     1
+    ],
+    "order": "continuous",
+    "continuous": true,
+    "flip_symmetric": true,
+    "tolerance_mm": 0.05,
+    "exact_order": 36,
+    "residual_p99_mm": {
+     "rot_z_5": 0.005967712394183975,
+     "rot_z_10": 1.887621274920576e-05,
+     "rot_z_37": 0.005018443058659917,
+     "rot_z_90": 1.9859566729022493e-05,
+     "rot_z_180": 3.0111887722180758e-05,
+     "flip_x_mid": 2.9247310214793835e-05
+    },
+    "note": "the section is a regular 36-gon: exact under 10-degree turns, and within 0.006 mm of a round rod under any turn (continuous within the 0.05 mm tolerance)"
+   },
+   "axis_local": {
+    "point_mm": [
+     0,
+     0,
+     0
+    ],
+    "dir": [
+     0,
+     0,
+     1
+    ]
+   },
+   "length_mm": 304.8000183105469,
+   "local_bounds_mm": [
+    [
+     -1.58749973774,
+     -1.587509274483,
+     -152.40000915520008
+    ],
+    [
+     1.58749973774,
+     1.5875092744830452,
+     152.40000915527014
+    ]
+   ],
+   "weight_in_position_score": 2.0
+  }
+ },
+ "instances": [
+  {
+   "id": "GM1",
+   "type": "GEARMOTOR",
+   "end": "+z",
+   "source_piece": "c013",
+   "source_piece_sha256": "b6d2a04b3cb491e51b8b24fb59596d3ee1b4abeae85b882b6608a71a2ebff651",
+   "local_to_strut": [
+    [
+     -0.4228950406207843,
+     -0.9061786698364038,
+     5.4331102885954976e-05,
+     -8.336198588529024
+    ],
+    [
+     0.9061786714033935,
+     -0.4228950405318546,
+     1.3680072379634254e-05,
+     -3.8915349999363618
+    ],
+    [
+     1.0579764170554022e-05,
+     5.501892139161443e-05,
+     0.999999998430497,
+     119.39981535760454
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "det": 1.0000000000000038,
+   "registration": {
+    "method": "point-to-point ICP from 24 principal-axis starts on 3 000 samples, then 30 point-to-point and up to 40 point-to-plane iterations on 20 000 STEP-mesh samples against 200 000 piece samples",
+    "seeds": {
+     "src": 101,
+     "dst": 102,
+     "eval": [
+      103,
+      104
+     ]
+    },
+    "step_mesh": {
+     "deflection": 0.005,
+     "angular": 0.1,
+     "triangles": 153225
+    },
+    "surface_distance_mm": {
+     "both": {
+      "p50": 0.0004310794207769579,
+      "p90": 0.005465496619029108,
+      "p99": 0.014970064274435502,
+      "max": 0.018259049074024127
+     },
+     "a_to_b": {
+      "p50": 0.0004331151564377632,
+      "p90": 0.005527799502994399,
+      "p99": 0.014799809741924594,
+      "max": 0.018259049074024127
+     },
+     "b_to_a": {
+      "p50": 0.00042953220483628904,
+      "p90": 0.005386019480015999,
+      "p99": 0.015147028667452943,
+      "max": 0.017848023501339377
+     },
+     "n_each": 10000
+    },
+    "piece_vertices_to_step_mesh_mm": {
+     "n": 21997,
+     "p50": 0.00029822420295268643,
+     "p90": 0.0008703839060502207,
+     "p99": 0.0017793953755004595,
+     "max": 0.0035157091680675344
+    },
+    "volume_piece_mm3": 2764.6811932282017,
+    "volume_step_mm3": 2768.582037243167,
+    "coarse_best_rms_mm": 0.0638154047822678,
+    "coarse_inits": 24,
+    "coarse_second_distinct_rms_mm": 0.2207424541955121
+   },
+   "vs_second_registration": {
+    "rotation_diff_deg": 0.024308923629988877,
+    "origin_diff_mm": 0.007383248742799247,
+    "recipe_p99_mm": 0.018882971210143453,
+    "recipe_max_mm": 0.028419588729463836
+   },
+   "output_axis_strut": {
+    "point_mm": [
+     -8.336198588529024,
+     -3.8915349999363618,
+     119.39981535760454
+    ],
+    "dir": [
+     5.4331102885954976e-05,
+     1.3680072379634254e-05,
+     0.999999998430497
+    ]
+   },
+   "output_axis_vs_winch_axis": {
+    "winch_tag": "P08",
+    "angle_deg": 0.0032101010340164016,
+    "offset_at_winch_axis_point_mm": 0.0006259393673479136,
+    "winch_axis_point_strut_mm": [
+     -8.33654,
+     -3.89129,
+     124.15001
+    ],
+    "along_shaft_mm": 4.750194619742367
+   }
+  },
+  {
+   "id": "GM2",
+   "type": "GEARMOTOR",
+   "end": "-z",
+   "source_piece": "c011",
+   "source_piece_sha256": "184ae247b80fc8ca857d5f96b0888bda225179ecb3a409e924df36deb01c4de1",
+   "local_to_strut": [
+    [
+     -0.8370990308691729,
+     -0.5470513795334793,
+     2.5853967768191076e-05,
+     -5.0317866794432
+    ],
+    [
+     -0.5470513801438777,
+     0.837099029867238,
+     -4.0963456184663646e-05,
+     7.70189466446745
+    ],
+    [
+     7.66783878980792e-07,
+     -4.843391822212982e-05,
+     -0.9999999988267931,
+     -119.39990222186444
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "det": 1.0000000000000173,
+   "registration": {
+    "method": "point-to-point ICP from 24 principal-axis starts on 3 000 samples, then 30 point-to-point and up to 40 point-to-plane iterations on 20 000 STEP-mesh samples against 200 000 piece samples",
+    "seeds": {
+     "src": 101,
+     "dst": 102,
+     "eval": [
+      103,
+      104
+     ]
+    },
+    "step_mesh": {
+     "deflection": 0.005,
+     "angular": 0.1,
+     "triangles": 153225
+    },
+    "surface_distance_mm": {
+     "both": {
+      "p50": 0.00041525740343015434,
+      "p90": 0.005486346937441956,
+      "p99": 0.014830457543059799,
+      "max": 0.018658922635951182
+     },
+     "a_to_b": {
+      "p50": 0.0004115466611581954,
+      "p90": 0.005553264382541143,
+      "p99": 0.014827863918826565,
+      "max": 0.01830064125356547
+     },
+     "b_to_a": {
+      "p50": 0.00041801688962361767,
+      "p90": 0.00540229760683544,
+      "p99": 0.014830646452984328,
+      "max": 0.018658922635951182
+     },
+     "n_each": 10000
+    },
+    "piece_vertices_to_step_mesh_mm": {
+     "n": 21997,
+     "p50": 0.00025413832241811586,
+     "p90": 0.0008611376140134683,
+     "p99": 0.0018342610832497157,
+     "max": 0.0034560204455394475
+    },
+    "volume_piece_mm3": 2764.681399093634,
+    "volume_step_mm3": 2768.582037243167,
+    "coarse_best_rms_mm": 0.06152777486632697,
+    "coarse_inits": 24,
+    "coarse_second_distinct_rms_mm": 0.22081457166413382
+   },
+   "vs_second_registration": {
+    "rotation_diff_deg": 0.006006738309923707,
+    "origin_diff_mm": 0.0064727001235798725,
+    "recipe_p99_mm": 0.016868411774749036,
+    "recipe_max_mm": 0.02516925511594197
+   },
+   "output_axis_strut": {
+    "point_mm": [
+     -5.0317866794432,
+     7.70189466446745,
+     -119.39990222186444
+    ],
+    "dir": [
+     2.5853967768191076e-05,
+     -4.0963456184663646e-05,
+     -0.9999999988267931
+    ]
+   },
+   "output_axis_vs_winch_axis": {
+    "winch_tag": "P09",
+    "angle_deg": 0.0027750659133237484,
+    "offset_at_winch_axis_point_mm": 0.0003462197787858766,
+    "winch_axis_point_strut_mm": [
+     -5.031884696866735,
+     7.701966737346854,
+     -124.14999693349912
+    ],
+    "along_shaft_mm": 4.75009470057535
+   }
+  },
+  {
+   "id": "ROD1",
+   "type": "ROD",
+   "end": "middle",
+   "source_piece": "c022",
+   "source_piece_sha256": "f4c3d4ad1288e2ffa4115b0429d87fef4c42cf14e105d36af97789f95dbef049",
+   "local_to_strut": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "det": 1.0,
+   "registration": {
+    "method": "by construction: the STEP is the piece's own triangles in the strut frame",
+    "vertex_set": {
+     "step_vertices": 74,
+     "piece_vertices": 74,
+     "max_step_to_piece_mm": 7.344433762031923e-11,
+     "max_piece_to_step_mm": 7.344433762031923e-11
+    }
+   },
+   "axis_strut": {
+    "point_mm": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  }
+ ]
+}

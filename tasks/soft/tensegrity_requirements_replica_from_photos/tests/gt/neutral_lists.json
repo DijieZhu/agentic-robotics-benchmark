@@ -1,0 +1,644 @@
+{
+ "schema": "tensegrity_requirements_replica_from_photos/gt/neutral_lists v1 (hidden)",
+ "bom_neutral": [
+  {
+   "id": "NEU-01",
+   "key": "battery_lead",
+   "value": {
+    "qty_per_strut": 2
+   },
+   "reason": "no honest route in the givens",
+   "money_row": 28,
+   "sources": [
+    {
+     "key": "bom_xlsx",
+     "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+     "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+     "how": "Components row 28: row"
+    }
+   ]
+  },
+  {
+   "id": "NEU-02",
+   "key": "cable_guide",
+   "value": {
+    "qty_per_strut": 2
+   },
+   "reason": "bill of materials 2 per strut, mesh 1 (cannot be ruled from the givens)",
+   "money_row": 30,
+   "sources": [
+    {
+     "key": "bom_xlsx",
+     "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+     "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+     "how": "Components row 30: row"
+    }
+   ]
+  },
+  {
+   "id": "NEU-03",
+   "key": "short_strain_sensor",
+   "value": {
+    "per_robot": 6
+   },
+   "reason": "count stated in two given files",
+   "money_row": null,
+   "sources": [
+    {
+     "key": "tracking_config",
+     "file": "github.com/shiyoung77/tensegrity_perception, branch ros: data_cfg.json",
+     "sha256": "5e6db514515d42610f6ed6865a7403d39478e08c62cd7ffd64f896172584a393",
+     "how": "pairs 0-5"
+    },
+    {
+     "key": "bom_xlsx",
+     "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+     "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+     "how": "In-house row 7: 2 per strut"
+    }
+   ]
+  },
+  {
+   "id": "NEU-04",
+   "key": "long_strain_sensor",
+   "value": {
+    "per_robot": 3
+   },
+   "reason": "count stated in two given files",
+   "money_row": null,
+   "sources": [
+    {
+     "key": "tracking_config",
+     "file": "github.com/shiyoung77/tensegrity_perception, branch ros: data_cfg.json",
+     "sha256": "5e6db514515d42610f6ed6865a7403d39478e08c62cd7ffd64f896172584a393",
+     "how": "pairs 6-8"
+    },
+    {
+     "key": "bom_xlsx",
+     "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+     "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+     "how": "In-house row 8: 2 per strut"
+    }
+   ]
+  },
+  {
+   "id": "NEU-05",
+   "key": "header_strips_shipped_with_breakouts",
+   "value": {
+    "pieces_in_mesh": 15
+   },
+   "reason": "ship with the bought boards",
+   "money_row": null,
+   "sources": [
+    {
+     "key": "cad_scene_pieces",
+     "file": "the designers' whole-strut mesh: the list of its edge-connected pieces (maintainers' split)",
+     "sha256": "78abb197334b21708a9c6425a8551679b81828147fe8e6abeb544908af156572",
+     "how": "male header strips of the bought boards: ['12.7 = 5 x 2.54 female header', '13-pin male header of MPR121', '15-pin male header strips of the Arduino, 2 pieces', '17.78 = 7 x 2.54 female header', '20.32 = 8 x 2.54 female header, 2 pieces', '33.02 = 13 x 2.54 female header', '38.1 = 15 x 2.54 female header, 2 pieces', '5-pin male header of ICM20948', '7-pin male header of MPR121', '8-pin male header plastic of INA260 (sits in the 8x1 spot)', '8-pin male headers of TB6612, 2 pieces']"
+    }
+   ]
+  },
+  {
+   "id": "NEU-06",
+   "key": "unidentified_piece_c050",
+   "value": {
+    "pieces_in_mesh": 1
+   },
+   "reason": "not in the bill of materials",
+   "money_row": null,
+   "sources": [
+    {
+     "key": "cad_scene_pieces",
+     "file": "the designers' whole-strut mesh: the list of its edge-connected pieces (maintainers' split)",
+     "sha256": "78abb197334b21708a9c6425a8551679b81828147fe8e6abeb544908af156572",
+     "how": "3-pin header-like block 11.4 x 7.6 x 5.1 near Arduino; not in BOM"
+    }
+   ]
+  },
+  {
+   "id": "NEU-07",
+   "key": "unidentified_piece_c135",
+   "value": {
+    "pieces_in_mesh": 1
+   },
+   "reason": "not in the bill of materials",
+   "money_row": null,
+   "sources": [
+    {
+     "key": "cad_scene_pieces",
+     "file": "the designers' whole-strut mesh: the list of its edge-connected pieces (maintainers' split)",
+     "sha256": "78abb197334b21708a9c6425a8551679b81828147fe8e6abeb544908af156572",
+     "how": "1.7 x 0.9 x 0.9 at z -54 r 17.3"
+    }
+   ]
+  }
+ ],
+ "bom_out_of_scope": {
+  "categories": [
+   "wire",
+   "tape",
+   "heat_shrink",
+   "solder",
+   "print_and_cast_material",
+   "charger",
+   "tools",
+   "consumables"
+  ],
+  "authors_supplies_sheet_items": [
+   "Battery Charger",
+   "Fishing Line (500 YD/100 LB)",
+   "1/2\" Black Tape",
+   "Micro USB Right Angle Adapter (2 pack)",
+   "Ultra-flexible Silicone Wire",
+   "Other wire",
+   "Dupont Crimps",
+   "JST-XH Crimps",
+   "Crimp Tool",
+   "Super Glue?",
+   "4-40 Tap",
+   "Needle-nose pliers",
+   "Tweezers",
+   "Soldering Iron",
+   "Prusa Mk3S Printer",
+   "Hatchbox Filament",
+   "FormLabs Form 3 Printer",
+   "Tough 1500 Resin"
+  ],
+  "source": {
+   "key": "bom_xlsx",
+   "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+   "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+   "how": "Supplies sheet, column A"
+  }
+ },
+ "requirements_w0": [
+  {
+   "id": "W0-01",
+   "quantity": "udp_port",
+   "truth": 2390,
+   "unit": "none",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor UDP_PORT; firmware localPort 2390"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-02",
+   "quantity": "pid_gains",
+   "truth": [
+    10.0,
+    0.01,
+    0.5
+   ],
+   "unit": "none",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor P, I, D"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-03",
+   "quantity": "position_tolerance",
+   "truth": 0.15,
+   "unit": "none",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor tol"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-04",
+   "quantity": "cable_length_command_min",
+   "truth": 100,
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor min_length"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-05",
+   "quantity": "cable_length_command_range",
+   "truth": 100,
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor RANGE"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-06",
+   "quantity": "speed_cap",
+   "truth": 70,
+   "unit": "none",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor max_speed (of 99 full scale)"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-07",
+   "quantity": "software_gear_ratio",
+   "truth": 150,
+   "unit": "none",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor gear_ratio"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-08",
+   "quantity": "encoder_counts_per_motor_rev",
+   "truth": 12,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor encoder_resolution"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-09",
+   "quantity": "winch_drum_diameter",
+   "truth": 6.35,
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "constructor winch_diameter"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-10",
+   "quantity": "telemetry_fields",
+   "truth": 13,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "len(sensor_array) check; firmware sends 13 fields"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-11",
+   "quantity": "capacitance_channels_read",
+   "truth": 4,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "firmware",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: onboard/onboard.ino/onboard.ino.ino",
+     "sha256": "b19b59eb75c6cdbbc8cabdd78a21de4c9f8f66fe62679e892010c93cea9f5ed2",
+     "how": "NUM_SENSORS"
+    }
+   ],
+   "given_file": [
+    "firmware"
+   ]
+  },
+  {
+   "id": "W0-12",
+   "quantity": "strain_sensors_total",
+   "truth": 9,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "num_sensors; tracking config has 9 pairs"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-13",
+   "quantity": "short_strain_sensors_per_robot",
+   "truth": 6,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "tracking_config",
+     "file": "github.com/shiyoung77/tensegrity_perception, branch ros: data_cfg.json",
+     "sha256": "5e6db514515d42610f6ed6865a7403d39478e08c62cd7ffd64f896172584a393",
+     "how": "pairs tied to motors (index < num_motors)"
+    }
+   ],
+   "given_file": [
+    "tracking_config"
+   ]
+  },
+  {
+   "id": "W0-14",
+   "quantity": "long_strain_sensors_per_robot",
+   "truth": 3,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "tracking_config",
+     "file": "github.com/shiyoung77/tensegrity_perception, branch ros: data_cfg.json",
+     "sha256": "5e6db514515d42610f6ed6865a7403d39478e08c62cd7ffd64f896172584a393",
+     "how": "the other pairs"
+    }
+   ],
+   "given_file": [
+    "tracking_config"
+   ]
+  },
+  {
+   "id": "W0-15",
+   "quantity": "active_cables_per_robot",
+   "truth": 6,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "num_motors"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-16",
+   "quantity": "controllers_per_robot",
+   "truth": 3,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "host",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: src/run_tensegrity.py",
+     "sha256": "14a53af9e3c2e432b4df8b250caec9858d5aa03a15f3a81011bf0c9e63ae2ed7",
+     "how": "num_arduino"
+    }
+   ],
+   "given_file": [
+    "host_script"
+   ]
+  },
+  {
+   "id": "W0-17",
+   "quantity": "short_sensors_per_sheet",
+   "truth": 17,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "dxf_short",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the short sensors' sensors.DXF",
+     "sha256": "e8cbb80050fecdc968319c99dd3b11d7b9e0ce867cbea6616d4d67ec242149bb",
+     "how": "columns of hole pairs"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-18",
+   "quantity": "long_sensors_per_sheet",
+   "truth": 14,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "dxf_long",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the long sensors' sensors.DXF",
+     "sha256": "a3033959c3db3ccb34f64b0e45380c3469bfaca5317717b38ec10a0f5414d58a",
+     "how": "columns of hole pairs"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-19",
+   "quantity": "short_sensor_hole_pitch",
+   "truth": 65.0,
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "dxf_short",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the short sensors' sensors.DXF",
+     "sha256": "e8cbb80050fecdc968319c99dd3b11d7b9e0ce867cbea6616d4d67ec242149bb",
+     "how": "hole pitch"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-20",
+   "quantity": "long_sensor_hole_pitch",
+   "truth": 130.0,
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "dxf_long",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the long sensors' sensors.DXF",
+     "sha256": "a3033959c3db3ccb34f64b0e45380c3469bfaca5317717b38ec10a0f5414d58a",
+     "how": "hole pitch"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-21",
+   "quantity": "short_sensor_planform",
+   "truth": [
+    16.0,
+    77.0
+   ],
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "dxf_short",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the short sensors' sensors.DXF",
+     "sha256": "e8cbb80050fecdc968319c99dd3b11d7b9e0ce867cbea6616d4d67ec242149bb",
+     "how": "extent of one sensor's outline (column band)"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-22",
+   "quantity": "long_sensor_planform",
+   "truth": [
+    18.0,
+    142.0
+   ],
+   "unit": "mm",
+   "sources": [
+    {
+     "key": "dxf_long",
+     "file": "figshare 10.6084/m9.figshare.32273583, Sensor_Fabrication.zip: the long sensors' sensors.DXF",
+     "sha256": "a3033959c3db3ccb34f64b0e45380c3469bfaca5317717b38ec10a0f5414d58a",
+     "how": "extent of one sensor's outline (column band)"
+    }
+   ],
+   "given_file": [
+    "sensor_cuts"
+   ]
+  },
+  {
+   "id": "W0-23",
+   "quantity": "pads_per_sensor_connector",
+   "truth": 4,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "board_brd",
+     "file": "github.com/ChemStud24/tensegrity, master: electronics/v3 Tensegrity Motherboard.brd",
+     "sha256": "9b82a9fbc8f01d505b7e2dcada6e47cdb6cbc13acdec08d7c172d485822b156c",
+     "how": "pads of the 4-pad sensor connector footprint (fab_data)"
+    }
+   ],
+   "given_file": [
+    "fab_data"
+   ]
+  },
+  {
+   "id": "W0-24",
+   "quantity": "pwm_full_scale",
+   "truth": [
+    255.0,
+    99.0
+   ],
+   "unit": "none",
+   "sources": [
+    {
+     "key": "firmware",
+     "file": "github.com/ChemStud24/tensegrity, branch rss25: onboard/onboard.ino/onboard.ino.ino",
+     "sha256": "b19b59eb75c6cdbbc8cabdd78a21de4c9f8f66fe62679e892010c93cea9f5ed2",
+     "how": "drive scale 255 / 99"
+    }
+   ],
+   "given_file": [
+    "firmware"
+   ]
+  },
+  {
+   "id": "W0-25",
+   "quantity": "calibration_lines_per_file",
+   "truth": 9,
+   "unit": "count",
+   "sources": [
+    {
+     "key": "calibration_new",
+     "file": "github.com/ChemStud24/tensegrity, master: calibration/new_calibration.json",
+     "sha256": "5ca8e4ab7cd217bc4d35a0f85235678412fd5512693f61b3a7ad0dff57fc8e5a",
+     "how": "entries of m and b"
+    }
+   ],
+   "given_file": [
+    "calibrations"
+   ]
+  }
+ ],
+ "no_source_quantity_candidates": {
+  "names": [
+   "robot_mass",
+   "strut_mass",
+   "cable_stiffness",
+   "fishing_line_diameter",
+   "battery_endurance",
+   "rolling_speed",
+   "payload",
+   "max_slope",
+   "max_drop_height",
+   "operating_temperature",
+   "ingress_protection",
+   "cable_pretension",
+   "stall_line_force",
+   "no_load_line_speed",
+   "cell_capacity",
+   "wireless_range",
+   "control_loop_rate",
+   "sensor_hysteresis",
+   "resting_height",
+   "footprint_area",
+   "turning_radius",
+   "charge_time",
+   "motor_winding_class",
+   "resistor_value",
+   "set_screw_size"
+  ],
+  "note": "names with no real source in the givens; a submission item on them counts as wrong"
+ }
+}

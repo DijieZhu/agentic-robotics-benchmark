@@ -15,13 +15,16 @@ which is not part of the repository; do not edit the frozen files (below) by han
 2. the agent-visible documents are in `environment/setup/payload/given/`;
 3. the large givens (14 lab logs, 12 photographs, the car's meshes: 44 files, 77.3 MB) are in the benchmark's asset
    dataset `grounded-intelligence-initiative/ale-robotics-assets` under
-   `tasks/ground/racecar_time_trial_on_unseen_track/payload/` at commit `6e0561c9981213310dd05c014a38509d8a1fcc06`
-   (an unchanged copy, in one dataset commit, of the files first published on 2026-11-17 under
-   `tasks/driving/racecar_time_trial_on_unseen_track/payload/`): `environment/assets.sha256` pins that commit and every
-   file's sha256, and the image fetches them while it builds (`environment/fetch_assets.py`); a
-   maintainer's local build may place the same files in the engine asset root `environment/assets/payload/` (never in
-   git) instead. Nothing hidden is in the dataset: the hidden set, the reference records and the anchor are here, the
-   reference program in `../solution/`, all in git.
+   `tasks/ground/racecar_time_trial_on_unseen_track/payload/` at commit `d37fd7ed3b11365ed9e73b5ff7faa009be311659` (the
+   files first published on 2026-11-17 under `tasks/driving/racecar_time_trial_on_unseen_track/payload/`, copied
+   unchanged to this folder in dataset commit `6e0561c9981213310dd05c014a38509d8a1fcc06`; then two of them were
+   replaced: `car/meshes/compute_unit.obj` without a vendor mark and lettering that were modelled as geometry, and
+   `car/meshes/textures/controller_board.png` with two more small inscriptions painted over; the other 42 files, the
+   physics and the sensors are unchanged): `environment/assets.sha256` pins that commit and every file's sha256, and the
+   image fetches them while it builds (`environment/fetch_assets.py`); a maintainer's local build may place the same
+   files in the engine asset root `environment/assets/payload/` (never in git) instead. Nothing hidden is in the
+   dataset: the hidden set, the reference records and the anchor are here, the reference program in `../solution/`, all
+   in git.
 
 ## Files
 

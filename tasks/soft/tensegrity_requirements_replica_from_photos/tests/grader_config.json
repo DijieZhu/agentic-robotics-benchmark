@@ -1,0 +1,558 @@
+{
+ "schema": "tensegrity_requirements_replica_from_photos/tests/grader_config v1",
+ "frozen": {
+  "by": "the maintainers' freeze step",
+  "date": "2026-11-17",
+  "version": "v1.1",
+  "freeze": "gt/freeze.json",
+  "note": "v1.1 of the scoring (decided on 2026-11-17, before the one episode that is read): weights 0.25 / 0.05 / 0.03 / 0.37 / 0.30, C1 groups 0.10 / 0.85 / 0.05, C4 = kit acceptance (c4.kit), zero points 4 a, four fairness fixes (NEU-08, NEU-09, the accepted series, the series writing forms); decided after a first episode that does not count (tests/README.md section 9). v1.0: frozen 2026-11-17 (weights 0.45 / 0.10 / 0.05 / 0.30 / 0.10, C4 = the per-line F0.5)"
+ },
+ "criteria": [
+  "net_and_geometry_replication",
+  "requirements_sheet",
+  "derived_quantities",
+  "bom_buildability",
+  "bom_procurement"
+ ],
+ "weights": {
+  "net_and_geometry_replication": 0.25,
+  "requirements_sheet": 0.05,
+  "derived_quantities": 0.03,
+  "bom_buildability": 0.37,
+  "bom_procurement": 0.3
+ },
+ "limits": {
+  "requirements_items": 60,
+  "derived_items": 20,
+  "bom_lines": 60,
+  "source_ids_per_item": 3
+ },
+ "c1": {
+  "groups": {
+   "topology": 0.1,
+   "dimensions": 0.85,
+   "counts": 0.05
+  },
+  "topology_blocks": {
+   "sensor_harness": 0.4,
+   "motor_harness": 0.15,
+   "ends": 0.35,
+   "controllers": 0.1
+  },
+  "ends_counted_only_with_right_harness_field": true,
+  "tier_weights": {
+   "W3": 3,
+   "W2": 2,
+   "W1": 1
+  },
+  "bands": "gt/freeze.json `bands` (full / zero point in mm, linear between; a = max(3 px, 2 sigma) of the ledger's measuring route on the photos, b = 4 a since v1.1 (v1.0: 6.5 a))",
+  "geometry_unit": "m",
+  "ruled_out_ledger_rows": [
+   "C1D-05",
+   "C1N-02"
+  ],
+  "public_band_classes": {
+   "small_features_on_close_ups": {
+    "rows": [
+     "C1D-04",
+     "C1D-07",
+     "C1D-08",
+     "C1D-09",
+     "C1D-10"
+    ],
+    "full_at_mm": [
+     0.087,
+     0.18
+    ],
+    "zero_at_mm": [
+     0.348,
+     0.72
+    ]
+   },
+   "strut_scale_lengths": {
+    "rows": [
+     "C1D-01",
+     "C1D-02",
+     "C1D-03",
+     "C1D-06",
+     "C1D-11"
+    ],
+    "full_at_mm": [
+     0.21,
+     0.343
+    ],
+    "zero_at_mm": [
+     0.84,
+     1.372
+    ]
+   },
+   "counts": "exact"
+  }
+ },
+ "c2": {
+  "tier_weights": {
+   "W3": 3,
+   "W2": 2,
+   "W1": 1
+  },
+  "bands": "gt/freeze.json `bands`: integers and enumerations exact; the gearbox ratio absolute 0.05 / 0.30; other numbers relative 1 % / 5 % (docs/conventions.md)",
+  "source_class_miss_factor": 0.5,
+  "precision_over": "every non-derived item; W0 names with a right value are left out, with a wrong value count as wrong; names with no source count as wrong"
+ },
+ "c3": {
+  "tier_weights": {
+   "W3": 3,
+   "W2": 2,
+   "W1": 1
+  },
+  "bands": "gt/freeze.json `bands`: integers exact; the encoder count over the command range relative 0.1 % / 0.3 %; other numbers relative 1 % / 5 % (docs/conventions.md)",
+  "missing_scores": 0.0
+ },
+ "c4": {
+  "ledger_component": "C4",
+  "robots": 8,
+  "struts_per_robot": 3,
+  "tier_weights": {
+   "W3": 3,
+   "W2": 2,
+   "W1": 1
+  },
+  "line_scores": {
+   "right_quantity": 1.0,
+   "wrong_quantity": 0.4
+  },
+  "category_ledger_to_contract": {
+   "cell": "battery_cell",
+   "control_board": "control_board",
+   "driver_board": "motor_driver_board",
+   "harness": "cable_assembly",
+   "insert": "threaded_insert",
+   "made_part": "made_part",
+   "motor": "gearmotor",
+   "pin_header": "pin_header",
+   "resistor": "resistor",
+   "rod": "rod",
+   "screw": "screw",
+   "sensing_board": "sensor_board",
+   "set_screw": "set_screw",
+   "socket": "socket_header",
+   "spacer": "spacer",
+   "switch": "switch",
+   "transistor": "transistor",
+   "wtb_connector": "wire_to_board_connector"
+  },
+  "recognised_by": {
+   "battery_cell": "attributes",
+   "bearing": "attributes",
+   "cable_assembly": "attributes",
+   "capacitor": "attributes",
+   "control_board": "vendor_part_number",
+   "diode": "attributes",
+   "dowel_pin": "attributes",
+   "fuse": "attributes",
+   "gearmotor": "attributes",
+   "led": "attributes",
+   "line_guide": "attributes",
+   "made_part": "tags",
+   "magnet": "attributes",
+   "motor_driver_board": "vendor_part_number",
+   "nut": "attributes",
+   "pin_header": "attributes",
+   "radio_module": "vendor_part_number",
+   "resistor": "attributes",
+   "retaining_ring": "attributes",
+   "rod": "attributes",
+   "screw": "attributes",
+   "sensor_board": "vendor_part_number",
+   "servo": "vendor_part_number",
+   "set_screw": "attributes",
+   "shaft_collar": "attributes",
+   "socket_header": "attributes",
+   "spacer": "attributes",
+   "spring": "attributes",
+   "strain_sensor": "attributes",
+   "switch": "attributes",
+   "threaded_insert": "attributes",
+   "transistor": "attributes",
+   "voltage_regulator_module": "vendor_part_number",
+   "washer": "attributes",
+   "wire_to_board_connector": "attributes"
+  },
+  "discriminating": {
+   "wire_to_board_connector": [
+    {
+     "attribute": "series",
+     "compare": "series",
+     "ledger_key": "series"
+    },
+    {
+     "attribute": "positions",
+     "compare": "integer",
+     "ledger_key": "positions"
+    },
+    {
+     "attribute": "mount",
+     "compare": "token",
+     "ledger_key": "mount"
+    },
+    {
+     "attribute": "entry",
+     "compare": "token",
+     "ledger_key": "entry"
+    }
+   ],
+   "screw": [
+    {
+     "attribute": "thread",
+     "compare": "thread",
+     "ledger_key": "thread"
+    },
+    {
+     "attribute": "length_mm",
+     "compare": "number",
+     "ledger_key": "length_under_head_mm",
+     "tolerance_ledger_key": "length_tolerance_mm"
+    },
+    {
+     "attribute": "head",
+     "compare": "token",
+     "ledger_key": "head"
+    }
+   ],
+   "socket_header": [
+    {
+     "attribute": "positions",
+     "compare": "integer",
+     "ledger_key": "positions"
+    }
+   ],
+   "pin_header": [
+    {
+     "attribute": "positions",
+     "compare": "integer",
+     "ledger_key": "positions"
+    },
+    {
+     "attribute": "orientation",
+     "compare": "token",
+     "ledger_key": "angle"
+    }
+   ],
+   "gearmotor": [
+    {
+     "attribute": "gear_ratio",
+     "compare": "number",
+     "ledger_key": "nominal_ratio",
+     "tolerance_ledger_key": "ratio_tolerance"
+    },
+    {
+     "attribute": "encoder",
+     "compare": "token",
+     "ledger_key": "encoder_connector"
+    },
+    {
+     "attribute": "encoder_counts_per_rev",
+     "compare": "integer",
+     "ledger_key": "encoder_cpr"
+    },
+    {
+     "attribute": "rated_voltage_v",
+     "compare": "number",
+     "ledger_key": "voltage_v",
+     "tolerance": 0.0
+    }
+   ],
+   "battery_cell": [
+    {
+     "attribute": "cells_in_series",
+     "compare": "integer",
+     "ledger_key": "cells_per_plug"
+    },
+    {
+     "attribute": "connector_positions",
+     "compare": "integer",
+     "ledger_key": "plug_positions"
+    }
+   ],
+   "switch": [
+    {
+     "attribute": "actuation",
+     "compare": "token",
+     "ledger_key": "kind"
+    },
+    {
+     "attribute": "terminals",
+     "compare": "integer",
+     "ledger_key": "pins"
+    }
+   ],
+   "rod": [
+    {
+     "attribute": "diameter_mm",
+     "compare": "number",
+     "ledger_key": "diameter_mm",
+     "tolerance": 0.083
+    },
+    {
+     "attribute": "length_mm",
+     "compare": "number",
+     "ledger_key": "length_mm",
+     "tolerance": 1.39
+    }
+   ],
+   "threaded_insert": [
+    {
+     "attribute": "thread",
+     "compare": "thread",
+     "ledger_key": "thread"
+    }
+   ],
+   "set_screw": [],
+   "spacer": [
+    {
+     "attribute": "length_mm",
+     "compare": "number",
+     "ledger_key": "length_mm",
+     "tolerance": 0.087
+    }
+   ],
+   "cable_assembly": [
+    {
+     "attribute": "connector_series",
+     "compare": "series",
+     "ledger_key": "end_series"
+    },
+    {
+     "attribute": "positions",
+     "compare": "integer",
+     "ledger_key": "end_positions"
+    }
+   ],
+   "transistor": [
+    {
+     "attribute": "package",
+     "compare": "package",
+     "ledger_key": "package"
+    },
+    {
+     "attribute": "channel",
+     "compare": "token",
+     "ledger_key": "polarity"
+    }
+   ],
+   "resistor": [
+    {
+     "attribute": "package",
+     "compare": "package",
+     "ledger_key": "package"
+    }
+   ]
+  },
+  "token_ledger_to_contract": {
+   "gearmotor": {
+    "encoder": {
+     "back": "back_connector"
+    }
+   },
+   "pin_header": {
+    "orientation": {
+     "right": "right_angle"
+    }
+   },
+   "transistor": {
+    "channel": {
+     "N+P": "complementary_pair"
+    }
+   }
+  },
+  "seller_vendors": {
+   "digikey": "DigiKey"
+  },
+  "accepted_part_numbers_extra": {
+   "C4-02": {
+    "part_numbers": [
+     "ABX00032"
+    ],
+    "why": "the controller board is accepted with and without headers; the maker lists ABX00032 as the with-headers item of the same board (vendor page VD-01); frozen in gt/freeze.json too"
+   }
+  },
+  "normalise": {
+   "vendor_suffix_words": [
+    "ag",
+    "and",
+    "bv",
+    "co",
+    "company",
+    "corp",
+    "corporation",
+    "electronics",
+    "gmbh",
+    "inc",
+    "incorporated",
+    "industries",
+    "limited",
+    "llc",
+    "ltd",
+    "plc",
+    "robotics",
+    "sa",
+    "srl",
+    "store"
+   ],
+   "vendor_aliases": {
+    "arduinocc": "arduino",
+    "arduinosrl": "arduino"
+   },
+   "part_number_strip_prefixes": [
+    "#"
+   ],
+   "series_prefix_words": [
+    "jst"
+   ],
+   "series_suffix_words": [
+    "connectors",
+    "connector",
+    "series",
+    "family",
+    "style",
+    "type"
+   ],
+   "thread_prefixes": [
+    "#",
+    "no.",
+    "no"
+   ],
+   "thread_suffixes": [
+    "unc",
+    "unf"
+   ],
+   "package_aliases": {
+    "soic8": "so8",
+    "8soic": "so8",
+    "sop8": "so8",
+    "8so": "so8",
+    "1608metric": "0603",
+    "1608m": "0603",
+    "0603imperial": "0603",
+    "0603inch": "0603",
+    "soic8n": "so8",
+    "so8n": "so8",
+    "soic8nb": "so8",
+    "soic8narrow": "so8",
+    "so8narrow": "so8",
+    "soic8150mil": "so8",
+    "so8150mil": "so8"
+   },
+   "series_tail_regex": "(?:pitch|[0-9]+(?:\\.[0-9]+)?(?:mm|pins?|pos|positions?|p|ways?|circuits?|contacts?)?|[^0-9a-z]+)$",
+   "thread_class_regex": "(?<=unc|unf)[123][ab]$"
+  },
+  "out_of_scope_categories": [
+   "casting_material",
+   "charger",
+   "consumable",
+   "heat_shrink",
+   "print_material",
+   "solder",
+   "tape",
+   "tool",
+   "wire"
+  ],
+  "neutral_rules": [
+   {
+    "id": "NEU-02",
+    "what": "the bought line-guide ring",
+    "category": "line_guide"
+   },
+   {
+    "id": "NEU-03/NEU-04",
+    "what": "the short and long strain sensors",
+    "category": "strain_sensor"
+   },
+   {
+    "id": "NEU-01",
+    "what": "the battery extension lead",
+    "category": "cable_assembly",
+    "attributes": {
+     "connector_series": [
+      "series",
+      "PH"
+     ],
+     "positions": [
+      "integer",
+      2
+     ]
+    }
+   },
+   {
+    "id": "NEU-05",
+    "what": "header strips that ship with the bought boards",
+    "category": "pin_header",
+    "attributes": {
+     "orientation": [
+      "token",
+      "straight"
+     ]
+    }
+   },
+   {
+    "id": "NEU-06",
+    "what": "the 3-pin block by the controller board that is not in the authors' table",
+    "category_any_of": [
+     "pin_header",
+     "socket_header",
+     "wire_to_board_connector"
+    ],
+    "attributes": {
+     "positions": [
+      "integer",
+      3
+     ]
+    }
+   },
+   {
+    "id": "NEU-08",
+    "what": "the chip resistors of the main board: not on the photographed board",
+    "category": "resistor"
+   },
+   {
+    "id": "NEU-09",
+    "what": "any ready-made lead other than the 6-position motor lead: no lead is in any photo",
+    "category": "cable_assembly",
+    "attributes_not": {
+     "positions": [
+      "integer",
+      6
+     ]
+    }
+   }
+  ],
+  "neutral_not_recognisable": {
+   "NEU-07": "an unidentified small piece of the mesh: no attribute names it, so no rule can recognise a line for it"
+  },
+  "f_beta": 0.5,
+  "f_beta_note": "reported only since v1.1 (metric c4_f_beta_score): the per-line F_beta of v1.0, (1 + b^2) P R / (b^2 P + R) with b = 0.5; C4 itself is the kit rule (c4.kit)",
+  "tolerances_frozen": {
+   "numbers_mm": {
+    "screw.length_mm": 0.102,
+    "rod.diameter_mm": 0.083,
+    "rod.length_mm": 1.39,
+    "spacer.length_mm": 0.087
+   },
+   "rule": "max(3 px, 2 sigma) of the attribute's best photo (the maintainers' precision budget), the same rule as the bands; gt/freeze.json `c4_tolerances` overrides the ledger rows' own tolerance (screws: 0.6 mm in the ledger)",
+   "gearmotor": "nominal ratio +/- 1 (ledger), rated voltage exact"
+  },
+  "quantity_note": "a line's quantity is right when it makes the same order as the truth's: robots x (struts_per_robot x qty_per_strut + qty_per_robot_extra) pieces (docs/conventions.md): the same order written per robot is no correction",
+  "kit": {
+   "zero_at_corrections": 2
+  },
+  "kit_note": "C4 = max(0, 1 - corrections / zero_at_corrections) (reqgrade/c4.py): corrections = recognised lines with a wrong quantity + per category max(truth lines no line is recognised as, lines recognised as no part); a line recognised as a part another line holds is folded into it first (reqgrade/match.py step 4)"
+ },
+ "c5": {
+  "band": {
+   "full_at": 0.005,
+   "zero_at": 0.05
+  },
+  "unmatched_line_price": "the category's truth line with the lowest exact-order cost (ties: lower workbook row), priced at the agent's quantity with its own pack size and tiers",
+  "priced_total_check_abs": 1e-06
+ }
+}

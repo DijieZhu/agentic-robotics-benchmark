@@ -1,0 +1,695 @@
+{
+ "schema": "tensegrity_requirements_replica_from_photos/tests/gt/freeze v1",
+ "version": "v1.1",
+ "frozen_by": "the maintainers' freeze step (v1.1; not in this repository); v1.0: the same step",
+ "date": "2026-11-17",
+ "provisional": false,
+ "rule": "v1.1: bands from the measured photo budget, a = max(3 px, 2 sigma), b = 4 a (v1.0: 6.5 a); C4 is kit acceptance, max(0, 1 - corrections / 2) (grader_config c4.kit); the graded list from observability on the delivered photos, the route audit (R0 = 0, one-step route floor <= 0.10) and a fairness review of every line the kit rule makes decisive; weights, the kit's two corrections and 4 a are design constants of 2026-11-17, not tuned against any submission. Decided after a first episode on v1.0 that was cut off by an infrastructure failure and does not count (tests/README.md section 9). Later changes: grader defects (rescored offline, marked) and pre-registered levers only",
+ "graded": [
+  "C1T-01",
+  "C1T-02",
+  "C1T-03",
+  "C1T-04",
+  "C1T-05",
+  "C1T-06",
+  "C1T-07",
+  "C1T-08",
+  "C1T-09",
+  "C1T-10",
+  "C1T-11",
+  "C1T-12",
+  "C1T-13",
+  "C1T-14",
+  "C1T-15",
+  "C1T-16",
+  "C1T-17",
+  "C1T-18",
+  "C1T-19",
+  "C1T-20",
+  "C1T-21",
+  "C1D-01",
+  "C1D-02",
+  "C1D-03",
+  "C1D-04",
+  "C1D-06",
+  "C1D-07",
+  "C1D-08",
+  "C1D-09",
+  "C1D-10",
+  "C1D-11",
+  "C1N-01",
+  "C2-01",
+  "C2-02",
+  "C2-03",
+  "C2-04",
+  "C2-05",
+  "C2-06",
+  "C2-07",
+  "C2-08",
+  "C3-01",
+  "C3-02",
+  "C3-03",
+  "C3-04",
+  "C3-05",
+  "C3-06",
+  "C3-07",
+  "C3-08",
+  "C4-02",
+  "C4-03",
+  "C4-04",
+  "C4-05",
+  "C4-06",
+  "C4-07",
+  "C4-08",
+  "C4-09",
+  "C4-10",
+  "C4-11",
+  "C4-12",
+  "C4-13",
+  "C4-14",
+  "C4-15",
+  "C4-16",
+  "C4-17",
+  "C4-18",
+  "C4-19",
+  "C4-21",
+  "C4-20",
+  "C4-22",
+  "C4-23",
+  "C4-24",
+  "C4-25",
+  "C4-26",
+  "C4-27",
+  "C4-29",
+  "C4-M1",
+  "C4-M2",
+  "C4-M3",
+  "C4-M4",
+  "C4-M5",
+  "C4-M6",
+  "C4-M7",
+  "C4-M8"
+ ],
+ "ungraded": [
+  "C1D-05",
+  "C1N-02",
+  "C4-31"
+ ],
+ "ungraded_reasons": {
+  "C1D-05": "line_exit_offset: taken off the graded list. The authors' mesh draws the guide ring with no hole axis (any principal direction: largest empty circle 0.1-0.3 mm); farthest point 19.7455 and piece centre 17.384 differ by 2.36 mm, far beyond any band; and the ring is a bought part of the neutral list",
+  "C1N-02": "line_exits_per_motor_module: taken off the graded list. The mesh draws one guide ring, on one motor module only (bill of materials: two per strut): no honest count",
+  "C4-31": "the main board's chip resistors (v1.1; neutral rule NEU-08): in the photos the board area between the two 15-position socket rows is empty (photo_222) while the MOSFET beside it is drawn; the authors' mesh draws no resistor; by the public trust order (what the photos show first) a careful reader judges them not fitted, so the line counts neither way: written or not, it is neither rewarded, nor counted, nor priced"
+ },
+ "w0_extra": [],
+ "bands": {
+  "C1D-01": {
+   "full_at_mm": 0.251,
+   "zero_at_mm": 1.004
+  },
+  "C1D-02": {
+   "full_at_mm": 0.258,
+   "zero_at_mm": 1.032
+  },
+  "C1D-03": {
+   "full_at_mm": 0.245,
+   "zero_at_mm": 0.98
+  },
+  "C1D-04": {
+   "full_at_mm": 0.13,
+   "zero_at_mm": 0.52
+  },
+  "C1D-06": {
+   "full_at_mm": 0.343,
+   "zero_at_mm": 1.372
+  },
+  "C1D-07": {
+   "full_at_mm": 0.179,
+   "zero_at_mm": 0.716
+  },
+  "C1D-08": {
+   "full_at_mm": 0.154,
+   "zero_at_mm": 0.616
+  },
+  "C1D-09": {
+   "full_at_mm": 0.087,
+   "zero_at_mm": 0.348
+  },
+  "C1D-10": {
+   "full_at_mm": 0.18,
+   "zero_at_mm": 0.72
+  },
+  "C1D-11": {
+   "full_at_mm": 0.21,
+   "zero_at_mm": 0.84
+  },
+  "C1N-01": "exact",
+  "C2-01": "exact (enum)",
+  "C2-02": "exact (enum)",
+  "C2-03": "exact",
+  "C2-04": "exact",
+  "C2-05": "exact",
+  "C2-06": "exact",
+  "C2-07": {
+   "abs_full_at": 0.05,
+   "abs_zero_at": 0.3
+  },
+  "C2-08": {
+   "rel_full_at": 0.01,
+   "rel_zero_at": 0.05
+  },
+  "C3-01": {
+   "rel_full_at": 0.01,
+   "rel_zero_at": 0.05
+  },
+  "C3-02": {
+   "rel_full_at": 0.01,
+   "rel_zero_at": 0.05
+  },
+  "C3-03": "exact",
+  "C3-04": "exact",
+  "C3-05": {
+   "rel_full_at": 0.001,
+   "rel_zero_at": 0.003
+  },
+  "C3-06": {
+   "rel_full_at": 0.01,
+   "rel_zero_at": 0.05
+  },
+  "C3-07": "exact",
+  "C3-08": {
+   "rel_full_at": 0.01,
+   "rel_zero_at": 0.05
+  }
+ },
+ "tiers": {
+  "C1D-01": "W3",
+  "C1D-02": "W2",
+  "C1D-03": "W2",
+  "C1D-04": "W2",
+  "C1D-06": "W2",
+  "C1D-07": "W1",
+  "C1D-08": "W1",
+  "C1D-09": "W1",
+  "C1D-10": "W1",
+  "C1D-11": "W1",
+  "C1N-01": "W1",
+  "C2-01": "W3",
+  "C2-02": "W2",
+  "C2-03": "W2",
+  "C2-04": "W1",
+  "C2-05": "W1",
+  "C2-06": "W2",
+  "C2-07": "W3",
+  "C2-08": "W2",
+  "C3-01": "W2",
+  "C3-02": "W2",
+  "C3-03": "W1",
+  "C3-04": "W1",
+  "C3-05": "W2",
+  "C3-06": "W1",
+  "C3-07": "W2",
+  "C3-08": "W2",
+  "C4-02": "W1",
+  "C4-03": "W1",
+  "C4-04": "W1",
+  "C4-05": "W3",
+  "C4-06": "W3",
+  "C4-07": "W2",
+  "C4-08": "W2",
+  "C4-09": "W1",
+  "C4-10": "W2",
+  "C4-11": "W3",
+  "C4-12": "W3",
+  "C4-13": "W3",
+  "C4-14": "W3",
+  "C4-15": "W1",
+  "C4-16": "W2",
+  "C4-17": "W2",
+  "C4-18": "W2",
+  "C4-19": "W2",
+  "C4-21": "W2",
+  "C4-20": "W1",
+  "C4-22": "W1",
+  "C4-23": "W1",
+  "C4-24": "W3",
+  "C4-25": "W1",
+  "C4-26": "W1",
+  "C4-27": "W2",
+  "C4-29": "W1",
+  "C4-M1": "W1",
+  "C4-M2": "W1",
+  "C4-M3": "W1",
+  "C4-M4": "W1",
+  "C4-M5": "W1",
+  "C4-M6": "W1",
+  "C4-M7": "W1",
+  "C4-M8": "W1"
+ },
+ "route_classes": {
+  "C1D-01": "R3",
+  "C1D-02": "R3",
+  "C1D-03": "R3",
+  "C1D-04": "R3",
+  "C1D-06": "R3",
+  "C1D-07": "R3",
+  "C1D-08": "R3",
+  "C1D-09": "R3",
+  "C1D-10": "R3",
+  "C1D-11": "R3",
+  "C1N-01": "R2",
+  "C2-01": "R2",
+  "C2-02": "R2",
+  "C2-03": "R2",
+  "C2-04": "R1",
+  "C2-05": "R2",
+  "C2-06": "R2",
+  "C2-07": "R3",
+  "C2-08": "R1",
+  "C3-01": "R1",
+  "C3-02": "R1",
+  "C3-03": "R1",
+  "C3-04": "R1",
+  "C3-05": "R3",
+  "C3-06": "R1",
+  "C3-07": "R1",
+  "C3-08": "R1",
+  "C4-02": "R1",
+  "C4-03": "R1",
+  "C4-04": "R1",
+  "C4-05": "R3",
+  "C4-06": "R2",
+  "C4-07": "R2",
+  "C4-08": "R2",
+  "C4-09": "R1",
+  "C4-10": "R3",
+  "C4-11": "R3",
+  "C4-12": "R3",
+  "C4-13": "R3",
+  "C4-14": "R3",
+  "C4-15": "R1",
+  "C4-16": "R3",
+  "C4-17": "R2",
+  "C4-18": "R2",
+  "C4-19": "R2",
+  "C4-21": "R2",
+  "C4-20": "R1",
+  "C4-22": "R1",
+  "C4-23": "R1",
+  "C4-24": "R2",
+  "C4-25": "R1",
+  "C4-26": "R1",
+  "C4-27": "R2",
+  "C4-29": "R1",
+  "C4-M1": "R1",
+  "C4-M2": "R1",
+  "C4-M3": "R1",
+  "C4-M4": "R1",
+  "C4-M5": "R1",
+  "C4-M6": "R1",
+  "C4-M7": "R1",
+  "C4-M8": "R1",
+  "C1T-01/ends": "R2",
+  "C1T-01/motor_harness": "R2",
+  "C1T-02/ends": "R2",
+  "C1T-02/motor_harness": "R2",
+  "C1T-03/ends": "R2",
+  "C1T-03/motor_harness": "R2",
+  "C1T-04/ends": "R2",
+  "C1T-04/motor_harness": "R2",
+  "C1T-05/ends": "R2",
+  "C1T-05/motor_harness": "R2",
+  "C1T-06/ends": "R2",
+  "C1T-06/motor_harness": "R2",
+  "C1T-07/ends": "R2",
+  "C1T-07/sensor_harness": "R2",
+  "C1T-08/ends": "R2",
+  "C1T-08/sensor_harness": "R2",
+  "C1T-09/ends": "R2",
+  "C1T-09/sensor_harness": "R2",
+  "C1T-10/ends": "R2",
+  "C1T-10/sensor_harness": "R2",
+  "C1T-11/ends": "R2",
+  "C1T-11/sensor_harness": "R2",
+  "C1T-12/ends": "R2",
+  "C1T-12/sensor_harness": "R2",
+  "C1T-13/ends": "R2",
+  "C1T-13/sensor_harness": "R2",
+  "C1T-14/ends": "R2",
+  "C1T-14/sensor_harness": "R2",
+  "C1T-15/ends": "R2",
+  "C1T-15/sensor_harness": "R2",
+  "C1T-16/sensor_harness": "R2",
+  "C1T-17/sensor_harness": "R2",
+  "C1T-18/sensor_harness": "R2",
+  "C1T-19/controllers": "R1",
+  "C1T-20/controllers": "R1",
+  "C1T-21/controllers": "R1"
+ },
+ "route_audit": {
+  "R0": 0.0,
+  "R0_plus_R1_row_weighted": 0.2596,
+  "R0_plus_R1_note": "the row-weighted share, reported only: the kit and the money are not sums over rows, so it no longer describes the grader",
+  "by_route": {
+   "R0": 0.0,
+   "R1": 0.2596,
+   "R2": 0.3419,
+   "R3": 0.3985
+  },
+  "one_step_route_floor": {
+   "reward": 0.043674089068825916,
+   "criteria": {
+    "C1": 0.010000000000000002,
+    "C2": 0.31578947368421056,
+    "C3": 0.8461538461538461,
+    "C4": 0.0,
+    "C5": 0.0
+   },
+   "kept": {
+    "bom_rows": [
+     "C4-02",
+     "C4-03",
+     "C4-04",
+     "C4-09",
+     "C4-15",
+     "C4-20",
+     "C4-22",
+     "C4-23",
+     "C4-25",
+     "C4-26",
+     "C4-29",
+     "C4-M1",
+     "C4-M2",
+     "C4-M3",
+     "C4-M4",
+     "C4-M5",
+     "C4-M6",
+     "C4-M7",
+     "C4-M8"
+    ],
+    "requirement_rows": [
+     "C2-04",
+     "C2-08"
+    ],
+    "derived_rows": [
+     "C3-01",
+     "C3-02",
+     "C3-03",
+     "C3-04",
+     "C3-06",
+     "C3-07",
+     "C3-08"
+    ],
+    "cable_net_records": [
+     "controller"
+    ],
+    "geometry": [],
+    "counts": []
+   }
+  },
+  "gate": {
+   "R0_must_be": 0.0,
+   "one_step_route_floor_max": 0.1,
+   "R0": 0.0,
+   "one_step_route_floor": 0.043674089068825916,
+   "passes": true
+  }
+ },
+ "discriminating_attributes": {
+  "C4-02": [
+   "vendor_part_number"
+  ],
+  "C4-03": [
+   "vendor_part_number"
+  ],
+  "C4-04": [
+   "vendor_part_number"
+  ],
+  "C4-05": [
+   "vendor_part_number"
+  ],
+  "C4-06": [
+   "vendor_part_number"
+  ],
+  "C4-07": [
+   "gear_ratio",
+   "encoder",
+   "encoder_counts_per_rev",
+   "rated_voltage_v"
+  ],
+  "C4-08": [
+   "cells_in_series",
+   "connector_positions"
+  ],
+  "C4-09": [
+   "actuation",
+   "terminals"
+  ],
+  "C4-10": [
+   "diameter_mm",
+   "length_mm"
+  ],
+  "C4-11": [
+   "thread"
+  ],
+  "C4-12": [
+   "thread"
+  ],
+  "C4-13": [
+   "thread",
+   "length_mm",
+   "head"
+  ],
+  "C4-14": [
+   "thread",
+   "length_mm",
+   "head"
+  ],
+  "C4-15": [],
+  "C4-16": [
+   "length_mm"
+  ],
+  "C4-17": [
+   "series",
+   "positions",
+   "mount",
+   "entry"
+  ],
+  "C4-18": [
+   "series",
+   "positions",
+   "mount",
+   "entry"
+  ],
+  "C4-19": [
+   "series",
+   "positions",
+   "mount",
+   "entry"
+  ],
+  "C4-21": [
+   "series",
+   "positions",
+   "mount",
+   "entry"
+  ],
+  "C4-20": [
+   "positions",
+   "orientation"
+  ],
+  "C4-22": [
+   "positions"
+  ],
+  "C4-23": [
+   "positions"
+  ],
+  "C4-24": [
+   "positions"
+  ],
+  "C4-25": [
+   "positions"
+  ],
+  "C4-26": [
+   "positions"
+  ],
+  "C4-27": [
+   "connector_series",
+   "positions"
+  ],
+  "C4-29": [
+   "package",
+   "channel"
+  ],
+  "C4-M1": [
+   "tags"
+  ],
+  "C4-M2": [
+   "tags"
+  ],
+  "C4-M3": [
+   "tags"
+  ],
+  "C4-M4": [
+   "tags"
+  ],
+  "C4-M5": [
+   "tags"
+  ],
+  "C4-M6": [
+   "tags"
+  ],
+  "C4-M7": [
+   "tags"
+  ],
+  "C4-M8": [
+   "tags"
+  ]
+ },
+ "c4_tolerances": {
+  "screw.length_mm": 0.102,
+  "rod.diameter_mm": 0.083,
+  "rod.length_mm": 1.39,
+  "spacer.length_mm": 0.087
+ },
+ "c4_dropped_attributes": {},
+ "c4_accepted_part_numbers_extra": {
+  "C4-02": {
+   "part_numbers": [
+    "ABX00032"
+   ],
+   "why": "the same board with headers (VD-01)"
+  },
+  "C4-03": {
+   "part_numbers": [
+    "ROB-14450",
+    "ROB-14451"
+   ],
+   "why": "with and without headers (table link and invoice)"
+  }
+ },
+ "c4_accepted_values": {
+  "C4-17": {
+   "series": [
+    "EH"
+   ]
+  },
+  "C4-21": {
+   "series": [
+    "EH"
+   ]
+  },
+  "C4-18": {
+   "series": [
+    "PA"
+   ]
+  }
+ },
+ "c4_accepted_values_why": "v1.1: the vendor pack VD-07 lists EH and XH both at 2.5 mm pitch and PA and PH both at 2.0 mm, with no outline that tells them apart; the check of the delivered photos separated XH from PH only; the mesh draws only the contacts of PH. The design rule that series the photos cannot tell apart are all accepted was not applied at the v1.0 freeze for these two pairs",
+ "r_q3_not_conditions": [
+  {
+   "attribute": "board_ctrl_outline",
+   "row": "C4-02",
+   "what": "outline 44.0 x 17.8 (the 45 x 18 family) vs 33 x 18"
+  },
+  {
+   "attribute": "board_drv_outline",
+   "row": "C4-03",
+   "what": "outline 20.32 square vs 19.0 (IMU) and 22.86 (power meter)"
+  },
+  {
+   "attribute": "board_ctrl_pins",
+   "row": "C4-02",
+   "what": "2 x 15 pins"
+  },
+  {
+   "attribute": "board_drv_pins",
+   "row": "C4-03",
+   "what": "2 x 8 pins"
+  }
+ ],
+ "r_q3_note": "none of these is a matching attribute of the ledger: the boards are recognised by vendor and part number (route R1: the libraries the firmware includes), so nothing is dropped from the matching conditions; registered as not-a-condition",
+ "vendor_rulings": [
+  {
+   "item": "C4-02 control board: accepted part numbers",
+   "sources": "ledger: ABX00027 (maker's CAD package, documentation page); vendor pack VD-01: ABX00032 = the same board with headers (SKU listed by the maker)",
+   "ruling": "accept both; the mesh shows the header strips as separate pieces (neutral NEU-05), which fits both items",
+   "freeze": "c4_accepted_part_numbers_extra C4-02 = [ABX00032]"
+  },
+  {
+   "item": "C4-03 motor driver: accepted part numbers",
+   "sources": "ledger: ROB-14450 (the table's link) and ROB-14451 (the invoice); VD-02 card: ROB-14450 only",
+   "ruling": "accept both; the vendor page stays as written (fields the vendor does not publish read 'not published')",
+   "freeze": "c4_accepted_part_numbers_extra C4-03 = [ROB-14450, ROB-14451] (the same set as the ledger)"
+  },
+  {
+   "item": "C4-04 capacitance board: which revision of Adafruit 1982",
+   "sources": "VD-03 lists the original and the STEMMA QT pin order; the ledger traced the QT order (the vendor's QT board file); the invoice names the QT version",
+   "ruling": "the mesh confirms the STEMMA QT version: piece c018 (33.1 x 19.2 mm) carries two boxes 6.0 x 4.0 mm, 3.0 mm tall, one at each short end (JST SH 4-way bodies), which the original board lacks; the author's board footprint has the QT pin order. The ledger stands; 1982 names both revisions",
+   "freeze": "no change",
+   "evidence": "a probe of mesh piece c018 by the maintainers (not in this repository)"
+  },
+  {
+   "item": "C4-06 power monitor: outline",
+   "sources": "the design notes: '22.86 square'; vendor: 22.9 mm x 22.8 mm (0.9 in x 0.9 in)",
+   "ruling": "vendor data (trust order: vendor data of an identified part > design text); the outline is a route hint, not a graded value",
+   "freeze": "no change"
+  },
+  {
+   "item": "C4-02 controller IMU chip in the vendor's pages",
+   "sources": "VD-01 Nano 33 IoT: technical specification LSM6DS3, data sheet LSM6DSL, parts list LSM6DSOXTR; the firmware includes Arduino_LSM6DS3",
+   "ruling": "no graded value; the route stays R1: of the boards with Wi-Fi in VD-01 only the Nano 33 IoT names LSM6DS3 (the RP2040 Connect names LSM6DSOX)",
+   "freeze": "no change"
+  },
+  {
+   "item": "C4-09 switch: latching or momentary",
+   "sources": "the design notes: 'latching'; no file in hand states the action",
+   "ruling": "the ledger matches on actuation 'pushbutton' and 2 terminals only; nothing depends on 'latching'",
+   "freeze": "no change"
+  },
+  {
+   "item": "C4-17 / 18 / 19 / 21 connector entry codes",
+   "sources": "ledger: entry from the JST part-number prefix (S = side, B = top); VD-07 states the code",
+   "ruling": "the code is in the vendor pack; the entry attribute stays a condition",
+   "freeze": "no change"
+  },
+  {
+   "item": "C4-10 rod: standard diameters of round bar",
+   "sources": "VD-08: not published (no page without JavaScript)",
+   "ruling": "not added; the diameter is measured on the photos (4.4 sigma on the delivered close-ups)",
+   "freeze": "no change"
+  },
+  {
+   "item": "VD-02 / 03 / 04 / 05: SparkFun boards without published outlines",
+   "sources": "the vendor pages: 'not published' for ROB-14450, SEN-09695, SEN-15335, SEN-13679",
+   "ruling": "written as 'not published'; no graded row needs the driver's outline (route R1, by the library)",
+   "freeze": "no change"
+  },
+  {
+   "item": "C2-07 / C3-05 exact gearbox ratio",
+   "sources": "VD-06: 150.58 (2 decimals) and 150.5828 (4 decimals); host script 150",
+   "ruling": "vendor data over the host constant (trust order); C2-07 truth 150.58 (band 0.05 / 0.30), C3-05 uses 150.5828 (band 0.1 % / 0.3 %)",
+   "freeze": "no change"
+  },
+  {
+   "item": "C4-17 / C4-21 (XH) and C4-18 (PH): series of the same pitch (v1.1)",
+   "sources": "VD-07: EH and XH 2.5 mm, PA and PH 2.0 mm, no outline dimensions; the check of the delivered photos tested XH against PH only",
+   "ruling": "accept EH for the two XH rows and PA for the PH row (series the photos cannot tell apart are all accepted)",
+   "freeze": "c4_accepted_values C4-17 / C4-21 series + [EH], C4-18 series + [PA]"
+  }
+ ],
+ "sha256": {
+  "ledger.json": "55ad0b2e7b5bdd4e91ee38a8bff7a2aeca12cf4ef18b4259b50fab0ce2301d56",
+  "neutral_lists.json": "682bb7bfb446aca082b48c83910ca2d370c0357adad5b8a68c41f2df3b60634e",
+  "price_table.json": "edfc721637c3a213d04d212eb15b9c74b06ef6b0db477fb8678eb78ed481ac09"
+ },
+ "v1_0": {
+  "by": "the maintainers' freeze step",
+  "date": "2026-11-17",
+  "freeze_json_sha256": "c717795ab06391c47e2b771dfab9c06408168b525f11d5aae876bdb00da2232f",
+  "grader_config_json_sha256": "9cffbed6ef8d14aaf9b2400f6addee07ee0476a80f94b7549dedc0e9872b6fa1"
+ },
+ "inputs": {
+  "budget.json": "29a41e0f26f227e5b30c37b6d8d09432373631228f0ec84e29083eef928988c3",
+  "answer_scan.json": "fb0d52dab52421b47770d268eebeaae670b8b05af752bac640c506c6c35daee8",
+  "route_audit.json": "081d2416f75870c756e6bc34c0758c5040fdad9ff07c80017a070621b116a549"
+ }
+}

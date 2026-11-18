@@ -6,17 +6,28 @@ Runs the grader's own `_early_lockdown` (and its helpers), taken from tests/lock
 stand-ins for the root-only parts (the kill, the stage lock, the snapshot) and a real child process playing the
 survivor; and checks that tests/verify.py voids the run on the running count only. Stdlib only: the grading stack
 (numpy, ...) that tests/verify.py imports later is not needed.
+
+Also: grade.py's child process runs on OpenBLAS's Haswell kernels on every CPU (OPENBLAS_CORETYPE in its
+environment, whatever the verify stage's own environment says). Under the AVX-512 kernel (SkylakeX) the reference's
+own part P51 does not tessellate to a closed manifold, the reference cannot load and every verify ends as a task
+error. Beside it the child gets OPENBLAS_L2_SIZE=256: on some AMD CPUs (L2 of 1024 KB per core) the OpenBLAS that
+numpy bundles otherwise enlarges its matrix-product blocks, for the forced kernel too, beyond what the Haswell kernel's
+fixed stack buffer holds (a product with a long inner dimension crashes or comes out wrong). Runs the grader's own
+`grade_child`, taken from tests/lockdown_runtime.py by name, with subprocess.run stubbed.
 """
 import ast
+import json
 import os
 import signal
 import stat
 import subprocess
+import sys
 import tempfile
 import time
 import types
 import unittest
 from pathlib import Path
+from unittest import mock
 
 TESTS = Path(__file__).resolve().parents[1] / "tasks/uav/uav_cad_design_from_photos/tests"
 RUNTIME = TESTS / "lockdown_runtime.py"
@@ -123,6 +134,70 @@ class SurvivorAtVerifyStart(unittest.TestCase):
                  if isinstance(n, ast.If) and any(isinstance(b, ast.Raise) for b in n.body)]
         self.assertFalse([t for t in tests if "agent_processes_left" in t], tests)
         self.assertTrue([t for t in tests if "agent_processes_running" in t], tests)
+
+
+class GradeChildKernels(unittest.TestCase):
+    """The environment grade_child hands grade.py: OpenBLAS pinned to its Haswell kernels with the L2 size beside
+    the kernel, one thread each."""
+
+    def setUp(self):
+        self.tmp = Path(self.enterContext(tempfile.TemporaryDirectory()))
+        (self.tmp / "stage").mkdir()
+
+    def _grade_child(self, parent_env):
+        """Run grade_child with `parent_env` as the verify stage's environment: (the result, the calls to run)."""
+        calls = []
+        tmp = self.tmp
+
+        def run(argv, **kwargs):
+            calls.append((argv, kwargs))
+            Path(argv[6]).write_text(json.dumps({"ok": True}))      # the child's OUT_JSON
+            return types.SimpleNamespace(returncode=0, stderr="")
+
+        ns = {"os": os, "sys": sys, "json": json, "time": time, "STAGE_DIR": str(tmp / "stage"),
+              "tempfile": types.SimpleNamespace(mkdtemp=lambda prefix="": tempfile.mkdtemp(prefix=prefix, dir=tmp)),
+              "subprocess": types.SimpleNamespace(run=run, TimeoutExpired=subprocess.TimeoutExpired)}
+        exec(_functions(RUNTIME, ["grade_child"]), ns)
+        stats = {}
+        with mock.patch.dict(os.environ, {k: v for k, v in parent_env.items() if v is not None}):
+            for key in [k for k, v in parent_env.items() if v is None]:
+                os.environ.pop(key, None)
+            res, _ = ns["grade_child"]("/extract", "/purchased", {"grader_cpus": 8}, stats)
+        self.assertEqual(stats["grade_child_exit"], 0.0)
+        return res, calls
+
+    def test_the_child_runs_on_the_haswell_kernels(self):
+        # the verify stage's own values: unset, the AVX-512 kernel / the L2 size that lets the blocks grow, an empty
+        # value; whatever they are, the child gets Haswell and 256
+        for core in (None, "SkylakeX", ""):
+            for l2 in (None, "1024", ""):
+                with self.subTest(parent_core=core, parent_l2=l2):
+                    self._check_child_env(core, l2)
+
+    def _check_child_env(self, core, l2):
+        res, calls = self._grade_child({"OPENBLAS_CORETYPE": core, "OPENBLAS_L2_SIZE": l2, "STAGE_ONLY": "kept"})
+        self.assertEqual(res, {"ok": True})
+        self.assertEqual(len(calls), 1)
+        argv, kwargs = calls[0]
+        self.assertEqual(argv[2], str(self.tmp / "stage" / "grade.py"))
+        env = kwargs["env"]
+        self.assertEqual({k: env.get(k) for k in ("OPENBLAS_CORETYPE", "OPENBLAS_L2_SIZE")},
+                         {"OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256"})
+        self.assertEqual(env["STAGE_ONLY"], "kept")  # the rest of the stage's environment is kept
+        self.assertEqual({k: env[k] for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")},
+                         {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"})
+        self.assertEqual(env["ARB_GRADER_CPUS"], "8")
+
+    def test_the_grade_goes_through_grade_child(self):
+        """grade.py is started in one place, grade_child, and verify.py's main() calls it once."""
+        main = next(n for n in ast.parse(VERIFY.read_text()).body if isinstance(n, ast.FunctionDef) and n.name == "main")
+        calls = [ast.unparse(n.func) for n in ast.walk(main) if isinstance(n, ast.Call)]
+        self.assertEqual(calls.count("runtime.grade_child"), 1, calls)
+        for path, expected in ((RUNTIME, {"grade_child"}), (VERIFY, set())):
+            tree = ast.parse(path.read_text())
+            holders = {f.name for f in ast.walk(tree) if isinstance(f, ast.FunctionDef)
+                       for c in ast.walk(f) if isinstance(c, ast.Constant) and c.value == "grade.py"}
+            self.assertEqual(holders, expected, path.name)
 
 
 if __name__ == "__main__":

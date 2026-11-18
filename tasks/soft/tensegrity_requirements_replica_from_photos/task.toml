@@ -1,0 +1,60 @@
+# tensegrity_requirements_replica_from_photos: the requirements stage on a soft robot (an atomic task). The agent writes
+# the requirements of eight replicas of a small three-strut, cable-driven tensegrity rolling robot that has left the
+# lab, known only from a photo set of one disassembled strut (rendered from the robot's own mesh; sparse physical scale
+# references; no cable, lead or sensor is in any photo), the controller firmware and the host software with its
+# tracking config and two calibrations, the controller board's neutral fabrication data, the two sensor cut-outline
+# drawings, eight vendor pages and the conventions. It delivers requirements.yaml, bom.json and cable_net.json.
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json, truth and freeze in tests/gt/; static, no agent code
+# runs): three gates, G0 structure (the files parse and pass the public schema_check.py), G1 submission integrity
+# (verify-start lockdown: nothing written after the agent phase, no link or replaced folder) and G2 no hedging (no
+# duplicate or over-long lists), each zeroing every criterion, x five criteria (v1.1 of the scoring):
+# net_and_geometry_replication C1 0.25 (within it cable-net topology 0.10, key dimensions 0.85, counts 0.05),
+# requirements_sheet C2 0.05, derived_quantities C3 0.03, bom_buildability C4 0.37 (kit acceptance against the robot's
+# real bill of materials: with n the corrections the order needs, C4 = max(0, 1 - n / 2)) and bom_procurement C5 0.30
+# (the order for eight robots priced at the lab's real purchase prices). requirements_score = G0 G1 G2 x the weighted
+# mean; reward = requirements_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/tensegrity_requirements_replica_from_photos"
+
+[metadata]
+platform = "soft"
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+# setup: stage the payload and the photo set into the agent home (< 30 s). agent: measurement on the photo set, reading
+# the firmware, the host software and the board's fabrication data, tracing the cable net and the bill of materials
+# (6 h budget, no network).
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root
+# in the agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead
+# of /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The
+# verifier has everything the grader reads: tests/ (gt/, grader_config.json, anchor.json, the grading modules
+# reqgrade/, the kit), the image's /opt/venv and the restored submission. environment/setup/setup.sh does not run
+# there, and verify reads nothing it stages (tests/given_hashes.json is the maintainers' pin, not read at verify time).
+# Its machine: the grader is static and single-threaded (test.sh pins the BLAS threads to 1); measured in a container
+# of the task image (2 CPUs, 4 GB, as root through tests/test.sh, with the image's desktop session started first), the
+# oracle submission took 0.5 s of wall time at 82 MB peak RSS and the whole container peaked at 525 MB, desktop
+# session included; 30 adversarial submissions (sparse files, lone surrogates, alias and merge-key bombs, alias
+# cycles, long integers, long mixed lists, deep nesting, FIFOs, links) each ended as a zero within 0.6 s and 100 MB.
+# So 2 CPUs and 4 GB, no GPU. timeout_sec also covers the verifier's start, the restore of the submission and the
+# stage upload, far inside 1200 s.
+[verifier]
+timeout_sec = 1200
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

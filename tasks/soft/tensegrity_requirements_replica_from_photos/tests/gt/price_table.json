@@ -1,0 +1,1166 @@
+{
+ "schema": "tensegrity_requirements_replica_from_photos/gt/price_table v1 (hidden)",
+ "source": {
+  "key": "bom_xlsx",
+  "file": "the project's website (NOTICE.md row 8): BOM.xlsx",
+  "sha256": "3dea5cc931d8758edf7f7f91b350ff498b703577aa277af90cf918284448c613",
+  "how": "openpyxl: Components (pack, unit price, per-strut quantity, J tier formulas), Discounts (tier prices); formulas evaluated by the maintainers' workbook reader"
+ },
+ "cost_function": "total = qty_per_strut x 24 + qty_per_robot_extra x 8 (8 robots); packs = ceil(total / pack); price = the tier the total reaches (strict \"<\" bounds as in the workbook); cost = packs x price",
+ "robots": 8,
+ "rows": [
+  {
+   "row": 2,
+   "description_author": "Arduino Nano 33 IoT",
+   "vendor": "Arduino",
+   "pack": 1.0,
+   "unit_price_column_E": 25.5,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 25.5
+    }
+   ],
+   "tier_cells": [
+    "Components!E2"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F2/D2,1)*E2",
+    "H": "=F2*Robots!$H$1",
+    "I": "=CEILING(H2/D2,1)",
+    "J": "=E2",
+    "K": "=_xlfn.CEILING.MATH(H2/D2,1)*J2"
+   }
+  },
+  {
+   "row": 3,
+   "description_author": "Dual TB6612FNG Motor Driver",
+   "vendor": "SparkFun",
+   "pack": 1.0,
+   "unit_price_column_E": 12.56,
+   "tiers": [
+    {
+     "below_total_qty": 100,
+     "price": 12.56
+    },
+    {
+     "below_total_qty": null,
+     "price": 11.86
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B1",
+    "Discounts!C1"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F3/D3,1)*E3",
+    "H": "=F3*Robots!$H$1",
+    "I": "=CEILING(H3/D3,1)",
+    "J": "=IF(H3<100,Discounts!B1,Discounts!C1)",
+    "K": "=_xlfn.CEILING.MATH(H3/D3,1)*J3"
+   }
+  },
+  {
+   "row": 4,
+   "description_author": "Capacitive Sensing Breakout MPR121",
+   "vendor": "Adafruit",
+   "pack": 1.0,
+   "unit_price_column_E": 7.85,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 7.95
+    },
+    {
+     "below_total_qty": 100,
+     "price": 7.16
+    },
+    {
+     "below_total_qty": null,
+     "price": 6.36
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B2",
+    "Discounts!C2",
+    "Discounts!D2"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F4/D4,1)*E4",
+    "H": "=F4*Robots!$H$1",
+    "I": "=CEILING(H4/D4,1)",
+    "J": "=IF(H4<10,Discounts!B2,IF(H4<100,Discounts!C2,Discounts!D2))",
+    "K": "=_xlfn.CEILING.MATH(H4/D4,1)*J4"
+   }
+  },
+  {
+   "row": 5,
+   "description_author": "Pimoroni ICM20948 9-axis IMU",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 17.4,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 17.4
+    }
+   ],
+   "tier_cells": [
+    "Components!E5"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F5/D5,1)*E5",
+    "H": "=F5*Robots!$H$1",
+    "I": "=CEILING(H5/D5,1)",
+    "J": "=E5",
+    "K": "=_xlfn.CEILING.MATH(H5/D5,1)*J5"
+   }
+  },
+  {
+   "row": 6,
+   "description_author": "Adafruit INA260 Power Meter",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 9.95,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 9.95
+    },
+    {
+     "below_total_qty": 100,
+     "price": 8.96
+    },
+    {
+     "below_total_qty": null,
+     "price": 7.96
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B17",
+    "Discounts!C17",
+    "Discounts!D17"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F6/D6,1)*E6",
+    "H": "=F6*Robots!$H$1",
+    "I": "=CEILING(H6/D6,1)",
+    "J": "=IF(H6<10,Discounts!B17,IF(H6<100,Discounts!C17,Discounts!D17))",
+    "K": "=_xlfn.CEILING.MATH(H6/D6,1)*J6"
+   }
+  },
+  {
+   "row": 7,
+   "description_author": "Micro Metal Gearmotor HPCB 6V w/ Encoder",
+   "vendor": "Pololu",
+   "pack": 1.0,
+   "unit_price_column_E": 28.45,
+   "tiers": [
+    {
+     "below_total_qty": 5,
+     "price": 28.45
+    },
+    {
+     "below_total_qty": 25,
+     "price": 26.17
+    },
+    {
+     "below_total_qty": 100,
+     "price": 24.08
+    },
+    {
+     "below_total_qty": null,
+     "price": 22.15
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B3",
+    "Discounts!C3",
+    "Discounts!D3",
+    "Discounts!E3"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F7/D7,1)*E7",
+    "H": "=F7*Robots!$H$1",
+    "I": "=CEILING(H7/D7,1)",
+    "J": "=IF(H7<5,Discounts!B3,IF(H7<25,Discounts!C3,IF(H7<100,Discounts!D3,Discounts!E3)))",
+    "K": "=_xlfn.CEILING.MATH(H7/D7,1)*J7"
+   }
+  },
+  {
+   "row": 8,
+   "description_author": "LiPo Battery 220 mAh",
+   "vendor": "Amazon",
+   "pack": 6.0,
+   "unit_price_column_E": 18.99,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 18.99
+    }
+   ],
+   "tier_cells": [
+    "Components!E8"
+   ],
+   "per_strut_author": 4.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F8/D8,1)*E8",
+    "H": "=F8*Robots!$H$1",
+    "I": "=CEILING(H8/D8,1)",
+    "J": "=E8",
+    "K": "=_xlfn.CEILING.MATH(H8/D8,1)*J8"
+   }
+  },
+  {
+   "row": 9,
+   "description_author": "SPST Pushbutton Switch",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 1.87,
+   "tiers": [
+    {
+     "below_total_qty": 5,
+     "price": 1.87
+    },
+    {
+     "below_total_qty": 25,
+     "price": 1.612
+    },
+    {
+     "below_total_qty": 100,
+     "price": 1.5204
+    },
+    {
+     "below_total_qty": null,
+     "price": 1.4546
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B4",
+    "Discounts!C4",
+    "Discounts!D4",
+    "Discounts!E4"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F9/D9,1)*E9",
+    "H": "=F9*Robots!$H$1",
+    "I": "=CEILING(H9/D9,1)",
+    "J": "=IF(H9<5,Discounts!B4,IF(H9<25,Discounts!C4,IF(H9<100,Discounts!D4,Discounts!E4)))",
+    "K": "=_xlfn.CEILING.MATH(H9/D9,1)*J9"
+   }
+  },
+  {
+   "row": 10,
+   "description_author": "1/8\" Aluminum Rod, 12\" Long",
+   "vendor": "McMaster",
+   "pack": 1.0,
+   "unit_price_column_E": 1.7,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 1.7
+    }
+   ],
+   "tier_cells": [
+    "Components!E10"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F10/D10,1)*E10",
+    "H": "=F10*Robots!$H$1",
+    "I": "=CEILING(H10/D10,1)",
+    "J": "=E10",
+    "K": "=_xlfn.CEILING.MATH(H10/D10,1)*J10"
+   }
+  },
+  {
+   "row": 11,
+   "description_author": "4-40 Heat-Set Threaded Inserts",
+   "vendor": "McMaster",
+   "pack": 50.0,
+   "unit_price_column_E": 9.36,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 9.36
+    }
+   ],
+   "tier_cells": [
+    "Components!E11"
+   ],
+   "per_strut_author": 10.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F11/D11,1)*E11",
+    "H": "=F11*Robots!$H$1",
+    "I": "=CEILING(H11/D11,1)",
+    "J": "=E11",
+    "K": "=_xlfn.CEILING.MATH(H11/D11,1)*J11"
+   }
+  },
+  {
+   "row": 12,
+   "description_author": "2-56 Heat-Set Threaded Inserts",
+   "vendor": "McMaster",
+   "pack": 50.0,
+   "unit_price_column_E": 9.36,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 9.36
+    }
+   ],
+   "tier_cells": [
+    "Components!E12"
+   ],
+   "per_strut_author": 4.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F12/D12,1)*E12",
+    "H": "=F12*Robots!$H$1",
+    "I": "=CEILING(H12/D12,1)",
+    "J": "=E12",
+    "K": "=_xlfn.CEILING.MATH(H12/D12,1)*J12"
+   }
+  },
+  {
+   "row": 13,
+   "description_author": "4-40 Socket Head Cap Screws",
+   "vendor": "McMaster",
+   "pack": 100.0,
+   "unit_price_column_E": 5.84,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 5.84
+    }
+   ],
+   "tier_cells": [
+    "Components!E13"
+   ],
+   "per_strut_author": 10.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F13/D13,1)*E13",
+    "H": "=F13*Robots!$H$1",
+    "I": "=CEILING(H13/D13,1)",
+    "J": "=E13",
+    "K": "=_xlfn.CEILING.MATH(H13/D13,1)*J13"
+   }
+  },
+  {
+   "row": 14,
+   "description_author": "2-56 Socket Head Cap Screws",
+   "vendor": "McMaster",
+   "pack": 100.0,
+   "unit_price_column_E": 12.19,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 12.19
+    }
+   ],
+   "tier_cells": [
+    "Components!E14"
+   ],
+   "per_strut_author": 4.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F14/D14,1)*E14",
+    "H": "=F14*Robots!$H$1",
+    "I": "=CEILING(H14/D14,1)",
+    "J": "=E14",
+    "K": "=_xlfn.CEILING.MATH(H14/D14,1)*J14"
+   }
+  },
+  {
+   "row": 15,
+   "description_author": "4-40 Set Screws",
+   "vendor": "McMaster",
+   "pack": 100.0,
+   "unit_price_column_E": 8.27,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 8.27
+    }
+   ],
+   "tier_cells": [
+    "Components!E15"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F15/D15,1)*E15",
+    "H": "=F15*Robots!$H$1",
+    "I": "=CEILING(H15/D15,1)",
+    "J": "=E15",
+    "K": "=_xlfn.CEILING.MATH(H15/D15,1)*J15"
+   }
+  },
+  {
+   "row": 16,
+   "description_author": "Spacers",
+   "vendor": "McMaster",
+   "pack": 1.0,
+   "unit_price_column_E": 2.0,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 2.0
+    },
+    {
+     "below_total_qty": null,
+     "price": 1.69
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B5",
+    "Discounts!C5"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F16/D16,1)*E16",
+    "H": "=F16*Robots!$H$1",
+    "I": "=CEILING(H16/D16,1)",
+    "J": "=IF(H16<10,Discounts!B5,Discounts!C5)",
+    "K": "=_xlfn.CEILING.MATH(H16/D16,1)*J16"
+   }
+  },
+  {
+   "row": 17,
+   "description_author": "JST-XH 6pos connector",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.35,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.35
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.264
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.2017
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B6",
+    "Discounts!C6",
+    "Discounts!D6"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F17/D17,1)*E17",
+    "H": "=F17*Robots!$H$1",
+    "I": "=CEILING(H17/D17,1)",
+    "J": "=IF(H17<10,Discounts!B6,IF(H17<100,Discounts!C6,Discounts!D6))",
+    "K": "=_xlfn.CEILING.MATH(H17/D17,1)*J17"
+   }
+  },
+  {
+   "row": 18,
+   "description_author": "JST-PH 2pos connector",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.12,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.12
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.091
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.069
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B7",
+    "Discounts!C7",
+    "Discounts!D7"
+   ],
+   "per_strut_author": 4.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F18/D18,1)*E18",
+    "H": "=F18*Robots!$H$1",
+    "I": "=CEILING(H18/D18,1)",
+    "J": "=IF(H18<10,Discounts!B7,IF(H18<100,Discounts!C7,Discounts!D7))",
+    "K": "=_xlfn.CEILING.MATH(H18/D18,1)*J18"
+   }
+  },
+  {
+   "row": 19,
+   "description_author": "JST-SH 6pos connector",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.83,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.83
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.726
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.5986
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B8",
+    "Discounts!C8",
+    "Discounts!D8"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F19/D19,1)*E19",
+    "H": "=F19*Robots!$H$1",
+    "I": "=CEILING(H19/D19,1)",
+    "J": "=IF(H19<10,Discounts!B8,IF(H19<100,Discounts!C8,Discounts!D8))",
+    "K": "=_xlfn.CEILING.MATH(H19/D19,1)*J19"
+   }
+  },
+  {
+   "row": 20,
+   "description_author": "4x1 right angle male header pins",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.48,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.48
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.368
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.2816
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B9",
+    "Discounts!C9",
+    "Discounts!D9"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F20/D20,1)*E20",
+    "H": "=F20*Robots!$H$1",
+    "I": "=CEILING(H20/D20,1)",
+    "J": "=IF(H20<10,Discounts!B9,IF(H20<100,Discounts!C9,Discounts!D9))",
+    "K": "=_xlfn.CEILING.MATH(H20/D20,1)*J20"
+   }
+  },
+  {
+   "row": 21,
+   "description_author": "JST-XH 2pos connector",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.21,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.21
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.162
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.1233
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B10",
+    "Discounts!C10",
+    "Discounts!D10"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F21/D21,1)*E21",
+    "H": "=F21*Robots!$H$1",
+    "I": "=CEILING(H21/D21,1)",
+    "J": "=IF(H21<10,Discounts!B10,IF(H21<100,Discounts!C10,Discounts!D10))",
+    "K": "=_xlfn.CEILING.MATH(H21/D21,1)*J21"
+   }
+  },
+  {
+   "row": 22,
+   "description_author": "15x1 female headers",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 1.23,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 1.23
+    },
+    {
+     "below_total_qty": 80,
+     "price": 0.935
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.737
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B11",
+    "Discounts!C11",
+    "Discounts!D11"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F22/D22,1)*E22",
+    "H": "=F22*Robots!$H$1",
+    "I": "=CEILING(H22/D22,1)",
+    "J": "=IF(H22<10,Discounts!B11,IF(H22<80,Discounts!C11,Discounts!D11))",
+    "K": "=_xlfn.CEILING.MATH(H22/D22,1)*J22"
+   }
+  },
+  {
+   "row": 23,
+   "description_author": "13x1 female headers",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 1.08,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 1.08
+    },
+    {
+     "below_total_qty": 80,
+     "price": 0.823
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.64775
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B12",
+    "Discounts!C12",
+    "Discounts!D12"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F23/D23,1)*E23",
+    "H": "=F23*Robots!$H$1",
+    "I": "=CEILING(H23/D23,1)",
+    "J": "=IF(H23<10,Discounts!B12,IF(H23<80,Discounts!C12,Discounts!D12))",
+    "K": "=_xlfn.CEILING.MATH(H23/D23,1)*J23"
+   }
+  },
+  {
+   "row": 24,
+   "description_author": "8x1 female headers",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.78,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.78
+    },
+    {
+     "below_total_qty": 80,
+     "price": 0.594
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.46688
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B13",
+    "Discounts!C13",
+    "Discounts!D13"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F24/D24,1)*E24",
+    "H": "=F24*Robots!$H$1",
+    "I": "=CEILING(H24/D24,1)",
+    "J": "=IF(H24<10,Discounts!B13,IF(H24<80,Discounts!C13,Discounts!D13))",
+    "K": "=_xlfn.CEILING.MATH(H24/D24,1)*J24"
+   }
+  },
+  {
+   "row": 25,
+   "description_author": "7x1 female headers",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.71,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.71
+    },
+    {
+     "below_total_qty": 80,
+     "price": 0.543
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.42725
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B14",
+    "Discounts!C14",
+    "Discounts!D14"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F25/D25,1)*E25",
+    "H": "=F25*Robots!$H$1",
+    "I": "=CEILING(H25/D25,1)",
+    "J": "=IF(H25<10,Discounts!B14,IF(H25<80,Discounts!C14,Discounts!D14))",
+    "K": "=_xlfn.CEILING.MATH(H25/D25,1)*J25"
+   }
+  },
+  {
+   "row": 26,
+   "description_author": "5x1 female headers",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.59,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.59
+    },
+    {
+     "below_total_qty": 80,
+     "price": 0.446
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.35038
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B15",
+    "Discounts!C15",
+    "Discounts!D15"
+   ],
+   "per_strut_author": 1.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F26/D26,1)*E26",
+    "H": "=F26*Robots!$H$1",
+    "I": "=CEILING(H26/D26,1)",
+    "J": "=IF(H26<10,Discounts!B15,IF(H26<80,Discounts!C15,Discounts!D15))",
+    "K": "=_xlfn.CEILING.MATH(H26/D26,1)*J26"
+   }
+  },
+  {
+   "row": 27,
+   "description_author": "10cm JST-SH 6pos jumper cable",
+   "vendor": "Pololu",
+   "pack": 1.0,
+   "unit_price_column_E": 2.19,
+   "tiers": [
+    {
+     "below_total_qty": 5,
+     "price": 2.19
+    },
+    {
+     "below_total_qty": 25,
+     "price": 2.01
+    },
+    {
+     "below_total_qty": null,
+     "price": 1.85
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B16",
+    "Discounts!C16",
+    "Discounts!D16"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F27/D27,1)*E27",
+    "H": "=F27*Robots!$H$1",
+    "I": "=CEILING(H27/D27,1)",
+    "J": "=IF(H27<5,Discounts!B16,IF(H27<25,Discounts!C16,Discounts!D16))",
+    "K": "=_xlfn.CEILING.MATH(H27/D27,1)*J27"
+   }
+  },
+  {
+   "row": 28,
+   "description_author": "Solder-ends JST-PH 2pos jumper cable",
+   "vendor": "Amazon",
+   "pack": 5.0,
+   "unit_price_column_E": 6.99,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 6.99
+    }
+   ],
+   "tier_cells": [
+    "Components!E28"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": false,
+   "neutral_reason": "battery lead: no honest route in the givens",
+   "formulas": {
+    "G": "=CEILING(F28/D28,1)*E28",
+    "H": "=F28*Robots!$H$1",
+    "I": "=CEILING(H28/D28,1)",
+    "J": "=E28",
+    "K": "=_xlfn.CEILING.MATH(H28/D28,1)*J28"
+   }
+  },
+  {
+   "row": 29,
+   "description_author": "MOSFET N/P-CH",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.52,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.52
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.348
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.2365
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B18",
+    "Discounts!C18",
+    "Discounts!D18"
+   ],
+   "per_strut_author": 3.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F29/D29,1)*E29",
+    "H": "=F29*Robots!$H$1",
+    "I": "=CEILING(H29/D29,1)",
+    "J": "=IF(H29<10,Discounts!B18,IF(H29<100,Discounts!C18,Discounts!D18))",
+    "K": "=_xlfn.CEILING.MATH(H29/D29,1)*J29"
+   }
+  },
+  {
+   "row": 30,
+   "description_author": "Cable Guide",
+   "vendor": "Mud Hole",
+   "pack": 1.0,
+   "unit_price_column_E": 0.55,
+   "tiers": [
+    {
+     "below_total_qty": null,
+     "price": 0.55
+    }
+   ],
+   "tier_cells": [
+    "Components!E30"
+   ],
+   "per_strut_author": 2.0,
+   "priced_scope": false,
+   "neutral_reason": "cable guide: two in the table, one in the mesh",
+   "formulas": {
+    "G": "=CEILING(F30/D30,1)*E30",
+    "H": "=F30*Robots!$H$1",
+    "I": "=CEILING(H30/D30,1)",
+    "J": "=E30",
+    "K": "=_xlfn.CEILING.MATH(H30/D30,1)*J30"
+   }
+  },
+  {
+   "row": 31,
+   "description_author": "Resistors",
+   "vendor": "DigiKey",
+   "pack": 1.0,
+   "unit_price_column_E": 0.1,
+   "tiers": [
+    {
+     "below_total_qty": 10,
+     "price": 0.1
+    },
+    {
+     "below_total_qty": 50,
+     "price": 0.012
+    },
+    {
+     "below_total_qty": 100,
+     "price": 0.0096
+    },
+    {
+     "below_total_qty": null,
+     "price": 0.0071
+    }
+   ],
+   "tier_cells": [
+    "Discounts!B19",
+    "Discounts!C19",
+    "Discounts!D19",
+    "Discounts!E19"
+   ],
+   "per_strut_author": 3.0,
+   "priced_scope": true,
+   "neutral_reason": null,
+   "formulas": {
+    "G": "=CEILING(F31/D31,1)*E31",
+    "H": "=F31*Robots!$H$1",
+    "I": "=CEILING(H31/D31,1)",
+    "J": "=IF(H31<10,Discounts!B19,IF(H31<50,Discounts!C19,IF(H31<100,Discounts!D19,Discounts!E19)))",
+    "K": "=_xlfn.CEILING.MATH(H31/D31,1)*J31"
+   }
+  }
+ ],
+ "exact_order_line_cost_8_robots": {
+  "2": 612.0,
+  "3": 301.44,
+  "4": 171.84,
+  "5": 417.6,
+  "6": 215.04,
+  "7": 1155.84,
+  "8": 303.84,
+  "9": 38.688,
+  "10": 40.8,
+  "11": 46.8,
+  "12": 18.72,
+  "13": 17.52,
+  "14": 12.19,
+  "15": 8.27,
+  "16": 81.12,
+  "17": 6.336,
+  "18": 8.736,
+  "19": 34.848,
+  "20": 17.664,
+  "21": 7.776,
+  "22": 44.88,
+  "23": 19.752,
+  "24": 28.512,
+  "25": 13.032,
+  "26": 10.704,
+  "27": 88.8,
+  "28": 69.9,
+  "29": 25.056,
+  "30": 26.4,
+  "31": 0.6912
+ },
+ "priced_scope_total_8_robots": 3748.4952,
+ "totals": {
+  "1": {
+   "struts": 3,
+   "all_30_rows_formula_evaluator": 548.192,
+   "all_30_rows_cost_function": 548.192,
+   "priced_scope_28_rows": 530.912,
+   "sheet_total_B3_rows_2_28": 539.312,
+   "reference_note_all_rows": 548.192,
+   "reference_note_B3": 539.312,
+   "abs_diff_all_rows_vs_note": 0.0,
+   "in_house_batches_active_passive": [
+    1.0,
+    1.0
+   ]
+  },
+  "2": {
+   "struts": 6,
+   "all_30_rows_formula_evaluator": 1034.846,
+   "all_30_rows_cost_function": 1034.846,
+   "priced_scope_28_rows": 1007.276,
+   "sheet_total_B3_rows_2_28": 1021.766,
+   "reference_note_all_rows": 1034.846,
+   "reference_note_B3": 1021.766,
+   "abs_diff_all_rows_vs_note": 0.0,
+   "in_house_batches_active_passive": [
+    1.0,
+    1.0
+   ]
+  },
+  "4": {
+   "struts": 12,
+   "all_30_rows_formula_evaluator": 1994.314,
+   "all_30_rows_cost_function": 1994.314,
+   "priced_scope_28_rows": 1946.164,
+   "sheet_total_B3_rows_2_28": 1968.154,
+   "reference_note_all_rows": 1994.314,
+   "reference_note_B3": 1968.154,
+   "abs_diff_all_rows_vs_note": 0.0,
+   "in_house_batches_active_passive": [
+    2.0,
+    2.0
+   ]
+  },
+  "8": {
+   "struts": 24,
+   "all_30_rows_formula_evaluator": 3844.7952,
+   "all_30_rows_cost_function": 3844.7952,
+   "priced_scope_28_rows": 3748.4952,
+   "sheet_total_B3_rows_2_28": 3792.648,
+   "reference_note_all_rows": 3844.7952,
+   "reference_note_B3": 3792.6479999999997,
+   "abs_diff_all_rows_vs_note": 0.0,
+   "in_house_batches_active_passive": [
+    3.0,
+    4.0
+   ]
+  },
+  "10": {
+   "struts": 30,
+   "all_30_rows_formula_evaluator": 4802.146,
+   "all_30_rows_cost_function": 4802.146,
+   "priced_scope_28_rows": 4685.266,
+   "sheet_total_B3_rows_2_28": 4736.962,
+   "reference_note_all_rows": 4802.146,
+   "reference_note_B3": 4736.9619999999995,
+   "abs_diff_all_rows_vs_note": 0.0,
+   "in_house_batches_active_passive": [
+    4.0,
+    5.0
+   ]
+  }
+ },
+ "design_values": {
+  "all_30_rows_8_robots": 3844.7952,
+  "priced_scope_8_robots": 3748.495
+ },
+ "design_check": {
+  "all_rows_8_abs_diff": 0.0,
+  "priced_scope_8_abs_diff": 0.0002
+ },
+ "cached_value_check": {
+  "formula_cells_checked": 180,
+  "mismatches": [],
+  "not_evaluable_checked_by_hand": [],
+  "inputs_as_saved": {
+   "Robots!B1": 2,
+   "Robots!E1": 6
+  }
+ },
+ "in_house": [
+  {
+   "row": 2,
+   "description_author": "End Caps",
+   "per_strut": 2,
+   "per_batch": null
+  },
+  {
+   "row": 3,
+   "description_author": "Motor Enclosure A",
+   "per_strut": 2,
+   "per_batch": null
+  },
+  {
+   "row": 4,
+   "description_author": "Motor Enclosure B",
+   "per_strut": 2,
+   "per_batch": null
+  },
+  {
+   "row": 5,
+   "description_author": "Electronics Enclosure A",
+   "per_strut": 1,
+   "per_batch": null
+  },
+  {
+   "row": 6,
+   "description_author": "Electronics Enclosure B",
+   "per_strut": 1,
+   "per_batch": null
+  },
+  {
+   "row": 7,
+   "description_author": "Active Sensors",
+   "per_strut": 2,
+   "per_batch": 17
+  },
+  {
+   "row": 8,
+   "description_author": "Passive Sensors",
+   "per_strut": 2,
+   "per_batch": 14
+  },
+  {
+   "row": 9,
+   "description_author": "Socks",
+   "per_strut": 2,
+   "per_batch": null
+  }
+ ],
+ "workbook_internal_notes": [
+  {
+   "row": 4,
+   "says": "unit price column E 7.85 but the first tier price is 7.95; the cost formula uses the tier"
+  }
+ ]
+}

@@ -1,0 +1,461 @@
+{
+ "status": "frozen",
+ "status_note": "frozen: any change after the freeze is a new version and is accepted again; scores of episodes recorded before stay as they are; offline re-grades under another configuration are marked 're-graded'. Detail removal: removing a detail must cost score when the removed detail is graded content (seen and readable in the photos); the graded flat-face list is unchanged (179 per strut); motor enclosure A close_1.0 is not graded by that rule (1.000)",
+ "note": "every number of the grader (tests/strutgrade/*.py module docstrings give the rules): bands are [full credit, zero credit] for errors and [zero, full] for rising quantities; lengths mm, volumes mm3, angles deg unless named otherwise",
+ "extract_timeout_s": 1800,
+ "grade_timeout_s": 1800,
+ "grader_cpus": 4,
+ "purchased_root": "/opt/task-assets/payload/purchased",
+ "aggregate": {
+  "weights": {
+   "shape": 0.25,
+   "holes": 0.2,
+   "planes": 0.15,
+   "functional": 0.1,
+   "placement": 0.15,
+   "fit": 0.1,
+   "mass": 0.05
+  },
+  "floor": [
+   0.3,
+   0.8
+  ],
+  "floored": [
+   "holes",
+   "planes",
+   "functional",
+   "placement",
+   "fit",
+   "mass"
+  ],
+  "allow_placeholders": false
+ },
+ "detenv": {
+  "grader_cpus": 4
+ },
+ "gates": {
+  "max_solids": 2000,
+  "min_volume_mm3": 1e-06,
+  "recheck_validity": true,
+  "min_fittable": 3
+ },
+ "mesh": {
+  "deflection_mm": 0.01,
+  "angle_rad": 0.1,
+  "retry": [
+   [
+    0.005,
+    0.05
+   ],
+   [
+    0.02,
+    0.2
+   ],
+   [
+    0.05,
+    0.3
+   ]
+  ],
+  "weld_mm": 0.0001,
+  "volume_tol_rel": 0.02,
+  "fill_max_loop": 4000,
+  "exact64": true,
+  "repair_rounds": 3
+ },
+ "sampling": {
+  "seed": 20261117,
+  "dense_per_mm2": 20.0,
+  "dense_min": 20000,
+  "dense_max": 500000,
+  "query_per_mm2": 2.0,
+  "query_min": 4000,
+  "query_max": 60000,
+  "disk_mm": 0.25
+ },
+ "recognition": {
+  "volume_rel": 0.01,
+  "exact_tol_mm": 0.001,
+  "approx_candidates": 2,
+  "approx_p95_mm": [
+   0.05,
+   0.004
+  ],
+  "attach_mm": 1.0,
+  "step_workers": 2,
+  "pin_volume_eps": 1e-07,
+  "approx_coarse_points": 1200,
+  "approx_fine_points": 6000,
+  "approx_trim": 0.9
+ },
+ "fit": {
+  "spin_step_deg": 15.0,
+  "n_coarse": 800,
+  "coarse_iters": 10,
+  "n_fine": 6000,
+  "fine_iters": 40,
+  "refine": 8,
+  "trim": 1.0,
+  "bound_mm": 30.0,
+  "window": 0.05,
+  "feature_tie": 0.01,
+  "max_candidates": 8,
+  "exact_snap_mm": 0.05,
+  "dedupe_mm": 0.05,
+  "coarse_dedupe_mm": 0.5,
+  "spin_axes": "distinct",
+  "refine_rms_factor": 2.0,
+  "refine_rms_margin_mm": 0.3,
+  "fine_tol": 1e-07,
+  "refine_symmetric": 24,
+  "coarse_trim": 0.9
+ },
+ "shape_minimal": {
+  "surface_p90_mm": {
+   "small": [
+    0.12,
+    0.6
+   ],
+   "large": [
+    0.2,
+    1.0
+   ]
+  },
+  "iou": [
+   0.4,
+   0.95
+  ],
+  "w_surface": 0.7,
+  "w_iou": 0.3,
+  "n_query": 6000
+ },
+ "align": {
+  "points_per_part": 64,
+  "cap_mm": 2.0,
+  "land_mm": 1.0,
+  "rounds": 5,
+  "shape_min": 0.2,
+  "tie_mm": 1e-06,
+  "cand_tie_mm2": 1e-06,
+  "robust_mm": 0.25
+ },
+ "items": {
+  "max_diagnostics": 6
+ },
+ "functional": {
+  "capture_mm": 3.0,
+  "capture_radius_rel": 0.5,
+  "windows_mm": [
+   1.0,
+   0.3,
+   0.2
+  ],
+  "normal_cos": 0.7,
+  "across_deg": 30.0,
+  "max_tilt_deg": 20.0,
+  "min_points": 30,
+  "rms_mm": 0.05,
+  "rms_rel": 0.03,
+  "arc_bin_deg": 10.0,
+  "min_arc_deg": 180.0,
+  "sphere_spread": [
+   0.002,
+   0.02
+  ],
+  "datum_shape_min": 0.2,
+  "axial_margin_mm": 3.0,
+  "half_window_mm": {
+   "cap_bore_axis": 18.0,
+   "winch_bore_axis": 8.0
+  },
+  "extent_bin_mm": 0.25,
+  "extent_share": 0.5,
+  "profile_bin_mm": 0.01,
+  "drum_delta_mm": 0.01,
+  "drum_middle_share": 0.4,
+  "items_note": "weight = the item's share of G summed over its instances (split equally); G1 0.20, G2 0.15, G3 0.15, G4 0.15, G5 0.35 (the five G5 angle sub-items 0.05 each: two winch turns, the twist, two post phases); reference values and instances from features.json functional.values",
+  "items": [
+   {
+    "name": "node_sphere_centre_distance",
+    "block": "G1",
+    "weight": 0.15,
+    "band": [
+     0.6,
+     4.0
+    ]
+   },
+   {
+    "name": "node_sphere_radius",
+    "block": "G1",
+    "weight": 0.05,
+    "band": [
+     0.12,
+     0.6
+    ]
+   },
+   {
+    "name": "winch_axis_offset_from_rod_axis",
+    "block": "G2",
+    "weight": 0.15,
+    "band": [
+     0.15,
+     1.0
+    ]
+   },
+   {
+    "name": "drum_mid_to_node_centre_axial",
+    "block": "G3",
+    "weight": 0.1,
+    "band": [
+     0.3,
+     2.0
+    ]
+   },
+   {
+    "name": "drum_diameter",
+    "block": "G3",
+    "weight": 0.05,
+    "band": [
+     0.1,
+     0.6
+    ]
+   },
+   {
+    "name": "post_mid_to_node_centre_axial",
+    "block": "G4",
+    "weight": 0.1,
+    "band": [
+     0.3,
+     2.0
+    ]
+   },
+   {
+    "name": "post_axis_offset_from_cap_bore_axis",
+    "block": "G4",
+    "weight": 0.05,
+    "band": [
+     0.15,
+     1.0
+    ]
+   },
+   {
+    "name": "winch_azimuth_minus_electronics_datum_mod180",
+    "block": "G5",
+    "weight": 0.1,
+    "band": [
+     2.0,
+     12.0
+    ]
+   },
+   {
+    "name": "twist_between_winches",
+    "block": "G5",
+    "weight": 0.05,
+    "band": [
+     2.0,
+     12.0
+    ]
+   },
+   {
+    "name": "post_pattern_phase_minus_electronics_datum_mod90",
+    "block": "G5",
+    "weight": 0.1,
+    "band": [
+     2.0,
+     12.0
+    ]
+   },
+   {
+    "name": "motor_encl_A_mid_to_rod_mid_axial",
+    "block": "G5",
+    "weight": 0.1,
+    "band": [
+     0.5,
+     4.0
+    ]
+   }
+  ]
+ },
+ "placement": {
+  "w_made": 0.5,
+  "w_purchased": 0.3,
+  "w_joints": 0.2,
+  "w_orientation": 0.3,
+  "made_position_mm": [
+   0.5,
+   4.0
+  ],
+  "made_orientation_deg": [
+   1.5,
+   12.0
+  ],
+  "purchased_position_mm": [
+   0.4,
+   3.0
+  ],
+  "purchased_orientation_deg": [
+   1.5,
+   12.0
+  ],
+  "rod_lateral_mm": [
+   0.2,
+   1.5
+  ],
+  "rod_axial_mm": [
+   0.5,
+   4.0
+  ],
+  "rod_angle_deg": [
+   0.3,
+   3.0
+  ],
+  "type_weights": {
+   "GEARMOTOR": 2.0,
+   "ROD": 2.0
+  },
+  "type_default_weight": 1.0,
+  "revolute_offset_mm": [
+   0.2,
+   1.0
+  ],
+  "revolute_angle_deg": [
+   1.0,
+   8.0
+  ],
+  "joints": {
+   "w_fixed": 0.6,
+   "w_revolute": 0.4,
+   "winch_family": "F-WI",
+   "winch_motor": {
+    "P08": "GM1",
+    "P09": "GM2"
+   }
+  }
+ },
+ "fit_clearance": {
+  "w_purchased": 0.4,
+  "w_made": 0.3,
+  "w_clearance": 0.3,
+  "contact_mm": [
+   0.1,
+   2.0
+  ],
+  "intrusion_rel": [
+   0.0005,
+   0.05
+  ],
+  "slack_mm3": 0.5,
+  "sweep_mm3": [
+   0.5,
+   40.0
+  ],
+  "segments": 128,
+  "repair_rounds": 3,
+  "blame_tie": 0.05
+ },
+ "mass": {
+  "mass_rel": [
+   0.02,
+   0.25
+  ],
+  "com_mm": [
+   0.5,
+   5.0
+  ],
+  "inertia_rel": [
+   0.04,
+   0.5
+  ],
+  "weights": [
+   0.3,
+   0.35,
+   0.35
+  ],
+  "extra_material": "printed_pla"
+ },
+ "shape": {
+  "surface_p90_mm": {
+   "small": [
+    0.12,
+    0.6
+   ],
+   "large": [
+    0.2,
+    1.0
+   ]
+  },
+  "iou": [
+   0.4,
+   0.95
+  ],
+  "w_surface": 0.7,
+  "w_iou": 0.3,
+  "quantile": 0.9,
+  "n_rank": 6000,
+  "distance_cap_mm": 3.0
+ },
+ "holes": {
+  "offset_mm": {
+   "small": [
+    0.12,
+    0.6
+   ],
+   "large": [
+    0.2,
+    1.0
+   ]
+  },
+  "radius_mm": [
+   0.08,
+   0.35
+  ],
+  "angle_deg": [
+   2.0,
+   10.0
+  ],
+  "match_cap_factor": 2.0,
+  "cost_clip": 2.0,
+  "trim_perp_deg": 2.0,
+  "facet_link_deg": 46.0,
+  "facet_min_facets": 4,
+  "facet_min_span_deg": 90.0,
+  "axis_min_dihedral_deg": 1.0,
+  "axis_cluster_deg": 2.0,
+  "axis_min_support": 4,
+  "axis_max_candidates": 4,
+  "merge_angle_deg": 1.0,
+  "merge_axis_mm": 0.02,
+  "merge_radius_mm": 0.02,
+  "merge_gap_mm": 0.2
+ },
+ "planes": {
+  "band_mm": {
+   "small": [
+    0.12,
+    0.6
+   ],
+   "large": [
+    0.2,
+    1.0
+   ]
+  },
+  "normal_deg": 30.0,
+  "search_mm": 5.0,
+  "missing_mm": 5.0,
+  "k_nn": 16,
+  "rank_points_per_plane": 48
+ },
+ "provenance": [
+  "shape: the module's defaults written out",
+  "holes: the module's defaults written out",
+  "planes: the module's defaults written out",
+  "sampling.disk_mm 0.15 -> 0.25 (above the precision budget's noise floor)",
+  "fit.trim 0.9 -> 1.0 for the refinement, fit.coarse_trim 0.9 keeps the coarse stage",
+  "mesh.exact64 true, mesh.repair_rounds 3: geom.mesh_solid tries the float64 manifold of the raw tessellation, then the welded float32 one, then the local repair before the hull",
+  "aggregate.floor [0.30, 0.80] (the precision budget's floor)",
+  "precision budget: shape / shape_minimal / holes.offset / planes bands {\"small\": [0.12, 0.6], \"large\": [0.2, 1.0]}",
+  "precision budget: holes.radius_mm [0.08, 0.35] (not triggered: the +-2 L documents score 0.9454 (worst) >= 0.90; the band stays)",
+  "precision budget: functional[*].band and placement bands",
+  "fit_clearance.intrusion_rel [0.0005, 0.05] (not triggered (C 0.7814 >= 0.7): 0.05 % / 5 % stay)",
+  "extract_timeout_s 900 -> 1800 (the extractor no longer writes the per-leaf STEP; the larger limit keeps very large documents from scoring by the host's load; verifier 3600 s)"
+ ]
+}

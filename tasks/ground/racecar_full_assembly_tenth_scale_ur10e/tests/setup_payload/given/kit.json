@@ -3,6 +3,7 @@
  "car": "the tenth-scale autonomous race car: a tenth-scale, four-wheel-drive touring-class car with an autonomy deck",
  "frames": "every file of parts/ is in millimetres. A loose unit's file shows the unit in the attitude its `delivered` text names, which is the attitude in which it is presented in the cell: its lowest point on z = 0, its footprint's smallest enclosing rectangle centred on the origin with its long side along x (the wheel: its axis on the z axis). roller.stl is in the car's own frame: origin on the ground plane under the middle of the rear axle, x forward, y to the left, z up, the wheel hubs at the angle of the drawn model. com_mm = the centre of mass in the file's frame; size_mm = the file's bounding box",
  "geometry": "the files show the car as it is drawn (its visible surface, simplified in triangle count only). The cell's collision shapes differ from them: cell/cell_manual.md, Collision model",
+ "appearance": "materials = the car model's materials by material key, appearance only: metallic and roughness (the terms the cell's cameras render them with) and the base colour rgba (a MuJoCo material's rgba, as the model has it); for the model's printed faces (the materials with a `texture`) also the image and a textured mesh (`texture_mesh`: the same triangles as that material's run in the part file, with texture coordinates, OpenGL convention, in the part file's frame and millimetres). part_materials = the material key of every triangle of each part file: runs [first triangle, number of triangles, material key] in the file's triangle order, together covering the file; the part files themselves carry no materials. A twin of the car whose part meshes are split into these runs, each with a material named mat_vis_<key> of that rgba (a textured key: its textured mesh, with the image as the colour map), renders the car as the cell's cameras render it through the given render session (arm.assembly_car.agent_render), which gives materials named mat_vis_<key> this table's metallic and roughness: cell/cell_api.md, Rendering your own frames",
  "mass": "mass_g = the mass the cell simulates for the unit, rounded to 1 g. The roller's mass_g and com_mm are those of its four wheel hubs, the only parts of it that move: the rest of the rolling chassis is clamped rigidly on the work stand and its mass plays no role in the cell",
  "identical_units": "units with the same id are interchangeable: any wheel fits any hub",
  "not_in_the_kit": "the wheel nuts and the battery hold-down bar with its two pins are fitted at another station; the photographs of the finished car show them",
@@ -171,6 +172,1038 @@
    387.7,
    181.2,
    142.7
+  ]
+ },
+ "materials": {
+  "m00": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.098,
+    0.098,
+    0.1176,
+    1.0
+   ]
+  },
+  "m01": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0275,
+    0.0275,
+    0.0275,
+    1.0
+   ]
+  },
+  "m02": {
+   "metallic": 0.8601,
+   "roughness": 0.6606,
+   "rgba": [
+    0.4275,
+    0.4275,
+    0.4275,
+    1.0
+   ]
+  },
+  "m03": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m04": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m05": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.1059,
+    0.1059,
+    0.1059,
+    1.0
+   ]
+  },
+  "m06": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    1.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m07": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.8275,
+    0.698,
+    0.4902,
+    1.0
+   ]
+  },
+  "m08": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  "m09": {
+   "metallic": 0.0,
+   "roughness": 0.2212,
+   "rgba": [
+    0.0745,
+    0.0784,
+    0.0745,
+    1.0
+   ]
+  },
+  "m10": {
+   "metallic": 0.1865,
+   "roughness": 0.7642,
+   "rgba": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m11": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.7451,
+    0.2784,
+    1.0
+   ]
+  },
+  "m12": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0,
+    0.502,
+    0.0,
+    1.0
+   ]
+  },
+  "m13": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.1882,
+    0.1961,
+    0.1412,
+    1.0
+   ]
+  },
+  "m14": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.502,
+    0.0,
+    1.0
+   ]
+  },
+  "m15": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.502,
+    0.502,
+    0.7529,
+    1.0
+   ]
+  },
+  "m16": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.9804,
+    0.7451,
+    0.2784,
+    1.0
+   ]
+  },
+  "m17": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.6824,
+    0.8196,
+    0.6078,
+    1.0
+   ]
+  },
+  "m18": {
+   "metallic": 0.0984,
+   "roughness": 0.2409,
+   "rgba": [
+    0.1059,
+    0.0902,
+    0.0784,
+    1.0
+   ]
+  },
+  "m19": {
+   "metallic": 0.0,
+   "roughness": 0.2,
+   "rgba": [
+    0.8,
+    0.8,
+    0.8,
+    1.0
+   ]
+  },
+  "m20": {
+   "metallic": 0.2073,
+   "roughness": 0.7306,
+   "rgba": [
+    0.0353,
+    0.0353,
+    0.0353,
+    1.0
+   ]
+  },
+  "m21": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0431,
+    0.0431,
+    0.0431,
+    1.0
+   ]
+  },
+  "m22": {
+   "metallic": 0.0,
+   "roughness": 0.5,
+   "rgba": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "texture": "appearance/m22.png",
+   "texture_mesh": "appearance/deck_assembly__m22.obj"
+  },
+  "m23": {
+   "metallic": 0.3316,
+   "roughness": 0.2782,
+   "rgba": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m24": {
+   "metallic": 0.0,
+   "roughness": 0.5,
+   "rgba": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "texture": "appearance/m24.png",
+   "texture_mesh": "appearance/deck_assembly__m24.obj"
+  },
+  "m25": {
+   "metallic": 0.0,
+   "roughness": 0.6347,
+   "rgba": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "texture": "appearance/m25.png",
+   "texture_mesh": "appearance/deck_assembly__m25.obj"
+  },
+  "m26": {
+   "metallic": 0.5078,
+   "roughness": 0.6305,
+   "rgba": [
+    0.0157,
+    0.0157,
+    0.0157,
+    1.0
+   ]
+  },
+  "m27": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.7922,
+    0.8196,
+    0.9294,
+    1.0
+   ]
+  },
+  "m28": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "m29": {
+   "metallic": 0.0,
+   "roughness": 0.3196,
+   "rgba": [
+    0.051,
+    0.051,
+    0.051,
+    1.0
+   ]
+  },
+  "m30": {
+   "metallic": 0.0,
+   "roughness": 0.159,
+   "rgba": [
+    0.0431,
+    0.0471,
+    0.051,
+    1.0
+   ]
+  },
+  "m31": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.749,
+    0.749,
+    0.749,
+    1.0
+   ]
+  },
+  "m32": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.251,
+    0.251,
+    0.251,
+    1.0
+   ]
+  },
+  "m33": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.1608,
+    0.1804,
+    0.1922,
+    1.0
+   ]
+  },
+  "m34": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0549,
+    0.1647,
+    0.2745,
+    1.0
+   ]
+  },
+  "m35": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.902,
+    0.3412,
+    0.0,
+    1.0
+   ]
+  },
+  "m36": {
+   "metallic": 0.0,
+   "roughness": 1.0,
+   "rgba": [
+    0.0745,
+    0.0745,
+    0.0745,
+    1.0
+   ]
+  },
+  "m37": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.8235,
+    0.4039,
+    1.0
+   ]
+  },
+  "m38": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.9294,
+    0.4314,
+    1.0
+   ]
+  },
+  "m39": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.098,
+    0.098,
+    0.098,
+    1.0
+   ]
+  },
+  "m40": {
+   "metallic": 0.0,
+   "roughness": 0.672,
+   "rgba": [
+    0.0745,
+    0.0784,
+    0.0745,
+    1.0
+   ]
+  },
+  "m41": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m42": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.9686,
+    0.6941,
+    0.3882,
+    1.0
+   ]
+  },
+  "m43": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.4,
+    0.0,
+    1.0
+   ]
+  },
+  "m44": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0,
+    0.0,
+    0.0431,
+    1.0
+   ]
+  },
+  "m45": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0588,
+    0.0588,
+    0.0588,
+    1.0
+   ]
+  },
+  "m46": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.5569,
+    0.5725,
+    0.5725,
+    1.0
+   ]
+  },
+  "m47": {
+   "metallic": 0.0,
+   "roughness": 0.8222,
+   "rgba": [
+    0.0784,
+    0.0588,
+    0.0627,
+    1.0
+   ]
+  },
+  "m48": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.6667,
+    0.6667,
+    0.6667,
+    1.0
+   ]
+  },
+  "m49": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.851,
+    0.851,
+    0.2549,
+    1.0
+   ]
+  },
+  "m50": {
+   "metallic": 0.0,
+   "roughness": 0.7487,
+   "rgba": [
+    0.0314,
+    0.0314,
+    0.0314,
+    1.0
+   ]
+  },
+  "m51": {
+   "metallic": 0.0,
+   "roughness": 0.1227,
+   "rgba": [
+    0.2471,
+    0.2471,
+    0.2471,
+    1.0
+   ]
+  },
+  "m52": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    1.0,
+    0.949,
+    1.0
+   ]
+  },
+  "m53": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.9608,
+    0.9608,
+    0.9608,
+    1.0
+   ]
+  },
+  "m54": {
+   "metallic": 0.0,
+   "roughness": 0.4336,
+   "rgba": [
+    0.5294,
+    0.502,
+    0.4235,
+    1.0
+   ]
+  },
+  "m55": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    1.0,
+    0.6431,
+    0.0314,
+    1.0
+   ]
+  },
+  "m56": {
+   "metallic": 0.0,
+   "roughness": 0.4181,
+   "rgba": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "m57": {
+   "metallic": 0.0,
+   "roughness": 0.5528,
+   "rgba": [
+    0.0157,
+    0.0157,
+    0.0157,
+    1.0
+   ]
+  }
+ },
+ "part_materials": {
+  "parts/wheel.stl": [
+   [
+    0,
+    473,
+    "m01"
+   ],
+   [
+    473,
+    3020,
+    "m20"
+   ]
+  ],
+  "parts/battery_pack.stl": [
+   [
+    0,
+    1547,
+    "m00"
+   ],
+   [
+    1547,
+    116,
+    "m03"
+   ],
+   [
+    1663,
+    156,
+    "m04"
+   ],
+   [
+    1819,
+    1086,
+    "m05"
+   ],
+   [
+    2905,
+    387,
+    "m13"
+   ]
+  ],
+  "parts/deck_assembly.stl": [
+   [
+    0,
+    1116,
+    "m19"
+   ],
+   [
+    1116,
+    940,
+    "m21"
+   ],
+   [
+    2056,
+    172,
+    "m22"
+   ],
+   [
+    2228,
+    5700,
+    "m23"
+   ],
+   [
+    7928,
+    172,
+    "m24"
+   ],
+   [
+    8100,
+    172,
+    "m25"
+   ],
+   [
+    8272,
+    2240,
+    "m26"
+   ],
+   [
+    10512,
+    1243,
+    "m27"
+   ],
+   [
+    11755,
+    38,
+    "m28"
+   ],
+   [
+    11793,
+    412,
+    "m29"
+   ]
+  ],
+  "parts/compute_module.stl": [
+   [
+    0,
+    330,
+    "m03"
+   ],
+   [
+    330,
+    2496,
+    "m04"
+   ],
+   [
+    2826,
+    34,
+    "m06"
+   ],
+   [
+    2860,
+    1240,
+    "m19"
+   ],
+   [
+    4100,
+    643,
+    "m28"
+   ],
+   [
+    4743,
+    1944,
+    "m30"
+   ],
+   [
+    6687,
+    530,
+    "m31"
+   ],
+   [
+    7217,
+    63,
+    "m32"
+   ],
+   [
+    7280,
+    332,
+    "m33"
+   ],
+   [
+    7612,
+    198,
+    "m34"
+   ],
+   [
+    7810,
+    537,
+    "m35"
+   ],
+   [
+    8347,
+    24,
+    "m36"
+   ],
+   [
+    8371,
+    862,
+    "m37"
+   ],
+   [
+    9233,
+    38,
+    "m38"
+   ],
+   [
+    9271,
+    10,
+    "m39"
+   ],
+   [
+    9281,
+    1162,
+    "m40"
+   ],
+   [
+    10443,
+    72,
+    "m41"
+   ],
+   [
+    10515,
+    39,
+    "m42"
+   ],
+   [
+    10554,
+    379,
+    "m43"
+   ],
+   [
+    10933,
+    182,
+    "m44"
+   ],
+   [
+    11115,
+    1745,
+    "m45"
+   ],
+   [
+    12860,
+    418,
+    "m46"
+   ],
+   [
+    13278,
+    296,
+    "m47"
+   ],
+   [
+    13574,
+    174,
+    "m48"
+   ],
+   [
+    13748,
+    124,
+    "m49"
+   ],
+   [
+    13872,
+    726,
+    "m50"
+   ],
+   [
+    14598,
+    10265,
+    "m51"
+   ],
+   [
+    24863,
+    723,
+    "m52"
+   ],
+   [
+    25586,
+    310,
+    "m53"
+   ],
+   [
+    25896,
+    4485,
+    "m54"
+   ],
+   [
+    30381,
+    2,
+    "m47"
+   ]
+  ],
+  "parts/lidar.stl": [
+   [
+    0,
+    1292,
+    "m04"
+   ],
+   [
+    1292,
+    586,
+    "m55"
+   ],
+   [
+    1878,
+    428,
+    "m56"
+   ],
+   [
+    2306,
+    1104,
+    "m57"
+   ]
+  ],
+  "parts/roller.stl": [
+   [
+    0,
+    38454,
+    "m00"
+   ],
+   [
+    38454,
+    118465,
+    "m01"
+   ],
+   [
+    156919,
+    1968,
+    "m02"
+   ],
+   [
+    158887,
+    609,
+    "m03"
+   ],
+   [
+    159496,
+    657,
+    "m04"
+   ],
+   [
+    160153,
+    4336,
+    "m05"
+   ],
+   [
+    164489,
+    229,
+    "m06"
+   ],
+   [
+    164718,
+    381,
+    "m07"
+   ],
+   [
+    165099,
+    116,
+    "m08"
+   ],
+   [
+    165215,
+    3574,
+    "m09"
+   ],
+   [
+    168789,
+    2220,
+    "m10"
+   ],
+   [
+    171009,
+    232,
+    "m11"
+   ],
+   [
+    171241,
+    344,
+    "m12"
+   ],
+   [
+    171585,
+    203,
+    "m13"
+   ],
+   [
+    171788,
+    4320,
+    "m14"
+   ],
+   [
+    176108,
+    24,
+    "m15"
+   ],
+   [
+    176132,
+    40,
+    "m16"
+   ],
+   [
+    176172,
+    120,
+    "m17"
+   ],
+   [
+    176292,
+    19088,
+    "m18"
+   ],
+   [
+    195380,
+    496,
+    "m19"
+   ],
+   [
+    195876,
+    88,
+    "m00"
+   ],
+   [
+    195964,
+    2161,
+    "m01"
+   ],
+   [
+    198125,
+    1744,
+    "m09"
+   ],
+   [
+    199869,
+    88,
+    "m00"
+   ],
+   [
+    199957,
+    2161,
+    "m01"
+   ],
+   [
+    202118,
+    1744,
+    "m09"
+   ],
+   [
+    203862,
+    88,
+    "m00"
+   ],
+   [
+    203950,
+    2161,
+    "m01"
+   ],
+   [
+    206111,
+    1744,
+    "m09"
+   ],
+   [
+    207855,
+    88,
+    "m00"
+   ],
+   [
+    207943,
+    2161,
+    "m01"
+   ],
+   [
+    210104,
+    1744,
+    "m09"
+   ],
+   [
+    211848,
+    2111,
+    "m01"
+   ],
+   [
+    213959,
+    4187,
+    "m00"
+   ]
   ]
  }
 }
