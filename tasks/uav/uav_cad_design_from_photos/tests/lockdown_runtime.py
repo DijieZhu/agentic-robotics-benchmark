@@ -269,8 +269,14 @@ def grade_child(extract_dir, purchased_root, cfg, stats):
     out = os.path.join(work, "result.json")
     argv = [sys.executable, "-B", os.path.join(STAGE_DIR, "grade.py"), extract_dir, os.path.join(STAGE_DIR, "reference"),
             purchased_root, out, "--config", os.path.join(STAGE_DIR, "grader_config.json")]
+    # OPENBLAS_CORETYPE: the same OpenBLAS kernel on every CPU; under the AVX-512 kernel (SkylakeX) the reference's own
+    # part P51 does not tessellate to a closed manifold and the reference cannot load.
+    # OPENBLAS_L2_SIZE, set together with it: on some AMD CPUs (L2 cache of 1024 KB per core) the OpenBLAS that numpy
+    # bundles enlarges its matrix-product blocks for every kernel, the forced one included, beyond what the Haswell
+    # kernel's fixed stack buffer holds; a product with a long inner dimension then crashes or comes out wrong. The
+    # enlargement applies only when the L2 size reads 1024, so 256 (the L2 the kernel is tuned for) keeps its blocks.
     env = dict(os.environ, ARB_GRADER_CPUS=str(int(cfg.get("grader_cpus", 8))), OMP_NUM_THREADS="1",
-               OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
+               OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1", OPENBLAS_CORETYPE="Haswell", OPENBLAS_L2_SIZE="256")
     timeout = int(cfg.get("grade_timeout_s", 1080))
     t = time.time()
     try:
