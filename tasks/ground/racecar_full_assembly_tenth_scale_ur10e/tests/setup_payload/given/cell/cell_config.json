@@ -1,0 +1,112 @@
+{
+ "agent_cameras": [
+  "top",
+  "wrist"
+ ],
+ "camera_budget_frames": 450,
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "note": "a unit pressed on the environment or another unit above part_force_N for `ticks` consecutive control ticks is a safety violation (the normal forces summed per unit and body it presses on; the gripper's pads on a unit do not count)",
+  "part_force_N": 150.0,
+  "ticks": 20
+ },
+ "episodes": 4,
+ "layout": {
+  "base_clear_m": 0.2,
+  "bench_jitter": {
+   "gap_m": 0.06,
+   "layouts": 50,
+   "tries": 200,
+   "xy_m": 0.03,
+   "yaw_deg": 30.0
+  },
+  "bench_xy": [
+   [
+    -0.548,
+    1.448
+   ],
+   [
+    -0.698,
+    0.698
+   ]
+  ],
+  "fixture_gap_m": 0.06,
+  "hub_start_deg": [
+   0.0,
+   60.0
+  ],
+  "lanes": null,
+  "note": "the episode's physical draws: the work stand within jitter_m of its nominal place and turned by up to jitter_yaw_deg, the chassis on it within clamp_repeat_m and clamp_repeat_deg of its drawn place; the deck shelf and the parts tray around their nominal places in the same way, the deck and the tray's two units inside the play of their fixtures; every wheel and the stick pack moved by up to xy_m and turned about the vertical by up to yaw_deg around its place in the shop's layout of the kit, on the face that layout gives it, the stick pack's lead end either way; every hub turned from the drawn model's angle by an angle drawn uniformly over the hex's pitch",
+  "reach_m": null,
+  "settle_lift_m": 0.0003,
+  "shelf": {
+   "jitter_m": 0.02,
+   "jitter_yaw_deg": 5.0,
+   "nominal_xy": [
+    0.3,
+    -0.45
+   ],
+   "play_yaw_deg": 0.5,
+   "yaw_deg": 180.0
+  },
+  "stand": {
+   "axle_height_m": 0.2,
+   "clamp_repeat_deg": 0.3,
+   "clamp_repeat_m": 0.001,
+   "jitter_m": 0.015,
+   "jitter_yaw_deg": 2.0,
+   "nominal_xy": [
+    0.62,
+    0.0
+   ],
+   "yaw_deg": 180.0
+  },
+  "tray": {
+   "jitter_m": 0.04,
+   "jitter_yaw_deg": 10.0,
+   "nominal_xy": [
+    0.3,
+    0.45
+   ],
+   "yaw_deg": 0.0
+  }
+ },
+ "max_ticks_per_step": 500,
+ "note": "the cell's configuration as far as it is public (the camera mounts, what is drawn for the cameras and the shop's layout of the kit are not)",
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "note": "robot_force_N: a robot link other than the gripper's pads pressing harder than this is a safety violation (see scoring.safety_violation_factor); part_speed_m_s: a loose unit faster than this, or off the bench, is scrapped (it no longer counts; the episode goes on)",
+  "part_speed_m_s": 3.0,
+  "robot_force_N": 150.0
+ },
+ "scope": {
+  "note": "premounted: places the cell fastens itself before the episode starts; none in this version",
+  "premounted": []
+ },
+ "scoring": {
+  "count_subassembly": true,
+  "note": "count_subassembly true: a compute module or a LiDAR fastened on the deck assembly counts wherever the deck assembly is, unless the deck assembly is scrapped. safety_violation_factor: a safety violation (safety.robot_force_N, or damage.part_force_N for damage.ticks) does not end the episode, but an episode with one keeps only this share of its score, however many violations it has",
+  "safety_violation_factor": 0.3
+ },
+ "silence_s": 120.0,
+ "sim_cap_s": 650.0,
+ "wall_cap_s": 3100.0
+}

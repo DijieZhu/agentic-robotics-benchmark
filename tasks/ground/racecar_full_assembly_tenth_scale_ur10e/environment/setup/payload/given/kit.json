@@ -1,0 +1,176 @@
+{
+ "schema": "racecar-kit/1",
+ "car": "the tenth-scale autonomous race car: a tenth-scale, four-wheel-drive touring-class car with an autonomy deck",
+ "frames": "every file of parts/ is in millimetres. A loose unit's file shows the unit in the attitude its `delivered` text names, which is the attitude in which it is presented in the cell: its lowest point on z = 0, its footprint's smallest enclosing rectangle centred on the origin with its long side along x (the wheel: its axis on the z axis). roller.stl is in the car's own frame: origin on the ground plane under the middle of the rear axle, x forward, y to the left, z up, the wheel hubs at the angle of the drawn model. com_mm = the centre of mass in the file's frame; size_mm = the file's bounding box",
+ "geometry": "the files show the car as it is drawn (its visible surface, simplified in triangle count only). The cell's collision shapes differ from them: cell/cell_manual.md, Collision model",
+ "mass": "mass_g = the mass the cell simulates for the unit, rounded to 1 g. The roller's mass_g and com_mm are those of its four wheel hubs, the only parts of it that move: the rest of the rolling chassis is clamped rigidly on the work stand and its mass plays no role in the cell",
+ "identical_units": "units with the same id are interchangeable: any wheel fits any hub",
+ "not_in_the_kit": "the wheel nuts and the battery hold-down bar with its two pins are fitted at another station; the photographs of the finished car show them",
+ "documents": {
+  "drawings": [
+   {
+    "file": "drawings/assembly_layout.png",
+    "title": "Deck and autonomy units: layout"
+   },
+   {
+    "file": "drawings/hub_and_wheel.png",
+    "title": "Wheel hub and wheel"
+   },
+   {
+    "file": "drawings/battery_bay.png",
+    "title": "Battery bay"
+   },
+   {
+    "file": "drawings/tray.png",
+    "title": "Parts tray"
+   },
+   {
+    "file": "drawings/stand_and_shelf.png",
+    "title": "Work stand and deck shelf"
+   }
+  ],
+  "manual": {
+   "index": "manual/photos.json",
+   "photos": "manual/photo_01.jpg .. manual/photo_14.jpg"
+  },
+  "cell": [
+   "cell/cell_manual.md",
+   "cell/cell_api.md",
+   "cell/cell_config.json"
+  ]
+ },
+ "units": [
+  {
+   "id": "wheel",
+   "file": "parts/wheel.stl",
+   "quantity": 4,
+   "name": "wheel and tyre, pre-mounted",
+   "role": "a wheel: the rim with its tyre; it goes on a wheel hub",
+   "material": "rubber tyre on a moulded plastic rim",
+   "delivered": "lying on its inner face, the spoked outer face up",
+   "presented": "bench",
+   "presentation": "loose on the bench, lying on its inner face with the spoked outer face up, at any turn about the vertical",
+   "mass_g": 24,
+   "com_mm": [
+    0.0,
+    0.0,
+    14.7
+   ],
+   "size_mm": [
+    65.2,
+    65.1,
+    26.9
+   ]
+  },
+  {
+   "id": "battery_pack",
+   "file": "parts/battery_pack.stl",
+   "quantity": 1,
+   "name": "NiMH stick pack",
+   "role": "the car's battery: a six-cell NiMH stick pack with its lead and plug; it lies in the battery bay of the chassis",
+   "material": "cells in two sticks under a heat-shrink sleeve; a two-wire lead with a plug",
+   "delivered": "lying flat on its underside, its long axis along x",
+   "presented": "bench",
+   "presentation": "loose on the bench, lying flat on its underside; its lead end points one way or the opposite way",
+   "mass_g": 320,
+   "com_mm": [
+    6.0,
+    -9.3,
+    12.3
+   ],
+   "size_mm": [
+    144.3,
+    66.4,
+    49.1
+   ]
+  },
+  {
+   "id": "deck_assembly",
+   "file": "parts/deck_assembly.stl",
+   "quantity": 1,
+   "name": "deck assembly",
+   "role": "the deck plate with what is already mounted on it: the antenna mount with the left and the right Wi-Fi antenna, the motor controller on its spacer block and the power distribution board; it sits on the four deck standoffs of the chassis and carries the compute module and the LiDAR",
+   "material": "polymer plate; metal standoffs; two circuit boards; a wood-grain spacer block; a printed antenna mount with two plastic antennas",
+   "delivered": "plate level, top face up, its long side along x; z = 0 at its lowest points, the screw ends under the plate",
+   "presented": "shelf",
+   "presentation": "on the deck shelf, top face up, the same way round as on the car, its right long edge overhanging. Its part file's lowest points are screw ends under the plate; it does not rest on them",
+   "mass_g": 232,
+   "com_mm": [
+    -37.0,
+    -0.9,
+    16.3
+   ],
+   "size_mm": [
+    276.8,
+    129.6,
+    79.5
+   ]
+  },
+  {
+   "id": "compute_module",
+   "file": "parts/compute_module.stl",
+   "quantity": 1,
+   "name": "compute module",
+   "role": "the car's compute module on its eight standoffs; it stands on the deck plate",
+   "material": "circuit boards with a finned metal heat sink and a fan; eight metal standoffs",
+   "delivered": "upright, as it stands on the deck plate; z = 0 at its lowest points, the screw ends under its standoffs",
+   "presented": "tray:compute_module",
+   "presentation": "in its nest of the parts tray, standing on its standoffs, in a storage orientation that is not the mounting orientation",
+   "mass_g": 172,
+   "com_mm": [
+    0.1,
+    -6.9,
+    21.7
+   ],
+   "size_mm": [
+    91.1,
+    80.7,
+    42.4
+   ]
+  },
+  {
+   "id": "lidar",
+   "file": "parts/lidar.stl",
+   "quantity": 1,
+   "name": "2D scanning LiDAR",
+   "role": "the car's 2D scanning LiDAR; it stands on the deck plate and has no fasteners of its own",
+   "material": "plastic housing: a square base, a round head and a connector block on one side",
+   "delivered": "upright, standing on its base",
+   "presented": "tray:lidar",
+   "presentation": "in its nest of the parts tray, standing on its base, in a storage orientation that is not the mounting orientation",
+   "mass_g": 130,
+   "com_mm": [
+    4.9,
+    0.0,
+    24.2
+   ],
+   "size_mm": [
+    51.6,
+    40.8,
+    57.1
+   ]
+  }
+ ],
+ "roller": {
+  "id": "roller",
+  "file": "parts/roller.stl",
+  "quantity": 1,
+  "name": "rolling chassis",
+  "role": "the rolling chassis: the chassis tub with drivetrain, suspension, steering, body posts with the rear wing frame, chassis brace, motor, kit speed controller, radio receiver and steering servo, the two battery hold-down posts, the four deck standoffs and the four wheel hubs. It is clamped on the work stand and is not a loose unit",
+  "material": "moulded plastic chassis parts; metal shafts, standoffs and fasteners",
+  "delivered": "in the car's own frame, standing on the ground plane of its wheels; the hubs at the drawn model's angle",
+  "presented": "stand",
+  "presentation": "clamped on the work stand by the tub's flat underside, level, its front towards the robot arm; every hub at its own random angle",
+  "mass_g": 35,
+  "com_mm": [
+   128.7,
+   0.0,
+   32.9
+  ],
+  "size_mm": [
+   387.7,
+   181.2,
+   142.7
+  ]
+ }
+}

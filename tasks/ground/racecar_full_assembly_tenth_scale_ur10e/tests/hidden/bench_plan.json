@@ -1,0 +1,129 @@
+{
+ "fixture_units": "DCK on the shelf, CMP and LDR in the tray: fixtures.nominal_unit_poses() at the grader config's fixture places",
+ "format": "racecar-bench-plan/1",
+ "lanes": {
+  "height_m": 0.1,
+  "x_max_m": 0.85,
+  "x_min_m": 0.4,
+  "y_max_m": 0.35,
+  "y_min_m": 0.09
+ },
+ "oracle": {
+  "hub_deg": {
+   "hub_FL": 0.0,
+   "hub_FR": 0.0,
+   "hub_RL": 0.0,
+   "hub_RR": 0.0
+  },
+  "note": "the privileged run's hub angles when it runs on the nominal layout (oracle_nominal_layout); the fixed hidden set draws its own"
+ },
+ "rest": {
+  "BAT": {
+   "face": "on its underside (the pack's z up), laid as mounted: the lead end towards the cell's +x",
+   "lead_end_deg": 0,
+   "pos": [
+    0.9693,
+    -0.25,
+    0.0003
+   ],
+   "quat": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "spot_xy": [
+    0.97,
+    -0.25
+   ],
+   "type": "BAT",
+   "yaw_deg": 180.0
+  },
+  "WHL1": {
+   "face": "inner face on the bench (the wheel's z, its outer side, up)",
+   "pos": [
+    0.95,
+    0.25,
+    0.01384
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "spot_xy": [
+    0.95,
+    0.25
+   ],
+   "type": "WHL",
+   "yaw_deg": 0.0
+  },
+  "WHL2": {
+   "face": "inner face on the bench (the wheel's z, its outer side, up)",
+   "pos": [
+    0.95,
+    0.47,
+    0.01384
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "spot_xy": [
+    0.95,
+    0.47
+   ],
+   "type": "WHL",
+   "yaw_deg": 0.0
+  },
+  "WHL3": {
+   "face": "inner face on the bench (the wheel's z, its outer side, up)",
+   "pos": [
+    1.15,
+    0.25,
+    0.01384
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "spot_xy": [
+    1.15,
+    0.25
+   ],
+   "type": "WHL",
+   "yaw_deg": 0.0
+  },
+  "WHL4": {
+   "face": "inner face on the bench (the wheel's z, its outer side, up)",
+   "pos": [
+    1.15,
+    0.47,
+    0.01384
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "spot_xy": [
+    1.15,
+    0.47
+   ],
+   "type": "WHL",
+   "yaw_deg": 0.0
+  }
+ },
+ "ring_m": [
+  0.25,
+  1.3
+ ],
+ "settle_lift_m": 0.0003,
+ "source": "arm/assembly_car/bench_plan.py rest_plan() on the kit's collision (variant prototype)"
+}
