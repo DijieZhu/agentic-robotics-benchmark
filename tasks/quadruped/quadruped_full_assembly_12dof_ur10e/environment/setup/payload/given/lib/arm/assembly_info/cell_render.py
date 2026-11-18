@@ -1,13 +1,18 @@
 """Render twin of the information-tier assembly cell (PUBLIC CODE).
 
 The live cameras of `cell_info.InfoCellServer` are rendered through the renderer-agnostic layer `render`:
-one `RenderBackend.open(scene)` session per episode on a render twin of the physics cell. The twin is the episode's
-physics MjSpec (same bodies and joint names, so `session.sync_from(model, data)` copies the state by joint name) plus
-visual-only additions: the workbench frame, the factory floor and backdrop walls, the three datum boards (physical bodies
-with procedural textures from `render.scale_refs`, so any backend renders them: the bench board on the world, the fixture
-board on the fixture, the hand plate on the Panda hand) and the episode's lights. The builder hands the render layer a
-copy of the MjSpec registered for this process (`scene(key=...)`); its request digest covers the builder source and the
-kit's mesh folder.
+one session per episode on a render twin of the physics cell. The twin is the episode's physics MjSpec (same bodies and
+joint names, so `session.sync_from(model, data)` copies the state by joint name) plus visual-only additions: the
+workbench frame, the factory floor and backdrop walls, the three datum boards (physical bodies with procedural textures
+from `render.scale_refs`, so any backend renders them: the bench board on the world, the fixture board on the fixture,
+the hand plate on the Panda hand) and the episode's lights. The builder hands the render layer a copy of the MjSpec
+registered for this process (`scene(key=...)`); its request digest covers the builder source and the kit's mesh folder.
+
+`open_session` renders like the cell cameras by default: MuJoCo's Filament renderer (render.filament.view) in the baked
+factory hall of the scenery folder (~/render) with the cell's look (cell_look(): arm/<cell>/agent_look.json), the twin without
+its MuJoCo-only scenery (workbench frame, floor, backdrop walls; the hall replaces them and the episode's lights), depth
+from MuJoCo on the same geometry. MuJoCo's classic renderer (the twin as described above) on request:
+`open_session(server, renderer="mujoco")` or ARB_AGENT_RENDERER=mujoco in the environment.
 """
 
 import math
@@ -15,10 +20,24 @@ import os
 
 import numpy as np
 
-__all__ = ["scene", "open_session", "render_spec", "board_ref", "attach_ref", "BOARD_GEOMS"]
+__all__ = ["scene", "open_session", "render_spec", "board_ref", "attach_ref", "BOARD_GEOMS", "RENDERERS", "cell_look"]
 
 _SPECS = {}
 BOARD_GEOMS = ("bench_board", "fixture_board", "hand_plate")
+RENDERERS = ("filament", "mujoco")
+# the classic renderer's scenery, replaced by the hall in the Filament session
+_CLASSIC_SCENERY = ("bench_leg_", "bench_apron_", "bench_shelf", "backdrop_")
+_LIB = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+def cell_look():
+    """The cell's look file: $ARB_AGENT_LOOK, else the first arm/assembly_*/agent_look.json of this library (sorted by
+    name: the cell's own), else None (the look's defaults)."""
+    if os.environ.get("ARB_AGENT_LOOK"):
+        return os.environ["ARB_AGENT_LOOK"]
+    import glob
+    found = sorted(glob.glob(os.path.join(_LIB, "arm", "assembly_*", "agent_look.json")))
+    return found[0] if found else None
 
 
 def scene(key):
@@ -141,8 +160,42 @@ def render_spec(server):
     return spec
 
 
-def open_session(server):
-    """Open the episode's render session (MuJoCo backend; RA1 sensor depth, RA2 one pass, RA4 sessions)."""
+def _render_dir():
+    """The cameras' scenery: $ARB_AGENT_RENDER_DIR, else the folder `render` next to $ARB_GIVEN_DIR (where the cell runs
+    a program), else ~/render."""
+    if os.environ.get("ARB_AGENT_RENDER_DIR"):
+        return os.environ["ARB_AGENT_RENDER_DIR"]
+    g = os.environ.get("ARB_GIVEN_DIR")
+    if g and os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(g)), "render")):
+        return os.path.join(os.path.dirname(os.path.abspath(g)), "render")
+    return os.path.expanduser("~/render")
+
+
+def _open_filament(server, look=None, render_dir=None):
+    """The episode's session in the factory hall: MuJoCo's Filament renderer (render.filament.view), depth from MuJoCo."""
+    from render.filament.view import FilamentViewBackend, FilamentViewSession, _strip
+    spec = render_spec(server)
+    for g in list(spec.geoms):
+        if (g.name or "") == "floor":
+            spec.delete(g)
+    spec = _strip(spec, 2, _CLASSIC_SCENERY)
+    rd = render_dir or _render_dir()
+    ph = server.cfg["photo"]
+    return FilamentViewSession(FilamentViewBackend(), spec, room=os.path.join(rd, "room"), look=look or cell_look(),
+                               surface=os.path.join(rd, "oak"), bench_xy=(0.0, 0.0), lod=str(ph.get("lod", "full")),
+                               content_files=[os.path.join(server.a2_dir, "meshes", "visual")])
+
+
+def open_session(server, renderer=None, look=None, render_dir=None):
+    """Open the episode's render session. renderer: "filament" (MuJoCo's Filament renderer in the factory hall, as the
+    cell cameras; the default) or "mujoco" (MuJoCo's classic renderer; RA1 sensor depth, RA2 one pass, RA4 sessions);
+    None = $ARB_AGENT_RENDERER, else "filament". look: a look file for the Filament session (default cell_look());
+    render_dir: the scenery folder with room/ and oak/ (default ~/render)."""
+    want = str(renderer or os.environ.get("ARB_AGENT_RENDERER") or "filament")
+    if want not in RENDERERS:
+        raise ValueError("renderer %r: one of %s" % (want, ", ".join(RENDERERS)))
+    if want == "filament":
+        return _open_filament(server, look=look, render_dir=render_dir)
     from render.backends import get_backend, require_capabilities
     from render.spec import BackgroundSpec, HeadlightSpec, LightSpec, MaterialOverride, SceneSpec
     be = get_backend("mujoco")

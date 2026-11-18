@@ -12,8 +12,8 @@ the functional check are the validated six-servo cell's; what changes is what th
                           parts, no mates, no held
   set_control, command    unchanged
   step(n_ticks)           events limited to `safety:<what>` and `episode_over`
-  get_camera(name, depth) one frame of a cell camera through the render layer (`shared/render`, MuJoCo backend, one session per
-                          episode): PNG rgb (+ 16-bit PNG sensor depth in mm, 0 = invalid); no intrinsics, no pose, no exact
+  get_camera(name, depth) one frame of a cell camera through the render layer (`cell_render.open_session`: Filament in the
+                          factory hall by default, one session per episode): PNG rgb (+ 16-bit PNG sensor depth in mm, 0 = invalid); no intrinsics, no pose, no exact
                           depth; at most `camera_budget_frames` frames per episode (any camera), then {"error": "camera_budget"}
   finish()                ends the episode
   get_state_privileged(), describe_privileged()
