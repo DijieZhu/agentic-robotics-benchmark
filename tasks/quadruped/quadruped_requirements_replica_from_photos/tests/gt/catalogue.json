@@ -1,0 +1,896 @@
+{
+ "drivers": [
+  {
+   "channels": 2,
+   "continuous_current_a": 6.5,
+   "efficiency": 0.92,
+   "input_range_v": [
+    9.0,
+    30.0
+   ],
+   "part_id": "TK-2C10",
+   "peak_current_a": 10.0,
+   "price_usd": 34.0,
+   "vendor": "TK"
+  },
+  {
+   "channels": 2,
+   "continuous_current_a": 7.0,
+   "efficiency": 0.92,
+   "input_range_v": [
+    9.0,
+    30.0
+   ],
+   "part_id": "TK-2C14",
+   "peak_current_a": 14.0,
+   "price_usd": 41.0,
+   "vendor": "TK"
+  },
+  {
+   "channels": 2,
+   "continuous_current_a": 10.0,
+   "efficiency": 0.92,
+   "input_range_v": [
+    9.0,
+    30.0
+   ],
+   "part_id": "TK-2C20",
+   "peak_current_a": 20.0,
+   "price_usd": 52.0,
+   "vendor": "TK"
+  },
+  {
+   "channels": 2,
+   "continuous_current_a": 7.0,
+   "efficiency": 0.92,
+   "input_range_v": [
+    18.0,
+    48.0
+   ],
+   "part_id": "TK-2C14H",
+   "peak_current_a": 14.0,
+   "price_usd": 47.0,
+   "vendor": "TK"
+  }
+ ],
+ "errata": [
+  {
+   "as_printed": "the WD-R52-72 page plots the WD-R52-82 curves",
+   "correct": "the specification table governs",
+   "field": "curves",
+   "item": "WD-1",
+   "part_id": "WD-R52-72",
+   "sheet": "DS-errata-WD-2026-09"
+  },
+  {
+   "as_printed": 4.5,
+   "correct": 4.0,
+   "field": "capacity_ah",
+   "item": "AC-1",
+   "part_id": "AC-6S-40",
+   "sheet": "DS-errata-AC-2026-08"
+  },
+  {
+   "as_printed": 12.0,
+   "correct": 10.0,
+   "field": "peak_current_a",
+   "item": "TK-1",
+   "part_id": "TK-2C10",
+   "sheet": "DS-errata-TK-2026-07"
+  }
+ ],
+ "format": "quad-catalogue/1",
+ "housing_classes": {
+  "R38": {
+   "bolt": "M3",
+   "bolt_circle_m": 0.025,
+   "bolts": 4,
+   "can_diameter_m": 0.038,
+   "can_length_m": 0.016,
+   "lip_diameter_m": 0.026,
+   "mount_diameter_m": 0.03,
+   "shaft_diameter_m": 0.004
+  },
+  "R52": {
+   "bolt": "M3",
+   "bolt_circle_m": 0.025,
+   "bolts": 4,
+   "can_diameter_m": 0.052,
+   "can_length_m": 0.02,
+   "lip_diameter_m": 0.026,
+   "mount_diameter_m": 0.03,
+   "shaft_diameter_m": 0.004
+  },
+  "R62": {
+   "bolt": "M3",
+   "bolt_circle_m": 0.025,
+   "bolts": 4,
+   "can_diameter_m": 0.062,
+   "can_length_m": 0.024,
+   "lip_diameter_m": 0.026,
+   "mount_diameter_m": 0.03,
+   "shaft_diameter_m": 0.004
+  }
+ },
+ "hubs": [
+  {
+   "input_range_v": [
+    9.0,
+    48.0
+   ],
+   "part_id": "TK-HB6",
+   "ports": 6,
+   "price_usd": 38.0,
+   "vendor": "TK"
+  }
+ ],
+ "modules": [
+  {
+   "continuous_torque_nm": 1.75,
+   "headline": "3 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.178,
+   "output_inertia_kg_m2": 0.0021,
+   "part_id": "WD-R52-32",
+   "phase_resistance_ohm": 0.32,
+   "points": [
+    {
+     "no_load_speed_rad_s": 27.227136331111538,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 3.2,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 40.21238596594935,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 3.3,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 61.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 2.0,
+   "headline": "3.5 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.188,
+   "output_inertia_kg_m2": 0.0024,
+   "part_id": "WD-R52-37",
+   "phase_resistance_ohm": 0.3,
+   "points": [
+    {
+     "no_load_speed_rad_s": 25.656340004316643,
+     "peak_current_a": 9.5,
+     "peak_torque_nm": 3.7,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 37.90855135331684,
+     "peak_current_a": 9.5,
+     "peak_torque_nm": 3.8,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 66.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 2.3,
+   "headline": "4 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.198,
+   "output_inertia_kg_m2": 0.0027,
+   "part_id": "WD-R52-42",
+   "phase_resistance_ohm": 0.28,
+   "points": [
+    {
+     "no_load_speed_rad_s": 24.085543677521745,
+     "peak_current_a": 10.0,
+     "peak_torque_nm": 4.2,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 35.60471674068432,
+     "peak_current_a": 10.0,
+     "peak_torque_nm": 4.3,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 71.5,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 2.62,
+   "headline": "5 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.21,
+   "output_inertia_kg_m2": 0.0031,
+   "part_id": "WD-R52-48",
+   "phase_resistance_ohm": 0.26,
+   "points": [
+    {
+     "no_load_speed_rad_s": 22.51474735072685,
+     "peak_current_a": 10.5,
+     "peak_torque_nm": 4.8,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 33.3008821280518,
+     "peak_current_a": 10.5,
+     "peak_torque_nm": 4.9,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 77.5,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.0,
+   "headline": "5.5 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.224,
+   "output_inertia_kg_m2": 0.0035,
+   "part_id": "WD-R52-55",
+   "phase_resistance_ohm": 0.24,
+   "points": [
+    {
+     "no_load_speed_rad_s": 20.94395102393195,
+     "peak_current_a": 11.0,
+     "peak_torque_nm": 5.5,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 30.99704751541929,
+     "peak_current_a": 11.0,
+     "peak_torque_nm": 5.6,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 84.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.42,
+   "headline": "6.5 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.24,
+   "output_inertia_kg_m2": 0.004,
+   "part_id": "WD-R52-63",
+   "phase_resistance_ohm": 0.22,
+   "points": [
+    {
+     "no_load_speed_rad_s": 19.687313962496034,
+     "peak_current_a": 11.5,
+     "peak_torque_nm": 6.3,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 29.112091923265414,
+     "peak_current_a": 11.5,
+     "peak_torque_nm": 6.4,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 91.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.9,
+   "headline": "7 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.258,
+   "output_inertia_kg_m2": 0.0046,
+   "part_id": "WD-R52-72",
+   "phase_resistance_ohm": 0.21,
+   "points": [
+    {
+     "no_load_speed_rad_s": 18.430676901060117,
+     "peak_current_a": 12.0,
+     "peak_torque_nm": 7.2,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 27.227136331111538,
+     "peak_current_a": 12.0,
+     "peak_torque_nm": 7.3,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 98.5,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 4.45,
+   "headline": "8 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.278,
+   "output_inertia_kg_m2": 0.0053,
+   "part_id": "WD-R52-82",
+   "phase_resistance_ohm": 0.2,
+   "points": [
+    {
+     "no_load_speed_rad_s": 17.27875959474386,
+     "peak_current_a": 12.5,
+     "peak_torque_nm": 8.2,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 25.551620249196983,
+     "peak_current_a": 12.5,
+     "peak_torque_nm": 8.3,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 106.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 5.05,
+   "headline": "9.5 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.3,
+   "output_inertia_kg_m2": 0.0061,
+   "part_id": "WD-R52-94",
+   "phase_resistance_ohm": 0.19,
+   "points": [
+    {
+     "no_load_speed_rad_s": 16.126842288427603,
+     "peak_current_a": 13.0,
+     "peak_torque_nm": 9.4,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 23.876104167282428,
+     "peak_current_a": 13.0,
+     "peak_torque_nm": 9.5,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 131.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 5.8,
+   "headline": "11 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.322,
+   "output_inertia_kg_m2": 0.007,
+   "part_id": "WD-R52-108",
+   "phase_resistance_ohm": 0.18,
+   "points": [
+    {
+     "no_load_speed_rad_s": 15.079644737231007,
+     "peak_current_a": 13.5,
+     "peak_torque_nm": 10.8,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 22.30530784048753,
+     "peak_current_a": 13.5,
+     "peak_torque_nm": 10.9,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 139.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.3,
+   "headline": "8 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.262,
+   "output_inertia_kg_m2": 0.0098,
+   "part_id": "WD-R52-80G",
+   "phase_resistance_ohm": 0.3,
+   "points": [
+    {
+     "no_load_speed_rad_s": 12.356931104119852,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 8.0,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 18.2212373908208,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 8.0,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 92.0,
+   "title": "Actuator module, high-ratio",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.8,
+   "headline": "6 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.262,
+   "output_inertia_kg_m2": 0.0038,
+   "part_id": "WD-R52-60T",
+   "phase_resistance_ohm": 0.21,
+   "points": [
+    {
+     "no_load_speed_rad_s": 20.106192982974676,
+     "peak_current_a": 11.5,
+     "peak_torque_nm": 6.0,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 29.740410453983372,
+     "peak_current_a": 11.5,
+     "peak_torque_nm": 6.1,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 99.0,
+   "title": "Actuator module, thermal variant",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 1.3,
+   "headline": "2.5 N m class",
+   "housing_class": "R38",
+   "lead_time": "stock",
+   "mass_kg": 0.13,
+   "output_inertia_kg_m2": 0.0014,
+   "part_id": "WD-R38-24",
+   "phase_resistance_ohm": 0.42,
+   "points": [
+    {
+     "no_load_speed_rad_s": 31.41592653589793,
+     "peak_current_a": 7.2,
+     "peak_torque_nm": 2.4,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 46.39085151800928,
+     "peak_current_a": 7.2,
+     "peak_torque_nm": 2.45,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 54.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 1.62,
+   "headline": "3 N m class",
+   "housing_class": "R38",
+   "lead_time": "stock",
+   "mass_kg": 0.14200000000000002,
+   "output_inertia_kg_m2": 0.0018,
+   "part_id": "WD-R38-30",
+   "phase_resistance_ohm": 0.37,
+   "points": [
+    {
+     "no_load_speed_rad_s": 29.321531433504735,
+     "peak_current_a": 8.0,
+     "peak_torque_nm": 3.0,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 43.35397861953914,
+     "peak_current_a": 8.0,
+     "peak_torque_nm": 3.05,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 60.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 2.05,
+   "headline": "4 N m class",
+   "housing_class": "R38",
+   "lead_time": "stock",
+   "mass_kg": 0.156,
+   "output_inertia_kg_m2": 0.0023,
+   "part_id": "WD-R38-38",
+   "phase_resistance_ohm": 0.33,
+   "points": [
+    {
+     "no_load_speed_rad_s": 27.01769682087222,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 3.8,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 39.89822670059037,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 3.85,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 76.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 2.59,
+   "headline": "5 N m class",
+   "housing_class": "R38",
+   "lead_time": "stock",
+   "mass_kg": 0.17200000000000001,
+   "output_inertia_kg_m2": 0.0029,
+   "part_id": "WD-R38-48",
+   "phase_resistance_ohm": 0.3,
+   "points": [
+    {
+     "no_load_speed_rad_s": 24.713862208239703,
+     "peak_current_a": 10.0,
+     "peak_torque_nm": 4.8,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 36.54719453676126,
+     "peak_current_a": 10.0,
+     "peak_torque_nm": 4.85,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 85.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 5.4,
+   "headline": "9.5 N m class",
+   "housing_class": "R62",
+   "lead_time": "stock",
+   "mass_kg": 0.33,
+   "output_inertia_kg_m2": 0.007,
+   "part_id": "WD-R62-95",
+   "phase_resistance_ohm": 0.17,
+   "points": [
+    {
+     "no_load_speed_rad_s": 17.59291886010284,
+     "peak_current_a": 14.0,
+     "peak_torque_nm": 9.5,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 25.97049926967562,
+     "peak_current_a": 14.0,
+     "peak_torque_nm": 9.6,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 112.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 7.0,
+   "headline": "12.5 N m class",
+   "housing_class": "R62",
+   "lead_time": "6 weeks",
+   "mass_kg": 0.395,
+   "output_inertia_kg_m2": 0.0095,
+   "part_id": "WD-R62-125",
+   "phase_resistance_ohm": 0.15,
+   "points": [
+    {
+     "no_load_speed_rad_s": 15.498523757709645,
+     "peak_current_a": 16.0,
+     "peak_torque_nm": 12.5,
+     "voltage_v": 24.0
+    },
+    {
+     "no_load_speed_rad_s": 22.933626371205488,
+     "peak_current_a": 16.0,
+     "peak_torque_nm": 12.6,
+     "voltage_v": 36.0
+    }
+   ],
+   "price_usd": 138.0,
+   "title": "Actuator module",
+   "vendor": "WD",
+   "voltage_range_v": [
+    16.0,
+    44.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.604216045980972,
+   "headline": "7 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.25,
+   "output_inertia_kg_m2": 0.0042,
+   "part_id": "QM-52-70",
+   "phase_resistance_ohm": 0.22,
+   "points": [
+    {
+     "no_load_speed_rad_s": 19.896753472735355,
+     "peak_current_a": 12.0,
+     "peak_torque_nm": 7.005059399712234,
+     "voltage_v": 30.0
+    }
+   ],
+   "price_usd": 86.0,
+   "title": "Actuator module",
+   "vendor": "QM",
+   "voltage_range_v": [
+    18.0,
+    40.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 3.8979766014527755,
+   "headline": "9 N m class",
+   "housing_class": "R52",
+   "lead_time": "stock",
+   "mass_kg": 0.28500000000000003,
+   "output_inertia_kg_m2": 0.0058,
+   "part_id": "QM-52-90",
+   "phase_resistance_ohm": 0.2,
+   "points": [
+    {
+     "no_load_speed_rad_s": 17.80235837034216,
+     "peak_current_a": 13.0,
+     "peak_torque_nm": 9.00489087350105,
+     "voltage_v": 30.0
+    }
+   ],
+   "price_usd": 92.0,
+   "title": "Actuator module",
+   "vendor": "QM",
+   "voltage_range_v": [
+    18.0,
+    40.0
+   ]
+  },
+  {
+   "continuous_torque_nm": 1.9998314737888152,
+   "headline": "4 N m class",
+   "housing_class": "R38",
+   "lead_time": "stock",
+   "mass_kg": 0.16,
+   "output_inertia_kg_m2": 0.0024,
+   "part_id": "QM-38-40",
+   "phase_resistance_ohm": 0.33,
+   "points": [
+    {
+     "no_load_speed_rad_s": 25.132741228718345,
+     "peak_current_a": 9.0,
+     "peak_torque_nm": 3.9996629475776304,
+     "voltage_v": 30.0
+    }
+   ],
+   "price_usd": 79.0,
+   "title": "Actuator module",
+   "vendor": "QM",
+   "voltage_range_v": [
+    18.0,
+    40.0
+   ]
+  }
+ ],
+ "packs": [
+  {
+   "capacity_ah": 4.0,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 6,
+   "continuous_current_a": 20.0,
+   "mass_kg": 0.455,
+   "outline_m": [
+    0.14200000000000002,
+    0.048,
+    0.044
+   ],
+   "part_id": "AC-6S-40",
+   "price_usd": 79.0,
+   "vendor": "AC"
+  },
+  {
+   "capacity_ah": 5.0,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 6,
+   "continuous_current_a": 25.0,
+   "mass_kg": 0.56,
+   "outline_m": [
+    0.146,
+    0.05,
+    0.046
+   ],
+   "part_id": "AC-6S-50",
+   "price_usd": 94.0,
+   "vendor": "AC"
+  },
+  {
+   "capacity_ah": 6.0,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 6,
+   "continuous_current_a": 28.0,
+   "mass_kg": 0.66,
+   "outline_m": [
+    0.15,
+    0.052000000000000005,
+    0.048
+   ],
+   "part_id": "AC-6S-60",
+   "price_usd": 109.0,
+   "vendor": "AC"
+  },
+  {
+   "capacity_ah": 7.2,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 6,
+   "continuous_current_a": 30.0,
+   "mass_kg": 0.78,
+   "outline_m": [
+    0.164,
+    0.056,
+    0.05
+   ],
+   "part_id": "AC-6S-72",
+   "price_usd": 126.0,
+   "vendor": "AC"
+  },
+  {
+   "capacity_ah": 4.0,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 8,
+   "continuous_current_a": 20.0,
+   "mass_kg": 0.6,
+   "outline_m": [
+    0.186,
+    0.048,
+    0.044
+   ],
+   "part_id": "AC-8S-40",
+   "price_usd": 104.0,
+   "vendor": "AC"
+  },
+  {
+   "capacity_ah": 5.0,
+   "cell_voltage_v": {
+    "cutoff": 3.0,
+    "full": 4.2,
+    "nominal": 3.6
+   },
+   "cells": 8,
+   "continuous_current_a": 25.0,
+   "mass_kg": 0.74,
+   "outline_m": [
+    0.19,
+    0.05,
+    0.046
+   ],
+   "part_id": "AC-8S-50",
+   "price_usd": 122.0,
+   "vendor": "AC"
+  }
+ ],
+ "vendors": {
+  "AC": {
+   "inspected": true,
+   "name": "Ardent Cells"
+  },
+  "QM": {
+   "inspected": false,
+   "name": "Quillon Motion"
+  },
+  "TK": {
+   "inspected": false,
+   "name": "Torvik Controls"
+  },
+  "WD": {
+   "inspected": true,
+   "name": "Wrenfield Drives"
+  }
+ }
+}

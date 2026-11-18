@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Traced requirements of the replica fleet: one item per quantity that the brief, the build log, the photos or the documents fix, plus the derived items of brief B-16 (source_id 'derived' with a derivation note). Bounds in the listed units.",
+  "properties": {
+    "notes": {
+      "type": "string"
+    },
+    "project": {
+      "type": "string"
+    },
+    "requirements": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "bound": {
+            "type": "number"
+          },
+          "comparator": {
+            "enum": [
+              ">=",
+              "<=",
+              "==",
+              ">",
+              "<"
+            ],
+            "type": "string"
+          },
+          "derivation": {
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^REQ-[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "quantity": {
+            "enum": [
+              "actuator_count",
+              "cell_end_voltage",
+              "crouch_height",
+              "drive_peak_current:knee",
+              "drive_rms_current:knee",
+              "driver_efficiency",
+              "duty_rms_torque:hip_pitch",
+              "duty_rms_torque:hip_roll",
+              "duty_rms_torque:knee",
+              "eco_cost",
+              "harness_drop",
+              "joint_peak_speed:hip_pitch",
+              "joint_peak_speed:hip_roll",
+              "joint_peak_speed:knee",
+              "loaded_com_x",
+              "loaded_com_z",
+              "mission_charge",
+              "mission_time",
+              "pack_count",
+              "payload_box_height",
+              "payload_box_length",
+              "payload_box_width",
+              "payload_mass_max",
+              "payload_mass_min",
+              "peak_normal_force",
+              "proof_load_factor",
+              "proof_peak_torque:hip_pitch",
+              "proof_peak_torque:hip_roll",
+              "proof_peak_torque:knee",
+              "revolute_dof",
+              "robot_mass",
+              "shift_time",
+              "stance_height",
+              "standup_peak_torque:knee",
+              "standup_time",
+              "step_length",
+              "supply_peak_current",
+              "sway_fraction",
+              "swing_height",
+              "swing_time",
+              "total_cost",
+              "tray_current",
+              "unit_count",
+              "untested_vendor_derating",
+              "usable_fraction"
+            ],
+            "type": "string"
+          },
+          "source_clause": {
+            "type": "string"
+          },
+          "source_id": {
+            "pattern": "^(B|BL)-[0-9]{2}$|^PH-[0-9]{2}$|^DS-[A-Za-z0-9-]+$|^LR(-[0-9]{4}-[0-9]{4})?$|^derived$",
+            "type": "string"
+          },
+          "unit": {
+            "enum": [
+              "%",
+              "A",
+              "A.h",
+              "Ah",
+              "N",
+              "N m",
+              "N.m",
+              "Nm",
+              "USD",
+              "V",
+              "cm",
+              "count",
+              "deg",
+              "deg/s",
+              "fraction",
+              "g",
+              "h",
+              "kg",
+              "kg.cm",
+              "lbf.in",
+              "m",
+              "mA",
+              "mAh",
+              "min",
+              "mm",
+              "ms",
+              "oz.in",
+              "rad",
+              "rad/s",
+              "rpm",
+              "s"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "quantity",
+          "comparator",
+          "bound",
+          "unit",
+          "source_id"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "units": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "requirements"
+  ],
+  "title": "req-quad/1 requirements sheet",
+  "type": "object"
+}

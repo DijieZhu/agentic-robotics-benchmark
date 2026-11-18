@@ -155,6 +155,12 @@ summary = "Program a 6-DoF arm to build a twelve-actuator quadruped from its loo
 platforms = ["quadruped", "arm"]
 stages = ["assembly"]
 
+[quadruped_requirements_replica_from_photos]
+title = "Specify upgraded replicas of a quadruped"
+summary = "Specify eight upgraded replicas of an inspection quadruped that has left the lab, from its photos and build records, down to its actuators, drivers and battery."
+platforms = ["quadruped"]
+stages = ["requirements"]
+
 [fault_adaptive_spacecraft_docking]
 title = "Dock a spacecraft with faulty thrusters"
 summary = "Dock a planar spacecraft whose six thrusters are wired in an unknown order and degrade in flight, identifying them as it goes."

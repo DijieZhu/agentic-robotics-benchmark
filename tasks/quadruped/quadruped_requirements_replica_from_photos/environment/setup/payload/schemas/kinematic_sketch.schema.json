@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The Appendix-D geometry (m, each with a nominal value and a tolerance), the spacer legs, the stops (rad, Appendix-D conventions), the housing classes, the pack bay and the BOM's actuator line per joint type.",
+  "properties": {
+    "format": {
+      "const": "sketch-quad/1"
+    },
+    "geometry": {
+      "additionalProperties": true,
+      "properties": {
+        "foot_radius": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "hip_spacer": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "leg_offset": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "pitch_axis_drop": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "pitch_axis_spacing": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "roll_axis_spacing": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "shank_length": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        },
+        "thigh_length": {
+          "additionalProperties": true,
+          "properties": {
+            "nominal": {
+              "type": "number"
+            },
+            "tol": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "nominal",
+            "tol"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "pitch_axis_spacing",
+        "roll_axis_spacing",
+        "pitch_axis_drop",
+        "leg_offset",
+        "hip_spacer",
+        "thigh_length",
+        "shank_length",
+        "foot_radius"
+      ],
+      "type": "object"
+    },
+    "housing_class": {
+      "additionalProperties": false,
+      "properties": {
+        "hip_pitch": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        },
+        "hip_roll": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        },
+        "knee": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "hip_roll",
+        "hip_pitch",
+        "knee"
+      ],
+      "type": "object"
+    },
+    "modules": {
+      "additionalProperties": false,
+      "properties": {
+        "hip_pitch": {
+          "type": "string"
+        },
+        "hip_roll": {
+          "type": "string"
+        },
+        "knee": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hip_roll",
+        "hip_pitch",
+        "knee"
+      ],
+      "type": "object"
+    },
+    "pack_bay": {
+      "enum": [
+        "nose_box",
+        "belly_bay"
+      ],
+      "type": "string"
+    },
+    "spacer_legs": {
+      "description": "distinct leg names (a G0 rule checks that no leg repeats)",
+      "items": {
+        "enum": [
+          "fl",
+          "fr",
+          "rl",
+          "rr"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "stops": {
+      "additionalProperties": false,
+      "properties": {
+        "hip_pitch": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "hip_roll": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "knee": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "hip_roll",
+        "hip_pitch",
+        "knee"
+      ],
+      "type": "object"
+    },
+    "units": {
+      "additionalProperties": false,
+      "properties": {
+        "angle": {
+          "const": "rad"
+        },
+        "length": {
+          "const": "m"
+        }
+      },
+      "required": [
+        "length",
+        "angle"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "units",
+    "geometry",
+    "spacer_legs",
+    "stops",
+    "housing_class",
+    "pack_bay",
+    "modules"
+  ],
+  "title": "sketch-quad/1 kinematic sketch of the replica",
+  "type": "object"
+}

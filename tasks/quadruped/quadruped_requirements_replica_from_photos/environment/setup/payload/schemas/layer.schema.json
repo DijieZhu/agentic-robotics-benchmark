@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The numbers of the customer brief and the build log that the acceptance procedure reads (SI units; mission_time_s in seconds), plus the delivered lots named in the quote.",
+  "properties": {
+    "brief": {
+      "additionalProperties": true,
+      "properties": {
+        "actuator_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "battery_families": {
+          "items": {
+            "pattern": "^[1-9][0-9]*S$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "ceiling_usd": {
+          "type": "number"
+        },
+        "cell_end_voltage_v": {
+          "type": "number"
+        },
+        "copper_loss_factor": {
+          "type": "number"
+        },
+        "crouch_height_m": {
+          "type": "number"
+        },
+        "dof": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "driver_efficiency": {
+          "type": "number"
+        },
+        "dt_s": {
+          "type": "number"
+        },
+        "eco_usd": {
+          "type": "number"
+        },
+        "gravity_m_s2": {
+          "type": "number"
+        },
+        "harness_drop_v": {
+          "type": "number"
+        },
+        "mission_time_s": {
+          "type": "number"
+        },
+        "pack_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "payload_bottom_kg": {
+          "type": "number"
+        },
+        "payload_top_kg": {
+          "type": "number"
+        },
+        "proof_factor": {
+          "type": "number"
+        },
+        "shift_time_s": {
+          "type": "number"
+        },
+        "stance_height_m": {
+          "type": "number"
+        },
+        "standup_time_s": {
+          "type": "number"
+        },
+        "step_length_m": {
+          "type": "number"
+        },
+        "sway_fraction": {
+          "type": "number"
+        },
+        "swing_height_m": {
+          "type": "number"
+        },
+        "swing_time_s": {
+          "type": "number"
+        },
+        "tray_current_a": {
+          "type": "number"
+        },
+        "unit_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "untested_cap": {
+          "type": "number"
+        },
+        "usable_fraction": {
+          "type": "number"
+        },
+        "z_quantile": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "unit_count",
+        "actuator_count",
+        "dof",
+        "pack_count",
+        "battery_families",
+        "payload_top_kg",
+        "payload_bottom_kg",
+        "proof_factor",
+        "stance_height_m",
+        "crouch_height_m",
+        "standup_time_s",
+        "step_length_m",
+        "swing_height_m",
+        "shift_time_s",
+        "swing_time_s",
+        "sway_fraction",
+        "dt_s",
+        "gravity_m_s2",
+        "mission_time_s",
+        "usable_fraction",
+        "cell_end_voltage_v",
+        "harness_drop_v",
+        "tray_current_a",
+        "driver_efficiency",
+        "copper_loss_factor",
+        "untested_cap",
+        "z_quantile",
+        "ceiling_usd",
+        "eco_usd"
+      ],
+      "type": "object"
+    },
+    "format": {
+      "const": "quad-layer/1"
+    },
+    "lots": {
+      "additionalProperties": true,
+      "properties": {
+        "cells": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "properties": {
+              "lot_id": {
+                "type": "string"
+              },
+              "report": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "lot_id",
+              "report"
+            ],
+            "type": "object"
+          },
+          "type": "object"
+        },
+        "modules": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "properties": {
+              "lot_id": {
+                "type": "string"
+              },
+              "report": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "lot_id",
+              "report"
+            ],
+            "type": "object"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "brief"
+  ],
+  "title": "quad-layer/1 brief constants and requirements",
+  "type": "object"
+}
