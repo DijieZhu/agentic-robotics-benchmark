@@ -1,0 +1,2888 @@
+{
+ "schema": "tensegrity_cad_design_from_photos/reference/seen v1",
+ "what": "which parts of each reference design the photo set lets a careful solver locate; the surface items use only seen samples, the hole and flat-face items only gradable features",
+ "sampling": {
+  "function": "strutgrade.geom.sample_surface(V, F, n, seed)",
+  "n": "strutgrade.geom.n_samples(area, cfg.sampling, kind)",
+  "seed": "strutgrade.detenv.seed_for(cfg, 'reference', design key); query samples seed + 1",
+  "cfg_sampling": {
+   "seed": 20261117,
+   "dense_per_mm2": 20.0,
+   "dense_min": 20000,
+   "dense_max": 500000,
+   "query_per_mm2": 2.0,
+   "query_min": 4000,
+   "query_max": 60000,
+   "disk_mm": 0.25
+  },
+  "bit_order": "numpy.packbits(seen, bitorder='little')",
+  "read": "seen = numpy.unpackbits(numpy.frombuffer(open(file, 'rb').read(), numpy.uint8), bitorder='little')[:n].astype(bool)",
+  "use": "dense bits mark the reference's dense samples (the distance targets); query bits mark its query samples (seed + 1; the reference -> submission direction measures from them)"
+ },
+ "rules": {
+  "visible": "in the frame (2 px margin), facing the camera with incidence <= 75 deg, not behind the z-buffer surface (exact rasterisation of the whole scene at 2016 x 1512, all hardware in place)",
+  "seen": "(a) visible in >= 2 photos whose view directions (in the part's own frame; the two parts of a pair pool their photos) are >= 25 deg apart, or (b) visible in one photo >= 45 deg off its normal with >= 60 % of its flat face's boundary visible in that photo; and r_n <= 2 L (r_n = min over photos of p / sin(theta) and over pairs of max(p_i, p_j) / sin(beta); L = 0.040 mm small parts, 0.067 mm large parts)",
+  "plane_gradable": ">= 60 % of its dense samples seen and >= 60 % of its boundary length visible in the photos that see it",
+  "hole_step": "mouth = an open end (winding-number probes); position gradable: >= 2 photos with the mouth facing (<= 80 deg), >= 15 px across and >= 25 % of its rim marked (wall or face side visible, or the insert / screw in it), >= 1 photo with >= 50 % marked; radius gradable: the same with the rim itself (nothing in the hole at the mouth) >= 50 % visible in >= 1 photo",
+  "functional": "the item's assumed method has >= 2 photos >= 25 deg apart showing each of its point groups (>= 10 % and >= 100 points)"
+ },
+ "photo_plan": {
+  "photos": 287,
+  "camera_plan_sha256": "db4d8f6402cf01edd0f0bc7460eb97d996411f14e934ca14e546b8f5301a97a9"
+ },
+ "designs": {
+  "F-EA": {
+   "tags": [
+    "P01"
+   ],
+   "size_class": "large",
+   "L_mm": 0.067,
+   "samples": {
+    "dense": {
+     "file": "seen/F-EA.dense.bits",
+     "n": 317454,
+     "sha256": "3336720fa131052e2f55683663698353a2911f6031d8455ca0d6a2c2fca5a85f",
+     "seen": 303842,
+     "share": 0.9571213467147996,
+     "points_hash": "e7e3b7ab859cf2cf45dca1ff88cab6be190dab5803cfb9737716683a9a0db93f",
+     "seed": 136363832
+    },
+    "query": {
+     "file": "seen/F-EA.query.bits",
+     "n": 31746,
+     "sha256": "80fa681ea1d968f4f0c1fdc208312b20657bf6f452d73cadbd8c7d4c5bb4ee3b",
+     "seen": 30377,
+     "share": 0.9568764568764568,
+     "points_hash": "45dcdadac55d7194d394406b2a65d9d652eb893a25dc82785bd5ccda4145e240",
+     "seed": 136363833
+    }
+   },
+   "seen_share": 0.9571213467147996,
+   "rn_median_mm": 0.04623915623389575,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F002",
+     "gradable": false,
+     "seen_share": 0.9937,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 25 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F003",
+     "gradable": false,
+     "seen_share": 0.9646,
+     "boundary_cover": 0.9588,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F004",
+     "gradable": false,
+     "seen_share": 0.7603,
+     "boundary_cover": 0.9706,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 56 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F005",
+     "gradable": false,
+     "seen_share": 0.9122,
+     "boundary_cover": 0.9882,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F006",
+     "gradable": false,
+     "seen_share": 0.7273,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 46 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F007",
+     "gradable": true,
+     "seen_share": 0.9243,
+     "boundary_cover": 0.9706
+    },
+    {
+     "id": "F008",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F009",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F010",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F011",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F012",
+     "gradable": false,
+     "seen_share": 0.969,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 53 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F013",
+     "gradable": true,
+     "seen_share": 0.9688,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F014",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 31 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F015",
+     "gradable": true,
+     "seen_share": 0.9927,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F016",
+     "gradable": false,
+     "seen_share": 0.9627,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 36 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F017",
+     "gradable": false,
+     "seen_share": 0.982,
+     "boundary_cover": 0.9967,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 27 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F018",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 24 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F019",
+     "gradable": false,
+     "seen_share": 0.9872,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 15 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F020",
+     "gradable": true,
+     "seen_share": 0.8414,
+     "boundary_cover": 0.9265
+    },
+    {
+     "id": "F021",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F022",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F023",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    },
+    {
+     "id": "F024",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F025",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F026",
+     "gradable": false,
+     "seen_share": 0.9653,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 30 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F027",
+     "gradable": false,
+     "seen_share": 0.9781,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 27 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F028",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 30 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F029",
+     "gradable": false,
+     "seen_share": 0.9971,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 18 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F030",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 25 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F031",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 24 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F032",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F033",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F034",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F035",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F036",
+     "gradable": true,
+     "seen_share": 0.8492,
+     "boundary_cover": 0.7206
+    },
+    {
+     "id": "F037",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F038",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    },
+    {
+     "id": "F039",
+     "gradable": true,
+     "seen_share": 0.854,
+     "boundary_cover": 0.9265
+    },
+    {
+     "id": "F040",
+     "gradable": false,
+     "seen_share": 0.9977,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F041",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 50 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F042",
+     "gradable": false,
+     "seen_share": 0.9986,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 36 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F043",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    },
+    {
+     "id": "F044",
+     "gradable": true,
+     "seen_share": 0.9333,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F045",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 56 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F046",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 28 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F047",
+     "gradable": false,
+     "seen_share": 0.9996,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 5 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F048",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 8 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F049",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 25 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F050",
+     "gradable": false,
+     "seen_share": 0.9989,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 6 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F051",
+     "gradable": true,
+     "seen_share": 0.9167,
+     "boundary_cover": 0.9265
+    },
+    {
+     "id": "F052",
+     "gradable": false,
+     "seen_share": 0.9748,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F053",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F054",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F055",
+     "gradable": false,
+     "seen_share": 0.9999,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 38 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F056",
+     "gradable": true,
+     "seen_share": 0.8611,
+     "boundary_cover": 0.9265
+    },
+    {
+     "id": "F057",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    },
+    {
+     "id": "F058",
+     "gradable": true,
+     "seen_share": 0.9016,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F059",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F060",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 28 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F061",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F062",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F063",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F064",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F065",
+     "gradable": false,
+     "seen_share": 0.9637,
+     "boundary_cover": 0.9036,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F066",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F067",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 13 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F068",
+     "gradable": false,
+     "seen_share": 0.9969,
+     "boundary_cover": 0.921,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 13 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F069",
+     "gradable": false,
+     "seen_share": 0.9696,
+     "boundary_cover": 0.9277,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 40 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F070",
+     "gradable": false,
+     "seen_share": 0.9885,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 29 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F071",
+     "gradable": false,
+     "seen_share": 0.86,
+     "boundary_cover": 0.8125,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 7 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F072",
+     "gradable": false,
+     "seen_share": 0.9356,
+     "boundary_cover": 0.9064,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 58 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F073",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F074",
+     "gradable": false,
+     "seen_share": 0.9702,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 16 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F075",
+     "gradable": false,
+     "seen_share": 0.6094,
+     "boundary_cover": 0.9044,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F076",
+     "gradable": true,
+     "seen_share": 0.9159,
+     "boundary_cover": 0.8903
+    },
+    {
+     "id": "F077",
+     "gradable": false,
+     "seen_share": 0.957,
+     "boundary_cover": 0.8727,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F078",
+     "gradable": true,
+     "seen_share": 0.8223,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F079",
+     "gradable": false,
+     "seen_share": 0.9639,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 32 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F080",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F081",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F082",
+     "gradable": true,
+     "seen_share": 0.9407,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F083",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F084",
+     "gradable": false,
+     "seen_share": 0.7905,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F085",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 50 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F086",
+     "gradable": false,
+     "seen_share": 0.9892,
+     "boundary_cover": 0.9647,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 52 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F087",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 48 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F088",
+     "gradable": false,
+     "seen_share": 0.8229,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 40 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F089",
+     "gradable": false,
+     "seen_share": 0.6619,
+     "boundary_cover": 0.9853,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F090",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F091",
+     "gradable": false,
+     "seen_share": 0.9776,
+     "boundary_cover": 0.9314,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F092",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 53 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F093",
+     "gradable": false,
+     "seen_share": 0.9431,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 35 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F094",
+     "gradable": false,
+     "seen_share": 0.8269,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 43 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F095",
+     "gradable": false,
+     "seen_share": 0.9944,
+     "boundary_cover": 0.9706,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F096",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 21 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F097",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H02",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H03",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H04",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H05",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H06",
+     "hole": "G04",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H07",
+     "hole": "G05",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H08",
+     "hole": "G06",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H09",
+     "hole": "G07",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H10",
+     "hole": "G08",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H11",
+     "hole": "G08",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H12",
+     "hole": "G08",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H13",
+     "hole": "G09",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H14",
+     "hole": "G10",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 97,
+    "planes_gradable": 34,
+    "steps": 14,
+    "steps_position_gradable": 14,
+    "steps_radius_gradable": 8
+   }
+  },
+  "F-EB": {
+   "tags": [
+    "P02"
+   ],
+   "size_class": "large",
+   "L_mm": 0.067,
+   "samples": {
+    "dense": {
+     "file": "seen/F-EB.dense.bits",
+     "n": 406262,
+     "sha256": "96747b7a6f0c95f76f04eac001b4c4da0e2c6ad552d111fcf07e6806184087f4",
+     "seen": 402922,
+     "share": 0.991778704382886,
+     "points_hash": "2411c809f00b72b64e24799677bd0c32e4b45f2e7917147dc6942ddbbbf921da",
+     "seed": 1152382109
+    },
+    "query": {
+     "file": "seen/F-EB.query.bits",
+     "n": 40627,
+     "sha256": "2877fa8e49c581e8b5bc101af4014f4771da357cd6d5d5b6627fd20f27f1f29b",
+     "seen": 40299,
+     "share": 0.9919265513082433,
+     "points_hash": "bd3560063950c8bb4c3e518b5711e7a39e455ea7f40f785fcddf3f155d35035c",
+     "seed": 1152382110
+    }
+   },
+   "seen_share": 0.991778704382886,
+   "rn_median_mm": 0.0466168916927626,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 60 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F002",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 58 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F003",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F004",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F005",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F006",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F007",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F008",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F009",
+     "gradable": true,
+     "seen_share": 0.9859,
+     "boundary_cover": 0.8526
+    },
+    {
+     "id": "F010",
+     "gradable": true,
+     "seen_share": 0.9951,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F011",
+     "gradable": true,
+     "seen_share": 0.9484,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F012",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F013",
+     "gradable": false,
+     "seen_share": 0.9881,
+     "boundary_cover": 0.9673,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 39 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F014",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 33 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F015",
+     "gradable": false,
+     "seen_share": 0.926,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 28 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F016",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F017",
+     "gradable": false,
+     "seen_share": 0.8961,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 26 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F018",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 48 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F019",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 31 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F020",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F021",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.9826
+    },
+    {
+     "id": "F022",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 43 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F023",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 48 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F024",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F025",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F026",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 9 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F027",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 28 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F028",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F029",
+     "gradable": false,
+     "seen_share": 0.8458,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 45 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F030",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F031",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F032",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F033",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F034",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F035",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F036",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F037",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 42 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F038",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F039",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 30 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F040",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 5 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F041",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 23 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F042",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F043",
+     "gradable": true,
+     "seen_share": 0.9979,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F044",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F045",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 59 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F046",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F047",
+     "gradable": true,
+     "seen_share": 0.9972,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F048",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 36 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F049",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F050",
+     "gradable": false,
+     "seen_share": 0.9692,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 10 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F051",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 30 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F052",
+     "gradable": false,
+     "seen_share": 0.8421,
+     "boundary_cover": 0.9869,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 39 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F053",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F054",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F055",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F056",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F057",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 58 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F058",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 32 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F059",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F060",
+     "gradable": true,
+     "seen_share": 0.8389,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F061",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F062",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 60 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F063",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F064",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F065",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F066",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F067",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F068",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F069",
+     "gradable": true,
+     "seen_share": 0.8045,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F070",
+     "gradable": true,
+     "seen_share": 0.9471,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F071",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F072",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 23 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F073",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F074",
+     "gradable": true,
+     "seen_share": 0.9996,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F075",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 42 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F076",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F077",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 57 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F078",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F079",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F080",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F081",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F082",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F083",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F084",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 55 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F085",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 55 % of the edge length visible in >= 2 photos"
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H02",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H03",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H04",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H05",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H06",
+     "hole": "G04",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 85,
+    "planes_gradable": 43,
+    "steps": 6,
+    "steps_position_gradable": 6,
+    "steps_radius_gradable": 6
+   }
+  },
+  "F-PB": {
+   "tags": [
+    "P03"
+   ],
+   "size_class": "large",
+   "L_mm": 0.067,
+   "samples": {
+    "dense": {
+     "file": "seen/F-PB.dense.bits",
+     "n": 176418,
+     "sha256": "5c7a70a4328c8896a9ec26e781fb4ea8f5c4b27b03374698b8bde6af928c8e7a",
+     "seen": 155104,
+     "share": 0.8791846636964482,
+     "points_hash": "e70631d814d13aeefea0d0a501f2b1c51f7941f03fe03c7caee884a7ef8ec2fd",
+     "seed": 2023585143
+    },
+    "query": {
+     "file": "seen/F-PB.query.bits",
+     "n": 17642,
+     "sha256": "8e031081e34b9f6bbf25b0c76c11d4496703a87a2eee79a1e1bd65be4357a74b",
+     "seen": 15517,
+     "share": 0.8795488039904773,
+     "points_hash": "d2762756ef6bc484fb8fc183bf8aa7bdbe3d9e20ac23c0fe8d9fe9a6a4a335bd",
+     "seed": 2023585144
+    }
+   },
+   "seen_share": 0.8791846636964482,
+   "rn_median_mm": 0.04778127021177618,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 55 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F002",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 36 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F003",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 29 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F004",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F005",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 44 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F006",
+     "gradable": true,
+     "seen_share": 0.9931,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F007",
+     "gradable": true,
+     "seen_share": 0.7465,
+     "boundary_cover": 0.9602
+    },
+    {
+     "id": "F008",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 23 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F009",
+     "gradable": false,
+     "seen_share": 0.9879,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 17 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F010",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 34 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F011",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 23 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F012",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 41 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F013",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 39 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F014",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 49 % of the edge length visible in >= 2 photos"
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H02",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H03",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H04",
+     "hole": "G04",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 14,
+    "planes_gradable": 2,
+    "steps": 4,
+    "steps_position_gradable": 4,
+    "steps_radius_gradable": 4
+   }
+  },
+  "F-MA": {
+   "tags": [
+    "P04",
+    "P05"
+   ],
+   "size_class": "large",
+   "L_mm": 0.067,
+   "samples": {
+    "dense": {
+     "file": "seen/F-MA.dense.bits",
+     "n": 366858,
+     "sha256": "2e6ac963120166f589e0f262b5681076a1d69c2ddffb28060f5bf28f657a510c",
+     "seen": 275656,
+     "share": 0.7513969982936177,
+     "points_hash": "19a592defc8536dfd825cc668f3970a48bd1851d52c3986673f626cc8285e464",
+     "seed": 1900350389
+    },
+    "query": {
+     "file": "seen/F-MA.query.bits",
+     "n": 36686,
+     "sha256": "24fc80b7c33735df55a03002cde3bb8f5389491a36f73a754f571dce02718033",
+     "seen": 27585,
+     "share": 0.7519217140053427,
+     "points_hash": "940459257aaf3b2e7d92e821c836bc2fa1696e1543bb7863dea4ec1fe93769c0",
+     "seed": 1900350390
+    }
+   },
+   "seen_share": 0.7513969982936177,
+   "rn_median_mm": 0.04223717261413523,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F002",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 46 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F003",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.8549
+    },
+    {
+     "id": "F004",
+     "gradable": true,
+     "seen_share": 0.948,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F005",
+     "gradable": true,
+     "seen_share": 0.9821,
+     "boundary_cover": 0.9326
+    },
+    {
+     "id": "F006",
+     "gradable": true,
+     "seen_share": 0.9967,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F007",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.8051
+    },
+    {
+     "id": "F008",
+     "gradable": false,
+     "seen_share": 0.6198,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F009",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 28 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F010",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F011",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F012",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 45 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F013",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F014",
+     "gradable": true,
+     "seen_share": 0.9784,
+     "boundary_cover": 0.9797
+    },
+    {
+     "id": "F015",
+     "gradable": true,
+     "seen_share": 0.8422,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F016",
+     "gradable": false,
+     "seen_share": 0.9893,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F017",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 21 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F018",
+     "gradable": true,
+     "seen_share": 0.9775,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F019",
+     "gradable": false,
+     "seen_share": 0.7262,
+     "boundary_cover": 0.9328,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 34 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F020",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0559
+    },
+    {
+     "id": "F021",
+     "gradable": false,
+     "seen_share": 0.9683,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 37 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F022",
+     "gradable": false,
+     "seen_share": 0.8114,
+     "boundary_cover": 0.9567,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 34 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F023",
+     "gradable": false,
+     "seen_share": 0.9139,
+     "boundary_cover": 0.9441,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 26 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F024",
+     "gradable": false,
+     "seen_share": 0.998,
+     "boundary_cover": 0.9257,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 32 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F025",
+     "gradable": false,
+     "seen_share": 0.6486,
+     "boundary_cover": 0.747,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 43 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F026",
+     "gradable": false,
+     "seen_share": 0.1154,
+     "boundary_cover": 0.199
+    },
+    {
+     "id": "F027",
+     "gradable": false,
+     "seen_share": 0.1136,
+     "boundary_cover": 0.3077
+    },
+    {
+     "id": "F028",
+     "gradable": false,
+     "seen_share": 0.4603,
+     "boundary_cover": 0.5995
+    },
+    {
+     "id": "F029",
+     "gradable": false,
+     "seen_share": 0.2221,
+     "boundary_cover": 0.6499
+    },
+    {
+     "id": "F030",
+     "gradable": false,
+     "seen_share": 0.1699,
+     "boundary_cover": 0.6222
+    },
+    {
+     "id": "F031",
+     "gradable": false,
+     "seen_share": 0.3686,
+     "boundary_cover": 0.6617
+    },
+    {
+     "id": "F032",
+     "gradable": false,
+     "seen_share": 0.7416,
+     "boundary_cover": 0.9078,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 18 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F033",
+     "gradable": false,
+     "seen_share": 0.4713,
+     "boundary_cover": 0.7396
+    },
+    {
+     "id": "F034",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F035",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 42 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F036",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 55 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F037",
+     "gradable": false,
+     "seen_share": 0.7969,
+     "boundary_cover": 0.7015,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 21 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F038",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F039",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F040",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F041",
+     "gradable": true,
+     "seen_share": 0.9535,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F042",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F043",
+     "gradable": false,
+     "seen_share": 0.9778,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 59 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F044",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    },
+    {
+     "id": "F045",
+     "gradable": false,
+     "seen_share": 0.9945,
+     "boundary_cover": 0.9834,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 47 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F046",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 16 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F047",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 22 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F048",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F049",
+     "gradable": false,
+     "seen_share": 0.2586,
+     "boundary_cover": 0.989
+    },
+    {
+     "id": "F050",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F051",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F052",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H02",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H03",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H04",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H05",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H06",
+     "hole": "G04",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H07",
+     "hole": "G05",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H08",
+     "hole": "G06",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H09",
+     "hole": "G07",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H10",
+     "hole": "G07",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H11",
+     "hole": "G08",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 52,
+    "planes_gradable": 18,
+    "steps": 11,
+    "steps_position_gradable": 11,
+    "steps_radius_gradable": 11
+   }
+  },
+  "F-MB": {
+   "tags": [
+    "P06",
+    "P07"
+   ],
+   "size_class": "small",
+   "L_mm": 0.04,
+   "samples": {
+    "dense": {
+     "file": "seen/F-MB.dense.bits",
+     "n": 44625,
+     "sha256": "f42c95a75083f403bff154630dc0c3df488f0034106e87af337253afa61b2a97",
+     "seen": 43073,
+     "share": 0.9652212885154061,
+     "points_hash": "04ece2de6cd49feb21ceb1f2120dd8491c93b31bfb04cdb1fd4032c7a550d69b",
+     "seed": 42586505
+    },
+    "query": {
+     "file": "seen/F-MB.query.bits",
+     "n": 4463,
+     "sha256": "dd000a1718fe44f2ca7a86eb8acc15505c36024e4753b41532dad6965ed3920b",
+     "seen": 4313,
+     "share": 0.9663903204122788,
+     "points_hash": "a30c00198da76cbf95eee764f0678e4fd2845e3ae3f5b6e5927bf135cff939ed",
+     "seed": 42586506
+    }
+   },
+   "seen_share": 0.9652212885154061,
+   "rn_median_mm": 0.026894987867153077,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F002",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F003",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 53 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F004",
+     "gradable": false,
+     "seen_share": 0.3644,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F005",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 1 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F006",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 5 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F007",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 51 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F008",
+     "gradable": true,
+     "seen_share": 0.9265,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F009",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F010",
+     "gradable": true,
+     "seen_share": 0.9896,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F011",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.4351
+    },
+    {
+     "id": "F012",
+     "gradable": false,
+     "seen_share": 0.2159,
+     "boundary_cover": 0.9484
+    },
+    {
+     "id": "F013",
+     "gradable": false,
+     "seen_share": 0.3108,
+     "boundary_cover": 0.5799
+    },
+    {
+     "id": "F014",
+     "gradable": false,
+     "seen_share": 0.1515,
+     "boundary_cover": 0.8295
+    },
+    {
+     "id": "F015",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F016",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H02",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H03",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H04",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 16,
+    "planes_gradable": 7,
+    "steps": 4,
+    "steps_position_gradable": 4,
+    "steps_radius_gradable": 4
+   }
+  },
+  "F-WI": {
+   "tags": [
+    "P08",
+    "P09"
+   ],
+   "size_class": "small",
+   "L_mm": 0.04,
+   "samples": {
+    "dense": {
+     "file": "seen/F-WI.dense.bits",
+     "n": 20000,
+     "sha256": "0eafd1e935414971c0390d9b3cf372117b547b484783b3c834f14b7887489246",
+     "seen": 18771,
+     "share": 0.93855,
+     "points_hash": "8f82206b24660049bebff4132bc2f16c69e3d409543423742a46771ad1c44449",
+     "seed": 809992088
+    },
+    "query": {
+     "file": "seen/F-WI.query.bits",
+     "n": 4000,
+     "sha256": "fdb6ca63c274f441c21643f985aeb2321f82754e9b98eb7e04f06480c0ac0ce5",
+     "seen": 3760,
+     "share": 0.94,
+     "points_hash": "6c761a64c61a72cb4a16e1eca53b3d8f5bccb72043063a975ef3b9ee96739d0b",
+     "seed": 809992089
+    }
+   },
+   "seen_share": 0.93855,
+   "rn_median_mm": 0.02855562226832254,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F002",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F003",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H02",
+     "hole": "G02",
+     "position_gradable": true,
+     "radius_gradable": false,
+     "reason_not_radius": "mouth covered by hardware (insert, set screw, screw, rod or shaft) in every photo that shows it"
+    },
+    {
+     "id": "H03",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    },
+    {
+     "id": "H04",
+     "hole": "G03",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 3,
+    "planes_gradable": 3,
+    "steps": 4,
+    "steps_position_gradable": 4,
+    "steps_radius_gradable": 3
+   }
+  },
+  "F-EC": {
+   "tags": [
+    "P10",
+    "P11"
+   ],
+   "size_class": "small",
+   "L_mm": 0.04,
+   "samples": {
+    "dense": {
+     "file": "seen/F-EC.dense.bits",
+     "n": 64985,
+     "sha256": "343ff04f27789908ad7f34835cf820e3993aa5d31ace8b2e1acd48089795b166",
+     "seen": 60073,
+     "share": 0.924413326152189,
+     "points_hash": "56602e8d51f77b08e44563bcff8f511f1f201efa3c45f380b3dbe3bc3c023a86",
+     "seed": 938660460
+    },
+    "query": {
+     "file": "seen/F-EC.query.bits",
+     "n": 6499,
+     "sha256": "8a9ace8272f2b96a36b40c0453dec4e3c7fc4599eab3fbccb63946b50626181c",
+     "seen": 5999,
+     "share": 0.9230650869364517,
+     "points_hash": "cafc5c57b3ac5728f966985f68ce244cb044f74e34a6a4cd9250397171f71f87",
+     "seed": 938660461
+    }
+   },
+   "seen_share": 0.924413326152189,
+   "rn_median_mm": 0.027766899557269683,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F002",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F003",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F004",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F005",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F006",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F007",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F008",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F009",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F010",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F011",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F012",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 54 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F013",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F014",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F015",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F016",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F017",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F018",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F019",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F020",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F021",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    },
+    {
+     "id": "F022",
+     "gradable": false,
+     "seen_share": 0.9605,
+     "boundary_cover": 0.9054,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 42 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F023",
+     "gradable": false,
+     "seen_share": 0.9465,
+     "boundary_cover": 0.8039,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 43 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F024",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 39 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F025",
+     "gradable": false,
+     "seen_share": 1.0,
+     "boundary_cover": 0.9136,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 58 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F026",
+     "gradable": false,
+     "seen_share": 0.9964,
+     "boundary_cover": 0.9125,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 38 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F027",
+     "gradable": false,
+     "seen_share": 0.984,
+     "boundary_cover": 0.8788,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 43 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F028",
+     "gradable": false,
+     "seen_share": 0.9449,
+     "boundary_cover": 0.8444,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 35 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F029",
+     "gradable": false,
+     "seen_share": 0.9917,
+     "boundary_cover": 0.9597,
+     "not_gradable_reason": "edge contrast (cover >= 60 %): CNR >= 5 on 35 % of the edge length visible in >= 2 photos"
+    },
+    {
+     "id": "F030",
+     "gradable": true,
+     "seen_share": 0.9874,
+     "boundary_cover": 0.9992
+    },
+    {
+     "id": "F031",
+     "gradable": false,
+     "seen_share": 0.0,
+     "boundary_cover": 0.0
+    }
+   ],
+   "hole_steps": [
+    {
+     "id": "H01",
+     "hole": "G01",
+     "position_gradable": true,
+     "radius_gradable": true,
+     "reason_not_radius": null
+    }
+   ],
+   "counts": {
+    "planes": 31,
+    "planes_gradable": 21,
+    "steps": 1,
+    "steps_position_gradable": 1,
+    "steps_radius_gradable": 1
+   }
+  },
+  "F-CO": {
+   "tags": [
+    "P12",
+    "P13"
+   ],
+   "size_class": "small",
+   "L_mm": 0.04,
+   "samples": {
+    "dense": {
+     "file": "seen/F-CO.dense.bits",
+     "n": 71779,
+     "sha256": "56c72059bf6f8fcdfbb38f804204e4b3f28db982396bdbb01d3044be2bdc5d93",
+     "seen": 71672,
+     "share": 0.9985093133089065,
+     "points_hash": "ce947be9df26353d882af0e8ed90e8b07e07cf14cf32abe71c5c3dc1de746b75",
+     "seed": 1481842107
+    },
+    "query": {
+     "file": "seen/F-CO.query.bits",
+     "n": 7178,
+     "sha256": "7555f4c9ec8ef4a9195e33ac540940a073aa5e311b927b4621d08fb1140b8170",
+     "seen": 7167,
+     "share": 0.9984675397046531,
+     "points_hash": "4667d262053ee723f42f4564b8e1c0b4f10aa95521d06286af157e41969a47f6",
+     "seed": 1481842108
+    }
+   },
+   "seen_share": 0.9985093133089065,
+   "rn_median_mm": 0.030980711486448105,
+   "planes": [
+    {
+     "id": "F001",
+     "gradable": true,
+     "seen_share": 1.0,
+     "boundary_cover": 1.0
+    }
+   ],
+   "hole_steps": [],
+   "counts": {
+    "planes": 1,
+    "planes_gradable": 1,
+    "steps": 0,
+    "steps_position_gradable": 0,
+    "steps_radius_gradable": 0
+   }
+  }
+ },
+ "functional": [
+  {
+   "item": "node_sphere_radius",
+   "block": "G1",
+   "instances": [
+    "P12"
+   ],
+   "method": "macros of a cover (either of the identical pair): the outer sphere from two directions",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_056.jpg"
+   ]
+  },
+  {
+   "item": "node_sphere_radius",
+   "block": "G1",
+   "instances": [
+    "P13"
+   ],
+   "method": "macros of a cover (either of the identical pair): the outer sphere from two directions",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_056.jpg"
+   ]
+  },
+  {
+   "item": "node_sphere_centre_distance",
+   "block": "G1",
+   "instances": [
+    "P12",
+    "P13"
+   ],
+   "method": "chain: rod length (data sheet) - 2 x (rod length inside a cap - sphere centre above the cap's lower face): a cap's dome and lower face in macros, and each bare rod end at the stages with the caps off",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_054.jpg",
+    "photo_264.jpg",
+    "photo_265.jpg",
+    "photo_266.jpg"
+   ]
+  },
+  {
+   "item": "winch_axis_offset_from_rod_axis",
+   "block": "G2",
+   "instances": [
+    "P08"
+   ],
+   "method": "stage close-up with the enclosure B off: the winch's flange rim beside the bare rod end (5x)",
+   "photos_ok": false,
+   "photos": []
+  },
+  {
+   "item": "winch_axis_offset_from_rod_axis",
+   "block": "G2",
+   "instances": [
+    "P09"
+   ],
+   "method": "stage close-up with the enclosure B off: the winch's flange rim beside the bare rod end (5x)",
+   "photos_ok": true,
+   "photos": [
+    "photo_268.jpg",
+    "photo_282.jpg"
+   ]
+  },
+  {
+   "item": "drum_mid_to_node_centre_axial",
+   "block": "G3",
+   "instances": [
+    "P08",
+    "P12"
+   ],
+   "method": "chain: the drum and the bare rod end together at the stage with enclosure B off, plus the cap chain of node_sphere_centre_distance",
+   "photos_ok": false,
+   "photos": []
+  },
+  {
+   "item": "drum_mid_to_node_centre_axial",
+   "block": "G3",
+   "instances": [
+    "P09",
+    "P13"
+   ],
+   "method": "chain: the drum and the bare rod end together at the stage with enclosure B off, plus the cap chain of node_sphere_centre_distance",
+   "photos_ok": true,
+   "photos": [
+    "photo_268.jpg",
+    "photo_282.jpg"
+   ]
+  },
+  {
+   "item": "drum_diameter",
+   "block": "G3",
+   "instances": [
+    "P08"
+   ],
+   "method": "side macros of a winch (either of the pair): the drum between the flanges",
+   "photos_ok": true,
+   "photos": [
+    "photo_067.jpg",
+    "photo_068.jpg"
+   ]
+  },
+  {
+   "item": "drum_diameter",
+   "block": "G3",
+   "instances": [
+    "P09"
+   ],
+   "method": "side macros of a winch (either of the pair): the drum between the flanges",
+   "photos_ok": true,
+   "photos": [
+    "photo_067.jpg",
+    "photo_068.jpg"
+   ]
+  },
+  {
+   "item": "post_mid_to_node_centre_axial",
+   "block": "G4",
+   "instances": [
+    "P10",
+    "P12"
+   ],
+   "method": "side macros of a cap (either of the pair): posts and dome together (the cover sits on the dome)",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_057.jpg"
+   ]
+  },
+  {
+   "item": "post_mid_to_node_centre_axial",
+   "block": "G4",
+   "instances": [
+    "P11",
+    "P13"
+   ],
+   "method": "side macros of a cap (either of the pair): posts and dome together (the cover sits on the dome)",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_057.jpg"
+   ]
+  },
+  {
+   "item": "post_axis_offset_from_cap_bore_axis",
+   "block": "G4",
+   "instances": [
+    "P10"
+   ],
+   "method": "macros of a cap (either of the pair) from the dome side: the four posts and the dome (centred on the bore)",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_057.jpg"
+   ]
+  },
+  {
+   "item": "post_axis_offset_from_cap_bore_axis",
+   "block": "G4",
+   "instances": [
+    "P11"
+   ],
+   "method": "macros of a cap (either of the pair) from the dome side: the four posts and the dome (centred on the bore)",
+   "photos_ok": true,
+   "photos": [
+    "photo_053.jpg",
+    "photo_057.jpg"
+   ]
+  },
+  {
+   "item": "winch_azimuth_minus_electronics_datum_mod180",
+   "block": "G5",
+   "instances": [
+    "P08",
+    "P01",
+    "P02"
+   ],
+   "method": "3-D reasoning over E / H / A (and early stage) photos: that end's motor module (enclosures A and B) and the electronics enclosure together, two directions >= 25 deg apart",
+   "photos_ok": true,
+   "photos": [
+    "photo_238.jpg",
+    "photo_239.jpg"
+   ]
+  },
+  {
+   "item": "winch_azimuth_minus_electronics_datum_mod180",
+   "block": "G5",
+   "instances": [
+    "P09",
+    "P01",
+    "P02"
+   ],
+   "method": "3-D reasoning over E / H / A (and early stage) photos: that end's motor module (enclosures A and B) and the electronics enclosure together, two directions >= 25 deg apart",
+   "photos_ok": true,
+   "photos": [
+    "photo_238.jpg",
+    "photo_239.jpg"
+   ]
+  },
+  {
+   "item": "twist_between_winches",
+   "block": "G5",
+   "instances": [
+    "P08",
+    "P09"
+   ],
+   "method": "both ends' modules against the electronics enclosure (the item above at both ends)",
+   "photos_ok": true,
+   "photos": [
+    "photo_238.jpg",
+    "photo_239.jpg"
+   ]
+  },
+  {
+   "item": "post_pattern_phase_minus_electronics_datum_mod90",
+   "block": "G5",
+   "instances": [
+    "P10",
+    "P01",
+    "P02"
+   ],
+   "method": "stage photos with the covers off: that cap's posts and the electronics enclosure together",
+   "photos_ok": true,
+   "photos": [
+    "photo_263.jpg",
+    "photo_279.jpg"
+   ]
+  },
+  {
+   "item": "post_pattern_phase_minus_electronics_datum_mod90",
+   "block": "G5",
+   "instances": [
+    "P11",
+    "P01",
+    "P02"
+   ],
+   "method": "stage photos with the covers off: that cap's posts and the electronics enclosure together",
+   "photos_ok": true,
+   "photos": [
+    "photo_262.jpg",
+    "photo_263.jpg"
+   ]
+  },
+  {
+   "item": "motor_encl_A_mid_to_rod_mid_axial",
+   "block": "G5",
+   "instances": [
+    "P04"
+   ],
+   "method": "the enclosure A's outer end face and the bare rod end together (stages with the caps off), plus the rod length from the data sheet",
+   "photos_ok": true,
+   "photos": [
+    "photo_273.jpg",
+    "photo_280.jpg"
+   ]
+  },
+  {
+   "item": "motor_encl_A_mid_to_rod_mid_axial",
+   "block": "G5",
+   "instances": [
+    "P05"
+   ],
+   "method": "the enclosure A's outer end face and the bare rod end together (stages with the caps off), plus the rod length from the data sheet",
+   "photos_ok": true,
+   "photos": [
+    "photo_266.jpg",
+    "photo_282.jpg"
+   ]
+  }
+ ],
+ "plane_reading": {
+  "rule": "a flat face is graded when it is plane_gradable (rules) and, if any of its sharp edges is visible in a photo, CNR >= 5 holds over >= 60 % of the sharp-edge length visible in >= 2 photos (the edge-contrast rule at threshold 0.6 instead of 0.8)",
+  "threshold": 0.6,
+  "planes_per_strut": 179,
+  "planes_per_strut_without_edge_rule": 360,
+  "planes_per_strut_at_edge_share_0_8": 92,
+  "applied_by": "at the freeze"
+ }
+}

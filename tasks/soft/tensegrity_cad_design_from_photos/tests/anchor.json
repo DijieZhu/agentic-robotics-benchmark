@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "design_score",
+ "note": "design_score is 0.25 x shape + the shape floor x (0.20 holes + 0.15 flat faces + 0.10 functional geometry + 0.15 placement + 0.10 fit and clearance + 0.05 mass), times public_model_reuse, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own design_score: the native FreeCAD document built at oracle time by solution/solve.sh from the original parts (the authors' mesh pieces turned triangle for triangle into faceted solids) and the vendor STEPs scores 1.0 through the real extraction and grading path; the grader is deterministic (fixed sampling seed), so full_at = 1.0",
+ "value": 1.0
+}

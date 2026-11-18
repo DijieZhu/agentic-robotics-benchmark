@@ -1,0 +1,69 @@
+# tensegrity_cad_design_from_photos: the hardware-design (CAD) stage for a small three-strut, cable-driven tensegrity
+# rolling robot (an atomic task). A mechanical designer re-creates the lost CAD of one strut (an aluminium rod; in the
+# middle a two-piece printed enclosure around the main board; near each end a motor module, printed pieces around a
+# geared motor that turns a printed line spool; at each end a printed end cap with a moulded silicone cover: 13 made
+# parts, 3 purchased components) in FreeCAD 1.1 from one fixed photo set (287 photos rendered with Blender Cycles from
+# the robot's original parts on an electronics bench: every made part on a cutting mat with scale references, close-ups,
+# the assembled strut and an eight-stage disassembly) and the purchased components' datasheets, drawings and STEP
+# files. No topology, no templates, no practice unit. It delivers one FreeCAD document,
+# /home/user/submission/strut.FCStd: one PartDesign Body per part tag (P01 to P13), the purchased components placed,
+# one Assembly with P01 grounded, Fixed joints and a Revolute joint per line spool, in the assembled configuration.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available,
+# and verify records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs): headless FreeCAD reads the document as an unprivileged account; each tagged part is fitted
+# rigidly on its own onto the original part, then the whole strut is fitted rigidly onto the original (no base part);
+# identical parts are matched to installed positions inside their family; shape 0.25, holes 0.20, flat faces 0.15,
+# functional geometry 0.10, placement and joints 0.15, fit and clearance 0.10, mass properties 0.05, all but shape
+# times a shape floor; design_score = reward (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/tensegrity_cad_design_from_photos"
+
+[metadata]
+platform = "soft"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set and the purchased components' documents (< 1 min). agent: re-model the strut in FreeCAD
+# (6 h). verify: the verifier sandbox's start, the lockdown, the FreeCAD document read by headless FreeCAD and the grade.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root.
+# setup.sh does not run there; the purchased components the grader reads are the image's own fetched assets
+# (/opt/task-assets/payload/purchased, pinned by sha256 in tests/reference/purchased_pins.json), and the made parts'
+# reference is in tests/reference/. The verifier runs the image's own desktop as the agent account; verify stops it
+# first.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

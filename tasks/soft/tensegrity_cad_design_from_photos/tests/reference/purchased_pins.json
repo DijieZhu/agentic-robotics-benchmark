@@ -1,0 +1,40 @@
+{
+ "schema": "tensegrity_cad_design_from_photos/grader-purchased-pins v1",
+ "note": "the STEP of every purchased type (path relative to the purchased root of the payload), its sha256 and bytes, and which of its solids, in OCC STEPControl_Reader order (OneShape, unique solid map), is which constituent of purchased.json",
+ "types": {
+  "GEARMOTOR": {
+   "step": "POLOLU-5192/POLOLU-5192.step",
+   "sha256": "db5532e79fb01e7838d55692b3fc35844e406970fc0c6f87ac53e1f8d23234a5",
+   "bytes": 18773944,
+   "solids": [
+    {
+     "index": 0,
+     "constituent": "GEARMOTOR.c1",
+     "volume_mm3": 2768.582037243167,
+     "centroid_mm": [
+      0.022798192885893135,
+      0.142523318799227,
+      -16.538780362715087
+     ]
+    }
+   ]
+  },
+  "ROD": {
+   "step": "MCMASTER-8974K19/MCMASTER-8974K19.step",
+   "sha256": "44dca7360bc1bc8fb3b4fb5aa8fb05abc9cf4b2f8e1af3619d78621a2c832853",
+   "bytes": 313079,
+   "solids": [
+    {
+     "index": 0,
+     "constituent": "ROD.c1",
+     "volume_mm3": 2400.964548026596,
+     "centroid_mm": [
+      -4.5809617488653687e-07,
+      1.0824513634687153e-05,
+      3.5647434425620174e-11
+     ]
+    }
+   ]
+  }
+ }
+}
