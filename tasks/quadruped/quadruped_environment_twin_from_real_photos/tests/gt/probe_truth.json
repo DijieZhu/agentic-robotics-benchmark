@@ -1,0 +1,626 @@
+{
+ "format": "site-probe-truth/1",
+ "variants": [
+  "nominal",
+  "mass_x0.5",
+  "mass_x2",
+  "mass_mix_s0",
+  "mass_mix_s1",
+  "friction_0.4",
+  "friction_0.8",
+  "friction_1.0",
+  "timestep_1ms",
+  "speed_x0.5",
+  "speed_x2",
+  "pose_s0",
+  "pose_s1",
+  "pose_s2",
+  "support_+5mm",
+  "support_-5mm",
+  "alt_box"
+ ],
+ "protocol": {
+  "lift": {
+   "lift_mm": 100.0,
+   "rise_s": 1.0,
+   "hold_s": 1.0,
+   "profile": "minimum-jerk",
+   "note": "each probed unit is driven kinematically by lift_mm along the twin's +z (minimum jerk over rise_s / speed, then held hold_s) from the settled state; every other unit is free"
+  },
+  "outcome": {
+   "carried_rise_mm": 60.0,
+   "carried_tol_mm": 30.0,
+   "follow_max_deg": 10.0,
+   "stay_mm": 10.0,
+   "stay_deg": 5.0,
+   "disturbed_mm": 20.0,
+   "disturbed_deg": 10.0,
+   "note": "carried: the unit follows the lifted one (rise >= carried_rise_mm, |d - d_lifted| <= carried_tol_mm, rotation < follow_max_deg); stayed: |d| < stay_mm and rotation < stay_deg; disturbed: |d| >= disturbed_mm (moves more than 2 cm) or rotation >= disturbed_deg, and not following; anything else is intermediate (never scored)"
+  }
+ },
+ "lift": {
+  "nonempty": [
+   {
+    "unit": "u050",
+    "carried": [
+     "u051"
+    ],
+    "disturbed": [],
+    "ambiguous": []
+   }
+  ],
+  "empty": [
+   {
+    "unit": "u005",
+    "ambiguous": []
+   },
+   {
+    "unit": "u006",
+    "ambiguous": []
+   },
+   {
+    "unit": "u007",
+    "ambiguous": []
+   },
+   {
+    "unit": "u017",
+    "ambiguous": []
+   },
+   {
+    "unit": "u020",
+    "ambiguous": []
+   },
+   {
+    "unit": "u030",
+    "ambiguous": []
+   },
+   {
+    "unit": "u051",
+    "ambiguous": []
+   },
+   {
+    "unit": "u053",
+    "ambiguous": []
+   }
+  ],
+  "dropped": []
+ },
+ "entries": {
+  "u005": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u006": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u007": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u017": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u020": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u030": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u050": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "carried",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u051": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u053": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  },
+  "u053": {
+   "u001": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u002": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u003": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u005": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u006": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u007": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u008": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u017": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u020": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u030": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u032": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u050": {
+    "nominal": "stayed",
+    "unanimous": true
+   },
+   "u051": {
+    "nominal": "stayed",
+    "unanimous": true
+   }
+  }
+ },
+ "gates": [
+  {
+   "id": "g_east_n",
+   "joint": "g_east_n__slide",
+   "leaf_centre": [
+    8.0736,
+    -2.62,
+    1.155
+   ],
+   "axis": [
+    0.008405997,
+    0.999964669,
+    0.0
+   ],
+   "opening_sign": 1,
+   "opening_from": "stated",
+   "width_m": 2.900473,
+   "travel_m": [
+    0.0,
+    2.1752
+   ],
+   "qpos0_m": 0.0,
+   "rule_on_true_twin": true,
+   "rule_reasons": []
+  },
+  {
+   "id": "g_east_s",
+   "joint": "g_east_s__slide",
+   "leaf_centre": [
+    8.0131,
+    -6.625,
+    1.155
+   ],
+   "axis": [
+    -0.00721,
+    -0.999974008,
+    -0.0
+   ],
+   "opening_sign": 1,
+   "opening_from": "stated",
+   "width_m": 3.690173,
+   "travel_m": [
+    0.0,
+    2.45
+   ],
+   "qpos0_m": 0.0,
+   "rule_on_true_twin": true,
+   "rule_reasons": []
+  }
+ ]
+}

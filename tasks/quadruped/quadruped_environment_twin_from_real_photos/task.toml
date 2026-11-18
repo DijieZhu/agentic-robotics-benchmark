@@ -1,0 +1,76 @@
+# quadruped_environment_twin_from_real_photos: 44 real DSLR photos, taken from a tripod, of an underground goods delivery bay,
+# where a small four-legged robot is to do night rounds. The agent builds the interactive MuJoCo twin of the bay that
+# the rounds are rehearsed in: the building static, every loose unit (pallet boxes, pallets, a skip, a trailer,
+# vehicles, a timber trolley, a sign stand, ...) its own free rigid body with a class label, each named mesh-cage gate
+# one body on one slide joint, and the photos' cameras as named cameras photo_NNN. It delivers
+# submission/scene.xml + assets/ + objects.json. CPU only: no GPU in the sandbox (renders through MuJoCo's OSMesa).
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json; static, no agent code runs, CPU only, nothing rendered):
+# gates G1 submission integrity (verify-start lockdown) x G0 twin validity (the public gate twin_gate.py, the same
+# code as the agent's check_twin.py, the settle check, and a similarity fit of the submitted photo cameras to the true
+# ones) x the weighted mean of C1 inventory, C2 pose and shape, C3 site geometry in the robot's terms (C1-gated), C4
+# static physics, C5 interaction (C1-gated), C6 walk predictivity (C1-gated: the series' quadruped walks hidden routes
+# with a frozen controller in the agent's twin and in the true twin) and C7 scale (C1-gated), measured in the site
+# frame after the camera alignment. twin_score = that gated weighted mean; reward = twin_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/quadruped_environment_twin_from_real_photos"
+
+[metadata]
+platform = "quadruped"
+
+# The whole sandbox: pycolmap's sparse reconstruction of the 44 photos peaks at a few GB, an OpenMVS dense cloud of
+# the site runs 20-25 min on 8 CPUs, and the agent's own MuJoCo checks (settle, probes, walks, CPU renders) run beside
+# them. No GPU: nothing the agent is given needs one.
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 0
+
+# setup: stage the givens (the 44 photos, the documents, the public modules, the probe robot and an empty submission/)
+# into the agent home; no warm-up. agent: photos to an interactive twin (6 h budget). verify: see below.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root
+# in the agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead
+# of /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The
+# verifier has everything the grader reads: tests/ (gt/ with the hidden true twin and its truth files,
+# grader_config.json, anchor.json, the grading modules, setup_payload/ with the public gate, simulation, slice map and
+# the probe robot, the kit), the image's /opt/venv and the restored submission. environment/setup/setup.sh does not run
+# there. The grader renders nothing and needs no GPU. As root it only locks, measures, snapshots and copies the
+# submission; the gate, the compile, every simulation and every robot walk run in a worker process as the unprivileged
+# account `nobody` under a 6 GB address-space limit and a hard timeout planned from the verify deadline. The worker
+# first self-tests the truth (the true twin through the same grading code must score exactly 1 in every criterion and
+# reproduce every stored walk outcome), then grades the submission; the walks run in a pool of worker processes sized
+# from the verifier's CPUs. A walk's outcome is decided in simulated time, never by the clock: a verifier too slow to
+# finish the walks within the deadline voids the verification (a task error), it never lowers a score.
+# Verifier class: an x86-64-v3 Linux CPU (AVX2 + FMA). The worker pins numpy's and OpenBLAS's CPU-dependent code paths
+# to that level, which makes the verdict bit-identical between AVX2 and AVX-512 machines (measured); on another ISA the
+# verdict is still graded but may differ from the x86 one in the last bits.
+# Its machine (worker and walk processes single-threaded; test.sh pins the BLAS threads to 1): the walks are 85-90 % of
+# a verify and its time is T(P) = T_fixed + c (S_self + f S_sub) / P on P CPUs: c 0.83-0.85 wall s per simulated s per
+# walk process (an EPYC 7763), S_self = 401 simulated s (the nominal runs of the 28 kept routes: the self-test), S_sub =
+# 4 S_self = 1606 s (the submission's four starts per route), f = 1 for an ordinary twin and 1.75 for the worst legal
+# twin measured (105 extra floor slabs under the routes, a column depth of 126 of the 128 allowed), T_fixed 53-263 s.
+# Measured on the real truth with nothing else running: the oracle 480 s on 4 CPUs (882 s on 2), the worst legal twin
+# 951 s (1600 s on 2); the process tree at most 2.6 GB RSS / 0.76 GB PSS, while a twin at the hull-vertex cap needs 7.9
+# GB PSS with 4 walk processes; in a container of this image limited to 4 CPUs and 16 GB, this task's test.sh graded the
+# oracle's answer in 348 s (cgroup memory peak 0.8 GB) and an empty submission in 88 s. So 4 CPUs (the walk pool's
+# processes), 16 GB, no GPU; timeout_sec = 3 x the worst legal twin (2853 s, rounded up; it also covers the verifier's
+# start, the restore of the submission and the stage upload). On 2 CPUs the timeout would be 4800 s, with the grader's
+# C6 stage cap raised to 3600 s. A verifier too slow for the walks voids the verify; it never lowers a score.
+[verifier]
+timeout_sec = 2900
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 16384
+gpus = 0
