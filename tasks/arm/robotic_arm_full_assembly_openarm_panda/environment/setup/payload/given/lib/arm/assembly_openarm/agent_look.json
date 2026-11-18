@@ -1,0 +1,11 @@
+{
+ "_doc": "Look of the agent's cameras (agent_render.py) in the baked factory hall room_factory_v3_baked (the v2 room: lamps out of their housings, Standard-shader metal/smoothness maps; Cycles DIFFUSE lightmaps at 1024 samples, denoised; the HDR KTX of the Cycles panorama at the bench). Calibrated 2026-10-23 against the v2 Cycles stills (viz/factory_cycles.py, 256 spp): region luminance room 0.97-1.06, bench top 0.91-1.17, floor 1.00-1.13 of Cycles.",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 0.51,
+ "room_baked_light_scale": 6500,
+ "room_ibl_ktx_intensity": 12000,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 0.9
+}
