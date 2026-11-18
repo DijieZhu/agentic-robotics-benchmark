@@ -1,0 +1,254 @@
+# Acceptance conditions of an evidence frame and scoring tolerances, version 1.
+#
+# Single source for the site generator (readable regions, slot proofs) and for the mission package (evidence gate,
+# scoring), in machine-readable form. The values come from an observability study of the instruments
+# (second run: 106,560 samples, 40 per cell, classic renderer).
+#
+# Changed 2026-11-14: re-measured with the readers v3 at the robot's own
+# camera (0.295 m standing, 0.24 m crouching, 0.18 m ahead of the body centre) on its inspect frames in 14 generated
+# sites (8,812 frames; inside / outside a region by mission/evidence.py's record) and in the reduced grid study.
+# The readability rule (a type's evidence region is where the reference reader reads right: at least 40 samples
+# a cell and a one-sided lower 90 % bound of at least 0.90) failed at the far end of three regions, which are tightened: gauge feature_px 70 -> 77
+# (and min_dist 0.4 -> 0.8: 160 mm dials closer than 0.8 m read right in 91 % with 14 misreads in the grid study),
+# valve_handwheel 90 -> 115 (about 3.5 m), level 161 -> 400 (about 4.0 m for a 0.40 m window; 4.1-5 m read right
+# in 88.5 % of 52 frames). reference_p95 of gauge, level, valve_lever and valve_handwheel are the new readers' in-region
+# 95th percentiles on that sample. Keys and their meaning are unchanged.
+#
+# Changed 2026-11-14 afternoon (after a review of the readers): no row the
+# generator or the grader reads changed. reference_p95 re-measured with the corrected readers in three in-site
+# samples (the review's 8,766 frames at 0.295 / 0.24 m and two fresh samples of about 13,000 frames at 0.299 / 0.245 /
+# 0.316 m); thermal with each surface rendered at its catalogue emissivity (the cell since 12:33). The readability rule holds for the
+# level, rising-stem and lever rows without tightening (max_off_axis 30, not used).
+#
+# Changed 2026-11-13 16:15 EST from the first version, after the second study: level feature_px 128 -> 161 and
+# max_off_axis 15 -> 30; lamps feature_px 8 -> 9; thermal max_off_axis 30 -> 60; reference_p95 of gauge, valve_lever,
+# valve_handwheel, level and thermal; the count rule of the survey mark. Nav-camera (wide) frames are not evidence
+# for gauges and level gauges (margins 1.1 and 0.9 in the study).
+#
+# Conventions:
+#   feature_px      apparent size, in pixels of the cited frame, of the named feature of the instrument's face
+#   max_off_axis    angle in degrees between the line from the camera to the centre of the face and the face normal
+#   in_frame        what must lie completely inside the image
+#   visible_share   minimum share of the feature's sample points not occluded (ray casts from the camera)
+#   min_dist/max_dist  camera-to-face distance in metres (max 5 m is the study's measured limit, for every type)
+#   tolerance       full credit up to this error; linear to zero at zero_factor times it
+#   camera          which camera's frames can be cited
+#   lighting        the reading place must be lit to this level (version 1: bright everywhere)
+
+version: 1
+zero_factor: 2.5
+value_free_credit: 0.25
+max_cited_frames: 3
+lighting: bright
+max_dist_all: 5.0
+
+types:
+  gauge:
+    reported: value in the dial's unit
+    tolerance: {kind: fraction_of_span, value: 0.02}
+    camera: inspect
+    feature: dial_diameter
+    feature_px: 77           # 2026-11-14: 70 -> 77 (the readability rule at the robot's camera, readers v3)
+    max_off_axis: 45
+    in_frame: dial
+    in_frame_share: 0.90
+    visible_share: 0.90
+    min_dist: 0.8            # 2026-11-14: 0.4 -> 0.8 (a 160 mm dial closer than 0.8 m at 30-45 deg: 91 % right, 14 misreads)
+    reference_p95: {value: 0.0087, unit: fraction_of_span}   # 2026-11-14: largest of 3 site samples (0.0086 /
+                            # 0.0087 / 0.0080), the corrected readers; margin 2.3 (v3 first pass: 0.0082)
+  level:
+    reported: level in percent
+    tolerance: {kind: absolute, value: 5.0, unit: percent}
+    camera: inspect
+    feature: window_length
+    feature_px: 400         # 2026-11-14: 161 -> 400 (the readability rule in sites: the 4-5 m band read right only 88.5 %)
+    max_off_axis: 30        # combined off-axis angle; keep the horizontal part within about 15 degrees when placing
+    in_frame: scale_plate
+    in_frame_share: 1.0
+    visible_share: 0.90
+    min_dist: 2.5
+    reference_p95: {value: 1.39, unit: percent}              # largest of 3 site samples (1.39 / 1.30 / 1.35);
+                            # margin 3.6 (v3 first pass: 1.25, on the frames v3 could read)
+  valve_lever:
+    reported: angle between lever and pipe in degrees (0 in line, 90 across)
+    tolerance: {kind: absolute, value: 5.0, unit: deg}
+    camera: inspect
+    feature: lever_length
+    feature_px: 80
+    max_off_axis: 45
+    in_frame: lever_and_tag_plate
+    in_frame_share: 1.0
+    visible_share: 0.90
+    min_dist: 1.5
+    reference_p95: {value: 0.95, unit: deg}                  # largest of 3 site samples (0.88 / 0.89 / 0.95);
+                            # margin 5.3 (v3 first pass: 1.01)
+  valve_handwheel:
+    reported: opening in percent (rising stem indicator)
+    tolerance: {kind: absolute, value: 5.0, unit: percent}
+    camera: inspect
+    feature: indicator_stroke
+    feature_px: 115          # 2026-11-14: 90 -> 115 (the readability rule in sites, about 3.5 m)
+    max_off_axis: 45
+    in_frame: indicator_plate
+    in_frame_share: 1.0
+    visible_share: 0.90
+    min_dist: 1.5
+    reference_p95: {value: 1.46, unit: percent}              # largest of 3 site samples (1.46 / 1.43 / 1.40);
+                            # margin 3.4 (v3 first pass: 1.5)
+  lamps:
+    reported: on / off for each lamp, left to right
+    tolerance: {kind: all_correct}
+    camera: inspect
+    feature: lens_diameter
+    feature_px: 9
+    max_off_axis: 55
+    in_frame: panel
+    in_frame_share: 1.0
+    visible_share: 0.90
+    min_dist: 1.5
+  thermal:
+    reported: hottest point of the tagged component in degrees C
+    tolerance: {kind: absolute, value: 3.0, unit: degC}
+    camera: thermal
+    feature: face_min_side
+    feature_px: 6
+    max_off_axis: 60        # measured to 60 degrees in the second study (>= 4 px was enough; 6 px keeps a margin)
+    in_frame: face
+    in_frame_share: 1.0
+    visible_share: 0.05     # changed 2026-11-13 17:05: a bearing housing is 4 to 60 percent visible from any side (the
+                            # pump body hides the rest), so a share of 0.90 can never pass; see size_rule
+    size_rule: "effective size = smaller side of the component's projected box x sqrt(visible share) >= feature_px"
+    off_axis_note: "a component body has no single face normal; apply max_off_axis only where the site gives one"
+    min_dist: 0.4
+    reference_p95: {value: 0.47, unit: K}                    # 2026-11-14: largest of 2 fresh site samples
+                            # (0.452 / 0.466 K; 663 / 670 frames, cameras 0.245 / 0.299 / 0.316 m, each surface rendered
+                            # at its catalogue emissivity); margin 6.4. With every surface at 0.93 (the cell before
+                            # 12:33) it was 1.65 K (powder-coated steel +1.22 K)
+    needs: surface type on the round sheet (emissivity from the catalog)
+
+mark:
+  reported: dose rate where the robot stands
+  tolerance: {kind: relative, value: 0.10}
+  evidence: {within_m: 0.30, for_s: 10.0}
+  count_rule: "counts needed N >= (z / tolerance)^2: 385 counts for 95 percent inside 10 percent, 271 for 90 percent"
+  truth: the field at the robot's own position during the dwell
+
+source:
+  reported: x, y of the unlisted source in the site frame
+  full_credit_within_m: 1.0
+  zero_at_m: 3.0
+  evidence: {own_dosimeter_mean_over_s: 3.0, at_least_rate: threshold}   # threshold in the dose config (2.0 Gy/h in design units)
+
+weights:
+  instrument_each: 0.10     # eight instruments
+  mark: 0.06
+  source: 0.14
+return_factor: {on_pad_upright_within_m: 1.0, value: 1.0, otherwise: 0.85}
+
+# Added 2026-11-16 (version 2; amended the same day at 05:00):
+# the text tag plate's legibility rule, for the generator's `plate_readable`, `findable` and
+# `search_budget` rows. Not an evidence condition (no row above changed). Sizes are taken at the plate's centre in
+# the inspection camera: cap_px = f x 0.025 m / distance (101.0 / d), pitch_px = f x 0.020 m x cos(angle off the plate's
+# normal) / distance (80.8 cos / d).
+# The legible region: cap >= 14 px, pitch >= 8 px, at most 60 deg off the plate. It is accepted when, on the
+# frozen look, in generated version 2 sites, with the generator's own inclusion test (plate_readable's rays and the
+# coplanar test) and a random draw that no reader change has seen: (a) no wrong tag is returned; (b) the lower 90 % bound of
+# whole-tag reads over the region is at least 0.99, counted per frame where plates share a frame; (c) every cell of cap
+# height x angle holds at least 40 views and reads at least 0.97 of them. `measured` below says what was measured how.
+plate_readable:
+  camera: inspect
+  cap_px: 14.0                 # the legible region: cap height at the plate's centre
+  pitch_px: 8.0                # character pitch at the plate's centre
+  legible_off_axis: 60         # the legible region's angle (an earlier version wrote 65 here, which is only the reader's gate;
+                               # the board study's 60-65 deg column held every miss of the region: 419 / 424, lower 0.979)
+  reader_gate: {cap_px: 12.6, pitch_px: 7.6, off_axis: 65}   # bricks.readers.tagtext's own refusal limits (0.9 x the
+                               # region's cap, 0.95 x its pitch, 65 deg; CAP_MIN_PX, PITCH_MIN_PX, OFF_AXIS_MAX_DEG). The
+                               # reader reads beyond the region; this deviation from the legibility rule is accepted as long
+                               # as the study shows no wrong tag there. The pitch gate was 7.2 until 07:35: the study's
+                               # first board fill read one plate wrong at pitch 7.3 px (see measured). Not read by the
+                               # generator.
+  max_off_axis: 55             # plate_readable's angle (the margin region)
+  margin: 1.3                  # plate_readable asks cap >= margin x cap_px and pitch >= margin x pitch_px
+  whole_plate_in_frame: true
+  clear_grid: [25, 11]         # points over the plate that must be clear of occluders (first 12 x 6), placed
+                               # EDGE TO EDGE: y = linspace(-w/2, w/2, 25), z = linspace(-h/2, h/2, 11), 0.5 mm in
+                               # from the edge (about 8 mm apart); since 2026-11-16 03:15. Corrected 05:30: an earlier note
+                               # wrote that the 12 x 6 grid "missed thin occluders over the plate's edge (switchgear door
+                               # seams)". That cause was wrong: the misses on the lamp-panel plates of t1-t3 (LCP-1419,
+                               # LCP-1426, LCP-1417) were a switchgear door seam whose front face lies flush with the
+                               # plate's face (0.0 mm) and runs through the plate's middle; a ray test ignores hits within
+                               # 12 mm of its target point, so no grid density sees it (the 25 x 11 grid passes all 12 such
+                               # views). What catches it is the coplanar test (any other geom whose surface lies within
+                               # 2 mm of the plate's face plane and overlaps its outline fails plates_clear /
+                               # plate_readable; the generator's code) and the generator mounting panel
+                               # plates on one leaf, 10 mm clear of any seam. The 25 x 11 grid stays, as a finer ray
+                               # sample, not as that fix.
+  findable_off_axis: 60        # findable: legible from one viewpoint at cap_px / pitch_px within this angle (= the legible region's)
+  nav_blob_px: 10              # findable / search_budget: the plate at least this wide in a navigation frame
+  nav_false_candidates_per_viewpoint: 3   # search_budget's allowance, per navigation frame
+  measured:                    # every number with the task image's packages, the cell's camera model and renderer
+    starting_point: "the design's starting point, a prototype test bay: cap 14 px, pitch 8 px, 65 deg (plain wall, hall
+      lights, prototype reader)"
+    board_study_first: "the first board study (the plate reader of 2026-11-16 03:11, before its local normalisation;
+      one held-out random draw of plates): 11,785 plate views on 3 x 3 boards (4 walls: paint / hall lights, blockwork,
+      grey blockwork, shield concrete / room spot lights; half on dark steel; near-twin tags; cameras 0.245-0.316 m;
+      boards at 0.5-1.9 m). 0 wrong tags. Inside 14 / 8 / 65: 4,791 / 4,796 (lower 90 % bound 0.9982 with plates as
+      the unit). Per cell of cap height x angle (the per-cell rule of that time: at least 40 plates a cell, a lower 90 % bound of at
+      least 0.99 and no wrong tag): the 60-65 deg column holds all 5 misses (419 / 424, lower 0.979; cells 22-30 px
+      203 / 206 and 30-45 px 155 / 157, lower 0.970), so no cell at 60-65 deg qualifies; with frames as the unit
+      660 / 665 frames all read (lower 0.987). Inside 14 / 8 / 60: 4,372 / 4,372 (lower 0.9996; 613 / 613 frames,
+      lower 0.997). Validated on one held-out draw; two earlier draws had led to the size-gate change and to two
+      border-finding fixes. That study never put a plate at 2.0 m under a room spot light, where this reader refused
+      every plate (seen on a review's boards; fixed by the reader's normalisation of a plate against its local
+      background)"
+    in_site_first: "the first in-site study (2026-11-16; version 1's practice packages t1-t3 and the hall re-skinned
+      with text plates, under an earlier dressing of the look). Inclusion by rays only, the generator's kind of test
+      (12 x 6 or 24 x 10 points): inside 14 / 8 / 65 1,059 / 1,073 (0.987, lower 0.982), 0 wrong; t1-t3 alone 456 /
+      468 (lower 0.963); inside 14 / 8 / 60 952 / 963 (lower 0.983). Its first report was 1,059 / 1,062 (lower 0.9942),
+      with a second inclusion condition (at least 97 % of the plate's outline its own pixels in a segmentation render)
+      that was added at 02:51 and revised at 03:02, after the runs of 02:29 / 02:32 on the same seeds had shown the
+      misses: it excluded the 12 flush-seam lamp-panel views (the case the coplanar test now refuses). No cell of 40
+      views met lower >= 0.99. A review re-ran it on the frozen look: 2,130 of 2,131 outcomes the same, 0 wrong"
+    in_site_v2: "the legibility rule's acceptance study (the second in-site study, 2026-11-16): 17 generated version 2
+      development sites (development packages 1-17 of one generator version), the frozen look (SITE_GEN_DRESS=1), the
+      robot's own inspection camera at 0.245 / 0.299 / 0.316 m, every listed instrument's and decoy's text plate (2
+      thermal decoys without evidence geometry skipped), views counted with the generator's own inclusion test
+      (site_gen.accept.plate_legible with clear=True: tilt limits, whole plate in the frame, 25 x 11 rays, the coplanar
+      test). Draw A (the reader of 07:00 with a pitch gate of 7.2 px): 7,648 of 8,440 views counted; region 4,926 /
+      4,932 read, one plate a frame, lower 90 % bound 0.9980; 0 wrong tags in and beyond the region (1,206 reads
+      beyond); but its board fill returned one wrong tag beyond the region (V-7145 as N-7145 at pitch 7.3 px, 57 deg),
+      so the pitch gate went to 7.6 px and the study was repeated. Draw B (the final reader): 7,625 of 8,368 views
+      counted; (a) 0 wrong tags in the region and 0 beyond it (1,131 reads beyond: 60-65 deg 995 / 999, 12.6-14 px 48 /
+      117); (b) region 4,922 / 4,926 read, lower 90 % bound 0.9985 by frame; the 4 misses are draw A's two missed decoy
+      plates, whose frames show them touching a copper or an ochre pipe in the image (the reader's yellow window takes
+      its saturated pixels: refusals); (c) every cell of cap height x angle with 40 or more site views reads 0.983 or
+      more; seven cells had fewer than 40 site views (14-16 px x 40-50 and 50-55 deg, 16-18.2 px x 40-50, 50-55 and
+      55-60 deg, 70-110 and 110-170 px x 0-20 deg) and were filled with boards (below): every cell then holds >= 40
+      views and >= 0.97 (lowest 18.2-22 px x 50-55 deg, 58 / 59, sites only; of the filled cells 16-18.2 px x 40-50
+      deg, 267 / 271); pooled with the boards 6,080 / 6,090, lower 0.9972 by frame. All three criteria hold on draw B.
+      Per site: 15 of 17 read every view of the region (lower bounds 0.993-0.995); site 2 257 / 259, site 8 320 / 322.
+      Pose of the read plates (true facing): centre median 0.7 mm, p95 36 mm; normal median 0.04 deg, p95 0.64 deg; no
+      mirror flip"
+    boards_v2: "boards for the cells the sites leave thin (the acceptance study's fill, cap and angle drawn inside the
+      region's part of each cell): the same lettering, frozen-look wall surfaces (wall_dado_green, wall_dado_blue,
+      wall_paint_plain, shield_concrete, blockwork), room / near / dim spot lights, worn-steel backings. Draw B (two
+      board sets, the final reader): 2,046 views, 0 wrong tags anywhere (200 reads beyond the region); draw A's fill
+      (pitch gate 7.2): 1,881 views, 1 wrong tag beyond the region (above)"
+    board_validation_v2: "the final reader against the first study's reader and the first version with the local
+      normalisation, on the same frames (development boards of 2026-11-16, 8 walls incl. the frozen look's surfaces,
+      hall / room / near / dim lights, a row at 2.0 m; 16,620 views): in the region 6,115 / 6,115 (the first study's
+      reader 6,050: the room-lit row at 2.0 m and dim plates, fixed by the local normalisation), 0 wrong tags in any
+      version"
+    instrument_readers_v2: "the six instrument readers on the same 17 sites and look (the recorded facing; draw A's
+      instrument frames, 14,259 frames; the readability rule per stratum of camera height x 15 deg x distance thirds,
+      >= 40 frames): in region dial 3,027 / 3,034, level 756 / 758, lamps 1,288 / 1,295, rising stem 2,179 / 2,213,
+      quarter-turn valve (plate pose) 528 / 540, temperature point 249 / 249; no stratum of >= 40 frames below 0.90 for
+      any type (none for the levers and temperature points: too few per stratum); 6 confident misreads in region. The
+      dial reader was fixed for the dressed backgrounds (a clipped face; a grey face inside a brighter wall): on the
+      dumped dial crops 2,981 -> 3,027 in region. No row above changed"
+    wide_finder: "the plate finder in navigation frames. Second study (the same 17 sites, frozen look, draw A's
+      navigation frames): 2,885 frames, 1,175 of them aimed near the ruled exceptions (hazard stripes, trefoil and
+      hazard signs); false candidates per frame mean 0.058, p95 1, max 2: no frame over the allowance of 3; plates found
+      0.957 / 0.940 / 0.912 / 0.902 at 1.5-3 / 3-4.5 / 4.5-6 / 6-7.6 m (targets: plates whose centre ray is clear),
+      0.65 at 7.6-9 m. First study (re-skinned practice sites, the earlier dressing, 832 frames): 0.972-0.980 per band
+      to 7.6 m, 0.78 (241 / 308) at 7.6-9 m; false mean 0.037, max 2 (version 1's look: mean 0.29, max 7)"

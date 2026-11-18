@@ -1,0 +1,85 @@
+# Mission configuration.
+# The evidence gate, the tolerances, the item weights and the return factor are NOT here: config.load_cfg() reads them
+# from the shared acceptance_v1.yaml (the one source for the site generator and the grader side).
+
+time:
+  tick_s: 0.01                 # one facade tick = 10 physics steps of 1 ms
+  max_ticks_per_step: 500
+  sim_time_limit_s: 1350.0     # version 2.1 (2026-11-17): 1350 s per mission, scored and practice alike
+                               # (version 2.0: 2400 s); the training hall 900 s
+                               # (practice_ground/sites.json); the grader's tests/grader_config.json says the same
+
+budgets:                       # a call past its budget answers an error dict
+  program_time_s: 1200.0       # measured and reported, not enforced (the mission world runs in one process)
+  silence_s: 180.0
+  frames: {nav: 300, inspect: 240, depth: 1500, thermal: 150, lidar: 4000}
+  reports: {instrument: 40, mark: 6, source: 3}
+
+start:                         # the robot is set down within 5 cm and 2 degrees of the pad datum; its
+  pos_m: 0.05                  # odometry starts at the datum (the set-down error is a draw of the mission's seed)
+  yaw_deg: 2.0
+
+odometry_drift:                # extra drift on top of the controller's leg odometry (facade only)
+  scale_error: 0.02            # |scale error| of the distance travelled (sign seeded)
+  heading_rate_max_deg_min: 1.0
+  heading_rate_tau_s: 120.0    # correlation time of the heading-rate random walk
+  seed_salt: 7919
+
+dose:
+  # Design units: the site files keep the site field in uSv/h; 1 site unit = 0.067 Gy/h
+  # (the ladder site says the same in site.json ladder.dose.unit_factor).
+  gyh_per_site_unit: 0.067
+  # The sensor head's rating: one configured number for every site (site_gen ladder.dose.rating_gy).
+  # Reaching it ends the mission. No per-site rating from a reference route (an earlier 3 x route dose is gone).
+  rating_gy: 2.0
+  sensitivity_cps_per_gyh: 45.0  # 3.0 cps per site unit
+  e_x_threshold_gyh: 2.0          # E_X on the robot's own dosimeter (acceptance_v1: "threshold in the dose
+                                  # config"); the 3 s averaging window comes from acceptance_v1 (source.evidence)
+  e_x_within_m: 3.0               # ... and during those 3 s the body centre stayed within this distance (horizontal) of
+                                  # the point the report gives (decided 2026-11-14)
+  sample_s: 0.1
+  dosimeter_offset: [0.0, 0.0, 0.0]   # in the base frame (body centre)
+
+link:
+  check_every_s: 0.5
+  base_range_m: 12.0
+  repeater_range_m: 9.0
+  end_margin_m: 0.35           # a ray hit this close to the node counts as reaching it (antenna, its own wall)
+
+hold:                          # version 2: after every `blocked` report the robot takes no
+  after_blocked_s: 5.0         # walking command for this long (simulated s) and its status stays `blocked`; a mode or
+                               # body command given meanwhile takes effect when it ends. In the cell around the gait,
+                               # for every controller; 0 = version 1's behaviour (no hold)
+
+protect:                       # stand-in firmware protections, ONLY for a controller without its own (the classical
+  enabled: true                # one); the learned controller reports blocked / protective_sit itself
+  trip_stop: true
+  backoff_s: 2.0                # back off 0.2 m, then stand until the program commands again
+  backoff_speed: 0.10
+  trip_debounce_s: 3.0
+  protective_tilt_deg: 35.0
+  protective_pause_s: 5.0
+  lost_tilt_deg: 70.0           # the grader's 'robot lost' rule applies to every controller
+  lost_hold_s: 2.0
+  rated:                        # element classes each mode may touch without a trip stop
+    walk: [free, slow, tight]
+    high_step: [free, slow, tight, needs_high_step]
+    crouch_walk: [free, slow, tight, needs_crouch]
+    stand: [free, slow, tight, needs_high_step, needs_crouch]
+    sit: [free, slow, tight, needs_high_step, needs_crouch]
+
+sensors:
+  nav: {width: 640, height: 480, hfov_deg: 90.0, depth_range: [0.15, 8.0]}
+  inspect: {width: 1280, height: 960, hfov_deg: 18.0}
+  thermal: {width: 160, height: 120, hfov_deg: 50.0, ambient_c: 22.0, emissivity: 0.93}
+  lidar: {beams: 720, r_min: 0.15, r_max: 12.0}
+  offsets:                      # boresighted on the tilt body (x forward, y left, z up), metres
+    nav: [0.0155, 0.0, 0.0]
+    inspect: [0.0155, -0.022, 0.0]
+    thermal: [0.0155, 0.022, 0.0]
+  room_lights_per_frame: 7      # the classic renderer draws 8 lights including the headlight
+  head_limits: {pan: [-1.75, 1.75], tilt: [-1.0, 0.8]}
+
+log:
+  traj_hz: 20
+  save_frames: true

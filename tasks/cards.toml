@@ -161,6 +161,12 @@ summary = "Program a 6-DoF arm to build a twelve-actuator quadruped from its loo
 platforms = ["quadruped", "arm"]
 stages = ["assembly"]
 
+[quadruped_hazardous_plant_inspection]
+title = "Inspect a legacy nuclear plant with a quadruped"
+summary = "Program a small quadruped to inspect a legacy nuclear plant building from an outdated drawing: read its tagged instruments, measure a dose rate, find an unlisted source and return to the pad."
+platforms = ["quadruped"]
+stages = ["behavior"]
+
 [quadruped_requirements_replica_from_photos]
 title = "Specify upgraded replicas of a quadruped"
 summary = "Specify eight upgraded replicas of an inspection quadruped that has left the lab, from its photos and build records, down to its actuators, drivers and battery."

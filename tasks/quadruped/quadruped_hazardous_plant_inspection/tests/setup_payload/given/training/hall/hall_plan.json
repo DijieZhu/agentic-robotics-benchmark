@@ -1,0 +1,4110 @@
+{
+ "frame": {
+  "origin": "deployment pad centre (airlock datum)",
+  "x": "into the building",
+  "y": "left",
+  "z": "up",
+  "units": "m, rad"
+ },
+ "datum": {
+  "pos": [
+   0.0,
+   0.0
+  ],
+  "yaw": 0.0,
+  "uncertainty": {
+   "pos_m": 0.05,
+   "yaw_deg": 2.0
+  },
+  "pad_size_m": 0.9
+ },
+ "drawing": {
+  "number": "AB-GA-1070",
+  "title": "TRAINING HALL - GENERAL ARRANGEMENT",
+  "revision": "C",
+  "revision_date": "2026-11-01",
+  "scale": "1:100",
+  "sheets": [
+   {
+    "sheet": 1,
+    "rect": [
+     2.0,
+     -10.5,
+     17.0,
+     0.0
+    ],
+    "missing": false
+   },
+   {
+    "sheet": 2,
+    "rect": [
+     17.0,
+     -10.5,
+     32.0,
+     0.0
+    ],
+    "missing": false
+   },
+   {
+    "sheet": 3,
+    "rect": [
+     2.0,
+     0.0,
+     17.0,
+     10.5
+    ],
+    "missing": false
+   },
+   {
+    "sheet": 4,
+    "rect": [
+     17.0,
+     0.0,
+     32.0,
+     10.5
+    ],
+    "missing": false
+   }
+  ],
+  "notes": [
+   "DIMENSIONS IN METRES FROM THE AIRLOCK DATUM",
+   "DRAWING CHECKED AGAINST THE HALL"
+  ]
+ },
+ "building": {
+  "outline": [
+   2.0,
+   -10.5,
+   32.0,
+   10.5
+  ],
+  "airlock": [
+   -1.5,
+   -1.5,
+   2.0,
+   1.5
+  ],
+  "wall_height": 2.6
+ },
+ "grid": {
+  "pitch": 6.0,
+  "x_lines": [
+   {
+    "label": "1",
+    "x": 2.0
+   },
+   {
+    "label": "2",
+    "x": 8.0
+   },
+   {
+    "label": "3",
+    "x": 14.0
+   },
+   {
+    "label": "4",
+    "x": 20.0
+   },
+   {
+    "label": "5",
+    "x": 26.0
+   },
+   {
+    "label": "6",
+    "x": 32.0
+   }
+  ],
+  "y_lines": [
+   {
+    "label": "A",
+    "y": -10.5
+   },
+   {
+    "label": "B",
+    "y": -4.5
+   },
+   {
+    "label": "C",
+    "y": 1.5
+   },
+   {
+    "label": "D",
+    "y": 7.5
+   }
+  ]
+ },
+ "rooms": [
+  {
+   "number": "100",
+   "name": "AIRLOCK",
+   "type": "airlock",
+   "rect": [
+    -1.5,
+    -1.5,
+    2.0,
+    1.5
+   ]
+  },
+  {
+   "number": "200",
+   "name": "TRAINING HALL",
+   "type": "hall",
+   "rect": [
+    2.0,
+    -10.5,
+    32.0,
+    10.5
+   ]
+  }
+ ],
+ "walls": [
+  {
+   "a": [
+    -1.5,
+    -1.5
+   ],
+   "b": [
+    -1.5,
+    1.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": -0.025
+  },
+  {
+   "a": [
+    2.0,
+    -10.5
+   ],
+   "b": [
+    2.0,
+    -1.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": -0.025
+  },
+  {
+   "a": [
+    2.0,
+    -1.5
+   ],
+   "b": [
+    2.0,
+    1.5
+   ],
+   "thickness": 0.25,
+   "kind": "wall",
+   "offset": 0.0
+  },
+  {
+   "a": [
+    2.0,
+    1.5
+   ],
+   "b": [
+    2.0,
+    10.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": -0.025
+  },
+  {
+   "a": [
+    32.0,
+    -10.5
+   ],
+   "b": [
+    32.0,
+    10.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": 0.025
+  },
+  {
+   "a": [
+    2.0,
+    -10.5
+   ],
+   "b": [
+    32.0,
+    -10.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": -0.025
+  },
+  {
+   "a": [
+    -1.5,
+    -1.5
+   ],
+   "b": [
+    2.0,
+    -1.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": -0.025
+  },
+  {
+   "a": [
+    -1.5,
+    1.5
+   ],
+   "b": [
+    2.0,
+    1.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": 0.025
+  },
+  {
+   "a": [
+    2.0,
+    10.5
+   ],
+   "b": [
+    32.0,
+    10.5
+   ],
+   "thickness": 0.3,
+   "kind": "outer",
+   "offset": 0.025
+  }
+ ],
+ "doors": [
+  {
+   "pos": [
+    2.0,
+    0.0
+   ],
+   "axis": "x",
+   "width": 1.2,
+   "rooms": [
+    "100",
+    "200"
+   ],
+   "kind": "door",
+   "hinge": 1,
+   "swing_into": "100",
+   "drawn_state": "open as drawn"
+  },
+  {
+   "pos": [
+    -1.5,
+    0.0
+   ],
+   "axis": "x",
+   "width": 1.4,
+   "rooms": [
+    "OUT",
+    "100"
+   ],
+   "kind": "door",
+   "hinge": -1,
+   "swing_into": "100",
+   "drawn_state": "exterior, kept shut",
+   "note": "airlock outer door"
+  }
+ ],
+ "equipment": [
+  {
+   "label": "DEPLOYMENT PAD (DATUM)",
+   "kind": "deployment_pad",
+   "room": "100",
+   "shape": "rect",
+   "outline": [
+    [
+     -0.45,
+     -0.45
+    ],
+    [
+     0.45,
+     -0.45
+    ],
+    [
+     0.45,
+     0.45
+    ],
+    [
+     -0.45,
+     0.45
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     4.97,
+     1.8
+    ],
+    [
+     5.03,
+     1.8
+    ],
+    [
+     5.03,
+     5.4
+    ],
+    [
+     4.97,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     6.17,
+     1.8
+    ],
+    [
+     6.23,
+     1.8
+    ],
+    [
+     6.23,
+     5.4
+    ],
+    [
+     6.17,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     7.37,
+     1.8
+    ],
+    [
+     7.43,
+     1.8
+    ],
+    [
+     7.43,
+     5.4
+    ],
+    [
+     7.37,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     8.57,
+     1.8
+    ],
+    [
+     8.63,
+     1.8
+    ],
+    [
+     8.63,
+     5.4
+    ],
+    [
+     8.57,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     9.77,
+     1.8
+    ],
+    [
+     9.83,
+     1.8
+    ],
+    [
+     9.83,
+     5.4
+    ],
+    [
+     9.77,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     10.97,
+     1.8
+    ],
+    [
+     11.03,
+     1.8
+    ],
+    [
+     11.03,
+     5.4
+    ],
+    [
+     10.97,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     12.17,
+     1.8
+    ],
+    [
+     12.23,
+     1.8
+    ],
+    [
+     12.23,
+     5.4
+    ],
+    [
+     12.17,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     13.37,
+     1.8
+    ],
+    [
+     13.43,
+     1.8
+    ],
+    [
+     13.43,
+     5.4
+    ],
+    [
+     13.37,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     14.57,
+     1.8
+    ],
+    [
+     14.63,
+     1.8
+    ],
+    [
+     14.63,
+     5.4
+    ],
+    [
+     14.57,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     15.77,
+     1.8
+    ],
+    [
+     15.83,
+     1.8
+    ],
+    [
+     15.83,
+     5.4
+    ],
+    [
+     15.77,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     16.97,
+     1.8
+    ],
+    [
+     17.03,
+     1.8
+    ],
+    [
+     17.03,
+     5.4
+    ],
+    [
+     16.97,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     18.17,
+     1.8
+    ],
+    [
+     18.23,
+     1.8
+    ],
+    [
+     18.23,
+     5.4
+    ],
+    [
+     18.17,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     19.37,
+     1.8
+    ],
+    [
+     19.43,
+     1.8
+    ],
+    [
+     19.43,
+     5.4
+    ],
+    [
+     19.37,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     20.57,
+     1.8
+    ],
+    [
+     20.63,
+     1.8
+    ],
+    [
+     20.63,
+     5.4
+    ],
+    [
+     20.57,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     21.77,
+     1.8
+    ],
+    [
+     21.83,
+     1.8
+    ],
+    [
+     21.83,
+     5.4
+    ],
+    [
+     21.77,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     22.97,
+     1.8
+    ],
+    [
+     23.03,
+     1.8
+    ],
+    [
+     23.03,
+     5.4
+    ],
+    [
+     22.97,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     24.17,
+     1.8
+    ],
+    [
+     24.23,
+     1.8
+    ],
+    [
+     24.23,
+     5.4
+    ],
+    [
+     24.17,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     25.37,
+     1.8
+    ],
+    [
+     25.43,
+     1.8
+    ],
+    [
+     25.43,
+     5.4
+    ],
+    [
+     25.37,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     26.57,
+     1.8
+    ],
+    [
+     26.63,
+     1.8
+    ],
+    [
+     26.63,
+     5.4
+    ],
+    [
+     26.57,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     27.77,
+     1.8
+    ],
+    [
+     27.83,
+     1.8
+    ],
+    [
+     27.83,
+     5.4
+    ],
+    [
+     27.77,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     28.97,
+     1.8
+    ],
+    [
+     29.03,
+     1.8
+    ],
+    [
+     29.03,
+     5.4
+    ],
+    [
+     28.97,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     30.17,
+     1.8
+    ],
+    [
+     30.23,
+     1.8
+    ],
+    [
+     30.23,
+     5.4
+    ],
+    [
+     30.17,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     31.37,
+     1.8
+    ],
+    [
+     31.43,
+     1.8
+    ],
+    [
+     31.43,
+     5.4
+    ],
+    [
+     31.37,
+     5.4
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     4.97,
+     6.8
+    ],
+    [
+     5.03,
+     6.8
+    ],
+    [
+     5.03,
+     10.375
+    ],
+    [
+     4.97,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     6.17,
+     6.8
+    ],
+    [
+     6.23,
+     6.8
+    ],
+    [
+     6.23,
+     10.375
+    ],
+    [
+     6.17,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     7.37,
+     6.8
+    ],
+    [
+     7.43,
+     6.8
+    ],
+    [
+     7.43,
+     10.375
+    ],
+    [
+     7.37,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     8.57,
+     6.8
+    ],
+    [
+     8.63,
+     6.8
+    ],
+    [
+     8.63,
+     10.375
+    ],
+    [
+     8.57,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     9.77,
+     6.8
+    ],
+    [
+     9.83,
+     6.8
+    ],
+    [
+     9.83,
+     10.375
+    ],
+    [
+     9.77,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     10.97,
+     6.8
+    ],
+    [
+     11.03,
+     6.8
+    ],
+    [
+     11.03,
+     10.375
+    ],
+    [
+     10.97,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     12.17,
+     6.8
+    ],
+    [
+     12.23,
+     6.8
+    ],
+    [
+     12.23,
+     10.375
+    ],
+    [
+     12.17,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     13.37,
+     6.8
+    ],
+    [
+     13.43,
+     6.8
+    ],
+    [
+     13.43,
+     10.375
+    ],
+    [
+     13.37,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     14.57,
+     6.8
+    ],
+    [
+     14.63,
+     6.8
+    ],
+    [
+     14.63,
+     10.375
+    ],
+    [
+     14.57,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     15.77,
+     6.8
+    ],
+    [
+     15.83,
+     6.8
+    ],
+    [
+     15.83,
+     10.375
+    ],
+    [
+     15.77,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     16.97,
+     6.8
+    ],
+    [
+     17.03,
+     6.8
+    ],
+    [
+     17.03,
+     10.375
+    ],
+    [
+     16.97,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     18.17,
+     6.8
+    ],
+    [
+     18.23,
+     6.8
+    ],
+    [
+     18.23,
+     10.375
+    ],
+    [
+     18.17,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     19.37,
+     6.8
+    ],
+    [
+     19.43,
+     6.8
+    ],
+    [
+     19.43,
+     10.375
+    ],
+    [
+     19.37,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     20.57,
+     6.8
+    ],
+    [
+     20.63,
+     6.8
+    ],
+    [
+     20.63,
+     10.375
+    ],
+    [
+     20.57,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     21.77,
+     6.8
+    ],
+    [
+     21.83,
+     6.8
+    ],
+    [
+     21.83,
+     10.375
+    ],
+    [
+     21.77,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     22.97,
+     6.8
+    ],
+    [
+     23.03,
+     6.8
+    ],
+    [
+     23.03,
+     10.375
+    ],
+    [
+     22.97,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     24.17,
+     6.8
+    ],
+    [
+     24.23,
+     6.8
+    ],
+    [
+     24.23,
+     10.375
+    ],
+    [
+     24.17,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     25.37,
+     6.8
+    ],
+    [
+     25.43,
+     6.8
+    ],
+    [
+     25.43,
+     10.375
+    ],
+    [
+     25.37,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     26.57,
+     6.8
+    ],
+    [
+     26.63,
+     6.8
+    ],
+    [
+     26.63,
+     10.375
+    ],
+    [
+     26.57,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     27.77,
+     6.8
+    ],
+    [
+     27.83,
+     6.8
+    ],
+    [
+     27.83,
+     10.375
+    ],
+    [
+     27.77,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     28.97,
+     6.8
+    ],
+    [
+     29.03,
+     6.8
+    ],
+    [
+     29.03,
+     10.375
+    ],
+    [
+     28.97,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     30.17,
+     6.8
+    ],
+    [
+     30.23,
+     6.8
+    ],
+    [
+     30.23,
+     10.375
+    ],
+    [
+     30.17,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE DIVIDER",
+   "kind": "divider",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     31.37,
+     6.8
+    ],
+    [
+     31.43,
+     6.8
+    ],
+    [
+     31.43,
+     10.375
+    ],
+    [
+     31.37,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "LANE BACK WALL (1.2 m)",
+   "kind": "partition",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     5.0,
+     1.75
+    ],
+    [
+     31.4,
+     1.75
+    ],
+    [
+     31.4,
+     1.85
+    ],
+    [
+     5.0,
+     1.85
+    ]
+   ]
+  },
+  {
+   "label": "L18 PLATFORM 0.040 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     25.43,
+     1.85
+    ],
+    [
+     26.57,
+     1.85
+    ],
+    [
+     26.57,
+     3.8
+    ],
+    [
+     25.43,
+     3.8
+    ]
+   ]
+  },
+  {
+   "label": "L19 PLATFORM 0.052 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     26.63,
+     1.85
+    ],
+    [
+     27.77,
+     1.85
+    ],
+    [
+     27.77,
+     3.8
+    ],
+    [
+     26.63,
+     3.8
+    ]
+   ]
+  },
+  {
+   "label": "L20 PLATFORM 0.070 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     27.83,
+     1.85
+    ],
+    [
+     28.97,
+     1.85
+    ],
+    [
+     28.97,
+     3.8
+    ],
+    [
+     27.83,
+     3.8
+    ]
+   ]
+  },
+  {
+   "label": "L21 PLATFORM 0.110 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     29.03,
+     1.85
+    ],
+    [
+     30.17,
+     1.85
+    ],
+    [
+     30.17,
+     3.8
+    ],
+    [
+     29.03,
+     3.8
+    ]
+   ]
+  },
+  {
+   "label": "L27 LOW RACK 0.420 m CLEAR",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     9.83,
+     7.9
+    ],
+    [
+     10.97,
+     7.9
+    ],
+    [
+     10.97,
+     8.9
+    ],
+    [
+     9.83,
+     8.9
+    ]
+   ]
+  },
+  {
+   "label": "L28 LOW RACK 0.340 m CLEAR",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     11.03,
+     7.9
+    ],
+    [
+     12.17,
+     7.9
+    ],
+    [
+     12.17,
+     8.9
+    ],
+    [
+     11.03,
+     8.9
+    ]
+   ]
+  },
+  {
+   "label": "L29 LOW RACK 0.310 m CLEAR",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     12.23,
+     7.9
+    ],
+    [
+     13.37,
+     7.9
+    ],
+    [
+     13.37,
+     8.9
+    ],
+    [
+     12.23,
+     8.9
+    ]
+   ]
+  },
+  {
+   "label": "L30 LOW RACK 0.290 m CLEAR",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     13.43,
+     7.9
+    ],
+    [
+     14.57,
+     7.9
+    ],
+    [
+     14.57,
+     8.9
+    ],
+    [
+     13.43,
+     8.9
+    ]
+   ]
+  },
+  {
+   "label": "L31 LOW RACK 0.260 m CLEAR",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     14.63,
+     7.9
+    ],
+    [
+     15.77,
+     7.9
+    ],
+    [
+     15.77,
+     8.9
+    ],
+    [
+     14.63,
+     8.9
+    ]
+   ]
+  },
+  {
+   "label": "L32 PIPE BRIDGE 0.290 m CLEAR, 0.8 m LONG",
+   "kind": "rack",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     15.83,
+     8.0
+    ],
+    [
+     16.97,
+     8.0
+    ],
+    [
+     16.97,
+     8.8
+    ],
+    [
+     15.83,
+     8.8
+    ]
+   ]
+  },
+  {
+   "label": "L33 RAMP 8 DEG + PLATFORM 0.20 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     17.03,
+     6.8
+    ],
+    [
+     18.17,
+     6.8
+    ],
+    [
+     18.17,
+     10.375
+    ],
+    [
+     17.03,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "L34 RAMP 12 DEG + PLATFORM 0.20 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     18.23,
+     6.8
+    ],
+    [
+     19.37,
+     6.8
+    ],
+    [
+     19.37,
+     10.375
+    ],
+    [
+     18.23,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "L35 RAMP 15 DEG + PLATFORM 0.20 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     19.43,
+     6.8
+    ],
+    [
+     20.57,
+     6.8
+    ],
+    [
+     20.57,
+     10.375
+    ],
+    [
+     19.43,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "L36 RAMP 18 DEG + PLATFORM 0.20 m",
+   "kind": "platform",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     20.63,
+     6.8
+    ],
+    [
+     21.77,
+     6.8
+    ],
+    [
+     21.77,
+     10.375
+    ],
+    [
+     20.63,
+     10.375
+    ]
+   ]
+  },
+  {
+   "label": "L37 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     21.83,
+     8.38
+    ],
+    [
+     22.075,
+     8.38
+    ],
+    [
+     22.075,
+     8.42
+    ],
+    [
+     21.83,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L37 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     22.725,
+     8.38
+    ],
+    [
+     22.97,
+     8.38
+    ],
+    [
+     22.97,
+     8.42
+    ],
+    [
+     22.725,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L38 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     23.03,
+     8.38
+    ],
+    [
+     23.325,
+     8.38
+    ],
+    [
+     23.325,
+     8.42
+    ],
+    [
+     23.03,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L38 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     23.875,
+     8.38
+    ],
+    [
+     24.17,
+     8.38
+    ],
+    [
+     24.17,
+     8.42
+    ],
+    [
+     23.875,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L39 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     24.23,
+     8.38
+    ],
+    [
+     24.56,
+     8.38
+    ],
+    [
+     24.56,
+     8.42
+    ],
+    [
+     24.23,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L39 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     25.04,
+     8.38
+    ],
+    [
+     25.37,
+     8.38
+    ],
+    [
+     25.37,
+     8.42
+    ],
+    [
+     25.04,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L40 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     25.43,
+     8.38
+    ],
+    [
+     25.79,
+     8.38
+    ],
+    [
+     25.79,
+     8.42
+    ],
+    [
+     25.43,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "L40 GAP PANEL",
+   "kind": "panel",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     26.21,
+     8.38
+    ],
+    [
+     26.57,
+     8.38
+    ],
+    [
+     26.57,
+     8.42
+    ],
+    [
+     26.21,
+     8.42
+    ]
+   ]
+  },
+  {
+   "label": "PALLET ISLAND (LOOP)",
+   "kind": "pallets",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     10.0,
+     -3.5
+    ],
+    [
+     18.0,
+     -3.5
+    ],
+    [
+     18.0,
+     -1.0
+    ],
+    [
+     10.0,
+     -1.0
+    ]
+   ]
+  },
+  {
+   "label": "SHIELD BLOCKS",
+   "kind": "shield",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     29.4,
+     -2.1
+    ],
+    [
+     31.875,
+     -2.1
+    ],
+    [
+     31.875,
+     -1.8
+    ],
+    [
+     29.4,
+     -1.8
+    ]
+   ]
+  },
+  {
+   "label": "SHIELD BLOCKS",
+   "kind": "shield",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     29.4,
+     0.6
+    ],
+    [
+     31.875,
+     0.6
+    ],
+    [
+     31.875,
+     0.9
+    ],
+    [
+     29.4,
+     0.9
+    ]
+   ]
+  },
+  {
+   "label": "CHECK SOURCE (25 Gy/h AT 1 m)",
+   "kind": "check_source",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     31.05,
+     -0.75
+    ],
+    [
+     31.35,
+     -0.75
+    ],
+    [
+     31.35,
+     -0.45
+    ],
+    [
+     31.05,
+     -0.45
+    ]
+   ]
+  },
+  {
+   "label": "PLATE POST 1",
+   "kind": "post",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     2.7,
+     -7.5
+    ],
+    [
+     3.0,
+     -7.5
+    ],
+    [
+     3.0,
+     -7.2
+    ],
+    [
+     2.7,
+     -7.2
+    ]
+   ]
+  },
+  {
+   "label": "PLATE POST 2",
+   "kind": "post",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     2.7,
+     -4.8
+    ],
+    [
+     3.0,
+     -4.8
+    ],
+    [
+     3.0,
+     -4.5
+    ],
+    [
+     2.7,
+     -4.5
+    ]
+   ]
+  },
+  {
+   "label": "PLATE BOARD",
+   "kind": "plate_board",
+   "room": "200",
+   "shape": "rect",
+   "outline": [
+    [
+     2.125,
+     -6.71
+    ],
+    [
+     2.145,
+     -6.71
+    ],
+    [
+     2.145,
+     -5.29
+    ],
+    [
+     2.125,
+     -5.29
+    ]
+   ]
+  }
+ ],
+ "grid_markers": [
+  {
+   "id": "GM-01",
+   "marker_id": 300,
+   "pos": [
+    6.2,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S1",
+   "on": "wall"
+  },
+  {
+   "id": "GM-02",
+   "marker_id": 301,
+   "pos": [
+    9.4,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S2",
+   "on": "wall"
+  },
+  {
+   "id": "GM-03",
+   "marker_id": 302,
+   "pos": [
+    12.6,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S3",
+   "on": "wall"
+  },
+  {
+   "id": "GM-04",
+   "marker_id": 303,
+   "pos": [
+    15.8,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S4",
+   "on": "wall"
+  },
+  {
+   "id": "GM-05",
+   "marker_id": 304,
+   "pos": [
+    19.0,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S5",
+   "on": "wall"
+  },
+  {
+   "id": "GM-06",
+   "marker_id": 305,
+   "pos": [
+    22.2,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S6",
+   "on": "wall"
+  },
+  {
+   "id": "GM-07",
+   "marker_id": 306,
+   "pos": [
+    25.4,
+    -10.371
+   ],
+   "height": 0.25,
+   "facing_deg": 90.0,
+   "grid": "S7",
+   "on": "wall"
+  },
+  {
+   "id": "GM-08",
+   "marker_id": 307,
+   "pos": [
+    2.129,
+    -8.0
+   ],
+   "height": 0.6,
+   "facing_deg": 0.0,
+   "grid": "W-8",
+   "on": "wall"
+  },
+  {
+   "id": "GM-09",
+   "marker_id": 308,
+   "pos": [
+    2.129,
+    -4.0
+   ],
+   "height": 0.6,
+   "facing_deg": 0.0,
+   "grid": "W-4",
+   "on": "wall"
+  },
+  {
+   "id": "GM-10",
+   "marker_id": 309,
+   "pos": [
+    2.129,
+    3.0
+   ],
+   "height": 0.6,
+   "facing_deg": 0.0,
+   "grid": "W+3",
+   "on": "wall"
+  },
+  {
+   "id": "GM-11",
+   "marker_id": 310,
+   "pos": [
+    31.871,
+    -8.0
+   ],
+   "height": 0.6,
+   "facing_deg": 180.0,
+   "grid": "E-8",
+   "on": "wall"
+  },
+  {
+   "id": "GM-12",
+   "marker_id": 311,
+   "pos": [
+    31.871,
+    -3.5
+   ],
+   "height": 0.6,
+   "facing_deg": 180.0,
+   "grid": "E-3",
+   "on": "wall"
+  },
+  {
+   "id": "GM-13",
+   "marker_id": 312,
+   "pos": [
+    14.0,
+    -0.996
+   ],
+   "height": 0.6,
+   "facing_deg": 90.0,
+   "grid": "IN",
+   "on": "island"
+  },
+  {
+   "id": "GM-14",
+   "marker_id": 313,
+   "pos": [
+    14.0,
+    -3.504
+   ],
+   "height": 0.6,
+   "facing_deg": -90.0,
+   "grid": "IS",
+   "on": "island"
+  },
+  {
+   "id": "GM-15",
+   "marker_id": 314,
+   "pos": [
+    9.996,
+    -2.25
+   ],
+   "height": 0.6,
+   "facing_deg": 180.0,
+   "grid": "IW",
+   "on": "island"
+  }
+ ],
+ "zoning": {
+  "survey_date": "2026-11-01",
+  "zones": [
+   {
+    "zone_class": "supervised",
+    "polygon": [
+     [
+      -1.375,
+      -1.375
+     ],
+     [
+      1.875,
+      -1.375
+     ],
+     [
+      1.875,
+      1.375
+     ],
+     [
+      -1.375,
+      1.375
+     ]
+    ],
+    "label": "100"
+   },
+   {
+    "zone_class": "supervised",
+    "polygon": [
+     [
+      2.125,
+      -10.375
+     ],
+     [
+      8.075,
+      -10.375
+     ],
+     [
+      8.075,
+      10.375
+     ],
+     [
+      2.125,
+      10.375
+     ]
+    ],
+    "label": "200"
+   },
+   {
+    "zone_class": "supervised",
+    "polygon": [
+     [
+      8.075,
+      -10.375
+     ],
+     [
+      14.025,
+      -10.375
+     ],
+     [
+      14.025,
+      10.375
+     ],
+     [
+      8.075,
+      10.375
+     ]
+    ],
+    "label": "200"
+   },
+   {
+    "zone_class": "controlled",
+    "polygon": [
+     [
+      14.025,
+      -10.375
+     ],
+     [
+      19.975,
+      -10.375
+     ],
+     [
+      19.975,
+      10.375
+     ],
+     [
+      14.025,
+      10.375
+     ]
+    ],
+    "label": "200"
+   },
+   {
+    "zone_class": "controlled",
+    "polygon": [
+     [
+      19.975,
+      -10.375
+     ],
+     [
+      25.925,
+      -10.375
+     ],
+     [
+      25.925,
+      10.375
+     ],
+     [
+      19.975,
+      10.375
+     ]
+    ],
+    "label": "200"
+   },
+   {
+    "zone_class": "high_radiation",
+    "polygon": [
+     [
+      25.925,
+      -10.375
+     ],
+     [
+      31.875,
+      -10.375
+     ],
+     [
+      31.875,
+      10.375
+     ],
+     [
+      25.925,
+      10.375
+     ]
+    ],
+    "label": "200"
+   }
+  ],
+  "classes": [
+   [
+    "supervised",
+    0.1675
+   ],
+   [
+    "controlled",
+    1.675
+   ],
+   [
+    "high_radiation",
+    null
+   ]
+  ],
+  "unit": "Gy/h"
+ },
+ "link": {
+  "base_station": {
+   "pos": [
+    0.6175,
+    -1.075
+   ],
+   "range_m": 12.0
+  },
+  "repeaters": [
+   {
+    "id": "RP1",
+    "pos": [
+     31.7,
+     -5.0
+    ],
+    "status": "in service",
+    "range_m": 9.0
+   }
+  ],
+  "rule": "reports are delivered when the robot has line of sight to the base station within its range, or to a working repeater; elsewhere they are queued"
+ },
+ "work_order": {
+  "number": "WO-88641",
+  "title": "Practice round, training hall",
+  "items": [
+   {
+    "tag": "HV-251",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 5",
+     "pos": [
+      16.4,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "quarter-turn valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    }
+   },
+   {
+    "tag": "HV-252",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 5",
+     "pos": [
+      17.4,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "quarter-turn valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    }
+   },
+   {
+    "tag": "HV-253",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 5",
+     "pos": [
+      18.4,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "quarter-turn valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    }
+   },
+   {
+    "tag": "HV-291",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 9",
+     "pos": [
+      29.4,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "quarter-turn valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    }
+   },
+   {
+    "tag": "LCP-271",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "service": "calibration stand",
+    "n_lamps": 3,
+    "colors": [
+     "green",
+     "red",
+     "amber"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 7",
+     "pos": [
+      22.8,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "indicator lamp panel",
+    "kind": "instrument",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    }
+   },
+   {
+    "tag": "LCP-272",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "service": "calibration stand",
+    "n_lamps": 4,
+    "colors": [
+     "green",
+     "red",
+     "amber",
+     "white"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 7",
+     "pos": [
+      23.8,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "indicator lamp panel",
+    "kind": "instrument",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    }
+   },
+   {
+    "tag": "LCP-273",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "service": "calibration stand",
+    "n_lamps": 6,
+    "colors": [
+     "green",
+     "red",
+     "amber",
+     "white",
+     "green",
+     "red"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 7",
+     "pos": [
+      24.8,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "indicator lamp panel",
+    "kind": "instrument",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    }
+   },
+   {
+    "tag": "LCP-292",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "service": "calibration stand",
+    "n_lamps": 4,
+    "colors": [
+     "green",
+     "amber",
+     "red",
+     "white"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 9",
+     "pos": [
+      31.0,
+      -10.2
+     ],
+     "height": 1.9,
+     "facing_deg": 90.0
+    },
+    "type_text": "indicator lamp panel",
+    "kind": "instrument",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    }
+   },
+   {
+    "tag": "LG-241",
+    "type": "level",
+    "report": "level in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 4",
+     "pos": [
+      13.2,
+      -9.9
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "tubular level gauge",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4
+   },
+   {
+    "tag": "LG-242",
+    "type": "level",
+    "report": "level in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 4",
+     "pos": [
+      14.2,
+      -9.9
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "tubular level gauge",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4
+   },
+   {
+    "tag": "LG-243",
+    "type": "level",
+    "report": "level in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 4",
+     "pos": [
+      15.2,
+      -9.9
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "tubular level gauge",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4
+   },
+   {
+    "tag": "PI-211",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      6
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 1",
+     "pos": [
+      3.6,
+      -10.3
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 63 mm case",
+    "kind": "instrument",
+    "case_mm": 63
+   },
+   {
+    "tag": "PI-212",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      10
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 1",
+     "pos": [
+      4.6,
+      -10.3
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 63 mm case",
+    "kind": "instrument",
+    "case_mm": 63
+   },
+   {
+    "tag": "PI-213",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      16
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 1",
+     "pos": [
+      5.6,
+      -10.3
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 63 mm case",
+    "kind": "instrument",
+    "case_mm": 63
+   },
+   {
+    "tag": "PI-221",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      25
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 2",
+     "pos": [
+      6.8,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 100 mm case",
+    "kind": "instrument",
+    "case_mm": 100
+   },
+   {
+    "tag": "PI-222",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      -1,
+      3
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 2",
+     "pos": [
+      7.8,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 100 mm case",
+    "kind": "instrument",
+    "case_mm": 100
+   },
+   {
+    "tag": "PI-231",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      6
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 3",
+     "pos": [
+      10.0,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 160 mm case",
+    "kind": "instrument",
+    "case_mm": 160
+   },
+   {
+    "tag": "PI-232",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      16
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 3",
+     "pos": [
+      11.0,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 160 mm case",
+    "kind": "instrument",
+    "case_mm": 160
+   },
+   {
+    "tag": "PI-233",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      25
+     ],
+     "unit": "bar"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 3",
+     "pos": [
+      12.0,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 160 mm case",
+    "kind": "instrument",
+    "case_mm": 160
+   },
+   {
+    "tag": "SM-01",
+    "type": "dose_point",
+    "report": "dose rate (Gy/h) at the survey mark",
+    "service": "survey point",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "survey mark on the floor",
+     "pos": [
+      27.2,
+      -0.6
+     ],
+     "height": 0.0,
+     "facing_deg": 0.0
+    },
+    "type_text": "survey mark (dose rate on the floor)",
+    "kind": "survey_mark"
+   },
+   {
+    "tag": "TI-223",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "scale": {
+     "range": [
+      0,
+      120
+     ],
+     "unit": "°C"
+    },
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 2",
+     "pos": [
+      8.8,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "dial gauge, 100 mm case",
+    "kind": "instrument",
+    "case_mm": 100
+   },
+   {
+    "tag": "TS-281",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "service": "calibration stand",
+    "n_units": 1,
+    "units": [
+     "TS-281 heater terminal box"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 8",
+     "pos": [
+      26.0,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "temperature point (surface)",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "painted steel",
+    "component": "TS-281 heater terminal box"
+   },
+   {
+    "tag": "TS-282",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "service": "calibration stand",
+    "n_units": 1,
+    "units": [
+     "TS-282 heater terminal box"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 8",
+     "pos": [
+      27.0,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "temperature point (surface)",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "powder-coated steel",
+    "component": "TS-282 heater terminal box"
+   },
+   {
+    "tag": "TS-283",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "service": "calibration stand",
+    "n_units": 1,
+    "units": [
+     "TS-283 heater terminal box"
+    ],
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 8",
+     "pos": [
+      28.0,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "temperature point (surface)",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "oxidised cast iron",
+    "component": "TS-283 heater terminal box"
+   },
+   {
+    "tag": "V-261",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 6",
+     "pos": [
+      19.6,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "rising-stem gate valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    }
+   },
+   {
+    "tag": "V-262",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 6",
+     "pos": [
+      20.6,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0
+    },
+    "type_text": "rising-stem gate valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    }
+   },
+   {
+    "tag": "V-263",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "service": "calibration stand",
+    "location": {
+     "documented": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "mount": "instrument wall bay 6",
+     "pos": [
+      21.6,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0
+    },
+    "type_text": "rising-stem gate valve",
+    "kind": "instrument",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    }
+   },
+   {
+    "tag": "X",
+    "type": "hotspot",
+    "report": "position (x, y in the site frame) of the unlisted source",
+    "service": "radiation survey",
+    "location": {
+     "documented": false,
+     "survey_rooms": [
+      "200"
+     ],
+     "text": "an unlisted source exists somewhere in the building; report its position"
+    }
+   }
+  ],
+  "radiation_survey": {
+   "report": "dose-rate readings along the route; the position of any unlisted source",
+   "survey_rooms": [
+    "200"
+   ]
+  },
+  "return": "return to the deployment pad in the airlock and stop upright",
+  "documented_sources": [
+   {
+    "room": "200",
+    "count": 1,
+    "text": "check source"
+   }
+  ]
+ },
+ "round_sheet": {
+  "title": "PRACTICE ROUND - TRAINING HALL",
+  "number": "WO-88641",
+  "drawing": "AB-GA-1070",
+  "last_round": null,
+  "note": "Locations and values: see the calibration sheet. Report each reading with the frame that shows it.",
+  "items": [
+   {
+    "tag": "HV-251",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "kind": "instrument",
+    "type_text": "quarter-turn valve",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      16.4,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 5"
+    }
+   },
+   {
+    "tag": "HV-252",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "kind": "instrument",
+    "type_text": "quarter-turn valve",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      17.4,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 5"
+    }
+   },
+   {
+    "tag": "HV-253",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "kind": "instrument",
+    "type_text": "quarter-turn valve",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      18.4,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 5"
+    }
+   },
+   {
+    "tag": "HV-291",
+    "type": "valve_lever",
+    "report": "open / closed / angle",
+    "kind": "instrument",
+    "type_text": "quarter-turn valve",
+    "scale": {
+     "range": [
+      0,
+      90
+     ],
+     "unit": "deg (0 open, 90 closed)"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      29.4,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 9"
+    }
+   },
+   {
+    "tag": "LCP-271",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "kind": "instrument",
+    "type_text": "indicator lamp panel",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    },
+    "n_lamps": 3,
+    "colors": [
+     "green",
+     "red",
+     "amber"
+    ],
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      22.8,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 7"
+    }
+   },
+   {
+    "tag": "LCP-272",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "kind": "instrument",
+    "type_text": "indicator lamp panel",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    },
+    "n_lamps": 4,
+    "colors": [
+     "green",
+     "red",
+     "amber",
+     "white"
+    ],
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      23.8,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 7"
+    }
+   },
+   {
+    "tag": "LCP-273",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "kind": "instrument",
+    "type_text": "indicator lamp panel",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    },
+    "n_lamps": 6,
+    "colors": [
+     "green",
+     "red",
+     "amber",
+     "white",
+     "green",
+     "red"
+    ],
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      24.8,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 7"
+    }
+   },
+   {
+    "tag": "LCP-292",
+    "type": "lamps",
+    "report": "on/off state of each lamp (left to right)",
+    "kind": "instrument",
+    "type_text": "indicator lamp panel",
+    "scale": {
+     "range": null,
+     "unit": "on / off per lamp"
+    },
+    "n_lamps": 4,
+    "colors": [
+     "green",
+     "amber",
+     "red",
+     "white"
+    ],
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      31.0,
+      -10.2
+     ],
+     "height": 1.9,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 9"
+    }
+   },
+   {
+    "tag": "LG-241",
+    "type": "level",
+    "report": "level in percent",
+    "kind": "instrument",
+    "type_text": "tubular level gauge",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      13.2,
+      -9.9
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 4"
+    }
+   },
+   {
+    "tag": "LG-242",
+    "type": "level",
+    "report": "level in percent",
+    "kind": "instrument",
+    "type_text": "tubular level gauge",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      14.2,
+      -9.9
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 4"
+    }
+   },
+   {
+    "tag": "LG-243",
+    "type": "level",
+    "report": "level in percent",
+    "kind": "instrument",
+    "type_text": "tubular level gauge",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "%"
+    },
+    "window_m": 0.4,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      15.2,
+      -9.9
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 4"
+    }
+   },
+   {
+    "tag": "PI-211",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 63 mm case",
+    "scale": {
+     "range": [
+      0,
+      6
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 63,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      3.6,
+      -10.3
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 1"
+    }
+   },
+   {
+    "tag": "PI-212",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 63 mm case",
+    "scale": {
+     "range": [
+      0,
+      10
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 63,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      4.6,
+      -10.3
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 1"
+    }
+   },
+   {
+    "tag": "PI-213",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 63 mm case",
+    "scale": {
+     "range": [
+      0,
+      16
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 63,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      5.6,
+      -10.3
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 1"
+    }
+   },
+   {
+    "tag": "PI-221",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 100 mm case",
+    "scale": {
+     "range": [
+      0,
+      25
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 100,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      6.8,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 2"
+    }
+   },
+   {
+    "tag": "PI-222",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 100 mm case",
+    "scale": {
+     "range": [
+      -1,
+      3
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 100,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      7.8,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 2"
+    }
+   },
+   {
+    "tag": "PI-231",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 160 mm case",
+    "scale": {
+     "range": [
+      0,
+      6
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 160,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      10.0,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 3"
+    }
+   },
+   {
+    "tag": "PI-232",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 160 mm case",
+    "scale": {
+     "range": [
+      0,
+      16
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 160,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      11.0,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 3"
+    }
+   },
+   {
+    "tag": "PI-233",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 160 mm case",
+    "scale": {
+     "range": [
+      0,
+      25
+     ],
+     "unit": "bar"
+    },
+    "case_mm": 160,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      12.0,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 3"
+    }
+   },
+   {
+    "tag": "SM-01",
+    "type": "dose_point",
+    "report": "dose rate (Gy/h) at the survey mark",
+    "kind": "survey_mark",
+    "type_text": "survey mark (dose rate on the floor)",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      27.2,
+      -0.6
+     ],
+     "height": 0.0,
+     "facing_deg": 0.0,
+     "mount": "survey mark on the floor"
+    }
+   },
+   {
+    "tag": "TI-223",
+    "type": "gauge",
+    "report": "reading in the dial's unit",
+    "kind": "instrument",
+    "type_text": "dial gauge, 100 mm case",
+    "scale": {
+     "range": [
+      0,
+      120
+     ],
+     "unit": "°C"
+    },
+    "case_mm": 100,
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      8.8,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 2"
+    }
+   },
+   {
+    "tag": "TS-281",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "kind": "instrument",
+    "type_text": "temperature point (surface)",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "painted steel",
+    "component": "TS-281 heater terminal box",
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      26.0,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 8"
+    }
+   },
+   {
+    "tag": "TS-282",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "kind": "instrument",
+    "type_text": "temperature point (surface)",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "powder-coated steel",
+    "component": "TS-282 heater terminal box",
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      27.0,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 8"
+    }
+   },
+   {
+    "tag": "TS-283",
+    "type": "thermal",
+    "report": "which unit is hot and its surface temperature",
+    "kind": "instrument",
+    "type_text": "temperature point (surface)",
+    "scale": {
+     "range": [
+      0,
+      150
+     ],
+     "unit": "°C"
+    },
+    "surface": "oxidised cast iron",
+    "component": "TS-283 heater terminal box",
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      28.0,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 8"
+    }
+   },
+   {
+    "tag": "V-261",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "kind": "instrument",
+    "type_text": "rising-stem gate valve",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      19.6,
+      -10.2
+     ],
+     "height": 0.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 6"
+    }
+   },
+   {
+    "tag": "V-262",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "kind": "instrument",
+    "type_text": "rising-stem gate valve",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      20.6,
+      -10.2
+     ],
+     "height": 1.0,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 6"
+    }
+   },
+   {
+    "tag": "V-263",
+    "type": "valve_handwheel",
+    "report": "opening in percent",
+    "kind": "instrument",
+    "type_text": "rising-stem gate valve",
+    "scale": {
+     "range": [
+      0,
+      100
+     ],
+     "unit": "% open"
+    },
+    "service": "calibration stand",
+    "location": {
+     "recorded": true,
+     "room": "200",
+     "room_name": "TRAINING HALL",
+     "pos": [
+      21.6,
+      -10.2
+     ],
+     "height": 1.5,
+     "facing_deg": 90.0,
+     "mount": "instrument wall bay 6"
+    }
+   },
+   {
+    "tag": "UNLISTED",
+    "type": "hotspot",
+    "kind": "unlisted_source",
+    "text": "One source is in the hall: the check source in the shield-block cave on the east wall. Report its position.",
+    "report": "position (x, y in the site frame) of the unlisted source"
+   }
+  ]
+ },
+ "modification_log": {
+  "title": "MODIFICATION RECORD",
+  "note": "No modification since the drawing.",
+  "entries": []
+ },
+ "facility_facts": {
+  "statements": [
+   "The training hall's drawing is complete and correct: every wall, lane, platform, panel, island and shield block is drawn where it is.",
+   "Every instrument on the instrument wall holds the value of the calibration sheet.",
+   "The check source's strength and position, the survey mark and every grid marker are on the calibration sheet.",
+   "Every lane holds one obstacle; the lane table gives its kind, size and the rating that applies to it.",
+   "Both link nodes (the base station and the repeater) work."
+  ],
+  "location_bounds": {
+   "listed": "at the drawn place"
+  }
+ }
+}

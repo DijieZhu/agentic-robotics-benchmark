@@ -1,0 +1,10382 @@
+{
+ "format": "gait-manual-tables/2",
+ "how_measured": "Randomised trials of this robot and firmware; a rate is written [k, n]: k of n trials. Obstacle trials: the robot starts 0.7-0.9 m before the element with up to 0.12 m of lateral offset and is steered as each row says; 'approach' is the angle between the element's edge and square to the path. The commanded speed is drawn over the range given. A try ends at a 'blocked' report; the next try repeats the same command after a 1 s pause. Floors: dry, friction 0.8-0.9 unless stated. Odometry is not in these tables: see the datasheet's odometry entry.",
+ "modes": {
+  "walk": {
+   "command_limits": {
+    "vx": 0.45,
+    "vy": 0.2,
+    "yaw_rate": 1.0,
+    "body_height": [
+     0.24,
+     0.26
+    ],
+    "default": 0.24
+   },
+   "speed_tracking_level_floor": [
+    {
+     "command": {
+      "vx": -0.3,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.3086,
+       "min": -0.3108,
+       "max": -0.3063,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0002,
+       "min": -0.0028,
+       "max": 0.0015,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.012,
+       "min": 0.0091,
+       "max": 0.0138,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 60.0567,
+      "min": 59.624,
+      "max": 60.3163,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.1,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.0859,
+       "min": 0.0821,
+       "max": 0.0891,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0011,
+       "min": -0.0034,
+       "max": 0.0019,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0073,
+       "min": 0.0046,
+       "max": 0.0087,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 57.0425,
+      "min": 56.5161,
+      "max": 57.416,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.2,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.189,
+       "min": 0.1857,
+       "max": 0.1932,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0019,
+       "min": -0.0034,
+       "max": -0.0004,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.001,
+       "min": -0.0034,
+       "max": 0.0077,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 58.526,
+      "min": 57.6716,
+      "max": 58.9722,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.3,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.2952,
+       "min": 0.2927,
+       "max": 0.2971,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0025,
+       "min": -0.0057,
+       "max": -0.0011,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0036,
+       "min": -0.0103,
+       "max": 0.0038,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 59.7971,
+      "min": 59.0012,
+      "max": 60.46,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.3,
+      "vy": 0,
+      "yaw_rate": 0.5
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.3028,
+       "min": 0.2939,
+       "max": 0.308,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0054,
+       "min": -0.0104,
+       "max": 0.003,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.4816,
+       "min": 0.4745,
+       "max": 0.4855,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 61.0358,
+      "min": 60.242,
+      "max": 61.6273,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.45,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.4454,
+       "min": 0.4409,
+       "max": 0.449,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0018,
+       "min": -0.004,
+       "max": -0.0006,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0077,
+       "min": -0.0151,
+       "max": 0.0028,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 61.7051,
+      "min": 60.4004,
+      "max": 62.3148,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.4,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.3965,
+       "min": 0.3942,
+       "max": 0.3995,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0035,
+       "min": -0.0059,
+       "max": -0.0013,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0065,
+       "min": -0.0117,
+       "max": 0.0034,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 61.0964,
+      "min": 59.7427,
+      "max": 62.0264,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0.1,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.0007,
+       "min": -0.0015,
+       "max": 0.0017,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0886,
+       "min": 0.0828,
+       "max": 0.0914,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0117,
+       "min": -0.0169,
+       "max": -0.0084,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 56.4147,
+      "min": 55.6948,
+      "max": 56.7016,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0.2,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0022,
+       "min": -0.0061,
+       "max": 0.0036,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.1984,
+       "min": 0.1939,
+       "max": 0.2016,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0213,
+       "min": -0.0275,
+       "max": -0.0153,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 58.7092,
+      "min": 57.9062,
+      "max": 59.5019,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0,
+      "yaw_rate": 0.5
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0037,
+       "min": -0.0053,
+       "max": -0.0021,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.004,
+       "min": -0.0094,
+       "max": 0.0006,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.4744,
+       "min": 0.4717,
+       "max": 0.4771,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 56.2582,
+      "min": 55.8882,
+      "max": 57.2585,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0,
+      "yaw_rate": 1.0
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0026,
+       "min": -0.0039,
+       "max": 0.0004,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0053,
+       "min": -0.0124,
+       "max": 0.0001,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.9867,
+       "min": 0.9716,
+       "max": 0.9951,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 58.6212,
+      "min": 57.6583,
+      "max": 59.8225,
+      "n": 5
+     }
+    }
+   ],
+   "stopping_distance_m": [
+    {
+     "from_speed_mps": 0.3,
+     "distance": {
+      "mean": 0.014,
+      "min": 0.0074,
+      "max": 0.0225,
+      "n": 10
+     },
+     "time_to_standstill_s": {
+      "mean": 0.202,
+      "min": 0.14,
+      "max": 0.36,
+      "n": 10
+     }
+    },
+    {
+     "from_speed_mps": 0.45,
+     "distance": {
+      "mean": 0.0401,
+      "min": 0.03,
+      "max": 0.0481,
+      "n": 10
+     },
+     "time_to_standstill_s": {
+      "mean": 0.228,
+      "min": 0.18,
+      "max": 0.34,
+      "n": 10
+     }
+    }
+   ],
+   "posture": [
+    {
+     "commanded_body_height_m": 0.24,
+     "body_height_m": {
+      "mean": 0.2417,
+      "min": 0.2416,
+      "max": 0.2417,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2986,
+      "min": 0.2986,
+      "max": 0.2987,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.26,
+     "body_height_m": {
+      "mean": 0.2589,
+      "min": 0.2589,
+      "max": 0.2589,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.3159,
+      "min": 0.3158,
+      "max": 0.3159,
+      "n": 3
+     }
+    }
+   ],
+   "level_floor_random_commands": {
+    "what": "random walking commands (mostly forward, some backward, with sideways and turning parts and stops), redrawn every 2-4 s",
+    "runs": 30,
+    "minutes": 30.0,
+    "distance_m": 423.4,
+    "blocked_reports": 0,
+    "protective_sits": 0,
+    "falls": 0
+   },
+   "level_floor_sideways_and_turning_commands": [
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.9,
+     "runs": 30,
+     "minutes": 30.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    },
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.2,
+     "runs": 10,
+     "minutes": 10.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    }
+   ]
+  },
+  "high_step": {
+   "command_limits": {
+    "vx": 0.25,
+    "vy": 0.1,
+    "yaw_rate": 0.6,
+    "body_height": [
+     0.24,
+     0.27
+    ],
+    "default": 0.255
+   },
+   "speed_tracking_level_floor": [
+    {
+     "command": {
+      "vx": 0.1,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.0774,
+       "min": 0.0763,
+       "max": 0.0786,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0047,
+       "min": 0.0028,
+       "max": 0.0087,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.006,
+       "min": 0.0003,
+       "max": 0.0088,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 55.3487,
+      "min": 54.6985,
+      "max": 56.9188,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.25,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.2408,
+       "min": 0.2382,
+       "max": 0.2432,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0032,
+       "min": -0.0045,
+       "max": -0.0005,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0014,
+       "min": -0.015,
+       "max": 0.0035,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 57.2581,
+      "min": 56.4259,
+      "max": 59.3247,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.2,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.1887,
+       "min": 0.186,
+       "max": 0.1905,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.001,
+       "min": -0.0021,
+       "max": 0.0037,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0,
+       "min": -0.0127,
+       "max": 0.0038,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 56.0252,
+      "min": 55.2012,
+      "max": 58.3792,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0.1,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.0152,
+       "min": 0.0097,
+       "max": 0.0175,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0766,
+       "min": 0.0739,
+       "max": 0.0811,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0075,
+       "min": 0.0065,
+       "max": 0.0092,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 56.093,
+      "min": 55.5227,
+      "max": 57.2763,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0,
+      "yaw_rate": 0.6
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0009,
+       "min": -0.0026,
+       "max": 0.0009,
+       "n": 5
+      },
+      "vy": {
+       "mean": -0.0048,
+       "min": -0.0071,
+       "max": -0.0005,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.5733,
+       "min": 0.5684,
+       "max": 0.5775,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 56.219,
+      "min": 55.8876,
+      "max": 56.8301,
+      "n": 5
+     }
+    }
+   ],
+   "stopping_distance_m": [
+    {
+     "from_speed_mps": 0.25,
+     "distance": {
+      "mean": 0.022,
+      "min": -0.0036,
+      "max": 0.0526,
+      "n": 10
+     },
+     "time_to_standstill_s": {
+      "mean": 0.194,
+      "min": 0.16,
+      "max": 0.26,
+      "n": 10
+     }
+    }
+   ],
+   "posture": [
+    {
+     "commanded_body_height_m": 0.24,
+     "body_height_m": {
+      "mean": 0.2435,
+      "min": 0.2434,
+      "max": 0.2436,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.302,
+      "min": 0.3019,
+      "max": 0.3022,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.255,
+     "body_height_m": {
+      "mean": 0.2573,
+      "min": 0.2573,
+      "max": 0.2574,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.3156,
+      "min": 0.3156,
+      "max": 0.3156,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.27,
+     "body_height_m": {
+      "mean": 0.2702,
+      "min": 0.2701,
+      "max": 0.2702,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.328,
+      "min": 0.3279,
+      "max": 0.328,
+      "n": 3
+     }
+    }
+   ],
+   "level_floor_random_commands": {
+    "what": "random walking commands (mostly forward, some backward, with sideways and turning parts and stops), redrawn every 2-4 s",
+    "runs": 30,
+    "minutes": 30.0,
+    "distance_m": 225.2,
+    "blocked_reports": 0,
+    "protective_sits": 0,
+    "falls": 0
+   },
+   "level_floor_sideways_and_turning_commands": [
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.9,
+     "runs": 30,
+     "minutes": 30.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    },
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.2,
+     "runs": 10,
+     "minutes": 10.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    }
+   ]
+  },
+  "crouch_walk": {
+   "command_limits": {
+    "vx": 0.2,
+    "vy": 0.1,
+    "yaw_rate": 0.6,
+    "body_height": [
+     0.17,
+     0.19
+    ],
+    "default": 0.18
+   },
+   "speed_tracking_level_floor": [
+    {
+     "command": {
+      "vx": 0.15,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.146,
+       "min": 0.1448,
+       "max": 0.1472,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0027,
+       "min": 0.0008,
+       "max": 0.0048,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0114,
+       "min": 0.0074,
+       "max": 0.0154,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 66.5311,
+      "min": 66.0799,
+      "max": 67.0234,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.1,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.0924,
+       "min": 0.0909,
+       "max": 0.0935,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0054,
+       "min": 0.0017,
+       "max": 0.0081,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0123,
+       "min": 0.0085,
+       "max": 0.0146,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 65.4965,
+      "min": 64.9497,
+      "max": 66.2065,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0.2,
+      "vy": 0,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": 0.1967,
+       "min": 0.1954,
+       "max": 0.1977,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0009,
+       "min": -0.0005,
+       "max": 0.0021,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.0074,
+       "min": 0.0041,
+       "max": 0.0121,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 67.4782,
+      "min": 66.8932,
+      "max": 68.1433,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0.1,
+      "yaw_rate": 0
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0049,
+       "min": -0.0065,
+       "max": -0.0027,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.081,
+       "min": 0.0748,
+       "max": 0.0863,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": -0.0149,
+       "min": -0.0163,
+       "max": -0.0121,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 66.2067,
+      "min": 65.7936,
+      "max": 66.5952,
+      "n": 5
+     }
+    },
+    {
+     "command": {
+      "vx": 0,
+      "vy": 0,
+      "yaw_rate": 0.6
+     },
+     "measured": {
+      "vx": {
+       "mean": -0.0107,
+       "min": -0.0146,
+       "max": -0.0088,
+       "n": 5
+      },
+      "vy": {
+       "mean": 0.0121,
+       "min": 0.0075,
+       "max": 0.0145,
+       "n": 5
+      },
+      "yaw_rate": {
+       "mean": 0.5711,
+       "min": 0.567,
+       "max": 0.5777,
+       "n": 5
+      }
+     },
+     "blocked": [
+      0,
+      5
+     ],
+     "power_W": {
+      "mean": 67.8683,
+      "min": 67.2633,
+      "max": 68.8735,
+      "n": 5
+     }
+    }
+   ],
+   "stopping_distance_m": [
+    {
+     "from_speed_mps": 0.2,
+     "distance": {
+      "mean": 0.0279,
+      "min": 0.0147,
+      "max": 0.0365,
+      "n": 10
+     },
+     "time_to_standstill_s": {
+      "mean": 0.158,
+      "min": 0.1,
+      "max": 0.22,
+      "n": 10
+     }
+    }
+   ],
+   "posture": [
+    {
+     "commanded_body_height_m": 0.17,
+     "body_height_m": {
+      "mean": 0.181,
+      "min": 0.181,
+      "max": 0.181,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2358,
+      "min": 0.2358,
+      "max": 0.2358,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.18,
+     "body_height_m": {
+      "mean": 0.1899,
+      "min": 0.1899,
+      "max": 0.1899,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2451,
+      "min": 0.245,
+      "max": 0.2451,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.19,
+     "body_height_m": {
+      "mean": 0.1985,
+      "min": 0.1985,
+      "max": 0.1985,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2539,
+      "min": 0.2539,
+      "max": 0.2539,
+      "n": 3
+     }
+    }
+   ],
+   "level_floor_random_commands": {
+    "what": "random walking commands (mostly forward, some backward, with sideways and turning parts and stops), redrawn every 2-4 s",
+    "runs": 30,
+    "minutes": 30.0,
+    "distance_m": 179.5,
+    "blocked_reports": 0,
+    "protective_sits": 0,
+    "falls": 0
+   },
+   "level_floor_sideways_and_turning_commands": [
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.9,
+     "runs": 30,
+     "minutes": 30.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    },
+    {
+     "what": "sideways, turning in place, sideways and turning, slow creep with sideways, and a path follower's pattern (turn in place and walk in alternation every 0.2-1.0 s), redrawn every 2-5 s, with stops",
+     "floor_friction": 0.2,
+     "runs": 10,
+     "minutes": 10.0,
+     "blocked_reports": 0,
+     "protective_sits": 0,
+     "falls": 0
+    }
+   ]
+  },
+  "stand": {
+   "command_limits": {
+    "body_height": [
+     0.15,
+     0.26
+    ],
+    "default": 0.24,
+    "pitch_deg": [
+     -20,
+     20
+    ]
+   },
+   "posture": [
+    {
+     "commanded_body_height_m": 0.15,
+     "body_height_m": {
+      "mean": 0.1492,
+      "min": 0.1492,
+      "max": 0.1492,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2039,
+      "min": 0.2039,
+      "max": 0.204,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.18,
+     "body_height_m": {
+      "mean": 0.1792,
+      "min": 0.1792,
+      "max": 0.1792,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2339,
+      "min": 0.2339,
+      "max": 0.234,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.22,
+     "body_height_m": {
+      "mean": 0.2192,
+      "min": 0.2192,
+      "max": 0.2192,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2739,
+      "min": 0.2739,
+      "max": 0.274,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": 0.26,
+     "body_height_m": {
+      "mean": 0.2592,
+      "min": 0.2592,
+      "max": 0.2592,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.3139,
+      "min": 0.3139,
+      "max": 0.314,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": null,
+     "body_height_m": {
+      "mean": 0.2388,
+      "min": 0.2387,
+      "max": 0.2389,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.3469,
+      "min": 0.3468,
+      "max": 0.3471,
+      "n": 3
+     },
+     "commanded_pitch_deg": -20.0,
+     "body_pitch_deg": {
+      "mean": -19.9835,
+      "min": -20.094,
+      "max": -19.9035,
+      "n": 3
+     }
+    },
+    {
+     "commanded_body_height_m": null,
+     "body_height_m": {
+      "mean": 0.2393,
+      "min": 0.2393,
+      "max": 0.2393,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.2354,
+      "min": 0.2351,
+      "max": 0.2357,
+      "n": 3
+     },
+     "commanded_pitch_deg": 20.0,
+     "body_pitch_deg": {
+      "mean": 19.7387,
+      "min": 19.6328,
+      "max": 19.8153,
+      "n": 3
+     }
+    }
+   ]
+  },
+  "sit": {
+   "command_limits": {},
+   "posture": [
+    {
+     "commanded_body_height_m": null,
+     "body_height_m": {
+      "mean": 0.0398,
+      "min": 0.0398,
+      "max": 0.0399,
+      "n": 3
+     },
+     "camera_height_m": {
+      "mean": 0.0961,
+      "min": 0.096,
+      "max": 0.0961,
+      "n": 3
+     }
+    }
+   ]
+  }
+ },
+ "obstacles": [
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.27,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    30,
+    40
+   ],
+   "crossed_first_try": [
+    22,
+    40
+   ],
+   "blocked_on_first_try": [
+    18,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 22,
+    "2": 7,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 18
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.28,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 600,
+   "crossed": [
+    600,
+    600
+   ],
+   "crossed_first_try": [
+    582,
+    600
+   ],
+   "blocked_on_first_try": [
+    18,
+    600
+   ],
+   "fell": [
+    0,
+    600
+   ],
+   "stopped_without_report": [
+    0,
+    600
+   ],
+   "tries_needed_when_crossed": {
+    "1": 582,
+    "2": 18
+   },
+   "first_blocked_reason": {
+    "slip": 18
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.18,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.185,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.19,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 340,
+   "crossed": [
+    340,
+    340
+   ],
+   "crossed_first_try": [
+    331,
+    340
+   ],
+   "blocked_on_first_try": [
+    9,
+    340
+   ],
+   "fell": [
+    0,
+    340
+   ],
+   "stopped_without_report": [
+    0,
+    340
+   ],
+   "tries_needed_when_crossed": {
+    "1": 331,
+    "2": 8,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 8,
+    "stall": 1
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.29,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.3,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.31,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "crouch_walk",
+   "clearance_m": 0.33,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.26,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    20,
+    40
+   ],
+   "crossed_first_try": [
+    8,
+    40
+   ],
+   "blocked_on_first_try": [
+    32,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 8,
+    "2": 2,
+    "3": 10
+   },
+   "first_blocked_reason": {
+    "slip": 32
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.27,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.28,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 600,
+   "crossed": [
+    600,
+    600
+   ],
+   "crossed_first_try": [
+    600,
+    600
+   ],
+   "blocked_on_first_try": [
+    0,
+    600
+   ],
+   "fell": [
+    0,
+    600
+   ],
+   "stopped_without_report": [
+    0,
+    600
+   ],
+   "tries_needed_when_crossed": {
+    "1": 600
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.18,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.185,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.283,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.19,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 340,
+   "crossed": [
+    340,
+    340
+   ],
+   "crossed_first_try": [
+    340,
+    340
+   ],
+   "blocked_on_first_try": [
+    0,
+    340
+   ],
+   "fell": [
+    0,
+    340
+   ],
+   "stopped_without_report": [
+    0,
+    340
+   ],
+   "tries_needed_when_crossed": {
+    "1": 340
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.29,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.31,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "crouch_walk",
+   "clearance_m": 0.33,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "crouch_walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 300,
+   "crossed": [
+    0,
+    300
+   ],
+   "crossed_first_try": [
+    0,
+    300
+   ],
+   "blocked_on_first_try": [
+    300,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 49,
+    "step": 251
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "crouch_walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    57,
+    60
+   ],
+   "blocked_on_first_try": [
+    3,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 57,
+    "2": 3
+   },
+   "first_blocked_reason": {
+    "slip": 3
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "crouch_walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 7,
+    "step": 53
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "crouch_walk",
+   "height_m": 0.0495,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 300,
+   "crossed": [
+    0,
+    300
+   ],
+   "crossed_first_try": [
+    0,
+    300
+   ],
+   "blocked_on_first_try": [
+    300,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 42,
+    "step": 258
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "crouch_walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 8,
+    "step": 52
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "crouch_walk",
+   "height_m": 0.12,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 27,
+    "step": 13
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "crouch_walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    48,
+    60
+   ],
+   "blocked_on_first_try": [
+    12,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 48,
+    "2": 12
+   },
+   "first_blocked_reason": {
+    "slip": 12
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "crouch_walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 13,
+    "step": 47
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "crouch_walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 17,
+    "step": 43
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "high_step",
+   "clearance_m": 0.3,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "body_height_m": 0.24,
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "high_step",
+   "clearance_m": 0.31,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "high_step",
+   "clearance_m": 0.33,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 60
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "high_step",
+   "clearance_m": 0.28,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 59,
+    "stall": 1
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "high_step",
+   "clearance_m": 0.3,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 39,
+    "stall": 1
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "high_step",
+   "clearance_m": 0.31,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "high_step",
+   "clearance_m": 0.33,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    25,
+    60
+   ],
+   "crossed_first_try": [
+    25,
+    60
+   ],
+   "blocked_on_first_try": [
+    35,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 25
+   },
+   "first_blocked_reason": {
+    "slip": 33,
+    "stall": 2
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    23,
+    25
+   ],
+   "blocked_on_first_try": [
+    2,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 23,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "slip": 2
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    23,
+    25
+   ],
+   "blocked_on_first_try": [
+    2,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 23,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "slip": 2
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    21,
+    25
+   ],
+   "blocked_on_first_try": [
+    4,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 21,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 4
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.0599,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    150,
+    150
+   ],
+   "crossed_first_try": [
+    116,
+    150
+   ],
+   "blocked_on_first_try": [
+    34,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 116,
+    "2": 30,
+    "3": 4
+   },
+   "first_blocked_reason": {
+    "slip": 34
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.0599,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    150,
+    150
+   ],
+   "crossed_first_try": [
+    135,
+    150
+   ],
+   "blocked_on_first_try": [
+    15,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 135,
+    "2": 14,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 13,
+    "stall": 2
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.0599,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    150,
+    150
+   ],
+   "crossed_first_try": [
+    138,
+    150
+   ],
+   "blocked_on_first_try": [
+    12,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 138,
+    "2": 12
+   },
+   "first_blocked_reason": {
+    "slip": 10,
+    "stall": 2
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    19,
+    25
+   ],
+   "blocked_on_first_try": [
+    6,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 19,
+    "2": 6
+   },
+   "first_blocked_reason": {
+    "slip": 5,
+    "stall": 1
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    34,
+    35
+   ],
+   "blocked_on_first_try": [
+    1,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 34,
+    "2": 1
+   },
+   "first_blocked_reason": {
+    "slip": 1
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.062,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 301,
+   "crossed": [
+    296,
+    301
+   ],
+   "crossed_first_try": [
+    198,
+    301
+   ],
+   "blocked_on_first_try": [
+    103,
+    301
+   ],
+   "fell": [
+    0,
+    301
+   ],
+   "stopped_without_report": [
+    0,
+    301
+   ],
+   "tries_needed_when_crossed": {
+    "1": 198,
+    "2": 80,
+    "3": 18
+   },
+   "first_blocked_reason": {
+    "slip": 99,
+    "stall": 4
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.062,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 299,
+   "crossed": [
+    298,
+    299
+   ],
+   "crossed_first_try": [
+    259,
+    299
+   ],
+   "blocked_on_first_try": [
+    40,
+    299
+   ],
+   "fell": [
+    0,
+    299
+   ],
+   "stopped_without_report": [
+    0,
+    299
+   ],
+   "tries_needed_when_crossed": {
+    "1": 259,
+    "2": 34,
+    "3": 5
+   },
+   "first_blocked_reason": {
+    "slip": 35,
+    "stall": 5
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.12,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    1,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 15
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.12,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    1,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.15,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 15
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "high_step",
+   "height_m": 0.15,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    1,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    24,
+    25
+   ],
+   "blocked_on_first_try": [
+    1,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 24,
+    "2": 1
+   },
+   "first_blocked_reason": {
+    "slip": 1
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    23,
+    25
+   ],
+   "blocked_on_first_try": [
+    2,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 23,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "slip": 2
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    21,
+    25
+   ],
+   "blocked_on_first_try": [
+    4,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 21,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 4
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    149,
+    150
+   ],
+   "crossed_first_try": [
+    127,
+    150
+   ],
+   "blocked_on_first_try": [
+    23,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 127,
+    "2": 21,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 23
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    150,
+    150
+   ],
+   "crossed_first_try": [
+    143,
+    150
+   ],
+   "blocked_on_first_try": [
+    7,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 143,
+    "2": 6,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 7
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    150,
+    150
+   ],
+   "crossed_first_try": [
+    139,
+    150
+   ],
+   "blocked_on_first_try": [
+    11,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 139,
+    "2": 9,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 9,
+    "stall": 2
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 301,
+   "crossed": [
+    299,
+    301
+   ],
+   "crossed_first_try": [
+    220,
+    301
+   ],
+   "blocked_on_first_try": [
+    81,
+    301
+   ],
+   "fell": [
+    0,
+    301
+   ],
+   "stopped_without_report": [
+    0,
+    301
+   ],
+   "tries_needed_when_crossed": {
+    "1": 220,
+    "2": 74,
+    "3": 5
+   },
+   "first_blocked_reason": {
+    "slip": 76,
+    "stall": 5
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 299,
+   "crossed": [
+    299,
+    299
+   ],
+   "crossed_first_try": [
+    283,
+    299
+   ],
+   "blocked_on_first_try": [
+    16,
+    299
+   ],
+   "fell": [
+    0,
+    299
+   ],
+   "stopped_without_report": [
+    0,
+    299
+   ],
+   "tries_needed_when_crossed": {
+    "1": 283,
+    "2": 13,
+    "3": 3
+   },
+   "first_blocked_reason": {
+    "slip": 13,
+    "stall": 3
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    14,
+    25
+   ],
+   "blocked_on_first_try": [
+    11,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 14,
+    "2": 10,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 11
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    34,
+    35
+   ],
+   "crossed_first_try": [
+    31,
+    35
+   ],
+   "blocked_on_first_try": [
+    4,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 31,
+    "2": 3
+   },
+   "first_blocked_reason": {
+    "slip": 3,
+    "stall": 1
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    21,
+    25
+   ],
+   "blocked_on_first_try": [
+    4,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 21,
+    "2": 4
+   },
+   "first_blocked_reason": {
+    "slip": 4
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    24,
+    25
+   ],
+   "crossed_first_try": [
+    20,
+    25
+   ],
+   "blocked_on_first_try": [
+    5,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 20,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 5
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    18,
+    25
+   ],
+   "blocked_on_first_try": [
+    7,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 18,
+    "2": 6,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 6,
+    "stall": 1
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    32,
+    35
+   ],
+   "blocked_on_first_try": [
+    3,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 32,
+    "2": 3
+   },
+   "first_blocked_reason": {
+    "slip": 3
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    142,
+    150
+   ],
+   "crossed_first_try": [
+    100,
+    150
+   ],
+   "blocked_on_first_try": [
+    50,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 100,
+    "2": 27,
+    "3": 15
+   },
+   "first_blocked_reason": {
+    "slip": 50
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 300,
+   "crossed": [
+    299,
+    300
+   ],
+   "crossed_first_try": [
+    284,
+    300
+   ],
+   "blocked_on_first_try": [
+    16,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {
+    "1": 284,
+    "2": 13,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 16
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 151,
+   "crossed": [
+    146,
+    151
+   ],
+   "crossed_first_try": [
+    95,
+    151
+   ],
+   "blocked_on_first_try": [
+    56,
+    151
+   ],
+   "fell": [
+    0,
+    151
+   ],
+   "stopped_without_report": [
+    0,
+    151
+   ],
+   "tries_needed_when_crossed": {
+    "1": 95,
+    "2": 38,
+    "3": 13
+   },
+   "first_blocked_reason": {
+    "slip": 56
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 449,
+   "crossed": [
+    448,
+    449
+   ],
+   "crossed_first_try": [
+    412,
+    449
+   ],
+   "blocked_on_first_try": [
+    37,
+    449
+   ],
+   "fell": [
+    0,
+    449
+   ],
+   "stopped_without_report": [
+    0,
+    449
+   ],
+   "tries_needed_when_crossed": {
+    "1": 412,
+    "2": 32,
+    "3": 4
+   },
+   "first_blocked_reason": {
+    "slip": 37
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 301,
+   "crossed": [
+    283,
+    301
+   ],
+   "crossed_first_try": [
+    188,
+    301
+   ],
+   "blocked_on_first_try": [
+    113,
+    301
+   ],
+   "fell": [
+    0,
+    301
+   ],
+   "stopped_without_report": [
+    0,
+    301
+   ],
+   "tries_needed_when_crossed": {
+    "1": 188,
+    "2": 69,
+    "3": 26
+   },
+   "first_blocked_reason": {
+    "slip": 112,
+    "stall": 1
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 299,
+   "crossed": [
+    297,
+    299
+   ],
+   "crossed_first_try": [
+    274,
+    299
+   ],
+   "blocked_on_first_try": [
+    25,
+    299
+   ],
+   "fell": [
+    0,
+    299
+   ],
+   "stopped_without_report": [
+    0,
+    299
+   ],
+   "tries_needed_when_crossed": {
+    "1": 274,
+    "2": 18,
+    "3": 5
+   },
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    23,
+    25
+   ],
+   "crossed_first_try": [
+    19,
+    25
+   ],
+   "blocked_on_first_try": [
+    6,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 19,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 6
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    34,
+    35
+   ],
+   "crossed_first_try": [
+    30,
+    35
+   ],
+   "blocked_on_first_try": [
+    5,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 30,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 5
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.1,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 15
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.1,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.12,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 15
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.12,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.15,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 15
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.15,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.18,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 14,
+    "stall": 1
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "high_step",
+   "height_m": 0.18,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    25,
+    25
+   ],
+   "blocked_on_first_try": [
+    0,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 25
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    25,
+    25
+   ],
+   "blocked_on_first_try": [
+    0,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 25
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    20,
+    25
+   ],
+   "blocked_on_first_try": [
+    5,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 20,
+    "2": 5
+   },
+   "first_blocked_reason": {
+    "slip": 5
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.045,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    19,
+    25
+   ],
+   "blocked_on_first_try": [
+    6,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 19,
+    "2": 4,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 6
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.05,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    35,
+    35
+   ],
+   "blocked_on_first_try": [
+    0,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 35
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    25,
+    25
+   ],
+   "crossed_first_try": [
+    15,
+    25
+   ],
+   "blocked_on_first_try": [
+    10,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 15,
+    "2": 7,
+    "3": 3
+   },
+   "first_blocked_reason": {
+    "slip": 10
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.055,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    31,
+    35
+   ],
+   "blocked_on_first_try": [
+    4,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 31,
+    "2": 3,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "slip": 4
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    140,
+    150
+   ],
+   "crossed_first_try": [
+    93,
+    150
+   ],
+   "blocked_on_first_try": [
+    57,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 93,
+    "2": 32,
+    "3": 15
+   },
+   "first_blocked_reason": {
+    "slip": 56,
+    "stall": 1
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading held only",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 300,
+   "crossed": [
+    299,
+    300
+   ],
+   "crossed_first_try": [
+    283,
+    300
+   ],
+   "blocked_on_first_try": [
+    17,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {
+    "1": 283,
+    "2": 14,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 17
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 150,
+   "crossed": [
+    140,
+    150
+   ],
+   "crossed_first_try": [
+    80,
+    150
+   ],
+   "blocked_on_first_try": [
+    70,
+    150
+   ],
+   "fell": [
+    0,
+    150
+   ],
+   "stopped_without_report": [
+    0,
+    150
+   ],
+   "tries_needed_when_crossed": {
+    "1": 80,
+    "2": 47,
+    "3": 13
+   },
+   "first_blocked_reason": {
+    "slip": 68,
+    "stall": 2
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.0565,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 450,
+   "crossed": [
+    448,
+    450
+   ],
+   "crossed_first_try": [
+    416,
+    450
+   ],
+   "blocked_on_first_try": [
+    34,
+    450
+   ],
+   "fell": [
+    0,
+    450
+   ],
+   "stopped_without_report": [
+    0,
+    450
+   ],
+   "tries_needed_when_crossed": {
+    "1": 416,
+    "2": 27,
+    "3": 5
+   },
+   "first_blocked_reason": {
+    "slip": 33,
+    "stall": 1
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 301,
+   "crossed": [
+    277,
+    301
+   ],
+   "crossed_first_try": [
+    160,
+    301
+   ],
+   "blocked_on_first_try": [
+    141,
+    301
+   ],
+   "fell": [
+    0,
+    301
+   ],
+   "stopped_without_report": [
+    0,
+    301
+   ],
+   "tries_needed_when_crossed": {
+    "1": 160,
+    "2": 81,
+    "3": 36
+   },
+   "first_blocked_reason": {
+    "slip": 135,
+    "stall": 6
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.058,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 299,
+   "crossed": [
+    296,
+    299
+   ],
+   "crossed_first_try": [
+    268,
+    299
+   ],
+   "blocked_on_first_try": [
+    31,
+    299
+   ],
+   "fell": [
+    0,
+    299
+   ],
+   "stopped_without_report": [
+    0,
+    299
+   ],
+   "tries_needed_when_crossed": {
+    "1": 268,
+    "2": 26,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 31
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    24,
+    25
+   ],
+   "crossed_first_try": [
+    16,
+    25
+   ],
+   "blocked_on_first_try": [
+    9,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {
+    "1": 16,
+    "2": 8
+   },
+   "first_blocked_reason": {
+    "slip": 8,
+    "stall": 1
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.06,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 35,
+   "crossed": [
+    35,
+    35
+   ],
+   "crossed_first_try": [
+    30,
+    35
+   ],
+   "blocked_on_first_try": [
+    5,
+    35
+   ],
+   "fell": [
+    0,
+    35
+   ],
+   "stopped_without_report": [
+    0,
+    35
+   ],
+   "tries_needed_when_crossed": {
+    "1": 30,
+    "2": 3,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "slip": 5
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.1,
+   "approach": "edge turned 10-20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.11,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 15,
+   "crossed": [
+    0,
+    15
+   ],
+   "crossed_first_try": [
+    0,
+    15
+   ],
+   "blocked_on_first_try": [
+    15,
+    15
+   ],
+   "fell": [
+    0,
+    15
+   ],
+   "stopped_without_report": [
+    0,
+    15
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 14,
+    "stall": 1
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "high_step",
+   "height_m": 0.1,
+   "approach": "edge within 10 degrees of square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 25,
+   "crossed": [
+    0,
+    25
+   ],
+   "crossed_first_try": [
+    0,
+    25
+   ],
+   "blocked_on_first_try": [
+    25,
+    25
+   ],
+   "fell": [
+    0,
+    25
+   ],
+   "stopped_without_report": [
+    0,
+    25
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 25
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "walk",
+   "clearance_m": 0.3,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 59,
+    "stall": 1
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "walk",
+   "clearance_m": 0.31,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "walk",
+   "clearance_m": 0.32,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    32,
+    40
+   ],
+   "crossed_first_try": [
+    32,
+    40
+   ],
+   "blocked_on_first_try": [
+    8,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 32
+   },
+   "first_blocked_reason": {
+    "slip": 8
+   }
+  },
+  {
+   "element": "low overhead: hatch and pipe rack 6 m long (cross beams every 1.5 m), a 2.5 cm conduit on the floor",
+   "kind": "chase",
+   "mode": "walk",
+   "clearance_m": 0.33,
+   "approach": "square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "walk",
+   "clearance_m": 0.28,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 60
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "walk",
+   "clearance_m": 0.29,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "walk",
+   "clearance_m": 0.3,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 40
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "walk",
+   "clearance_m": 0.31,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    41,
+    60
+   ],
+   "crossed_first_try": [
+    41,
+    60
+   ],
+   "blocked_on_first_try": [
+    19,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 41
+   },
+   "first_blocked_reason": {
+    "slip": 19
+   }
+  },
+  {
+   "element": "low overhead: pipe cross-over (two pipes of 0.14 m diameter)",
+   "kind": "crossover",
+   "mode": "walk",
+   "clearance_m": 0.33,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.03,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 660,
+   "crossed": [
+    660,
+    660
+   ],
+   "crossed_first_try": [
+    658,
+    660
+   ],
+   "blocked_on_first_try": [
+    2,
+    660
+   ],
+   "fell": [
+    0,
+    660
+   ],
+   "stopped_without_report": [
+    0,
+    660
+   ],
+   "tries_needed_when_crossed": {
+    "1": 658,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "slip": 1,
+    "step": 1
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.04,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    11,
+    60
+   ],
+   "crossed_first_try": [
+    11,
+    60
+   ],
+   "blocked_on_first_try": [
+    49,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 11
+   },
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 45
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    4,
+    60
+   ],
+   "crossed_first_try": [
+    4,
+    60
+   ],
+   "blocked_on_first_try": [
+    56,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 4
+   },
+   "first_blocked_reason": {
+    "slip": 2,
+    "step": 54
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 360,
+   "crossed": [
+    3,
+    360
+   ],
+   "crossed_first_try": [
+    3,
+    360
+   ],
+   "blocked_on_first_try": [
+    357,
+    360
+   ],
+   "fell": [
+    0,
+    360
+   ],
+   "stopped_without_report": [
+    0,
+    360
+   ],
+   "tries_needed_when_crossed": {
+    "1": 3
+   },
+   "first_blocked_reason": {
+    "slip": 24,
+    "step": 333
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.055,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 56
+   }
+  },
+  {
+   "element": "pipe lying on the floor (round)",
+   "kind": "floor_pipe",
+   "mode": "walk",
+   "height_m": 0.06,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 1,
+    "step": 59
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.03,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 660,
+   "crossed": [
+    660,
+    660
+   ],
+   "crossed_first_try": [
+    654,
+    660
+   ],
+   "blocked_on_first_try": [
+    6,
+    660
+   ],
+   "fell": [
+    0,
+    660
+   ],
+   "stopped_without_report": [
+    0,
+    660
+   ],
+   "tries_needed_when_crossed": {
+    "1": 654,
+    "2": 6
+   },
+   "first_blocked_reason": {
+    "slip": 5,
+    "step": 1
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.04,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    14,
+    60
+   ],
+   "crossed_first_try": [
+    14,
+    60
+   ],
+   "blocked_on_first_try": [
+    46,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 14
+   },
+   "first_blocked_reason": {
+    "slip": 3,
+    "step": 43
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    3,
+    60
+   ],
+   "crossed_first_try": [
+    3,
+    60
+   ],
+   "blocked_on_first_try": [
+    57,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 3
+   },
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 53
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.0495,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 300,
+   "crossed": [
+    0,
+    300
+   ],
+   "crossed_first_try": [
+    0,
+    300
+   ],
+   "blocked_on_first_try": [
+    300,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 20,
+    "stall": 1,
+    "step": 279
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    1,
+    60
+   ],
+   "crossed_first_try": [
+    1,
+    60
+   ],
+   "blocked_on_first_try": [
+    59,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 1
+   },
+   "first_blocked_reason": {
+    "slip": 3,
+    "step": 56
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.055,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 2,
+    "step": 58
+   }
+  },
+  {
+   "element": "hose lying on the floor (round)",
+   "kind": "hose",
+   "mode": "walk",
+   "height_m": 0.06,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 5,
+    "step": 55
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.03,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    59,
+    60
+   ],
+   "blocked_on_first_try": [
+    1,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 59,
+    "2": 1
+   },
+   "first_blocked_reason": {
+    "slip": 1
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.035,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    29,
+    60
+   ],
+   "crossed_first_try": [
+    29,
+    60
+   ],
+   "blocked_on_first_try": [
+    31,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 29
+   },
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 27
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.04,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 56
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 1,
+    "step": 59
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.0495,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 300,
+   "crossed": [
+    0,
+    300
+   ],
+   "crossed_first_try": [
+    0,
+    300
+   ],
+   "blocked_on_first_try": [
+    300,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 22,
+    "step": 278
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 5,
+    "step": 55
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.055,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 11,
+    "step": 49
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.06,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 13,
+    "step": 47
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.12,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 26,
+    "stall": 1,
+    "step": 13
+   }
+  },
+  {
+   "element": "kerb or bund edge (square edges, 0.20 m deep)",
+   "kind": "kerb",
+   "mode": "walk",
+   "height_m": 0.18,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    0,
+    40
+   ],
+   "crossed_first_try": [
+    0,
+    40
+   ],
+   "blocked_on_first_try": [
+    40,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 27,
+    "stall": 1,
+    "step": 12
+   }
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "walk",
+   "height_m": 0.03,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 660,
+   "crossed": [
+    660,
+    660
+   ],
+   "crossed_first_try": [
+    660,
+    660
+   ],
+   "blocked_on_first_try": [
+    0,
+    660
+   ],
+   "fell": [
+    0,
+    660
+   ],
+   "stopped_without_report": [
+    0,
+    660
+   ],
+   "tries_needed_when_crossed": {
+    "1": 660
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "walk",
+   "height_m": 0.04,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    17,
+    60
+   ],
+   "crossed_first_try": [
+    17,
+    60
+   ],
+   "blocked_on_first_try": [
+    43,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 17
+   },
+   "first_blocked_reason": {
+    "step": 43
+   }
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    15,
+    60
+   ],
+   "crossed_first_try": [
+    15,
+    60
+   ],
+   "blocked_on_first_try": [
+    45,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 15
+   },
+   "first_blocked_reason": {
+    "step": 45
+   }
+  },
+  {
+   "element": "ramped cable protector (25 degree sides, 0.10 m flat top)",
+   "kind": "protector",
+   "mode": "walk",
+   "height_m": 0.06,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    10,
+    60
+   ],
+   "crossed_first_try": [
+    10,
+    60
+   ],
+   "blocked_on_first_try": [
+    50,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 10
+   },
+   "first_blocked_reason": {
+    "step": 50
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.025,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.03,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 660,
+   "crossed": [
+    660,
+    660
+   ],
+   "crossed_first_try": [
+    638,
+    660
+   ],
+   "blocked_on_first_try": [
+    22,
+    660
+   ],
+   "fell": [
+    0,
+    660
+   ],
+   "stopped_without_report": [
+    0,
+    660
+   ],
+   "tries_needed_when_crossed": {
+    "1": 638,
+    "2": 22
+   },
+   "first_blocked_reason": {
+    "slip": 20,
+    "step": 2
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.035,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    23,
+    60
+   ],
+   "crossed_first_try": [
+    23,
+    60
+   ],
+   "blocked_on_first_try": [
+    37,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 23
+   },
+   "first_blocked_reason": {
+    "slip": 7,
+    "step": 30
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.04,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 4,
+    "step": 56
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.045,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 1,
+    "step": 59
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.0495,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 300,
+   "crossed": [
+    0,
+    300
+   ],
+   "crossed_first_try": [
+    0,
+    300
+   ],
+   "blocked_on_first_try": [
+    300,
+    300
+   ],
+   "fell": [
+    0,
+    300
+   ],
+   "stopped_without_report": [
+    0,
+    300
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 22,
+    "step": 278
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.05,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 5,
+    "step": 55
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.055,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 11,
+    "step": 49
+   }
+  },
+  {
+   "element": "door sill (square edges, 0.12 m deep)",
+   "kind": "sill",
+   "mode": "walk",
+   "height_m": 0.06,
+   "approach": "edge turned up to 20 degrees from square",
+   "steering": "heading and track held (sideways corrections)",
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 60,
+   "crossed": [
+    0,
+    60
+   ],
+   "crossed_first_try": [
+    0,
+    60
+   ],
+   "blocked_on_first_try": [
+    60,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 13,
+    "step": 47
+   }
+  }
+ ],
+ "slopes_and_surfaces": [
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.20",
+   "mode": "crouch_walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking down",
+   "mode": "crouch_walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "crouch_walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "side slope, walking across it (along the contour)",
+   "mode": "crouch_walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.08,
+    0.2
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.20",
+   "mode": "high_step",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking down",
+   "mode": "high_step",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "high_step",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "side slope, walking across it (along the contour)",
+   "mode": "high_step",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.1,
+    0.25
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 12.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    38,
+    40
+   ],
+   "blocked_on_first_try": [
+    2,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 38,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "step": 2
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 8.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 12.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    38,
+    40
+   ],
+   "blocked_on_first_try": [
+    2,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 38,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "step": 2
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 8.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    38,
+    40
+   ],
+   "blocked_on_first_try": [
+    2,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 38,
+    "2": 2
+   },
+   "first_blocked_reason": {
+    "step": 2
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    38,
+    40
+   ],
+   "blocked_on_first_try": [
+    2,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 38,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "step": 2
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 12.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    39,
+    40
+   ],
+   "blocked_on_first_try": [
+    1,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 39,
+    "2": 1
+   },
+   "first_blocked_reason": {
+    "stall": 1
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 640,
+   "crossed": [
+    640,
+    640
+   ],
+   "crossed_first_try": [
+    597,
+    640
+   ],
+   "blocked_on_first_try": [
+    43,
+    640
+   ],
+   "fell": [
+    0,
+    640
+   ],
+   "stopped_without_report": [
+    0,
+    640
+   ],
+   "tries_needed_when_crossed": {
+    "1": 597,
+    "2": 37,
+    "3": 6
+   },
+   "first_blocked_reason": {
+    "step": 43
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.3,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    53,
+    60
+   ],
+   "blocked_on_first_try": [
+    7,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 53,
+    "2": 7
+   },
+   "first_blocked_reason": {
+    "step": 7
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading held only",
+   "trials": 200,
+   "crossed": [
+    198,
+    200
+   ],
+   "crossed_first_try": [
+    178,
+    200
+   ],
+   "blocked_on_first_try": [
+    22,
+    200
+   ],
+   "fell": [
+    0,
+    200
+   ],
+   "stopped_without_report": [
+    0,
+    200
+   ],
+   "tries_needed_when_crossed": {
+    "1": 178,
+    "2": 19,
+    "3": 1
+   },
+   "first_blocked_reason": {
+    "step": 21,
+    "strike_pitch": 1
+   }
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 14.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.3
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges)",
+   "mode": "walk",
+   "slope_deg": 8.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "approach": "within 10 degrees of the ramp's axis",
+   "steering": "heading and track held (sideways corrections)",
+   "trials": 40,
+   "crossed": [
+    36,
+    40
+   ],
+   "crossed_first_try": [
+    32,
+    40
+   ],
+   "blocked_on_first_try": [
+    8,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 32,
+    "2": 2,
+    "3": 2
+   },
+   "first_blocked_reason": {
+    "stall": 2,
+    "step": 6
+   }
+  },
+  {
+   "what": "level floor of friction 0.2, walking 15 s",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "surface_friction": 0.2,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "trials": 40,
+   "walked_without_stop_or_fall": [
+    40,
+    40
+   ],
+   "blocked": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "distance_walked_m": {
+    "mean": 4.2433,
+    "min": 1.853,
+    "max": 6.3168,
+    "n": 40
+   }
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.12",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.15",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 30,
+   "crossed": [
+    30,
+    30
+   ],
+   "crossed_first_try": [
+    30,
+    30
+   ],
+   "blocked_on_first_try": [
+    0,
+    30
+   ],
+   "fell": [
+    0,
+    30
+   ],
+   "stopped_without_report": [
+    0,
+    30
+   ],
+   "tries_needed_when_crossed": {
+    "1": 30
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.20",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.25",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "trials": 30,
+   "crossed": [
+    30,
+    30
+   ],
+   "crossed_first_try": [
+    30,
+    30
+   ],
+   "blocked_on_first_try": [
+    0,
+    30
+   ],
+   "fell": [
+    0,
+    30
+   ],
+   "stopped_without_report": [
+    0,
+    30
+   ],
+   "tries_needed_when_crossed": {
+    "1": 30
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "wet patch 1.0 m across on level floor, friction 0.30",
+   "mode": "walk",
+   "slope_deg": 0.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 40,
+   "crossed": [
+    40,
+    40
+   ],
+   "crossed_first_try": [
+    40,
+    40
+   ],
+   "blocked_on_first_try": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking down",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 100,
+   "crossed": [
+    100,
+    100
+   ],
+   "crossed_first_try": [
+    100,
+    100
+   ],
+   "blocked_on_first_try": [
+    0,
+    100
+   ],
+   "fell": [
+    0,
+    100
+   ],
+   "stopped_without_report": [
+    0,
+    100
+   ],
+   "tries_needed_when_crossed": {
+    "1": 100
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking down",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 700,
+   "crossed": [
+    700,
+    700
+   ],
+   "crossed_first_try": [
+    700,
+    700
+   ],
+   "blocked_on_first_try": [
+    0,
+    700
+   ],
+   "fell": [
+    0,
+    700
+   ],
+   "stopped_without_report": [
+    0,
+    700
+   ],
+   "tries_needed_when_crossed": {
+    "1": 700
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking down",
+   "mode": "walk",
+   "slope_deg": 20.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 100,
+   "crossed": [
+    100,
+    100
+   ],
+   "crossed_first_try": [
+    100,
+    100
+   ],
+   "blocked_on_first_try": [
+    0,
+    100
+   ],
+   "fell": [
+    0,
+    100
+   ],
+   "stopped_without_report": [
+    0,
+    100
+   ],
+   "tries_needed_when_crossed": {
+    "1": 100
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 100,
+   "crossed": [
+    99,
+    100
+   ],
+   "crossed_first_try": [
+    82,
+    100
+   ],
+   "blocked_on_first_try": [
+    18,
+    100
+   ],
+   "fell": [
+    0,
+    100
+   ],
+   "stopped_without_report": [
+    0,
+    100
+   ],
+   "tries_needed_when_crossed": {
+    "1": 82,
+    "2": 3,
+    "3": 14
+   },
+   "first_blocked_reason": {
+    "step": 18
+   }
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.3,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    58,
+    60
+   ],
+   "crossed_first_try": [
+    40,
+    60
+   ],
+   "blocked_on_first_try": [
+    20,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 40,
+    "2": 7,
+    "3": 11
+   },
+   "first_blocked_reason": {
+    "step": 20
+   }
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "surface_friction": 0.25,
+   "trials": 30,
+   "crossed": [
+    0,
+    30
+   ],
+   "crossed_first_try": [
+    0,
+    30
+   ],
+   "blocked_on_first_try": [
+    30,
+    30
+   ],
+   "fell": [
+    0,
+    30
+   ],
+   "stopped_without_report": [
+    0,
+    30
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 21,
+    "step": 9
+   }
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.3
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 20.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    26,
+    60
+   ],
+   "crossed_first_try": [
+    26,
+    60
+   ],
+   "blocked_on_first_try": [
+    34,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 26
+   },
+   "first_blocked_reason": {
+    "step": 34
+   }
+  },
+  {
+   "what": "ramp, walking up",
+   "mode": "walk",
+   "slope_deg": 20.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 1,
+   "surface_friction": 0.35,
+   "trials": 30,
+   "crossed": [
+    0,
+    30
+   ],
+   "crossed_first_try": [
+    0,
+    30
+   ],
+   "blocked_on_first_try": [
+    30,
+    30
+   ],
+   "fell": [
+    0,
+    30
+   ],
+   "stopped_without_report": [
+    0,
+    30
+   ],
+   "tries_needed_when_crossed": {},
+   "first_blocked_reason": {
+    "slip": 13,
+    "step": 17
+   }
+  },
+  {
+   "what": "side slope, walking across it (along the contour)",
+   "mode": "walk",
+   "slope_deg": 10.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 100,
+   "crossed": [
+    100,
+    100
+   ],
+   "crossed_first_try": [
+    100,
+    100
+   ],
+   "blocked_on_first_try": [
+    0,
+    100
+   ],
+   "fell": [
+    0,
+    100
+   ],
+   "stopped_without_report": [
+    0,
+    100
+   ],
+   "tries_needed_when_crossed": {
+    "1": 100
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "side slope, walking across it (along the contour)",
+   "mode": "walk",
+   "slope_deg": 15.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 700,
+   "crossed": [
+    700,
+    700
+   ],
+   "crossed_first_try": [
+    700,
+    700
+   ],
+   "blocked_on_first_try": [
+    0,
+    700
+   ],
+   "fell": [
+    0,
+    700
+   ],
+   "stopped_without_report": [
+    0,
+    700
+   ],
+   "tries_needed_when_crossed": {
+    "1": 700
+   },
+   "first_blocked_reason": {}
+  },
+  {
+   "what": "side slope, walking across it (along the contour)",
+   "mode": "walk",
+   "slope_deg": 20.0,
+   "commanded_speed_mps": [
+    0.15,
+    0.45
+   ],
+   "tries_allowed": 3,
+   "trials": 60,
+   "crossed": [
+    60,
+    60
+   ],
+   "crossed_first_try": [
+    60,
+    60
+   ],
+   "blocked_on_first_try": [
+    0,
+    60
+   ],
+   "fell": [
+    0,
+    60
+   ],
+   "stopped_without_report": [
+    0,
+    60
+   ],
+   "tries_needed_when_crossed": {
+    "1": 60
+   },
+   "first_blocked_reason": {}
+  }
+ ],
+ "spaces": {
+  "corridor": [
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.36,
+    "tries_allowed": 1,
+    "done": [
+     5,
+     10
+    ],
+    "blocked": [
+     5,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.4,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     2,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.45,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.36,
+    "tries_allowed": 1,
+    "done": [
+     9,
+     10
+    ],
+    "blocked": [
+     1,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.4,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     7,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.45,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     1,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.36,
+    "tries_allowed": 1,
+    "done": [
+     7,
+     10
+    ],
+    "blocked": [
+     3,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.4,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     2,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.45,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   }
+  ],
+  "turn_in_place_180deg": [
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 3,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 24.45,
+     "min": 24.1,
+     "max": 25.2,
+     "n": 10
+    }
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.6,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.6,
+    "tries_allowed": 3,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 41.14,
+     "min": 33.6,
+     "max": 46.4,
+     "n": 10
+    }
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.7,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.7,
+    "tries_allowed": 3,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.8,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     4,
+     10
+    ]
+   },
+   {
+    "mode": "crouch_walk",
+    "clear_width_m": 0.9,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.5,
+    "tries_allowed": 3,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 25.95,
+     "min": 24.7,
+     "max": 27.6,
+     "n": 10
+    }
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.6,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.6,
+    "tries_allowed": 3,
+    "done": [
+     5,
+     10
+    ],
+    "blocked": [
+     5,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 58.11,
+     "min": 56.5,
+     "max": 59.8,
+     "n": 10
+    }
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.7,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.7,
+    "tries_allowed": 3,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.8,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     1,
+     10
+    ]
+   },
+   {
+    "mode": "high_step",
+    "clear_width_m": 0.9,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.5,
+    "tries_allowed": 3,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 26.03,
+     "min": 25.1,
+     "max": 26.9,
+     "n": 10
+    }
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.6,
+    "tries_allowed": 1,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.6,
+    "tries_allowed": 3,
+    "done": [
+     0,
+     10
+    ],
+    "blocked": [
+     10,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ],
+    "turned_before_the_first_blocked_deg": {
+     "mean": 51.18,
+     "min": 50.4,
+     "max": 51.7,
+     "n": 10
+    }
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.7,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.7,
+    "tries_allowed": 3,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     10,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.8,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     5,
+     10
+    ]
+   },
+   {
+    "mode": "walk",
+    "clear_width_m": 0.9,
+    "tries_allowed": 1,
+    "done": [
+     10,
+     10
+    ],
+    "blocked": [
+     0,
+     10
+    ],
+    "neither_in_20_s": [
+     0,
+     10
+    ],
+    "fell": [
+     0,
+     10
+    ],
+    "touched_the_walls": [
+     0,
+     10
+    ]
+   }
+  ]
+ },
+ "stall_detection": [
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "crouch_walk",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 3.122,
+    "min": 2.1,
+    "max": 3.96,
+    "n": 10
+   },
+   "reason": {
+    "slip": 7,
+    "step": 1,
+    "strikes": 2
+   }
+  },
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "crouch_walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 2.85,
+    "min": 2.28,
+    "max": 3.52,
+    "n": 10
+   },
+   "reason": {
+    "slip": 2,
+    "step": 8
+   }
+  },
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "high_step",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 4.208,
+    "min": 3.32,
+    "max": 5.72,
+    "n": 10
+   },
+   "reason": {
+    "slip": 10
+   }
+  },
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "high_step",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 4.624,
+    "min": 3.7,
+    "max": 5.24,
+    "n": 10
+   },
+   "reason": {
+    "slip": 10
+   }
+  },
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "walk",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 2.432,
+    "min": 1.88,
+    "max": 2.74,
+    "n": 10
+   },
+   "reason": {
+    "slip": 9,
+    "strikes": 1
+   }
+  },
+  {
+   "what": "commanded sideways into a wall beside the robot",
+   "mode": "walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    10,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 2.528,
+    "min": 2.32,
+    "max": 2.64,
+    "n": 10
+   },
+   "reason": {
+    "slip": 10
+   }
+  },
+  {
+   "what": "walking sideways into a 4.95 cm sill",
+   "mode": "crouch_walk",
+   "floor_friction": 0.9,
+   "trials": 20,
+   "blocked": [
+    20,
+    20
+   ],
+   "stopped_without_report": [
+    0,
+    20
+   ],
+   "crossed": [
+    0,
+    20
+   ],
+   "fell": [
+    0,
+    20
+   ],
+   "time_to_report_s": {
+    "mean": 3.833,
+    "min": 2.1,
+    "max": 7.96,
+    "n": 20
+   },
+   "reason": {
+    "step": 20
+   }
+  },
+  {
+   "what": "walking sideways into a 4.95 cm sill",
+   "mode": "walk",
+   "floor_friction": 0.9,
+   "trials": 40,
+   "blocked": [
+    40,
+    40
+   ],
+   "stopped_without_report": [
+    0,
+    40
+   ],
+   "crossed": [
+    0,
+    40
+   ],
+   "fell": [
+    0,
+    40
+   ],
+   "time_to_report_s": {
+    "mean": 1.77,
+    "min": 1.12,
+    "max": 3.16,
+    "n": 40
+   },
+   "reason": {
+    "slip": 4,
+    "step": 36
+   }
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "crouch_walk",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    0,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    10,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "reason": {}
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "crouch_walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    3,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    7,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 2.3733,
+    "min": 1.0,
+    "max": 3.5,
+    "n": 3
+   },
+   "reason": {
+    "step": 1,
+    "strikes": 2
+   }
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "high_step",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    0,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    10,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "reason": {}
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "high_step",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    0,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    10,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "reason": {}
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "walk",
+   "floor_friction": 0.2,
+   "trials": 10,
+   "blocked": [
+    0,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    10,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "reason": {}
+  },
+  {
+   "what": "facing into a room corner, commanded to turn in place",
+   "mode": "walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "blocked": [
+    2,
+    10
+   ],
+   "stopped_without_report": [
+    0,
+    10
+   ],
+   "turned_out_of_the_corner": [
+    8,
+    10
+   ],
+   "fell": [
+    0,
+    10
+   ],
+   "time_to_report_s": {
+    "mean": 2.93,
+    "min": 2.72,
+    "max": 3.14,
+    "n": 2
+   },
+   "reason": {
+    "strikes": 2
+   }
+  },
+  {
+   "what": "facing into a room corner, a path follower alternating turning in place and walking towards a goal behind the wall (retrying after each report)",
+   "mode": "crouch_walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "longest_stretch_without_progress_or_report_s": {
+    "mean": 2.12,
+    "min": 1.3,
+    "max": 2.5,
+    "n": 10
+   },
+   "reports_per_minute": {
+    "mean": 25.0582,
+    "min": 21.9634,
+    "max": 26.9551,
+    "n": 10
+   }
+  },
+  {
+   "what": "facing into a room corner, a path follower alternating turning in place and walking towards a goal behind the wall (retrying after each report)",
+   "mode": "high_step",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "longest_stretch_without_progress_or_report_s": {
+    "mean": 2.98,
+    "min": 2.4,
+    "max": 3.5,
+    "n": 10
+   },
+   "reports_per_minute": {
+    "mean": 13.9767,
+    "min": 13.9767,
+    "max": 13.9767,
+    "n": 10
+   }
+  },
+  {
+   "what": "facing into a room corner, a path follower alternating turning in place and walking towards a goal behind the wall (retrying after each report)",
+   "mode": "walk",
+   "floor_friction": 0.9,
+   "trials": 10,
+   "longest_stretch_without_progress_or_report_s": {
+    "mean": 1.93,
+    "min": 1.5,
+    "max": 2.6,
+    "n": 10
+   },
+   "reports_per_minute": {
+    "mean": 20.2662,
+    "min": 18.9684,
+    "max": 22.9617,
+    "n": 10
+   }
+  }
+ ]
+}

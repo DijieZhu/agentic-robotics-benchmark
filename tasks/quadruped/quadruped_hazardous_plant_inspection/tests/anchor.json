@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.95,
+ "metric": "inspection_score",
+ "note": "inspection_score is the contract gate times the mean over the twelve hidden sites of the mission's score S = R x sum(w x c) (eight instruments 0.10 each, delivered x evidence x value; the survey mark 0.06; the unlisted source 0.14; R = 1.0 upright within 1.0 m of the pad centre at the end, else 0.85), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1).",
+ "source": "oracle verify of 2026-11-17 in the task image (image sha256:ecc784cfb46b, built from this environment/ of version 2.1, the render bundle fetched from the asset dataset at build time) on the grading machine, 2026-11-17 15:24-16:52 EST at host load 29-305, version 2.1's twelve hidden sites (tests/grader_config.json c9c3ff9b: 12 episodes, 1350 s), the twelve final states equal to admission A4's records bit for bit: inspection_score of one full verify of the oracle submission (solution/) on the hidden set (tests/hidden/seeds.json 58e69cf14fcdb566), tests/test.sh as root in a fresh container of the task image with only the submission restored (the maintainers' container verify of the oracle, 5290 s), per site [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.995, 1.0, 1.0, 1.0, 1.0, 1.0]; cell tests/plantcell/server.py 73253287a70cd27b, reference tests/reference/reference.py 2e9cb3ea1733764d, render bundle pin 4b47ee85d4775560 (sha256 prefixes of the files as verified, their bytes before amendment 2: the text amendment A5-text of 2026-11-18, recorded in tests/hidden/selection.json with the frozen files' old and new sha256, changed comments, docstrings and notes only, of these files and of tests/hidden/seeds.json too)",
+ "value": 0.999586
+}

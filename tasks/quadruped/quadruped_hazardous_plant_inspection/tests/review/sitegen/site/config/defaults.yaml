@@ -1,0 +1,340 @@
+# site_gen defaults: every number of the grey-box plant generator.
+# Units: metres, seconds, degrees where the key says _deg, uSv/h for dose rates, uSv for doses.
+# The `capability` section is overridden key by key by capability.json when that file exists.
+
+version: "0.2"
+layout: draft                  # draft: the first layout's grammar (8 IPs of random types, default)
+                               # ladder_v1: the ten-slot ladder (section `ladder` below)
+grid_res: 0.05                 # traversability / readability grid (m)
+max_attempts: 32               # generator retries (sub-seeds) until the guarantees hold
+
+# ---------------------------------------------------------------------------------------------- building
+building:
+  width: 30.0                  # along +x (into the building)
+  depth: 21.0                  # along y
+  lattice: 0.5
+  wall_height: 2.6
+  wall_thickness: 0.25
+  outer_wall_thickness: 0.30
+  shield_wall_thickness: [0.6, 1.0]
+  roof_thickness: 0.20
+  overhead_decor_min_z: 2.2    # anything above this goes to geom group 2
+  door_height: 2.0
+  corridor_width: 2.0
+  south_band_depth: [6.0, 6.5, 7.0]
+  middle_band_depth: [5.5, 6.0, 6.5]
+  north_band_depth: [4.5, 7.0] # allowed range of what is left
+  east_block_width: [7.5, 8.0, 8.5]
+  east_room_min: 4.0
+  mirror_probability: 0.5      # mirror the plan about the corridor axis
+  grid_pitch: 6.0              # structural grid (column lines 1,2,3.. along x; A,B,C.. along y)
+  stair_door: true             # blocked stairwell door at the far end of the second corridor leg
+  sheets: [2, 2]               # the drawing is cut into 2 x 2 sheets
+
+airlock:
+  depth_x: 3.5
+  width_y: 3.0
+  pad_from_inner_wall: 2.0     # pad centre (the datum) to the facade door plane
+  pad_size: 0.9
+  inner_door_width: 1.2
+  outer_door_width: 1.4
+
+corridor:
+  fire_doors: [1, 2]           # count of fire doors across the corridor
+  fire_door_sill_weights: {free: 0.6, needs_high_step: 0.4}
+  hoses: [1, 3]                # hoses / cable protectors crossing the corridor
+  hose_class_weights: {free: 0.55, needs_high_step: 0.45}
+  walkway_line_width: 0.08
+  walkway_line_inset: 0.30
+  repeaters: 2                 # one works, one is dead (the drawing shows both in service)
+
+# room type parameters: width = along the corridor wall, depth = across (taken from the band)
+rooms:
+  airlock:         {light: bright}
+  corridor:        {light: bright}
+  pump_room:       {width: [6.5, 8.5], min_depth: 5.5, pumps: [2, 3], light: bright, door_width: [1.2, 1.6]}
+  valve_gallery:   {width: [8.5, 10.5], min_depth: 5.0, light: mid, door_width: [0.9, 1.1]}
+  tank_room:       {width: [7.5, 8.5], min_depth: 7.0, light: mid, door_width: [1.2, 1.6]}
+  electrical_room: {width: [5.0, 6.5], min_depth: 4.5, light: dim, door_width: [0.9, 1.1]}
+  waste_store:     {width: [6.0, 8.0], min_depth: 5.5, light: dim, door_width: [1.0, 1.2]}
+  pipe_chase:      {width: 1.5, light: dark, mouth_width: 1.0}
+  annex:           {size: [[4.0, 5.0], [4.0, 5.0]], light: dim, door_width: [0.9, 1.0]}
+  decor:           {width: [3.0, 6.5], light: mid, door_width: [0.9, 1.0],
+                    kinds: [change_room, sample_lab, store, workshop, hvac_room, decon_room, office]}
+  west_room_probability: 0.7   # a small room between the west wall and the pipe chase
+  west_room_width: [2.5, 4.0]
+  interconnect_probability: 0.22  # door between two neighbouring rooms of a band
+  second_door_probability: 0.3    # middle-band room gets a door on both corridor legs
+
+doors:
+  width: [0.9, 1.2]
+  leaf_thickness: 0.045
+  sill_depth: 0.12
+  room_sill_weights: {free: 0.72, needs_high_step: 0.28}
+  ajar_probability: 0.18       # an ordinary room door left ajar (a tight gap)
+  frame_width: 0.06
+
+# ---------------------------------------------------------------------------------------------- capability
+# Placeholder bands, used when capability.json is missing. Sizes are drawn inside a band, `band_margin` of the
+# band's width away from its edges; nothing is drawn between two bands (the envelope's 95 percent rule).
+capability:
+  step:       {free_max: 0.03, needs_high_step: [0.035, 0.06], barrier_min: 0.10}
+  floor_pipe: {free_max: 0.03, needs_high_step: [0.04, 0.07], barrier_min: 0.12}
+  overhead:   {free_min: 0.50, needs_crouch: [0.30, 0.40], barrier_max: 0.22}
+  width:      {free_min: 0.70, tight: [0.45, 0.60], barrier_max: 0.36}
+  slope_deg:  {free_max: 10.0, slow: [10.0, 18.0], barrier_min: 30.0}
+  friction:   {slow_max: 0.35}
+  band_margin: 0.15
+
+modes:
+  walk:        {speed: 0.40, head_height: 0.33, power_W: 55.0}
+  high_step:   {speed: 0.18, head_height: 0.36, power_W: 85.0}
+  crouch_walk: {speed: 0.14, head_height: 0.20, power_W: 75.0}
+  slow_factor: 0.45            # speed multiplier on slow cells (ramps 10-18 deg, puddles)
+  tight_factor: 0.5            # speed multiplier where the footprint cannot turn
+  switch_time_s: 3.0           # mode change
+  idle_power_W: 25.0
+
+robot:
+  footprint: [0.55, 0.33]      # walking footprint, length x width (measured on the robot model: the hind knees
+                               # reach 8.6 cm behind the body; the map's disc model uses the width bands)
+  standin_height: 0.12
+  standin_mass: 3.0
+  standin_z: 0.20              # stand-in box centre height at the start pose
+
+# ---------------------------------------------------------------------------------------------- inspection points
+ips:
+  count: 8
+  mandatory: [gauge, valve_lever, valve_handwheel, level, lamps]
+  extra_weights: {thermal: 4.0, dose_point: 4.0, hotspot: 4.0, gauge: 1.0, valve_lever: 0.5, lamps: 0.5}
+  weights: {gauge: 1.0, valve_lever: 1.0, valve_handwheel: 1.0, level: 1.0, lamps: 1.0, thermal: 1.2,
+            dose_point: 1.0, hotspot: 1.4}
+  weight_total: 0.85
+  max_per_room: 2
+  decoys: [6, 12]
+  dwell_s: {gauge: 6, valve_lever: 6, valve_handwheel: 6, level: 6, lamps: 6, thermal: 8, dose_point: 30,
+            hotspot: 45}
+  gauge_cases_mm: [63, 100, 160]
+  gauge_scales:                # (lo, hi, unit): the dial scales the bricks gauge prints (bricks.targets.gauge.SCALES)
+    - [0, 6, bar]
+    - [0, 10, bar]
+    - [0, 16, bar]
+    - [0, 25, bar]
+    - [-1, 3, bar]
+    - [0, 120, "°C"]
+  value_span: [0.08, 0.92]     # truth values are drawn inside this fraction of the scale
+  lamps_count: [3, 6]
+  thermal_units: [3, 4]
+  thermal_normal_C: [32, 46]
+  thermal_hot_C: [68, 95]
+  thermal_none_probability: 0.15
+  dose_point_radius: 0.30      # the robot must stand within this of the marked point
+  hotspot_radius: 1.0          # the readable region of a hotspot: within this of the source
+  gauge_height: [0.4, 1.6]
+  handwheel_height: [1.0, 1.4]
+  level_window_m: 0.44         # sight-glass window of the tubular level gauges (ladder: 0.40)
+
+# Observability windows from an observability study of the instruments (2026-11-13: the
+# stand-off band where the reference reader is right in >= 95 % of samples, head at 0.33 m, bright light). A window
+# is a list of alternatives (the union): the narrow 18 deg inspect camera and, where it helps, the wide 90 deg nav
+# camera. d: HORIZONTAL distance from the head to the face centre (m); off_normal: angle between the face normal and
+# the line of sight; elev: camera tilt up to the target (bricks: dials fail above about 45-50 deg).
+# A machine-readable ```yaml observability:``` block in that study's notes would override these.
+observability:
+  gauge_63:        [{d: [0.4, 3.0], off_normal_deg: 45, elev_deg: 45}]
+  gauge_100:       [{d: [0.6, 4.0], off_normal_deg: 45, elev_deg: 45}]
+  gauge_160:       [{d: [0.8, 5.0], off_normal_deg: 45, elev_deg: 50}, {d: [0.6, 1.5], off_normal_deg: 15, elev_deg: 50}]
+  valve_lever:     [{d: [1.5, 5.0], off_normal_deg: 45, elev_deg: 50}, {d: [0.4, 0.8], off_normal_deg: 45, elev_deg: 50}]
+  valve_handwheel: [{d: [1.5, 5.0], off_normal_deg: 45, elev_deg: 50}, {d: [0.6, 4.0], off_normal_deg: 10, elev_deg: 50}]
+  level:           [{d: [2.5, 5.0], off_normal_deg: 15, elev_deg: 45}, {d: [0.6, 1.0], off_normal_deg: 10, elev_deg: 45}]
+  lamps:           [{d: [1.0, 5.0], off_normal_deg: 45, elev_deg: 50}, {d: [0.4, 0.8], off_normal_deg: 15, elev_deg: 50}]
+  thermal:         [{d: [0.6, 4.0], off_normal_deg: 65, elev_deg: 60}]   # placeholder: no thermal window in the study
+  ideal_d_fraction: 0.35       # preferred stand-off inside the first window (for the observation pose)
+  source: "bricks OBSERVABILITY.md section 1 (narrow 18 deg / wide 90 deg, bright)"
+
+# ---------------------------------------------------------------------------------------------- radiation
+radiation:
+  background: [0.08, 0.25]     # uSv/h
+  height: 0.30                 # dose-rate maps are evaluated at the dosimeter height
+  r_min: 0.25                  # inverse-square floor
+  mu_wall: 6.0                 # 1/m, ordinary 0.25 m block wall
+  mu_shield: 11.0              # 1/m, shield concrete / lead-blanket stacks
+  documented_drums: [3, 6]     # active drums in the waste store
+  drum_strength: [40.0, 260.0] # uSv/h at 1 m
+  undocumented: [1, 2]         # hot spots not on the drawing / not in the zoning
+  hotspot_strength: [300.0, 900.0]
+  hotspot_kinds: {sump: 1.0, pipe_elbow: 1.0, moved_drum: 1.0}
+  zone_classes:                # upper bounds (uSv/h) of the zoning classes of the old survey
+    - [supervised, 2.5]
+    - [controlled, 25.0]
+    - [high_radiation, 1.0e9]
+  budget_fraction: 0.40        # the reference route uses about this fraction of the dose budget
+  survey_date: "1996-09-12"
+
+# ---------------------------------------------------------------------------------------------- link
+link:
+  base_range: 12.0
+  repeater_range: 9.0
+  antenna_height: 1.2
+
+# ---------------------------------------------------------------------------------------------- discrepancies
+discrepancies:
+  count: [4, 6]                # room_missing and zone_outdated always; the rest drawn
+  weights: {door_blocked: 1.0, wall_added: 0.8, opening_added: 0.8, ip_moved: 1.0, ip_undocumented: 0.8,
+            sheet_missing: 0.9}
+  require_one_of: [ip_moved, ip_undocumented]
+  grid_markers_present: 0.75   # fraction of documented grid markers that exist in reality
+  grid_markers: [12, 16]
+  equipment_noise: 0.0
+
+# ---------------------------------------------------------------------------------------------- mission budgets
+mission:
+  time_limit_s: 2400
+  energy_margin: 2.0           # energy budget = margin x the reference route's energy
+  frames: {camera: 600, thermal: 120, lidar: 300}
+  return_weight: 0.15
+
+drawing:
+  number_prefix: "AB-GA-10"
+  revision_dates: ["1984-03-02", "1987-11-19", "1991-06-07", "1993-02-24"]
+  revisions: ["B", "C", "D", "E"]
+  title: "AUXILIARY BUILDING - GROUND FLOOR - GENERAL ARRANGEMENT"
+  scale_text: "1:100"
+
+render:
+  topdown_px: [2400, 1700]
+  dollhouse_px: [1920, 1200]
+  eye_px: [1280, 800]
+  eye_height: 0.33
+  max_lights: 7                # the classic renderer draws 8 lights including the headlight
+
+# ---------------------------------------------------------------------------------------------- ten-slot ladder
+# Used when `layout: ladder_v1`. The acceptance conditions of an evidence frame are
+# NOT copied here: they are read from acceptance_v1.yaml (the file shared with the grader side).
+ladder:
+  acceptance_file: acceptance_v1.yaml      # relative to the library root
+  slots: [A, B-step, B-kerb, B-low, C-sealed, C-moved, C-relocated, C-annex]
+  types: [gauge_63, gauge_100, gauge_160, level, valve_lever, lamps, thermal, valve_handwheel]
+  assignment: random           # random, or a fixed map {slot: type} (all eight slots), e.g. from ladder.cross_design
+  slot_types: {}               # optional {slot: [types]} restricting the random assignment
+  infeasible_pairs: [[B-low, level]]   # a sub-seed drawing one is rejected at once; a fixed assignment with one is
+                               # an error. The 2.5 m chase cannot give the level gauge its 2.5-3 m reading
+                               # distance from inside the valve station (none of 48 swept
+                               # sites admitted one before this rule)
+  cameras:                     # pixel geometry of the cameras named in the acceptance file
+    inspect: {width: 1280, height: 960, hfov_deg: 18.0}
+    thermal: {width: 160, height: 120, hfov_deg: 50.0}
+    nav: {width: 640, height: 480, hfov_deg: 90.0}
+  head:                        # the robot's sensor head (camera = the inspection / thermal camera's optical centre)
+    stand_nominal: null        # camera height standing: null = capability.json modes.walk.head_height (v2: 0.295 m;
+                               # the observability study used 0.33 m)
+    crouch_nominal: null       # crouching: null = modes.crouch_walk.head_height (v2: 0.235 m: body origin 0.18 m +
+                               # 0.055 m)
+    camera_z_range: [0.145, 0.375]  # every camera height the robot can take: stand body height 0.15-0.26 m
+                               # (facade) + 0.055 m to the tilt axis, body pitch +-0.25 rad at the 0.165 m mast,
+                               # +-0.0155 m of the camera ahead of the tilt axis
+    range_samples: 7           # camera heights sampled over camera_z_range for the exclusion proofs
+    reach_m: 0.22              # the camera can be up to this far from the body centre (0.165 + 0.027 m; any heading)
+    tilt_deg: [-45.0, 57.0]    # pan-tilt elevation limits (mission.yaml head_limits: tilt -1.0..0.8 rad, + = down)
+    body_pitch_deg: 14.3       # body pitch range of 'stand' (facade: +-0.25 rad), widens the generous aim range
+    mast_x: 0.165              # pan axis ahead of the body centre (facade describe(): pan_axis_body)
+    cam_fwd: 0.0155            # camera ahead of the tilt axis (mission.yaml sensors.offsets)
+    cam_lat: {inspect: -0.022, thermal: 0.022, nav: 0.0}   # camera to the side (+ = left)
+  margin: {size_factor: 1.3, angle_deg: 5.0, tilt_deg: 2.0, min_area_m2: 0.15, dist_m: 0.05}
+  reading_place: {d: [1.5, 3.0], off_deg: 30.0, level_d: [2.5, 3.0], level_off_deg: 15.0}
+  mount:                       # placement rules
+    gauge_63_max_z: 1.3
+    dial_high_z: 1.4
+    dial_high_standoff: 1.0
+    gauge_63_high_standoff: 1.5
+    z: {gauge_63: [0.55, 1.25], gauge_100: [0.55, 1.5], gauge_160: [0.6, 1.55], level: [0.95, 1.05],
+        valve_lever: [0.75, 1.15], valve_handwheel: [0.6, 0.95], lamps: [1.1, 1.4], thermal: [0.7, 1.2]}
+  level_window_m: 0.40
+  truth:                       # truth distributions (a development test checks them)
+    lever_end_p: 0.20          # P(0 deg) = P(90 deg) = 0.20 ...
+    lever_mid_deg: [15, 75]    # ... otherwise throttled, uniform integer degrees here (away from the ends)
+  thermal:
+    surfaces: {painted steel: 0.93, powder-coated steel: 0.91, oxidised cast iron: 0.94}
+    hot_C: [40.0, 110.0]       # after a review (was 55-95: a constant 75 deg C expected 0.26)
+    normal_C: [30.0, 45.0]
+    range: [0, 150]
+  last_2009: {lever_states: [0, 90]}
+  findable: {tag_px: 24, max_off_deg: 70.0, lidar_beams: 10, lidar_area_m2: 2.0, lidar_height: 0.30,
+             lidar_step_deg: 0.5, lidar_range: [0.15, 12.0]}
+  search: {frame_budget: 144, overlap_deg: 2.0, mount_z: [0.3, 1.9]}
+  decoys: [6, 12]
+  corridor:
+    a_stretch: [3.55, 3.75]    # C1 between the airlock door wall and the corridor sill (m)
+    sill_kind_weights: {fire_door: 0.7, hose: 0.3}
+  high_step_kinds: [sill, hose, bund, floor_pipe]   # needs_high_step elements only of these kinds (others free;
+                               # a bund kerb then a barrier). Ramped cable protectors are out: walk crosses them
+                               # (the gait is not rated on them)
+  high_step_draw: {}           # optional {kind: [lo, hi]} overriding the drawn needs_high_step range.
+                               # Empty since capability.json version 2 (2026-11-14 10:20 EST): the sizes are
+                               # drawn inside its bands with band_margin (sill / hose / kerb 0.0495-0.0565 m, round
+                               # pipe 0.0501-0.0599 m). Until v2 it held interim ranges (sills, hoses, kerbs
+                               # 0.048-0.055 m, pipes 0.045-0.060 m)
+  crouch_draw: {}              # the same for needs_crouch (v2: 0.283-0.297 m; interim before: 0.282-0.298 m)
+  high_step_band: [0.0, 1.0]   # fraction of the drawable needs_high_step range (showcase: [0.0, 0.5])
+  generic_high_step_max: 0.060 # generic (non-element) geometry taller than this is solid for every mode (no size
+                               # between the rated high-step range and a barrier on any access)
+  puddle_friction: [0.20, 0.30] # the gait's measured range (capability.json friction note); puddles are also kept
+                               # off every required access (ladder._prune_puddles)
+  access: {max_slope_deg: 15.0}
+  debris_probability: 0.0      # rubble at undrawn openings (debris is not a kind the classical controller is rated for)
+  optional_deviations: {count: [0, 2], weights: {wall_added: 1.0, opening_added: 1.0}}
+  mod_log: {p_entry: 0.4, irrelevant: [3, 5]}
+  grid_markers_present: 0.75
+  lighting: bright             # every reading place is lit to the bright level
+  dose:
+    unit_factor: 0.067         # design Gy(/h) per site uSv(/h): the site field x 6.7e4 read in Gy
+    rating_gy: 2.0             # dose rating of the sensor head (one number for every site)
+    route_fraction_max: 0.35   # the reference route may use at most this share of the rating
+    mark_band_gyh: [0.3, 1.7]  # field at the survey mark (design units)
+    band_margin: 1.12          # the mark is placed this far inside the band
+    source_gyh_at_1m: [20.0, 60.0]
+    evidence_gyh: 2.0          # E_X: 3 s mean of the robot's own dosimeter
+    evidence_margin: 1.15
+    x_factor: 3.0              # X raises the rate to >= x_factor x its zone's drawn level ...
+    x_length_m: 5.0            # ... along at least this much of the route to some B or C item
+    mark_dwell_s: 60.0
+    source_dwell_s: 10.0
+    zone_margin: 1.2           # the documented process source makes its zone 'controlled' with this margin
+    process_source_kinds: [tank_contents, hepa_filters, decon_sink, sample_store, resin_filter]
+  v2: null                     # version 2: the candidate's factors {k, label, bund, b_step,
+                               # b_low, sheet_place} by candidate number (site_gen.variants.v2_config; site_gen.sets sets
+                               # it per candidate). null: version 1's generator, unchanged
+  v2_params:                   # version 2's parameters (read only when ladder.v2 is set; config.load_config applies the
+                               # first two over `ladder`)
+    corridor_sill_kind_weights: {fire_door: 0.5, hose: 0.5}   # version 2 (version 1: 0.7 / 0.3)
+    extra_high_step_kinds: [trench_cover]                      # the new kind joins ladder.high_step_kinds
+    sheet: {cut_shift_m: 1.0, cut_clear_m: 0.3, counts: [2, 3, 4]}   # the missing sheet
+    strip:                     # B-step in the room
+      near_m: [2.2, 2.8]       # the strip's near edge from the door wall
+      approach_m: 1.0          # flat floor before and behind
+      cover_depth_m: 0.20      # the trench cover's plate (the bund kerb's section)
+      min_depth_m: 5.0         # floor behind the door wall
+      depth_first: [5.5]       # rooms at least this deep first (in order), when the site has one; among the
+                               # rooms where the type has a hidden place (variants.strip_slack). Measured 2026-11-16:
+                               # B-step placement passes on 62 % of sub-seeds (temperature point 25 %, lamp panel
+                               # 38 %, the rest 50-94 %); kept with half of the candidates (a quarter was not taken)
+      kind_weights: {hose: 0.4, floor_pipe: 0.3, trench_cover: 0.3}
+    rack:                      # B-low in a room
+      length_m: [0.8, 1.2]     # along the way
+      min_depth_m: 4.5
+      approach_m: 1.0
+      near_min_m: 1.5          # the bridge's near edge from the door wall
+      near_max_m: 2.4
+      back_min_m: 1.7          # floor behind the bridge (approach and reading places)
+      top_m: 1.7               # the pipe layers reach this height (a cable tray on top)
+      pipe_r_m: [0.07, 0.10]
+    facing_step_deg: 5.0       # the round sheet's facing to the nearest 5 degrees (version 1: 45)
+  overrides:                   # merged over this file when layout = ladder_v1
+    max_attempts: 64
+    rooms:
+      west_room_probability: 1.0
+      west_room_width: [4.5, 4.5]
+      pipe_chase: {width: 2.5}          # a multiple of building.lattice
+    ips: {level_window_m: 0.40, decoys: [6, 12]}
+    doors: {ajar_probability: 0.12}
+    radiation: {undocumented: [1, 1]}

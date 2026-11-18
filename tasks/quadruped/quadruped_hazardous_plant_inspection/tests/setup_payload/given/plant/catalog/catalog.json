@@ -1,0 +1,1705 @@
+{
+ "about": "Instrument catalogue of the plant (as printed). Dimensions in metres unless stated; images are the printed faces at the stated resolution.",
+ "gauge": {
+  "case_mm": [
+   63,
+   100,
+   160
+  ],
+  "dial_diameter": "0.9 x the case diameter (63 mm case: 56.7 mm dial; 100: 90; 160: 144)",
+  "sweep_deg": 270.0,
+  "low_end": "7:30 position",
+  "high_end": "4:30 position",
+  "direction": "clockwise",
+  "gap": "90 degrees at the bottom (6 o'clock)",
+  "needle": "black",
+  "dial": "white, black ticks and numerals",
+  "bezel": "the bezel lip stands 4 % of the case diameter in front of the dial",
+  "scales": {
+   "0-6bar": {
+    "range": [
+     0.0,
+     6.0
+    ],
+    "unit": "bar",
+    "major": 1.0,
+    "minor": 0.2,
+    "image": "dial_0-6bar.png"
+   },
+   "0-10bar": {
+    "range": [
+     0.0,
+     10.0
+    ],
+    "unit": "bar",
+    "major": 1.0,
+    "minor": 0.2,
+    "image": "dial_0-10bar.png"
+   },
+   "0-16bar": {
+    "range": [
+     0.0,
+     16.0
+    ],
+    "unit": "bar",
+    "major": 2.0,
+    "minor": 0.5,
+    "image": "dial_0-16bar.png"
+   },
+   "0-25bar": {
+    "range": [
+     0.0,
+     25.0
+    ],
+    "unit": "bar",
+    "major": 5.0,
+    "minor": 1.0,
+    "image": "dial_0-25bar.png"
+   },
+   "-1-3bar": {
+    "range": [
+     -1.0,
+     3.0
+    ],
+    "unit": "bar",
+    "major": 1.0,
+    "minor": 0.2,
+    "image": "dial_-1-3bar.png"
+   },
+   "0-120C": {
+    "range": [
+     0.0,
+     120.0
+    ],
+    "unit": "°C",
+    "major": 20.0,
+    "minor": 5.0,
+    "image": "dial_0-120C.png"
+   }
+  },
+  "accuracy_class": "1.0 (printed on the dial)",
+  "image_scale": "dial images are 1024 px across the printed dial (the same face for every case size)",
+  "tag_plate": "below the case, centred (tag plate centre 15 mm + half the plate height below the case's lower edge), parallel to the dial"
+ },
+ "level": {
+  "windows": {
+   "400": {
+    "window_m": 0.4,
+    "plate_m": [
+     0.05,
+     0.45
+    ],
+    "image": "level_scale_400mm.png"
+   },
+   "440": {
+    "window_m": 0.44,
+    "plate_m": [
+     0.05,
+     0.49
+    ],
+    "image": "level_scale_440mm.png"
+   }
+  },
+  "window": "per item on the round sheet (window_m)",
+  "scale": "0-100 % on a white plate to the right of the glass tube; 0 % at the bottom",
+  "plate_width_m": 0.05,
+  "plate_height": "window + 2 x 25 mm (the 0 % and 100 % ticks lie 25 mm inside the plate's ends, at the window's ends)",
+  "ticks": "21 ticks every 5 %; majors every 10 % (0.45 of the plate width), minors 0.28; numerals every 20 %",
+  "tube_od_m": 0.024,
+  "tube_axis_to_plate_left_edge_m": 0.028,
+  "backing": "a white strip behind the tube",
+  "liquids": [
+   "amber",
+   "green",
+   "oil",
+   "water"
+  ],
+  "tag_plate": "right of the scale plate, 20 mm beyond its edge, its lower edge level with the window's bottom",
+  "image_scale": "2400 px per m"
+ },
+ "valve_lever": {
+  "lever_length_m": 0.18,
+  "lever_colour": "red",
+  "reading": "angle between lever and pipe in degrees: 0 in line (open), 90 across (closed)",
+  "lever_plane": "parallel to the valve's face, in front of the pipe",
+  "pipe": "horizontal or vertical; the round sheet does not state which",
+  "tag_plate": "on the valve body below the stem (horizontal pipe: on the side away from the closing lever); vertical pipe: beside the pipe on the closing side, below the swept quadrant; parallel to the lever plane",
+  "image": "valve_lever_positions.png"
+ },
+ "valve_handwheel": {
+  "indicator": "vertical scale 0-100 % on a white plate beside the rising stem, 0 % (SHUT) at the bottom, 100 % (OPEN) at the top; an orange pointer on the stem slides over the plate's left half",
+  "plate_m": [
+   0.036,
+   0.13
+  ],
+  "scale_span_m": 0.1,
+  "stroke_m": 0.1,
+  "ticks": "21 ticks every 5 %, centred on the plate; majors at 0, 25, 50, 75, 100 % (0.62 of the plate width), minors 0.38; numerals 0, 50, 100; legends OPEN (top) and SHUT (bottom)",
+  "pointer_m": [
+   0.018,
+   0.007
+  ],
+  "pointer_in_front_of_plate_m": 0.0027,
+  "handwheel_diameter_m": 0.25,
+  "tag_plate": "right of the indicator plate, 20 mm beyond its edge, centred on the plate's height",
+  "image": "valve_handwheel_indicator.png",
+  "image_scale": "6000 px per m"
+ },
+ "lamps": {
+  "lens_diameter_m": 0.023,
+  "bezel_diameter_m": 0.033,
+  "pitch_m": 0.065,
+  "lamps_per_panel": [
+   3,
+   4,
+   5,
+   6
+  ],
+  "panel_height_m": 0.2,
+  "panel_width": "n x pitch + 50 mm",
+  "panel_colour": "light grey (RAL 7035)",
+  "colours": {
+   "green": {
+    "legend": "RUN",
+    "meaning": "running"
+   },
+   "red": {
+    "legend": "TRIP",
+    "meaning": "tripped (fault)"
+   },
+   "amber": {
+    "legend": "ALARM",
+    "meaning": "alarm"
+   },
+   "white": {
+    "legend": "POWER",
+    "meaning": "power on"
+   }
+  },
+  "order": "left to right as seen from the front; the round sheet lists the colours in that order",
+  "lit": "a lit lens glows in its colour; an unlit lens is a dark tint of it",
+  "legend_strip": "below the lens row, one legend word per lamp",
+  "tag_plate": "below the panel, centred",
+  "images": {
+   "3": "lamp_panel_3.png",
+   "4": "lamp_panel_4.png",
+   "5": "lamp_panel_5.png",
+   "6": "lamp_panel_6.png"
+  },
+  "image_scale": "4000 px per m (drawings of the front; lenses shown unlit)"
+ },
+ "issue": "2026-11-16",
+ "lettering": {
+  "grid_units": {
+   "width": 4.0,
+   "cap_height": 8.0,
+   "origin": "lower left corner of the glyph cell, x to the right, y up"
+  },
+  "pen_units": 1.15,
+  "pen_shape": "round (a stroke is every point within half the pen of the polyline)",
+  "pitch_units": 6.4,
+  "space": "advances one pitch, no ink",
+  "glyphs": {
+   "A": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      2.0,
+      8.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ],
+    [
+     [
+      0.8,
+      3.0
+     ],
+     [
+      3.2,
+      3.0
+     ]
+    ]
+   ],
+   "B": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      0.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      3.0,
+      4.0
+     ],
+     [
+      4.0,
+      3.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0
+     ]
+    ]
+   ],
+   "C": [
+    [
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ]
+    ]
+   ],
+   "D": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      2.0,
+      8.0
+     ],
+     [
+      4.0,
+      6.0
+     ],
+     [
+      4.0,
+      2.0
+     ],
+     [
+      2.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0
+     ]
+    ]
+   ],
+   "E": [
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ],
+    [
+     [
+      0.0,
+      4.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ]
+   ],
+   "F": [
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.0,
+      0.0
+     ]
+    ],
+    [
+     [
+      0.0,
+      4.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ]
+   ],
+   "G": [
+    [
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      3.6
+     ],
+     [
+      2.2,
+      3.6
+     ]
+    ]
+   ],
+   "H": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      0.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      0.0,
+      4.0
+     ],
+     [
+      4.0,
+      4.0
+     ]
+    ]
+   ],
+   "I": [
+    [
+     [
+      2.0,
+      0.0
+     ],
+     [
+      2.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      0.8,
+      0.0
+     ],
+     [
+      3.2,
+      0.0
+     ]
+    ],
+    [
+     [
+      0.8,
+      8.0
+     ],
+     [
+      3.2,
+      8.0
+     ]
+    ]
+   ],
+   "J": [
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      0.0,
+      2.6
+     ]
+    ]
+   ],
+   "K": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      0.0,
+      3.4
+     ]
+    ],
+    [
+     [
+      1.5,
+      4.8
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "L": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "M": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      2.0,
+      3.6
+     ],
+     [
+      4.0,
+      8.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "N": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      4.0,
+      0.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ]
+   ],
+   "O": [
+    [
+     [
+      1.5,
+      0.0
+     ],
+     [
+      2.5,
+      0.0
+     ],
+     [
+      4.0,
+      1.5
+     ],
+     [
+      4.0,
+      6.5
+     ],
+     [
+      2.5,
+      8.0
+     ],
+     [
+      1.5,
+      8.0
+     ],
+     [
+      0.0,
+      6.5
+     ],
+     [
+      0.0,
+      1.5
+     ],
+     [
+      1.5,
+      0.0
+     ]
+    ]
+   ],
+   "P": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      0.0,
+      4.0
+     ]
+    ]
+   ],
+   "Q": [
+    [
+     [
+      1.5,
+      0.0
+     ],
+     [
+      2.5,
+      0.0
+     ],
+     [
+      4.0,
+      1.5
+     ],
+     [
+      4.0,
+      6.5
+     ],
+     [
+      2.5,
+      8.0
+     ],
+     [
+      1.5,
+      8.0
+     ],
+     [
+      0.0,
+      6.5
+     ],
+     [
+      0.0,
+      1.5
+     ],
+     [
+      1.5,
+      0.0
+     ]
+    ],
+    [
+     [
+      2.0,
+      3.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "R": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      0.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      2.0,
+      4.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "S": [
+    [
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      5.0
+     ],
+     [
+      1.0,
+      4.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      4.0,
+      3.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0
+     ]
+    ]
+   ],
+   "T": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      2.0,
+      8.0
+     ],
+     [
+      2.0,
+      0.0
+     ]
+    ]
+   ],
+   "U": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ]
+   ],
+   "V": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      2.0,
+      0.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ]
+   ],
+   "W": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      2.0,
+      5.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ]
+   ],
+   "X": [
+    [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "Y": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      2.0,
+      4.0
+     ],
+     [
+      4.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      2.0,
+      4.0
+     ],
+     [
+      2.0,
+      0.0
+     ]
+    ]
+   ],
+   "Z": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      4.0,
+      8.0
+     ],
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "0": [
+    [
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ]
+   ],
+   "1": [
+    [
+     [
+      0.8,
+      6.2
+     ],
+     [
+      2.4,
+      8.0
+     ],
+     [
+      2.4,
+      0.0
+     ]
+    ],
+    [
+     [
+      0.8,
+      0.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "2": [
+    [
+     [
+      0.0,
+      7.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.2
+     ],
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      0.0
+     ]
+    ]
+   ],
+   "3": [
+    [
+     [
+      0.0,
+      7.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      1.6,
+      4.0
+     ]
+    ],
+    [
+     [
+      3.0,
+      4.0
+     ],
+     [
+      4.0,
+      3.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0
+     ]
+    ]
+   ],
+   "4": [
+    [
+     [
+      3.1,
+      0.0
+     ],
+     [
+      3.1,
+      8.0
+     ],
+     [
+      0.0,
+      2.6
+     ],
+     [
+      4.0,
+      2.6
+     ]
+    ]
+   ],
+   "5": [
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.0,
+      4.6
+     ],
+     [
+      3.0,
+      4.6
+     ],
+     [
+      4.0,
+      3.6
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0
+     ]
+    ]
+   ],
+   "6": [
+    [
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      3.6
+     ],
+     [
+      3.0,
+      4.6
+     ],
+     [
+      0.0,
+      4.6
+     ]
+    ]
+   ],
+   "7": [
+    [
+     [
+      0.0,
+      8.0
+     ],
+     [
+      4.0,
+      8.0
+     ],
+     [
+      1.4,
+      0.0
+     ]
+    ]
+   ],
+   "8": [
+    [
+     [
+      1.0,
+      4.0
+     ],
+     [
+      0.0,
+      5.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      4.0,
+      5.0
+     ],
+     [
+      3.0,
+      4.0
+     ],
+     [
+      1.0,
+      4.0
+     ],
+     [
+      0.0,
+      3.0
+     ],
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      3.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ]
+   ],
+   "9": [
+    [
+     [
+      0.0,
+      1.0
+     ],
+     [
+      1.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      4.0,
+      1.0
+     ],
+     [
+      4.0,
+      7.0
+     ],
+     [
+      3.0,
+      8.0
+     ],
+     [
+      1.0,
+      8.0
+     ],
+     [
+      0.0,
+      7.0
+     ],
+     [
+      0.0,
+      4.4
+     ],
+     [
+      1.0,
+      3.4
+     ],
+     [
+      4.0,
+      3.4
+     ]
+    ]
+   ],
+   "-": [
+    [
+     [
+      0.7,
+      4.0
+     ],
+     [
+      3.3,
+      4.0
+     ]
+    ]
+   ]
+  },
+  "tag_grammar": {
+   "pattern": "^[A-Z]{1,3}-[0-9]{2,5}$",
+   "max_chars": 8,
+   "words": "one to three capital letters, a hyphen, two to five digits"
+  },
+  "tag_plate": {
+   "size_mm": [
+    190.8,
+    79.2
+   ],
+   "thickness_mm": 2.0,
+   "plate_rgb": [
+    245,
+    196,
+    0
+   ],
+   "ink_rgb": [
+    15,
+    15,
+    15
+   ],
+   "border_line": {
+    "outer_edge_inset_mm": 4.0,
+    "width_mm": 1.6
+   },
+   "cap_height_mm": 25.0,
+   "pen_mm": 3.59375,
+   "pitch_mm": 20.0,
+   "text_placement": "one line; the glyph cells (not the ink) are centred on the plate: the first cell's left edge is half of ((n - 1) x pitch + 4 units) left of the plate's centre and the cells' bottom edge half the cap height below it"
+  },
+  "room_plate": {
+   "size_mm": [
+    400.0,
+    100.0
+   ],
+   "plate_rgb": [
+    238,
+    238,
+    230
+   ],
+   "ink_rgb": [
+    15,
+    15,
+    15
+   ],
+   "border_line": {
+    "outer_edge_inset_mm": 4.0,
+    "width_mm": 1.6
+   },
+   "number_cap_height_mm": 45.0,
+   "name_cap_height_mm": 20.0,
+   "text_placement": "the room number from 14 mm inside the left edge, the name half a number pitch after it (two lines when it is long), both centred vertically"
+  },
+  "image": "lettering.png",
+  "image_scale": "160 px of cap height; each glyph in its 4 x 8 cell (grey)"
+ },
+ "tags": {
+  "instrument_tag": {
+   "plate_m": [
+    0.1908,
+    0.0792
+   ],
+   "thickness_m": 0.002,
+   "plate_rgb": [
+    245,
+    196,
+    0
+   ],
+   "ink_rgb": [
+    15,
+    15,
+    15
+   ],
+   "cap_height_m": 0.025,
+   "pitch_m": 0.02,
+   "layout": "signal yellow plate, a black border line 1.6 mm wide 4.0 mm inside its edge, the tag in the plant lettering on one line, centred (catalog.json 'lettering', tag_plate_drawing.png)",
+   "mounting": "parallel to the instrument's face (see each type's tag_plate)",
+   "image": "tag_plate_example.png",
+   "drawing": "tag_plate_drawing.png",
+   "image_scale": "4 px per mm"
+  },
+  "room_plate": {
+   "plate_m": [
+    0.4,
+    0.1
+   ],
+   "drawing": "room_plate_drawing.png"
+  },
+  "grid_marker": {
+   "dictionary": "DICT_APRILTAG_36h11",
+   "family": "AprilTag 36h11",
+   "marker_m": 0.11,
+   "plate_m": [
+    0.3498,
+    0.1452
+   ],
+   "image": "grid_marker_example.png",
+   "note": "grid-line marker plates on walls at surveyed positions (the drawing lists them)",
+   "marker_centre_left_of_plate_centre_m": 0.1023,
+   "drawn_position": "grid_markers[].pos, height and facing_deg of the drawing are those of the plate's centre"
+  }
+ },
+ "thermal": {
+  "emissivity_by_surface": {
+   "painted steel": 0.93,
+   "powder-coated steel": 0.91,
+   "oxidised cast iron": 0.94
+  },
+  "band": "8-14 um",
+  "reported": "which unit of the tagged component is hot and its surface temperature in degrees C (the hottest point of that unit)",
+  "note": "the round sheet states the component's surface type"
+ },
+ "legibility": {
+  "about": "where the lettering of a tag plate is legible in a frame of the robot's inspection camera: sizes in pixels of that frame; d = distance from the camera to the plate in metres, a = angle between the plate's normal and the line to the camera",
+  "camera": "inspect",
+  "focal_length_px": 4040.8,
+  "cap_height_px": "101.0 / d",
+  "pitch_px": "80.8 x cos(a) / d",
+  "legible_from_cap_height_px": 14.0,
+  "legible_from_pitch_px": 8.0,
+  "legible_up_to_deg_off_the_normal": 60.0
+ },
+ "positions": {
+  "about": "per type: what the position recorded on the round sheet is; the reference point that the record photo's distance, angle and size are measured to, relative to that position; the tag plate's centre relative to the reference point. Metres; ahead = toward the viewer along the face normal, right = the viewer's right, up. Values measured in the training hall unless a range is given",
+  "gauge": {
+   "position": "the centre of the dial",
+   "reference_point": {
+    "ahead": 0.0,
+    "right": 0.0,
+    "up": 0.0
+   },
+   "tag_plate_centre": {
+    "case_63": {
+     "ahead": 0.004,
+     "right": 0.0,
+     "up": -0.086
+    },
+    "case_100": {
+     "ahead": -0.003,
+     "right": 0.0,
+     "up": -0.105
+    },
+    "case_160": {
+     "ahead": -0.013,
+     "right": 0.0,
+     "up": -0.135
+    }
+   }
+  },
+  "level": {
+   "position": "the glass tube's axis, at the middle of the window",
+   "reference_point": {
+    "ahead": 0.0,
+    "right": 0.033,
+    "up": 0.0
+   },
+   "tag_plate_centre": {
+    "window_0.40": {
+     "ahead": -0.001,
+     "right": 0.16,
+     "up": -0.16
+    },
+    "window_0.44": {
+     "ahead": -0.001,
+     "right": 0.16,
+     "up": -0.18
+    }
+   }
+  },
+  "valve_lever": {
+   "position": "the pipe's axis at the valve",
+   "reference_point": {
+    "what": "the lever's pivot on the valve stem",
+    "hall_horizontal_pipe": {
+     "ahead": 0.082,
+     "right": 0.0,
+     "up": 0.0
+    },
+    "hall_vertical_pipe": {
+     "ahead": 0.088,
+     "right": 0.0,
+     "up": 0.0
+    },
+    "ahead_range_in_the_plant_m": [
+     0.05,
+     0.14
+    ]
+   },
+   "tag_plate_centre": {
+    "horizontal_pipe": {
+     "ahead": -0.034,
+     "right": 0.0,
+     "up": -0.126
+    },
+    "vertical_pipe": {
+     "ahead": -0.033,
+     "right": 0.201,
+     "up": -0.063
+    }
+   }
+  },
+  "valve_handwheel": {
+   "position": "the valve body, at the height of the pipe's axis",
+   "reference_point": {
+    "ahead": 0.0,
+    "right": 0.0,
+    "up": 0.42
+   },
+   "tag_plate_centre": {
+    "ahead": -0.001,
+    "right": 0.133,
+    "up": 0.0
+   }
+  },
+  "lamps": {
+   "position": "the panel",
+   "reference_point": {
+    "ahead": 0.0,
+    "right": 0.0,
+    "up": -0.005
+   },
+   "tag_plate_centre": {
+    "ahead": 0.002,
+    "right": 0.0,
+    "up": -0.152
+   }
+  },
+  "thermal": {
+   "position": "a point just in front of the hot face",
+   "components": [
+    {
+     "component": "<tag> heater terminal box",
+     "hot_face": "the front plate of a heater terminal box on a wall",
+     "face_width_height_m": [
+      0.34,
+      0.28
+     ],
+     "reference_point": {
+      "ahead": -0.004,
+      "right": 0.0,
+      "up": 0.0
+     },
+     "tag_plate_centre": {
+      "ahead": 0.007,
+      "right": 0.295,
+      "up": 0.0
+     }
+    },
+    {
+     "component": "<tag> heater",
+     "hot_face": "the front plate of a heater terminal box on a tank",
+     "face_width_height_m": [
+      0.28,
+      0.24
+     ],
+     "reference_point": {
+      "ahead": -0.004,
+      "right": 0.0,
+      "up": 0.0
+     },
+     "tag_plate_centre": {
+      "ahead": 0.007,
+      "right": 0.265,
+      "up": 0.0
+     }
+    },
+    {
+     "component": "<switchgear> cubicle <n>",
+     "hot_face": "the door of a switchgear cubicle",
+     "face_width_height_m": [
+      0.5,
+      1.4
+     ],
+     "reference_point": {
+      "ahead": -0.124,
+      "right": 0.0,
+      "up": 0.05
+     },
+     "tag_plate_centre": {
+      "ahead": 0.127,
+      "right": 0.375,
+      "up": -0.05
+     }
+    }
+   ]
+  }
+ }
+}
