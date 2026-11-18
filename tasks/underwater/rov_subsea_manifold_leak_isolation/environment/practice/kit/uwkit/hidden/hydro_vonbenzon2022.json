@@ -1,0 +1,19 @@
+{
+  "name": "vonbenzon2022",
+  "role": "literature hydrodynamic coefficient set B (grader / hidden-world side only; never ship agent-side)",
+  "convention": "diagonal Fossen coefficients about the CG, body axes, positive magnitudes; invariant under FRD<->FLU",
+  "added_mass": [6.357, 7.121, 18.686, 0.186, 0.135, 0.222],
+  "damping_linear": [13.7, 0.0, 33.0, 0.0, 0.8, 0.0],
+  "damping_quadratic": [141.0, 217.0, 190.0, 1.192, 0.47, 1.5],
+  "units": {"added_mass": "kg x3, kg m^2 x3", "damping_linear": "N s/m x3, N m s/rad x3", "damping_quadratic": "N s^2/m^2 x3, N m s^2/rad^2 x3"},
+  "rho_ref": 1000.0,
+  "identified_vehicle": {
+    "mass_kg": 13.5,
+    "inertia_diag_kgm2": [0.26, 0.23, 0.37],
+    "volume_m3": 0.0135,
+    "z_bg_m": 0.01,
+    "thruster_limit_N": 30.0,
+    "note": "added mass computed with DNV empirical formulae (AddedMassCoef.m), damping identified"
+  },
+  "provenance": "von Benzon et al. (2022) J. Mar. Sci. Eng. 10(12):1898, Table A1. Values read directly from the authors' MATLAB package Parameters/Robots.mat (phase-1 note R2 section 11 row 1); cross-checked against Umiusi estimate_hydro.py and OceanScale vehicles/bluerov2.py transcriptions (R4 section 6; R4 lists Kp' = 0.189, the .mat has 0.186)."
+}

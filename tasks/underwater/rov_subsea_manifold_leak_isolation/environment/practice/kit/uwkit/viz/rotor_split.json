@@ -1,0 +1,1835 @@
+{
+ "schema": "uwkit.viz.rotor_split/1",
+ "conventions": {
+  "frames": "prototype = native mesh frame of the thruster prototype (metres; the manifest pose T_B maps it to B); B = body FLU",
+  "axis": "axis_B = unit vector along the site +x of the digest table = direction of the force on the body under positive (forward) thrust = from the propeller towards the nose cone (the 'front' of the thruster)",
+  "spin_sign_forward": "sign of omega . axis_B for forward thrust (positive command / positive rotor speed); -1 = the rotor turns clockwise when seen from the nose cone (looking along -axis_B), +1 = counter-clockwise.  Visible spin = spin_sign_forward x sign(rotor speed).",
+  "outflow": "forward thrust: water leaves through the rear lip (rear_lip_B_m, behind the propeller); reverse thrust: through the front lip around the nose cone (front_lip_B_m)",
+  "what_rotates": "only the propeller solid (blades + hub; the motor rotor, shaft, shaft collar and the propeller screw are inside / not in the vehicle CAD); nose cone, nozzle (with its tail cone and rear vanes), stator base and screws are static.  See UWKIT_VIZ.md section 2.",
+  "marker": "rotor_marker = the outer part of one blade, same geometry as the blade, drawn in a contrasting colour only to make the rotation readable on video (not a real paint scheme)"
+ },
+ "sources": {
+  "geometry": "per-solid B-rep tessellation of the vehicle CAD (0.2 mm / 0.3 rad), decimated with quadric simplification; poses = parts manifest T_B; table = spec values <config>.thrusters",
+  "spin": "three checks: blade pitch hand from face normals, Newtonian panel model of the spinning rotor, and the vendor rule 'a CW propeller gives forward thrust spinning clockwise seen from the nose cone'"
+ },
+ "prototypes": {
+  "ccw": {
+   "hand_label": "CCW",
+   "items": [
+    "thruster_heavy_m5",
+    "thruster_heavy_m8",
+    "thruster_m1",
+    "thruster_m2",
+    "thruster_std_m5"
+   ],
+   "mesh_files": {
+    "stator": "thruster_ccw_stator.stl",
+    "rotor_hub": "thruster_ccw_rotor_hub.stl",
+    "rotor_blades": "thruster_ccw_rotor_blades.stl",
+    "rotor_marker": "thruster_ccw_rotor_marker.stl"
+   },
+   "faces": {
+    "stator": 9000,
+    "rotor_hub": 1565,
+    "rotor_blades": 1650,
+    "rotor_marker": 785,
+    "source_rotor": 8992,
+    "source_stator": 120180
+   },
+   "solid_roles": {
+    "0": "nose cone (cable entry, screwed to the stator base) - static",
+    "1": "stator base with front struts and potted stator - static",
+    "2": "nozzle: duct + mounting base + rear vanes + tail cone (one solid) - static",
+    "3": "threaded insert in the mounting base - static",
+    "4": "threaded insert in the mounting base - static",
+    "5": "threaded insert in the mounting base - static",
+    "6": "threaded insert in the mounting base - static",
+    "7": "radial screw nozzle -> strut - static",
+    "8": "radial screw nozzle -> strut - static",
+    "9": "radial screw nozzle -> strut - static",
+    "10": "radial screw nozzle -> strut - static",
+    "11": "axial screw nose cone -> stator base - static",
+    "12": "axial screw nose cone -> stator base - static",
+    "13": "propeller (blades + hub) - ROTOR"
+   },
+   "solids": {
+    "0": {
+     "faces": 13424,
+     "volume_cm3": 4.73,
+     "r_mm": [
+      0.0,
+      20.0
+     ],
+     "z_mm": [
+      -67.4,
+      -42.0
+     ]
+    },
+    "1": {
+     "faces": 8440,
+     "volume_cm3": 62.894,
+     "r_mm": [
+      10.36,
+      43.69
+     ],
+     "z_mm": [
+      -42.0,
+      10.04
+     ]
+    },
+    "2": {
+     "faces": 44010,
+     "volume_cm3": 114.006,
+     "r_mm": [
+      1.1,
+      50.96
+     ],
+     "z_mm": [
+      -21.89,
+      45.28
+     ]
+    },
+    "3": {
+     "faces": 6096,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.75,
+      50.51
+     ],
+     "z_mm": [
+      2.8,
+      7.7
+     ]
+    },
+    "4": {
+     "faces": 6096,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.16,
+      49.08
+     ],
+     "z_mm": [
+      -6.7,
+      -1.8
+     ]
+    },
+    "5": {
+     "faces": 6098,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.75,
+      50.51
+     ],
+     "z_mm": [
+      2.8,
+      7.7
+     ]
+    },
+    "6": {
+     "faces": 6096,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.16,
+      49.08
+     ],
+     "z_mm": [
+      12.3,
+      17.2
+     ]
+    },
+    "7": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      36.0,
+      49.08
+     ],
+     "z_mm": [
+      -18.62,
+      -13.13
+     ]
+    },
+    "8": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      -18.61,
+      -13.13
+     ]
+    },
+    "9": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      -18.62,
+      -13.12
+     ]
+    },
+    "10": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      -18.62,
+      -13.13
+     ]
+    },
+    "11": {
+     "faces": 6340,
+     "volume_cm3": 0.104,
+     "r_mm": [
+      13.13,
+      18.62
+     ],
+     "z_mm": [
+      -48.17,
+      -37.17
+     ]
+    },
+    "12": {
+     "faces": 6340,
+     "volume_cm3": 0.104,
+     "r_mm": [
+      13.13,
+      18.62
+     ],
+     "z_mm": [
+      -48.17,
+      -37.17
+     ]
+    },
+    "13": {
+     "faces": 8992,
+     "volume_cm3": 8.164,
+     "r_mm": [
+      5.6,
+      38.1
+     ],
+     "z_mm": [
+      -25.0,
+      5.02
+     ]
+    }
+   },
+   "rotor_solids": [
+    13
+   ],
+   "stator_solids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "axis_proto": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "centre_proto_m": [
+    1.6e-06,
+    -2e-07,
+    -0.0067626
+   ],
+   "hub_radius_m": 0.0205,
+   "tip_radius_m": 0.0381,
+   "blades": 3,
+   "marker_blade_angle_proto_deg": 40.21,
+   "duct_lips_proto_z_m": [
+    -0.02189,
+    0.02255
+   ],
+   "duct_inner_radius_m": 0.03885,
+   "tail_cone_tip_proto_z_m": 0.04528,
+   "blade_pitch_m": {
+    "median": 0.16802,
+    "q10_q90": [
+     0.13586,
+     0.20743
+    ],
+    "area_fraction_same_sign": 0.938,
+    "hand": "right"
+   },
+   "spin_checks": {
+    "from_pitch_hand": 1,
+    "newtonian_panel": 1,
+    "official_label": 1,
+    "panel_axial_force_omega_plus_minus": [
+     2.66e-07,
+     -2.52e-07
+    ]
+   },
+   "spin_sign_forward": 1
+  },
+  "cw": {
+   "hand_label": "CW",
+   "items": [
+    "thruster_heavy_m6",
+    "thruster_heavy_m7",
+    "thruster_m3",
+    "thruster_m4",
+    "thruster_std_m6"
+   ],
+   "mesh_files": {
+    "stator": "thruster_cw_stator.stl",
+    "rotor_hub": "thruster_cw_rotor_hub.stl",
+    "rotor_blades": "thruster_cw_rotor_blades.stl",
+    "rotor_marker": "thruster_cw_rotor_marker.stl"
+   },
+   "faces": {
+    "stator": 8999,
+    "rotor_hub": 2131,
+    "rotor_blades": 1304,
+    "rotor_marker": 565,
+    "source_rotor": 8432,
+    "source_stator": 120122
+   },
+   "solid_roles": {
+    "0": "propeller (blades + hub) - ROTOR",
+    "1": "nose cone (cable entry, screwed to the stator base) - static",
+    "2": "stator base with front struts and potted stator - static",
+    "3": "nozzle: duct + mounting base + rear vanes + tail cone (one solid) - static",
+    "4": "threaded insert in the mounting base - static",
+    "5": "threaded insert in the mounting base - static",
+    "6": "threaded insert in the mounting base - static",
+    "7": "threaded insert in the mounting base - static",
+    "8": "radial screw nozzle -> strut - static",
+    "9": "radial screw nozzle -> strut - static",
+    "10": "radial screw nozzle -> strut - static",
+    "11": "radial screw nozzle -> strut - static",
+    "12": "axial screw nose cone -> stator base - static",
+    "13": "axial screw nose cone -> stator base - static"
+   },
+   "solids": {
+    "0": {
+     "faces": 8432,
+     "volume_cm3": 8.174,
+     "r_mm": [
+      5.6,
+      38.1
+     ],
+     "z_mm": [
+      -5.02,
+      25.0
+     ]
+    },
+    "1": {
+     "faces": 13418,
+     "volume_cm3": 4.73,
+     "r_mm": [
+      0.0,
+      20.0
+     ],
+     "z_mm": [
+      42.0,
+      67.4
+     ]
+    },
+    "2": {
+     "faces": 8438,
+     "volume_cm3": 62.894,
+     "r_mm": [
+      10.36,
+      43.69
+     ],
+     "z_mm": [
+      -10.04,
+      42.0
+     ]
+    },
+    "3": {
+     "faces": 43958,
+     "volume_cm3": 114.006,
+     "r_mm": [
+      1.1,
+      50.96
+     ],
+     "z_mm": [
+      -45.28,
+      21.89
+     ]
+    },
+    "4": {
+     "faces": 6098,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.75,
+      50.51
+     ],
+     "z_mm": [
+      -7.7,
+      -2.8
+     ]
+    },
+    "5": {
+     "faces": 6094,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.16,
+      49.08
+     ],
+     "z_mm": [
+      1.8,
+      6.7
+     ]
+    },
+    "6": {
+     "faces": 6098,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.75,
+      50.51
+     ],
+     "z_mm": [
+      -7.7,
+      -2.8
+     ]
+    },
+    "7": {
+     "faces": 6098,
+     "volume_cm3": 0.075,
+     "r_mm": [
+      43.16,
+      49.08
+     ],
+     "z_mm": [
+      -17.2,
+      -12.3
+     ]
+    },
+    "8": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      36.0,
+      49.08
+     ],
+     "z_mm": [
+      13.13,
+      18.62
+     ]
+    },
+    "9": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      13.13,
+      18.61
+     ]
+    },
+    "10": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      13.12,
+      18.62
+     ]
+    },
+    "11": {
+     "faces": 4310,
+     "volume_cm3": 0.061,
+     "r_mm": [
+      35.28,
+      48.35
+     ],
+     "z_mm": [
+      13.13,
+      18.62
+     ]
+    },
+    "12": {
+     "faces": 6340,
+     "volume_cm3": 0.104,
+     "r_mm": [
+      13.13,
+      18.62
+     ],
+     "z_mm": [
+      37.17,
+      48.17
+     ]
+    },
+    "13": {
+     "faces": 6340,
+     "volume_cm3": 0.104,
+     "r_mm": [
+      13.13,
+      18.62
+     ],
+     "z_mm": [
+      37.17,
+      48.17
+     ]
+    }
+   },
+   "rotor_solids": [
+    0
+   ],
+   "stator_solids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ],
+   "axis_proto": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "centre_proto_m": [
+    -3.6e-06,
+    -3.8e-06,
+    0.0071698
+   ],
+   "hub_radius_m": 0.0205,
+   "tip_radius_m": 0.0381,
+   "blades": 3,
+   "marker_blade_angle_proto_deg": 15.99,
+   "duct_lips_proto_z_m": [
+    -0.02255,
+    0.02189
+   ],
+   "duct_inner_radius_m": 0.03885,
+   "tail_cone_tip_proto_z_m": -0.04528,
+   "blade_pitch_m": {
+    "median": -0.07421,
+    "q10_q90": [
+     -0.07952,
+     -0.05751
+    ],
+    "area_fraction_same_sign": 0.929,
+    "hand": "left"
+   },
+   "spin_checks": {
+    "from_pitch_hand": -1,
+    "newtonian_panel": -1,
+    "official_label": -1,
+    "panel_axial_force_omega_plus_minus": [
+     -9e-08,
+     9.9e-08
+    ]
+   },
+   "spin_sign_forward": -1
+  }
+ },
+ "thrusters": {
+  "mission": [
+   {
+    "site": "thr_1",
+    "item": "thruster_m1",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     -0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460727,
+     -0.0995403,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167856,
+     -0.079927,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134829,
+     -0.109665,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0027,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      0.0,
+      0.6691306,
+      -0.0950141
+     ],
+     [
+      -0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_2",
+    "item": "thruster_m2",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460706,
+     0.099538,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167854,
+     0.079924,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134826,
+     0.109662,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0021,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      -0.0,
+      -0.6691306,
+      0.0950141
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_3",
+    "item": "thruster_m3",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     -0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.1373357,
+     -0.0989886,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157222,
+     -0.076903,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127484,
+     -0.10993,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0059,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      -0.0,
+      -0.7431448,
+      -0.0936628
+     ],
+     [
+      0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_4",
+    "item": "thruster_m4",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.137341,
+     0.0989934,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157227,
+     0.076908,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127489,
+     0.109935,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      0.0,
+      0.7431448,
+      0.0936628
+     ],
+     [
+      -0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_5",
+    "item": "thruster_heavy_m5",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.1326984,
+     -0.2179998,
+     -0.0085134
+    ],
+    "rear_lip_B_m": [
+     0.132698,
+     -0.218,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     0.132698,
+     -0.218,
+     -0.023644
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0037,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -1.0,
+      0.0,
+      0.0,
+      0.1327
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.218
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_6",
+    "item": "thruster_heavy_m6",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.1327036,
+     0.2179962,
+     -0.0089206
+    ],
+    "rear_lip_B_m": [
+     0.132704,
+     0.217996,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     0.132704,
+     0.217996,
+     -0.023644
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -1.0,
+      0.0,
+      0.0,
+      0.1327
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.218
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_7",
+    "item": "thruster_heavy_m7",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     -0.1073036,
+     -0.2179962,
+     -0.0089206
+    ],
+    "rear_lip_B_m": [
+     -0.107304,
+     -0.217996,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     -0.107304,
+     -0.217996,
+     -0.023644
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -0.1073
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.218
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_8",
+    "item": "thruster_heavy_m8",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     -0.1072984,
+     0.2179998,
+     -0.0085134
+    ],
+    "rear_lip_B_m": [
+     -0.107298,
+     0.218,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     -0.107298,
+     0.218,
+     -0.023644
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0037,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -0.1073
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.218
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   }
+  ],
+  "heavy": [
+   {
+    "site": "thr_1",
+    "item": "thruster_m1",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     -0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460727,
+     -0.0995403,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167856,
+     -0.079927,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134829,
+     -0.109665,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0027,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      0.0,
+      0.6691306,
+      -0.0950141
+     ],
+     [
+      -0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_2",
+    "item": "thruster_m2",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460706,
+     0.099538,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167854,
+     0.079924,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134826,
+     0.109662,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0021,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      -0.0,
+      -0.6691306,
+      0.0950141
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_3",
+    "item": "thruster_m3",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     -0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.1373357,
+     -0.0989886,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157222,
+     -0.076903,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127484,
+     -0.10993,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0059,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      -0.0,
+      -0.7431448,
+      -0.0936628
+     ],
+     [
+      0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_4",
+    "item": "thruster_m4",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.137341,
+     0.0989934,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157227,
+     0.076908,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127489,
+     0.109935,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      0.0,
+      0.7431448,
+      0.0936628
+     ],
+     [
+      -0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_5",
+    "item": "thruster_heavy_m5",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.1326984,
+     -0.2179998,
+     -0.0085134
+    ],
+    "rear_lip_B_m": [
+     0.132698,
+     -0.218,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     0.132698,
+     -0.218,
+     -0.023644
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0037,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -1.0,
+      0.0,
+      0.0,
+      0.1327
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.218
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_6",
+    "item": "thruster_heavy_m6",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.1327036,
+     0.2179962,
+     -0.0089206
+    ],
+    "rear_lip_B_m": [
+     0.132704,
+     0.217996,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     0.132704,
+     0.217996,
+     -0.023644
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -1.0,
+      0.0,
+      0.0,
+      0.1327
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.218
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_7",
+    "item": "thruster_heavy_m7",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     -0.1073036,
+     -0.2179962,
+     -0.0089206
+    ],
+    "rear_lip_B_m": [
+     -0.107304,
+     -0.217996,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     -0.107304,
+     -0.217996,
+     -0.023644
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -0.1073
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.218
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_8",
+    "item": "thruster_heavy_m8",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     -0.1072984,
+     0.2179998,
+     -0.0085134
+    ],
+    "rear_lip_B_m": [
+     -0.107298,
+     0.218,
+     0.020799
+    ],
+    "front_lip_B_m": [
+     -0.107298,
+     0.218,
+     -0.023644
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0037,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -0.1073
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.218
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -0.0017508
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   }
+  ],
+  "std": [
+   {
+    "site": "thr_1",
+    "item": "thruster_m1",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     -0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460727,
+     -0.0995403,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167856,
+     -0.079927,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134829,
+     -0.109665,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0027,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      0.0,
+      0.6691306,
+      -0.0950141
+     ],
+     [
+      -0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_2",
+    "item": "thruster_m2",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     -0.7431448,
+     0.6691306,
+     0.0
+    ],
+    "centre_B_m": [
+     0.1460706,
+     0.099538,
+     -0.0723498
+    ],
+    "rear_lip_B_m": [
+     0.167854,
+     0.079924,
+     -0.07235
+    ],
+    "front_lip_B_m": [
+     0.134826,
+     0.109662,
+     -0.07235
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0021,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.6691306,
+      -0.0,
+      0.7431448,
+      0.1510972
+     ],
+     [
+      -0.7431448,
+      -0.0,
+      -0.6691306,
+      0.0950141
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_3",
+    "item": "thruster_m3",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     -0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.1373357,
+     -0.0989886,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157222,
+     -0.076903,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127484,
+     -0.10993,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0059,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      -0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      -0.0,
+      -0.7431448,
+      -0.0936628
+     ],
+     [
+      0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_4",
+    "item": "thruster_m4",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.6691306,
+     0.7431448,
+     0.0
+    ],
+    "centre_B_m": [
+     -0.137341,
+     0.0989934,
+     -0.0723462
+    ],
+    "rear_lip_B_m": [
+     -0.157227,
+     0.076908,
+     -0.072346
+    ],
+    "front_lip_B_m": [
+     -0.127489,
+     0.109935,
+     -0.072346
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.00016,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      0.7431448,
+      -0.0,
+      0.6691306,
+      -0.1421359
+     ],
+     [
+      -0.6691306,
+      0.0,
+      0.7431448,
+      0.0936628
+     ],
+     [
+      -0.0,
+      -1.0,
+      -0.0,
+      -0.07235
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_5",
+    "item": "thruster_std_m5",
+    "propeller": "CCW",
+    "prototype": "ccw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.0127016,
+     -0.1105002,
+     -0.0020144
+    ],
+    "rear_lip_B_m": [
+     0.012702,
+     -0.1105,
+     0.027298
+    ],
+    "front_lip_B_m": [
+     0.012702,
+     -0.1105,
+     -0.017145
+    ],
+    "spin_sign_forward": 1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0046,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      -0.0,
+      0.0127
+     ],
+     [
+      -0.0,
+      1.0,
+      -0.0,
+      -0.1105
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.0047482
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   {
+    "site": "thr_6",
+    "item": "thruster_std_m6",
+    "propeller": "CW",
+    "prototype": "cw",
+    "axis_B": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "centre_B_m": [
+     0.0126964,
+     0.1105038,
+     -0.0024206
+    ],
+    "rear_lip_B_m": [
+     0.012696,
+     0.110504,
+     0.027299
+    ],
+    "front_lip_B_m": [
+     0.012696,
+     0.110504,
+     -0.017144
+    ],
+    "spin_sign_forward": -1,
+    "check": {
+     "axis_vs_digest_deg": 0.0,
+     "centre_vs_digest_mm": 0.0052,
+     "hand_vs_digest": true
+    },
+    "T_B": [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0127
+     ],
+     [
+      0.0,
+      -1.0,
+      0.0,
+      0.1105
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0,
+      0.0047492
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   }
+  ]
+ }
+}

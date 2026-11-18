@@ -1,0 +1,58 @@
+{
+  "name": "reference vehicle - simulator model parameters",
+  "role": "simulator modelling choices and firmware givens that are NOT in the reference-vehicle digest (spec_values.json). Geometry, mass properties, thruster layout and sensor poses always come from the digest; this file only holds dynamics parameters of the actuators, the battery, the hotel load and the collision / servo settings.",
+  "thruster_model": {
+    "pwm_center_us": 1500.0,
+    "pwm_half_span_us": 400.0,
+    "tau_up_s": 0.04,
+    "tau_down_s": 0.06,
+    "inflow_loss": true,
+    "geometric_pitch_m": 0.0742,
+    "inflow_zero_ratio": 1.0,
+    "inflow_factor_max": 1.25
+  },
+  "battery": {
+    "series_cells": 4,
+    "capacity_Ah": 18.0,
+    "r0_ohm": 0.020,
+    "r1_ohm": 0.010,
+    "tau1_s": 30.0,
+    "ocv_soc": [0.0, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00],
+    "ocv_cell_V": [3.00, 3.20, 3.33, 3.47, 3.55, 3.61, 3.67, 3.74, 3.81, 3.89, 3.98, 4.06, 4.18],
+    "i_continuous_A": 60.0,
+    "i_burst_A": 132.0,
+    "burst_s": 10.0,
+    "v_cutoff_V": 12.0,
+    "v_recover_V": 12.5
+  },
+  "hotel_W": {"base": 20.0, "light_each_full": 15.0, "sonar": 5.0, "dvl": 4.0},
+  "camera_tilt": {
+    "range_deg": [-90.0, 90.0],
+    "rate_deg_s": 60.0,
+    "kp_N_m_per_rad": 2.0,
+    "kv_N_m_s_per_rad": 0.05,
+    "damping_N_m_s_per_rad": 0.02,
+    "armature_kg_m2": 1e-4,
+    "note": "servo: position actuator on the tilt hinge; the commanded angle is slewed at rate_deg_s (servo speed estimate)"
+  },
+  "gripper": {
+    "close_open_s": null,
+    "force_calibration_point": "tcp",
+    "kp_N_m_per_rad": 1000.0,
+    "kv_N_m_s_per_rad": 4.0,
+    "armature_kg_m2": 0.002,
+    "joint_damping_N_m_s_per_rad": 0.05,
+    "closed_margin_rad": 0.03,
+    "pad_face_offset_m": 0.0015,
+    "pad_thickness_m": 0.006,
+    "pad_half_width_m": 0.0075,
+    "pad_back_from_tcp_m": 0.022,
+    "pad_friction": [1.2, 0.02, 0.002],
+    "added_mass_coefficient": 0.5,
+    "note": "1 DOF: the two jaws turn about their own pins and are coupled by an equality constraint (pusher linkage); one position actuator drives the upper jaw. Torque limit = 2 x official grip force at the calibration point x its lever arm about the pin. close_open_s null = take the official open / close time from the digest. Pads: one box per jaw on its gripping face (the CAD jaw's convex hull is not a gripping surface: the closed jaws' hulls overlap)."
+  },
+  "collision": {
+    "friction": [0.8, 0.02, 0.001],
+    "note": "vehicle collision geoms: contype 2 / conaffinity 1 (collide with ordinary geoms, not with each other)"
+  }
+}
