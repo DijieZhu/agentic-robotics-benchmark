@@ -1,0 +1,490 @@
+{
+ "format": "site-twin-grader-config/1",
+ "version": "quad-site-twin/1.2.1",
+ "note": "The grader's knobs (hidden with the tests): one section per criterion; keys named in a section's marks.cal are the calibrated knobs, keys in marks.B come from the measured envelope of the probe instrument. The gate and the standard simulation are the public files setup_payload/twin_gate.py and setup_payload/twin_sim_config.json. Lengths in m, angles in deg, times in s, memory in MB. Rules in force: a relaxation before every dynamic settle, G0 included (a unit still too fast is excluded); matching at tau_match_m, b_shape on F_registered; the true samples recomputed and checked against a digest; no height fields; no outcome from the wall clock (the walk stage's time guards are task errors); C4 weighted by q, the alignment refinement inside its trust region, the slice averaged over the site; b_vert follows the support chain (a unit's b_vert is at most its supporter's, the chain ends in the environment); a C1 true positive needs the right label and F_registered >= C2.shape_band[0]; the gate travel rule's closing condition (C5.max_closing_m). Scoring v1.2: the matching pairs the counted true units first and offers the 'ignore' entries only the agent units left; C2.pose_band_m [0.03, 0.10] with e_pose at the footprint corners clipped to C2.pose_corner_clip_m (2 m) from the box's centre; C2.shape_band [0.5, 0.9], so a C1 true positive needs F_registered >= 0.5; C6.unit_routes_need 'paired': a route that units decide counts only when every deciding unit is paired in the matching with an agent unit that takes part in the walks; C6.progress_band [0.05, 0.20], the truth's keep rule C6.truth.max_progress_spread 0.05, not above the band's lower end.",
+ "criteria": {
+  "require_all": true,
+  "order": [
+   "C1",
+   "C2",
+   "C3",
+   "C7",
+   "C4",
+   "C5",
+   "C6"
+  ],
+  "C1": {
+   "name": "inventory",
+   "module": "score_c1",
+   "weight": 0.15,
+   "truth": [
+    "items_truth",
+    "items_surface"
+   ],
+   "gate": null
+  },
+  "C2": {
+   "name": "pose_shape",
+   "module": "score_c2",
+   "weight": 0.3,
+   "truth": [
+    "items_truth",
+    "items_surface"
+   ],
+   "gate": null
+  },
+  "C3": {
+   "name": "site_geometry",
+   "module": "score_c3",
+   "weight": 0.15,
+   "truth": [
+    "c3_samples",
+    "slice_truth"
+   ],
+   "gate": "C1"
+  },
+  "C7": {
+   "name": "scale",
+   "module": "score_c7",
+   "weight": 0.05,
+   "truth": [],
+   "gate": "C1"
+  },
+  "C4": {
+   "name": "static_physics",
+   "module": "score_c4",
+   "weight": 0.1,
+   "truth": [
+    "support_truth"
+   ],
+   "gate": null
+  },
+  "C5": {
+   "name": "interaction",
+   "module": "score_c5",
+   "weight": 0.1,
+   "truth": [
+    "probe_truth"
+   ],
+   "gate": "C1"
+  },
+  "C6": {
+   "name": "walk",
+   "module": "score_c6",
+   "weight": 0.15,
+   "truth": [
+    "routes"
+   ],
+   "gate": "C1"
+  },
+  "marks": {
+   "cal": [
+    "C1.weight",
+    "C2.weight",
+    "C3.weight",
+    "C4.weight",
+    "C5.weight",
+    "C6.weight",
+    "C7.weight"
+   ],
+   "B": []
+  }
+ },
+ "alignment": {
+  "ransac": {
+   "inlier_m": 0.15,
+   "min_triangle_m2": 0.5,
+   "min_inliers": 8,
+   "max_rms_m": 0.08,
+   "max_median_angle_deg": 3.0,
+   "refit_iterations": 10
+  },
+  "refine": {
+   "huber_m": 0.03,
+   "iterations": 30,
+   "ignore_above_m": 0.15,
+   "trust_rot_deg": 0.5,
+   "trust_trans_m": 0.15,
+   "trust_scale": 0.01,
+   "fallback_within_m": 0.06,
+   "fallback_min_share": 0.3,
+   "max_rays": 12000,
+   "converge_rad": 1e-08,
+   "converge_m": 1e-07
+  },
+  "identity_snap": {
+   "m": 1e-07,
+   "rad": 1e-09,
+   "scale": 1e-09
+  },
+  "selftest_sfm": {
+   "radius_m": 15.0,
+   "max_disp_m": 0.01,
+   "max_rot_deg": 0.05
+  },
+  "marks": {
+   "cal": [
+    "ransac.max_rms_m"
+   ],
+   "B": []
+  }
+ },
+ "matching": {
+  "tau_m": 0.03,
+  "tau_match_m": 0.1,
+  "f_min": 0.25,
+  "spacing_m": 0.01,
+  "max_samples_per_unit": 150000,
+  "seed": 20261113,
+  "pair_bbox_margin_m": 0.1,
+  "table_min_f": 0.05,
+  "marks": {
+   "cal": [
+    "tau_m",
+    "tau_match_m"
+   ],
+   "B": []
+  },
+  "note": "Units are matched on the F-score at tau_match_m (Hungarian over pairs with F >= f_min: C1 says whether a unit is there, to roughly 15 cm); two passes over the same F table, the counted true units first (with every agent unit), then the 'ignore' entries with the agent units the first pass left, so an 'ignore' entry lying on a counted unit cannot take the agent's model of that unit; tau_m is the tolerance of C2's shape band (F after the registration of b_pose)"
+ },
+ "zones": {
+  "footprint_cell_m": 0.02,
+  "max_footprint_cells": 400000,
+  "marks": {
+   "cal": [],
+   "B": []
+  }
+ },
+ "C1": {
+  "marks": {
+   "cal": [],
+   "B": []
+  },
+  "note": "A matched pair (matching.f_min at matching.tau_match_m) is a true positive only if its label is the true one or an accepted alternative AND its shape is recognisable: the measure of C2's b_shape (F_registered) reaches C2.shape_band[0]; matching itself stays tolerant"
+ },
+ "C2": {
+  "pose_band_m": [
+   0.03,
+   0.1
+  ],
+  "pose_corner_clip_m": 2.0,
+  "shape_band": [
+   0.5,
+   0.9
+  ],
+  "vert_band_m": [
+   0.02,
+   0.06
+  ],
+  "registration": {
+   "iterations": 40,
+   "max_samples": 3000,
+   "trim": 0.9,
+   "normal_weight_m": 0.05,
+   "max_step_deg": 3.0,
+   "max_step_m": 0.05,
+   "max_total_deg": 30.0,
+   "max_total_m": 0.5
+  },
+  "vert": {
+   "column_m": 0.02,
+   "max_columns": 3000,
+   "support_above_m": 0.06
+  },
+  "shape_on": "F_registered",
+  "report_registered_shape": true,
+  "marks": {
+   "cal": [
+    "pose_band_m",
+    "pose_corner_clip_m",
+    "shape_band",
+    "vert_band_m",
+    "shape_on"
+   ],
+   "B": []
+  },
+  "note": "q = b_pose x b_shape x b_vert per counted pair; b_pose = band_down(e_pose, pose_band_m), e_pose measured at the four corners of the true footprint box, a corner further than pose_corner_clip_m from the box's centre taken on its ray at that distance (the yaw of a long vehicle costs no more than that of a 2 x pose_corner_clip_m unit; the free symmetry measures the translation only); b_shape = band_up(F_registered, shape_band) (the F-score at matching.tau_m after the registration of b_pose; C1's shape condition is F_registered >= shape_band[0]); shape_on 'F' is a calibration switch only (the matching's F at tau_match_m); b_vert follows the support chain (support.chain_b_vert: a unit's b_vert is at most the best chained b_vert of what it rests on, its supporters being the owners of the support columns within support.CHAIN_TOL_M (5 mm) of its lowest contact; the environment and the gates end a chain with 1, a stack on a floating unit floats too)"
+ },
+ "C3": {
+  "note": "The C3 module is twin/score_c3.py with the payload's twin_slice.py. C3 = C1 x (w_slice slice + w_depth depth + w_up up x min(1, depth / up_depth_full)) / (sum of the weights), the slice weight dropped when fewer than 2 classes are scored. slice: the robot-terms map (twin_slice.py) of the agent's twin at the true cells, own scale, chance-corrected balanced accuracy over the scored classes. The slice keys must equal the ones slice_truth.npz was built with (checked: a mismatch is a task error). h_crouch_m / h_stand_m / r_robot_m: the probe robot's measured envelope. The reference level is the true FLOOR only (ground_classes), the truth perturbations include +-perturb_footprint_m shifts of all geometry, the class set is fixed by the truth, the agent's map is computed in the frame site / s* with absolute robot sizes. The slice averages over the site.",
+  "w_slice": 0.5,
+  "w_depth": 0.3,
+  "w_up": 0.2,
+  "up_depth_full": 0.5,
+  "slice": {
+   "cell_m": 0.05,
+   "low_from_m": 0.06,
+   "support_tol_m": 0.06,
+   "h_crouch_m": 0.26,
+   "h_stand_m": 0.33,
+   "r_robot_m": 0.17,
+   "clear_cap_m": 1.0,
+   "decisive_m": 0.6,
+   "clearance_decisive_m": 0.6,
+   "min_class_cells": 200,
+   "perturb_height_m": 0.02,
+   "perturb_footprint_m": 0.04,
+   "min_photos": 2,
+   "ground_classes": [
+    "floor"
+   ],
+   "grid_margin_m": 1.0
+  },
+  "depth": {
+   "band_m": [
+    0.02,
+    0.06
+   ],
+   "classes": [
+    "floor",
+    "wall",
+    "pillar",
+    "dock",
+    "kerb"
+   ],
+   "range_max_m": 12.0,
+   "incidence_min_deg": 10.0
+  },
+  "up_band_deg": [
+   0.5,
+   3.0
+  ],
+  "marks": {
+   "cal": [
+    "slice.min_class_cells",
+    "w_slice",
+    "w_depth",
+    "w_up",
+    "up_depth_full",
+    "depth.band_m",
+    "up_band_deg"
+   ],
+   "B": [
+    "slice.h_crouch_m",
+    "slice.h_stand_m",
+    "slice.r_robot_m"
+   ]
+  }
+ },
+ "C4": {
+  "note": "C4 static physics (twin/score_c4.py). The static rule is twin_sim_config.json static (10 mm / 2 deg, maxima over the relaxation and the settle against the submitted pose, x s*). env_snap_m: an environment supporter is the class of the highest true part top within this height of the force-weighted contact point (mapped into the site frame); support_classes: the environment classes a required edge may have; selftest: the true twin's rest (relaxation, settle; ignore entries) in mm / deg. The support variants open / close every support interface by 5 mm and box each unit from its pieces below a unit resting on it. static_share and support_F1 are weighted by q.",
+  "w_static": 0.5,
+  "w_support": 0.5,
+  "env_snap_m": 0.08,
+  "support_classes": [
+   "floor",
+   "dock",
+   "kerb"
+  ],
+  "selftest": {
+   "relax_mm": 0.1,
+   "settle_mm": 1.0,
+   "settle_deg": 0.5,
+   "ignore_settle_mm": 1.0
+  },
+  "marks": {
+   "cal": [
+    "env_snap_m"
+   ],
+   "B": []
+  }
+ },
+ "C5": {
+  "note": "C5 interaction (twin/score_c5.py). lift_m / disturbed_m must equal twin_sim_config lift.lift_mm / outcome.disturbed_mm and travel_width_ratio / min_open_m / max_closing_m its gate_rule (a mismatch is a task error); max_closing_m: the travel rule's closing condition, at most this much travel beyond the surveyed position against the true opening direction plus the true gate's own travel that way (both true gates are surveyed shut: 0), so a range symmetric about the surveyed position fails; false_mover_penalty x the mean charge of the empty-set probes that ran is taken off the lift term; empty_charge: any (1 when the twin moves any unit) or share (the share of the taking-part units that moved); fallback_weights: the criterion weights when fewer than min_nonempty_probes non-empty probes survive the truth's variants (C5 is then the gate term alone). An empty-set probe in which any other unit is carried or disturbed charges 1 (empty_charge any), lift = max(0, mean of q x J over the non-empty probes - false_mover_penalty x mean charge); a submitted gate counts unless its leaf centre lies outside the region polygons (matched gates always count).",
+  "w_lift": 0.4,
+  "w_gate": 0.6,
+  "lift_m": 0.1,
+  "disturbed_m": 0.02,
+  "min_nonempty_probes": 3,
+  "fallback_weights": {
+   "C4": 0.14,
+   "C5": 0.06
+  },
+  "gate_match_m": 0.5,
+  "axis_band_deg": [
+   3.0,
+   12.0
+  ],
+  "travel_width_ratio": [
+   0.5,
+   1.0
+  ],
+  "min_open_m": 0.4,
+  "max_closing_m": 0.1,
+  "false_mover_penalty": 1.0,
+  "empty_charge": "any",
+  "marks": {
+   "cal": [
+    "w_lift",
+    "w_gate",
+    "false_mover_penalty",
+    "empty_charge"
+   ],
+   "B": []
+  }
+ },
+ "C6": {
+  "note": "C6 walk predictivity (twin/walks.py, twin/score_c6.py). variants: the K agent-side start variants (route frame: along / left +-start_dxy_m, yaw +-start_dyaw_deg, any gait phase; number 0 nominal; seeded by variant_seed, the same for every submission); contact: the standard contact parameters every collision geom gets during walks (the instrument envelope's: friction 0.8, MuJoCo's default solref / solimp); procs: the walk pool (the CPUs the process may use: affinity mask and cgroup quota, capped at procs.max); run_wall: the WALL GUARD per run = max(min_s, factor x per_sim_s x the harness's simulated-time limit), per_sim_s the slowest wall seconds per simulated second measured on an accepted verifier (3.0: the worst legal twin measured 2.15 alone and about 2.7 under full load, the oracle at most 1.9), factor >= 20; passing the guard, or the stage budget (the stage deadline - budget_margin_s) running out, is a TASK ERROR (the episode is void), never an outcome; progress_band [full, zero] on |progress - true progress| of a run on a blocked route that is not reached ([0.05, 0.20]); unit_routes_need: 'paired' = a route whose feature.units in routes.json is not empty scores 0 unless every one of those units is paired in the matching with an agent unit that takes part in the walks (not excluded); no C1 true positive is asked for; 'none' = every route scored raw; the true twin's self-test must meet it on every route, and a deciding unit that is not a counted true unit is a task error; truth: the build-time variant set and keep rule, max_progress_spread not above progress_band[0] (checked by config.py: a kept blocked route's own spread must keep full credit); feature_margins [blocked at or below, reached at or above] (the probe robot's measured limits + 2 cm photo tolerance)",
+  "variants": 4,
+  "variant_seed": 20261113,
+  "start_dxy_m": 0.02,
+  "start_dyaw_deg": 2.0,
+  "reach_progress": 0.95,
+  "progress_band": [
+   0.05,
+   0.2
+  ],
+  "unit_routes_need": "paired",
+  "start_ray_m": 0.3,
+  "min_routes_per_group": 5,
+  "selftest_progress_tol": 0.02,
+  "skip_when_gate_zero": true,
+  "contact": {
+   "standardise": true,
+   "contype": 1,
+   "conaffinity": 1,
+   "condim": 3,
+   "friction": [
+    0.8,
+    0.005,
+    0.0001
+   ],
+   "solref": [
+    0.02,
+    1.0
+   ],
+   "solimp": [
+    0.9,
+    0.95,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "margin_m": 0.0,
+   "gap_m": 0.0,
+   "priority": 0,
+   "solmix": 1.0
+  },
+  "procs": {
+   "max": 8,
+   "reserve": 0
+  },
+  "run_wall": {
+   "per_sim_s": 3.0,
+   "factor": 20.0,
+   "min_s": 120.0
+  },
+  "budget_margin_s": 20.0,
+  "truth": {
+   "n_wide": 16,
+   "seed": 6,
+   "start_dxy_m": 0.05,
+   "start_dyaw_deg": 3.0,
+   "friction_scale": [
+    0.92,
+    1.08
+   ],
+   "unit_dxy_m": 0.01,
+   "max_progress_spread": 0.05,
+   "min_variants": 12
+  },
+  "feature_margins": {
+   "passage": [
+    0.26,
+    0.36
+   ],
+   "clearance_walk": [
+    0.29,
+    0.35
+   ],
+   "clearance_crouch": [
+    0.23,
+    0.28
+   ]
+  },
+  "allowed_modes": [
+   "walk",
+   "crouch"
+  ],
+  "marks": {
+   "cal": [
+    "variants",
+    "progress_band",
+    "selftest_progress_tol",
+    "truth.n_wide",
+    "truth.max_progress_spread",
+    "procs.max",
+    "run_wall.per_sim_s"
+   ],
+   "B": [
+    "feature_margins",
+    "contact.friction",
+    "contact.solref",
+    "contact.solimp",
+    "allowed_modes"
+   ]
+  }
+ },
+ "C7": {
+  "band": [
+   0.03,
+   0.12
+  ],
+  "marks": {
+   "cal": [
+    "band"
+   ],
+   "B": []
+  }
+ },
+ "selftest": {
+  "camera_tol_m": 1e-06,
+  "camera_tol_deg": 0.0001,
+  "intr_tol_px": 0.001,
+  "surface_tol_m": 1e-06,
+  "c3_agree_m": 0.001,
+  "c3_agree_frac": 0.999
+ },
+ "gt": {
+  "twin": "gt/twin",
+  "cameras_true": "gt/cameras_true.json",
+  "region": "gt/region.json",
+  "items_truth": "gt/items_truth.json",
+  "items_surface": "gt/items_surface.npz",
+  "c3_samples": "gt/c3_samples.npz",
+  "slice_truth": "gt/slice_truth.npz",
+  "support_truth": "gt/support_truth.json",
+  "probe_truth": "gt/probe_truth.json",
+  "routes": "gt/routes.json",
+  "robustness": "gt/robustness.json",
+  "sfm_selftest": "gt/sfm_selftest.json"
+ },
+ "runtime": {
+  "default_budget_s": 2900,
+  "reserve_s": 30,
+  "min_worker_s": 30,
+  "max_worker_s": 3600,
+  "worker_margin_s": 10,
+  "worker_account": "nobody",
+  "worker_address_space_mb": 6144,
+  "stage_caps_s": {
+   "selftest": 900,
+   "gate": 180,
+   "g0_settle": 180,
+   "align": 300,
+   "core": 300,
+   "q": 300,
+   "C1": 60,
+   "C2": 60,
+   "C3": 600,
+   "C7": 60,
+   "C4": 300,
+   "C5": 600,
+   "C6": 1800
+  },
+  "timeout_is_task_error": [
+   "C6"
+  ],
+  "note": "default_budget_s: the worker's budget when the engine passes no ALE_VERIFY_DEADLINE_SECONDS (the recommended verifier timeout: 3 x the worst legal twin on 4 CPUs); stage_caps_s: an alarm per stage (a timeout scores that stage's criteria 0 with a diagnostic), except the stages in timeout_is_task_error (the walks), where a timeout is a task error; every cap is at least 3 x the worst stage measured on the cap-stress twins (C6: 3 x the worst legal twin's walk stage on 4 CPUs; on 2 CPUs raise C6 to 3600 and the timeout and max_worker_s to 4800, measured on the real site). Sizing on the real site: 28 routes, the oracle 480 s and the worst legal twin 951 s on 4 CPUs of an EPYC 7763; default_budget_s = 3 x 951 s rounded up."
+ }
+}

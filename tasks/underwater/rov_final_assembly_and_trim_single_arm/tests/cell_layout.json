@@ -1,0 +1,664 @@
+{
+ "schema": "rov-cell-layout/1",
+ "package": "P06",
+ "status": "frozen",
+ "frozen_by": "P06 (study/v3/analyze_v3.py)",
+ "source_candidate": {
+  "path": "v_sh25.json",
+  "sha256": "f70cb9bb177e20fe33bb36455cf3b737e54c636cb6c3f011fa1e0e9cc20768c2"
+ },
+ "digest": {
+  "manifest_sha256": "99b937ff958bf88e28a866059a887fcfeb3981b80e6a5b677da5056fbf448abe",
+  "spec_values_sha256": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "reference_vehicle_sha256": "9938c11d8d46491b92de19d2c537e3dabe2b5d713fb99049c5456a631cc21d31",
+  "unit_map_sha256": "ab47a495f1b2a305368a43d700260797bfb3ce24efc63119ec9954f832da88f7"
+ },
+ "units": "cell frame: m, origin = the arm base, z up, x towards the positioner's drive stand; vehicle frame B: mm, FLU (x forward, y port, z up), origin on the 4-inch tube axis; yaw / roll in deg",
+ "conventions": {
+  "psi_deg": "0 = the vehicle's stern towards the arm (vehicle x = cell x); keel_up = 180 deg about the vehicle x axis",
+  "station_frames": "ballast_box: middle of the pocket field on the bench; thruster_tray: middle of the 4 nests on the bench; enclosure_rack: midway between the two V blocks on the bench, x along the tube axis; guard_rack: centre of the shelf's top face, x along the guard's long side (both racks yaw 0: the guard lies in its vehicle orientation, front towards +x, outer edge outboard)",
+  "jitter": "per episode, uniform: x and y each within +-jitter_xy_m, yaw within +-jitter_yaw_deg (the ballast box is fixed; the L-mag lever, P10, is off)"
+ },
+ "positioner": {
+  "psi_deg": 0.0,
+  "vehicle_origin_cell_m": [
+   0.6,
+   0.0,
+   0.42
+  ],
+  "column_radius_m": 0.4,
+  "fork": {
+   "jaw_z_B_mm": [
+    -5.0,
+    25.0
+   ],
+   "jaw_thick_mm": 12.0,
+   "jaw_gap_to_plate_mm": 0.5,
+   "jaw_len_inner_mm": 20.0,
+   "jaw_beyond_edge_mm": 4.0,
+   "crossbar_len_mm": 20.0,
+   "outer_jaw_to_guard_end_mm": 6.0,
+   "shaft_half_mm": 25.0
+  },
+  "seat": {
+   "x_B_mm": [
+    380.0,
+    480.0
+   ],
+   "half_y_mm": 90.0,
+   "above_axis_mm": 90.0
+  },
+  "outrigger": {
+   "inner_abs_y_m": 0.295,
+   "outer_abs_y_m": 0.335,
+   "top_z_m": 0.05,
+   "x_from_B_mm": -150.0
+  },
+  "load_cells_vehicle_mm_deck_up": {
+   "A": [
+    450.0,
+    0.0
+   ],
+   "B": [
+    -150.0,
+    300.0
+   ],
+   "C": [
+    -150.0,
+    -300.0
+   ]
+  }
+ },
+ "stations": {
+  "ballast_box": {
+   "origin_xy_m": [
+    0.25,
+    -0.4
+   ],
+   "yaw_deg": 0.0,
+   "jitter_xy_m": 0.0,
+   "jitter_yaw_deg": 0.0,
+   "pockets_x": 4,
+   "pockets_y": 3,
+   "pitch_x_mm": 70.0,
+   "pitch_y_mm": 90.0,
+   "floor_z_mm": 32.0,
+   "wall_height_mm": 3.5,
+   "play_per_side_mm": 0.5,
+   "rim_mm": 0.0,
+   "blocks": 12
+  },
+  "thruster_tray": {
+   "nominal_xy_m": [
+    0.22,
+    0.48
+   ],
+   "nominal_yaw_deg": 0.0,
+   "jitter_xy_m": 0.04,
+   "jitter_yaw_deg": 10.0,
+   "nests": 4,
+   "nest_pitch_mm": 150.0,
+   "top_z_mm": 60.0,
+   "rim_above_top_mm": 20.0,
+   "hole_diameter_mm": 80.0,
+   "ring_r_mm": [
+    41.0,
+    46.0
+   ],
+   "outline_half_mm": 135.0,
+   "mount_block_deg": [
+    0.0,
+    180.0
+   ],
+   "board_origin_mm": null,
+   "tilt_max_deg": null
+  },
+  "enclosure_rack": {
+   "nominal_xy_m": [
+    -0.17,
+    -0.58
+   ],
+   "nominal_yaw_deg": 0.0,
+   "jitter_xy_m": 0.02,
+   "jitter_yaw_deg": 5.0,
+   "tube_axis_z_mm": 138.0,
+   "vblock_spacing_mm": 180.0,
+   "vblock_width_mm": 30.0,
+   "vblock_angle_deg": 90.0,
+   "vblock_y_mm": [
+    20.0,
+    50.0
+   ],
+   "vblock_t_mm": 10.0,
+   "roll_range_deg": 20.0,
+   "dome_deg": [
+    0.0,
+    180.0
+   ]
+  },
+  "guard_rack": {
+   "port": {
+    "nominal_xy_m": [
+     0.72,
+     0.53
+    ],
+    "nominal_yaw_deg": 0.0
+   },
+   "stbd": {
+    "nominal_xy_m": [
+     0.72,
+     -0.53
+    ],
+    "nominal_yaw_deg": 0.0
+   },
+   "jitter_xy_m": 0.02,
+   "jitter_yaw_deg": 5.0,
+   "shelf_top_z_mm": 250.0,
+   "overhang_mm": 49.0,
+   "shelf_t_mm": 10.0,
+   "shelf_len_mm": 390.0,
+   "stop_inset_mm": 10.0,
+   "stop_gap_mm": 5.8,
+   "stop_h_mm": 5.0,
+   "pedestal_inset_mm": 15.0,
+   "play_mm": null,
+   "play_deg": null
+  }
+ },
+ "fixture_values_for_P10": [
+  "stations/thruster_tray/board_origin_mm",
+  "stations/thruster_tray/tilt_max_deg",
+  "stations/guard_rack/play_mm",
+  "stations/guard_rack/play_deg"
+ ],
+ "derived": {
+  "column_x_range_cell_m": [
+   0.3448,
+   0.98
+  ],
+  "turning_boxes_B_mm": [
+   [
+    "jaw_in_P",
+    [
+     224.02,
+     153.0,
+     10.0
+    ],
+    [
+     12.0,
+     6.0,
+     15.0
+    ]
+   ],
+   [
+    "jaw_out_P",
+    [
+     229.85,
+     175.53,
+     10.0
+    ],
+    [
+     6.17,
+     6.0,
+     15.0
+    ]
+   ],
+   [
+    "jaw_in_S",
+    [
+     224.02,
+     -153.0,
+     10.0
+    ],
+    [
+     12.0,
+     6.0,
+     15.0
+    ]
+   ],
+   [
+    "jaw_out_S",
+    [
+     229.85,
+     -175.53,
+     10.0
+    ],
+    [
+     6.17,
+     6.0,
+     15.0
+    ]
+   ],
+   [
+    "crossbar",
+    [
+     246.02,
+     0.0,
+     10.0
+    ],
+    [
+     10.0,
+     181.53,
+     15.0
+    ]
+   ],
+   [
+    "shaft",
+    [
+     318.01,
+     0.0,
+     0.0
+    ],
+    [
+     61.99,
+     25.0,
+     25.0
+    ]
+   ]
+  ],
+  "static_boxes_cell_m": [
+   [
+    "seat",
+    [
+     1.03,
+     0.0,
+     0.255
+    ],
+    [
+     0.05,
+     0.09,
+     0.255
+    ]
+   ],
+   [
+    "beam_L",
+    [
+     0.765,
+     0.315,
+     0.025
+    ],
+    [
+     0.315,
+     0.02,
+     0.025
+    ]
+   ],
+   [
+    "beam_R",
+    [
+     0.765,
+     -0.315,
+     0.025
+    ],
+    [
+     0.315,
+     0.02,
+     0.025
+    ]
+   ],
+   [
+    "cross",
+    [
+     1.03,
+     0.0,
+     0.025
+    ],
+    [
+     0.05,
+     0.335,
+     0.025
+    ]
+   ]
+  ],
+  "ballast_block_own_mm": [
+   41.895,
+   57.894,
+   11.25
+  ],
+  "ballast_block_yaw_in_vendor_cad_deg": -1.01,
+  "ballast_pocket_mm": [
+   42.895,
+   58.894
+  ],
+  "thruster_duct_B_mm": {
+   "duct_bottom_z": -23.644,
+   "duct_top_z": 20.799,
+   "lip_r": 48.464,
+   "nose_bottom_z": -69.151
+  },
+  "guard_on_rack": {
+   "width_mm": 118.4,
+   "on_shelf_mm": 69.4
+  },
+  "enclosure_rack_E_x_at_origin_mm": 10.18,
+  "envelopes_bounds_cell_m": {
+   "ballast_box": [
+    0.11,
+    -0.535,
+    0.39,
+    -0.265
+   ],
+   "thruster_tray": [
+    0.0236,
+    0.2836,
+    0.4164,
+    0.6764
+   ],
+   "enclosure_rack": [
+    -0.3822,
+    -0.6739,
+    0.0545,
+    -0.4863
+   ],
+   "guard_rack_port": [
+    0.4811,
+    0.4535,
+    0.9586,
+    0.6455
+   ],
+   "guard_rack_stbd": [
+    0.4812,
+    -0.6455,
+    0.9589,
+    -0.4535
+   ]
+  }
+ },
+ "validity": {
+  "pair_gap_m": {
+   "ballast_box|thruster_tray": 0.5486,
+   "ballast_box|enclosure_rack": 0.0567,
+   "ballast_box|guard_rack_port": 0.7283,
+   "ballast_box|guard_rack_stbd": 0.0912,
+   "thruster_tray|enclosure_rack": 0.7742,
+   "thruster_tray|guard_rack_port": 0.0654,
+   "thruster_tray|guard_rack_stbd": 0.7502,
+   "enclosure_rack|guard_rack_port": 1.0639,
+   "enclosure_rack|guard_rack_stbd": 0.427,
+   "guard_rack_port|guard_rack_stbd": 0.9069
+  },
+  "min_pair_gap_m": 0.0567,
+  "required_pair_gap_m": 0.03,
+  "ok_pairs": true,
+  "table_cell_m": {
+   "x": [
+    -0.55,
+    1.45
+   ],
+   "y": [
+    -0.7,
+    0.7
+   ]
+  },
+  "table": {
+   "ballast_box": {
+    "inside": true,
+    "margin_m": 0.165
+   },
+   "thruster_tray": {
+    "inside": true,
+    "margin_m": 0.0236
+   },
+   "enclosure_rack": {
+    "inside": true,
+    "margin_m": 0.0261
+   },
+   "guard_rack_port": {
+    "inside": true,
+    "margin_m": 0.0545
+   },
+   "guard_rack_stbd": {
+    "inside": true,
+    "margin_m": 0.0545
+   }
+  },
+  "ok_table": true,
+  "gap_to_positioner_static_m": {
+   "ballast_box": 0.06,
+   "thruster_tray": 0.0336,
+   "enclosure_rack": 0.4437,
+   "guard_rack_port": 0.1185,
+   "guard_rack_stbd": 0.1185
+  },
+  "gap_to_arm_base_axis_m": {
+   "ballast_box": 0.2869,
+   "thruster_tray": 0.2922,
+   "enclosure_rack": 0.4876,
+   "guard_rack_port": 0.6708,
+   "guard_rack_stbd": 0.6707
+  },
+  "method": "jitter envelope = union over yaw (1 deg samples, consecutive samples hulled) of the Minkowski sum of each convex footprint piece (station boxes; convex hulls of the parts' coarse hi samples) with the jitter square; shapely distances"
+ },
+ "reach_evidence": {
+  "dir": "evidence/reach_v3/",
+  "acceptance": [
+   {
+    "id": 1,
+    "pass": true
+   },
+   {
+    "id": 2,
+    "pass": true
+   },
+   {
+    "id": 3,
+    "pass": true
+   },
+   {
+    "id": 4,
+    "pass": true
+   },
+   {
+    "id": 5,
+    "pass": true
+   },
+   {
+    "id": 6,
+    "pass": true
+   }
+  ],
+  "station_sources": {
+   "ballast_box": {
+    "file": "stations_A.json",
+    "layout": "cand_A.json",
+    "layout_sha256": "47bf0795bd5d6c36addb81ff3e5bae83246b6fa9eac4ef3141ae20a1e89f7644",
+    "station_spec_equals_frozen": true
+   },
+   "enclosure_rack": {
+    "file": "stations_A.json",
+    "layout": "cand_A.json",
+    "layout_sha256": "47bf0795bd5d6c36addb81ff3e5bae83246b6fa9eac4ef3141ae20a1e89f7644",
+    "station_spec_equals_frozen": true
+   },
+   "guard_rack_port": {
+    "file": "st_sh25_all.json",
+    "layout": "v_sh25.json",
+    "layout_sha256": "f70cb9bb177e20fe33bb36455cf3b737e54c636cb6c3f011fa1e0e9cc20768c2",
+    "station_spec_equals_frozen": true
+   },
+   "guard_rack_stbd": {
+    "file": "st_sh25_all.json",
+    "layout": "v_sh25.json",
+    "layout_sha256": "f70cb9bb177e20fe33bb36455cf3b737e54c636cb6c3f011fa1e0e9cc20768c2",
+    "station_spec_equals_frozen": true
+   },
+   "thruster_tray": {
+    "file": "stations_A.json",
+    "layout": "cand_A.json",
+    "layout_sha256": "47bf0795bd5d6c36addb81ff3e5bae83246b6fa9eac4ef3141ae20a1e89f7644",
+    "station_spec_equals_frozen": true
+   }
+  },
+  "frozen_slot_pairs_GF_TF": {
+   "ee": {
+    "GF": 120,
+    "TF": 120
+   },
+   "vt_FR": {
+    "GF": 88,
+    "TF": 66
+   },
+   "vt_FL": {
+    "GF": 104,
+    "TF": 66
+   },
+   "vt_RR": {
+    "GF": 110,
+    "TF": 74
+   },
+   "vt_RL": {
+    "GF": 94,
+    "TF": 74
+   },
+   "guard_P": {
+    "GF": 280,
+    "TF": 154
+   },
+   "guard_S": {
+    "GF": 280,
+    "TF": 154
+   }
+  },
+  "frozen_hole_grasps": {
+   "C1": 4,
+   "C2": 4,
+   "C3": 4,
+   "C4": 4,
+   "C5": 4,
+   "C6": 4,
+   "C7": 4,
+   "C8": 4,
+   "AS1": 4,
+   "FP1": 4,
+   "AS2": 2,
+   "FP2": 2,
+   "FS2": 2
+  },
+  "station_minima": {
+   "ballast_box": {
+    "min_best_all": 3,
+    "min_best_place_feasible": 3
+   },
+   "enclosure_rack": {
+    "min_best_all": 4,
+    "min_best_place_feasible": 4
+   },
+   "guard_rack_port": {
+    "min_best_all": 3,
+    "min_best_place_feasible": 3
+   },
+   "guard_rack_stbd": {
+    "min_best_all": 3,
+    "min_best_place_feasible": 3
+   },
+   "thruster_tray": {
+    "min_best_all": 4,
+    "min_best_place_feasible": 4
+   }
+  },
+  "min_arm_fixture_mm": 43.5
+ },
+ "notes": {
+  "provenance": {
+   "design": "DESIGN.md v1.2 section 1.3 (placement, positioner, stations) with DECISIONS L13, L19, N5; PHASE2_PLAN P06 notes",
+   "digest_derived_at_run_time": [
+    "fork jaws: side-plate end edges and faces, guard ends (manifest bboxes)",
+    "column x range: the vehicle's x extent",
+    "ballast pockets: the block's own footprint (min-area rectangle of its hi mesh) + play",
+    "thruster nests: the duct's bottom edge (hi samples) sits on the ring top",
+    "enclosure rack: the tube axis frame E (P02 unit map), the rack origin at E x = midway between the two 4-inch cradles",
+    "guard racks: the guard's bbox (width, bottom face), its inner edge on the shelf"
+   ]
+  },
+  "changed_by_P06": [
+   {
+    "key": "stations/thruster_tray/nominal_xy_m",
+    "from": [
+     0.3,
+     0.48
+    ],
+    "to": [
+     0.22,
+     0.48
+    ],
+    "why": "at (0.30, 0.48) the tray's jitter envelope (+-40 mm / +-10 deg, thrusters included) overlapped the port guard rack's envelope (0 mm) and the positioner's port outrigger beam (0 mm); at x 0.22 it is 65 mm from the rack and 34 mm from the beam, 24 mm inside the bench edge"
+   },
+   {
+    "key": "stations/enclosure_rack/nominal_xy_m",
+    "from": [
+     -0.05,
+     -0.58
+    ],
+    "to": [
+     -0.17,
+     -0.58
+    ],
+    "why": "at (-0.05, -0.58) the enclosure's jitter envelope (397 mm tube either way round, +-20 mm / +-5 deg) overlapped the ballast box (0 mm); at x -0.17 the gap is 57 mm"
+   },
+   {
+    "key": "positioner/outrigger",
+    "from": "|y| 0.28-0.32 m (G4 proposal)",
+    "to": "|y| 0.295-0.335 m",
+    "why": "DESIGN 1.3: the beams outside the planform of the vehicle with guards (|y| 287.4 mm), inner face >= 0.295 m (G2's section)"
+   },
+   {
+    "key": "stations/guard_rack",
+    "from": "one two-shelf rack at (0.72, +0.56), shelves 0.080 / 0.200 m (G4)",
+    "to": "one single-level rack per side at (0.72, +-0.53), the guard in its vehicle orientation (front +x), outer edge 49 mm over the shelf's outer edge (shelf height: the next entry)",
+    "why": "DESIGN v1.2 / N5; the rack origin is the shelf top's centre (drawings_spec A.2), the guard's centre sits 29.5 mm outboard of it"
+   },
+   {
+    "key": "stations/enclosure_rack/tube_axis_z_mm, vblock_spacing_mm",
+    "from": "G4 0.110 m / V blocks 235 mm apart; G5 0.1378 m / 180 mm",
+    "to": "138.0 mm / 180 mm, 90-deg V faces spanning |y| 20-50 mm (V tops 30.8 mm below the axis)",
+    "why": "G5's observability discriminator was measured on this rack (axis 137.8 mm, V blocks at +-90 mm) and uses the points above axis - 25 mm; the V tops stay below that; the V blocks sit on the tube body between the flanges, >= 40 mm from the fingers' span along the tube, >= 34 mm from the locking-cord handles, >= 50 mm from the clips"
+   },
+   {
+    "key": "stations/ballast_box pockets",
+    "from": "G4: 4 mm dividers on a 70 x 90 mm grid",
+    "to": "pockets = block's own footprint + 0.5 mm per side, walls 3.5 mm high on a 70 x 90 mm grid",
+    "why": "DESIGN 1.3 '\u683c\u5185\u6e38\u9699\u6bcf\u8fb9 0.5 mm'"
+   },
+   {
+    "key": "stations/guard_rack/shelf_top_z_mm",
+    "from": 200.0,
+    "to": 250.0,
+    "why": "at 0.200 m the best grasp had exactly 3 IK branches at 14 of the 18 rack poses (both racks, nominal + 8 jitter corners, both orders alike; the dominant branch failure is an arm link within 5 mm of the bench, the hand coming in horizontally from outboard); at 0.250 m it has 4 at 34 of the 36 (pose x order) cases and 3 at the other two (thrusters-first order, one jitter corner per side). evidence/reach_v3/stations_summary.json (0.250) and stations_summary_guard_shelf200.json (0.200)"
+   }
+  ],
+  "kept_from_design_unchanged": [
+   "positioner: psi 0 (stern towards the arm), vehicle origin (0.60, 0, 0.42) m, column radius 0.40 m, load cells (+450, 0), (-150, +-300) mm, fork outer jaws 6 mm short of the guard ends",
+   "ballast box (0.25, -0.40) m fixed, 4 x 3 pockets at 70 x 90 mm, floor 32 mm, walls 3.5 mm, 12 blocks",
+   "thruster tray jitter +-40 mm / +-10 deg, 2 x 2 nests at 150 mm, top 60 mm, duct bottom 20 mm above the top, hole 80 mm, mount block 0 / 180 deg",
+   "enclosure rack jitter +-20 mm / +-5 deg, roll +-20 deg, dome 0 / 180 deg",
+   "guard racks jitter +-20 mm / +-5 deg, overhang 49 mm, nominal (0.72, +-0.53) m"
+  ],
+  "not_fixed_here": [
+   "board origin and tilt of the thruster tray, the guard racks' locating play (fixture values, P10)",
+   "the nest key (the tray's keyed pocket for the mount block) is not modelled in the reach study (it sits under the mount block, away from the fingers)",
+   "the bench's own calibration board (precedent at (1.2, -0.5) m) is outside the envelopes here; P10 places it"
+  ],
+  "alternatives_measured": [
+   {
+    "what": "ballast box at (0.25, -0.31) with the enclosure rack at (-0.05, -0.58) (candidate B)",
+    "result": "one pocket with 0 feasible branches; rejected"
+   },
+   {
+    "what": "ballast box at (0.25, -0.45)",
+    "result": "11 pockets at 4 branches, 1 at 3 (the frozen (0.25, -0.40): 9 at 4, 3 at 3); same minimum, the design value kept"
+   },
+   {
+    "what": "ballast box at (0.30, -0.42)",
+    "result": "one pocket at 2; rejected"
+   },
+   {
+    "what": "guard racks at (0.72, +-0.48), shelf 0.200 m",
+    "result": "nominal pose: best grasp 3 branches (46 feasible grasps vs 30 at +-0.53); not pursued"
+   },
+   {
+    "what": "guard rack shelf 0.300 m",
+    "result": "nominal pose: best 4 (same as 0.250); 0.250 kept (closer to the design value)"
+   }
+  ]
+ }
+}

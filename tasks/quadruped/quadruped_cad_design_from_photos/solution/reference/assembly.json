@@ -1,0 +1,2278 @@
+{
+ "format": "quad-cad-gt/1",
+ "units": {
+  "length": "mm",
+  "angle": "rad"
+ },
+ "root_link": "body",
+ "links": [
+  {
+   "name": "body",
+   "parent": null,
+   "joint": null,
+   "origin_mm": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "FL_shoulder",
+   "parent": "body",
+   "joint": "FL_HAA",
+   "origin_mm": [
+    60.2805,
+    87.5,
+    0.0
+   ]
+  },
+  {
+   "name": "FL_upper",
+   "parent": "FL_shoulder",
+   "joint": "FL_HFE",
+   "origin_mm": [
+    216.8805,
+    92.25,
+    0.0
+   ]
+  },
+  {
+   "name": "FL_lower",
+   "parent": "FL_upper",
+   "joint": "FL_KFE",
+   "origin_mm": [
+    216.8805,
+    133.283,
+    -173.937
+   ]
+  },
+  {
+   "name": "FR_shoulder",
+   "parent": "body",
+   "joint": "FR_HAA",
+   "origin_mm": [
+    45.6805,
+    -87.5,
+    0.0
+   ]
+  },
+  {
+   "name": "FR_upper",
+   "parent": "FR_shoulder",
+   "joint": "FR_HFE",
+   "origin_mm": [
+    216.8805,
+    -92.25,
+    0.0
+   ]
+  },
+  {
+   "name": "FR_lower",
+   "parent": "FR_upper",
+   "joint": "FR_KFE",
+   "origin_mm": [
+    216.8805,
+    -133.283,
+    -173.937
+   ]
+  },
+  {
+   "name": "HL_shoulder",
+   "parent": "body",
+   "joint": "HL_HAA",
+   "origin_mm": [
+    -45.6805,
+    87.5,
+    0.0
+   ]
+  },
+  {
+   "name": "HL_upper",
+   "parent": "HL_shoulder",
+   "joint": "HL_HFE",
+   "origin_mm": [
+    -216.8805,
+    92.25,
+    0.0
+   ]
+  },
+  {
+   "name": "HL_lower",
+   "parent": "HL_upper",
+   "joint": "HL_KFE",
+   "origin_mm": [
+    -216.8805,
+    133.283,
+    -166.09
+   ]
+  },
+  {
+   "name": "HR_shoulder",
+   "parent": "body",
+   "joint": "HR_HAA",
+   "origin_mm": [
+    -60.2805,
+    -87.5,
+    0.0
+   ]
+  },
+  {
+   "name": "HR_upper",
+   "parent": "HR_shoulder",
+   "joint": "HR_HFE",
+   "origin_mm": [
+    -216.8805,
+    -92.25,
+    0.0
+   ]
+  },
+  {
+   "name": "HR_lower",
+   "parent": "HR_upper",
+   "joint": "HR_KFE",
+   "origin_mm": [
+    -216.8805,
+    -133.283,
+    -166.09
+   ]
+  }
+ ],
+ "parts": [
+  {
+   "tag": "P01",
+   "instance": "body.body_front",
+   "design": "body_front",
+   "link": "body",
+   "file": "parts/body_front.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     210.7805
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P02",
+   "instance": "body.body_center.B",
+   "design": "body_center",
+   "link": "body",
+   "file": "parts/body_center.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -22.5
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P03",
+   "instance": "body.body_center.T",
+   "design": "body_center",
+   "link": "body",
+   "file": "parts/body_center.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     22.5
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P04",
+   "instance": "body.body_back",
+   "design": "body_back",
+   "link": "body",
+   "file": "parts/body_back.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -210.7805
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P05",
+   "instance": "body.haa_support.HL",
+   "design": "haa_support",
+   "link": "body",
+   "file": "parts/haa_support.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -236.3805
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P06",
+   "instance": "body.haa_support.HR",
+   "design": "haa_support",
+   "link": "body",
+   "file": "parts/haa_support.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -236.3805
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P07",
+   "instance": "body.body_side.FR",
+   "design": "body_side",
+   "link": "body",
+   "file": "parts/body_side.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     103.2805
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -45.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P08",
+   "instance": "body.body_side.FL",
+   "design": "body_side",
+   "link": "body",
+   "file": "parts/body_side.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     103.2805
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     45.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P09",
+   "instance": "body.body_side.HR",
+   "design": "body_side",
+   "link": "body",
+   "file": "parts/body_side.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -103.2805
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -45.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P10",
+   "instance": "body.body_side.HL",
+   "design": "body_side",
+   "link": "body",
+   "file": "parts/body_side.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -103.2805
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     45.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P11",
+   "instance": "body.haa_support.FR",
+   "design": "haa_support",
+   "link": "body",
+   "file": "parts/haa_support.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     236.3805
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P12",
+   "instance": "body.haa_support.FL",
+   "design": "haa_support",
+   "link": "body",
+   "file": "parts/haa_support.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     236.3805
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P13",
+   "instance": "body.haa_shell_cover.FL",
+   "design": "haa_shell_cover",
+   "link": "body",
+   "file": "parts/haa_shell_cover.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     63.0305
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P14",
+   "instance": "body.haa_shell_cover.FR",
+   "design": "haa_shell_cover",
+   "link": "body",
+   "file": "parts/haa_shell_cover.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     42.9305
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P15",
+   "instance": "body.haa_shell_cover.HL",
+   "design": "haa_shell_cover",
+   "link": "body",
+   "file": "parts/haa_shell_cover.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -42.9305
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P16",
+   "instance": "body.haa_shell_base.FL",
+   "design": "haa_shell_base",
+   "link": "body",
+   "file": "parts/haa_shell_base.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     63.0305
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P17",
+   "instance": "body.haa_shell_base.HR",
+   "design": "haa_shell_base",
+   "link": "body",
+   "file": "parts/haa_shell_base.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -63.0305
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P18",
+   "instance": "body.haa_shell_base.FR",
+   "design": "haa_shell_base",
+   "link": "body",
+   "file": "parts/haa_shell_base.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     42.9305
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P19",
+   "instance": "body.haa_shell_cover.HR",
+   "design": "haa_shell_cover",
+   "link": "body",
+   "file": "parts/haa_shell_cover.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -63.0305
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P20",
+   "instance": "body.haa_shell_base.HL",
+   "design": "haa_shell_base",
+   "link": "body",
+   "file": "parts/haa_shell_base.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -42.9305
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P21",
+   "instance": "FL.hfe_shell_cover",
+   "design": "hfe_shell_cover",
+   "link": "FL_shoulder",
+   "file": "parts/hfe_shell_cover.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     156.6
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     2.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P22",
+   "instance": "FL.hfe_shell_base",
+   "design": "hfe_shell_base",
+   "link": "FL_shoulder",
+   "file": "parts/hfe_shell_base.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     156.6
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     2.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P23",
+   "instance": "FL.upper_shell_base",
+   "design": "upper_shell_base",
+   "link": "FL_upper",
+   "file": "parts/upper_shell_base_front.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P24",
+   "instance": "FL.lower_leg",
+   "design": "lower_leg",
+   "link": "FL_lower",
+   "file": "parts/lower_leg_front.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     17.2
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P25",
+   "instance": "FL.upper_shell_cover",
+   "design": "upper_shell_cover",
+   "link": "FL_upper",
+   "file": "parts/upper_shell_cover_front.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P26",
+   "instance": "FR.upper_shell_cover",
+   "design": "upper_shell_cover",
+   "link": "FR_upper",
+   "file": "parts/upper_shell_cover_front.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P27",
+   "instance": "FR.upper_shell_base",
+   "design": "upper_shell_base",
+   "link": "FR_upper",
+   "file": "parts/upper_shell_base_front.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P28",
+   "instance": "FR.hip_adapter",
+   "design": "hip_adapter",
+   "link": "FR_shoulder",
+   "file": "parts/hip_adapter.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     15.7
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P29",
+   "instance": "FR.hfe_shell_cover",
+   "design": "hfe_shell_cover",
+   "link": "FR_shoulder",
+   "file": "parts/hfe_shell_cover.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     171.2
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -2.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P30",
+   "instance": "FR.hfe_shell_base",
+   "design": "hfe_shell_base",
+   "link": "FR_shoulder",
+   "file": "parts/hfe_shell_base.step",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     171.2
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -2.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P31",
+   "instance": "FR.lower_leg",
+   "design": "lower_leg",
+   "link": "FR_lower",
+   "file": "parts/lower_leg_front.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -17.2
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P32",
+   "instance": "HL.hfe_shell_base",
+   "design": "hfe_shell_base",
+   "link": "HL_shoulder",
+   "file": "parts/hfe_shell_base.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -171.2
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     2.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P33",
+   "instance": "HL.upper_shell_cover",
+   "design": "upper_shell_cover",
+   "link": "HL_upper",
+   "file": "parts/upper_shell_cover_hind.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P34",
+   "instance": "HL.upper_shell_base",
+   "design": "upper_shell_base",
+   "link": "HL_upper",
+   "file": "parts/upper_shell_base_hind.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P35",
+   "instance": "HL.hfe_shell_cover",
+   "design": "hfe_shell_cover",
+   "link": "HL_shoulder",
+   "file": "parts/hfe_shell_cover.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -171.2
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     2.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P36",
+   "instance": "HL.lower_leg",
+   "design": "lower_leg",
+   "link": "HL_lower",
+   "file": "parts/lower_leg_hind.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     17.2
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P37",
+   "instance": "HL.hip_adapter",
+   "design": "hip_adapter",
+   "link": "HL_shoulder",
+   "file": "parts/hip_adapter.step",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -15.7
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P38",
+   "instance": "HR.lower_leg",
+   "design": "lower_leg",
+   "link": "HR_lower",
+   "file": "parts/lower_leg_hind.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -17.2
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P39",
+   "instance": "HR.hfe_shell_cover",
+   "design": "hfe_shell_cover",
+   "link": "HR_shoulder",
+   "file": "parts/hfe_shell_cover.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -156.6
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -2.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P40",
+   "instance": "HR.upper_shell_base",
+   "design": "upper_shell_base",
+   "link": "HR_upper",
+   "file": "parts/upper_shell_base_hind.step",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P41",
+   "instance": "HR.upper_shell_cover",
+   "design": "upper_shell_cover",
+   "link": "HR_upper",
+   "file": "parts/upper_shell_cover_hind.step",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -38.283
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P42",
+   "instance": "HR.hfe_shell_base",
+   "design": "hfe_shell_base",
+   "link": "HR_shoulder",
+   "file": "parts/hfe_shell_base.step",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     -156.6
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -2.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ ],
+ "cores": [
+  {
+   "id": "core.FL_HAA",
+   "link": "body",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     60.2805
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.FL_HFE",
+   "link": "FL_shoulder",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     156.6
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     4.75
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.FL_KFE",
+   "link": "FL_upper",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     41.033
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.FR_HAA",
+   "link": "body",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     45.6805
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.FR_HFE",
+   "link": "FR_shoulder",
+   "T_link": [
+    [
+     -1.0,
+     0.0,
+     0.0,
+     171.2
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -4.75
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.FR_KFE",
+   "link": "FR_upper",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -41.033
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -173.937
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HL_HAA",
+   "link": "body",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     1.0,
+     -45.6805
+    ],
+    [
+     -1.0,
+     0.0,
+     0.0,
+     87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HL_HFE",
+   "link": "HL_shoulder",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -171.2
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     4.75
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HL_KFE",
+   "link": "HL_upper",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     41.033
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HR_HAA",
+   "link": "body",
+   "T_link": [
+    [
+     0.0,
+     0.0,
+     -1.0,
+     -60.2805
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -87.5
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HR_HFE",
+   "link": "HR_shoulder",
+   "T_link": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -156.6
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -4.75
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "core.HR_KFE",
+   "link": "HR_upper",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -41.033
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -166.09
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ ],
+ "feet": [
+  {
+   "id": "foot.FL",
+   "link": "FL_lower",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     17.2
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -144.406999
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "foot.FR",
+   "link": "FR_lower",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -17.2
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -144.406999
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "foot.HL",
+   "link": "HL_lower",
+   "T_link": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     17.2
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -185.313999
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "id": "foot.HR",
+   "link": "HR_lower",
+   "T_link": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -17.2
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     -185.313999
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ ],
+ "joints": [
+  {
+   "name": "FL_HAA",
+   "parent_link": "body",
+   "child_link": "FL_shoulder",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "point_mm": [
+    60.2805,
+    87.5,
+    0.0
+   ],
+   "driven_by": "core.FL_HAA",
+   "limits_rad": [
+    -1.360866613867,
+    1.359256296136
+   ]
+  },
+  {
+   "name": "FL_HFE",
+   "parent_link": "FL_shoulder",
+   "child_link": "FL_upper",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "point_mm": [
+    216.8805,
+    92.25,
+    0.0
+   ],
+   "driven_by": "core.FL_HFE",
+   "limits_rad": [
+    -3.12413936107,
+    3.12413936107
+   ]
+  },
+  {
+   "name": "FL_KFE",
+   "parent_link": "FL_upper",
+   "child_link": "FL_lower",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "point_mm": [
+    216.8805,
+    133.283,
+    -173.937
+   ],
+   "driven_by": "core.FL_KFE",
+   "limits_rad": [
+    -3.14159265359,
+    3.14159265359
+   ]
+  },
+  {
+   "name": "FR_HAA",
+   "parent_link": "body",
+   "child_link": "FR_shoulder",
+   "axis": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "point_mm": [
+    45.6805,
+    -87.5,
+    0.0
+   ],
+   "driven_by": "core.FR_HAA",
+   "limits_rad": [
+    -1.373366080171,
+    1.357722315348
+   ]
+  },
+  {
+   "name": "FR_HFE",
+   "parent_link": "FR_shoulder",
+   "child_link": "FR_upper",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "point_mm": [
+    216.8805,
+    -92.25,
+    0.0
+   ],
+   "driven_by": "core.FR_HFE",
+   "limits_rad": [
+    -3.12413936107,
+    3.12413936107
+   ]
+  },
+  {
+   "name": "FR_KFE",
+   "parent_link": "FR_upper",
+   "child_link": "FR_lower",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "point_mm": [
+    216.8805,
+    -133.283,
+    -173.937
+   ],
+   "driven_by": "core.FR_KFE",
+   "limits_rad": [
+    -3.14159265359,
+    3.14159265359
+   ]
+  },
+  {
+   "name": "HL_HAA",
+   "parent_link": "body",
+   "child_link": "HL_shoulder",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "point_mm": [
+    -45.6805,
+    87.5,
+    0.0
+   ],
+   "driven_by": "core.HL_HAA",
+   "limits_rad": [
+    -1.373174527376,
+    1.371821291878
+   ]
+  },
+  {
+   "name": "HL_HFE",
+   "parent_link": "HL_shoulder",
+   "child_link": "HL_upper",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "point_mm": [
+    -216.8805,
+    92.25,
+    0.0
+   ],
+   "driven_by": "core.HL_HFE",
+   "limits_rad": [
+    -3.12413936107,
+    3.12413936107
+   ]
+  },
+  {
+   "name": "HL_KFE",
+   "parent_link": "HL_upper",
+   "child_link": "HL_lower",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "point_mm": [
+    -216.8805,
+    133.283,
+    -166.09
+   ],
+   "driven_by": "core.HL_KFE",
+   "limits_rad": [
+    -3.14159265359,
+    3.14159265359
+   ]
+  },
+  {
+   "name": "HR_HAA",
+   "parent_link": "body",
+   "child_link": "HR_shoulder",
+   "axis": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "point_mm": [
+    -60.2805,
+    -87.5,
+    0.0
+   ],
+   "driven_by": "core.HR_HAA",
+   "limits_rad": [
+    -1.380808364109,
+    1.382266007954
+   ]
+  },
+  {
+   "name": "HR_HFE",
+   "parent_link": "HR_shoulder",
+   "child_link": "HR_upper",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "point_mm": [
+    -216.8805,
+    -92.25,
+    0.0
+   ],
+   "driven_by": "core.HR_HFE",
+   "limits_rad": [
+    -2.938097393491,
+    3.12413936107
+   ]
+  },
+  {
+   "name": "HR_KFE",
+   "parent_link": "HR_upper",
+   "child_link": "HR_lower",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "point_mm": [
+    -216.8805,
+    -133.283,
+    -166.09
+   ],
+   "driven_by": "core.HR_KFE",
+   "limits_rad": [
+    -3.14159265359,
+    3.14159265359
+   ]
+  }
+ ],
+ "foot_points": {
+  "FL": [
+   0.0,
+   17.2,
+   -144.406999
+  ],
+  "FR": [
+   0.0,
+   -17.2,
+   -144.406999
+  ],
+  "HL": [
+   0.0,
+   17.2,
+   -185.313999
+  ],
+  "HR": [
+   0.0,
+   -17.2,
+   -185.313999
+  ]
+ },
+ "generator": "gt-quad/1.0.0",
+ "family": "solo12_family_v1"
+}

@@ -1,0 +1,274 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-records/1",
+ "title": "Grader configuration and scoring records of racecar_time_trial_on_unseen_track (machine-readable companion of the contract)",
+ "description": "config = the grader's knobs (every starred number of the design); result = what the referee writes after one venue; reference = the frozen results of the privileged reference program at one venue; score = the scoring module's output; lab_log_header / lab_log_row = the two line kinds of a lab log file.",
+ "$defs": {
+  "session_name": {"enum": ["practice", "tt1", "tt2", "avoid"]},
+  "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "unit": {"type": "number", "minimum": 0, "maximum": 1},
+
+  "config": {
+   "type": "object", "additionalProperties": false,
+   "required": ["schema", "sim", "sessions", "budgets", "command", "staff", "scoring", "route_gate"],
+   "properties": {
+    "schema": {"const": "racecar-grader-config/1"},
+    "sim": {
+     "type": "object", "additionalProperties": false,
+     "required": ["tick_s", "physics_dt_s", "physics_steps_per_tick", "subscans_per_tick", "imu_samples_per_tick", "cmd_delay_ticks"],
+     "properties": {
+      "tick_s": {"const": 0.025},
+      "physics_dt_s": {"enum": [0.0025, 0.00125]},
+      "physics_steps_per_tick": {"enum": [10, 20]},
+      "subscans_per_tick": {"const": 5},
+      "imu_samples_per_tick": {"const": 5},
+      "cmd_delay_ticks": {"type": "integer", "minimum": 0, "maximum": 4}
+     }
+    },
+    "sessions": {
+     "type": "array", "minItems": 4, "maxItems": 4,
+     "items": {
+      "type": "object", "additionalProperties": false, "required": ["name", "duration_s", "desk_before_s", "scored", "phases"],
+      "properties": {
+       "name": {"$ref": "#/$defs/session_name"},
+       "duration_s": {"type": "number", "exclusiveMinimum": 0},
+       "desk_before_s": {"type": "number", "minimum": 0, "description": "Program time allowed between the end of the previous session (or the start of the run) and open_session."},
+       "scored": {"type": "boolean"},
+       "phases": {
+        "type": "array", "minItems": 1,
+        "items": {"type": "object", "additionalProperties": false, "required": ["name", "t0_s", "speed_limit_mps"],
+                  "properties": {"name": {"enum": ["mapping", "free", "heat", "static", "dynamic"]}, "t0_s": {"type": "number", "minimum": 0},
+                                 "speed_limit_mps": {"type": ["number", "null"], "exclusiveMinimum": 0}}}
+       }
+      }
+     }
+    },
+    "budgets": {
+     "type": "object", "additionalProperties": false, "required": ["program_ms_per_tick", "cpu_factor", "silence_s", "import_check_s"],
+     "properties": {
+      "program_ms_per_tick": {"type": "number", "exclusiveMinimum": 0, "description": "On-track program time, averaged over a session: the cap of a session is this x its number of ticks."},
+      "cpu_factor": {"type": "number", "exclusiveMinimum": 0},
+      "silence_s": {"type": "number", "exclusiveMinimum": 0},
+      "import_check_s": {"type": "number", "exclusiveMinimum": 0}
+     }
+    },
+    "command": {
+     "type": "object", "additionalProperties": false, "required": ["steer_max_rad", "speed_min_mps", "speed_max_mps"],
+     "properties": {"steer_max_rad": {"type": "number", "exclusiveMinimum": 0}, "speed_min_mps": {"type": "number", "maximum": 0}, "speed_max_mps": {"type": "number", "exclusiveMinimum": 0}}
+    },
+    "staff": {
+     "type": "object", "additionalProperties": false,
+     "required": ["crash_displacement_m", "open_wall_wheels_over", "rollover_tilt_rad", "hold_s", "relocate_at_s", "relocate_pos_err_m",
+                  "relocate_yaw_err_rad", "roadside_clearance_m", "putback_err_m", "speeding_hold_s", "warnings_end_session", "out_of_bounds_void_at"],
+     "properties": {
+      "crash_displacement_m": {"type": "number", "exclusiveMinimum": 0, "description": "A track object displaced this far from where it was last set is a crash; less is a touch."},
+      "open_wall_wheels_over": {"type": "integer", "minimum": 1, "maximum": 4, "description": "This many wheels beyond a tape line is a crash; fewer is a touch."},
+      "rollover_tilt_rad": {"type": "number", "exclusiveMinimum": 0, "description": "The car counts as rolled over when its up axis leans this far from the vertical."},
+      "hold_s": {"type": "number", "exclusiveMinimum": 0, "description": "From `stopped` to `released`."},
+      "relocate_at_s": {"type": "number", "minimum": 0, "description": "Time after `stopped` at which the car stands at the track edge and the displaced objects are back."},
+      "relocate_pos_err_m": {"type": "number", "minimum": 0},
+      "relocate_yaw_err_rad": {"type": "number", "minimum": 0},
+      "roadside_clearance_m": {"type": "number", "minimum": 0, "description": "Free distance between the relocated car's side and the wall it is put next to."},
+      "putback_err_m": {"type": "number", "minimum": 0},
+      "speeding_hold_s": {"type": "number", "exclusiveMinimum": 0, "description": "Ground speed above a phase's speed limit for this long is one warning."},
+      "warnings_end_session": {"type": "integer", "minimum": 1},
+      "out_of_bounds_void_at": {"type": "integer", "minimum": 1, "description": "The n-th time the whole car leaves the track at one venue voids the venue's remaining sessions."}
+     }
+    },
+    "scoring": {
+     "type": "object", "additionalProperties": false,
+     "required": ["weights", "fast", "cons", "avoid", "virtual_rank_ratios", "full_at"],
+     "properties": {
+      "weights": {"type": "object", "additionalProperties": false, "required": ["fast", "cons", "avoid"],
+                  "properties": {"fast": {"$ref": "#/$defs/unit"}, "cons": {"$ref": "#/$defs/unit"}, "avoid": {"$ref": "#/$defs/unit"}}},
+      "fast": {"type": "object", "additionalProperties": false, "required": ["zero_ratio", "span_ratio"],
+               "properties": {"zero_ratio": {"type": "number", "exclusiveMinimum": 1}, "span_ratio": {"type": "number", "exclusiveMinimum": 0}}},
+      "cons": {"type": "object", "additionalProperties": false, "required": ["zero_frac", "full_margin_laps"],
+               "properties": {"zero_frac": {"$ref": "#/$defs/unit"}, "full_margin_laps": {"type": "integer", "minimum": 0}}},
+      "avoid": {"type": "object", "additionalProperties": false,
+                "required": ["phase_weights", "zero_ratio", "span_ratio", "standstill_s", "standstill_speed_mps", "min_overtakes_dynamic"],
+                "properties": {
+                 "phase_weights": {"type": "object", "additionalProperties": false, "required": ["static", "dynamic"],
+                                   "properties": {"static": {"$ref": "#/$defs/unit"}, "dynamic": {"$ref": "#/$defs/unit"}}},
+                 "zero_ratio": {"type": "number", "exclusiveMinimum": 1}, "span_ratio": {"type": "number", "exclusiveMinimum": 0},
+                 "standstill_s": {"type": "number", "exclusiveMinimum": 0}, "standstill_speed_mps": {"type": "number", "exclusiveMinimum": 0},
+                 "min_overtakes_dynamic": {"type": "integer", "minimum": 0}}},
+      "virtual_rank_ratios": {"type": "array", "minItems": 1, "items": {"type": "number", "exclusiveMinimum": 1}, "description": "Fastest-lap ratios of places 2, 3, ... of the real field to its winner; reported, never scored."},
+      "full_at": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+     }
+    },
+    "route_gate": {
+     "type": "object", "additionalProperties": false, "required": ["forbidden_calls", "forbidden_extensions", "max_submission_mb"],
+     "properties": {
+      "forbidden_calls": {"type": "array", "items": {"type": "string"}},
+      "forbidden_extensions": {"type": "array", "items": {"type": "string", "pattern": "^\\.[a-z0-9]+$"}},
+      "max_submission_mb": {"type": "number", "exclusiveMinimum": 0}
+     }
+    }
+   }
+  },
+
+  "lap": {
+   "type": "object", "additionalProperties": false, "required": ["n", "lap_s", "t_end_s", "interrupted", "touches", "clean", "standstill", "overtakes", "chain_break"],
+   "properties": {
+    "n": {"type": "integer", "minimum": 1},
+    "lap_s": {"type": "number", "exclusiveMinimum": 0, "description": "Lap time, interpolated between physics steps."},
+    "t_end_s": {"type": "number", "minimum": 0, "description": "Session time of the crossing that completed the lap."},
+    "interrupted": {"type": "boolean", "description": "A crash or a relocation happened inside the lap (the lap counts for neither table)."},
+    "touches": {"type": "integer", "minimum": 0, "description": "Contacts with any track object, box or car inside the lap, plus wheels over a tape line."},
+    "clean": {"type": "boolean", "description": "Not interrupted and touches == 0."},
+    "standstill": {"type": "boolean", "description": "The car stood still for longer than scoring.avoid.standstill_s inside the lap."},
+    "overtakes": {"type": "integer", "minimum": 0, "description": "Slow cars passed inside the lap."},
+    "chain_break": {"type": "boolean", "description": "The lap clock threw a lap away (backward crossing of the timing line, or a forward crossing without every checkpoint) after the previous lap of the list; this lap does not start where that one ended, so a run of consecutive laps ends before it. False for lap 1."}
+   }
+  },
+
+  "result": {
+   "type": "object", "additionalProperties": false,
+   "required": ["schema", "world_id", "layout_digest", "config_sha256", "end_reason", "step_called", "sessions", "time_trial", "avoid", "stats"],
+   "properties": {
+    "schema": {"const": "racecar-venue-result/1"},
+    "world_id": {"type": "string"},
+    "layout_digest": {"$ref": "#/$defs/sha256"},
+    "config_sha256": {"$ref": "#/$defs/sha256"},
+    "end_reason": {"enum": ["finish", "eof", "silence", "import_timeout", "stalled", "protocol", "program_time_cap", "desk_time_cap", "cpu_cap", "void", "physics_fault", "internal_error"]},
+    "step_called": {"type": "boolean"},
+    "sessions": {
+     "type": "array", "maxItems": 4,
+     "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "ticks", "end", "laps", "touches", "crashes", "pickups", "warnings", "out_of_bounds", "max_displacement_m", "program_s", "desk_s"],
+      "properties": {
+       "name": {"$ref": "#/$defs/session_name"},
+       "ticks": {"type": "integer", "minimum": 0},
+       "end": {"enum": ["time", "closed", "warnings", "void", "aborted"]},
+       "laps": {"type": "array", "items": {"$ref": "#/$defs/lap"}},
+       "touches": {"type": "integer", "minimum": 0},
+       "crashes": {"type": "integer", "minimum": 0},
+       "pickups": {"type": "integer", "minimum": 0},
+       "warnings": {"type": "integer", "minimum": 0},
+       "out_of_bounds": {"type": "integer", "minimum": 0},
+       "max_displacement_m": {"type": "number", "minimum": 0},
+       "program_s": {"type": "number", "minimum": 0},
+       "desk_s": {"type": "number", "minimum": 0}
+      }
+     }
+    },
+    "time_trial": {
+     "type": "object", "additionalProperties": false, "required": ["T_best_s", "N_best"],
+     "properties": {
+      "T_best_s": {"type": ["number", "null"], "exclusiveMinimum": 0, "description": "Fastest uninterrupted lap of tt1 and tt2; null without one."},
+      "N_best": {"type": "integer", "minimum": 0, "description": "Longest run of consecutive uninterrupted laps inside one heat."}
+     }
+    },
+    "avoid": {
+     "type": "object", "additionalProperties": false, "required": ["static", "dynamic"],
+     "properties": {
+      "static": {"$ref": "#/$defs/avoid_phase"},
+      "dynamic": {"$ref": "#/$defs/avoid_phase"}
+     }
+    },
+    "stats": {
+     "type": "object", "additionalProperties": false,
+     "required": ["touches", "crashes", "wall_displacement_m", "laps_by_session", "program_s", "warnings", "forbidden_calls", "bad_calls"],
+     "properties": {
+      "touches": {"type": "integer", "minimum": 0},
+      "crashes": {"type": "integer", "minimum": 0},
+      "wall_displacement_m": {"type": "number", "minimum": 0, "description": "Sum over all duct pieces of their displacement from the world file's pose at the end of the venue."},
+      "laps_by_session": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+      "program_s": {"type": "number", "minimum": 0},
+      "warnings": {"type": "integer", "minimum": 0},
+      "forbidden_calls": {"type": "integer", "minimum": 0},
+      "bad_calls": {"type": "integer", "minimum": 0}
+     }
+    }
+   }
+  },
+  "avoid_phase": {
+   "type": "object", "additionalProperties": false, "required": ["T_clean_s", "clean_laps"],
+   "properties": {
+    "T_clean_s": {"type": ["number", "null"], "exclusiveMinimum": 0, "description": "Best whole clean lap of the phase (dynamic: with at least one slow car passed); null without one."},
+    "clean_laps": {"type": "integer", "minimum": 0}
+   }
+  },
+
+  "reference": {
+   "type": "object", "additionalProperties": false,
+   "required": ["schema", "world_id", "layout_digest", "T_ref_s", "N_ref", "T_phase_ref_s", "T_qss_f2_s", "environments"],
+   "properties": {
+    "schema": {"const": "racecar-venue-reference/1"},
+    "world_id": {"type": "string"},
+    "layout_digest": {"$ref": "#/$defs/sha256"},
+    "T_ref_s": {"type": "number", "exclusiveMinimum": 0, "description": "The reference program's T_best_s at this venue: its fastest uninterrupted lap of tt1 and tt2."},
+    "N_ref": {"type": "integer", "minimum": 3, "description": "The reference program's N_best: its longest run of consecutive uninterrupted laps in either heat, by the same code as the agent's N_best (the scoring asserts N_ref >= 3)."},
+    "T_phase_ref_s": {"type": "object", "additionalProperties": false, "required": ["static", "dynamic"],
+                      "properties": {"static": {"type": "number", "exclusiveMinimum": 0}, "dynamic": {"type": "number", "exclusiveMinimum": 0}}},
+    "T_qss_f2_s": {"type": "number", "exclusiveMinimum": 0, "description": "T_qss(0.93): the quasi-steady-state lap time on the line the reference program drove in tt2, every grip-dependent capability x 0.93^2, the grip x 0.7 within 0.4 m of a raised carpet edge as in the program's own plan (selection gate G3 wants T_ref_s <= 1.03 x this)."},
+    "environments": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Where the reference program was run with these results (development venv, verifier image, a second CPU)."}
+   }
+  },
+
+  "score": {
+   "type": "object", "additionalProperties": false,
+   "required": ["schema", "venues", "gates", "gate", "time_trial_score", "anchor", "reward"],
+   "properties": {
+    "schema": {"const": "racecar-score/1"},
+    "venues": {
+     "type": "array", "minItems": 1,
+     "items": {
+      "type": "object", "additionalProperties": false, "required": ["world_id", "fast", "cons", "avoid_static", "avoid_dynamic", "avoid", "venue", "virtual_rank"],
+      "properties": {
+       "world_id": {"type": "string"},
+       "fast": {"$ref": "#/$defs/unit"}, "cons": {"$ref": "#/$defs/unit"},
+       "avoid_static": {"$ref": "#/$defs/unit"}, "avoid_dynamic": {"$ref": "#/$defs/unit"}, "avoid": {"$ref": "#/$defs/unit"},
+       "venue": {"$ref": "#/$defs/unit"},
+       "virtual_rank": {"type": ["integer", "null"], "minimum": 1}
+      }
+     }
+    },
+    "gates": {
+     "type": "object", "additionalProperties": false, "required": ["submission_ok", "step_called", "clean_run", "no_network", "no_late_write"],
+     "properties": {"submission_ok": {"type": "boolean"}, "step_called": {"type": "boolean"}, "clean_run": {"type": "boolean"},
+                    "no_network": {"type": "boolean"}, "no_late_write": {"type": "boolean"}}
+    },
+    "gate": {"enum": [0, 1]},
+    "time_trial_score": {"$ref": "#/$defs/unit"},
+    "anchor": {"type": "object", "additionalProperties": false, "required": ["value", "full_at"],
+               "properties": {"value": {"type": "number", "exclusiveMinimum": 0}, "full_at": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}}},
+    "reward": {"$ref": "#/$defs/unit"}
+   }
+  },
+
+  "lab_log_header": {
+   "type": "object", "additionalProperties": false, "required": ["schema", "name", "description", "floor", "tick_s", "tracker_rate_hz", "ticks"],
+   "properties": {
+    "schema": {"const": "racecar-lab-log/1"},
+    "name": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "description": {"type": "string"},
+    "floor": {"type": "object", "additionalProperties": false, "required": ["kind", "grip"],
+              "properties": {"kind": {"type": "string"}, "grip": {"type": "number", "exclusiveMinimum": 0}}},
+    "tick_s": {"const": 0.025},
+    "tracker_rate_hz": {"const": 100},
+    "ticks": {"type": "integer", "minimum": 1}
+   }
+  },
+  "lab_log_row": {
+   "type": "object", "additionalProperties": false, "required": ["tick", "cmd", "obs", "tracker"],
+   "properties": {
+    "tick": {"type": "integer", "minimum": 1},
+    "cmd": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}, "description": "[steer, speed] sent with this step."},
+    "obs": {
+     "type": "object", "additionalProperties": false, "required": ["scan", "imu", "wheel_speed", "steer_echo"],
+     "properties": {
+      "scan": {"type": "array", "minItems": 1081, "maxItems": 1081, "items": {"type": "integer", "minimum": 0, "maximum": 10000}},
+      "imu": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "number"}}},
+      "wheel_speed": {"type": "number"},
+      "steer_echo": {"type": "number"}
+     }
+    },
+    "tracker": {"type": "array", "items": {"type": "array", "minItems": 4, "maxItems": 4, "prefixItems": [{"type": "integer", "minimum": 0}, {"type": "number"}, {"type": "number"}, {"type": "number"}]},
+                "description": "Overhead tracker samples that fall in this tick: [t_ms since the log's start, x, y, yaw] of the car frame in the lab frame, 100 Hz."}
+   }
+  }
+ }
+}

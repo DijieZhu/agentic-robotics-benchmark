@@ -1,0 +1,868 @@
+{
+ "schema": "manifold-type-ga/1",
+ "what": "production manifold, type general arrangement (as designed; the same type at every drilling centre)",
+ "units": "m",
+ "frame": {
+  "origin": "mudmat top at the structure centre",
+  "axes": {
+   "x": "along the long side",
+   "y": "across",
+   "z": "up"
+  },
+  "units": "m"
+ },
+ "as_built": {
+  "chart_position_offset_range": [
+   2.0,
+   8.0
+  ],
+  "chart_heading_error_max_deg": 15.0,
+  "water_depth_range": [
+   45.0,
+   75.0
+  ],
+  "flange_top_height_range": [
+   1.0,
+   1.6
+  ],
+  "note": "flange heights differ from branch to branch within the range; the structure is as drawn"
+ },
+ "structure": {
+  "frame_size_xy": [
+   12.0,
+   8.0
+  ],
+  "mudmat_size": [
+   13.0,
+   9.0,
+   0.3
+  ],
+  "roof_top_height": 3.4
+ },
+ "roof_grating": {
+  "top_height": 3.4,
+  "bars": 24,
+  "bars_run_along": "y",
+  "bar_width": 0.06,
+  "bar_height": 0.1,
+  "bar_pitch": 0.5,
+  "note": "open between the bars to bubbles, to light and to the scanning sonar; a marker put down on it stays on it; the vehicle's DVL tracks it (vehicle manual)"
+ },
+ "headers": [
+  {
+   "name": "P",
+   "y": -0.6,
+   "height": 0.7,
+   "radius": 0.12
+  },
+  {
+   "name": "T",
+   "y": 0.6,
+   "height": 0.7,
+   "radius": 0.12
+  }
+ ],
+ "slot_spacing": 4.0,
+ "branches": [
+  {
+   "branch": 1,
+   "slot_axis_xy": [
+    -4.0,
+    -2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     -4.0,
+     -1.8
+    ],
+    "run_to_xy": [
+     -4.0,
+     -0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      -4.0,
+      -1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      -4.0,
+      -1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     -4.0,
+     -2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  },
+  {
+   "branch": 2,
+   "slot_axis_xy": [
+    -4.0,
+    2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     -4.0,
+     1.8
+    ],
+    "run_to_xy": [
+     -4.0,
+     0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      -4.0,
+      1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      -4.0,
+      1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     -4.0,
+     2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  },
+  {
+   "branch": 3,
+   "slot_axis_xy": [
+    0.0,
+    -2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     0.0,
+     -1.8
+    ],
+    "run_to_xy": [
+     0.0,
+     -0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      0.0,
+      -1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      0.0,
+      -1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     0.0,
+     -2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  },
+  {
+   "branch": 4,
+   "slot_axis_xy": [
+    0.0,
+    2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     0.0,
+     1.8
+    ],
+    "run_to_xy": [
+     0.0,
+     0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      0.0,
+      1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      0.0,
+      1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     0.0,
+     2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  },
+  {
+   "branch": 5,
+   "slot_axis_xy": [
+    4.0,
+    -2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     4.0,
+     -1.8
+    ],
+    "run_to_xy": [
+     4.0,
+     -0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      4.0,
+      -1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      4.0,
+      -1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     4.0,
+     -2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  },
+  {
+   "branch": 6,
+   "slot_axis_xy": [
+    4.0,
+    2.0
+   ],
+   "leak_segment": {
+    "run_from_xy": [
+     4.0,
+     1.8
+    ],
+    "run_to_xy": [
+     4.0,
+     0.75
+    ],
+    "pipe_radius": 0.085,
+    "pipe_axis_below_flange_top": 0.15,
+    "then": "down at run_to_xy to the height of the headers"
+   },
+   "flanges": [
+    {
+     "name": "F1",
+     "xy": [
+      4.0,
+      1.7
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    },
+    {
+     "name": "F2",
+     "xy": [
+      4.0,
+      1.45
+     ],
+     "radius": 0.15,
+     "top_height_range": [
+      1.0,
+      1.6
+     ]
+    }
+   ],
+   "marker_zone": {
+    "centre_xy": [
+     4.0,
+     2.0
+    ],
+    "height": 3.4,
+    "radius": 1.5
+   }
+  }
+ ],
+ "marker_zone_paint": {
+  "shape": "square outline inscribed in the zone circle",
+  "half_side_over_radius": 0.7,
+  "line_width": 0.04
+ },
+ "panel": {
+  "side": "-y",
+  "face_plane_y": -5.0,
+  "frame_P_in_S": {
+   "origin": [
+    0.0,
+    -5.0,
+    0.0
+   ],
+   "X": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "Y": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "Z": [
+    0.0,
+    -1.0,
+    0.0
+   ]
+  },
+  "skid_mudmat_x": [
+   -3.3,
+   3.3
+  ],
+  "skid_mudmat_y": [
+   -11.0,
+   -4.55
+  ],
+  "as_designed": "panel column i from the viewer's left serves branch i; the tag plates govern"
+ },
+ "lines": {
+  "sea_bed_z": -0.3,
+  "lines": [
+   {
+    "name": "production flowline",
+    "tie_in": {
+     "header": "P",
+     "end": "+x"
+    },
+    "pipe": "steel line pipe with a thin polymer coating",
+    "outer_diameter": 0.27,
+    "spool": {
+     "from_xy": [
+      5.4,
+      -0.6
+     ],
+     "to_xy": [
+      7.1,
+      -0.6
+     ],
+     "level": true,
+     "axis_above_sea_bed": 1.0,
+     "top_above_sea_bed": 1.135
+    },
+    "descent": {
+     "from_xy": [
+      7.1,
+      -0.6
+     ],
+     "to_xy": [
+      10.1,
+      -0.6
+     ],
+     "length_along_x": 3.0,
+     "supports": 2,
+     "supports_material": "concrete"
+    },
+    "on_sea_bed": {
+     "from_xy": [
+      10.1,
+      -0.6
+     ],
+     "buried_share_of_diameter": 0.3,
+     "pipe_top_above_sea_bed": 0.189,
+     "route": "individual to the site: the work order's chart (as laid, nominal)"
+    },
+    "mattress": {
+     "across_line": 6.0,
+     "along_line": 3.0,
+     "thickness": 0.15,
+     "top_beside_pipe_above_sea_bed": 0.15,
+     "top_over_pipe_above_sea_bed": 0.339,
+     "material": "concrete",
+     "positions": "the work order's chart (approximate)"
+    }
+   },
+   {
+    "name": "test flowline",
+    "tie_in": {
+     "header": "T",
+     "end": "-x"
+    },
+    "pipe": "flexible pipe with a polymer outer sheath",
+    "outer_diameter": 0.15,
+    "spool": {
+     "from_xy": [
+      -5.4,
+      0.6
+     ],
+     "to_xy": [
+      -7.1,
+      0.6
+     ],
+     "level": true,
+     "axis_above_sea_bed": 1.0,
+     "top_above_sea_bed": 1.075
+    },
+    "descent": {
+     "from_xy": [
+      -7.1,
+      0.6
+     ],
+     "to_xy": [
+      -10.1,
+      0.6
+     ],
+     "length_along_x": 3.0,
+     "supports": 2,
+     "supports_material": "concrete"
+    },
+    "on_sea_bed": {
+     "from_xy": [
+      -10.1,
+      0.6
+     ],
+     "buried_share_of_diameter": 0.3,
+     "pipe_top_above_sea_bed": 0.105,
+     "route": "individual to the site: the work order's chart (as laid, nominal)"
+    },
+    "mattress": {
+     "across_line": 6.0,
+     "along_line": 3.0,
+     "thickness": 0.15,
+     "top_beside_pipe_above_sea_bed": 0.15,
+     "top_over_pipe_above_sea_bed": 0.255,
+     "material": "concrete",
+     "positions": "the work order's chart (approximate)"
+    }
+   }
+  ]
+ },
+ "members": [
+  {
+   "name": "mudmat",
+   "part": "mudmat",
+   "shape": "box",
+   "centre": [
+    0.0,
+    0.0,
+    -0.15
+   ],
+   "half_size": [
+    6.5,
+    4.5,
+    0.15
+   ]
+  },
+  {
+   "name": "skid_mudmat",
+   "part": "mudmat",
+   "shape": "box",
+   "centre": [
+    0.0,
+    -7.775,
+    -0.15
+   ],
+   "half_size": [
+    3.3,
+    3.225,
+    0.15
+   ]
+  },
+  {
+   "name": "frame_leg_0",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    -5.85,
+    -3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_leg_1",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    -5.85,
+    3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_leg_2",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    0.0,
+    -3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_leg_3",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    0.0,
+    3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_leg_4",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    5.85,
+    -3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_leg_5",
+   "part": "frame_leg",
+   "shape": "box",
+   "centre": [
+    5.85,
+    3.85,
+    1.6
+   ],
+   "half_size": [
+    0.15,
+    0.15,
+    1.6
+   ]
+  },
+  {
+   "name": "frame_beam_x0",
+   "part": "frame_beam",
+   "shape": "box",
+   "centre": [
+    0.0,
+    -3.9,
+    3.2
+   ],
+   "half_size": [
+    6.0,
+    0.1,
+    0.1
+   ]
+  },
+  {
+   "name": "frame_beam_x1",
+   "part": "frame_beam",
+   "shape": "box",
+   "centre": [
+    0.0,
+    3.9,
+    3.2
+   ],
+   "half_size": [
+    6.0,
+    0.1,
+    0.1
+   ]
+  },
+  {
+   "name": "frame_beam_y0",
+   "part": "frame_beam",
+   "shape": "box",
+   "centre": [
+    -5.9,
+    0.0,
+    3.2
+   ],
+   "half_size": [
+    0.1,
+    4.0,
+    0.1
+   ]
+  },
+  {
+   "name": "frame_beam_y1",
+   "part": "frame_beam",
+   "shape": "box",
+   "centre": [
+    5.9,
+    0.0,
+    3.2
+   ],
+   "half_size": [
+    0.1,
+    4.0,
+    0.1
+   ]
+  },
+  {
+   "name": "roof_support",
+   "part": "roof_support",
+   "shape": "box",
+   "centre": [
+    0.0,
+    0.0,
+    3.22
+   ],
+   "half_size": [
+    6.0,
+    0.05,
+    0.08
+   ]
+  },
+  {
+   "name": "header_P",
+   "part": "header",
+   "shape": "capsule",
+   "a": [
+    -5.4,
+    -0.6,
+    0.7
+   ],
+   "b": [
+    5.4,
+    -0.6,
+    0.7
+   ],
+   "radius": 0.12
+  },
+  {
+   "name": "header_T",
+   "part": "header",
+   "shape": "capsule",
+   "a": [
+    -5.4,
+    0.6,
+    0.7
+   ],
+   "b": [
+    5.4,
+    0.6,
+    0.7
+   ],
+   "radius": 0.12
+  },
+  {
+   "name": "slot_hub_0",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    -4.0,
+    -2.0,
+    0.0
+   ],
+   "b": [
+    -4.0,
+    -2.0,
+    2.0
+   ],
+   "radius": 0.2
+  },
+  {
+   "name": "slot_hub_1",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    -4.0,
+    2.0,
+    0.0
+   ],
+   "b": [
+    -4.0,
+    2.0,
+    2.0
+   ],
+   "radius": 0.2
+  },
+  {
+   "name": "slot_hub_2",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    0.0,
+    -2.0,
+    0.0
+   ],
+   "b": [
+    0.0,
+    -2.0,
+    2.0
+   ],
+   "radius": 0.2
+  },
+  {
+   "name": "slot_hub_3",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "b": [
+    0.0,
+    2.0,
+    2.0
+   ],
+   "radius": 0.2
+  },
+  {
+   "name": "slot_hub_4",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    4.0,
+    -2.0,
+    0.0
+   ],
+   "b": [
+    4.0,
+    -2.0,
+    2.0
+   ],
+   "radius": 0.2
+  },
+  {
+   "name": "slot_hub_5",
+   "part": "hub",
+   "shape": "cylinder",
+   "a": [
+    4.0,
+    2.0,
+    0.0
+   ],
+   "b": [
+    4.0,
+    2.0,
+    2.0
+   ],
+   "radius": 0.2
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "design_score",
+ "note": "design_score is the weighted mean of the six criteria after the gates (cad_valid, public_model_reuse), the leg gating and the floors, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own measured design_score under ale validate: the oracle document (the photographed robot itself) scores exactly 1.0 under every hidden seed draw (validate-a8d0c5f0, validate-ef980f5f, and the grader QC on the hidden robot, on the host and as root in the task image, under four seed pairs and fresh draws)",
+ "value": 1.0
+}

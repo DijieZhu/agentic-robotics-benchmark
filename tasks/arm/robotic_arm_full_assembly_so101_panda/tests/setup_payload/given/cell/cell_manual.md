@@ -54,10 +54,14 @@ colour pixels (depth along the optical axis, 1 mm steps, range 0.1-4 m, no readi
 the pixels); its noise is about 0.5 mm + 4 mm per m^2 x z^2 for the top camera and about 0.2 mm + 3 mm per m^2 x z^2
 for the wrist camera, plus unit-specific systematic errors of up to about a millimetre that do not average away. The
 hall's brightness varies by up to about 20 % between runs, and each camera unit has its own slight colour response
-(gain and tint within a few per cent), constant during a run; the image noise is new in every frame. The images come from a physically based renderer of the hall
-(soft shadows, reflections on metal and plastic); the given render layer (`~/given/lib/render`,
-`arm.assembly_info.cell_render`) draws the cell with MuJoCo's classic renderer instead (same geometry and camera model,
-plainer shading, no hall).
+(gain and tint within a few per cent), constant during a run; the image noise is new in every frame. The images come from MuJoCo's Filament
+renderer (physically based: soft shadows, reflections on metal and plastic) in the hall, whose light is baked into its
+textures (`~/render`). The given render layer (`~/given/lib/render`, with `arm.assembly_full.agent_render` and
+`arm.assembly_info.cell_render`) renders the same way: the same renderer, hall and look for your own scenes, depth from
+MuJoCo on the same geometry (`cell_api.md`, "Rendering your own frames"); it is the way to see what these cameras would
+see. MuJoCo's own renderer (`mujoco.Renderer`, or the render layer's `"mujoco"` backend) stays available but draws a
+different picture (no hall, MuJoCo's own lights, flat colours, no reflections), so image processing tuned on its
+frames may behave differently on the cameras' frames.
 
 ## Fastening, safety, budgets
 

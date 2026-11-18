@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.95,
+ "metric": "intervention_score",
+ "note": "intervention_score is the contract gate times the mean over the six hidden stations of the station score (eleven items in integer percentage points: M1 0.03, M2 0.12, H 0.12, I1 0.08, I2 0.22, I3 0.08, D1 0.07, D2 0.05, S1 0.04, S2 0.14, R 0.05; a critical error zeroes I, S and H of its station), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1).",
+ "source": "measured: one full verify of the oracle submission (solution/: the reference program inside the cell, with the true poses of the vehicle and the structure) on this hidden set, tests/test.sh as root in a fresh container of the task image (--cpus 8, 16 GB, no network) with only the submission restored, 3 slot(s); station scores 1.00, 1.00, 1.00, 1.00, 1.00, 1.00; never a printed or planned figure.",
+ "value": 1.0
+}

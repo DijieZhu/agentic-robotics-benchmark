@@ -1,0 +1,44 @@
+{
+ "clauses": [
+  {
+   "bound": 3.4,
+   "comparator": ">=",
+   "conditions": {},
+   "id": "AC-01",
+   "quantity": "tank_net_buoyancy_n",
+   "unit": "N"
+  },
+  {
+   "bound": 5.1,
+   "comparator": "<=",
+   "conditions": {},
+   "id": "AC-02",
+   "quantity": "tank_net_buoyancy_n",
+   "unit": "N"
+  },
+  {
+   "bound": 20.3,
+   "comparator": "<=",
+   "conditions": {
+    "chamber_c": 10.0
+   },
+   "id": "AC-03",
+   "quantity": "pack_dcir_mohm",
+   "unit": "mOhm"
+  },
+  {
+   "bound": 68.2,
+   "comparator": ">=",
+   "conditions": {
+    "axis": "surge_astern",
+    "limiter": "on",
+    "supply_v": 12.0
+   },
+   "id": "AC-04",
+   "quantity": "bollard_thrust_n",
+   "unit": "N"
+  }
+ ],
+ "for_bid": "T-05",
+ "for_options": []
+}

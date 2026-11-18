@@ -1,0 +1,94 @@
+{
+  "_about": "Capability bands for the site generator (site_gen.config reads 'capability' and 'modes'). Version 3, 2026-11-14 11:00 EST, for the gait firmware of the build stage (gait/rl_controller.py: step guard, slip-aware stall check, walk body height 0.24-0.26 m). Every number below was measured (MuJoCo 3.14.0) with obstacles built like site_gen's, element turned U(-20, 20) degrees, commanded speed over the mode's whole range, in three result sets. The measured tables are in manual_tables.json.",
+  "_how_the_bands_were_set": {
+    "step": "Sills (0.12 m deep), kerbs (0.20 m), hoses (round); rates [k/n] from manual_tables.json. Walk, wrong mode, first try, refused: hose 4 cm (<= 20 deg) 46/60, hose 4.5 cm (<= 20 deg) 57/60, hose 4.95 cm (<= 20 deg) 300/300, hose 5 cm (<= 20 deg) 59/60, hose 5.5 cm (<= 20 deg) 60/60, hose 6 cm (<= 20 deg) 60/60, kerb 3.5 cm (<= 20 deg) 31/60, kerb 4 cm (<= 20 deg) 60/60, kerb 4.5 cm (<= 20 deg) 60/60, kerb 4.95 cm (<= 20 deg) 300/300, kerb 5 cm (<= 20 deg) 60/60, kerb 5.5 cm (<= 20 deg) 60/60, kerb 6 cm (<= 20 deg) 60/60, sill 3.5 cm (<= 20 deg) 37/60, sill 4 cm (<= 20 deg) 60/60, sill 4.5 cm (<= 20 deg) 60/60, sill 4.95 cm (<= 20 deg) 300/300, sill 5 cm (<= 20 deg) 60/60, sill 5.5 cm (<= 20 deg) 60/60, sill 6 cm (<= 20 deg) 60/60. crouch_walk, wrong mode, first try, refused: hose 4.5 cm (<= 20 deg) 60/60, hose 4.95 cm (<= 20 deg) 300/300, hose 5 cm (<= 20 deg) 60/60, sill 4.5 cm (<= 20 deg) 60/60, sill 5 cm (<= 20 deg) 60/60. Walk, right mode, three tries, crossed: hose 2.5 cm (<= 20 deg) 60/60, hose 3 cm (<= 20 deg) 660/660, kerb 2.5 cm (<= 20 deg) 60/60, kerb 3 cm (<= 20 deg) 60/60, protector 2.5 cm (<= 20 deg) 60/60, protector 3 cm (<= 20 deg) 660/660, sill 2.5 cm (<= 20 deg) 60/60, sill 3 cm (<= 20 deg) 660/660. High_step within three tries, crossed: hose 4.5 cm (10-20 deg) 25/25, hose 4.5 cm (<= 10 deg) 35/35, hose 5 cm (10-20 deg) 25/25, hose 5 cm (<= 10 deg) 35/35, hose 5.5 cm (10-20 deg) 25/25, hose 5.5 cm (<= 10 deg) 35/35, hose 5.65 cm (10-20 deg, heading only) 149/150, hose 5.65 cm (<= 10 deg) 150/150, hose 5.65 cm (<= 10 deg, heading only) 150/150, hose 5.8 cm (10-20 deg) 299/301, hose 5.8 cm (<= 10 deg) 299/299, hose 6 cm (10-20 deg) 25/25, hose 6 cm (<= 10 deg) 34/35, kerb 4.5 cm (10-20 deg) 25/25, kerb 4.5 cm (<= 10 deg) 35/35, kerb 5 cm (10-20 deg) 24/25, kerb 5 cm (<= 10 deg) 35/35, kerb 5.5 cm (10-20 deg) 25/25, kerb 5.5 cm (<= 10 deg) 35/35, kerb 5.65 cm (10-20 deg) 146/151, kerb 5.65 cm (10-20 deg, heading only) 142/150, kerb 5.65 cm (<= 10 deg) 448/449, kerb 5.65 cm (<= 10 deg, heading only) 299/300, kerb 5.8 cm (10-20 deg) 283/301, kerb 5.8 cm (<= 10 deg) 297/299, kerb 6 cm (10-20 deg) 23/25, kerb 6 cm (<= 10 deg) 34/35, sill 4.5 cm (10-20 deg) 25/25, sill 4.5 cm (<= 10 deg) 35/35, sill 5 cm (10-20 deg) 25/25, sill 5 cm (<= 10 deg) 35/35, sill 5.5 cm (10-20 deg) 25/25, sill 5.5 cm (<= 10 deg) 35/35, sill 5.65 cm (10-20 deg) 140/150, sill 5.65 cm (10-20 deg, heading only) 140/150, sill 5.65 cm (<= 10 deg) 448/450, sill 5.65 cm (<= 10 deg, heading only) 299/300, sill 5.8 cm (10-20 deg) 277/301, sill 5.8 cm (<= 10 deg) 296/299, sill 6 cm (10-20 deg) 24/25, sill 6 cm (<= 10 deg) 35/35. Barriers, three tries, refused: kerb 10 cm high_step 15/15, kerb 10 cm high_step 25/25, kerb 12 cm high_step 15/15, kerb 12 cm crouch_walk 40/40, kerb 12 cm walk 40/40, kerb 12 cm high_step 25/25, kerb 15 cm high_step 15/15, kerb 15 cm high_step 25/25, kerb 18 cm high_step 15/15, kerb 18 cm walk 40/40, kerb 18 cm high_step 25/25, sill 10 cm high_step 15/15, sill 10 cm high_step 25/25. So: free to 0.03, needs_high_step 0.048 to 0.058, barrier from 0.1; high_step's rating holds for approaches within 10 degrees of square (the manual tells programs to square up and to re-align after a 'blocked'); the 10-20 degree rows are published beside them. Ramped cable protectors are not a crisp needs_high_step element (walk, first try, refused: protector 4 cm (<= 20 deg) 43/60, protector 5 cm (<= 20 deg) 45/60, protector 6 cm (<= 20 deg) 50/60): keep them in the free band.",
+    "floor_pipe": "Round pipes on the floor; rates from manual_tables.json. Walk, wrong mode, first try, refused: floor pipe 4 cm (<= 20 deg) 49/60, floor pipe 4.5 cm (<= 20 deg) 56/60, floor pipe 5 cm (<= 20 deg) 357/360, floor pipe 5.5 cm (<= 20 deg) 60/60, floor pipe 6 cm (<= 20 deg) 60/60. crouch_walk, wrong mode, first try, refused: floor pipe 5 cm (<= 20 deg) 300/300. Walk, right mode, three tries, crossed: floor pipe 2.5 cm (<= 20 deg) 60/60, floor pipe 3 cm (<= 20 deg) 660/660. High_step within three tries, crossed: floor pipe 4.5 cm (10-20 deg) 25/25, floor pipe 4.5 cm (<= 10 deg) 35/35, floor pipe 5 cm (10-20 deg) 25/25, floor pipe 5 cm (<= 10 deg) 35/35, floor pipe 5.5 cm (10-20 deg) 25/25, floor pipe 5.5 cm (<= 10 deg) 35/35, floor pipe 5.99 cm (10-20 deg, heading only) 150/150, floor pipe 5.99 cm (<= 10 deg) 150/150, floor pipe 5.99 cm (<= 10 deg, heading only) 150/150, floor pipe 6 cm (10-20 deg) 25/25, floor pipe 6 cm (<= 10 deg) 35/35, floor pipe 6.2 cm (10-20 deg) 296/301, floor pipe 6.2 cm (<= 10 deg) 298/299. Barriers refused: floor pipe 12 cm high_step 15/15, floor pipe 12 cm high_step 25/25, floor pipe 15 cm high_step 15/15, floor pipe 15 cm high_step 25/25. So: free to 0.03, needs_high_step 0.048 to 0.062, barrier from 0.12.",
+    "overhead": "Walk and high_step under low overheads, one try, refused: chase 0.3 m walk default body 60/60, chase 0.31 m walk default body 40/40, chase 0.32 m walk default body 8/40, chase 0.33 m walk default body 0/60, crossover 0.28 m walk default body 60/60, crossover 0.29 m walk default body 40/40, crossover 0.3 m walk default body 40/40, crossover 0.31 m walk default body 19/60, crossover 0.33 m walk default body 0/60, chase 0.3 m high_step body 0.24 m 40/40, chase 0.31 m high_step default body 40/40, chase 0.33 m high_step default body 60/60, crossover 0.28 m high_step default body 60/60, crossover 0.3 m high_step default body 40/40, crossover 0.31 m high_step default body 40/40, crossover 0.33 m high_step default body 35/60. crouch_walk, three tries, crossed: chase 0.27 m default body 30/40, chase 0.28 m default body 40/40, chase 0.283 m default body 600/600, chase 0.283 m body 0.18 m 40/40, chase 0.283 m body 0.185 m 40/40, chase 0.283 m body 0.19 m 340/340, chase 0.29 m default body 40/40, chase 0.3 m default body 40/40, chase 0.31 m default body 40/40, chase 0.33 m default body 40/40, crossover 0.26 m default body 20/40, crossover 0.27 m default body 40/40, crossover 0.28 m default body 40/40, crossover 0.283 m default body 600/600, crossover 0.283 m body 0.18 m 40/40, crossover 0.283 m body 0.185 m 40/40, crossover 0.283 m body 0.19 m 340/340, crossover 0.29 m default body 40/40, crossover 0.31 m default body 40/40, crossover 0.33 m default body 40/40. crouch_walk's body height range is 0.17-0.19 m (above it, crouch_walk was refused at the drawn lowest clearance). So: free from 0.4, needs_crouch 0.28 to 0.3, barrier at 0.24 and below.",
+    "width": "Straight corridor between walls: crouch_walk 0.36 m through 5/10 (touched 10/10), crouch_walk 0.40 m through 10/10 (touched 2/10), crouch_walk 0.45 m through 10/10 (touched 0/10), crouch_walk 0.50 m through 10/10 (touched 0/10), high_step 0.36 m through 9/10 (touched 10/10), high_step 0.40 m through 10/10 (touched 7/10), high_step 0.45 m through 10/10 (touched 1/10), high_step 0.50 m through 10/10 (touched 0/10), walk 0.36 m through 7/10 (touched 10/10), walk 0.40 m through 10/10 (touched 2/10), walk 0.45 m through 10/10 (touched 0/10), walk 0.50 m through 10/10 (touched 0/10). Turning 180 degrees in place between walls: crouch_walk 0.50 m (1 try) turned 0/10, blocked 10/10, crouch_walk 0.50 m (3 tries) turned 0/10, blocked 10/10, crouch_walk 0.60 m (1 try) turned 0/10, blocked 10/10, crouch_walk 0.60 m (3 tries) turned 0/10, blocked 10/10, crouch_walk 0.70 m (1 try) turned 10/10, blocked 0/10, crouch_walk 0.70 m (3 tries) turned 10/10, blocked 0/10, crouch_walk 0.80 m (1 try) turned 10/10, blocked 0/10, crouch_walk 0.90 m (1 try) turned 10/10, blocked 0/10, high_step 0.50 m (1 try) turned 0/10, blocked 10/10, high_step 0.50 m (3 tries) turned 0/10, blocked 10/10, high_step 0.60 m (1 try) turned 0/10, blocked 10/10, high_step 0.60 m (3 tries) turned 5/10, blocked 5/10, high_step 0.70 m (1 try) turned 10/10, blocked 0/10, high_step 0.70 m (3 tries) turned 10/10, blocked 0/10, high_step 0.80 m (1 try) turned 10/10, blocked 0/10, high_step 0.90 m (1 try) turned 10/10, blocked 0/10, walk 0.50 m (1 try) turned 0/10, blocked 10/10, walk 0.50 m (3 tries) turned 0/10, blocked 10/10, walk 0.60 m (1 try) turned 0/10, blocked 10/10, walk 0.60 m (3 tries) turned 0/10, blocked 10/10, walk 0.70 m (1 try) turned 10/10, blocked 0/10, walk 0.70 m (3 tries) turned 10/10, blocked 0/10, walk 0.80 m (1 try) turned 10/10, blocked 0/10, walk 0.90 m (1 try) turned 10/10, blocked 0/10. Unchanged: free from 0.7, tight 0.45 to 0.6 (no turning inside), barrier at 0.3 and below.",
+    "slope_deg": "Three tries unless stated: crouch_walk ramp, walking down 15 deg speed 0.08-0.20: crossed 60/60, first try 60/60, fell 0/60; crouch_walk ramp, walking up 15 deg speed 0.08-0.20: crossed 60/60, first try 60/60, fell 0/60; crouch_walk side slope, walking across it (along the contour) 15 deg speed 0.08-0.20: crossed 60/60, first try 60/60, fell 0/60; high_step ramp, walking down 15 deg speed 0.10-0.25: crossed 60/60, first try 60/60, fell 0/60; high_step ramp, walking up 15 deg speed 0.10-0.25: crossed 60/60, first try 60/60, fell 0/60; high_step side slope, walking across it (along the contour) 15 deg speed 0.10-0.25: crossed 60/60, first try 60/60, fell 0/60; walk ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 10 deg speed 0.15-0.45: crossed 40/40, first try 40/40, fell 0/40; walk ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 12 deg speed 0.15-0.45: crossed 40/40, first try 40/40, fell 0/40; walk ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.15-0.45: crossed 40/40, first try 38/40, fell 0/40; walk ramp over a kerb 0.05 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 8 deg speed 0.15-0.45: crossed 40/40, first try 40/40, fell 0/40; walk ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 10 deg speed 0.15-0.45: crossed 40/40, first try 40/40, fell 0/40; walk ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 12 deg speed 0.15-0.45: crossed 40/40, first try 40/40, fell 0/40; walk ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.15-0.45: crossed 40/40, first try 38/40, fell 0/40; walk ramp over a kerb 0.12 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 8 deg speed 0.15-0.45: crossed 40/40, first try 38/40, fell 0/40; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 10 deg speed 0.15-0.45: crossed 40/40, first try 38/40, fell 0/40; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 12 deg speed 0.15-0.45: crossed 40/40, first try 39/40, fell 0/40; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.15-0.45: crossed 640/640, first try 597/640, fell 0/640; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.30-0.45: crossed 60/60, first try 53/60, fell 0/60; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.15-0.45: crossed 198/200, first try 178/200, fell 0/200; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 14 deg speed 0.15-0.30: crossed 60/60, first try 60/60, fell 0/60; walk ramp over a kerb 0.18 m high (up, 0.20 m flat, down; 0.90 m wide, raised side edges) 8 deg speed 0.15-0.45: crossed 36/40, first try 32/40, fell 0/40; walk ramp, walking down 10 deg speed 0.15-0.45: crossed 100/100, first try 100/100, fell 0/100; walk ramp, walking down 15 deg speed 0.15-0.45: crossed 700/700, first try 700/700, fell 0/700; walk ramp, walking down 20 deg speed 0.15-0.45: crossed 60/60, first try 60/60, fell 0/60; walk ramp, walking up 10 deg speed 0.15-0.45: crossed 100/100, first try 100/100, fell 0/100; walk ramp, walking up 15 deg speed 0.15-0.45: crossed 99/100, first try 82/100, fell 0/100; walk ramp, walking up 15 deg speed 0.30-0.45: crossed 58/60, first try 40/60, fell 0/60; walk ramp, walking up 15 deg friction 0.25 speed 0.15-0.45: crossed 0/30, first try 0/30, fell 0/30; walk ramp, walking up 15 deg speed 0.15-0.30: crossed 60/60, first try 60/60, fell 0/60; walk ramp, walking up 20 deg speed 0.15-0.45: crossed 26/60, first try 26/60, fell 0/60; walk ramp, walking up 20 deg friction 0.35 speed 0.15-0.45: crossed 0/30, first try 0/30, fell 0/30; walk side slope, walking across it (along the contour) 10 deg speed 0.15-0.45: crossed 100/100, first try 100/100, fell 0/100; walk side slope, walking across it (along the contour) 15 deg speed 0.15-0.45: crossed 700/700, first try 700/700, fell 0/700; walk side slope, walking across it (along the contour) 20 deg speed 0.15-0.45: crossed 60/60, first try 60/60, fell 0/60. Unchanged: free to 10.0, slow 10.0 to 15.0 (slow: 0.30 m/s or less), nothing between 15.0 and 30.0 on any route.",
+    "friction": "Level floor: crouch_walk wet patch 1.0 m across on level floor, friction 0.20: crossed 40/40, fell 0/40; high_step wet patch 1.0 m across on level floor, friction 0.20: crossed 40/40, fell 0/40; walk level floor of friction 0.2, walking 15 s: walked without stop or fall 40/40; walk wet patch 1.0 m across on level floor, friction 0.12: crossed 40/40, fell 0/40; walk wet patch 1.0 m across on level floor, friction 0.15: crossed 30/30, fell 0/30; walk wet patch 1.0 m across on level floor, friction 0.20: crossed 40/40, fell 0/40; walk wet patch 1.0 m across on level floor, friction 0.25: crossed 30/30, fell 0/30; walk wet patch 1.0 m across on level floor, friction 0.30: crossed 40/40, fell 0/40. Unchanged: keep patches of 0.35 and below off required accesses and never on a slope."
+  },
+  "_robot": {
+    "mass_kg": 3.151,
+    "footprint_m": [
+      0.55,
+      0.33
+    ],
+    "height_standing_m": 0.322,
+    "height_crouch_m": 0.261,
+    "camera_height_stand_m": 0.299,
+    "note": "Camera (head tilt axis) 0.055 m above the body origin and 0.165 m ahead of it. Measured camera height walking: walk 0.299 m (body 0.242), high_step 0.316 (0.257), crouch_walk 0.245 (0.190); standing 0.204-0.314 m for body heights 0.15-0.26. Lidar top 0.081 m above the body origin."
+  },
+  "_manual_notes_for_programs": [
+    "Walk and crouch_walk stop with 'blocked' (reason 'step') when a foot comes down more than 3 cm above its previous foothold: they refuse sills and kerbs from 4 cm and hoses and floor pipes from 5 cm, and cross 3 cm and below.",
+    "On 15 degree ramps walk at 0.30 m/s or slower (faster, the step guard stops it at the foot of the ramp in a third of first tries).",
+    "A 'blocked' at rated sizes is a real slow-down (less than 15 percent of the commanded progress for 2.5 s in high_step, 25 percent for 1.5 s in walk): retry up to twice in the same mode.",
+    "The stall check measures progress with the IMU as well as the legs: treading in place on a slippery floor or against an obstacle ends in 'blocked' (reason 'slip').",
+    "Status returns to 'ok' when the robot starts walking again after a 'blocked'.",
+    "Ramped cable protectors are not refused reliably by walk (43-50 of 60 first tries at 4-6 cm): do not use them as needs_high_step elements."
+  ],
+  "capability": {
+    "step": {
+      "free_max": 0.03,
+      "needs_high_step": [
+        0.048,
+        0.058
+      ],
+      "barrier_min": 0.1
+    },
+    "floor_pipe": {
+      "free_max": 0.03,
+      "needs_high_step": [
+        0.048,
+        0.062
+      ],
+      "barrier_min": 0.12
+    },
+    "overhead": {
+      "free_min": 0.4,
+      "needs_crouch": [
+        0.28,
+        0.3
+      ],
+      "barrier_max": 0.24
+    },
+    "width": {
+      "free_min": 0.7,
+      "tight": [
+        0.45,
+        0.6
+      ],
+      "barrier_max": 0.3
+    },
+    "slope_deg": {
+      "free_max": 10.0,
+      "slow": [
+        10.0,
+        15.0
+      ],
+      "barrier_min": 30.0
+    },
+    "friction": {
+      "slow_max": 0.35
+    },
+    "band_margin": 0.15
+  },
+  "modes": {
+    "walk": {
+      "speed": 0.3,
+      "head_height": 0.299,
+      "power_W": 60.0
+    },
+    "high_step": {
+      "speed": 0.15,
+      "head_height": 0.316,
+      "power_W": 56.0
+    },
+    "crouch_walk": {
+      "speed": 0.14,
+      "head_height": 0.245,
+      "power_W": 66.5
+    }
+  },
+  "_modes_measured": "speed: planning speed for routes (measured on level floor: walk 0.295 m/s at a 0.30 command, 0.445 at 0.45; high_step 0.189 at 0.20, 0.241 at 0.25; crouch_walk 0.146 at 0.15, 0.197 at 0.20; 5 runs each). head_height: camera height walking at the mode's default body height (3 runs). power_W: mechanical + copper + 12 W electronics over 4 s of steady walking: walk 59.8 W at 0.30 m/s, high_step 56.0 at 0.20, crouch_walk 66.5 at 0.15."
+}

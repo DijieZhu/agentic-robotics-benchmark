@@ -1,0 +1,4861 @@
+{
+ "schema": "task_values/1",
+ "task": "rov_subsea_manifold_leak_isolation",
+ "what": "DESIGN v1.3 的全部设计取值（机器可读）。车体数不在这里：运行时按 digest.keys 读 shared/spec_values.json。由设计派生的数（力矩余量、湿重、墙钟、命中率等）也不在这里：它们在 build/margins.json，由 tools/margins/run_all.py 从本文件与 digest 重算。",
+ "design": {
+  "file": "DESIGN.md",
+  "version": "v1.3"
+ },
+ "fields": {
+  "value": "取值；区间写成 [lo, hi]",
+  "unit": "单位",
+  "grade": "来源等级：digest | 官 | 测·G<k>[/G<k>…] | 文 | 估 | 占 | 先验 | 定（由裁决或标准的定义定下，不是待测的量）",
+  "from": "出自哪个门（G0-G6）、裁决（shared/DECISIONS.md 的编号，如 M11）、笔记（note:<名>，名字见 DESIGN 文首的缩写表，如 note:R8）或 DESIGN / BRIEF / digest / vendor",
+  "ref": "DESIGN.md 的节",
+  "status": "frozen = 已定；estimate = 估算，待 pending 里的包实测后冻结；placeholder = 设计取值（占位），待 pending 里的包测过再冻结",
+  "pending": "由哪些 phase 2 的包量 / 定（frozen 的条目带 pending 表示只复核）",
+  "visibility": "public = 原样写给 agent；public_range = 给 agent 的是 public 字段里的范围或说法；hidden = 不公开；缺省 = DESIGN 没有明说，由文档包按 §1.2 / §5 定",
+  "public": "给 agent 的范围或说法，以及在哪个文件",
+  "amended": "（可选）某个包在 DESIGN.md 修订之前改了这个值时必须加：{by: 包号, design_value: DESIGN.md 仍印着的值, reason: 原因}。测试用 design_value 核对 DESIGN，用 value 重算 margins.json；DESIGN 修订（P31）后删掉这个字段。DESIGN 没有的新键加 new_key: true、design_value 为 null（as_designed 时去掉）；只改状态 / 可见性的条目 design_value 等于 value。from 也可以写 shared/DECISIONS_P2_BEH.md 的裁决号（如 P02-1），grade 的「测」也可以写包号（如 测·P07）",
+  "note": "备注"
+ },
+ "values": {
+  "digest.required_version": {
+   "value": "v3",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "L4",
+    "M1"
+   ],
+   "ref": "文首 digest 状态、§9、§14 DG1-DG14",
+   "status": "frozen",
+   "note": "开工先核对 shared/DIGEST_FREEZE.md；digest 再变要主会话同意"
+  },
+  "digest.sha256": {
+   "value": {
+    "spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+    "vehicle_parts_manifest.json": "99b937ff958bf88e28a866059a887fcfeb3981b80e6a5b677da5056fbf448abe",
+    "REFERENCE_VEHICLE.md": "9938c11d8d46491b92de19d2c537e3dabe2b5d713fb99049c5456a631cc21d31"
+   },
+   "unit": "sha256",
+   "grade": "digest",
+   "from": [
+    "L4"
+   ],
+   "ref": "文首 digest 状态",
+   "status": "frozen",
+   "note": "与 shared/DIGEST_FREEZE.md 第 1 节的表一致（run_all.py --check 三方比对）"
+  },
+  "digest.keys": {
+   "value": {
+    "sea_state": "mission.state_sea_SP35_trim",
+    "sites": "mission.sites",
+    "thrusters": "mission.thrusters",
+    "bbox": "mission.bbox_B_m",
+    "sensor_specs": "sensor_specs",
+    "thruster_curve_limits": "thruster_curve_limits",
+    "ballast_unit": "uwkit.ballast_unit",
+    "gravity": "gravity",
+    "battery_official": "official_specs"
+   },
+   "unit": "-",
+   "grade": "digest",
+   "from": [
+    "L4",
+    "M1"
+   ],
+   "ref": "§2 开头、§9、§14 DG1-DG11、附录",
+   "status": "frozen",
+   "note": "车体数的唯一来源：运行时按这些键读 shared/spec_values.json。海水状态直接读 sea_state（6 个配重单元已在内），不要从淡水状态加块；ballast_unit = 块 + 钉"
+  },
+  "vehicle.build": {
+   "value": {
+    "config": "mission",
+    "ballast": "sea",
+    "collision": "mesh",
+    "jaw_collision": "shell"
+   },
+   "unit": "-",
+   "grade": "测·G0",
+   "from": [
+    "G0",
+    "M1",
+    "R3"
+   ],
+   "ref": "§2 开头、§7 uwkit 现状 (1)、§14 DG10",
+   "status": "frozen",
+   "note": "uwkit.build_vehicle 的参数；jaw_collision 默认是 pads，本题显式传 shell；collision=merged 是没有用到的耗时退路"
+  },
+  "vehicle.sea_ballast_units": {
+   "value": 6,
+   "unit": "units",
+   "grade": "digest",
+   "from": [
+    "M1",
+    "L4"
+   ],
+   "ref": "§0 变更摘要 10、§14 DG1",
+   "status": "frozen",
+   "note": "海水状态的配重单元数（一个单元 = 块 + 钉）；run_all.py 用它核对读到的确实是 digest 的海水状态"
+  },
+  "vehicle.hydro_draw": {
+   "value": "once per task world (uwkit.sample_hydro between the two literature sets)",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "U1"
+   ],
+   "ref": "§2 开头、§1.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "水池、姊妹站点、隐藏站点是同一台车、同一次抽样"
+  },
+  "resources.cpus": {
+   "value": 8,
+   "unit": "CPU",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§8",
+   "status": "frozen",
+   "note": "agent 与 verifier 相同"
+  },
+  "resources.memory_gb": {
+   "value": 16,
+   "unit": "GB",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§8",
+   "status": "frozen"
+  },
+  "resources.gpus": {
+   "value": 0,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§8",
+   "status": "frozen"
+  },
+  "resources.agent_timeout_sec": {
+   "value": 14400,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "BRIEF"
+   ],
+   "ref": "§8、§13、§19-3",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "verifier.timeout_sec": {
+   "value": 9600,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N7",
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§8、§13、§14",
+   "status": "frozen",
+   "pending": [
+    "A05"
+   ],
+   "note": "规则见 runtime_budget.json timeout.rule；换外观（Filament）后由 A05 按同一规则重推（P03-1：预计 10300-10800 s）"
+  },
+  "verifier.timeout_cap_sec": {
+   "value": 10800,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N7"
+   ],
+   "ref": "§8、§13",
+   "status": "frozen"
+  },
+  "verifier.sites": {
+   "value": 6,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.5、§13",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "verifier.waves": {
+   "value": 2,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N7"
+   ],
+   "ref": "§13",
+   "status": "frozen"
+  },
+  "verifier.slots_per_wave": {
+   "value": 3,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N7"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "每槽 cell 与程序各钉一个核"
+  },
+  "verifier.single_site_reruns": {
+   "value": 1,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "cell 故障（不是程序的错）重跑一次，最多一站",
+   "visibility": "public"
+  },
+  "verifier.fixed_steps_s": {
+   "value": 250.0,
+   "unit": "s",
+   "grade": "估",
+   "from": [
+    "G5"
+   ],
+   "ref": "§13",
+   "status": "estimate",
+   "pending": [
+    "P29"
+   ],
+   "note": "lockdown、route gate、import 检查、断网自测"
+  },
+  "verifier.build_s": {
+   "value": 5.0,
+   "unit": "s",
+   "grade": "测·G5",
+   "from": [
+    "G5"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "实测 4.6 s，核算取 5"
+  },
+  "verifier.grace_s": {
+   "value": 90.0,
+   "unit": "s",
+   "grade": "估",
+   "from": [
+    "G5"
+   ],
+   "ref": "§13",
+   "status": "estimate",
+   "pending": [
+    "P29"
+   ],
+   "note": "宽限与清理；与 build_s 合计 95 s"
+  },
+  "verifier.margin_frac": {
+   "value": 0.15,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§13",
+   "status": "frozen"
+  },
+  "verifier.kappa_assumed": {
+   "value": 1.018,
+   "unit": "-",
+   "grade": "测·P03",
+   "from": [
+    "M12",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "3 站并行时 cell 一侧的拖慢系数；P03 实测 1.0176（K = 3），K = 2 / 4 为 1.00 / 1.05（runtime_budget.json kappa）"
+  },
+  "verifier.kappa_bounds": {
+   "value": [
+    1.0,
+    1.4
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "M12"
+   ],
+   "ref": "§13",
+   "status": "frozen"
+  },
+  "verifier.unit_cost.sim_wall_s_per_sim_s": {
+   "value": 0.2856,
+   "unit": "s/s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.cell_wall_per_sim_s.single.max_of_station_runs（单站整局平均的最大值；并行由 kappa_assumed 乘上）"
+  },
+  "verifier.unit_cost.frame640_p95_s": {
+   "value": 0.4815,
+   "unit": "s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.frame_640x480_s.single.p95",
+   "visibility": "public",
+   "public": "instruction.md：练习耗时的说法（约三分之一仿真时间、每帧四分之一到半秒）"
+  },
+  "verifier.unit_cost.frame320_p95_s": {
+   "value": 0.1904,
+   "unit": "s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.frame_320x240_s.single.p95"
+  },
+  "verifier.unit_cost.ping_p95_s": {
+   "value": 0.004932,
+   "unit": "s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.ping_s.single.p95"
+  },
+  "verifier.unit_cost.sim_wall_s_per_sim_s_typical": {
+   "value": 0.2817,
+   "unit": "s/s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§1.6、§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.cell_wall_per_sim_s.single.mean",
+   "visibility": "public",
+   "public": "instruction.md：练习耗时的说法（约三分之一仿真时间、每帧四分之一到半秒）"
+  },
+  "verifier.unit_cost.frame640_median_s": {
+   "value": 0.2364,
+   "unit": "s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.frame_640x480_s.single.median",
+   "visibility": "public",
+   "public": "instruction.md：练习耗时的说法（约三分之一仿真时间、每帧四分之一到半秒）"
+  },
+  "verifier.unit_cost.ping_median_s": {
+   "value": 0.003815,
+   "unit": "s",
+   "grade": "测·P03",
+   "from": [
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "note": "unit_costs_p95.ping_s.single.median"
+  },
+  "verifier.v11_budget": {
+   "value": {
+    "frame_units": 900,
+    "frame_weight_320x240": 0.35,
+    "sonar_pings": 40000
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "G5"
+   ],
+   "ref": "§1.5、§13",
+   "status": "frozen",
+   "note": "v1.1 的预算，只用于「串行为什么不行」的对照算术，已作废"
+  },
+  "verifier.filament_scenario": {
+   "value": {
+    "frame640_s": 1.1,
+    "frame320_s": 0.45
+   },
+   "unit": "s",
+   "grade": "先验",
+   "from": [
+    "note:U1"
+   ],
+   "ref": "§13",
+   "status": "estimate",
+   "pending": [
+    "A05"
+   ],
+   "note": "邻居任务的 Filament 帧 0.4-1.1 s，取上端"
+  },
+  "verifier.reference_run_estimate": {
+   "value": {
+    "sim_s": 1515,
+    "frame_units": 55.4,
+    "sonar_pings": 4940
+   },
+   "unit": "-",
+   "grade": "测·P16",
+   "from": [
+    "G6"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "pending": [
+    "P26"
+   ],
+   "note": "开发站（k = 0）上 11 项全分的参考程序；v1 候选上的值由 P26 的选集记录"
+  },
+  "verifier.runner_accounts": {
+   "value": [
+    "cellrun0",
+    "cellrun1",
+    "cellrun2"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P24-2"
+   ],
+   "ref": "§1.7、§13",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "tools/assemble_task.py grader_config 的 runner_accounts"
+  },
+  "verifier.pin_policy": {
+   "value": "auto",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P03-2",
+    "P24-4"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "harness/tests_stage/slots.py plan_slots(policy)"
+  },
+  "verifier.slot_mode": {
+   "value": "queue",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P03-2",
+    "P24-4"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "harness/tests_stage/slots.py SlotScheduler(mode)"
+  },
+  "verifier.station_watchdog_s": {
+   "value": 3117.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "P24-4"
+   ],
+   "ref": "§13",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "派生：ceil((timeout_sec − 250) / (批数 + 1 次重跑)) = ceil(3116.7)；代码按公式算（assemble_task.grader_config），本键记录现值，tests/test_spec_consistency.py 守住相等"
+  },
+  "verifier.program_cpu_cap_s": {
+   "value": 3600.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "P24-4"
+   ],
+   "ref": "§1.5、§13",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "派生（同上，assemble_task.grader_config 的 program_cpu_cap_s）；只是 CPU 限制的后备，程序时间由 program_time_cap_s 管"
+  },
+  "budget.sim_time_s": {
+   "value": 2400.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N6",
+    "P03-1"
+   ],
+   "ref": "§1.1、§1.5、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.program_time_s": {
+   "value": 1200.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "M12",
+    "P03-1"
+   ],
+   "ref": "§1.5、§13、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "墙钟减去 cell 的仿真与渲染"
+  },
+  "budget.program_cpu_cores": {
+   "value": 1,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "M12",
+    "N7"
+   ],
+   "ref": "§1.5、§13",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.silence_s": {
+   "value": 180.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P03-1"
+   ],
+   "ref": "§1.5、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.camera_frame_units": {
+   "value": 600.0,
+   "unit": "frame units",
+   "grade": "定",
+   "from": [
+    "M12",
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§1.5、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.frame_weight_640x480": {
+   "value": 1.0,
+   "unit": "frame units",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.5",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.frame_weight_320x240": {
+   "value": 0.4,
+   "unit": "frame units",
+   "grade": "定",
+   "from": [
+    "M12",
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§1.5、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "实测 320 帧的 p95 是 640 帧的 0.38"
+  },
+  "budget.sonar_pings": {
+   "value": 16000,
+   "unit": "pings",
+   "grade": "定",
+   "from": [
+    "M12",
+    "G5",
+    "P03-1"
+   ],
+   "ref": "§1.5、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.protective_stops": {
+   "value": 6,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§1.5、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "第 6 次硬碰撞保护停 = 车辆停用"
+  },
+  "budget.import_check_s": {
+   "value": 120.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "note:U1"
+   ],
+   "ref": "§1.7",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "budget.submission_max_mb": {
+   "value": 60.0,
+   "unit": "MB",
+   "grade": "定",
+   "from": [
+    "note:U1"
+   ],
+   "ref": "§1.7、§3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.size_m": {
+   "value": [
+    12.0,
+    8.0,
+    4.0
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.runs": {
+   "value": 24,
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.6、§14",
+   "status": "placeholder",
+   "pending": [
+    "P18"
+   ],
+   "visibility": "public"
+  },
+  "practice.tank.max_sim_s": {
+   "value": 600.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.flow_m_s": {
+   "value": [
+    0.0,
+    0.5
+   ],
+   "unit": "m/s",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.turbidity_levels": {
+   "value": 3,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.turbidity_c550": {
+   "value": {
+    "clear": 0.4,
+    "medium": 0.8,
+    "murky": 1.2
+   },
+   "unit": "1/m",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/drawings/facilities.py TANK.turbidity_c550；设定名 clear / medium / murky（练习服务的 setup_schema）"
+  },
+  "practice.tank.gas_L_min": {
+   "value": [
+    0.5,
+    2.9
+   ],
+   "unit": "L/min",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py TANK.bubbler.gas_L_min"
+  },
+  "practice.tank.rise_m_s": {
+   "value": 0.24,
+   "unit": "m/s",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "note": "facilities.py TANK.bubbler.rise_m_s（评分站点按 plume.rise_m_s 抽）"
+  },
+  "practice.tank.diffuser_head_m": {
+   "value": 1.3,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py TANK.bubbler.head_top"
+  },
+  "practice.tank.grating_coupon": {
+   "value": {
+    "size_m": [
+     1.5,
+     1.5
+    ],
+    "top_m": 2.4
+   },
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py TANK.coupon（与顶板格栅同截面、同间距）"
+  },
+  "practice.tank.calibration_codes": {
+   "value": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py TANK.calib.codes"
+  },
+  "practice.tank.current_ramp_m_s2": {
+   "value": 0.02,
+   "unit": "m/s²",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/practice_sites.py TANK_CURRENT_RAMP"
+  },
+  "practice.tank.current_steps_max": {
+   "value": 8,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/practice_sites.py 的 setup_schema（build/practice_public.json）"
+  },
+  "practice.tank.handle_torques": {
+   "value": {
+    "BV1": [
+     2.0,
+     3.0
+    ],
+    "BV2": [
+     3.5,
+     5.5
+    ],
+    "BV3": [
+     5.0,
+     8.0
+    ],
+    "PV1": [
+     2.5,
+     4.0
+    ],
+    "PV2": [
+     4.0,
+     6.0
+    ],
+    "PV3": [
+     3.0,
+     4.5
+    ]
+   },
+   "unit": "N·m",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/practice_sites.py TANK_TORQUES；最重一只在 valve.torque 的类上限"
+  },
+  "practice.tank.d1_bay_xy": {
+   "value": [
+    2.6,
+    2.4
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/practice_sites.py TANK_D1_BAY"
+  },
+  "practice.tank.track_resolution": {
+   "value": {
+    "position_m": 0.0001,
+    "quaternion": 1e-06,
+    "encoder_deg": 0.01
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "practice/facility.py TRACK_POS_DEC 4、TRACK_QUAT_DEC 6、ENCODER_DEC 2（小数位）"
+  },
+  "practice.tank.panel_columns_rows": {
+   "value": [
+    3,
+    2
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.truth_pose_rate_hz": {
+   "value": 5.0,
+   "unit": "Hz",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.tank.debris_kinds": {
+   "value": [
+    "D1",
+    "D4"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.sister.runs": {
+   "value": 6,
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.6、§14",
+   "status": "placeholder",
+   "pending": [
+    "P18"
+   ],
+   "visibility": "public"
+  },
+  "practice.sister.max_sim_s": {
+   "value": 1800.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.sister.panel_valves": {
+   "value": 2,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.sister.depth_m": {
+   "value": 48.0,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py SISTER.seabed_depth_m"
+  },
+  "practice.sister.leak_height_m": {
+   "value": 1.2,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P13-1",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "facilities.py SISTER.flange.leak_height"
+  },
+  "practice.sister.handle_torques": {
+   "value": {
+    "BV1": [
+     4.0,
+     6.5
+    ],
+    "PV1": [
+     3.0,
+     5.0
+    ]
+   },
+   "unit": "N·m",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/practice_sites.py SISTER_TORQUES"
+  },
+  "practice.sister.chart_offset_m": {
+   "value": {
+    "offset_xy": [
+     3.1,
+     -2.6
+    ],
+    "heading_err_deg": 8.0
+   },
+   "unit": "m, deg",
+   "grade": "定",
+   "from": [
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "gen/practice_sites.py SISTER_CHART（真实位姿 SISTER_POSE 在原点）"
+  },
+  "practice.concurrent": {
+   "value": 2,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P20-1"
+   ],
+   "ref": "§1.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "practice.wall_per_run_s": {
+   "value": {
+    "tank": 223.0,
+    "sister": 551.0
+   },
+   "unit": "s",
+   "grade": "测·P20",
+   "from": [
+    "G5",
+    "P20-2"
+   ],
+   "ref": "§1.6、§13",
+   "status": "frozen",
+   "pending": [
+    "A05"
+   ],
+   "note": "P20-2 的量法（本机，load 70-110，兄弟超线程忙：偏保守）；换 Filament 后由 A05 重量",
+   "visibility": "public",
+   "public": "instruction.md：一次用满仿真时间的练习约几分钟（取整到分钟）与全部用完约几小时"
+  },
+  "api.public_calls": {
+   "value": [
+    "mission",
+    "clock",
+    "step",
+    "finish",
+    "state",
+    "set_nav_fix",
+    "idle",
+    "set_attitude",
+    "set_velocity",
+    "set_hold",
+    "set_wrench",
+    "camera_frame",
+    "set_camera_tilt",
+    "set_lights",
+    "sonar_scan",
+    "gripper_open",
+    "gripper_close"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "U3",
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "17 个；其它调用答 forbidden 并计数"
+  },
+  "api.mode_names": {
+   "value": {
+    "idle": "idle",
+    "set_attitude": "attitude",
+    "set_velocity": "velocity",
+    "set_hold": "station",
+    "set_wrench": "wrench"
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "U3",
+    "DESIGN"
+   ],
+   "ref": "§1.4、§5",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "agent 可见面只用这些中性名；uwkit 的模式名不得出现在 state()、API 文档、手册里"
+  },
+  "api.modes_need_dvl": {
+   "value": {
+    "idle": false,
+    "attitude": false,
+    "velocity": true,
+    "station": true,
+    "wrench": "only the horizontal axes that are not freed"
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "api.wrench_axes": {
+   "value": "body",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.4、§17-6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "set_wrench 的轴是体轴（frame='world' 时力按世界坐标给）"
+  },
+  "api.camera_sizes": {
+   "value": [
+    [
+     640,
+     480
+    ],
+    [
+     320,
+     240
+    ]
+   ],
+   "unit": "px",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "api.camera_tilt_sign": {
+   "value": "up positive",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "U8"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "api.gripper_states": {
+   "value": [
+    "open",
+    "closed_empty",
+    "stalled_on_object"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "不带对象名"
+  },
+  "api.nav_status": {
+   "value": [
+    "LOCK",
+    "HOLD",
+    "STALE"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "api.step_max_s": {
+   "value": 10.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "public": "vehicle_api.md：一次 step(dt) 的上限",
+   "note": "P24a 收进（shared/DECISIONS_P2_BEH.md 裁决 P21-1；P09 的 cell 常数）：server.STEP_MAX_S 读这个键"
+  },
+  "api.number_max": {
+   "value": 1000000.0,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "public": "vehicle_api.md：调用参数里任何数的绝对值上限，超出答 bad_params",
+   "note": "P24a 收进（shared/DECISIONS_P2_BEH.md 裁决 P21-1；P09 的 cell 常数）：server.NUMBER_MAX 读这个键"
+  },
+  "api.sonar_step_deg": {
+   "value": 0.9,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "public": "vehicle_api.md：声呐探头的机械步距",
+   "note": "P24a 收进（shared/DECISIONS_P2_BEH.md 裁决 P21-1；P09 的 cell 常数）：server.SONAR_STEP_DEG 读这个键；一圈的 ping 数 = 360 / 本值 = 400（派生，不另设键：一个数一个来源）；等于扫描声呐的 1 gradian 步距"
+  },
+  "api.state_resolution": {
+   "value": {
+    "t": 6,
+    "nav_position_m": 4,
+    "nav_velocity_m_s": 4,
+    "nav_since_lock_s": 3,
+    "depth_m": 4,
+    "altitude_m": 3,
+    "dvl_beam_range_m": 3,
+    "quat_wxyz": 7,
+    "heading_rad": 7,
+    "rates_b_rad_s": 5,
+    "velocity_b_m_s": 4,
+    "battery_V": 3,
+    "battery_A": 3,
+    "battery_soc": 5,
+    "wrench_groups": 3,
+    "group_scale": 4,
+    "current_limit_scale": 4,
+    "thrusters": 4,
+    "camera_tilt_deg": 2,
+    "protect_remaining_s": 3
+   },
+   "unit": "decimals",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "public": "vehicle_api.md：state() 各键在线上的小数位",
+   "note": "P24a 收进（shared/DECISIONS_P2_BEH.md 裁决 P21-1；P09 的 cell 常数）：server.STATE_RESOLUTION 读这个键；nav_cov_m2 保留 4 位有效数字（代码里的规则，不是表项）"
+  },
+  "api.error_codes": {
+   "value": [
+    "forbidden",
+    "bad_params",
+    "no_mission",
+    "episode_over",
+    "budget",
+    "sensor_unavailable",
+    "internal_error"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "cell/subseacell/server.py ERROR_CODES（裁决 P21-1 的同一做法：键 = 代码常数，由测试守住）"
+  },
+  "api.practice_calls": {
+   "value": [
+    "reset",
+    "instruments"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§1.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "server.py PRACTICE_METHODS"
+  },
+  "api.privileged_calls": {
+   "value": [
+    "get_state_privileged",
+    "reference_run"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "server.py PRIVILEGED_METHODS"
+  },
+  "firmware.control_period_s": {
+   "value": 0.01,
+   "unit": "s",
+   "grade": "测·G1",
+   "from": [
+    "G1",
+    "K2"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "firmware.integrator_limit_frac": {
+   "value": 0.9,
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.2、§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "积分上限 = 该轴额定能力的 90 %，模式切换时清零"
+  },
+  "firmware.priority": {
+   "value": [
+    "torque",
+    "depth",
+    "horizontal_force"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "J4"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "力矩（含 set_wrench 的力矩前馈）先于深度先于水平力，组内方向不变；这个分组留在本题的固件封装里"
+  },
+  "firmware.degrade.hold_last_s": {
+   "value": 2.0,
+   "unit": "s",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "firmware.degrade.ramp_down_s": {
+   "value": 1.0,
+   "unit": "s",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "firmware.hold_min_standoff_m": {
+   "value": 0.5,
+   "unit": "m",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2",
+    "L14",
+    "M11"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "set_hold 只用于离面板 ≥ 0.5 m 的接近；最后 0.3-0.5 m 没有可靠的 DVL 底锁"
+  },
+  "firmware.lock_debounce_s": {
+   "value": 1.0,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "public": "vehicle_manual.md：DVL 降级——底锁缺口持续这么久才算失锁",
+   "note": "P24a 收进（shared/DECISIONS_P2_BEH.md 裁决 P21-1 / P04-2；P04 的 cell 常数），firmware.FirmwareConfig 经 VALUE_KEYS 读这个键；P24b 的合并 amendment 不必再加"
+  },
+  "manual.dvl_roll_loss_deg": {
+   "value": [
+    36.0,
+    51.0
+   ],
+   "unit": "deg",
+   "grade": "测·G1",
+   "from": [
+    "G1",
+    "K3",
+    "L14",
+    "M11"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "绕夹爪轴约从这个角度起 DVL 失锁，取决于离面板多远；手册只写到 datasheet 级"
+  },
+  "manual.dvl_no_lock_near_panel_m": {
+   "value": 0.3,
+   "unit": "m",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2",
+    "K3",
+    "M11"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "面板前约这个距离以内没有可靠的 DVL 底锁"
+  },
+  "manual.depth_abs_accuracy_pct": {
+   "value": 0.1,
+   "unit": "% of reading",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "manual.ahrs_dynamic_tilt_err_deg": {
+   "value": [
+    1.0,
+    2.0
+   ],
+   "unit": "deg",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "sonar.ping_time_model": {
+   "value": "2R/c + overhead + per_metre * R (uwkit ScanningSonarConfig)",
+   "unit": "-",
+   "grade": "官",
+   "from": [
+    "note:US"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "系数运行时取 uwkit 的 ScanningSonarConfig，不在这里重复"
+  },
+  "grasp.jaw.half_gap_mm": {
+   "value": {
+    "at_tip": 30.3,
+    "slope_per_mm": 0.44
+   },
+   "unit": "mm",
+   "grade": "测·G1/P05",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.4、§14 DG4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "h(s) = at_tip − slope·s，s = 爪尖后的距离；P05 在成品模型上复核为 30.31 / 0.440（build/gripper_outline.json）"
+  },
+  "grasp.jaw.full_open_deg_per_jaw": {
+   "value": 23.75,
+   "unit": "deg",
+   "grade": "测·G0/P05",
+   "from": [
+    "G0",
+    "G1"
+   ],
+   "ref": "§1.4、§14 DG4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "同上：模型上的实测，不在 spec_values 里"
+  },
+  "grasp.jaw.length_mm": {
+   "value": {
+    "pin_to_tip": 70.9,
+    "along_tool_axis": 81.8
+   },
+   "unit": "mm",
+   "grade": "测·P05",
+   "from": [
+    "G0"
+   ],
+   "ref": "§1.4、§14 DG4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "pin_to_tip = 销轴到爪尖（jaw_pin_to_tip_mm），along_tool_axis = 整只爪沿工具轴（jaw_length_mm）；手册用 pin_to_tip（go:jaw_pin_to_tip_mm）"
+  },
+  "grasp.jaw.width_mm": {
+   "value": 16.0,
+   "unit": "mm",
+   "grade": "测·G0/P05",
+   "from": [
+    "G0"
+   ],
+   "ref": "§1.4、§14 DG4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "成品模型 15.7 mm（gripper_outline.json）；手册印整毫米"
+  },
+  "grasp.jaw.stroke_time_s": {
+   "value": 1.572,
+   "unit": "s",
+   "grade": "测·P05",
+   "from": [
+    "G0"
+   ],
+   "ref": "§14 DG4",
+   "status": "frozen",
+   "note": "全行程到 98 %；手册写 1.6 s（官）"
+  },
+  "grasp.paddle.entry_window_mm": {
+   "value": {
+    "a0": 24.3,
+    "slope_per_mm_bite": 0.44
+   },
+   "unit": "mm",
+   "grade": "测·G1",
+   "from": [
+    "G1",
+    "L14",
+    "M11"
+   ],
+   "ref": "§1.4 (a)、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "12 mm 的叶片能进入张开的爪：|dz| ≤ a0 − slope × 咬入（mm）"
+  },
+  "grasp.paddle.lateral_mm": {
+   "value": 60.0,
+   "unit": "mm",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§1.4 (b)、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.paddle.bite_min_mm": {
+   "value": 20.0,
+   "unit": "mm",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§1.4 (c)、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.paddle.bite_max": {
+   "value": "jaw throat (shell collision model)",
+   "unit": "-",
+   "grade": "测·G2",
+   "from": [
+    "G2",
+    "M11"
+   ],
+   "ref": "§1.4 (c)、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "规则里不另写数；316 次成功合爪的咬入中位 53.7 mm、最大 55.7 mm，喉部约 56 mm"
+  },
+  "grasp.paddle.angle_deg": {
+   "value": 15.0,
+   "unit": "deg",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§1.4 (d)、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.paddle.settle_s": {
+   "value": 0.5,
+   "unit": "s",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.4、§14、§17-6",
+   "status": "frozen",
+   "pending": [
+    "P11"
+   ],
+   "visibility": "public",
+   "note": "v1.1 是 0.3 s；0.5 s 只有 20 次对照，P11 复核。五次 smootherstep；滑正期间手柄铰链锁住"
+  },
+  "grasp.slip.lateral_N": {
+   "value": 90.0,
+   "unit": "N",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2",
+    "L14"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.slip.bending_Nm": {
+   "value": 12.0,
+   "unit": "N m",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2",
+    "L14"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.slip.window_s": {
+   "value": 0.2,
+   "unit": "s",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2",
+    "L14"
+   ],
+   "ref": "§1.4、§3.6、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.slip.armed_from": {
+   "value": "settle_end",
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1",
+    "L14"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "grasp.stall.window_s": {
+   "value": 0.1,
+   "unit": "s",
+   "grade": "测·G2",
+   "from": [
+    "G2",
+    "M11"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen"
+  },
+  "grasp.stall.jaw_angle_change_rad": {
+   "value": 0.002,
+   "unit": "rad",
+   "grade": "测·G2",
+   "from": [
+    "G2",
+    "M11"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen"
+  },
+  "grasp.eye.capture_radius_mm": {
+   "value": 35.0,
+   "unit": "mm",
+   "grade": "测·P02/P05",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gripper_close 完成时 TCP 离环心 ≤ 此值就激活球铰（connect），每次激活记一条夹持事件"
+  },
+  "grasp.eye.inner_diameter_mm": {
+   "value": 80.0,
+   "unit": "mm",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§2.3.3",
+   "status": "placeholder",
+   "pending": [
+    "P02"
+   ],
+   "visibility": "public"
+  },
+  "grasp.close_push_N": {
+   "value": 15.0,
+   "unit": "N",
+   "grade": "测·G2",
+   "from": [
+    "G2"
+   ],
+   "ref": "§1.4、§2.3.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "合爪期间沿夹爪轴推（操作指引）"
+  },
+  "protect.collision.force_N": {
+   "value": 150.0,
+   "unit": "N",
+   "grade": "占",
+   "from": [
+    "DESIGN",
+    "G1",
+    "G6"
+   ],
+   "ref": "§1.4、§14",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.collision.impulse_Ns": {
+   "value": 12.0,
+   "unit": "N s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§14",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.collision.impulse_window_s": {
+   "value": 0.1,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.collision.stop_s": {
+   "value": 2.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.collision.hold_s": {
+   "value": 8.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.out_of_bounds.horizontal_m": {
+   "value": 60.0,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§14",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.out_of_bounds.altitude_m": {
+   "value": 15.0,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§14",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.out_of_bounds.persist_s": {
+   "value": 10.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.undervoltage.V": {
+   "value": 12.0,
+   "unit": "V",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§14",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "protect.undervoltage.persist_s": {
+   "value": 5.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4",
+   "status": "placeholder",
+   "pending": [
+    "P04"
+   ],
+   "visibility": "public"
+  },
+  "site.depth_m": {
+   "value": [
+    45.0,
+    75.0
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P12-3"
+   ],
+   "ref": "§0、§14 DG12",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "site.chart_offset_m": {
+   "value": [
+    2.0,
+    8.0
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P12-3"
+   ],
+   "ref": "§1.3、§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "site.chart_heading_err_deg": {
+   "value": 15.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "DESIGN",
+    "P12-3"
+   ],
+   "ref": "§1.3、§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "site.chart_far_threshold_m": {
+   "value": 4.0,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.5",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "属性表「海图偏差 ≥ 4 m」"
+  },
+  "site.origin_box_half_m": {
+   "value": 100.0,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P12-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "gen/sitegen/build.py ORIGIN_HALF_M"
+  },
+  "site.battery_soc0": {
+   "value": 0.9,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§2.1",
+   "status": "frozen",
+   "note": "gen/sitegen/build.py BATTERY_SOC0 = gen/practice_sites.py BATTERY_SOC0"
+  },
+  "manifold.slots": {
+   "value": 6,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§0、§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "2 × 3 排列"
+  },
+  "manifold.slot_grid": {
+   "value": [
+    3,
+    2
+   ],
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "A01",
+    "A02"
+   ],
+   "visibility": "public"
+  },
+  "manifold.slot_spacing_m": {
+   "value": 4.0,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "A01",
+    "A02"
+   ],
+   "visibility": "public",
+   "note": "替身；买到资产后量。≥ 5 m 时属性表重算，< 2.4 m 时标记区改条带"
+  },
+  "manifold.roof_height_m": {
+   "value": 3.4,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "A01",
+    "A02"
+   ],
+   "visibility": "public",
+   "note": "顶板防护格栅离泥垫的高度"
+  },
+  "manifold.frame_m": {
+   "value": [
+    12.0,
+    8.0
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "A01",
+    "A02"
+   ],
+   "visibility": "public"
+  },
+  "manifold.mudmat_m": {
+   "value": [
+    13.0,
+    9.0,
+    0.3
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "A01",
+    "A02"
+   ],
+   "visibility": "public"
+  },
+  "marker_zone.radius_factor": {
+   "value": 0.375,
+   "unit": "x slot spacing",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.4、§3.6",
+   "status": "placeholder",
+   "pending": [
+    "A02"
+   ],
+   "visibility": "public",
+   "note": "间距 4 m 时半径 1.5 m，区不重叠且留 25 % 间隙"
+  },
+  "laydown.size_m": {
+   "value": [
+    3.0,
+    2.0
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P02",
+    "P16"
+   ],
+   "visibility": "public"
+  },
+  "laydown.near_edge_from_panel_m": {
+   "value": 2.5,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P02",
+    "P16"
+   ],
+   "visibility": "public"
+  },
+  "cage.reflector_spacing_m": {
+   "value": 1.2,
+   "unit": "m",
+   "grade": "测·P07",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "cage.inner_m": {
+   "value": [
+    1.4,
+    1.4,
+    1.2
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "note": "cell/subseacell/objects.py CAGE.inner"
+  },
+  "cage.deck_top_m": {
+   "value": 0.15,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "objects.py CAGE.deck_top"
+  },
+  "cage.pocket_m": {
+   "value": {
+    "x": [
+     -0.04,
+     0.25
+    ],
+    "y": [
+     -0.14,
+     0.1
+    ],
+    "depth": 0.1
+   },
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "note": "objects.py CAGE.pocket"
+  },
+  "cage.pad": {
+   "value": {
+    "friction": 1.0,
+    "solref_s": 0.05
+   },
+   "unit": "-, s",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1、§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "objects.py CAGE.pad（friction[0]、solref[0]）"
+  },
+  "cage.code_id": {
+   "value": 26,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "objects.py CAGE.tag.code_index = gen/sitegen/panel.py CODE_ID_CAGE（面板标准的码号分配）"
+  },
+  "cage.reflector_m": {
+   "value": {
+    "diameter": 0.1,
+    "height": 2.0,
+    "out_of_entrance": 0.1
+   },
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "note": "objects.py CAGE.pole（radius × 2、height、out）；间距见 cage.reflector_spacing_m"
+  },
+  "cage.range_m": {
+   "value": [
+    22.0,
+    28.0
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P12-3"
+   ],
+   "ref": "§2.1、§2.5",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "gen/sitegen/build.py CAGE_RANGE_M"
+  },
+  "cage.bearing_half_deg": {
+   "value": 50.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "P12-3"
+   ],
+   "ref": "§2.1、§2.5",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "gen/sitegen/build.py CAGE_BEARING_DEG"
+  },
+  "panel.columns": {
+   "value": 6,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.rows": {
+   "value": [
+    "BV",
+    "PV",
+    "TV"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.pitch_m": {
+   "value": 0.6,
+   "unit": "m",
+   "grade": "测·G1/G2/G6",
+   "from": [
+    "G0",
+    "G1",
+    "G2",
+    "G6"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "行距 = 列距"
+  },
+  "panel.row_heights_m": {
+   "value": [
+    1.5,
+    2.1,
+    2.7
+   ],
+   "unit": "m",
+   "grade": "测·G1/G2/G6",
+   "from": [
+    "G1",
+    "G2",
+    "G6"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "阀杆离泥垫的高度"
+  },
+  "panel.port_row_height_m": {
+   "value": 0.55,
+   "unit": "m",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "estimate",
+   "pending": [
+    "P02",
+    "P16"
+   ],
+   "visibility": "public",
+   "note": "只有几何核算；§2.3.3 退路 (3) 会把它降到 0.40 m"
+  },
+  "panel.ports": {
+   "value": [
+    "PARK-A",
+    "TP-1",
+    "TP-2",
+    "TP-3",
+    "TP-4",
+    "TP-5",
+    "TP-6",
+    "PARK-B"
+   ],
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1、§2.3.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "间距 = panel.pitch_m，TP-i 在第 i 列正下方"
+  },
+  "panel.rail.diameter_m": {
+   "value": 0.06,
+   "unit": "m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.rail.centre_height_m": {
+   "value": 1.0,
+   "unit": "m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.rail.standoff_m": {
+   "value": 0.3,
+   "unit": "m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "离面板面；挪到 0.40 m 不解决 DVL 丢锁"
+  },
+  "panel.skid_size_m": {
+   "value": [
+    5.1,
+    3.2
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1",
+   "status": "placeholder",
+   "pending": [
+    "P05"
+   ],
+   "visibility": "public"
+  },
+  "panel.protrusion_max_m": {
+   "value": 0.1,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1",
+   "status": "placeholder",
+   "pending": [
+    "P05"
+   ],
+   "visibility": "public"
+  },
+  "panel.row_orders": {
+   "value": [
+    [
+     "B",
+     "P",
+     "T"
+    ],
+    [
+     "T",
+     "P",
+     "B"
+    ],
+    [
+     "B",
+     "T",
+     "P"
+    ]
+   ],
+   "unit": "-",
+   "grade": "测·G6",
+   "from": [
+    "G6"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "as-built 自下而上；第一种 = 图纸；列序正 / 反"
+  },
+  "panel.tag.size_mm": {
+   "value": [
+    424.0,
+    200.0
+   ],
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2、§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.tag.centre_above_stem_m": {
+   "value": 0.22,
+   "unit": "m",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2、§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.tag.position_tol_mm": {
+   "value": 5.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "panel.tag.fouled_max": {
+   "value": 4,
+   "unit": "-",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "≤ 4 块位号牌的码被附着物盖住（漆字完好）"
+  },
+  "panel.tag.fouling_margin_mm": {
+   "value": 6.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§2.1",
+   "status": "frozen"
+  },
+  "code.data_cells": {
+   "value": 6,
+   "unit": "cells",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "6 × 6 数据格"
+  },
+  "code.cell_mm": {
+   "value": 20.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4",
+    "U7"
+   ],
+   "ref": "§1.2、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "code.border_cells": {
+   "value": 1,
+   "unit": "cells",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "code.outer_mm": {
+   "value": 160.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4",
+    "U7"
+   ],
+   "ref": "§1.2、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "code.quiet_zone_mm": {
+   "value": 20.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "code.codewords": {
+   "value": 48,
+   "unit": "-",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§1.2、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "code.min_hamming": {
+   "value": 12,
+   "unit": "bits",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§0-8、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "任意旋转之间"
+  },
+  "code.decode_max_correction_bits": {
+   "value": 2,
+   "unit": "bits",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§2.4",
+   "status": "frozen",
+   "note": "固定读数器的纠错上限"
+  },
+  "code.text_height_mm": {
+   "value": 80.0,
+   "unit": "mm",
+   "grade": "测·G4",
+   "from": [
+    "G4",
+    "U7"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "handle.paddle_mm": {
+   "value": [
+    160.0,
+    60.0,
+    12.0
+   ],
+   "unit": "mm",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.2、§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "handle.stem_standoff_m": {
+   "value": 0.15,
+   "unit": "m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§1.2、§2.3.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "面板面到叶片中心"
+  },
+  "handle.grip_engagement_nominal_m": {
+   "value": 0.04,
+   "unit": "m",
+   "grade": "测·G1",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§0、§2.3.1",
+   "status": "frozen",
+   "note": "面板几何核算用的名义咬入",
+   "visibility": "public"
+  },
+  "valve.convention": {
+   "value": {
+    "open": "paddle horizontal",
+    "closed": "paddle vertical",
+    "close_direction": "clockwise facing the panel"
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "J1",
+    "R3"
+   ],
+   "ref": "§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "valve.stops_deg": {
+   "value": [
+    0.0,
+    90.0
+   ],
+   "unit": "deg",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "valve.closed_min_deg": {
+   "value": 80.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1、§3.2、§3.6",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "工艺上 < 80° 即导通"
+  },
+  "valve.open_max_deg": {
+   "value": 10.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1、§3.2、§3.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "valve.torque.running_Nm": {
+   "value": [
+    2.0,
+    5.0
+   ],
+   "unit": "N m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.1、§14",
+   "status": "frozen",
+   "visibility": "public_range",
+   "public": {
+    "value": "class upper limit only",
+    "where": "field/panel_standard.md"
+   }
+  },
+  "valve.torque.breakaway_Nm": {
+   "value": [
+    3.0,
+    8.0
+   ],
+   "unit": "N m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.1、§14",
+   "status": "frozen",
+   "visibility": "public_range",
+   "public": {
+    "value": "class upper limit only",
+    "where": "field/panel_standard.md"
+   }
+  },
+  "valve.torque.detent_Nm": {
+   "value": 1.5,
+   "unit": "N m",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.1、§2.3.1、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "valve.detent_zone_deg": {
+   "value": 10.0,
+   "unit": "deg",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "valve.breakaway_rearm": {
+   "value": {
+    "within_deg": 0.5,
+    "rest_s": 0.05
+   },
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.1",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "process.p0_bar": {
+   "value": [
+    30.0,
+    60.0
+   ],
+   "unit": "bar",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "hidden"
+  },
+  "process.tau_s": {
+   "value": [
+    40.0,
+    90.0
+   ],
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "hidden"
+  },
+  "process.update_hz": {
+   "value": 10.0,
+   "unit": "Hz",
+   "grade": "测·G6",
+   "from": [
+    "G6"
+   ],
+   "ref": "§2.3.5、§2.3.6",
+   "status": "frozen"
+  },
+  "process.graph": {
+   "value": {
+    "valves": 18,
+    "nodes": 14
+   },
+   "unit": "-",
+   "grade": "测·G6",
+   "from": [
+    "G6"
+   ],
+   "ref": "§2.3.5",
+   "status": "frozen"
+  },
+  "process.all_branches_have_open_valve": {
+   "value": true,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "J2"
+   ],
+   "ref": "§2.1、§3.4",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "六条支路都是泄漏候选（硬条件）"
+  },
+  "process.stale_entries": {
+   "value": [
+    0,
+    2
+   ],
+   "unit": "-",
+   "grade": "测·G6",
+   "from": [
+    "G6"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "leak.source_lateral_max_m": {
+   "value": 0.6,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ]
+  },
+  "leak.source_height_m": {
+   "value": [
+    1.0,
+    1.6
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "public"
+  },
+  "leak.bubble_mm": {
+   "value": [
+    3.0,
+    8.0
+   ],
+   "unit": "mm",
+   "grade": "文",
+   "from": [
+    "note:R8",
+    "M14"
+   ],
+   "ref": "§2.1、§2.3.5",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "leak.flow_max_L_min": {
+   "value": 3.0,
+   "unit": "L/min",
+   "grade": "文",
+   "from": [
+    "note:R8",
+    "M14"
+   ],
+   "ref": "§2.1、§2.3.5",
+   "status": "frozen"
+  },
+  "tide.peak_m_s": {
+   "value": [
+    0.8,
+    1.6
+   ],
+   "unit": "m/s",
+   "grade": "占",
+   "from": [
+    "note:PA",
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "public",
+   "note": "离底 2 m 处主轴峰值"
+  },
+  "tide.slack_time_s": {
+   "value": [
+    -600.0,
+    3000.0
+   ],
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "note:PA"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "hidden",
+   "public": {
+    "value": "forecast slack time ±10 min",
+    "where": "mission()"
+   },
+   "note": "平潮时刻在开工后 −10 到 +50 min"
+  },
+  "tide.minor_ratio": {
+   "value": [
+    0.03,
+    0.12
+   ],
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "note:PA"
+   ],
+   "ref": "§2.1",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "hidden"
+  },
+  "tide.period_h": {
+   "value": 12.42,
+   "unit": "h",
+   "grade": "文",
+   "from": [
+    "note:PA"
+   ],
+   "ref": "附录",
+   "status": "frozen",
+   "note": "M2 分潮",
+   "visibility": "public"
+  },
+  "tide.ref_height_m": {
+   "value": 2.0,
+   "unit": "m",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "流速按离底 2 m 给出"
+  },
+  "tide.profile_power": {
+   "value": [
+    1,
+    7
+   ],
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "1/7 次幂；2 m 以上继续按 1/7 增长"
+  },
+  "tide.delta_m": {
+   "value": 20.0,
+   "unit": "m",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "tide.forecast_slack_err_min": {
+   "value": 10.0,
+   "unit": "min",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.2、§1.3",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "tide.forecast_direction_err_deg": {
+   "value": 20.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "tide.forecast_rate_classes": {
+   "value": {
+    "classes": [
+     "neap",
+     "mean",
+     "spring"
+    ],
+    "rule": "tide.peak_m_s split in thirds by the drawn peak speed"
+   },
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.2、§1.3",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "gen/sitegen/build.py RATE_CLASSES 与 rc = RATE_CLASSES[min(2, int((U2 − lo) / ((hi − lo) / 3)))]"
+  },
+  "gust.sigma_frac": {
+   "value": [
+    0.1,
+    0.2
+   ],
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "L15",
+    "G1",
+    "G2"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P11"
+   ],
+   "visibility": "public_range",
+   "public": {
+    "value": [
+     0.1,
+     0.2
+    ],
+    "where": "field/metocean_summary.md"
+   },
+   "note": "σ = frac·|v| + offset；0.15 已测，0.20 由 P11 复核"
+  },
+  "gust.sigma_offset_m_s": {
+   "value": 0.015,
+   "unit": "m/s",
+   "grade": "占",
+   "from": [
+    "L15",
+    "G3"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P11"
+   ],
+   "visibility": "hidden"
+  },
+  "gust.tau_s": {
+   "value": [
+    5.0,
+    15.0
+   ],
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "L15",
+    "G3"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P11"
+   ],
+   "visibility": "hidden"
+  },
+  "gust.vertical_sigma_frac": {
+   "value": 0.25,
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "gust.vertical_tau_frac": {
+   "value": 0.5,
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "gust.tested_sigma_frac": {
+   "value": 0.15,
+   "unit": "-",
+   "grade": "测·G1/G2",
+   "from": [
+    "G1",
+    "G2"
+   ],
+   "ref": "§2.1、§14",
+   "status": "frozen"
+  },
+  "flow.inside_factor": {
+   "value": [
+    0.4,
+    0.7
+   ],
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§14",
+   "status": "placeholder",
+   "pending": [
+    "P12"
+   ],
+   "visibility": "hidden"
+  },
+  "flow.inside_transition_m": {
+   "value": 0.3,
+   "unit": "m",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "flow.band_m_s": {
+   "value": {
+    "weak": [
+     0.0,
+     0.15
+    ],
+    "mid": [
+     0.15,
+     0.3
+    ],
+    "strong": [
+     0.3,
+     0.4
+    ]
+   },
+   "unit": "m/s",
+   "grade": "占",
+   "from": [
+    "N6",
+    "M11",
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.1、§2.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P12",
+    "P16"
+   ],
+   "visibility": "hidden",
+   "note": "标记时段、离底 2 m；v1.1 的强流档到 0.45"
+  },
+  "flow.band_times_s": {
+   "value": [
+    150.0,
+    240.0,
+    330.0,
+    420.0
+   ],
+   "unit": "s",
+   "grade": "测·G6",
+   "from": [
+    "G6"
+   ],
+   "ref": "§2.1、§2.5",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "contact_window.limit_m_s": {
+   "value": 0.3,
+   "unit": "m/s",
+   "grade": "测·G1/G2",
+   "from": [
+    "M11",
+    "N6",
+    "G1",
+    "G2"
+   ],
+   "ref": "§0-2、§2.1、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "面板处接触作业的流速上限（取代 L14 的 0.35）"
+  },
+  "contact_window.height": {
+   "value": "mudmat thickness + top valve row stem height",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "M11"
+   ],
+   "ref": "§2.1、附录",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "面板最高一行阀杆高度处的平均流速；数值由 margins 从 manifold.mudmat_m 与 panel.row_heights_m 导出"
+  },
+  "contact_window.open_by_s": {
+   "value": 780.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "M11",
+    "N6"
+   ],
+   "ref": "§2.1、§2.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P12",
+    "P16"
+   ],
+   "visibility": "hidden"
+  },
+  "contact_window.hold_until_s": {
+   "value": 2100.0,
+   "unit": "s",
+   "grade": "占",
+   "from": [
+    "M11",
+    "N6"
+   ],
+   "ref": "§2.1、§2.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P12",
+    "P16"
+   ],
+   "visibility": "hidden"
+  },
+  "water.c550_per_m": {
+   "value": [
+    0.4,
+    1.2
+   ],
+   "unit": "1/m",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public_range",
+   "public": {
+    "value": [
+     0.0,
+     1.2
+    ],
+    "where": "field/metocean_summary.md"
+   },
+   "note": "uwkit clear 到 coastal 之间用 scaled_particles 连续取"
+  },
+  "water.band_c550_per_m": {
+   "value": {
+    "clear": [
+     0.4,
+     0.55
+    ],
+    "mid": [
+     0.65,
+     0.9
+    ],
+    "murky": [
+     0.95,
+     1.2
+    ]
+   },
+   "unit": "1/m",
+   "grade": "测·G3",
+   "from": [
+    "G3",
+    "G6"
+   ],
+   "ref": "§2.5、§3.8",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "属性表的水体档（proto/g6_sketch/cells.py）"
+  },
+  "water.ambient_light": {
+   "value": 0.0,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "夜间窗口"
+  },
+  "plume.rise_m_s": {
+   "value": [
+    0.2,
+    0.28
+   ],
+   "unit": "m/s",
+   "grade": "文",
+   "from": [
+    "note:R8",
+    "M14",
+    "L16",
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "frozen",
+   "visibility": "public_range",
+   "public": {
+    "value": [
+     0.15,
+     0.35
+    ],
+    "where": "field/leak_detection_note.md"
+   },
+   "note": "G3 在 0.20-0.30 上通过"
+  },
+  "plume.rise_spread_frac": {
+   "value": 0.15,
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.emission_per_s": {
+   "value": [
+    100.0,
+    300.0
+   ],
+   "unit": "particles/s",
+   "grade": "测·G3",
+   "from": [
+    "G3",
+    "note:R8"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "没有对实测标定；相当于 3-6 mm 气泡 0.5-2.9 L/min"
+  },
+  "plume.particle_ts_dB": {
+   "value": -55.0,
+   "unit": "dB",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.diffusivity_m2_s": {
+   "value": 0.01,
+   "unit": "m2/s",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.cull_height_m": {
+   "value": 12.0,
+   "unit": "m",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.step_hz": {
+   "value": 10.0,
+   "unit": "Hz",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.checkpoint_steps": {
+   "value": 100,
+   "unit": "steps",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "plume.camera_dot_mm": {
+   "value": [
+    2.0,
+    6.0
+   ],
+   "unit": "mm",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.sv0_dB": {
+   "value": -64.0,
+   "unit": "dB",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden",
+   "note": "+ 10 lg(颗粒负荷)：c 0.42 时 −64，c 1.2 时 −59"
+  },
+  "sonar_clutter.near_bottom_dB": {
+   "value": 6.0,
+   "unit": "dB",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.efold_height_m": {
+   "value": 3.0,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.blobs": {
+   "value": [
+    1,
+    3
+   ],
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden",
+   "note": "清水可为 0"
+  },
+  "sonar_clutter.blob_diameter_m": {
+   "value": [
+    0.2,
+    0.5
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.blob_ts_dB": {
+   "value": [
+    -38.0,
+    -28.0
+   ],
+   "unit": "dB",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5、§14",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.blob_height_above_roof_m": {
+   "value": [
+    0.8,
+    7.0
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "sonar_clutter.domain_m": {
+   "value": 30.0,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.3.5",
+   "status": "placeholder",
+   "pending": [
+    "P06"
+   ],
+   "visibility": "hidden"
+  },
+  "debris.form": {
+   "value": "self-standing open tubular stand",
+   "unit": "-",
+   "grade": "测·P02",
+   "from": [
+    "M13",
+    "N6"
+   ],
+   "ref": "§2.3.3、§14、§17-1",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "底圈与顶圈 1.00 × 0.50 m（中心线）、四条立腿、顶圈中间一根横管，总高 0.65 m，全部开敞钢圆管（P02 §6）"
+  },
+  "debris.stand.skid_m": {
+   "value": [
+    1.0,
+    0.5
+   ],
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "M13",
+    "N6"
+   ],
+   "ref": "§2.3.3",
+   "status": "placeholder",
+   "pending": [
+    "P02"
+   ],
+   "visibility": "public"
+  },
+  "debris.stand.height_m": {
+   "value": 0.65,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "M13",
+    "N6"
+   ],
+   "ref": "§2.3.3",
+   "status": "placeholder",
+   "pending": [
+    "P02"
+   ],
+   "visibility": "public"
+  },
+  "debris.stand.tube_length_m": {
+   "value": 9.05,
+   "unit": "m",
+   "grade": "测·P02",
+   "from": [
+    "M13",
+    "P02-1"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "frozen"
+  },
+  "debris.stand.leg_m": {
+   "value": {
+    "n": 4,
+    "length": 0.64
+   },
+   "unit": "m",
+   "grade": "测·P02",
+   "from": [
+    "M13",
+    "P02-1"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "frozen"
+  },
+  "debris.stand.top_cross_tubes": {
+   "value": 1,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "P02-2"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "objects.FrameSpec 的 top_cross 杆件；长度 = 顶圈宽 debris.stand.skid_m[1]"
+  },
+  "debris.register": {
+   "value": {
+    "D1": {
+     "material": "steel",
+     "od_mm": 12.0,
+     "wall_mm": 1.2,
+     "sealed": false
+    },
+    "D2": {
+     "material": "steel",
+     "od_mm": 13.5,
+     "wall_mm": 1.6,
+     "sealed": false
+    },
+    "D3": {
+     "material": "steel",
+     "od_mm": 13.5,
+     "wall_mm": 2.3,
+     "sealed": true
+    },
+    "D4": {
+     "material": "steel",
+     "od_mm": 13.5,
+     "wall_mm": 2.3,
+     "sealed": false
+    }
+   },
+   "unit": "-",
+   "grade": "测·P02",
+   "from": [
+    "M13",
+    "N6",
+    "P02-1"
+   ],
+   "ref": "§2.3.3、§14",
+   "status": "frozen",
+   "visibility": "public_range",
+   "public": {
+    "value": "material, tube diameter, wall thickness as nominal ±10 %, mass in air to 10 g, may be flooded (D3 / D4: the same tube, sealed / flooded, not told apart)",
+    "where": "field/dropped_object_register.md"
+   },
+   "note": "sealed = 两端封口（不灌水）；种类与湿重不告知；= cell/subseacell/objects.py REGISTER（湿重由 FrameSpec 算：24.7 / 36.2 / 43.3 / 49.0 N）"
+  },
+  "debris.liftable_kinds": {
+   "value": [
+    "D1",
+    "D2"
+   ],
+   "unit": "-",
+   "grade": "测·P02/P16",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.3、§2.5",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "可整件提的（D2 取决于电压）；D3、D4 只能拖"
+  },
+  "debris.density_kg_m3": {
+   "value": {
+    "steel": 7850.0,
+    "aluminium": 2700.0,
+    "water": 1025.0
+   },
+   "unit": "kg/m3",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ],
+   "note": "登记表算术用的密度（海水取 1025）"
+  },
+  "debris.eye.drag_centre_height_m": {
+   "value": 0.22,
+   "unit": "m",
+   "grade": "测·P02",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "debris.eye.drag_out_m": {
+   "value": 0.08,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P02-2"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "objects.FRAME_DEFAULTS eye_drag_out"
+  },
+  "debris.eye.lift_position": {
+   "value": "midpoint of the top cross tube; ring centre debris.eye.lift_above_tube_m above the tube's centreline",
+   "unit": "-",
+   "grade": "测·P02",
+   "from": [
+    "M13",
+    "P02-2",
+    "P13-2"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "debris.eye.lift_above_tube_m": {
+   "value": 0.2,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P02-2"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "objects.FRAME_DEFAULTS eye_lift_up"
+  },
+  "debris.pose.yaw_max_deg": {
+   "value": 20.0,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "debris.pose.inner_skid_from_panel_m": {
+   "value": [
+    0.2,
+    0.3
+   ],
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "M13",
+    "P02-3"
+   ],
+   "ref": "§2.3.3",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "P02-3 起读作「最近的管面离面板面」（不再是内侧滑橇）；另有：离任何结构 ≥ 10 mm、护栏腿不在外形内、被挡的口由通道扫掠算出（generator.debris）"
+  },
+  "debris.still.cg_shift_max_mm": {
+   "value": 5.0,
+   "unit": "mm",
+   "grade": "定",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.3、§14",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "debris.still.tilt_max_deg": {
+   "value": 0.5,
+   "unit": "deg",
+   "grade": "定",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.3、§14",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "debris.contact": {
+   "value": {
+    "solref": [
+     0.004,
+     1.0
+    ],
+    "solimp": [
+     0.999,
+     0.9999,
+     0.001
+    ],
+    "condim": 6,
+    "rolling_friction_m": 0.002
+   },
+   "unit": "MuJoCo",
+   "grade": "测·G6",
+   "from": [
+    "G6",
+    "M13",
+    "K2"
+   ],
+   "ref": "§2.3.3、§14",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "grader 一侧的世界规则，不公开数值"
+  },
+  "debris.estimate.cd": {
+   "value": 1.2,
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "附录",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ]
+  },
+  "debris.estimate.mu": {
+   "value": 0.8,
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ]
+  },
+  "debris.estimate.mu_drag_range": {
+   "value": [
+    0.5,
+    0.8
+   ],
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ]
+  },
+  "debris.estimate.overturn_arm_m": {
+   "value": 0.33,
+   "unit": "m",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ],
+   "note": "阻力作用点的高度（约半高）"
+  },
+  "debris.estimate.gust_sigmas": {
+   "value": 2.0,
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3、附录",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ],
+   "note": "阵流 = 均值 + 2σ，σ 取 gust.sigma_frac 的上端"
+  },
+  "debris.pull_out_before_lift_m": {
+   "value": 0.4,
+   "unit": "m",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.3",
+   "status": "estimate",
+   "pending": [
+    "P02"
+   ]
+  },
+  "marker.mass_kg": {
+   "value": 0.9,
+   "unit": "kg",
+   "grade": "测·P05",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "marker.wet_N": {
+   "value": 6.0,
+   "unit": "N",
+   "grade": "测·P05",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "marker.block_mm": {
+   "value": [
+    120.0,
+    120.0,
+    30.0
+   ],
+   "unit": "mm",
+   "grade": "测·P05",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.4、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "marker.view_limits": {
+   "value": {
+    "camera_tilt_down_deg": 45.0,
+    "frame_fraction_max": 0.12,
+    "centre_keepout_deg": 15.0
+   },
+   "unit": "-",
+   "grade": "测·P05",
+   "from": [
+    "M13"
+   ],
+   "ref": "§2.3.4",
+   "status": "frozen"
+  },
+  "marker.estimate": {
+   "value": {
+    "cd": 1.0,
+    "plan_area_m2": 0.0144,
+    "side_area_m2": 0.0072,
+    "mu": 0.5,
+    "fall_m": 0.5,
+    "flow_m_s": 0.3,
+    "roof_flow_m_s": 0.5
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.4",
+   "status": "estimate",
+   "pending": [
+    "P07"
+   ],
+   "note": "v1.0 的算术沿用（side_area = 0.12 × 0.06 m 是旧块体的侧面积；v1.2 的扁块没有重算）"
+  },
+  "stab.wet_N": {
+   "value": 3.0,
+   "unit": "N",
+   "grade": "测·P07",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.cone_diameter_mm": {
+   "value": 90.0,
+   "unit": "mm",
+   "grade": "测·P07",
+   "from": [
+    "note:R5"
+   ],
+   "ref": "§2.3.2、§3.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.tip_diameter_mm": {
+   "value": 40.0,
+   "unit": "mm",
+   "grade": "测·P07",
+   "from": [
+    "note:R5"
+   ],
+   "ref": "§3.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.align_max_rad": {
+   "value": 0.15,
+   "unit": "rad",
+   "grade": "测·P07",
+   "from": [
+    "note:R5"
+   ],
+   "ref": "§2.3.2、§3.6",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.insert_depth_mm": {
+   "value": 120.0,
+   "unit": "mm",
+   "grade": "测·P07",
+   "from": [
+    "note:R5"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.lock_hold_s": {
+   "value": 0.2,
+   "unit": "s",
+   "grade": "测·P07",
+   "from": [
+    "note:R5"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.mate_force_N": {
+   "value": {
+    "base": 15.0,
+    "per_bar": 2.5
+   },
+   "unit": "N, N/bar",
+   "grade": "测·P07",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.2、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "F_mate = base + per_bar × 泄漏段压力；停放口恒为 base"
+  },
+  "stab.extract_N": {
+   "value": 35.0,
+   "unit": "N",
+   "grade": "测·P07",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.2、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.side_load_max_N": {
+   "value": 60.0,
+   "unit": "N",
+   "grade": "测·P07",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§1.4、§14",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "Joined 期间侧向超过此值退回 Free"
+  },
+  "stab.seal_stroke_m": {
+   "value": 0.02,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-1"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "stab.py DEFAULTS seal_stroke_m；顶出力的系数 = stab.mate_force_N.per_bar"
+  },
+  "stab.seal_ramp_m": {
+   "value": 0.002,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-1"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "stab.py DEFAULTS seal_ramp_m"
+  },
+  "stab.depth_tol_m": {
+   "value": 0.001,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-1"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "stab.py DEFAULTS depth_tol_m"
+  },
+  "stab.extract_hold_s": {
+   "value": 0.2,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "P07-2"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "stab.py DEFAULTS extract_hold_s"
+  },
+  "stab.side_hold_s": {
+   "value": 0.2,
+   "unit": "s",
+   "grade": "定",
+   "from": [
+    "P07-2"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "stab.py DEFAULTS side_hold_s；侧向脱出后 stab 尖离开口外才能重新 Joined"
+  },
+  "stab.handle_from_tip_m": {
+   "value": 0.28,
+   "unit": "m",
+   "grade": "定",
+   "from": [
+    "P07-1"
+   ],
+   "ref": "§2.3.2",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "stab.py STAB.paddle.centre_x = −0.280"
+  },
+  "stab.initial_port": {
+   "value": "PARK-A",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.1",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "stab.depressurised_bar": {
+   "value": 10.0,
+   "unit": "bar",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.2 H8",
+   "status": "estimate",
+   "pending": [
+    "P16"
+   ],
+   "note": "算例：隔离后降到 10 bar 再插"
+  },
+  "world_rules.timestep_s": {
+   "value": 0.002,
+   "unit": "s",
+   "grade": "测·G1",
+   "from": [
+    "K2",
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.integrator": {
+   "value": "implicitfast",
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.cone": {
+   "value": "elliptic",
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.impratio": {
+   "value": 10.0,
+   "unit": "-",
+   "grade": "测·G1",
+   "from": [
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.friction_time_const_dt": {
+   "value": 2.0,
+   "unit": "x dt",
+   "grade": "测·G1",
+   "from": [
+    "K2",
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.stop_time_const_dt": {
+   "value": 4.0,
+   "unit": "x dt",
+   "grade": "测·G1",
+   "from": [
+    "K2",
+    "G1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "world_rules.friction_impedance": {
+   "value": [
+    0.9999,
+    0.9999,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "unit": "MuJoCo solimp",
+   "grade": "定",
+   "from": [
+    "P05-1",
+    "K2"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "cell/subseacell/devices.py DEFAULTS friction_solimp"
+  },
+  "world_rules.debris_sleep": {
+   "value": {
+    "margin_m": 0.25,
+    "hysteresis_m": 0.25,
+    "rest_s": 10.0,
+    "v_rest_m_s": 0.001,
+    "w_rest_rad_s": 0.02,
+    "latched_stab_counts": false
+   },
+   "unit": "m, s, m/s, rad/s",
+   "grade": "定",
+   "from": [
+    "P08-1"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "cell/subseacell/world.py DebrisSleep 的缺省参数与 stab_static()（P24a）"
+  },
+  "world_rules.valve_world_collision": {
+   "value": "excluded (physics-neutral)",
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "cell/subseacell/world.py：spec.add_exclude(bodyname1='world', bodyname2=<阀体>)"
+  },
+  "world_rules.stab_slider": {
+   "value": {
+    "mass_kg": 0.5,
+    "damping_N_s_m": 200.0
+   },
+   "unit": "kg, N·s/m",
+   "grade": "定",
+   "from": [
+    "P07-1"
+   ],
+   "ref": "§2.3.2、§2.3.6",
+   "status": "frozen",
+   "visibility": "hidden",
+   "note": "stab.py DEFAULTS slider_mass_kg、slider_damping"
+  },
+  "score.imaged.slant_max_m": {
+   "value": 1.3,
+   "unit": "m",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2、§3.6、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.cell_min_px": {
+   "value": 4.0,
+   "unit": "px",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2、§3.6、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.angle_max_deg": {
+   "value": 60.0,
+   "unit": "deg",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2、§3.6、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.edge_margin_px": {
+   "value": 20.0,
+   "unit": "px",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2、§3.6、§14",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.samples": {
+   "value": {
+    "grid": [
+     5,
+     5
+    ],
+    "unoccluded_min": 20
+   },
+   "unit": "-",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.light_level_min": {
+   "value": 0.3,
+   "unit": "-",
+   "grade": "测·G4",
+   "from": [
+    "G4"
+   ],
+   "ref": "§3.2",
+   "status": "frozen",
+   "visibility": "public"
+  },
+  "score.imaged.light_cone": {
+   "value": "half of the light's full beam angle (digest sensor_specs, U5)",
+   "unit": "-",
+   "grade": "测·G4",
+   "from": [
+    "G4",
+    "U5"
+   ],
+   "ref": "§3.2",
+   "status": "frozen",
+   "visibility": "public",
+   "note": "码中心在至少一盏灯的半角内；角度运行时取 digest"
+  },
+  "observability.sonar_snr_min_dB": {
+   "value": 6.0,
+   "unit": "dB",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.4 (c)",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "observability.sonar_range_m": {
+   "value": [
+    4.0,
+    6.0
+   ],
+   "unit": "m",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.4 (c)",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "observability.bubble_dots_min": {
+   "value": 30,
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.4 (c)",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "observability.bubble_view": {
+   "value": {
+    "range_max_m": 1.3,
+    "oblique_deg": [
+     45.0,
+     70.0
+    ]
+   },
+   "unit": "-",
+   "grade": "测·G3",
+   "from": [
+    "G3"
+   ],
+   "ref": "§2.4 (c)",
+   "status": "frozen",
+   "visibility": "hidden"
+  },
+  "observability.object_min_px": {
+   "value": 40.0,
+   "unit": "px",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.4 (d)",
+   "status": "placeholder",
+   "pending": [
+    "P19"
+   ],
+   "visibility": "hidden"
+  },
+  "observability.drag_eye_corridor_m": {
+   "value": 0.7,
+   "unit": "m",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.4 (d)",
+   "status": "placeholder",
+   "pending": [
+    "P19"
+   ],
+   "visibility": "hidden"
+  },
+  "observability.flow_estimate": {
+   "value": {
+    "hold_s": 20.0,
+    "error_max_m_s": 0.08
+   },
+   "unit": "-",
+   "grade": "占",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.4 (e)",
+   "status": "placeholder",
+   "pending": [
+    "P19"
+   ],
+   "visibility": "hidden"
+  },
+  "calc.voltages_V": {
+   "value": [
+    12.0,
+    13.5,
+    14.8,
+    16.0
+   ],
+   "unit": "V",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1",
+   "status": "frozen",
+   "note": "12 V = 欠压线；14.8 V = 标称"
+  },
+  "calc.hold_loads_N": {
+   "value": {
+    "lateral_up": [
+     0.0,
+     10.0,
+     55.0
+    ],
+    "surge_lateral": [
+     35.0,
+     10.0,
+     0.0
+    ],
+    "worst": [
+     40.0,
+     10.0,
+     60.0
+    ]
+   },
+   "unit": "N",
+   "grade": "估",
+   "from": [
+    "note:PB"
+   ],
+   "ref": "§2.3.1",
+   "status": "estimate",
+   "pending": [
+    "P11"
+   ],
+   "note": "转阀时同时顶住的体坐标力；worst = PB 的工况，垂向取不利符号"
+  },
+  "calc.torque_margin_min": {
+   "value": 1.3,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "PHASE2_PLAN P01 的验收",
+   "status": "frozen",
+   "note": "12 V + 最坏定位载荷下绕夹爪轴的力矩余量下限"
+  },
+  "calc.dvl_lock_geometry": {
+   "value": {
+    "max_incidence_deg": 55.0,
+    "min_beams": 3
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "note:US"
+   ],
+   "ref": "附录、§14 DG8",
+   "status": "estimate",
+   "pending": [
+    "P11"
+   ],
+   "note": "几何判据：束对平底的入射角超过此值判无效，少于 min_beams 束有效即失锁"
+  },
+  "calc.firmware_cases": {
+   "value": {
+    "torques_Nm": [
+     9.5,
+     12.0,
+     14.0
+    ],
+    "forces_N": [
+     [
+      0,
+      10,
+      55
+     ],
+     [
+      0,
+      10,
+      -55
+     ],
+     [
+      0,
+      44,
+      0
+     ],
+     [
+      0,
+      0,
+      44
+     ],
+     [
+      0,
+      0,
+      -44
+     ],
+     [
+      40,
+      10,
+      60
+     ],
+     [
+      0,
+      20,
+      0
+     ],
+     [
+      17,
+      20,
+      0
+     ]
+    ],
+    "voltages_V": [
+     12.0,
+     13.5,
+     14.8
+    ],
+    "axis_force_N": 44.0,
+    "body_mx_Nm": [
+     20.0,
+     30.0
+    ]
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.3.1",
+   "status": "estimate",
+   "pending": [
+    "P04"
+   ],
+   "note": "v12_firmware_alloc 的算例"
+  },
+  "calc.flow_speeds_m_s": {
+   "value": [
+    0.15,
+    0.3,
+    0.45
+   ],
+   "unit": "m/s",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.2 H0、H10",
+   "status": "estimate",
+   "pending": [
+    "P11"
+   ]
+  },
+  "calc.h6_example": {
+   "value": {
+    "applied_Nm": 7.0,
+    "running_Nm": 4.0
+   },
+   "unit": "N m",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.2 H6",
+   "status": "estimate",
+   "pending": [
+    "P17"
+   ]
+  },
+  "calc.optics": {
+   "value": {
+    "ranges_m": [
+     0.8,
+     1.3,
+     1.5,
+     2.0
+    ],
+    "transmission": 0.2,
+    "c_examples_per_m": [
+     0.42,
+     1.14
+    ],
+    "sonar_slice_range_m": 6.0,
+    "sonar_lap_range_m": 10.0
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.2 H1、H9、§2.4",
+   "status": "estimate",
+   "pending": [
+    "P19"
+   ]
+  },
+  "calc.plume_mc": {
+   "value": {
+    "seed": 20261114,
+    "draws": 20000,
+    "weak_min_m_s": 0.03,
+    "above_roof_m": 2.0,
+    "spacings_m": [
+     3.0,
+     4.0,
+     5.0,
+     6.0
+    ]
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.2 H2、§2.5",
+   "status": "estimate",
+   "pending": [
+    "P12"
+   ],
+   "note": "v12_plume 的抽样设置"
+  },
+  "calc.tide_mc": {
+   "value": {
+    "seed": 1,
+    "draws": 40000,
+    "grid_s": 10.0
+   },
+   "unit": "-",
+   "grade": "估",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§2.5",
+   "status": "estimate",
+   "pending": [
+    "P12"
+   ],
+   "note": "v12_tide_window 的抽样设置"
+  },
+  "timeline.reference_sim_s": {
+   "value": [
+    1100.0,
+    1650.0
+   ],
+   "unit": "s",
+   "grade": "估",
+   "from": [
+    "G6"
+   ],
+   "ref": "§1.1、§1.5、§2.5",
+   "status": "estimate",
+   "pending": [
+    "P16"
+   ]
+  },
+  "expected.raw_score": {
+   "value": {
+    "band": [
+     0.02,
+     0.2
+    ],
+    "most_likely": 0.08
+   },
+   "unit": "-",
+   "grade": "先验",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§0、§4.2",
+   "status": "estimate",
+   "pending": [
+    "P31"
+   ],
+   "note": "没有任何模型运行"
+  },
+  "expected.pilot_min_dev_mean": {
+   "value": 0.5,
+   "unit": "-",
+   "grade": "定",
+   "from": [
+    "DESIGN"
+   ],
+   "ref": "§4.2",
+   "status": "frozen",
+   "note": "P18 的验收线"
+  }
+ }
+}

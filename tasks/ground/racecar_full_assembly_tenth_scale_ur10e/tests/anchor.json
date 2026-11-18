@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "assembly_score",
+ "note": "assembly_score = contract_ok x the mean over the four fixed hidden episodes of stage_e x (1 if the episode is hard_ok, else grader_config.json scoring.safety_violation_factor = 0.3), stage_e = the counted mates' weight / 11.5; already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own assembly_score by construction: the privileged reference program inside the cell fastens all 8 slots on each of the four fixed hidden episodes, which the hidden-set selection requires of every kept episode (tests/review/select_set.py, rule 4); every ale validate of the task records it (oracle 1.0)",
+ "value": 1.0
+}

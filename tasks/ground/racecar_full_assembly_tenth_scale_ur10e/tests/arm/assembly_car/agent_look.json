@@ -1,0 +1,18 @@
+{
+ "_doc": "Look of the agent's cameras (agent_render.py) in the baked factory hall room_factory_v3r_quad_baked, unchanged from the earlier assembly cell (same bench, arm, gripper, hall bundle and probe): the hall's light units, exposure and filmic display transform are that cell's calibration of 2026-10-29 against Cycles stills of the unbaked hall (region luminance Cycles / Filament room 1.10-1.11, floor 0.86-1.11, bench top 0.96-1.07, arm 1.02-1.20). The car's materials take the kit's own PBR terms (kit.json materials: the model's metallic and roughness as exported), the roughness clamped to kit_materials.roughness (a surface lit by the hall's one probe below 0.3 reads as a mirror; above 0.95 the model has none); the fixtures, the boards, the arm and the props have the class terms in agent_render.make_look.",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 0.59,
+ "room_baked_light_scale": 6000,
+ "room_ibl_ktx_intensity": 20000,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 0.9,
+ "kit_materials": {
+  "roughness": [
+   0.3,
+   0.95
+  ],
+  "default_roughness": 0.6
+ }
+}

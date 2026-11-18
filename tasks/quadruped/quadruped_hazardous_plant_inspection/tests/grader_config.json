@@ -1,0 +1,21 @@
+{
+ "episodes": 12,
+ "program_time_cap_s": 1200.0,
+ "privileged_program_time_cap_s": 3600.0,
+ "silence_s": 180.0,
+ "cpu_cap_factor": 4.0,
+ "runner_account": "nobody",
+ "socket_sample_s": 0.5,
+ "time": {"sim_time_limit_s": 1350.0},
+ "budgets": {
+  "frames": {"nav": 300, "inspect": 240, "depth": 1500, "thermal": 150, "lidar": 4000},
+  "reports": {"instrument": 40, "mark": 6, "source": 3},
+  "max_cited_frames": 3
+ },
+ "route_gate": {
+  "forbidden_calls": ["torch.optim", ".backward(", "jax.grad"],
+  "forbidden_extensions": [".pt", ".pth", ".onnx", ".safetensors", ".ckpt", ".h5", ".pb", ".pkl", ".npz"],
+  "max_submission_mb": 60
+ },
+ "note": "run settings only: every tolerance and evidence condition comes from the cell's acceptance file (plantcell/data/acceptance_v1.yaml), every other cell setting from the cell's own configuration; `time` and `budgets` are deep-merged over the cell's defaults (the practice ground runs the same numbers; the training hall caps its missions at 900 s simulated). program_time_cap_s caps the program's own time per mission: the wall clock minus the cell's simulation (step) and sensor rendering (get_camera, get_depth, get_thermal, get_lidar), which the sim cap and the frame budgets bound (cellkit.wire); cpu_cap_factor x program_time_cap_s = the program's CPU seconds; privileged_program_time_cap_s caps the oracle's missions, whose reference program steps the cell inside its one call"
+}

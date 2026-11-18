@@ -1,0 +1,71 @@
+{
+  "format": "quad-grader-config/1",
+  "note": "Every knob of the grader (GRADER_SPEC sections 4-7, values as specified on 2026-10-27; on 2026-10-28 the 1 - IoU band widened to (0.20, 0.75) and the shape floor moved to the parts' p90 surface distance, from the precision budget on the real geometry (dev PRECISION.md section 8), then calibrated on the first round (dev CALIBRATION.md): band (2.5, 6.0) mm, whole where the surface item (0.3, 2.5) reaches 0, zero at about a part's bounding box (p90 median 5.6 mm on the hidden robot)). quad_grade.py merges this file over its DEFAULT_CONFIG (a missing key keeps the default). Bands are [full, zero]: 1 at |e| <= full, 0 at |e| >= zero, linear between. time_limits_s and extract_timeout_s are read by verify.py (the extraction, conversion and grading budgets); the grader records its own seconds per stage as statistics.",
+  "weights": {
+    "kinematic_fidelity": 0.30,
+    "feature_fidelity": 0.25,
+    "shape_fidelity": 0.25,
+    "mass_properties": 0.10,
+    "component_fit": 0.05,
+    "interference_free": 0.05
+  },
+  "gates": ["cad_valid", "public_model_reuse"],
+  "reported_checks": ["legs_valid", "cores_mounted", "cad_json_consistent"],
+  "subweights": {
+    "kinematic": {"axes": 0.30, "lengths": 0.20, "fk": 0.40, "range": 0.10},
+    "fk": {"median": 0.40, "p90": 0.35},
+    "feature": {"cutouts": 0.40, "extents": 0.40, "openings": 0.20},
+    "shape": {"surface": 0.60, "iou": 0.40},
+    "mass": {"mass": 0.50, "com": 0.50}
+  },
+  "bands": {
+    "axis_mm": [0.3, 3.0],
+    "length_mm": [0.3, 3.0],
+    "fk_median_mm": [0.5, 8.0],
+    "fk_p90_mm": [1.0, 15.0],
+    "cutout_offset_mm": [0.3, 3.0],
+    "cutout_area_rel": [0.10, 0.50],
+    "extent_mm": [0.3, 3.0],
+    "opening_mm": [0.3, 3.0],
+    "surface_mm": [0.3, 2.5],
+    "one_minus_iou": [0.20, 0.75],
+    "mass_rel": [0.02, 0.15],
+    "com_mm": [0.5, 6.0]
+  },
+  "floors": {
+    "shape_iou": [0.20, 0.50],
+    "shape_p90_mm": [2.5, 6.0],
+    "leg_fk_median_mm": [15.0, 60.0]
+  },
+  "material": {"density_kg_m3": 1050.0},
+  "consistency": {"axis_angle_deg": 1.0, "axis_offset_mm": 0.5, "contact_mm": 0.2, "gap_search_mm": 5.0},
+  "mjcf": {"configs": 16, "fk_mm": 1.0, "fk_deg": 0.5, "include_meshes": false},
+  "fk": {"configs_per_leg": 64},
+  "component_fit": {
+    "keepout_ratio": 0.001,
+    "ring_score": [0.25, 0.75],
+    "seats_combine": "mean",
+    "mount_combine": "mean",
+    "key_full_fraction": 0.8,
+    "key_sweep_steps": 90,
+    "key_depth_fraction": 1.0,
+    "key_grid_mm": 1.0,
+    "key_inset_mm": 0.5,
+    "mounted_min": 0.5
+  },
+  "interference": {
+    "adjacent_ratio": 0.01,
+    "nonadjacent_ratio": 0.001,
+    "configs_per_leg": 64,
+    "declared_configs_per_leg": 16,
+    "stream_multiplier": 24
+  },
+  "features": {"raster_mm": 0.1, "search_mm": 6.0, "present_fraction": 0.6},
+  "openings": {"designs": ["body_center"], "d_search_mm": [1.5, 40.0], "d_margin_mm": 0.5},
+  "alignment": {"n_src": 20000, "n_dst": 200000},
+  "public_model_reuse": {"invariant_rel": 0.002},
+  "reference": {"use_meshes": false},
+  "parallel": {"workers": 8, "min_total_mb": 20.0, "load_timeout_s": 600.0},
+  "time_limits_s": {"extract": 900, "convert": 600, "grade": 900, "verify": 2700},
+  "extract_timeout_s": 900
+}

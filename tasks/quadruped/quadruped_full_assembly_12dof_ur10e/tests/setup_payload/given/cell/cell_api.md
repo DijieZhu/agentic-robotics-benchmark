@@ -41,3 +41,72 @@ own time inside a request does not count; any request resets it, `get_state()` b
 of 4 x the wall cap applies per process; every process of the run's account is killed when the episode ends; a program
 that breaks the wire (crash, malformed line, exit) ends ITS episode with what it achieved so far and the other episodes
 still run.
+
+## Rendering your own frames
+
+The given render layer renders like the cell's cameras: MuJoCo's Filament renderer (physically based; on the CPU through
+Vulkan, Mesa's lavapipe) in the factory hall of `~/render` (its baked lightmaps, its lamps, its HDR image light, the
+scanned oak bench top), with the cell's look (`arm/assembly_quad/agent_look.json` and `agent_render.make_look()`: light
+units, exposure, the filmic display transform, physically based terms per material class). Depth comes from MuJoCo's
+renderer on the same geometry: metres along the optical axis, registered with the colour pixels, 0 where nothing is
+hit. Cameras are exact pinholes (`render.spec.CameraSpec`: `fx`, `fy`, `cx`, `cy` in pixels, `world_T_cam` the pose in
+the cell frame with OpenCV axes: x right, y down, z forward); lens distortion, noise, blur, vignetting, colour response
+and the depth-sensor model are the render layer's photo pipeline (`render.spec.PhotoSpec`), the cell's own code. Two
+ways in (put `~/given/lib` on `sys.path`):
+
+* `arm.assembly_quad.agent_render.open_session(spec, exposure_factor=1.0)`: the cell cameras' own render session for
+  your twin of this cell (`spec`: your `mujoco.MjSpec` in the cell frame, copied). Name the bench top geom `table_top`
+  with material `mat_bench` for the oak top; geoms named `floor`, `backdrop_*`, `bench_leg_*`, `bench_rail_*`,
+  `bench_shelf` and every geom in a group above 2 are left out; the robot table's steel frame, the control box with its
+  pendant, the floor tape and the hall are added, and the hall's lamps replace your scene's lights. `exposure_factor`
+  stands for the hall's brightness (the cell's own varies by up to about 20 % between runs). The session follows the
+  render layer's interface: `sync_from(model, data)` copies your physics state by joint name,
+  `render_raw_views([cam], ("rgb", "depth"))` gives the pinhole images, `render([cam], photo=..., seed=k,
+  outputs=("rgb", "sensor_depth"))` runs the photo pipeline.
+* `render.filament.view.open_view(spec_or_mjcf_path, room=..., look=..., surface=..., bench_xy=(0.45, 0.0))`: any scene
+  of yours, rendered exactly as given: none of the cell's props are added (no robot table frame, control box or floor
+  tape), your scene's own floor and walls stay unless `drop_prefixes` names them, and only geoms in a group above 2 are
+  left out; with `room`, the hall is added and its lamps replace your scene's lights (unless `keep_lights`). A twin of
+  this cell goes through `agent_render.open_session` instead. `view.render(state, camera, width=None, height=None,
+  depth=False)` returns RGB uint8 H x W x 3 (with `depth=True` also depth float32 H x W); `state` is an `MjData` (joints
+  copied by name), a `(model, data)` pair, a dict `{joint name: value}` or None; `camera` is a camera name of the model
+  (with `width`, `height`), a `CameraSpec` or a dict `{"width", "height", "fx", "fy", "cx", "cy", "world_T_cam"}` (`"K"`
+  may stand for the four intrinsics). `look` is the cell's look (`agent_render.make_look()`), a look file of your own
+  (JSON: the fields of `render.filament.backend.Look`; `"materials"` a list of `[geom glob, material glob, {"roughness",
+  "metallic"}]` rules, the first match wins) or None. `view.session` is a render-layer session for the photo pipeline.
+
+```python
+import os, sys
+sys.path.insert(0, os.path.expanduser("~/given/lib"))
+from arm.assembly_quad import agent_render
+from render.filament.view import open_view
+from render.spec import CameraSpec
+
+cam = CameraSpec.look_at("my_top", eye=(0.6, -0.3, 1.2), target=(0.5, 0.0, 0.0), width=1280, height=960, hfov_deg=70.0)
+session = agent_render.open_session(spec)            # spec: your MjSpec of the cell
+session.sync_from(model, data)                       # model, data: your physics
+raw = session.render_raw_views([cam], ("rgb", "depth"))[0]    # raw.rgb, raw.depth
+session.close()                                      # one session per process at a time
+
+view = open_view(part_spec, room=os.path.expanduser("~/render/room"), surface=os.path.expanduser("~/render/oak"),
+                 look=agent_render.make_look(), bench_xy=(0.45, 0.0))   # part_spec: a scene of yours, not the cell twin
+rgb, depth = view.render(part_data, cam, depth=True)                     # part_data: its MjData
+rgb_w = view.render({"my_hinge": 0.5}, "my_camera", 640, 480)            # a joint and a camera of part_spec
+view.close()
+```
+
+What it costs here (8 CPUs, a twin of the whole cell): `open_session` takes about 13-15 s (up to about 30 s on a busy
+machine), the display transform's lookup table (about 2 s) included, and the open session holds about 6-7 GB. Its first
+frame takes about 10-15 s: that is the first frame after Filament's context is made, which the first session or view of
+a process pays, and again the next one after the last was closed; the first frame of each further image size takes a
+few seconds more (the photo pipeline renders a slightly larger image per camera; its first `top` picture took 5-20 s
+here). Then a 1280 x 960 frame takes about 1.2-1.5 s with depth (about 2 s through the photo pipeline) and a 640 x 480
+frame about 0.6-0.8 s (0.8-0.9 s); `open_view` takes about 5-20 s on the same scene and renders as fast. Until you give
+a state (`sync_from`, `set_state`, or `state` in `view.render`), a session or view shows your twin's own pose (`qpos0`:
+the bodies where your spec puts them). One Filament session per process at a time: close it before opening the next (a
+second one is refused). Closing the last one also releases Filament's context and its memory once nothing refers to the
+closed session (about 0.3-1.4 GB stays with the process), so the next session's or view's first frame takes the 10-15 s
+again. Your program may use the layer during an episode too (it finds the hall next to `$ARB_GIVEN_DIR`); it then has 2
+render threads (about 1.5-1.9 s / 2.0-2.4 s and 0.7-0.9 s / 0.8-1.0 s per frame, its first frame about 10-14 s), and
+the time counts against the episode's wall clock. MuJoCo's classic renderer stays available: the render layer's MuJoCo
+backend (`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.

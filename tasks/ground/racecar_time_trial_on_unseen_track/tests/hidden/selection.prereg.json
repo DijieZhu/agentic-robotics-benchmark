@@ -1,0 +1,942 @@
+{
+ "schema": "racecar-selection/1",
+ "rehearsal": false,
+ "placeholder": false,
+ "not_the_hidden_set": null,
+ "package": "G4",
+ "written_utc": "2026-11-16T23:29:13Z",
+ "rule": "1. CELLS AND CANDIDATES: 6 cells = grip tier (low 0.45-0.55, mid 0.60-0.75, high 0.80-0.95) x layout class (Classic, Featured), one venue per cell. Four fresh os.urandom(16) seeds per cell (24), a seed is used in exactly one cell (the same seed gives the same layout on every tier). Seeds of the development pool, the lab world, example and demo venues never enter; F3's rehearsal draws its own seeds and those are not reused for the real selection. 2. WRITE FIRST: the rule text, cells, seeds with their order and the sha256 table of item 3 go into tests/hidden/selection.json before the first candidate world is generated. 3. FROZEN BY SHA256 AT THAT MOMENT: generator (sketch/venue/*.py, venue_params.json) and avoidance placement (sketch/others/*.py, others_params.json); contract checker and constants (examples/check.py, constants.py, world.schema.json, records.schema.json); the cell (sketch/car + drive_params.json, sketch/sensors + sensor_params.json, sketch/ducts + duct_params.json, sketch/referee + grader_config.json + referee_params.json, sketch/wire, carkit); the scoring module; the reference program (sketch/oracle/program/ with params.json); the selection and observability scripts; recorded besides: Python / mujoco / numpy versions, verifier image digest, CPU models of the three environments. In the task body the vendored copies under tests/ are what is frozen. 4. GENERATOR PREDICATES (recorded per candidate, re-checked at selection): check_world 0 errors including the two new checks (corridor uniqueness; no other track section within 3.0 m behind an opening); check_model 0 errors for the track and avoid models; class features complete (Classic: duct gaps, exactly 1 open wall, 1-3 dust or metal-cover patches, no shared wall, narrow section, black ducts or carpet tile; Featured: additionally a carpet tile, 12-30 % black ducts on the outer wall, a narrow section below 1.2 m, one shared wall, exactly 2 open walls); kinematic-car lap passes with 0 wheel points beyond any tape; at least one patch on the racing line in a bend; exactly 3 boxes each leaving >= 0.8 m passage, 1 or 2 slow cars; regeneration in a fresh process is byte-identical. 5. REFERENCE GATES, each candidate in drawn order, run once in three environments (E1 selection host venv, in-process; E2 verifier image, separate process over the wire, account nobody, i.e. verify.py's way, the reference numbers are taken here; E3 a machine with another CPU type, in-process, token in memory only): G1 clean day: in every session touches, crashes, pick-ups, out-of-bounds, warnings all 0, end_reason finish, 0 forbidden calls, check_result 0 errors; G2 terms complete: T_best, N_best, T_clean static and dynamic (with >= 1 overtake) all present; G3 fast-lap quality: T_ref <= 1.03 x T_qss(0.93), T_qss(f) = quasi-steady-state lap time on the line the program drives in tt2 with every grip-dependent capability x f^2 (lateral 0.975, braking 1.0, traction 0.95 of mu g), motor envelope 100 %, top speed 6.3251 m/s, friction ellipse, true grip under the four wheels, no window, no de-rating; G4 dynamic ruler: T_phase_ref[dynamic] <= 1.30 x T_phase_ref[static]; G5 environments agree: lap counts per session, N_best and the clean flag of every lap identical in E1, E2, E3; T_ref and both T_phase_ref of E1 and E3 within 0.1 % of E2 (bit-identity of the whole record is reported, not required); G6 the reference is a legal entry: program time <= 15 ms x ticks per session, desk times within caps. 6. OBSERVABILITY (E1, made with the reference, written to tests/review/observability.json, all must hold): every duct piece returns >= 8 beams in at least one scan of the reference's mapping lap (<= 1.8 m/s); each of the two duct-end pieces of every open wall returns >= 8 beams in a scan taken within 3 m; every box returns >= 8 beams in the scan where the LiDAR first comes within 3 m of the box centre in the static phase; every slow car, in at least one approach from behind at 3 m: tail box >= 8 beams and whole silhouette >= 8 beams; the reference's overtake stations and the track width there are recorded (no line); every consequential floor patch (the reference's tt2 plan is more than 2 % faster there when the patch is removed from the grip map) shows, in one patch-blind single lap of the reference (plan from the base grip only, other privileges kept, signals only, no score), a slip signal of at least 3 times the off-patch standard deviation of the same signal (IMU lateral-acceleration deficit against the plan, or wheel speed minus inertial speed), or that lap ends in a stop within 5 m after the patch; every carpet edge the reference's line crosses gives an IMU pitch-rate peak of at least 3 times the standard deviation of the 0.4 s before it. 7. KEEP: per cell the first candidate in drawn order that passes items 4-6; every rejection is recorded with the failed predicate and its numbers; if all four of a cell fail, four new seeds are drawn for that cell with a dated amendment; rule and lines never change after the freeze; a defect in frozen code means a dated amendment and a restart from item 1 with new seeds for all cells; no candidate is kept or dropped on any non-privileged program's score. 8. FROZEN AFTER SELECTION (sha256): the six world files tests/hidden/<world_id>.json with their layout digests, the six reference records, tests/anchor.json (the reference's measured score in one full verify in E2), tests/review/observability.json, the completed selection.json (runs, rejections, selected, amendments), the oracle token's sha256; verify.py compares the layout digest at every venue reset; a repository-level pytest guards the hashes. 9. AFTER SELECTION: degenerate programs D1-D5, mutants M1-M15 and benign B1-B2 run on the six venues; ale validate: untouched 0.0, oracle 1.0.",
+ "rule_amendments": [
+  {
+   "date": "2026-11-16",
+   "by": "G1",
+   "ruling": "L4a",
+   "item": 6,
+   "text": "Boxes and slow cars, reaction margin: the object appears in the reference's scans for >= 10 consecutive frames (0.25 s) with >= 5 beams in each, and at the start of that visible stretch the car's along-track distance to the object is >= the braking distance at its speed then (the reference program's braking capability) + 0.5 m. A venue where this does not hold is not selected. Replaces the box line (>= 8 beams in the scan where the LiDAR first comes within 3 m) and the slow-car line (tail box and silhouette >= 8 beams at 3 m)."
+  },
+  {
+   "date": "2026-11-16",
+   "by": "G1",
+   "ruling": "L4b",
+   "item": 6,
+   "text": "Every consequential floor patch and every carpet edge is either observable (a signal >= 3 times its noise in the mapping lap or in heat 1's first lap) or harmless when unknown (the privileged reference program, not knowing it in its plan, has zero crashes and zero touches all day). A venue where an object is neither is not selected. The unknowing run is the per-venue observability check of the privileged reference program, not a pilot."
+  },
+  {
+   "date": "2026-11-16",
+   "by": "G1",
+   "ruling": "L4c",
+   "item": 4,
+   "text": "'At least one patch on the racing line in a bend' = a patch the reference's line passes over inside one of the generator's bends (centreline radius <= 3.5 m, turn >= 1 rad)."
+  },
+  {
+   "date": "2026-11-16",
+   "by": "G4",
+   "item": 1,
+   "text": "REGISTERED AMENDMENT RULE (package G4, 2026-11-16, written into this file before any world of its seeds exists). (a) Eight os.urandom(16) seeds are drawn per cell at the pre-registration, in order 0-7. Orders 0-3 are rule item 1's four candidates of the cell (`candidates`); they are generated, run in E1, E2, E3 and judged. Orders 4-7 are the cell's reserve block (`reserve_candidates`): they are item 7's 'four new seeds for that cell', drawn now so that no seed is drawn after a result has been seen. A reserve block is activated only when all four of orders 0-3 of its cell fail items 4-6; the activation is a dated entry of `amendments` naming the cell and the four failures; the block's candidates then join `candidates` with their orders and are generated, run and judged like the first four; the keep rule takes the first passing candidate in order. (b) If all eight candidates of a cell fail, the selection of that cell stops: no further seed is drawn and no line is relaxed; the cell is left to the lead designer with the measured causes. (c) A defect in frozen code: rule item 7 (a dated amendment and a restart from item 1 with new seeds for all cells). (d) A run whose record carries `error` (an exception outside the program and the cell, e.g. a container that does not start) is run once more in the same environment with the same files; the first record is kept under runs/<env>/errors/. A cell failure (end_reason internal_error or physics_fault) is not an environment error: in E2 the verifier's own rule applies (the venue runs once more and the second run counts), in E1 and E3 the run stands and gate G1 judges it. (e) No candidate is kept or dropped on any non-privileged program's score; nobody looks at a picture of any candidate before the judgement is complete."
+  },
+  {
+   "date": "2026-11-16",
+   "by": "G4",
+   "item": 5,
+   "text": "E2 = the task image as the verifier runs a program: tests/verify.py's run_venue_with_retry in a container of the task image (root stage, the program as account nobody under the two seccomp filters and the limits, over the cell's wire, a fresh process per venue). The reference numbers are taken there."
+  },
+  {
+   "date": "2026-11-16",
+   "by": "G4",
+   "item": 3,
+   "text": "The frozen sha256 are G1's group tables (generator, contract, cell, scoring, reference_program, selection); the first five must equal sketch/FREEZE_G1.json, and so must the task body's vendored copies (tests/grader/, solution/reference/)."
+  }
+ ],
+ "amendment_rule": "REGISTERED AMENDMENT RULE (package G4, 2026-11-16, written into this file before any world of its seeds exists). (a) Eight os.urandom(16) seeds are drawn per cell at the pre-registration, in order 0-7. Orders 0-3 are rule item 1's four candidates of the cell (`candidates`); they are generated, run in E1, E2, E3 and judged. Orders 4-7 are the cell's reserve block (`reserve_candidates`): they are item 7's 'four new seeds for that cell', drawn now so that no seed is drawn after a result has been seen. A reserve block is activated only when all four of orders 0-3 of its cell fail items 4-6; the activation is a dated entry of `amendments` naming the cell and the four failures; the block's candidates then join `candidates` with their orders and are generated, run and judged like the first four; the keep rule takes the first passing candidate in order. (b) If all eight candidates of a cell fail, the selection of that cell stops: no further seed is drawn and no line is relaxed; the cell is left to the lead designer with the measured causes. (c) A defect in frozen code: rule item 7 (a dated amendment and a restart from item 1 with new seeds for all cells). (d) A run whose record carries `error` (an exception outside the program and the cell, e.g. a container that does not start) is run once more in the same environment with the same files; the first record is kept under runs/<env>/errors/. A cell failure (end_reason internal_error or physics_fault) is not an environment error: in E2 the verifier's own rule applies (the venue runs once more and the second run counts), in E1 and E3 the run stands and gate G1 judges it. (e) No candidate is kept or dropped on any non-privileged program's score; nobody looks at a picture of any candidate before the judgement is complete.",
+ "definitions": {
+  "D0_scope": "Rehearsal (F3): 8 candidates per cell instead of 4 (the assignment asks for at least 8); everything else as the rule. E1 = the selection host (an AMD Ryzen Threadripper 7960X) with the selection's own Python environment, in-process, with the observation tap; E2 = a container of a stand-in verifier image (no task image exists yet), the program in its own process over the wire (S6 run_venue), account nobody (uid 65534), no network; E3 = a second host (another CPU generation: an AMD Ryzen Threadripper PRO 5975WX) with its own Python environment, in-process. The reference numbers are E2's.",
+  "D1_beam_count": "A beam returns from an object when its scan value is non-zero (the LiDAR's `returned` flag) and the first surface along it (mj_multiRay's geom id) is a LiDAR geom of that object (duct/<D>/<k>/lidar; box/<id>/lidar; slow<i>/{tail_box,hull,lidar_head}/lidar). The count of an object in a scan is the number of such beams among the 1081 of that tick. The scan origin is the mean of the five sub-scan origins; distances are horizontal.",
+  "D2_mapping_lap": "The mapping lap is the whole practice session of the reference's run (run-up from the start pose, its one timed lap at the mapping cap 1.8 m/s, the stop). Walls: per duct piece the largest count over the practice scans; every piece >= 8; walls[].beams_min = the smallest over the duct's pieces.",
+  "D3_open_wall_ends": "The two end pieces of an open wall [A, B]: the last piece of A and the first piece of B. A practice scan is within 3 m of an end when its origin is <= 3.0 m from that end's end-face centre (open_walls[].ends). Per end the largest count over those scans (0 when none); >= 8.",
+  "D4_boxes": "Per box: the first tick of the avoid session with session time <= 90 s whose scan origin is <= 3.0 m from the box centre (its privileged pose at that tick); its count >= 8; never within 3 m = fail.",
+  "D5_slow_cars": "Dynamic phase (avoid session time > 90 s). An approach scan of slow car i: the car is on the track, its reference point is ahead of the ego's along the track by 0 < gap <= 6.0 m, and the distance from the scan origin to its tail-box centre (C (-0.034, 0, 0.1702)) is <= 3.0 m at this tick and was > 3.0 m at the previous tick. Tail = count of slow<i>/tail_box/lidar; silhouette = count of all LiDAR geoms of slow<i>. Line: at least one approach scan with tail >= 8 and silhouette >= 8. Recorded: the approach scan with the largest min(tail, silhouette); no approach = fail.",
+  "D6_overtakes": "Per tick of the dynamic phase and on-track slow car: g = s_ego_ref - s_slow_ref wrapped to (-L/2, L/2]; an overtake is a tick where g turns from < 0 to >= 0 with |g| <= 3.0 m at both ticks. Recorded: slow car id, ego station, track width (left + right) there. No line.",
+  "D7_consequential": "The tt2 plan = the reference program's Planner on the world as built, its track raceline and profile at heat2_factor. Without patch P = the same planner code and the same line on a copy of the world whose floor lacks P (polygon, grip and raised edge). There = the line samples at which at least one of Planner.wheel_grip's four wheel points lies inside P's polygon. Consequential iff max over those samples of v_without / v_with > 1.02. Patches the line never touches are not consequential.",
+  "D8_blind_lap": "The reference program unchanged, except that priv_world is answered with a copy of the world whose truth.floor.patches is empty (base grip only, no edges; the cell keeps the true world) and strategy.heat1_factor = heat2_factor; a fresh venue, practice and tt1 are driven, the run stops at the request to open tt2. Pass of P = a run of ticks in which a wheel ground point (pose + the C offsets) lies in P's polygon; the blind pass = the first pass in tt1 after tt1's first forward timing crossing with no `stopped` in the 10 s before it. Signals per tick: lateral deficit = sign(kappa) (v_plan^2 kappa - ay), kappa and v_plan of the blind heat-1 plan at the station of the car's reference point on that plan's line, ay = mean of the tick's five IMU lateral samples; slip speed = wheel_speed - true longitudinal speed. Window = the pass's ticks + 10 ticks. Off-patch ticks = tt1 ticks between the first and the last forward timing crossing with no wheel point in any patch, >= 1.0 s after the last tick that had one, not stopped and >= 3 s after a `released`. SNR = max over the window of |x - mean_off| / std_off; slip_signal_snr = the larger of the two signals; >= 3 passes. Stopped: a `stopped` event from the pass's first tick until the reference point is 5.0 m (station) past its station at the pass's last tick = passes (blind_pass_stopped). No blind pass = fail.",
+  "D9_carpet_edges": "Edges = the sides (vertex k -> k + 1) of every patch with edge_height_m > 0. A crossing = a wheel ground point's straight path between two consecutive tick-end poses of the E1 run's tt2 session intersects the side; crossings of one side within 0.5 s are one event, timed at the earliest (linear interpolation). IMU pitch rate gy at 200 Hz (sample j of tick n at (n - 1) 0.025 + 0.005 (j + 1) s). Base = samples in [t_c - 0.45, t_c - 0.05); peak = max |gy - mean_base| over [t_c - 0.025, t_c + 0.15]; SNR = peak / std_base. Per side: the median SNR over its tt2 events >= 3. A side with no tt2 event is not crossed by the line (not judged).",
+  "D10_patch_in_bend": "Item 4 'at least one patch on the racing line in a bend': some patch contains a wheel point (Planner.wheel_grip's four) at a sample of the reference's tt2 line where |kappa| >= 1 / 3.5 m (the generator's bend_max_radius_m). The generator's own on_racing_line flags are recorded besides.",
+  "D11_gates": "G1 per environment over all sessions: touches, crashes, pickups, out_of_bounds, warnings sum to 0; end_reason finish; stats.forbidden_calls 0; check_result 0 errors. G2 on E2: T_best and N_best present, N_best >= 3 (the scoring module asserts N_ref >= 3) and both T_clean present. G3 on E2's T_ref and T_qss_f2_s. G4 on E2. G5: per session lap count, N_best and every lap's clean flag equal in E1, E2, E3; |T(Ek) - T(E2)| <= 0.001 T(E2) for T_ref and both T_phase_ref, k = 1, 3. G6 per environment: every session's program_s <= 0.015 s x its ticks driven, every desk_s <= its cap.",
+  "D12_drivable": "drivable[]: kinematic_lap_ok = S3's kinematic_lap ok (its tape count is within 3 m of the tape, a superset of the contract's 1.5 m); reference_mapping_lap_clean = E1's practice session with touches, crashes, pickups, out_of_bounds, warnings all 0 and its timed lap clean.",
+  "D4a_reaction_boxes": "Per box, its first approach in the static phase: avoid-session ticks with session time <= 90 s up to the first tick at which the ego reference point passes the box centre's station (the signed station gap turns from > 0 to <= 0 within 3 m). A visible stretch = >= 10 consecutive ticks with >= 5 beams from box/<id>/lidar (D1's count). It counts when it starts inside the approach. Margin at its first tick: gap = along-track distance from the ego's foremost point (reference station + 0.20554 m) to the box's nearest footprint corner (stations of check.Track); need = v^2 / (2 a) + 0.5 m, v = the ego's ground speed, a = brake_frac_of_grip_g x avoid_factor^2 x mu x 9.81, mu = the smallest grip of the reference's avoidance plan (Planner.wheel_grip with the +-0.3 m window and the carpet-edge rule) on the avoidance line between the two stations. Pass: some counting stretch with gap >= need.",
+  "D5a_reaction_slow_cars": "Per slow car, dynamic phase (session time > 90 s): an approach = a run of consecutive ticks in which the car is on the track and its reference point is 0 < gap <= 6.0 m ahead of the ego's (D5's window). A visible stretch = >= 10 consecutive ticks with >= 5 beams from all LiDAR geoms of slow<i> (the silhouette). It counts for an approach when it overlaps it and the car is on the track and ahead at the stretch's first tick (it may start before the approach). Margin at that tick: gap = the reference-point gap - 0.22292 m (tail-box rear face behind the slow car's reference point) - 0.20554 m (the ego's front); need as D4a with the ego's own ground speed (the ruling says the car's speed; the slow car's speed is recorded besides). Pass: some approach with a counting stretch with gap >= need.",
+  "D8a_blind_day": "The blind run of item 6 is the reference program unchanged (its own parameters: practice 0.88 capped at 1.8 m/s, tt1 0.88, tt2 0.93, avoid 0.88) for the whole day, except that priv_world is answered with the world without floor patches (base grip, no edge; the cell keeps the true world). 'Unknown-object' runs: the same with only one patch removed (`<patch id>`) or only one patch's raised edge set to height 0 (`edge:<patch id>`).",
+  "D8b_patch_observable": "Per consequential patch (D7): every pass of the patch (D8's pass: a run of ticks with a wheel point inside) in two windows of the blind day, practice from its first tick to the forward crossing that completes its first lap (the mapping lap) and tt1 likewise (heat 1's run-up and first lap). Signals as D8 against the blind plan of that session (practice: the profile at practice_factor capped at practice_cap_mps; tt1: heat1_factor); noise = mean and standard deviation of the signal over the session's off-patch ticks between its first and last forward timing crossing (D8's exclusions); SNR of a pass = max over the pass + 10 ticks of |x - mean| / std, the larger signal. Observable: the largest SNR over both windows >= 3.",
+  "D8c_harmless": "Harmless when unknown: the whole-day blind run (D8a) ends with end_reason finish and every session has 0 crashes and 0 touches; or, failing that, the unknown-object run of this object does. A consequential patch or a crossed carpet edge passes item 6 when it is observable or harmless.",
+  "D9a_carpet_edges": "The carpet edges judged are the sides (D9) the E1 run crosses in tt1 or tt2. Observable: the largest D9 SNR over the side's crossings in the E1 run's practice (first tick to the end of its first lap) and tt1 (first tick to the end of its first lap) >= 3. Harmless: D8c with the unknown-object run edge:<patch id> (all sides of one tile are one object). D9's median over tt2 is reported as imu_shock_snr.",
+  "D10a_patch_in_bend": "Item 4 (ruling L4c): the generator's bends are the arcs of the world's layout (rebuilt from the seed: gen_venue.framed_core of the attempt whose centreline equals the world's within 1e-5 m) with |sweep| >= floor.bend_min_turn_rad (1 rad) and radius <= floor.bend_max_radius_m (3.5 m), as station intervals [s0, s0 + length] of the centreline. P6 passes when some patch contains a wheel point (Planner.wheel_grip's four) at a sample of the reference's tt2 line whose plan station lies in such an interval. F3's D10 reading is recorded as in_bend_f3.",
+  "D0_scope_G4": "Supersedes D0_scope (F3's rehearsal) for the real selection. Four candidates per cell (rule item 1) and a reserve block of four per cell (AMENDMENT_RULE_G4). E1 = the selection host (an AMD Ryzen Threadripper 7960X) with the selection's own Python environment, in-process with the observation tap (runs.run_venue mode tap); the whole-day blind run (D8a) and the unknown-object runs (D8c) run here too. E2 = a throw-away container of the task image (built from the task body's environment/, no network): the body's tests/ staged root-owned as the engine stages it, the reference program of solution/reference/ restored as /home/user/submission, and every venue run by tests/verify.py's own run_venue_with_retry (a fresh cell; the program in a new process over the cell's wire under ttverify.regime: account nobody, no new privileges, two seccomp filters, the limits), one venue at a time per container; the G3 bound T_qss_f2_s is computed in the same container from the frozen reference program's planner (gates.g3_bound). E3 = a second host (another CPU generation: an AMD Ryzen Threadripper PRO 5975WX) with its own Python environment, in-process (runs.run_venue mode inproc), token in memory only. The reference numbers are E2's.",
+  "D13_no_pictures": "Candidate worlds are exported with export_all(..., png=False): the world file, its venue sheet, its truth file, its digest and its MJCF; no top view or other picture of a candidate is written before the judgement is complete. Pictures of the selected venues for the owner's private review are written only after it, outside the task and outside the pool.",
+  "D14_rejections": "rejections[] lists every judged candidate that fails items 4-6, before or after the kept one of its cell, with its failed lines and numbers; passing candidates after the kept one are listed in not_needed[] (the rule does not need them; their verdicts stay in judgement.json)."
+ },
+ "lines": {
+  "black_frac_outer": [
+   0.12,
+   0.3
+  ],
+  "narrow_below_m": 1.2,
+  "box_passage_min_m": 0.8,
+  "n_boxes": 3,
+  "n_slow_cars": [
+   1,
+   2
+  ],
+  "bend_max_radius_m": 3.5,
+  "G3_ratio": 1.03,
+  "G4_ratio": 1.3,
+  "G5_rel": 0.001,
+  "program_ms_per_tick": 15.0,
+  "N_ref_min": 3,
+  "beams_min": 8,
+  "near_m": 3.0,
+  "static_phase_end_s": 90.0,
+  "approach_gap_max_m": 6.0,
+  "overtake_window_m": 3.0,
+  "consequential_speed_ratio": 1.02,
+  "snr_min": 3.0,
+  "stop_after_patch_m": 5.0,
+  "pass_after_ticks": 10,
+  "off_patch_settle_s": 1.0,
+  "release_settle_s": 3.0,
+  "no_stop_before_pass_s": 10.0,
+  "edge_base_s": [
+   0.45,
+   0.05
+  ],
+  "edge_peak_s": [
+   0.025,
+   0.15
+  ],
+  "edge_merge_s": 0.5,
+  "mapping_cap_mps": 1.8,
+  "reaction_beams_min": 5,
+  "reaction_frames_min": 10,
+  "reaction_extra_m": 0.5
+ },
+ "cells": [
+  {
+   "grip_tier": "low",
+   "layout_class": "classic"
+  },
+  {
+   "grip_tier": "mid",
+   "layout_class": "classic"
+  },
+  {
+   "grip_tier": "high",
+   "layout_class": "classic"
+  },
+  {
+   "grip_tier": "low",
+   "layout_class": "featured"
+  },
+  {
+   "grip_tier": "mid",
+   "layout_class": "featured"
+  },
+  {
+   "grip_tier": "high",
+   "layout_class": "featured"
+  }
+ ],
+ "per_cell": 4,
+ "reserve_per_cell": 4,
+ "candidates": [
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "de3a73b32c1d3b1465057c241d475e12",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "2e265c19309c9a812e8dacd5ab9d0d92",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "fb2394df418c7e04f950263d386d8a28",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "4999be6fbf6cb9419ae61e3586c2ea79",
+   "order": 3
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "358da71e605dc05181bf329ed2a93767",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "0c60ff3a04015923bfb4a0a6e7bc508d",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "0a9b1b0984f7f053529941003e3ccf6d",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "e294a5a5002498b85c39d1386073ab50",
+   "order": 3
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "d83293a16b780987c977899a49620c5c",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "8f61e5274fd983763aa435a6c5338207",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "43f40e8eec565e963403093f1ea0800f",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "5dccc9cc2d86af8c74a4a91930708d46",
+   "order": 3
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "be271c7dbcc3b1e99130d4aa7e86ac6d",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "a92bff65581d32a39efb808b41902445",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "dba8037fb0ffa17ff97d4961d14ee47c",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "c61835a867e7f6001810ffe21c5a2a84",
+   "order": 3
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "1d5fa1ab117d82e48a002622f8fa0d92",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "0e08bdbf1bf5137a685c7ab079fc48ad",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "6bb1918d5d486d5be809aa816c2d0ca5",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "645c536078e179eccbbadef999291971",
+   "order": 3
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "451a8f548f23cb563c6cb59814959bae",
+   "order": 0
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "cda3e2970320c0e81dc84d3539a41ab9",
+   "order": 1
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "04374d05f22556ba8a0a9affb05f1077",
+   "order": 2
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "8657e362ede0801fe54a3b62de2de2e1",
+   "order": 3
+  }
+ ],
+ "reserve_candidates": [
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "617a1aaa820d5281780484ea9d7a90c6",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "20a874cbfda8a75cb38cebf145e72be8",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "99d10fcceb8eed176228258ad7f13d39",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "classic"
+   },
+   "seed_hex": "19fb9da03cb00d097808eb6fca533bc6",
+   "order": 7
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "12a411e105fc947e19c4b977de923242",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "9f2cf66f8b8093edc7fd8e4f9c723ec4",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "c0978e9904fdd9dfd6bfd692cf866b94",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "classic"
+   },
+   "seed_hex": "a967854c85296f82fa2b82202441665b",
+   "order": 7
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "3154d1edd1daf342a6a8b631a4d62b10",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "88318023643df86ded07ac336a18dd71",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "4c5801d15633b3ff5fbf7c63d714f7e2",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "classic"
+   },
+   "seed_hex": "7dcfc731a8842dd3526410f9c270db94",
+   "order": 7
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "bf56fb8539877ace8e21abad8f8efcdc",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "e1c8c48b6c30e0e8c8cd9f8ad21de038",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "a0a41d34365d456355f4e4d122511965",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "low",
+    "layout_class": "featured"
+   },
+   "seed_hex": "c037d0f91c053179547385a739b389dd",
+   "order": 7
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "8c6356e07210f21e34e820700bb06e96",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "f81020b21cc9bc888de6f8c9fdeb0bd5",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "c8530b57f3158a1c9a3d5db13696a0b3",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "mid",
+    "layout_class": "featured"
+   },
+   "seed_hex": "285893e0304929341eb066d4bb3d2a2d",
+   "order": 7
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "e23d62be926a514373f795e4c63e1fce",
+   "order": 4
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "2776e344a6d0bd521259950af2f3f236",
+   "order": 5
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "29a4265fdb304a31079101dd02b02990",
+   "order": 6
+  },
+  {
+   "cell": {
+    "grip_tier": "high",
+    "layout_class": "featured"
+   },
+   "seed_hex": "9d383e04c4d658d47c76d6091923b725",
+   "order": 7
+  }
+ ],
+ "draw_rationale": {
+  "source": "records/G1.md section 0 item 7 (development pool + rehearsal pool after G1, frozen state FREEZE_G1); posterior Beta(1 + passing, 1 + failing) per cell",
+  "cells": {
+   "low/classic": {
+    "g1_passing": 9,
+    "g1_judged": 12,
+    "pass_rate": 0.75,
+    "p_no_survivor_point_4": 0.003906,
+    "p_no_survivor_beta_4": 0.014706,
+    "p_no_survivor_beta_8": 0.000811
+   },
+   "mid/classic": {
+    "g1_passing": 8,
+    "g1_judged": 12,
+    "pass_rate": 0.6667,
+    "p_no_survivor_point_4": 0.012346,
+    "p_no_survivor_beta_4": 0.029412,
+    "p_no_survivor_beta_8": 0.002433
+   },
+   "high/classic": {
+    "g1_passing": 11,
+    "g1_judged": 12,
+    "pass_rate": 0.9167,
+    "p_no_survivor_point_4": 4.8e-05,
+    "p_no_survivor_beta_4": 0.002101,
+    "p_no_survivor_beta_8": 4.4e-05
+   },
+   "low/featured": {
+    "g1_passing": 15,
+    "g1_judged": 16,
+    "pass_rate": 0.9375,
+    "p_no_survivor_point_4": 1.5e-05,
+    "p_no_survivor_beta_4": 0.000835,
+    "p_no_survivor_beta_8": 8e-06
+   },
+   "mid/featured": {
+    "g1_passing": 14,
+    "g1_judged": 16,
+    "pass_rate": 0.875,
+    "p_no_survivor_point_4": 0.000244,
+    "p_no_survivor_beta_4": 0.002506,
+    "p_no_survivor_beta_8": 4.2e-05
+   },
+   "high/featured": {
+    "g1_passing": 11,
+    "g1_judged": 12,
+    "pass_rate": 0.9167,
+    "p_no_survivor_point_4": 4.8e-05,
+    "p_no_survivor_beta_4": 0.002101,
+    "p_no_survivor_beta_8": 4.4e-05
+   }
+  },
+  "p_some_cell_empty_beta_4": 0.050879,
+  "p_some_cell_empty_beta_8": 0.003379
+ },
+ "exclusions": {
+  "n_seeds": 565,
+  "sha256_sorted": "70908cd7bbdc71f23791621ecaec0f03a9749f90af0215c4d868dafef5dbcb8a",
+  "roots": {
+   ".": 441,
+   "../racecar_time_trial_on_unseen_track": 146,
+   "the selection's run folder (outside the folder above)": 3660,
+   "tasks/driving/ of a benchmark checkout": 179
+  },
+  "also_twelve_digit_prefix": true,
+  "note": "every seed found under these roots (development pool, F3's rehearsal, G1's runs, the lab world, example and demo venues, the packages' test seeds) is barred, and so is any seed sharing a world_id prefix (the first 12 digits) with one"
+ },
+ "frozen_sha256": {
+  "carkit/__init__.py": "0ce912b10493b130428b5028758e5455f856ba582d09c68ed8928cda2fdb75cd",
+  "carkit/client.py": "8531cfeeae76dd31f3b0b757c09a38d7862a70bbf33bc2bb100477c33803ae50",
+  "carkit/events.py": "9517a2edb8b3d15d3af339f5804cf59dd8d3e1ef5c8da27abb6209f3a08c0547",
+  "carkit/logs.py": "244a613033960510ede6411c41eb6fbfa9586334e1869f66fc4c780abc33e601",
+  "carkit/protocol.py": "262194b8192b9023c7c3475aabaf07c13e40c254c55eae7c86d76b03c8a28c9a",
+  "carkit/scan.py": "d810efda5d2cd3a78f78ac636bf8f5254196df3012a4f0e8ebca2083d30848ab",
+  "sketch/car/__init__.py": "a6e2180510533c16258c9f16a797bcbb8a23d831d64b6015a94e3e9f4e7ffde6",
+  "sketch/car/build_car.py": "eb57129b55de11dba13050932e95538f2099df0f04c00a4a3acd76d91ac11680",
+  "sketch/car/drive_params.json": "77f4a40a873565c3d3749b4055082d6779e63402179d52e0b2fbf8ac1f4d29fb",
+  "sketch/car/floor.py": "dc86b7948c6bbed01d5ad8a960e3cdbb88ae98aa2749e670eea5580b81f7ef9f",
+  "sketch/car/gates.py": "4d0650a3e0dd0a4829ade45e629c9f5ea33a68563500f73493bbde2572849a7e",
+  "sketch/car/params.py": "526bbcc49a1e402513085fda96bf14c14404c5a142152716a491a62071fe6a7d",
+  "sketch/car/runtime.py": "28b39cf654cfd8c07d21b6185c5d1c9852530c016d17147de20c543953bf40fd",
+  "sketch/ducts/__init__.py": "cf74d3384e9659e685713725463e075436ae8cdde7835c9e8962ea2db5910346",
+  "sketch/ducts/build.py": "e5152ce89f57941635c4943297bb54fe75fe6edba072386e3825e726f3ace0c1",
+  "sketch/ducts/duct_params.json": "00ad8d28c1321905de7634a2e2231e23b191121bb82053e1dc4424d7c023756d",
+  "sketch/ducts/gates.py": "77f8450ec8f6e8bfc9a7bea50862a0b05f72c7555780935807ed9f2eb8f82870",
+  "sketch/ducts/geom.py": "3e09fd794859f47da616b0a68362c326104922552eb64bc611043ee8163f01cd",
+  "sketch/ducts/params.py": "ef85543109224fd6a2d455ada64b97aecfb882d2e8f0a6b9b2d4ba53b8be9b94",
+  "sketch/ducts/scenes.py": "1d937a82cf6ee7336700da171805ac31ee4380ff63fc00579d3bb05a01c5b22c",
+  "sketch/ducts/tracker.py": "e4f046c24f818f36f726fa944a14533dce4679572e034b5f23ed6e147ac064c5",
+  "sketch/ducts/window.py": "47b8f4bedd5bdd6b97db0a957029ca6b8e5a3e3e40f8082431572635152aeb0c",
+  "sketch/examples/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "sketch/examples/check.py": "907f9b451a812b294087279ba1e2f692bd3e291c47a7efe3cb1bf481edec4cc8",
+  "sketch/examples/constants.py": "a934f7c2738bf74f9b659a9eb8bdad301297518f75782d58fd27cd615625208b",
+  "sketch/examples/grader_config.json": "cfb5185a37f8e18d94078d449e64ab89bac64e076ff752ac5285d82c583ab5ac",
+  "sketch/examples/records.schema.json": "5939c558660667c23ca62fd953a07396a67c06c62eb4c558c73755d47107e9f9",
+  "sketch/examples/wire.schema.json": "408493cd105cfb23c352402b4dcd32245f7289606131ba339e962095e8e52160",
+  "sketch/oracle/__init__.py": "fc6f058969b55cecdc23c2d7fb63f4ec96ac5ac5532a3a004c493871bee968a6",
+  "sketch/oracle/gates.py": "c2153f9a858f4b408b13b137c8c548d704f6fed9ab07e3e383b8abff46a63840",
+  "sketch/oracle/program/drive.py": "396c994c267317c52f33a44def45a82ee000854a467792e5767104e890f76da4",
+  "sketch/oracle/program/s7ref/__init__.py": "0b970770574ba745367761b55c1311f86c9e8d14bdb1f1aa73d8e08732042c15",
+  "sketch/oracle/program/s7ref/control.py": "74ab0977f44f5c599e68c0cb15fb2f2009d56263f5a6e1e3e2c80a08dacbf3bf",
+  "sketch/oracle/program/s7ref/geometry.py": "ea4d03aecf8c5e876ff99979a1472fce927eae01cf58d37c123fd420d5f0aea6",
+  "sketch/oracle/program/s7ref/params.json": "1d86cdb59a2cee9d4ad99401d867fb55667bf5a029f802a1b9b14b8e86965321",
+  "sketch/oracle/program/s7ref/planner.py": "d9f59c9157dac1d86a89509358f11b5bb4780d32417990b6b1b20868dd918ba9",
+  "sketch/oracle/program/s7ref/qp.py": "2794566437046fb8ecc8389e174a170bd4181356f8b4211f0c127a1f9034ffb0",
+  "sketch/oracle/program/s7ref/reference.py": "e3e0845eb1f02bbdeb59611793239a2b8d12c5a0530ca33b9b0328ff7e293b2d",
+  "sketch/oracle/program/s7ref/traffic.py": "b07f119d9ec596fa6cfa450980ad2402f86b31dc5d8aa933bbecb7313db9f3e3",
+  "sketch/oracle/runner.py": "9e78a614e09ff55c8371c8870ac057a337dfdf0ee5d06e8aaab45e23007c6a5b",
+  "sketch/others/__init__.py": "45a606d3a37eb8b759a63d3f4e8276c2ca319b36ed9a4f088df6f04173bd35b8",
+  "sketch/others/boxes.py": "9e201d17608a121f87872dc1a55af85dacd6f746793db0bfc5fb16ad9ead1062",
+  "sketch/others/gates.py": "64ade7871d1641717a53fa062e1f30f77d09f48ad26f9674ba995e8094b5f2ad",
+  "sketch/others/others_params.json": "c90cfb43efc873e8fe53935d4af1cd2a5a4879c1a978db19b2b1a701414cf333",
+  "sketch/others/params.py": "3fa205ef6d0927ac8e0e35583a3075916483d401cb7fe569c810722a394672c6",
+  "sketch/others/path.py": "10e1d8094fdcb3551691468432ba09295ca6b2b6be6ca3d2374777a177b272d8",
+  "sketch/others/placement.py": "bc28734a538a89dab9c362cc133b56b7b4a2cb69f18402f371c46df70f181c37",
+  "sketch/others/schedule.py": "5bbd408bb2fd58639991c268d25c1ed6cee210d2944fc0f20a02a5177e082309",
+  "sketch/others/sim.py": "eddddd9ada002cdc409643ec9ff1de0792e5cbeb79f9260b4ae935a2aa0084c7",
+  "sketch/others/slowcars.py": "5824e84165b53a86aaed999a7eab0d3edf1ef83a4a46a970d01b2a62b123bcd1",
+  "sketch/others/testbeds.py": "12b4b6171b6c696d955616cc3ba77f19e23d870bca0375596e0481a3f443e97b",
+  "sketch/referee/__init__.py": "082204e47f76ccf361804f7dbe038635bdc6afd689bc5d6d4e909f0a7732afa6",
+  "sketch/referee/config.py": "712b1ca81d9f726aee160863cbc776b67eded49f6f99415b824fa0c0e6f3c06a",
+  "sketch/referee/geometry.py": "4c34e6dc8a2bf6a55b8923dcebc54366a9bfcc4e17a33b97dccc83519773d510",
+  "sketch/referee/grader_config.json": "cfb5185a37f8e18d94078d449e64ab89bac64e076ff752ac5285d82c583ab5ac",
+  "sketch/referee/privileged.py": "c9a1855f6499c445a55664ec9eae5c5c4472fd7194ce65b3077ab00c360bebc1",
+  "sketch/referee/providers.py": "8a129321f844b668c02adea3e613d5969b8ee9bbefaec4e67ff4c51cdfb047a3",
+  "sketch/referee/referee_params.json": "9b09dbcbefa572434f3ec72d5f1403e8aaea38b40e976a5f38f91e866a541a3e",
+  "sketch/referee/rules.py": "c1297a391057199182fa5c03f8a8c032334ab8cc5547b156387b51916c7a1bba",
+  "sketch/referee/staff.py": "1ffdfe5f1bedaa15918c3822f77629d632687f9687ca330dbc1a3b653de11fb2",
+  "sketch/referee/stubs.py": "fff3307069625c4157c72fe7b600793f053ddef7f2f3c12213418bb938bb22d7",
+  "sketch/referee/venue.py": "cdc5fe4172fe5d40eb90587639f41fec3aa540a5d8eff03129e19b477a63dad2",
+  "sketch/selection/__init__.py": "8e33861a10fec458db1f3ef3ff063239feb30731af3904fe6cfb895bab00613b",
+  "sketch/selection/__main__.py": "848d4baf0ba6027620cdcca85cdfa4128f87cefd9c10933c51912470a92ec832",
+  "sketch/selection/candidates.py": "e13a70f356be344ccc7213ed271442760fb96b1e1fdbb9a6094bf26f9e8da1bc",
+  "sketch/selection/e2verify.py": "5292bb6f06a92936f72a2cc085d9a51aa077d02a7e02be1e04d750d34367a26b",
+  "sketch/selection/freeze.py": "65e70e90c019602123c3e3e3a8905bf74898c3d02e4c24a7e8b6830a213b85d9",
+  "sketch/selection/judge.py": "2163230dff5dc8981861a26724576b7989dcfa2014c7052c233fec6de9112855",
+  "sketch/selection/observe.py": "e75d7b6e6db327f87d6e6c08490168b3cee23aad3efe4b934d610475c49bbb77",
+  "sketch/selection/real.py": "3938cda96fdddfe2b76ecfc762525773861d70b8f0aa2b93d6146835870691b4",
+  "sketch/selection/rule.py": "8d63ac1c0e4efa36b2246edcf42cb1dfd16cc386e042576492ec6f5b20b1aed2",
+  "sketch/selection/runs.py": "0bda55501ec0e6e69fd2765b888e1ae48ff027bfd77ed651e233dd4feda259c2",
+  "sketch/selection/tap.py": "38f0505924d515a7397dae9c780ad752b691996dc8594e9efd1ac387bac6a342",
+  "sketch/selection/timing.py": "0ee1b18d8783a0a6db76bbac279e01a76dd69e3e3cfcfc68bc090ab4ae980bfa",
+  "sketch/sensors/__init__.py": "10c63c2b0beed91d88153dcf88eda8f3136c0f36f2073fee97e3ed6df62c348b",
+  "sketch/sensors/frames.py": "70bdaf438b8cf91249a79c64c8fbefe2eed859ddc56812bc65a7b542d468f370",
+  "sketch/sensors/gates.py": "787d83bb548d71bc12ae58c23324d7f2c92d18cc6b5723cb44b8a02ba7a0b6db",
+  "sketch/sensors/imu.py": "c452b50423069f2bd5c8bc78cf9eabddf94fcdd78e6dc7e8eb4c44ffb5e9bd3e",
+  "sketch/sensors/lidar.py": "9d2df0fda400f8def2fc1bb38c4ace3133aab50b8bf65d2d63da91bb863bed71",
+  "sketch/sensors/motor.py": "149f90bfc99b162cb657748295c7519d26e9275da20c7c3b7a6c1bc25ff5293b",
+  "sketch/sensors/params.py": "5a8d8bac76494ba9fc34f762e5ddd148e0a79650f5dee39b9eba5c550533f599",
+  "sketch/sensors/reference.py": "1d7afe91e4f3712444d6a8d7a9b18e58fd70913a9e10a6df24d674892e20223b",
+  "sketch/sensors/scenes.py": "05d76c69dfb86c46095e9f5130c1eaf2d6792ef1e97862c1041c6e7e53fc0400",
+  "sketch/sensors/sensor_params.json": "18c31c668fe02b2bdb9be55b24e2246abad05f71ab065c76ca1450618a6e779b",
+  "sketch/sensors/suite.py": "9d6e2c012104a5dc484932c72873b3b6b6f2351e838b3c5609c44146898d6bda",
+  "sketch/venue/__init__.py": "fa721f0478cb6031ecd3de2aa4c66c7522cd57b1f0ece9637c1dd794bd4e9c40",
+  "sketch/venue/checks.py": "62c70ee2fb7a5db1741d86204f6a786dcdc73370f61dfaea05c3616b4d99d9f2",
+  "sketch/venue/export.py": "04e28f0726b397d1a3775ea0a661d8b9da2124eea262335a201dfff16161adac",
+  "sketch/venue/gates.py": "fd83ab4330bfd8af4cd6d70b50bb0d110e6537d57de855c1b41d563e05d20bab",
+  "sketch/venue/gen_venue.py": "f6d21ce52245930bfc97a6e5436a15d59f6e99f45989337cdde67acdedce320e",
+  "sketch/venue/geometry.py": "d2cec21306e90c2a330d0cc987f7b3b39c69846c4c03adadd53b16de9a48e30d",
+  "sketch/venue/integration.py": "c5d29bdd21842558db5656526f2e606b27885b38624b2ddbc46afb7f2013016b",
+  "sketch/venue/layout.py": "73f1a2b3900141bad307496149309c6148258b5240f3b7f51985a97a2883bf92",
+  "sketch/venue/venue_params.json": "a71206187325970462049fc76771ba7d081608af076129d9a79d6fea018cba3d",
+  "sketch/venue/walls.py": "8fcf059d2cc2a8518bd800f8a6be72e8f23f84dc2a312ce9e9a64d0a92b40a09",
+  "sketch/wire/__init__.py": "33e505c1d1d3685417cef1ece4212a9734ff6c5f88513976c0dd121df622e70f",
+  "sketch/wire/bench.py": "f9cd784e26f4f3158b06d94828aa16aef52c6fd42e997e73a167161d9cc59850",
+  "sketch/wire/inprocess.py": "b874ea35f85f33b97dac777d082cd590da84c2ee5bc8c39b4bf0b10d3fd14c71",
+  "sketch/wire/programs/hello/drive.py": "cb486cc269274976b320c55158dee2b674e33104c1d06d932d3eae0b2fe1c815",
+  "sketch/wire/runner.py": "bfb240e3cde49661d9ecfb7131e2458151bd83921d2cae778acc6b35ae1997f1",
+  "sketch/wire/server.py": "6627186744929417d2985d3f1c28432a9d9955f29832e5cdbe766b18d8a92e3e",
+  "sketch/wire/stub.py": "94f6518979147f4018616f58c5141d067be633abf8bb254f9ee7822e34468f5d",
+  "sketch/world.schema.json": "9e57dff6614b845f4760c7f83206ef41f496bc25cf51d84ea10e299bba874a99"
+ },
+ "frozen_excluded": {},
+ "frozen_trees": {
+  "generator": {
+   "digest": "ce21f9cf9af4fb8da9d80a6ed2e1548649b6b8200f6570455b82bed1cd911bfd",
+   "n_files": 21,
+   "files": {
+    "sketch/others/__init__.py": "45a606d3a37eb8b759a63d3f4e8276c2ca319b36ed9a4f088df6f04173bd35b8",
+    "sketch/others/boxes.py": "9e201d17608a121f87872dc1a55af85dacd6f746793db0bfc5fb16ad9ead1062",
+    "sketch/others/gates.py": "64ade7871d1641717a53fa062e1f30f77d09f48ad26f9674ba995e8094b5f2ad",
+    "sketch/others/others_params.json": "c90cfb43efc873e8fe53935d4af1cd2a5a4879c1a978db19b2b1a701414cf333",
+    "sketch/others/params.py": "3fa205ef6d0927ac8e0e35583a3075916483d401cb7fe569c810722a394672c6",
+    "sketch/others/path.py": "10e1d8094fdcb3551691468432ba09295ca6b2b6be6ca3d2374777a177b272d8",
+    "sketch/others/placement.py": "bc28734a538a89dab9c362cc133b56b7b4a2cb69f18402f371c46df70f181c37",
+    "sketch/others/schedule.py": "5bbd408bb2fd58639991c268d25c1ed6cee210d2944fc0f20a02a5177e082309",
+    "sketch/others/sim.py": "eddddd9ada002cdc409643ec9ff1de0792e5cbeb79f9260b4ae935a2aa0084c7",
+    "sketch/others/slowcars.py": "5824e84165b53a86aaed999a7eab0d3edf1ef83a4a46a970d01b2a62b123bcd1",
+    "sketch/others/testbeds.py": "12b4b6171b6c696d955616cc3ba77f19e23d870bca0375596e0481a3f443e97b",
+    "sketch/venue/__init__.py": "fa721f0478cb6031ecd3de2aa4c66c7522cd57b1f0ece9637c1dd794bd4e9c40",
+    "sketch/venue/checks.py": "62c70ee2fb7a5db1741d86204f6a786dcdc73370f61dfaea05c3616b4d99d9f2",
+    "sketch/venue/export.py": "04e28f0726b397d1a3775ea0a661d8b9da2124eea262335a201dfff16161adac",
+    "sketch/venue/gates.py": "fd83ab4330bfd8af4cd6d70b50bb0d110e6537d57de855c1b41d563e05d20bab",
+    "sketch/venue/gen_venue.py": "f6d21ce52245930bfc97a6e5436a15d59f6e99f45989337cdde67acdedce320e",
+    "sketch/venue/geometry.py": "d2cec21306e90c2a330d0cc987f7b3b39c69846c4c03adadd53b16de9a48e30d",
+    "sketch/venue/integration.py": "c5d29bdd21842558db5656526f2e606b27885b38624b2ddbc46afb7f2013016b",
+    "sketch/venue/layout.py": "73f1a2b3900141bad307496149309c6148258b5240f3b7f51985a97a2883bf92",
+    "sketch/venue/venue_params.json": "a71206187325970462049fc76771ba7d081608af076129d9a79d6fea018cba3d",
+    "sketch/venue/walls.py": "8fcf059d2cc2a8518bd800f8a6be72e8f23f84dc2a312ce9e9a64d0a92b40a09"
+   }
+  },
+  "contract": {
+   "digest": "a3aecb107c6c721b6960bf2901c849deff98cc4992fea14244e6a821072d9aef",
+   "n_files": 7,
+   "files": {
+    "sketch/examples/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sketch/examples/check.py": "907f9b451a812b294087279ba1e2f692bd3e291c47a7efe3cb1bf481edec4cc8",
+    "sketch/examples/constants.py": "a934f7c2738bf74f9b659a9eb8bdad301297518f75782d58fd27cd615625208b",
+    "sketch/examples/grader_config.json": "cfb5185a37f8e18d94078d449e64ab89bac64e076ff752ac5285d82c583ab5ac",
+    "sketch/examples/records.schema.json": "5939c558660667c23ca62fd953a07396a67c06c62eb4c558c73755d47107e9f9",
+    "sketch/examples/wire.schema.json": "408493cd105cfb23c352402b4dcd32245f7289606131ba339e962095e8e52160",
+    "sketch/world.schema.json": "9e57dff6614b845f4760c7f83206ef41f496bc25cf51d84ea10e299bba874a99"
+   }
+  },
+  "cell": {
+   "digest": "3399c4461596bbe45e0066a6fba69754b5c6e9c815275a537b7367b2ba78cf75",
+   "n_files": 51,
+   "files": {
+    "carkit/__init__.py": "0ce912b10493b130428b5028758e5455f856ba582d09c68ed8928cda2fdb75cd",
+    "carkit/client.py": "8531cfeeae76dd31f3b0b757c09a38d7862a70bbf33bc2bb100477c33803ae50",
+    "carkit/events.py": "9517a2edb8b3d15d3af339f5804cf59dd8d3e1ef5c8da27abb6209f3a08c0547",
+    "carkit/logs.py": "244a613033960510ede6411c41eb6fbfa9586334e1869f66fc4c780abc33e601",
+    "carkit/protocol.py": "262194b8192b9023c7c3475aabaf07c13e40c254c55eae7c86d76b03c8a28c9a",
+    "carkit/scan.py": "d810efda5d2cd3a78f78ac636bf8f5254196df3012a4f0e8ebca2083d30848ab",
+    "sketch/car/__init__.py": "a6e2180510533c16258c9f16a797bcbb8a23d831d64b6015a94e3e9f4e7ffde6",
+    "sketch/car/build_car.py": "eb57129b55de11dba13050932e95538f2099df0f04c00a4a3acd76d91ac11680",
+    "sketch/car/drive_params.json": "77f4a40a873565c3d3749b4055082d6779e63402179d52e0b2fbf8ac1f4d29fb",
+    "sketch/car/floor.py": "dc86b7948c6bbed01d5ad8a960e3cdbb88ae98aa2749e670eea5580b81f7ef9f",
+    "sketch/car/gates.py": "4d0650a3e0dd0a4829ade45e629c9f5ea33a68563500f73493bbde2572849a7e",
+    "sketch/car/params.py": "526bbcc49a1e402513085fda96bf14c14404c5a142152716a491a62071fe6a7d",
+    "sketch/car/runtime.py": "28b39cf654cfd8c07d21b6185c5d1c9852530c016d17147de20c543953bf40fd",
+    "sketch/ducts/__init__.py": "cf74d3384e9659e685713725463e075436ae8cdde7835c9e8962ea2db5910346",
+    "sketch/ducts/build.py": "e5152ce89f57941635c4943297bb54fe75fe6edba072386e3825e726f3ace0c1",
+    "sketch/ducts/duct_params.json": "00ad8d28c1321905de7634a2e2231e23b191121bb82053e1dc4424d7c023756d",
+    "sketch/ducts/gates.py": "77f8450ec8f6e8bfc9a7bea50862a0b05f72c7555780935807ed9f2eb8f82870",
+    "sketch/ducts/geom.py": "3e09fd794859f47da616b0a68362c326104922552eb64bc611043ee8163f01cd",
+    "sketch/ducts/params.py": "ef85543109224fd6a2d455ada64b97aecfb882d2e8f0a6b9b2d4ba53b8be9b94",
+    "sketch/ducts/scenes.py": "1d937a82cf6ee7336700da171805ac31ee4380ff63fc00579d3bb05a01c5b22c",
+    "sketch/ducts/tracker.py": "e4f046c24f818f36f726fa944a14533dce4679572e034b5f23ed6e147ac064c5",
+    "sketch/ducts/window.py": "47b8f4bedd5bdd6b97db0a957029ca6b8e5a3e3e40f8082431572635152aeb0c",
+    "sketch/referee/__init__.py": "082204e47f76ccf361804f7dbe038635bdc6afd689bc5d6d4e909f0a7732afa6",
+    "sketch/referee/config.py": "712b1ca81d9f726aee160863cbc776b67eded49f6f99415b824fa0c0e6f3c06a",
+    "sketch/referee/geometry.py": "4c34e6dc8a2bf6a55b8923dcebc54366a9bfcc4e17a33b97dccc83519773d510",
+    "sketch/referee/grader_config.json": "cfb5185a37f8e18d94078d449e64ab89bac64e076ff752ac5285d82c583ab5ac",
+    "sketch/referee/privileged.py": "c9a1855f6499c445a55664ec9eae5c5c4472fd7194ce65b3077ab00c360bebc1",
+    "sketch/referee/providers.py": "8a129321f844b668c02adea3e613d5969b8ee9bbefaec4e67ff4c51cdfb047a3",
+    "sketch/referee/referee_params.json": "9b09dbcbefa572434f3ec72d5f1403e8aaea38b40e976a5f38f91e866a541a3e",
+    "sketch/referee/rules.py": "c1297a391057199182fa5c03f8a8c032334ab8cc5547b156387b51916c7a1bba",
+    "sketch/referee/staff.py": "1ffdfe5f1bedaa15918c3822f77629d632687f9687ca330dbc1a3b653de11fb2",
+    "sketch/referee/stubs.py": "fff3307069625c4157c72fe7b600793f053ddef7f2f3c12213418bb938bb22d7",
+    "sketch/referee/venue.py": "cdc5fe4172fe5d40eb90587639f41fec3aa540a5d8eff03129e19b477a63dad2",
+    "sketch/sensors/__init__.py": "10c63c2b0beed91d88153dcf88eda8f3136c0f36f2073fee97e3ed6df62c348b",
+    "sketch/sensors/frames.py": "70bdaf438b8cf91249a79c64c8fbefe2eed859ddc56812bc65a7b542d468f370",
+    "sketch/sensors/gates.py": "787d83bb548d71bc12ae58c23324d7f2c92d18cc6b5723cb44b8a02ba7a0b6db",
+    "sketch/sensors/imu.py": "c452b50423069f2bd5c8bc78cf9eabddf94fcdd78e6dc7e8eb4c44ffb5e9bd3e",
+    "sketch/sensors/lidar.py": "9d2df0fda400f8def2fc1bb38c4ace3133aab50b8bf65d2d63da91bb863bed71",
+    "sketch/sensors/motor.py": "149f90bfc99b162cb657748295c7519d26e9275da20c7c3b7a6c1bc25ff5293b",
+    "sketch/sensors/params.py": "5a8d8bac76494ba9fc34f762e5ddd148e0a79650f5dee39b9eba5c550533f599",
+    "sketch/sensors/reference.py": "1d7afe91e4f3712444d6a8d7a9b18e58fd70913a9e10a6df24d674892e20223b",
+    "sketch/sensors/scenes.py": "05d76c69dfb86c46095e9f5130c1eaf2d6792ef1e97862c1041c6e7e53fc0400",
+    "sketch/sensors/sensor_params.json": "18c31c668fe02b2bdb9be55b24e2246abad05f71ab065c76ca1450618a6e779b",
+    "sketch/sensors/suite.py": "9d6e2c012104a5dc484932c72873b3b6b6f2351e838b3c5609c44146898d6bda",
+    "sketch/wire/__init__.py": "33e505c1d1d3685417cef1ece4212a9734ff6c5f88513976c0dd121df622e70f",
+    "sketch/wire/bench.py": "f9cd784e26f4f3158b06d94828aa16aef52c6fd42e997e73a167161d9cc59850",
+    "sketch/wire/inprocess.py": "b874ea35f85f33b97dac777d082cd590da84c2ee5bc8c39b4bf0b10d3fd14c71",
+    "sketch/wire/programs/hello/drive.py": "cb486cc269274976b320c55158dee2b674e33104c1d06d932d3eae0b2fe1c815",
+    "sketch/wire/runner.py": "bfb240e3cde49661d9ecfb7131e2458151bd83921d2cae778acc6b35ae1997f1",
+    "sketch/wire/server.py": "6627186744929417d2985d3f1c28432a9d9955f29832e5cdbe766b18d8a92e3e",
+    "sketch/wire/stub.py": "94f6518979147f4018616f58c5141d067be633abf8bb254f9ee7822e34468f5d"
+   }
+  },
+  "scoring": {
+   "digest": "7e841ecbf39f6ad51e2c6928ca42c9bcaadfc62db3a4932f20b7343a2f008ee7",
+   "n_files": 9,
+   "files": {
+    "sketch/scoring/__init__.py": "7ff39ea76e184507460ebd91b484dbbb0c56d406d30670f4deccc73ac4230036",
+    "sketch/scoring/audit.py": "0591cad2a59d8fd6bd9b34ff17f7e7e9affaeef368b1e4472fdbe604535fbb30",
+    "sketch/scoring/qc/__init__.py": "cefbfcbaaa02073344cc1567615f7ea2590b060109726682642584e2c1889196",
+    "sketch/scoring/qc/__main__.py": "d8184c4f90d86fd2c9c5c5a48942c18c44cb801f4754afa4c45260500312bc96",
+    "sketch/scoring/qc/catalogue.py": "4cf83bd1e5f0d1d78a99cd4cfd90103bd9fec091a2ecb87f99cf2553098be7b0",
+    "sketch/scoring/qc/drive_lib.py": "3e61b3150974bd8f0c38187bd499750b9ebec9e2db8ec5d5b8fab0393210c7c8",
+    "sketch/scoring/qc/programs.py": "318e2585c19db12225f9809fbad13800f471c5eae47552358a174a7d346dcd3c",
+    "sketch/scoring/qc/run.py": "93868d744ecc16c7617f76d1f3ec4077ae5ffc3be1fc5b8564aefbae54034f3c",
+    "sketch/scoring/score.py": "7253f5df138e3401076ce2801f27300032925c104e158373f36a4363165d3120"
+   }
+  },
+  "reference_program": {
+   "digest": "8ef8f744f0bb68111fb8758ca0e5918291480a262503495d363dbc47c3122f4e",
+   "n_files": 12,
+   "files": {
+    "sketch/oracle/__init__.py": "fc6f058969b55cecdc23c2d7fb63f4ec96ac5ac5532a3a004c493871bee968a6",
+    "sketch/oracle/gates.py": "c2153f9a858f4b408b13b137c8c548d704f6fed9ab07e3e383b8abff46a63840",
+    "sketch/oracle/program/drive.py": "396c994c267317c52f33a44def45a82ee000854a467792e5767104e890f76da4",
+    "sketch/oracle/program/s7ref/__init__.py": "0b970770574ba745367761b55c1311f86c9e8d14bdb1f1aa73d8e08732042c15",
+    "sketch/oracle/program/s7ref/control.py": "74ab0977f44f5c599e68c0cb15fb2f2009d56263f5a6e1e3e2c80a08dacbf3bf",
+    "sketch/oracle/program/s7ref/geometry.py": "ea4d03aecf8c5e876ff99979a1472fce927eae01cf58d37c123fd420d5f0aea6",
+    "sketch/oracle/program/s7ref/params.json": "1d86cdb59a2cee9d4ad99401d867fb55667bf5a029f802a1b9b14b8e86965321",
+    "sketch/oracle/program/s7ref/planner.py": "d9f59c9157dac1d86a89509358f11b5bb4780d32417990b6b1b20868dd918ba9",
+    "sketch/oracle/program/s7ref/qp.py": "2794566437046fb8ecc8389e174a170bd4181356f8b4211f0c127a1f9034ffb0",
+    "sketch/oracle/program/s7ref/reference.py": "e3e0845eb1f02bbdeb59611793239a2b8d12c5a0530ca33b9b0328ff7e293b2d",
+    "sketch/oracle/program/s7ref/traffic.py": "b07f119d9ec596fa6cfa450980ad2402f86b31dc5d8aa933bbecb7313db9f3e3",
+    "sketch/oracle/runner.py": "9e78a614e09ff55c8371c8870ac057a337dfdf0ee5d06e8aaab45e23007c6a5b"
+   }
+  },
+  "selection": {
+   "digest": "fe98a09cb983998518d856be44857584ad4fcfe597d7425e767356d0719bd62b",
+   "n_files": 12,
+   "files": {
+    "sketch/selection/__init__.py": "8e33861a10fec458db1f3ef3ff063239feb30731af3904fe6cfb895bab00613b",
+    "sketch/selection/__main__.py": "848d4baf0ba6027620cdcca85cdfa4128f87cefd9c10933c51912470a92ec832",
+    "sketch/selection/candidates.py": "e13a70f356be344ccc7213ed271442760fb96b1e1fdbb9a6094bf26f9e8da1bc",
+    "sketch/selection/e2verify.py": "5292bb6f06a92936f72a2cc085d9a51aa077d02a7e02be1e04d750d34367a26b",
+    "sketch/selection/freeze.py": "65e70e90c019602123c3e3e3a8905bf74898c3d02e4c24a7e8b6830a213b85d9",
+    "sketch/selection/judge.py": "2163230dff5dc8981861a26724576b7989dcfa2014c7052c233fec6de9112855",
+    "sketch/selection/observe.py": "e75d7b6e6db327f87d6e6c08490168b3cee23aad3efe4b934d610475c49bbb77",
+    "sketch/selection/real.py": "3938cda96fdddfe2b76ecfc762525773861d70b8f0aa2b93d6146835870691b4",
+    "sketch/selection/rule.py": "8d63ac1c0e4efa36b2246edcf42cb1dfd16cc386e042576492ec6f5b20b1aed2",
+    "sketch/selection/runs.py": "0bda55501ec0e6e69fd2765b888e1ae48ff027bfd77ed651e233dd4feda259c2",
+    "sketch/selection/tap.py": "38f0505924d515a7397dae9c780ad752b691996dc8594e9efd1ac387bac6a342",
+    "sketch/selection/timing.py": "0ee1b18d8783a0a6db76bbac279e01a76dd69e3e3cfcfc68bc090ab4ae980bfa"
+   }
+  }
+ },
+ "freeze_g1": {
+  "path": "sketch/FREEZE_G1.json",
+  "sha256": "e689e9f782edb829a5e66ef08da1c0da8b2b1e10369a11ac6f8d8750058d0bbe",
+  "groups_equal": [
+   "generator",
+   "contract",
+   "cell",
+   "scoring",
+   "reference_program"
+  ],
+  "selection_group": {
+   "freeze_g1": "623bdb264ff3e65d2008e7769241357a43065d2ea7a97dc967b00dd4b5749f99",
+   "now": "fe98a09cb983998518d856be44857584ad4fcfe597d7425e767356d0719bd62b",
+   "changed": [
+    "sketch/selection/__main__.py",
+    "sketch/selection/e2verify.py",
+    "sketch/selection/real.py"
+   ]
+  }
+ },
+ "body_vendored": {
+  "checked": 91,
+  "differs": [],
+  "body": "../racecar_time_trial_on_unseen_track"
+ },
+ "harness_sha256": {
+  "sketch/selection/anchor_container.sh": "d45fb9b23e322a76229352fd21d4766fb9850221bb9408255557a7b7e7f587d5",
+  "sketch/selection/e2_container.sh": "ee2cbac8c8fe4547dc95b1393e521b1580a8ba10b91b45272566a6ca48683040"
+ },
+ "environments": [
+  {
+   "host": "selection host (E1)",
+   "cpu": "AMD Ryzen Threadripper 7960X 24-Cores",
+   "python": "3.12.9",
+   "python_build": "main Mar  4 2025 22:48:41",
+   "libc": "glibc 2.39",
+   "mujoco": "3.14.0",
+   "numpy": "2.5.3",
+   "uid": 1000,
+   "env": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
+    "OPENBLAS_CORETYPE": null
+   },
+   "role": "E1"
+  },
+  {
+   "role": "E2",
+   "image": {
+    "tag": "racecar-tt-task:g4",
+    "id": "sha256:3d519af38a6eeb6e054a1bc8e6ec9d70bce441b481a17c3d30c0acedb1eda713",
+    "created": "2026-11-16T17:44:50.442445593-05:00",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "size_bytes": 2405422201
+   },
+   "body_files": {
+    "environment/Dockerfile": "423f7bc4cba3cbce39a90dc2cd9cf5b6b8ae143576302465d77f05e30c4e244a",
+    "environment/requirements.txt": "abef0936f920305c51ec3d0429af07b174383a8880bbedecd45e6c9252b7aa09",
+    "environment/assets.sha256": "eb702cc93eb769fca78a09551126e27dbf1517d4cb3740a0059ea07ba2a722f9",
+    "tests/verify.py": "d823954d1fefaffd25a076d0ea308cf6e2903f3210397885c93879a851b933eb",
+    "tests/grader_manifest.json": "238ccc4e0bacbc230a294a8609051001f0a24b9252a922ecdac897f52447a70a",
+    "tests/verify_config.json": "d79e6cd4977d0a3596bfecda773e443fd564f3244e15af18a9f39a6e9e3b7bb7",
+    "tests/grader_config.json": "cfb5185a37f8e18d94078d449e64ab89bac64e076ff752ac5285d82c583ab5ac"
+   }
+  },
+  {
+   "host": "second host (E3)",
+   "cpu": "AMD Ryzen Threadripper PRO 5975WX 32-Cores",
+   "python": "3.12.11",
+   "mujoco": "3.14.0",
+   "numpy": "2.5.3",
+   "lan_address": "withheld (a private LAN address)",
+   "role": "E3"
+  }
+ ],
+ "runs": [],
+ "selected": [],
+ "rejections": [],
+ "not_needed": [],
+ "drivable": [],
+ "amendments": []
+}

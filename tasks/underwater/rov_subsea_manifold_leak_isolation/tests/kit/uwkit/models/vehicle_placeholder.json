@@ -1,0 +1,70 @@
+{
+  "name": "default",
+  "status": "PLACEHOLDER until the reference-vehicle digest (spec_values.json) exists; every value below is tagged in UWKIT_DYNAMICS.md section 5 (measured / claimed / estimated)",
+  "frame": "body FLU, origin = CAD origin (4-inch electronics-tube axis), metres",
+  "mass_kg": 13.0,
+  "com_m": [0.013, 0.0, -0.060],
+  "inertia_com_kgm2": [[0.22, 0.0, 0.009], [0.0, 0.25, 0.0], [0.009, 0.0, 0.31]],
+  "volume_m3": 0.013065,
+  "cob_m": [0.013, 0.0, -0.030],
+  "half_height_m": 0.127,
+  "thrusters": [
+    {"name": "thr_1", "pos_m": [0.1513, -0.0948, -0.0724], "dir": [-0.7431, -0.6691, 0.0], "note": "front right, horizontal (CAD 42 deg)"},
+    {"name": "thr_2", "pos_m": [0.1513, 0.0948, -0.0724], "dir": [-0.7431, 0.6691, 0.0], "note": "front left, horizontal"},
+    {"name": "thr_3", "pos_m": [-0.1424, -0.0934, -0.0724], "dir": [0.6691, -0.7431, 0.0], "note": "rear right, horizontal (CAD 48 deg)"},
+    {"name": "thr_4", "pos_m": [-0.1424, 0.0934, -0.0724], "dir": [0.6691, 0.7431, 0.0], "note": "rear left, horizontal"},
+    {"name": "thr_5", "pos_m": [0.1200, -0.21805, 0.0051], "dir": [0.0, 0.0, -1.0], "note": "front right, vertical; positive command pushes the vehicle down"},
+    {"name": "thr_6", "pos_m": [0.1200, 0.21805, 0.0051], "dir": [0.0, 0.0, -1.0], "note": "front left, vertical"},
+    {"name": "thr_7", "pos_m": [-0.1200, -0.21805, 0.0051], "dir": [0.0, 0.0, -1.0], "note": "rear right, vertical"},
+    {"name": "thr_8", "pos_m": [-0.1200, 0.21805, 0.0051], "dir": [0.0, 0.0, -1.0], "note": "rear left, vertical"}
+  ],
+  "thruster_model": {
+    "pwm_center_us": 1500.0,
+    "pwm_half_span_us": 400.0,
+    "tau_up_s": 0.04,
+    "tau_down_s": 0.06,
+    "inflow_loss": true,
+    "geometric_pitch_m": 0.0742,
+    "inflow_zero_ratio": 1.0,
+    "inflow_factor_max": 1.25
+  },
+  "collision_boxes": [
+    {"name": "frame", "pos_m": [0.0, 0.0, -0.063], "half_m": [0.2285, 0.169, 0.127]},
+    {"name": "pod_r", "pos_m": [0.0, -0.2285, -0.010], "half_m": [0.2173, 0.059, 0.060]},
+    {"name": "pod_l", "pos_m": [0.0, 0.2285, -0.010], "half_m": [0.2173, 0.059, 0.060]}
+  ],
+  "sites": {
+    "cam_front": [0.170, 0.0, 0.0],
+    "sonar_head": [0.000, 0.0, 0.110],
+    "dvl": [-0.050, 0.0, -0.200],
+    "depth": [-0.200, 0.050, -0.050],
+    "imu": [0.000, 0.0, 0.000],
+    "light_1": [0.200, -0.120, 0.030],
+    "light_2": [0.200, 0.120, 0.030],
+    "light_3": [0.200, -0.120, -0.150],
+    "light_4": [0.200, 0.120, -0.150],
+    "gripper_tcp": [0.360, 0.0, -0.170]
+  },
+  "camera_tilt": {"pivot_m": [0.150, 0.0, 0.0], "range_rad": [-1.5708, 1.5708], "mass_kg": 0.03, "kp": 2.0},
+  "gripper": {
+    "housing_from_m": [0.200, 0.0, -0.170], "housing_to_m": [0.320, 0.0, -0.170], "housing_radius_m": 0.025,
+    "jaw_base_x_m": 0.330, "jaw_length_m": 0.050, "jaw_half_thickness_m": 0.006, "jaw_half_height_m": 0.015,
+    "open_half_gap_m": 0.040, "jaw_mass_kg": 0.03, "jaw_volume_m3": 1.5e-5,
+    "force_limit_N": 120.0, "kp": 3000.0
+  },
+  "battery": {
+    "series_cells": 4,
+    "capacity_Ah": 18.0,
+    "r0_ohm": 0.020,
+    "r1_ohm": 0.010,
+    "tau1_s": 30.0,
+    "ocv_soc": [0.0, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00],
+    "ocv_cell_V": [3.00, 3.20, 3.33, 3.47, 3.55, 3.61, 3.67, 3.74, 3.81, 3.89, 3.98, 4.06, 4.18],
+    "i_continuous_A": 60.0,
+    "i_burst_A": 132.0,
+    "burst_s": 10.0,
+    "v_cutoff_V": 12.0,
+    "v_recover_V": 12.5
+  },
+  "hotel_W": {"base": 20.0, "light_each_full": 15.0, "sonar": 5.0, "dvl": 4.0}
+}

@@ -1,0 +1,656 @@
+{
+ "format": "quad-component/1",
+ "class": "core",
+ "part_number": "VK-BDJ-0945",
+ "vendor": "Velkarion Drives",
+ "step": "core.step",
+ "keepout_step": "core_keepout.step",
+ "frame": "origin on the output axis at the output pulley mid-plane; +z = output axis toward the rotor side (the motor's positive sense, right-handed); +x from the output axis toward the motor axis",
+ "mass_kg": 0.095,
+ "com_mm": [
+  81.54,
+  0.0,
+  11.95
+ ],
+ "inertia_kg_mm2": [
+  [
+   18.8,
+   0.0,
+   -34.53
+  ],
+  [
+   0.0,
+   237.5,
+   0.0
+  ],
+  [
+   -34.53,
+   0.0,
+   235.34
+  ]
+ ],
+ "volume_mm3": 26795.635,
+ "keepout_volume_mm3": 41290.67,
+ "extents_mm": [
+  153.45,
+  44.4,
+  37.9
+ ],
+ "bbox_mm": [
+  [
+   -16.0,
+   -22.2,
+   -8.25
+  ],
+  [
+   137.45,
+   22.2,
+   29.65
+  ]
+ ],
+ "output": {
+  "point": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "socket": {
+   "w": 18.0,
+   "h": 10.0,
+   "r": 1.0,
+   "faces_z": [
+    -8.2,
+    8.2
+   ],
+   "holes": [
+    [
+     0.0,
+     8.0
+    ],
+    [
+     0.0,
+     -8.0
+    ]
+   ],
+   "hole_d": 3.1
+  }
+ },
+ "axes": {
+  "output": [
+   0.0,
+   0.0
+  ],
+  "centre_shaft": [
+   69.9,
+   0.0
+  ],
+  "motor": [
+   113.8,
+   0.0
+  ],
+  "direction": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "centre_distances": {
+   "output_to_centre": 69.9,
+   "centre_to_motor": 43.9,
+   "output_to_motor": 113.8
+  }
+ },
+ "probes": {
+  "frame": "core frame (mm): origin on the output axis at the output pulley mid-plane, +z toward the rotor side, +x toward the motor axis",
+  "seat_rings": [
+   {
+    "name": "output_lo",
+    "centre": [
+     0.0,
+     0.0,
+     -6.25
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "r": 16.6,
+    "n": 16,
+    "half": "-z"
+   },
+   {
+    "name": "output_hi",
+    "centre": [
+     0.0,
+     0.0,
+     6.25
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "r": 16.6,
+    "n": 16,
+    "half": "+z"
+   },
+   {
+    "name": "centre_lo",
+    "centre": [
+     69.9,
+     0.0,
+     -4.75
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "r": 4.6,
+    "n": 16,
+    "half": "-z"
+   },
+   {
+    "name": "centre_hi",
+    "centre": [
+     69.9,
+     0.0,
+     12.25
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "r": 4.6,
+    "n": 16,
+    "half": "+z"
+   },
+   {
+    "name": "motor_shaft_end",
+    "centre": [
+     113.8,
+     0.0,
+     -2.77
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "r": 4.6,
+    "n": 16,
+    "half": "-z"
+   }
+  ],
+  "mount": [
+   {
+    "name": "stator_1",
+    "point": [
+     126.3,
+     0.0,
+     10.15
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.6,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 0.375
+   },
+   {
+    "name": "stator_2",
+    "point": [
+     113.8,
+     12.5,
+     10.15
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.6,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 0.375
+   },
+   {
+    "name": "stator_3",
+    "point": [
+     101.3,
+     0.0,
+     10.15
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.6,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 0.375
+   },
+   {
+    "name": "stator_4",
+    "point": [
+     113.8,
+     -12.5,
+     10.15
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.6,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 0.375
+   },
+   {
+    "name": "encoder_1",
+    "point": [
+     129.55,
+     10.48,
+     8.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "ring_r": 2.0,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 1.0
+   },
+   {
+    "name": "encoder_2",
+    "point": [
+     129.55,
+     -10.48,
+     8.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "ring_r": 2.0,
+    "n": 8,
+    "half": "+z",
+    "source_fraction": 1.0
+   },
+   {
+    "name": "tensioner_1",
+    "point": [
+     63.9,
+     9.76,
+     -2.65
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.5,
+    "n": 8,
+    "half": "-z",
+    "source_fraction": 1.0
+   },
+   {
+    "name": "tensioner_2",
+    "point": [
+     63.9,
+     -9.76,
+     -2.65
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "ring_r": 2.5,
+    "n": 8,
+    "half": "-z",
+    "source_fraction": 1.0
+   }
+  ],
+  "key": {
+   "outline": [
+    [
+     8.4,
+     0.0
+    ],
+    [
+     8.4,
+     2.1047
+    ],
+    [
+     8.3464,
+     4.2
+    ],
+    [
+     6.3142,
+     4.4
+    ],
+    [
+     4.2094,
+     4.4
+    ],
+    [
+     2.1047,
+     4.4
+    ],
+    [
+     0.0,
+     4.4
+    ],
+    [
+     -2.1047,
+     4.4
+    ],
+    [
+     -4.2094,
+     4.4
+    ],
+    [
+     -6.3142,
+     4.4
+    ],
+    [
+     -8.3464,
+     4.2
+    ],
+    [
+     -8.4,
+     2.1047
+    ],
+    [
+     -8.4,
+     0.0
+    ],
+    [
+     -8.4,
+     -2.1047
+    ],
+    [
+     -8.3464,
+     -4.2
+    ],
+    [
+     -6.3142,
+     -4.4
+    ],
+    [
+     -4.2094,
+     -4.4
+    ],
+    [
+     -2.1047,
+     -4.4
+    ],
+    [
+     -0.0,
+     -4.4
+    ],
+    [
+     2.1047,
+     -4.4
+    ],
+    [
+     4.2094,
+     -4.4
+    ],
+    [
+     6.3142,
+     -4.4
+    ],
+    [
+     8.3464,
+     -4.2
+    ],
+    [
+     8.4,
+     -2.1047
+    ]
+   ],
+   "outline_inset_mm": 0.6,
+   "socket_outline": [
+    [
+     9.0,
+     0.0
+    ],
+    [
+     9.0,
+     2.2618
+    ],
+    [
+     8.866,
+     4.5
+    ],
+    [
+     6.7854,
+     5.0
+    ],
+    [
+     4.5236,
+     5.0
+    ],
+    [
+     2.2618,
+     5.0
+    ],
+    [
+     0.0,
+     5.0
+    ],
+    [
+     -2.2618,
+     5.0
+    ],
+    [
+     -4.5236,
+     5.0
+    ],
+    [
+     -6.7854,
+     5.0
+    ],
+    [
+     -8.866,
+     4.5
+    ],
+    [
+     -9.0,
+     2.2618
+    ],
+    [
+     -9.0,
+     -0.0
+    ],
+    [
+     -9.0,
+     -2.2618
+    ],
+    [
+     -8.866,
+     -4.5
+    ],
+    [
+     -6.7854,
+     -5.0
+    ],
+    [
+     -4.5236,
+     -5.0
+    ],
+    [
+     -2.2618,
+     -5.0
+    ],
+    [
+     -0.0,
+     -5.0
+    ],
+    [
+     2.2618,
+     -5.0
+    ],
+    [
+     4.5236,
+     -5.0
+    ],
+    [
+     6.7854,
+     -5.0
+    ],
+    [
+     8.866,
+     -4.5
+    ],
+    [
+     9.0,
+     -2.2618
+    ]
+   ],
+   "faces": [
+    {
+     "z": 8.2,
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "z": -8.2,
+     "normal": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    }
+   ],
+   "depth": 2.0,
+   "face_ring": {
+    "r": 10.6,
+    "n": 16,
+    "offset": 0.5
+   },
+   "holes": [
+    [
+     0.0,
+     8.0
+    ],
+    [
+     0.0,
+     -8.0
+    ]
+   ],
+   "hole_offset": 1.0,
+   "symmetry_deg": 180.0
+  },
+  "stator_clamp": [
+   {
+    "name": "stator_1",
+    "points": [
+     [
+      128.4298,
+      -1.4913,
+      10.15
+     ],
+     [
+      128.9,
+      0.0,
+      10.15
+     ],
+     [
+      128.4298,
+      1.4913,
+      10.15
+     ]
+    ]
+   },
+   {
+    "name": "stator_2",
+    "points": [
+     [
+      115.2913,
+      14.6298,
+      10.15
+     ],
+     [
+      113.8,
+      15.1,
+      10.15
+     ],
+     [
+      112.3087,
+      14.6298,
+      10.15
+     ]
+    ]
+   },
+   {
+    "name": "stator_3",
+    "points": [
+     [
+      99.1702,
+      1.4913,
+      10.15
+     ],
+     [
+      98.7,
+      0.0,
+      10.15
+     ],
+     [
+      99.1702,
+      -1.4913,
+      10.15
+     ]
+    ]
+   },
+   {
+    "name": "stator_4",
+    "points": [
+     [
+      112.3087,
+      -14.6298,
+      10.15
+     ],
+     [
+      113.8,
+      -15.1,
+      10.15
+     ],
+     [
+      115.2913,
+      -14.6298,
+      10.15
+     ]
+    ]
+   }
+  ],
+  "rules": {
+   "seat_rings": "ring points (ring_points(centre, axis, r, n)), 0.6 mm outside each bearing's outer diameter at its mid-plane, lie in the housing material of the link that carries the unit: >= 0.75 inside, in the housing half 'half'; the source shells score 1.00",
+   "mount": "per screw: the ring (radius ring_r about the screw axis, 0.3 mm into the housing from the mounting face, axis pointing into the housing) in housing material and the point itself (the screw path) empty; the source shells score 'source_fraction' (stator screws 0.375: their countersinks break into the d 26 opening of the stator wall, so only 3 of 8 ring points meet material; 'stator_clamp' gives the 3 outboard points that the source holds at 1.00)",
+   "key": "the output turns with the driven link, so sweep about z over [0, symmetry_deg) and keep the best angle; on the better face: the outline points at 'depth' inside the socket (z = face z - depth along the face normal) inside the driven link's key (>= 0.8), the face ring 'offset' beyond the face inside the driven link (its mating face, >= 0.75), the two hole axes 'hole_offset' beyond the face empty (screw paths). The source's driven parts score: outline 1.00 and holes 1.00 on all 12 joints; face ring 1.00 on the hip flexion and knee joints and 0.857 on the four hip abduction joints (the hip module's end block ends 10 mm from the axis, the spacer is 20 mm wide). The sweep is needed: at q = 0 the hip flexion child's key lies at 90 deg to the delivered socket, so the unit's solid overlaps that key by about 120 mm3 inside the socket (the keep-out does not)",
+   "keep_out": "core_keepout.step against the carrying link and against the driven link at q = 0: intersection volume <= 20 mm3 per unit"
+  }
+ },
+ "collision_step": "core_collision.step",
+ "collision_volume_mm3": 19676.697,
+ "collision_rule": "interference sets only (quad_grade.Collider): the unit without the output pulley's swept region (the pulley with its socket and key screw holes and the output bearings' inner rings, r < 14.8 over z +-8.25, turn with the driven link); the bearings' outer rings stay; three solids. Fit, keep-out and the consistency gap use core.step / core_keepout.step"
+}

@@ -1,0 +1,12 @@
+{
+ "plugin": "desk_plugin.py",
+ "instances": "../ref/desk_table.json",
+ "budget": 14,
+ "user": "alelab",
+ "socket": "/run/ale-desk/lab.sock",
+ "state_dir": "/var/lib/ale-desk",
+ "max_connections": 2,
+ "idle_timeout_s": 900,
+ "call_timeout_s": 120.0,
+ "env": {"OMP_NUM_THREADS": "1"}
+}

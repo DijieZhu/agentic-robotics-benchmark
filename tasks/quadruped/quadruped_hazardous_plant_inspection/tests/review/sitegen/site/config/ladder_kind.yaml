@@ -1,0 +1,11 @@
+# The ladder, with the legged crossings on required routes kind to the classical controller (it walks blind
+# and is weak on round floor pipes): needs_high_step only as door sills and ramped cable protectors (bumps); floor
+# pipes and hoses are drawn free (at most 0.03 m less the band margin, which the controller crosses at any angle),
+# a bund kerb that would need a high step becomes a barrier so the ramp is the way in, and the sizes are in the
+# lower half of the high-step band. The showcase site for development runs is generated with this.
+layout: ladder_v1
+ladder:
+  high_step_kinds: [sill, cable_protector]
+  high_step_band: [0.0, 0.5]
+  corridor:
+    sill_kind_weights: {fire_door: 1.0, hose: 0.0}

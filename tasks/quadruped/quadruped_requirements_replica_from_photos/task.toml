@@ -1,0 +1,55 @@
+# quadruped_requirements_replica_from_photos: the requirements stage of the quadruped workflow (an atomic task). The agent
+# specifies eight upgraded replicas of a 12-actuator, belt-reduced inspection quadruped that is no longer in the lab,
+# known only from one fixed photo set (36 photos rendered with Blender Cycles in a lab room, sparse physical scale
+# references), a build log, a customer brief with a public acceptance procedure, vendor datasheet and erratum pages, three
+# incoming-inspection reports (images only) and a distributor quote. It delivers requirements.yaml, bom.json and
+# kinematic_sketch.json.
+#
+# Grading (tests/verify.py; knobs in tests/grader_config.json; static, no agent code runs): gates G0 structure and G1
+# submission integrity (verify-start lockdown) x kinematic_replication 0.30, requirements_sheet 0.10,
+# derived_requirements 0.20, bom_acceptance 0.10 (the acceptance verdict on the true unit with the delivered lots'
+# weakest expected units), bom_economy 0.30 (linear from the live true optimum J* to J* + one engineering change, on the
+# ECO-repaired cost). requirements_score = the weighted mean; reward = requirements_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/quadruped_requirements_replica_from_photos"
+
+[metadata]
+platform = "quadruped"
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+# setup: stage the payload into the agent home (< 30 s). agent: photogrammetry on 36 photos, 35 document pages and three
+# lot reports read from images, a replica model, the public acceptance procedure and a BOM search (3-5 h of focused
+# work). verify: lockdown, the self-tests, the procedure on the true unit, the live optimum search (under 1 s measured,
+# below).
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission
+# (regular files and directories; links are never copied). Under shared verification the grader would run as root in the
+# agent's own sandbox, where the ALE base image leaves /usr/local/bin writable for the agent account and ahead of
+# /usr/bin on root's PATH: a program planted there would run as root when the engine starts `bash test.sh`. The verifier
+# has everything the grader reads: tests/ (gt/, grader_config.json, anchor.json, the grading modules quad/, stage_lock/,
+# the kit), the image's /opt/venv and the restored submission. environment/setup/setup.sh does not run there, and verify
+# reads nothing it stages (the grader's truth is in tests/gt/). Its machine: the grader is static and single-threaded
+# (test.sh pins the BLAS threads to 1); in a container of the task image with 2 CPUs and 4 GB, on the oracle and on the
+# three scored Opus 5.5 submissions of the frontier check, it peaked at 126-131 MB RSS and used 0.7 s of one CPU (the
+# self-tests and the live optimum search included; 0.8 s wall), and the whole container, the base image's desktop
+# session included, at 519 MB, so 2 CPUs and 4 GB, no GPU. timeout_sec also covers the verifier's start, the restore of
+# the submission and the stage upload (about 5 s before test.sh starts), far inside 900 s.
+[verifier]
+timeout_sec = 900
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

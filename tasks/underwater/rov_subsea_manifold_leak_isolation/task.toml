@@ -1,0 +1,103 @@
+# rov_subsea_manifold_leak_isolation (autonomous leak isolation on a subsea production manifold by an inspection-class
+# ROV; behavior stage; tests/README.md).
+#
+# After a storm the six-slot production manifold of a shallow gas field (45-75 m of water) has lost its control
+# umbilical: the platform only knows that the manifold is losing pressure and that gas reaches the surface. A support
+# vessel left a deployment cage with an acoustic modem on the seabed, an inspection-class ROV in it holding a leak
+# marker block in its gripper, and left. The acoustic link carries no video, so the intervention is the vehicle's
+# AUTONOMOUS program, written beforehand (intervene.py, solve(vehicle)): find the manifold with the scanning sonar, work
+# out which branch leaks (the bubble plume is bent by the tide; seen from afar it has to be traced back, seen up close
+# it means flying the structure in murky water), put the marker on that branch's roof zone, survey the intervention
+# panel's 18 valve positions, read the handles as they are, grip each open valve of the leaking branch and close it by
+# ROLLING THE WHOLE VEHICLE 90 deg about the gripper axis, drag the dropped object off the test-port approach, wait for
+# the isolated segment to bleed down, stab the pressure-recording hot stab into the branch's test port, and go back to
+# the cage. Every well is live: closing a healthy one freezes it with hydrates, so "close everything" is no option.
+# Score per station (eleven items from the hidden world's terminal state and the cell's event log only, integer
+# percentage points summing to 1.00): marker at rest on the roof 0.03, in the leaking branch's zone 0.12; survey
+# complete (>= 15 of 18 positions imaged), no critical error, vehicle not disabled 0.12; isolation: one isolation valve
+# closed 0.08, the segment isolated from every pressure source 0.22, no other valve moved 0.08; dropped object out of the
+# working band after a lifting-eye grip 0.07, at rest in the laydown area 0.05; hot stab out of its park and locked in a
+# legal port 0.04, locked in the leaking branch's test port 0.14; vehicle at rest in its cage 0.05. A critical error
+# (any valve outside the isolation set changes its conduction state for >= 0.2 s, even if turned back) zeroes the
+# isolation, stab and survey groups of that station; no negative marks, nothing carries across stations.
+# intervention_score = the contract gate x the mean over six hidden stations, stored as site packages in
+# tests/hidden/sites/ and pinned by tests/hidden/stations.json (selected by the pre-registered rule of
+# tests/hidden/selection.json among sites the privileged reference completes). The oracle submits a two-line program
+# with a 256-bit token: the reference program inside the cell gets the true poses of the vehicle and the structure,
+# never the leaking branch, a handle angle or a pressure.
+# Realism rule: the agent gets what the engineer who programs an intervention would have: the vehicle's manual and API
+# (datasheet level), the panel standard, isolation rules and operating limits, a metocean summary, the dropped-object
+# register, plume sample frames and the manifold's general arrangement, a work order per site at run time, the client
+# library, and two practice facilities (a black-box service under its own account: a training tank with instrument
+# truth, 24 runs, and a sister site without any truth or score, 6 runs); the simulator, its code, the vehicle's water
+# coefficients, the site generator and every ground truth of a graded site stay out of its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (intervene.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/rov_subsea_manifold_leak_isolation"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/underwater/<name>/. The metric
+# (intervention_score, higher) lives in tests/anchor.json.
+platform = "underwater"
+tags = ["subsea-intervention", "rov", "manifold", "leak-isolation", "valve-operation", "gas-plume", "tidal-current",
+        "scanning-sonar", "camera", "dvl", "navigation-drift", "fiducial-tags", "hot-stab", "dropped-object",
+        "contact-manipulation", "code-as-policy", "hidden-site", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the practice facilities.
+# [agent] timeout_sec: 4 h.
+# [verifier] timeout_sec = 9600 s. Derivation from unit costs measured in a container of the task image's runtime
+# with the verifier's 8 CPUs and 16 GB (2026-11-15, host load 72-119; every station of the bound at its budget limits):
+#   fixed steps: lockdown, the import check (at most 120 s), the desktop settle (at most 60 s), the no-network
+#     self-test, staging ...................................................................... 250 s
+#   one station, with three stations running at a time (each slot one cell process and one program process, pinned
+#   to cores of their own; a cell in a full wave runs 1.02 x slower than alone):
+#     the cell's simulation: 2400 s simulated x 0.291 s of wall clock per simulated second
+#       (the slowest measured station) ........................................................ 698 s
+#     the camera: 600 frame units at the p95 cost per frame (640 x 480 0.49 s, or 320 x 240 0.20 s at
+#       weight 0.40; the dearer of the two) ................................................... 294 s
+#     the sonar: 16000 pings x 5.00 ms (p95) ................................................... 80 s
+#     the program's own time on one core (its cap; the cell's work is not counted) ........... 1200 s
+#     the cell's build and the wire's grace .................................................... 95 s
+#     = 2367 s per station
+#   six stations in two waves of three slots (2 x 2367 s), one station run again alone after a cell failure
+#   (2348 s) and the fixed steps: 7332 s; x 1.15 margin, rounded up to 100 s: 8500 s;
+#   the same with stand-ins for the finished cell's extra objects: 9000 s.
+#   Rule: timeout_sec = min(10800, max(8500, 9000, 9600)) = 9600 s (9600 s: the design
+#   value; 10800 s: the cap of decision M12). The cell side could run 1.71 x slower than measured before the
+#   bounded total reaches it.
+#   Measured again on the six hidden stations in the task image (2026-11-17, three slots; package P42): at the dearest
+#   position, in front of the panel with the dropped object awake, the cell takes 0.942 s of wall clock per simulated
+#   second, so one station at all its budgets there takes 2261 (2400 x 0.942) + 272 (camera, 320 x 240) + 88 (sonar) +
+#   1200 + 95 = 3916 s.
+#   Each station has a watchdog (it ends a hung station; the budgets above bound the work): one wave's share of the
+#   limit, (9600 - 250) / 2 = 4675 s (decision AM2-13), above 3916 x 1.15 = 4503 s; the single-station re-run after a
+#   cell failure starts only while the average share, (9600 - 250) / (2 + 1) = 3117 s (rounded up), remains before the
+#   deadline.
+#   Measured: the anchor run (one full verify of the oracle submission on this hidden set, tests/test.sh in a fresh
+#   container of the task image, --cpus 8, 3 slot(s)) took 1048 s of wall clock.
+#   The oracle's stations run the reference program inside one privileged call.
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 9600
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

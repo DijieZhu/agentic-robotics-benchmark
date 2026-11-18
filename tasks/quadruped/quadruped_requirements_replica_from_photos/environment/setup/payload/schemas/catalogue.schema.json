@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The datasheet pages (with the vendors' erratum sheets applied) and the quote in SI units: torques N.m, speeds rad/s, currents A, voltages V, resistance ohm, inertia kg.m2 (output side), masses kg, lengths m, capacities Ah, prices USD. Each list in the quote's order. A vendor is 'inspected' when an incoming-inspection report exists for its parts.",
+  "properties": {
+    "drivers": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "channels": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "continuous_current_a": {
+            "type": "number"
+          },
+          "efficiency": {
+            "type": "number"
+          },
+          "input_range_v": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "peak_current_a": {
+            "type": "number"
+          },
+          "price_usd": {
+            "type": "number"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "part_id",
+          "vendor",
+          "channels",
+          "peak_current_a",
+          "continuous_current_a",
+          "input_range_v",
+          "price_usd"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "errata": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "as_printed": {},
+          "correct": {},
+          "field": {
+            "type": "string"
+          },
+          "item": {
+            "type": "string"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "sheet": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "format": {
+      "const": "quad-catalogue/1"
+    },
+    "housing_classes": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "bolt": {
+            "type": "string"
+          },
+          "bolt_circle_m": {
+            "type": "number"
+          },
+          "bolts": {
+            "type": "integer"
+          },
+          "can_diameter_m": {
+            "type": "number"
+          },
+          "can_length_m": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "propertyNames": {
+        "enum": [
+          "R52",
+          "R38",
+          "R62"
+        ]
+      },
+      "type": "object"
+    },
+    "hubs": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "input_range_v": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "ports": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "price_usd": {
+            "type": "number"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "part_id",
+          "vendor",
+          "ports",
+          "price_usd"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "modules": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "continuous_torque_nm": {
+            "type": "number"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "housing_class": {
+            "enum": [
+              "R52",
+              "R38",
+              "R62"
+            ],
+            "type": "string"
+          },
+          "lead_time": {
+            "type": "string"
+          },
+          "mass_kg": {
+            "type": "number"
+          },
+          "output_inertia_kg_m2": {
+            "type": "number"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "phase_resistance_ohm": {
+            "type": "number"
+          },
+          "points": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "no_load_speed_rad_s": {
+                  "type": "number"
+                },
+                "peak_current_a": {
+                  "type": "number"
+                },
+                "peak_torque_nm": {
+                  "type": "number"
+                },
+                "voltage_v": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "voltage_v",
+                "peak_torque_nm",
+                "no_load_speed_rad_s",
+                "peak_current_a"
+              ],
+              "type": "object"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "type": "array"
+          },
+          "price_usd": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "vendor": {
+            "type": "string"
+          },
+          "voltage_range_v": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "required": [
+          "part_id",
+          "vendor",
+          "housing_class",
+          "points",
+          "continuous_torque_nm",
+          "phase_resistance_ohm",
+          "output_inertia_kg_m2",
+          "mass_kg",
+          "voltage_range_v",
+          "price_usd"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "packs": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "capacity_ah": {
+            "type": "number"
+          },
+          "cell_voltage_v": {
+            "additionalProperties": true,
+            "properties": {
+              "cutoff": {
+                "type": "number"
+              },
+              "full": {
+                "type": "number"
+              },
+              "nominal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "nominal",
+              "full",
+              "cutoff"
+            ],
+            "type": "object"
+          },
+          "cells": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "continuous_current_a": {
+            "type": "number"
+          },
+          "mass_kg": {
+            "type": "number"
+          },
+          "outline_m": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "price_usd": {
+            "type": "number"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "part_id",
+          "vendor",
+          "cells",
+          "capacity_ah",
+          "continuous_current_a",
+          "mass_kg",
+          "outline_m",
+          "cell_voltage_v",
+          "price_usd"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "vendors": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "inspected": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "inspected"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "vendors",
+    "modules",
+    "packs",
+    "drivers",
+    "hubs"
+  ],
+  "title": "quad-catalogue/1 vendor parts and the quote (SI units)",
+  "type": "object"
+}

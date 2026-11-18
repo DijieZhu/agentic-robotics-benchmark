@@ -63,9 +63,8 @@ def test_a_missing_card_warns_and_fails_strict(tmp_path):
     ('title = "Open a box"\nplatforms = ["uav"]\nstages = ["behavior"]', "the first platform is the folder's"),
     ('title = "Open a box"\nplatforms = ["arm", "rover"]\nstages = ["behavior"]', "'rover' is not a key"),
     ('title = "Open a box"\nplatforms = ["arm", "arm"]\nstages = ["behavior"]', "lists a key twice"),
-    ('title = "Open a box"\nplatforms = ["arm"]\nstages = ["behavior", "control"]', "workflow order"),
-    ('title = "Open a box"\nplatforms = ["arm"]\nstages = ["end-to-end", "control"]', "stands alone"),
     ('title = "Open a box"\nplatforms = ["arm"]\nstages = ["planning"]', "'planning' is not one of"),
+    ('title = "Open a box"\nplatforms = ["arm"]\nstages = "behavior"', "a list of one stage key"),
     ('title = "open a box"\nplatforms = ["arm"]\nstages = ["behavior"]', "sentence case"),
     ('title = "Open a box."\nplatforms = ["arm"]\nstages = ["behavior"]', "without a period"),
     ('title = "' + "A" * 49 + '"\nplatforms = ["arm"]\nstages = ["behavior"]', "more than 48"),
@@ -87,8 +86,27 @@ def test_a_card_for_no_task_and_a_title_used_twice_are_errors(tmp_path):
     assert any("the same title as [box]" in e for e in errors), errors
 
 
-def test_several_stages_in_order_and_end_to_end_alone_pass(tmp_path):
-    cards = ('[box]\ntitle = "Open a box"\nplatforms = ["arm", "ground"]\nstages = ["hardware-design", "environment", "behavior"]\n'
+@pytest.mark.parametrize("stages", [
+    '["hardware-design", "environment", "behavior"]',
+    '["behavior", "control"]',
+    '["behavior", "behavior"]',
+    '["end-to-end", "control"]',
+    '[]',
+])
+def test_a_card_must_hold_exactly_one_stage(tmp_path, stages):
+    root = _tree(tmp_path, {"box": "arm"}, f'[box]\ntitle = "Open a box"\nplatforms = ["arm"]\nstages = {stages}\n')
+    errors, _ = tc.check(root)
+    assert any("stages holds exactly one stage" in e for e in errors), errors
+    assert tc.main(["--root", str(root), "check"]) == 1
+    with open(root / "tasks" / "cards.toml", "rb") as fh:
+        cards = tomllib.load(fh)
+    schema = json.loads((ROOT / "schemas" / "task-cards.schema.json").read_text(encoding="utf-8"))
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(cards, schema)
+
+
+def test_one_stage_and_end_to_end_pass(tmp_path):
+    cards = ('[box]\ntitle = "Open a box"\nplatforms = ["arm", "ground"]\nstages = ["behavior"]\n'
              '[line]\ntitle = "Build a robot end to end"\nplatforms = ["uav"]\nstages = ["end-to-end"]\n')
     root = _tree(tmp_path, {"box": "arm", "line": "uav"}, cards)
     assert tc.check(root, strict=True) == ([], [])

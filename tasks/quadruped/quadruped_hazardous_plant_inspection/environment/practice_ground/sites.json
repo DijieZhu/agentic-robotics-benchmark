@@ -1,0 +1,44 @@
+{
+ "rule": "the training hall (hand-laid, its drawing correct and complete) and three practice buildings chosen by the practice rule among the practice candidates of the label quadruped_hazardous_plant_inspection/practice/v2/<k>: disjoint from the hidden set and its candidates by construction",
+ "missions": 30,
+ "open": 2,
+ "program_time_cap_s": 1200.0,
+ "silence_s": 180.0,
+ "config": {
+  "time": {
+   "sim_time_limit_s": 1350.0
+  }
+ },
+ "note": "the practice ground's sites and allowance (environment/practice_ground/practiced.py); readable by the service's account only; written by the maintainers' assembly tool",
+ "sites": [
+  {
+   "name": "hall",
+   "package": "sites/hall.tar.xz",
+   "sha256": "fcf76a39024d13ec775e46a98774dd09a4587065fe9c9e4d752338296d49b75f",
+   "kind": "hall",
+   "about": "the training hall: lanes of every obstacle class in several sizes, an instrument wall, a board and posts with tag plates, a check source, surveyed grid markers, a base station, a straight and a loop for odometry",
+   "sim_time_limit_s": 900.0
+  },
+  {
+   "name": "t1",
+   "package": "sites/t1.tar.xz",
+   "sha256": "54615e4093b19853a851a0c0501fe611bd3ba5839d586689b7f59d8e090106ac",
+   "kind": "practice",
+   "about": "a practice building of the same kind as the scored ones"
+  },
+  {
+   "name": "t2",
+   "package": "sites/t2.tar.xz",
+   "sha256": "4988588a5e43bbcb4b5db23338ed5b0bc826e3031bc7a5062ac3e81cc0110821",
+   "kind": "practice",
+   "about": "a practice building of the same kind as the scored ones"
+  },
+  {
+   "name": "t3",
+   "package": "sites/t3.tar.xz",
+   "sha256": "aa1054b2498937d6e6916de7d09dff9fc05df1531a3926a28b8b200fabf4887e",
+   "kind": "practice",
+   "about": "a practice building of the same kind as the scored ones"
+  }
+ ]
+}

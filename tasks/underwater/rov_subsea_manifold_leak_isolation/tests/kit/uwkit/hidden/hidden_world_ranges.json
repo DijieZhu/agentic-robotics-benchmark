@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "role": "proposed hidden-world ranges (grader side only). Robot properties stay fixed; only fluid-vehicle interaction coefficients and the environment vary.",
+  "sampling": "lam_A ~ U(0,1) blends added mass linearly between set A (wu2018) and set B (vonbenzon2022); lam_D ~ U(0,1) blends damping (linear terms linearly, quadratic terms in log space); then each coefficient gets an independent multiplicative jitter exp(U(-j, j)). Draw ONCE per task world (one layout), not per episode.",
+  "endpoints": ["wu2018", "vonbenzon2022"],
+  "added_mass": {"blend": "linear", "jitter": 0.10},
+  "damping_linear": {"blend": "linear", "jitter": 0.15},
+  "damping_quadratic": {"blend": "log", "jitter": 0.15},
+  "fixed_robot": ["mass_kg", "com_m", "inertia_com_kgm2", "volume_m3", "cob_m", "thrusters", "thruster_model", "thruster_curve", "battery", "hotel_W", "autopilot gains"],
+  "environment": {
+    "rho_kg_m3": {"fresh": [997.0, 1000.0], "brackish": [1005.0, 1015.0], "sea": [1020.0, 1028.0]},
+    "current": "task-specific; see uwkit.dynamics.current (uniform / layered / tidal / Gauss-Markov / wake)"
+  }
+}

@@ -8,6 +8,14 @@ with procedural textures from `render.scale_refs`, so any backend renders them: 
 board on the fixture, the hand plate on the Panda hand) and the episode's lights. The builder hands the render layer a
 copy of the MjSpec registered for this process (`scene(key=...)`); its request digest covers the builder source and the
 kit's mesh folder.
+
+`open_session` renders like the cell's cameras by default: the twin goes through the cell cameras' own session
+(`arm.assembly_full.agent_render.open_session`: MuJoCo's Filament renderer in the baked factory hall of the scenery
+folder ~/render with the cell's look; the floor, the backdrop walls and the classic workbench frame are left out and
+the hall and the cell's steel bench frame stand in their place, the hall's lamps replace the episode's lights; depth
+from MuJoCo on the same geometry), at the exposure the episode's drawn key light gives (`_exposure`). MuJoCo's classic renderer (the
+twin as described above) on request: `open_session(server, renderer="mujoco")` or ARB_AGENT_RENDERER=mujoco in the
+environment.
 """
 
 import math
@@ -15,10 +23,11 @@ import os
 
 import numpy as np
 
-__all__ = ["scene", "open_session", "render_spec", "board_ref", "attach_ref", "BOARD_GEOMS"]
+__all__ = ["scene", "open_session", "render_spec", "board_ref", "attach_ref", "BOARD_GEOMS", "RENDERERS"]
 
 _SPECS = {}
 BOARD_GEOMS = ("bench_board", "fixture_board", "hand_plate")
+RENDERERS = ("filament", "mujoco")
 
 
 def scene(key):
@@ -141,8 +150,31 @@ def render_spec(server):
     return spec
 
 
-def open_session(server):
-    """Open the episode's render session (MuJoCo backend; RA1 sensor depth, RA2 one pass, RA4 sessions)."""
+def _exposure(server):
+    """The hall's brightness of the episode for the Filament session: its drawn key light over the configuration's
+    nominal key light (1.0 when the episode has no light draw)."""
+    try:
+        lc = server.episode["config"]["lights"]["key"]
+        nominal = lc["diffuse"] if isinstance(lc, dict) else lc
+        return float(server.episode["lights"]["key"]) / float(nominal)
+    except (AttributeError, KeyError, TypeError, ValueError, ZeroDivisionError):
+        return 1.0
+
+
+def open_session(server, renderer=None, render_dir=None):
+    """Open the episode's render session. renderer: "filament" (the default: the cell cameras' own session,
+    arm.assembly_full.agent_render.open_session on render_spec(server)) or "mujoco" (MuJoCo's classic renderer; RA1
+    sensor depth, RA2 one pass, RA4 sessions); None = $ARB_AGENT_RENDERER, else "filament". render_dir: the scenery
+    folder with room/ and oak/ for the Filament session (default ~/render, see agent_render._render_dir)."""
+    want = str(renderer or os.environ.get("ARB_AGENT_RENDERER") or "filament")
+    if want not in RENDERERS:
+        raise ValueError("renderer %r: one of %s" % (want, ", ".join(RENDERERS)))
+    if want == "filament":
+        from ..assembly_full import agent_render
+        ph = server.cfg["photo"]
+        return agent_render.open_session(render_spec(server), exposure_factor=_exposure(server), render_dir=render_dir,
+                                         content_files=[os.path.join(server.a2_dir, "meshes", "visual")],
+                                         lod=str(ph.get("lod", "full")))
     from render.backends import get_backend, require_capabilities
     from render.spec import BackgroundSpec, HeadlightSpec, LightSpec, MaterialOverride, SceneSpec
     be = get_backend("mujoco")

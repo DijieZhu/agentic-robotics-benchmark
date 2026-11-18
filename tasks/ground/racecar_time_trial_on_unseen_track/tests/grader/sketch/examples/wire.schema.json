@@ -1,0 +1,226 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-wire/1",
+ "title": "Wire messages of racecar_time_trial_on_unseen_track (machine-readable companion of the protocol's text)",
+ "description": "JSON lines. The program writes one request object per line and reads one reply object per line. The protocol's text is the text of record; sketch/examples/check.py validates against these definitions.",
+ "$defs": {
+  "session_name": {"enum": ["practice", "tt1", "tt2", "avoid"]},
+  "phase": {
+   "type": "object", "additionalProperties": false, "required": ["name", "t0_s", "speed_limit_mps"],
+   "properties": {
+    "name": {"enum": ["mapping", "free", "heat", "static", "dynamic"]},
+    "t0_s": {"type": "number", "minimum": 0},
+    "speed_limit_mps": {"type": ["number", "null"], "exclusiveMinimum": 0}
+   }
+  },
+  "envelope": {
+   "description": "What every request line is, whatever its method: an id, a method name and optional parameters.",
+   "type": "object", "additionalProperties": false, "required": ["id", "method"],
+   "properties": {"id": {"type": "integer", "minimum": 1}, "method": {"type": "string", "minLength": 1, "maxLength": 64}, "params": {"type": "object"}}
+  },
+  "request": {
+   "description": "A request that is well formed for its method (a method outside the table only has to be an envelope; the server answers it with `forbidden`).",
+   "type": "object", "additionalProperties": false, "required": ["id", "method"],
+   "properties": {
+    "id": {"type": "integer", "minimum": 1},
+    "method": {"type": "string", "minLength": 1, "maxLength": 64},
+    "params": {"type": "object"}
+   },
+   "allOf": [
+    {"if": {"properties": {"method": {"enum": ["describe", "close_session", "request_pickup", "priv_world", "priv_state"]}}},
+     "then": {"properties": {"params": {"type": "object", "maxProperties": 0}}}},
+    {"if": {"properties": {"method": {"const": "open_session"}}},
+     "then": {"required": ["params"], "properties": {"params": {"type": "object", "additionalProperties": false, "required": ["name"], "properties": {"name": {"$ref": "#/$defs/session_name"}}}}}},
+    {"if": {"properties": {"method": {"const": "step"}}},
+     "then": {"required": ["params"], "properties": {"params": {"type": "object", "additionalProperties": false, "required": ["steer", "speed"], "properties": {"steer": {"type": "number"}, "speed": {"type": "number"}}}}}},
+    {"if": {"properties": {"method": {"const": "priv_unlock"}}},
+     "then": {"required": ["params"], "properties": {"params": {"type": "object", "additionalProperties": false, "required": ["token"], "properties": {"token": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}}}}
+   ]
+  },
+  "error_reply": {
+   "type": "object", "additionalProperties": false, "required": ["id", "error"],
+   "properties": {
+    "id": {"type": ["integer", "null"]},
+    "error": {"enum": ["forbidden", "bad_params", "no_session", "bad_order", "venue_over"]},
+    "detail": {"type": "string", "maxLength": 300}
+   }
+  },
+
+  "reply_describe": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {
+    "id": {"type": "integer"},
+    "result": {
+     "type": "object", "additionalProperties": false,
+     "required": ["protocol", "venue_sheet", "sessions", "budgets", "timing", "car"],
+     "properties": {
+      "protocol": {"const": "racecar-wire/1"},
+      "venue_sheet": {"type": "object", "description": "world.venue_sheet verbatim (world.schema.json #/$defs/venue_sheet)."},
+      "sessions": {
+       "type": "array", "minItems": 4, "maxItems": 4,
+       "items": {
+        "type": "object", "additionalProperties": false, "required": ["name", "duration_s", "ticks", "desk_before_s", "scored", "phases"],
+        "properties": {
+         "name": {"$ref": "#/$defs/session_name"},
+         "duration_s": {"type": "number", "exclusiveMinimum": 0},
+         "ticks": {"type": "integer", "minimum": 1},
+         "desk_before_s": {"type": "number", "minimum": 0},
+         "scored": {"type": "boolean"},
+         "phases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/phase"}}
+        }
+       }
+      },
+      "budgets": {
+       "type": "object", "additionalProperties": false, "required": ["program_ms_per_tick", "cpu_factor", "silence_s"],
+       "properties": {
+        "program_ms_per_tick": {"type": "number", "exclusiveMinimum": 0},
+        "cpu_factor": {"type": "number", "exclusiveMinimum": 0},
+        "silence_s": {"type": "number", "exclusiveMinimum": 0}
+       }
+      },
+      "timing": {
+       "type": "object", "additionalProperties": false, "required": ["tick_s", "cmd_delay_ticks", "imu_samples_per_tick", "subscans_per_tick"],
+       "properties": {
+        "tick_s": {"const": 0.025},
+        "cmd_delay_ticks": {"type": "integer", "minimum": 0},
+        "imu_samples_per_tick": {"const": 5},
+        "subscans_per_tick": {"const": 5}
+       }
+      },
+      "car": {
+       "type": "object", "additionalProperties": false,
+       "required": ["wheelbase_m", "track_front_m", "track_rear_m", "tyre_radius_m", "mass_kg", "com_m", "length_m", "width_m", "height_m",
+                    "steer_max_rad", "steer_rate_max_radps", "min_turn_radius_m", "final_drive_ratio", "speed_cmd_min_mps", "speed_cmd_max_mps", "lidar", "imu"],
+       "properties": {
+        "wheelbase_m": {"type": "number"}, "track_front_m": {"type": "number"}, "track_rear_m": {"type": "number"},
+        "tyre_radius_m": {"type": "number"}, "mass_kg": {"type": "number"},
+        "com_m": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+        "length_m": {"type": "number"}, "width_m": {"type": "number"}, "height_m": {"type": "number"},
+        "steer_max_rad": {"type": "number"}, "steer_rate_max_radps": {"type": "number"}, "min_turn_radius_m": {"type": "number"},
+        "final_drive_ratio": {"type": "number"},
+        "speed_cmd_min_mps": {"type": "number", "maximum": 0}, "speed_cmd_max_mps": {"type": "number", "exclusiveMinimum": 0},
+        "lidar": {
+         "type": "object", "additionalProperties": false,
+         "required": ["pos_m", "beams", "angle_min_rad", "angle_inc_rad", "range_min_m", "range_max_m", "no_return"],
+         "properties": {
+          "pos_m": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+          "beams": {"const": 1081},
+          "angle_min_rad": {"type": "number"}, "angle_inc_rad": {"type": "number"},
+          "range_min_m": {"type": "number"}, "range_max_m": {"type": "number"},
+          "no_return": {"const": 0}
+         }
+        },
+        "imu": {
+         "type": "object", "additionalProperties": false, "required": ["pos_m", "rate_hz"],
+         "properties": {"pos_m": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}}, "rate_hz": {"const": 200}}
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+
+  "reply_open_session": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {
+    "id": {"type": "integer"},
+    "result": {
+     "type": "object", "additionalProperties": false, "required": ["session", "duration_s", "ticks", "phases"],
+     "properties": {
+      "session": {"$ref": "#/$defs/session_name"},
+      "duration_s": {"type": "number", "exclusiveMinimum": 0},
+      "ticks": {"type": "integer", "minimum": 1},
+      "phases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/phase"}}
+     }
+    }
+   }
+  },
+
+  "event": {
+   "oneOf": [
+    {"type": "object", "additionalProperties": false, "required": ["type", "count", "lap_ms"],
+     "properties": {"type": {"const": "lap"}, "count": {"type": "integer", "minimum": 0}, "lap_ms": {"type": ["integer", "null"], "minimum": 1}}},
+    {"type": "object", "additionalProperties": false, "required": ["type"], "properties": {"type": {"const": "stopped"}}},
+    {"type": "object", "additionalProperties": false, "required": ["type"], "properties": {"type": {"const": "released"}}},
+    {"type": "object", "additionalProperties": false, "required": ["type", "count"],
+     "properties": {"type": {"const": "warning"}, "count": {"type": "integer", "minimum": 1, "maximum": 3}}},
+    {"type": "object", "additionalProperties": false, "required": ["type", "name"],
+     "properties": {"type": {"const": "phase"}, "name": {"enum": ["free", "dynamic"]}}},
+    {"type": "object", "additionalProperties": false, "required": ["type", "reason"],
+     "properties": {"type": {"const": "session_end"}, "reason": {"enum": ["time", "warnings", "void"]}}}
+   ]
+  },
+
+  "reply_step": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {
+    "id": {"type": "integer"},
+    "result": {
+     "type": "object", "additionalProperties": false,
+     "required": ["tick", "scan", "imu", "wheel_speed", "steer_echo", "events"],
+     "properties": {
+      "tick": {"type": "integer", "minimum": 1, "description": "Ticks of this session completed with this step; session time = tick x 0.025 s."},
+      "scan": {"type": "array", "minItems": 1081, "maxItems": 1081, "items": {"type": "integer", "minimum": 0, "maximum": 10000}, "description": "Ranges in mm, 0 = no return; beam 0 at -135 deg, beam 540 straight ahead, beam 1080 at +135 deg."},
+      "imu": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "number"}}, "description": "Five samples, oldest first: [ax, ay, az, gx, gy, gz] in m/s^2 and rad/s."},
+      "wheel_speed": {"type": "number", "description": "m/s, from the motor speed."},
+      "steer_echo": {"type": "number", "description": "rad, the servo's present target."},
+      "events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+      "truth": {"$ref": "#/$defs/truth_state", "description": "Only after priv_unlock."}
+     }
+    }
+   }
+  },
+
+  "reply_close_session": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {
+    "id": {"type": "integer"},
+    "result": {"type": "object", "additionalProperties": false, "required": ["session", "ticks"],
+               "properties": {"session": {"$ref": "#/$defs/session_name"}, "ticks": {"type": "integer", "minimum": 0}}}
+   }
+  },
+
+  "reply_request_pickup": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {
+    "id": {"type": "integer"},
+    "result": {"type": "object", "additionalProperties": false, "required": ["accepted"], "properties": {"accepted": {"type": "boolean"}}}
+   }
+  },
+
+  "reply_priv_unlock": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {"id": {"type": "integer"}, "result": {"type": "object", "additionalProperties": false, "required": ["ok"], "properties": {"ok": {"const": true}}}}
+  },
+  "reply_priv_world": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {"id": {"type": "integer"}, "result": {"type": "object", "required": ["schema", "venue_sheet", "truth"], "description": "The whole world file."}}
+  },
+  "reply_priv_state": {
+   "type": "object", "additionalProperties": false, "required": ["id", "result"],
+   "properties": {"id": {"type": "integer"}, "result": {"$ref": "#/$defs/truth_state"}}
+  },
+
+  "truth_state": {
+   "description": "Privileged state at the end of the last tick. The reference program may add keys; these are the frozen minimum.",
+   "type": "object", "required": ["session", "tick", "stopped", "car", "boxes", "slow_cars", "moved_pieces"],
+   "properties": {
+    "session": {"oneOf": [{"$ref": "#/$defs/session_name"}, {"type": "null"}]},
+    "tick": {"type": "integer", "minimum": 0},
+    "stopped": {"type": "boolean"},
+    "car": {
+     "type": "object", "required": ["pose", "vel_mps", "yaw_rate_radps"],
+     "properties": {
+      "pose": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}, "description": "[x, y, yaw] of the car frame C in the world."},
+      "vel_mps": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}, "description": "[vx, vy] of the car frame origin in the car frame (forward, left)."},
+      "yaw_rate_radps": {"type": "number"}
+     }
+    },
+    "boxes": {"type": "array", "items": {"type": "object", "required": ["id", "pose"], "properties": {"id": {"type": "string"}, "pose": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}}}}},
+    "slow_cars": {"type": "array", "items": {"type": "object", "required": ["id", "pose", "speed_mps", "on_track"], "properties": {"id": {"type": "string"}, "pose": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}}, "speed_mps": {"type": "number"}, "on_track": {"type": "boolean"}}}},
+    "moved_pieces": {"type": "array", "items": {"type": "array", "minItems": 5, "maxItems": 5, "prefixItems": [{"type": "string"}, {"type": "integer"}, {"type": "number"}, {"type": "number"}, {"type": "number"}]}, "description": "[duct id, piece index, x, y, yaw] of every duct piece that is not at its world-file pose (more than 1 mm away)."}
+   }
+  }
+ }
+}

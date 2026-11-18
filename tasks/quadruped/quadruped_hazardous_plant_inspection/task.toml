@@ -1,0 +1,87 @@
+# quadruped_hazardous_plant_inspection (autonomous inspection round of a legacy nuclear plant building by a small
+# twelve-actuator quadruped; behavior stage; tests/README.md).
+#
+# A 3 kg quadruped with an on-board gait (walk, high_step, crouch_walk modes; the gait is the robot's firmware), a
+# pan-tilt sensor head (a 90 deg navigation RGB-D camera, an 18 deg inspection camera, a radiometric thermal camera, a
+# head lamp), a planar lidar on its back, a dosimeter and drifting leg odometry (MuJoCo, CPU, the classic renderer) is
+# set down in the airlock of a plant building nobody has entered since 2009. The team holds an outdated general
+# arrangement drawing and a round sheet of ten items: read eight tagged instruments (dial gauges, level gauges, lever
+# and rising-stem valves, lamp panels, a thermal measuring point), measure the dose rate at a survey mark, and find one
+# unlisted radiation source. The radio link ends a few metres past the airlock, so the agent writes the robot's
+# AUTONOMOUS program (patrol.py, solve(robot)): it reconciles the drawing with what the robot senses (a sealed door, a
+# moved and a relocated instrument, an undrawn annex), picks the gait mode for every sill, hose, pipe and low rack,
+# reads each value from its own frames, reports with cited evidence frames, and brings the robot back to the pad.
+# Score per site S = R x sum(w x c): each instrument 0.10 (delivered x evidence x value: full within tolerance, linear
+# to 0 at 2.5 x; a value-free report with a qualifying frame earns 0.25), the mark 0.06, the source 0.14; R = 1.0
+# upright on the pad at the end, else 0.85; no negative marks. inspection_score = the contract gate x the mean of S
+# over twelve hidden sites, stored as site packages in tests/hidden/sites/ and selected by the pre-registered rule of
+# tests/hidden/selection.json among sites the privileged reference completes. The oracle submits a two-line program
+# with a 256-bit token: the reference program inside the cell gets the true pose and the true layout, never a value.
+# Realism rule: the agent gets what the robotics engineer of an inspection team would have: the robot's manual and
+# API (datasheet level), the facility notes, the round procedure and site rules, the instrument catalogue, the client
+# library, and a practice ground (a black-box service under its own account: a training hall and three training
+# sites, 30 missions, a debrief per item after each); the simulator's code, the site generator and every ground truth
+# of a graded site stay out of its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (patrol.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/quadruped_hazardous_plant_inspection"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/quadruped/<name>/. The metric
+# (inspection_score, higher) lives in tests/anchor.json.
+platform = "quadruped"
+tags = ["inspection", "nuclear-plant", "legged-robot", "gait-modes", "outdated-map", "exploration", "instrument-reading",
+        "radiation", "dosimeter", "thermal-camera", "lidar", "rgbd", "odometry-drift", "mujoco", "code-as-policy",
+        "hidden-site", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the practice ground.
+# [agent] timeout_sec: 4 h.
+# [verifier] timeout_sec (version 2.1: twelve hidden sites and a 1350 s mission limit; version 2.0's
+# 24100 s was derived the same way for six sites at 2400 s), from numbers measured on the grading machine in a
+# container of the final task image of version 2.0 (image 67ad975eb0c4, the render bundle
+# fetched from the asset dataset at build time) with the verifier's 8 CPUs and 16 GB, 2026-11-16 21:51-22:05 EST, host
+# load 81-124 of 48 cores (a bench program: two runs of one 300 s mission alone on a practice building through
+# ~/training/run_mission.py, the program's own timing of every call; a probe of the cell's first frames on the four
+# practice packages; the cell's build of the twelve scored packages in the oracle's verify below; every input below is
+# the largest measured; version 2.1 changed no pace or cost, only the configuration): the import check (at most 120 s), the
+# desktop settle (at most 60 s), the no-network self-test (at most 60 s) and the lockdown (about 10 s), then twelve
+# hidden sites, each at the bounds of version 2.1's configuration (tests/grader_config.json and the cell's
+# mission.yaml: 1350 s simulated, the 1200 s program-time cap, the frame budgets nav 300, inspect 240, depth 1500,
+# thermal 150, lidar 4000): the cell's build from its stored site package (3.4 s) and its renderers' start (the first
+# navigation-with-depth, inspection and thermal frames: 4.2 s), the program within its 1200 s program-time cap, which
+# does not count the cell's simulation (the 1350 s mission limit at 0.4435 s of wall clock per simulated second, the
+# slowest whole-loop pace of the bench program, its own frames and the wire included, so those frames count twice here:
+# 599 s) and its sensor rendering (every frame budget used at the p95 cost of the sensor's call, encoding and wire
+# included: 300 navigation frames with depth x 0.466 s, 240 inspection x 0.549 s, 1500 depth-only x 0.124 s, 150
+# thermal x 0.108 s, 4000 lidar x 0.028 s: 586 s), the wire's 60 s grace after a mission is over and 30 s of end and
+# clean-up: about 2482 s a site; thirteen missions (verify.py runs at most one mission again after a cell failure; a
+# second one is a task error: MAX_RERUNS_PER_VERIFY) and the fixed steps: 32516 s; 37400 s leaves 15.0 % (version 2.0's
+# 24100 s: six sites at 2400 s; version 1's 23400 s came from its own bench of 2026-11-14 at load 95-112).
+# The oracle's missions run the reference program inside one privileged call (362-572 s of wall clock each here, for
+# 879-1146 s simulated; the oracle's verify of the twelve took 5290 s on 2026-11-17 15:24-16:52 EST at host load
+# 29-305).
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 37400
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

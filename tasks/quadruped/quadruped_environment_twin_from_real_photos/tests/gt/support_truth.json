@@ -1,0 +1,803 @@
+{
+ "format": "site-support-truth/1",
+ "rule": "edge a -> b when the contacts whose normal into b points up (cos >= support.up_cos) carry at least support.force_frac of b's weight, averaged over the last support.avg_last_s of the standard settle (relaxation, then the dynamic settle), the forces of pairs mapped onto the same nodes summed; an environment supporter is named by the class of the true part top under the force-weighted contact point (within env_snap_m); required = present in every physics variant",
+ "variants": [
+  "nominal",
+  "mass_x0.5",
+  "mass_x2",
+  "mass_mix_s0",
+  "mass_mix_s1",
+  "friction_0.4",
+  "friction_0.8",
+  "friction_1.0",
+  "timestep_1ms",
+  "pose_s0",
+  "pose_s1",
+  "pose_s2",
+  "support_+5mm",
+  "support_-5mm",
+  "alt_box"
+ ],
+ "env_parts": {
+  "env:cage": [
+   "cage_alcove_post__alcove_post",
+   "cage_east_cages__div_n_s",
+   "cage_east_cages__north_cage_n",
+   "cage_east_cages__south_cage_s"
+  ],
+  "env:dock": [
+   "dock_dock__lower",
+   "dock_dock__room_floor",
+   "dock_dock__slab"
+  ],
+  "env:door": [
+   "door_north__l1",
+   "door_north__l2",
+   "door_north__l3",
+   "door_north__l4",
+   "door_north__lintel"
+  ],
+  "env:fixture": [
+   "fixture_compactor__hull",
+   "fixture_dispenser__hull",
+   "fixture_downpipe_east__pipe",
+   "fixture_extinguisher_s__hull",
+   "fixture_hose_cabinet__hull",
+   "fixture_sink__hull"
+  ],
+  "env:floor": [
+   "floor_corridor_ramp__ramp",
+   "floor_slab"
+  ],
+  "env:kerb": [
+   "kerb_corridor_e__north",
+   "kerb_corridor_e__ramp0",
+   "kerb_corridor_e__ramp1",
+   "kerb_walkway__corner",
+   "kerb_walkway__corridor",
+   "kerb_walkway__east",
+   "kerb_walkway__west"
+  ],
+  "env:pillar": [
+   "pillar_east__shaft",
+   "pillar_pair_e__shaft",
+   "pillar_pair_w__base",
+   "pillar_pair_w__shaft",
+   "pillar_truck__base",
+   "pillar_truck__shaft"
+  ],
+  "env:rack": [
+   "rack_annex__bags_b0_l0",
+   "rack_annex__bags_b0_l1",
+   "rack_annex__bags_b0_l2",
+   "rack_annex__bags_b0_l3",
+   "rack_annex__bags_b1_l0",
+   "rack_annex__bags_b1_l1",
+   "rack_annex__bags_b1_l2",
+   "rack_annex__bags_b1_l3",
+   "rack_annex__beam_f0",
+   "rack_annex__beam_f1",
+   "rack_annex__beam_f2",
+   "rack_annex__guard_f0",
+   "rack_annex__pallets_b0_l0",
+   "rack_annex__pallets_b0_l1",
+   "rack_annex__pallets_b0_l2",
+   "rack_annex__pallets_b0_l3",
+   "rack_annex__pallets_b1_l0",
+   "rack_annex__pallets_b1_l1",
+   "rack_annex__pallets_b1_l2",
+   "rack_annex__pallets_b1_l3",
+   "rack_annex__upright_b0",
+   "rack_annex__upright_b1",
+   "rack_annex__upright_b2",
+   "rack_annex__upright_f0",
+   "rack_annex__upright_f1",
+   "rack_annex__upright_f2"
+  ],
+  "env:rail": [
+   "rail_g_east_n__rail",
+   "rail_g_east_s__rail"
+  ],
+  "env:wall": [
+   "wall_annex_e__face",
+   "wall_annex_n__face",
+   "wall_annex_pier__pier",
+   "wall_annex_w__face",
+   "wall_corr_e__face",
+   "wall_corr_w__face",
+   "wall_dock_room__back",
+   "wall_dock_room__south",
+   "wall_east_lintel__lintel",
+   "wall_eroom_back__face",
+   "wall_eroom_s__face",
+   "wall_hall_e_n__face",
+   "wall_hall_n_e1__face",
+   "wall_hall_n_e2__face",
+   "wall_hall_n_west__face",
+   "wall_hall_s__s0",
+   "wall_hall_s__s1",
+   "wall_hall_s__s2",
+   "wall_hall_s_e__face",
+   "wall_hall_s_pilaster__face",
+   "wall_hall_w__face",
+   "wall_hall_w_sw__face",
+   "wall_ne_stub__face",
+   "wall_recess__back_wall",
+   "wall_recess__lintel",
+   "wall_recess__north_wall",
+   "wall_recess__soffit",
+   "wall_recess__south_wall",
+   "wall_se_recess__back"
+  ]
+ },
+ "scored_env_classes": [
+  "env:dock",
+  "env:floor",
+  "env:kerb"
+ ],
+ "env_snap_m": 0.08,
+ "held": [
+  "u033",
+  "u052"
+ ],
+ "static_units": [
+  "u001",
+  "u002",
+  "u003",
+  "u005",
+  "u006",
+  "u007",
+  "u008",
+  "u017",
+  "u020",
+  "u030",
+  "u032",
+  "u050",
+  "u053"
+ ],
+ "not_static": [
+  {
+   "unit": "u051",
+   "not_static_in": [
+    "alt_box"
+   ]
+  }
+ ],
+ "required": [
+  {
+   "supporter": "env:floor",
+   "supported": "u001",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u002",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u003",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u005",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u006",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u007",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u008",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u030",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u032",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u050",
+   "nominal_weight_frac": 2.593333
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u017",
+   "nominal_weight_frac": 1.0
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u020",
+   "nominal_weight_frac": 1.685631
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u053",
+   "nominal_weight_frac": 1.057143
+  }
+ ],
+ "ambiguous": [],
+ "excluded": [
+  {
+   "supporter": "env:dock",
+   "supported": "u011",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u004",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u009",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u010",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u012",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u013",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u014",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u015",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u016",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u031",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:floor",
+   "supported": "u058",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u018",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u019",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u055",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u056",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u057",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u600",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "env:kerb",
+   "supported": "u601",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u019",
+   "supported": "u021",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u020",
+   "supported": "u021",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u050",
+   "supported": "u051",
+   "why": "supported unit not static in every variant",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u053",
+   "supported": "u054",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u600",
+   "supported": "u602",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  },
+  {
+   "supporter": "u601",
+   "supported": "u602",
+   "why": "held or ignore unit",
+   "present_in": [
+    "nominal",
+    "mass_x0.5",
+    "mass_x2",
+    "mass_mix_s0",
+    "mass_mix_s1",
+    "friction_0.4",
+    "friction_0.8",
+    "friction_1.0",
+    "timestep_1ms",
+    "pose_s0",
+    "pose_s1",
+    "pose_s2",
+    "support_+5mm",
+    "support_-5mm",
+    "alt_box"
+   ]
+  }
+ ],
+ "levels_qpos0": {
+  "u001": 1,
+  "u002": 1,
+  "u003": 1,
+  "u004": 1,
+  "u005": 1,
+  "u006": 1,
+  "u007": 1,
+  "u008": 1,
+  "u009": 1,
+  "u010": 1,
+  "u011": 1,
+  "u012": 1,
+  "u013": 1,
+  "u014": 1,
+  "u015": 1,
+  "u016": 1,
+  "u017": 1,
+  "u018": 1,
+  "u019": 1,
+  "u020": 1,
+  "u021": 2,
+  "u030": 1,
+  "u031": 1,
+  "u032": 1,
+  "u033": 1,
+  "u050": 1,
+  "u051": 2,
+  "u052": 2,
+  "u053": 1,
+  "u054": 2,
+  "u055": 1,
+  "u056": 1,
+  "u057": 1,
+  "u058": 1,
+  "u600": 1,
+  "u601": 1,
+  "u602": 2
+ }
+}

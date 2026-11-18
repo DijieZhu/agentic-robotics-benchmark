@@ -1,0 +1,57 @@
+{
+ "budgets": {
+  "camera_frame_units": 600.0,
+  "frame_weight": {
+   "320x240": 0.4,
+   "640x480": 1.0
+  },
+  "program_time_s": 1200.0,
+  "protective_stops": 6,
+  "silence_s": 180.0,
+  "sim_time_s": 2400.0,
+  "sonar_pings": 16000
+ },
+ "cell_python": "/opt/cellenv/bin/python3",
+ "deadline_margin_s": 300.0,
+ "fallback_runner_account": "nobody",
+ "import_check_s": 120.0,
+ "lock_program_affinity": true,
+ "note": "run settings of the grader (generated from the task values and the measured runtime budget, packages P01 / P03 / P24): six stations in up to three slots (one cell process and one program process each, pinned; queue order), one runner account per slot; program_time_cap_s caps the program's own time per station (the wall clock minus the cell's simulation and rendering, cellkit.wire), on one core (affinity locked); program_cpu_cap_s is only the CPU-limit backstop; station_watchdog_s bounds a hung station: one wave's share of the limit, (timeout_sec - 250 s) / 2 waves, above a station at all its budgets at the dearest measured position (3916 s; decision AM2-13, package P44); rerun_min_s, the time that must remain before the deadline for the single-station re-run, is the average share, (timeout_sec - 250 s) / (2 waves + 1 re-run); the budgets block is the cell's per-station budget (the practice facilities run the same numbers, simulated time per facility); every tolerance and world rule comes from data/task_values.json",
+ "pin_policy": "auto",
+ "program_cpu_cap_s": 3600.0,
+ "program_time_cap_s": 1200.0,
+ "rerun_min_s": 3117.0,
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60.0
+ },
+ "runner_accounts": [
+  "cellrun0",
+  "cellrun1",
+  "cellrun2"
+ ],
+ "schema": "subseacell-grader-config/1",
+ "silence_s": 180.0,
+ "single_station_reruns": 1,
+ "slot_mode": "queue",
+ "slots": 3,
+ "socket_sample_s": 0.5,
+ "station_watchdog_s": 4675.0,
+ "stations": 6,
+ "timeout_sec": 9600
+}

@@ -1,0 +1,721 @@
+{
+ "format": "site-robustness/1",
+ "variants": [
+  {
+   "id": "phys:nominal",
+   "kind": "nominal",
+   "params": {},
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:mass_x0.5",
+   "kind": "mass",
+   "params": {
+    "factor": 0.5
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:mass_x2",
+   "kind": "mass",
+   "params": {
+    "factor": 2.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:mass_mix_s0",
+   "kind": "mass_mix",
+   "params": {
+    "seed": 0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:mass_mix_s1",
+   "kind": "mass_mix",
+   "params": {
+    "seed": 1
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:friction_0.4",
+   "kind": "friction",
+   "params": {
+    "friction": 0.4
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:friction_0.8",
+   "kind": "friction",
+   "params": {
+    "friction": 0.8
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:friction_1.0",
+   "kind": "friction",
+   "params": {
+    "friction": 1.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:timestep_1ms",
+   "kind": "timestep",
+   "params": {
+    "timestep": 0.001
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:speed_x0.5",
+   "kind": "speed",
+   "params": {
+    "speed": 0.5
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:speed_x2",
+   "kind": "speed",
+   "params": {
+    "speed": 2.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:pose_s0",
+   "kind": "pose",
+   "params": {
+    "seed": 0,
+    "dxy_m": 0.01,
+    "dyaw_deg": 1.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:pose_s1",
+   "kind": "pose",
+   "params": {
+    "seed": 1,
+    "dxy_m": 0.01,
+    "dyaw_deg": 1.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:pose_s2",
+   "kind": "pose",
+   "params": {
+    "seed": 2,
+    "dxy_m": 0.01,
+    "dyaw_deg": 1.0
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:support_+5mm",
+   "kind": "support",
+   "params": {
+    "dz_m": 0.005
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:support_-5mm",
+   "kind": "support",
+   "params": {
+    "dz_m": -0.005
+   },
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "phys:alt_box",
+   "kind": "alt_box",
+   "params": {},
+   "used_by": [
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "id": "C6:a0",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0,
+     "dyaw": 0.0,
+     "friction": 1.0,
+     "left": 0.0,
+     "phase": 0.0,
+     "seed": 0
+    },
+    "unit_offsets": false
+   }
+  },
+  {
+   "id": "C6:a1",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0126,
+     "dyaw": -0.02019,
+     "friction": 1.0,
+     "left": 0.0135,
+     "phase": 0.1736,
+     "seed": 1
+    },
+    "unit_offsets": false
+   }
+  },
+  {
+   "id": "C6:a2",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0019,
+     "dyaw": -0.00031,
+     "friction": 1.0,
+     "left": 0.0084,
+     "phase": 0.0483,
+     "seed": 2
+    },
+    "unit_offsets": false
+   }
+  },
+  {
+   "id": "C6:a3",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0083,
+     "dyaw": 0.02123,
+     "friction": 1.0,
+     "left": -0.0132,
+     "phase": 0.3018,
+     "seed": 3
+    },
+    "unit_offsets": false
+   }
+  },
+  {
+   "id": "C6:w00",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0038,
+     "dyaw": -0.01371,
+     "friction": 1.078,
+     "left": -0.0157,
+     "phase": 0.3745,
+     "seed": 1000
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w01",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0133,
+     "dyaw": -0.01781,
+     "friction": 0.9397,
+     "left": 0.0174,
+     "phase": 0.6799,
+     "seed": 1001
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w02",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0448,
+     "dyaw": -0.05143,
+     "friction": 1.0523,
+     "left": 0.035,
+     "phase": 0.9788,
+     "seed": 1002
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w03",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0285,
+     "dyaw": -0.03064,
+     "friction": 0.9892,
+     "left": -0.0452,
+     "phase": 0.8499,
+     "seed": 1003
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w04",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0127,
+     "dyaw": -0.03285,
+     "friction": 1.0415,
+     "left": -0.0378,
+     "phase": 0.4973,
+     "seed": 1004
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w05",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.004,
+     "dyaw": 0.03835,
+     "friction": 0.9903,
+     "left": -0.0393,
+     "phase": 0.1397,
+     "seed": 1005
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w06",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0087,
+     "dyaw": -0.00858,
+     "friction": 0.9927,
+     "left": -0.0181,
+     "phase": 0.887,
+     "seed": 1006
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w07",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0039,
+     "dyaw": -0.02346,
+     "friction": 0.9779,
+     "left": 0.047,
+     "phase": 0.8948,
+     "seed": 1007
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w08",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0188,
+     "dyaw": -0.0455,
+     "friction": 1.0524,
+     "left": 0.0381,
+     "phase": 0.8667,
+     "seed": 1008
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w09",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0395,
+     "dyaw": -0.02735,
+     "friction": 0.9899,
+     "left": -0.044,
+     "phase": 0.7752,
+     "seed": 1009
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w10",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0495,
+     "dyaw": 0.03139,
+     "friction": 0.9441,
+     "left": 0.0193,
+     "phase": 0.9736,
+     "seed": 1010
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w11",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0248,
+     "dyaw": -0.04275,
+     "friction": 0.9923,
+     "left": 0.0341,
+     "phase": 0.2743,
+     "seed": 1011
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w12",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": -0.0082,
+     "dyaw": 0.03861,
+     "friction": 1.0246,
+     "left": 0.0043,
+     "phase": 0.6313,
+     "seed": 1012
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w13",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0092,
+     "dyaw": -0.00527,
+     "friction": 1.0655,
+     "left": -0.0289,
+     "phase": 0.9875,
+     "seed": 1013
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w14",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0267,
+     "dyaw": 0.03863,
+     "friction": 0.9836,
+     "left": 0.0034,
+     "phase": 0.6309,
+     "seed": 1014
+    },
+    "unit_offsets": true
+   }
+  },
+  {
+   "id": "C6:w15",
+   "kind": "walk",
+   "params": {
+    "variant": {
+     "along": 0.0026,
+     "dyaw": 0.00763,
+     "friction": 1.045,
+     "left": -0.0301,
+     "phase": 0.3136,
+     "seed": 1015
+    },
+    "unit_offsets": true
+   }
+  }
+ ],
+ "kept": {
+  "C4": {
+   "required_edges": 13,
+   "static_units": 13,
+   "alt_box": {
+    "boxed": [
+     "u001",
+     "u002",
+     "u003",
+     "u004",
+     "u005",
+     "u006",
+     "u007",
+     "u008",
+     "u009",
+     "u010",
+     "u011",
+     "u012",
+     "u013",
+     "u014",
+     "u015",
+     "u016",
+     "u017",
+     "u018",
+     "u019",
+     "u020",
+     "u021",
+     "u033",
+     "u053",
+     "u054",
+     "u055",
+     "u056",
+     "u057",
+     "u058",
+     "u600",
+     "u601",
+     "u602"
+    ],
+    "boxed_below": {
+     "u050": 0.313829
+    },
+    "kept": [
+     "u030",
+     "u031",
+     "u032",
+     "u051",
+     "u052"
+    ]
+   }
+  },
+  "C5": {
+   "nonempty_probes": 1,
+   "empty_probes": 8,
+   "entries": 117,
+   "unanimous_entries": 117
+  },
+  "C6": [
+   "O01_open_floor_west_bay",
+   "O02_past_skip_southeast_end",
+   "O03_truck_wheel_and_pillar",
+   "O04_past_car_rear",
+   "O05_past_skip_southwest_foot",
+   "B01_into_skip_south_side",
+   "B02_into_car_rear",
+   "B03_into_truck_front_wheel",
+   "B04_dock_wall_under_overhang",
+   "O06_open_floor_annex",
+   "O07_past_trailer_wheel",
+   "O08_past_sign_stand",
+   "O09_past_pallet_box_east_face",
+   "O14_past_pallet_box_southwest_corner",
+   "B05_gap_west_middle_pallet_box",
+   "B06_gap_middle_east_pallet_box",
+   "B07_into_pallet_box_east_face",
+   "B08_into_trailer_wheel",
+   "B09_into_pallet_box_south_face",
+   "O10_open_floor_south_hall",
+   "O11_under_timber_overhang",
+   "O12_past_trolley_west_side",
+   "O13_crouch_under_timber_north",
+   "B10_into_trolley_deck_west",
+   "B11_under_overhang_into_trolley",
+   "B12_closed_gate_north",
+   "B13_closed_gate_south",
+   "B14_pillar_pair_gap"
+  ]
+ },
+ "dropped": {
+  "C4": {
+   "ambiguous_edges": [],
+   "excluded_edges": [
+    [
+     "env:dock",
+     "u011",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u004",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u009",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u010",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u012",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u013",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u014",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u015",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u016",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u031",
+     "held or ignore unit"
+    ],
+    [
+     "env:floor",
+     "u058",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u018",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u019",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u055",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u056",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u057",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u600",
+     "held or ignore unit"
+    ],
+    [
+     "env:kerb",
+     "u601",
+     "held or ignore unit"
+    ],
+    [
+     "u019",
+     "u021",
+     "held or ignore unit"
+    ],
+    [
+     "u020",
+     "u021",
+     "held or ignore unit"
+    ],
+    [
+     "u050",
+     "u051",
+     "supported unit not static in every variant"
+    ],
+    [
+     "u053",
+     "u054",
+     "held or ignore unit"
+    ],
+    [
+     "u600",
+     "u602",
+     "held or ignore unit"
+    ],
+    [
+     "u601",
+     "u602",
+     "held or ignore unit"
+    ]
+   ],
+   "not_static": [
+    {
+     "unit": "u051",
+     "not_static_in": [
+      "alt_box"
+     ]
+    }
+   ]
+  },
+  "C5": {
+   "dropped_probes": [],
+   "ambiguous_entries": {}
+  },
+  "C6": {}
+ }
+}

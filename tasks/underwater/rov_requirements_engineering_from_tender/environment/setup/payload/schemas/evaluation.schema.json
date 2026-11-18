@@ -1,0 +1,181 @@
+{
+ "$defs": {
+  "accept": {
+   "additionalProperties": false,
+   "properties": {
+    "options": {
+     "items": {
+      "pattern": "^O-[A-Z0-9]{1,6}$",
+      "type": "string"
+     },
+     "maxItems": 2,
+     "type": "array",
+     "uniqueItems": true
+    },
+    "site": {
+     "additionalProperties": false,
+     "properties": {
+      "as_tendered_net_buoyancy_n": {
+       "type": "number"
+      },
+      "depth_rating_margin_m": {
+       "type": "number"
+      },
+      "dive_energy_reserve_frac": {
+       "type": "number"
+      },
+      "launch_mass_margin_kg": {
+       "type": "number"
+      },
+      "pitch_authority_ratio": {
+       "type": "number"
+      },
+      "station_thrust_ratio": {
+       "type": "number"
+      },
+      "tether_reach_margin_m": {
+       "type": "number"
+      },
+      "wet_temperature_margin_c": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "as_tendered_net_buoyancy_n",
+      "depth_rating_margin_m",
+      "station_thrust_ratio",
+      "dive_energy_reserve_frac",
+      "tether_reach_margin_m",
+      "pitch_authority_ratio",
+      "wet_temperature_margin_c",
+      "launch_mass_margin_kg"
+     ],
+     "type": "object"
+    },
+    "verdict": {
+     "const": "accept"
+    }
+   },
+   "required": [
+    "verdict",
+    "options",
+    "site"
+   ],
+   "type": "object"
+  },
+  "bid": {
+   "oneOf": [
+    {
+     "$ref": "#/$defs/accept"
+    },
+    {
+     "$ref": "#/$defs/reject"
+    }
+   ]
+  },
+  "reject": {
+   "additionalProperties": false,
+   "properties": {
+    "grounds": {
+     "items": {
+      "enum": [
+       "N-01",
+       "N-02",
+       "N-03",
+       "N-04",
+       "N-05",
+       "N-06",
+       "N-07",
+       "N-08",
+       "N-09",
+       "N-10",
+       "N-11",
+       "N-12"
+      ]
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array",
+     "uniqueItems": true
+    },
+    "verdict": {
+     "const": "reject"
+    }
+   },
+   "required": [
+    "verdict",
+    "grounds"
+   ],
+   "type": "object"
+  }
+ },
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "award": {
+   "oneOf": [
+    {
+     "enum": [
+      "T-01",
+      "T-02",
+      "T-03",
+      "T-04",
+      "T-05",
+      "T-06",
+      "T-07",
+      "T-08"
+     ]
+    },
+    {
+     "type": "null"
+    }
+   ]
+  },
+  "bids": {
+   "additionalProperties": false,
+   "properties": {
+    "T-01": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-02": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-03": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-04": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-05": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-06": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-07": {
+     "$ref": "#/$defs/bid"
+    },
+    "T-08": {
+     "$ref": "#/$defs/bid"
+    }
+   },
+   "required": [
+    "T-01",
+    "T-02",
+    "T-03",
+    "T-04",
+    "T-05",
+    "T-06",
+    "T-07",
+    "T-08"
+   ],
+   "type": "object"
+  }
+ },
+ "required": [
+  "bids",
+  "award"
+ ],
+ "title": "evaluation.json",
+ "type": "object"
+}

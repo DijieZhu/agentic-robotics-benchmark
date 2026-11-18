@@ -1,0 +1,897 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "The replica model that quadmodel.py turns into the dynamics model of acceptance procedure B-14: the Appendix-D geometry (m), the stops (rad, Appendix-D conventions), the housing class of each joint type with its can box (seat frame, z = can axis), the 12 module seats, the pack bay, the pod mount with its CoM marks, and every printed part and fixed component as a rigid inertial (mass kg, CoM m and inertia kg.m2 about the CoM, in the frame of the body it is attached to).",
+  "properties": {
+    "class_box_m": {
+      "additionalProperties": {
+        "items": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "maxItems": 3,
+        "minItems": 3,
+        "type": "array"
+      },
+      "minProperties": 1,
+      "propertyNames": {
+        "enum": [
+          "R52",
+          "R38",
+          "R62"
+        ]
+      },
+      "type": "object"
+    },
+    "format": {
+      "const": "quad-model/1"
+    },
+    "geometry": {
+      "additionalProperties": false,
+      "properties": {
+        "foot_radius": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "hip_spacer": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "knee_branch": {
+          "description": "knee_branch gives the knee configuration of B-05 in two characters, the first for the front legs (fl, fr) and the second for the rear legs (rl, rr): '>' puts the knee axis behind the line from the leg's hip_pitch axis to its foot point (toward -x of the trunk frame of Appendix D), '<' puts it ahead of that line (toward +x), so the two characters picture the legs as seen from the left (+y) side with the nose on the left.",
+          "enum": [
+            "><",
+            "<>",
+            ">>",
+            "<<"
+          ],
+          "type": "string"
+        },
+        "leg_offset": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "pitch_axis_drop": {
+          "type": "number"
+        },
+        "pitch_axis_spacing": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "roll_axis_spacing": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "shank_length": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "spacer_legs": {
+          "items": {
+            "enum": [
+              "fl",
+              "fr",
+              "rl",
+              "rr"
+            ],
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "thigh_length": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "pitch_axis_spacing",
+        "roll_axis_spacing",
+        "pitch_axis_drop",
+        "leg_offset",
+        "hip_spacer",
+        "spacer_legs",
+        "thigh_length",
+        "shank_length",
+        "foot_radius",
+        "knee_branch"
+      ],
+      "type": "object"
+    },
+    "housing_class": {
+      "additionalProperties": false,
+      "properties": {
+        "hip_pitch": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        },
+        "hip_roll": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        },
+        "knee": {
+          "enum": [
+            "R52",
+            "R38",
+            "R62"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "hip_roll",
+        "hip_pitch",
+        "knee"
+      ],
+      "type": "object"
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "pack_bay": {
+      "additionalProperties": false,
+      "properties": {
+        "centre_m": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "inner_m": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "name": {
+          "enum": [
+            "nose_box",
+            "belly_bay"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "centre_m",
+        "inner_m"
+      ],
+      "type": "object"
+    },
+    "pod": {
+      "additionalProperties": false,
+      "properties": {
+        "box_m": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "mark_offset_m": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "mount_centre_m": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "mount_centre_m",
+        "box_m",
+        "mark_offset_m"
+      ],
+      "type": "object"
+    },
+    "rigid_inertials": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "attach": {
+            "enum": [
+              "trunk",
+              "fl_shoulder",
+              "fl_thigh",
+              "fl_shank",
+              "fr_shoulder",
+              "fr_thigh",
+              "fr_shank",
+              "rl_shoulder",
+              "rl_thigh",
+              "rl_shank",
+              "rr_shoulder",
+              "rr_thigh",
+              "rr_shank"
+            ],
+            "type": "string"
+          },
+          "com_m": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array"
+          },
+          "inertia_kg_m2": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array"
+          },
+          "mass_kg": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "name": {
+            "pattern": "^[a-z0-9_]+$",
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "attach",
+          "mass_kg",
+          "com_m",
+          "inertia_kg_m2"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "seats": {
+      "additionalProperties": false,
+      "properties": {
+        "fl_hip_pitch": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "fl_hip_roll": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "fl_knee": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "fr_hip_pitch": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "fr_hip_roll": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "fr_knee": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rl_hip_pitch": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rl_hip_roll": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rl_knee": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rr_hip_pitch": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rr_hip_roll": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        },
+        "rr_knee": {
+          "additionalProperties": false,
+          "properties": {
+            "carrier": {
+              "enum": [
+                "trunk",
+                "fl_shoulder",
+                "fl_thigh",
+                "fl_shank",
+                "fr_shoulder",
+                "fr_thigh",
+                "fr_shank",
+                "rl_shoulder",
+                "rl_thigh",
+                "rl_shank",
+                "rr_shoulder",
+                "rr_thigh",
+                "rr_shank"
+              ],
+              "type": "string"
+            },
+            "pos_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "quat": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "carrier",
+            "pos_m",
+            "quat"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "fl_hip_roll",
+        "fl_hip_pitch",
+        "fl_knee",
+        "fr_hip_roll",
+        "fr_hip_pitch",
+        "fr_knee",
+        "rl_hip_roll",
+        "rl_hip_pitch",
+        "rl_knee",
+        "rr_hip_roll",
+        "rr_hip_pitch",
+        "rr_knee"
+      ],
+      "type": "object"
+    },
+    "stops": {
+      "additionalProperties": false,
+      "properties": {
+        "hip_pitch": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "hip_roll": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "knee": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "hip_roll",
+        "hip_pitch",
+        "knee"
+      ],
+      "type": "object"
+    },
+    "units": {
+      "const": {
+        "angle": "rad",
+        "length": "m",
+        "mass": "kg"
+      }
+    }
+  },
+  "required": [
+    "format",
+    "name",
+    "units",
+    "geometry",
+    "stops",
+    "housing_class",
+    "class_box_m",
+    "seats",
+    "pack_bay",
+    "pod",
+    "rigid_inertials"
+  ],
+  "title": "quad-model/1 replica model",
+  "type": "object"
+}

@@ -1,0 +1,99 @@
+{
+ "format": "quad-grader-config/1",
+ "grader": {
+  "c1": {
+   "group_weights": {
+    "classes": 0.15,
+    "lengths": 0.55,
+    "stops": 0.3
+   },
+   "length_full": {
+    "abs_m": 0.0005,
+    "rel": 0.0025
+   },
+   "length_zero": {
+    "abs_m": 0.004,
+    "rel": 0.02
+   },
+   "stop_deg": [
+    1.0,
+    6.0
+   ]
+  },
+  "c2": {
+   "brief_rel": [
+    0.02,
+    0.04
+   ],
+   "clause_weight": 0.5,
+   "photo_rel": [
+    0.01,
+    0.06
+   ]
+  },
+  "c3": {
+   "floors": {
+    "A": 0.2,
+    "Ah": 0.05,
+    "N": 1.0,
+    "N.m": 0.05,
+    "kg": 0.01,
+    "m": 0.1,
+    "rad/s": 0.2
+   },
+   "rel": [
+    0.03,
+    0.15
+   ]
+  },
+  "c4": {
+   "mode": "all"
+  },
+  "c5": {
+   "band_usd": 60.0,
+   "taper_frac": 0.1
+  },
+  "diagnostics": {
+   "per_criterion_chars": 380,
+   "total_chars": 2000
+  },
+  "optimum": {
+   "node_cap": 20000
+  },
+  "repair": {
+   "max_steps": 20,
+   "order": [
+    "knee",
+    "hip_pitch",
+    "hip_roll",
+    "battery",
+    "drivers",
+    "hub"
+   ]
+  }
+ },
+ "selftest": {
+  "base_residual": 1e-09,
+  "contact_n": 1e-09,
+  "deriv_h_s": 1e-05,
+  "deriv_rel": 1e-06,
+  "derived_rel": 1e-09,
+  "duty_abs": 1e-09,
+  "duty_every": 25,
+  "inertia_rel": 1e-09,
+  "knife_edge": 1e-06,
+  "normal_min_n": 0.5,
+  "optimum_usd": 1e-06,
+  "regressor_draws": 3,
+  "regressor_rel": 1e-08,
+  "wall_s": 60.0,
+  "xipos_m": 1e-09
+ },
+ "weights": {
+  "bom_acceptance": 0.1,
+  "bom_economy": 0.3,
+  "derived_requirements": 0.2,
+  "kinematic_replication": 0.3,
+  "requirements_sheet": 0.1
+ }
+}

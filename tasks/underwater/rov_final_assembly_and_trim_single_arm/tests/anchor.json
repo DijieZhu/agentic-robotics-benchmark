@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.97,
+ "metric": "assembly_score",
+ "note": "assembly_score is contract_ok x the episode mean of ((the counted structural mates' weight + 4.5 x trim) / 15.5 x hard_ok) over the four fixed hidden episodes, already on [0, 1]; ratio = score / 1.0, reward = min(ratio / full_at, 1). full_at 0.97 (DESIGN v1.2 section 3.1, design brief rule 7): the score is discrete, and one lost trim tier in one episode (0.978) or one lost guard in one episode (0.984) still saturates, one lost thruster (0.976) too, a lost enclosure (0.952) does not",
+ "source": "the reference program's own assembly_score by construction: with the token, the privileged reference program inside the cell fastens all 7 structural places and trims the vehicle into all three windows on each of the four fixed hidden episodes, which the hidden-set selection requires of every kept episode (DESIGN v1.2 section 3.5 (a)); the measured value of that run is filed by the hidden-set and integration packages (P20, P32)",
+ "value": 1.0
+}

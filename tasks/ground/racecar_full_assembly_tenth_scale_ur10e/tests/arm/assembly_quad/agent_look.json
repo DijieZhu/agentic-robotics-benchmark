@@ -1,0 +1,11 @@
+{
+ "_doc": "Look of the agent's cameras (agent_render.py) in the baked factory hall room_factory_v3r_quad_baked (the unbaked hall rebuilt without Unity, the north doorways closed, the cell's bench top and props as occluders; Cycles DIFFUSE lightmaps at 1024 samples, 20 mm texels, denoised h 6; the HDR KTX of the Cycles panorama at (0.45, 0, 0.45)). Calibrated 2026-10-29 against Cycles stills of the unbaked hall with its lamps (the maintainers' look calibration, 512 spp, seed 3; shots top / oblique / stand): region luminance Cycles / Filament room 1.10-1.11, floor 0.86-1.11, bench top 0.96-1.07, arm 1.02-1.20, units 0.80-0.91.",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 0.59,
+ "room_baked_light_scale": 6000,
+ "room_ibl_ktx_intensity": 20000,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 0.9
+}

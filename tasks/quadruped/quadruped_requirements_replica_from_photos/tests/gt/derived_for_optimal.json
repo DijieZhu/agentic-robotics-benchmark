@@ -1,0 +1,61 @@
+{
+ "bom": {
+  "battery_family": "6S",
+  "format": "bom-quad/1",
+  "parts": [
+   {
+    "count": 4,
+    "joint_type": "hip_roll",
+    "part_id": "WD-R52-42",
+    "role": "actuator"
+   },
+   {
+    "count": 4,
+    "joint_type": "hip_pitch",
+    "part_id": "WD-R38-30",
+    "role": "actuator"
+   },
+   {
+    "count": 4,
+    "joint_type": "knee",
+    "part_id": "WD-R52-82",
+    "role": "actuator"
+   },
+   {
+    "count": 1,
+    "part_id": "AC-6S-60",
+    "role": "battery"
+   },
+   {
+    "count": 6,
+    "part_id": "TK-2C14",
+    "role": "driver"
+   },
+   {
+    "count": 1,
+    "part_id": "TK-HB6",
+    "role": "hub"
+   }
+  ],
+  "total_cost_usd": 1343.0
+ },
+ "format": "quad-derived/1",
+ "values": {
+  "drive_peak_current:knee": 10.860130405293392,
+  "drive_rms_current:knee": 6.00615067964561,
+  "duty_rms_torque:hip_pitch": 1.2982156646671417,
+  "duty_rms_torque:hip_roll": 1.777986836141467,
+  "duty_rms_torque:knee": 3.4746954732203683,
+  "joint_peak_speed:hip_pitch": 3.098660782418981,
+  "joint_peak_speed:knee": 3.1774246142402656,
+  "loaded_com_x": 0.07295658983279034,
+  "mission_charge": 4.052573503332218,
+  "peak_normal_force": 39.01111249620717,
+  "proof_peak_torque:hip_pitch": 2.46471873146166,
+  "proof_peak_torque:hip_roll": 3.55246975801635,
+  "proof_peak_torque:knee": 6.590343692385524,
+  "robot_mass": 5.547429639352778,
+  "standup_peak_torque:knee": 4.269189404532984,
+  "supply_peak_current": 7.817373714339266
+ }
+}

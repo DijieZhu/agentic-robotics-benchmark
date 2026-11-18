@@ -1,0 +1,31 @@
+# MISSION PACKAGE ONLY: additions to the shared acceptance file acceptance_v1.yaml.
+#
+# The evidence gate and every tolerance, weight and threshold come from acceptance_v1.yaml itself
+# (config.load_cfg -> config.evidence_from_acceptance); this package keeps no copy of them (an earlier hand
+# copy of them was removed on 2026-11-13 with the move to the ladder site). What is here only says how the
+# geometric evidence record (evidence.py) measures what the file names, where the file leaves it open. No number of
+# the file is repeated.
+#
+# How the record measures each feature of the file (evidence.py, the same definitions as site_gen/accept.py):
+#   dial_diameter     0.9 x the case (63 / 100 / 160 mm); in-frame points: 24 points on the dial rim
+#   window_length     the level window (prior / site params window_m, 0.40 m on the ladder); in-frame: the scale plate
+#   lever_length      0.18 m; in-frame: the lever geoms, and separately the tag plate (the file's lever_and_tag_plate)
+#   indicator_stroke  0.10 m; in-frame: the indicator plate and the pointer
+#   lens_diameter     0.023 m; in-frame: the front face of the panel enclosure (its four corners) and the lenses
+#                     (the generator's front-face rectangle; no longer the enclosure's 3-D corners)
+#   face_min_side     thermal: the smaller side of the projected box of the component's face geom x sqrt(visible
+#                     share) (the file's size_rule); in-frame: the corners of that geom
+#   apparent size     f_px x nominal feature size / camera-to-face distance (the bricks study's definition)
+#   visible share     share of the feature's sample points reached by rays from the camera (geom groups 0-3, the
+#                     instrument's own geoms count as itself; for thermal only the component's face geom)
+
+evidence_additions:
+  types:
+    thermal:
+      # The file's off_axis_note: "a component body has no single face normal; apply max_off_axis only where the
+      # site gives one". The site gives one when the thermal item has a face (params face_w / face_h, ladder sites):
+      # the normal is +x of the item's face frame (site.json pose.yaw). A draft-site item (pump
+      # bearing housings) has none and is gated by the size rule and the visible share only.
+      off_axis_needs_face_normal: true
+    lamps:
+      in_frame_points: enclosure_front_face_and_lenses

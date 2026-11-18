@@ -1,0 +1,499 @@
+{
+ "rule": "R1 (04_v2_spec.md section 7): the (slot, the slot's variant, the sheet's place where it matters, type) pairs that pass their placement stage on fewer than one sub-seed in five, measured on at least 20 sub-seeds of a development label; place '*' = every place (listed by place only where the rate over every place is not below 1/5 but the rate at that place is)",
+ "measured": {
+  "label": "dev-sitegen2b-rates/v2/<j>",
+  "jobs": 1160,
+  "status": {
+   "placed": 1020,
+   "reject": 140
+  },
+  "rejected_before_placement": {
+   "roles": 60,
+   "sheet_edges": 44,
+   "sheet_items": 36
+  },
+  "tree": "x2 6aa7b59a7cd327b8 (placement code identical in x3-x4)",
+  "design": "job j: S-2 column (j-1) % 8, place ((j-1) // 8) % 3, type offset ((j-1) // 24) % 8 (slot i -> TYPE_ORDER[(i + offset) % 8], no repair), sub-seed 0; every slot's placement stage run (a failed slot left unplaced, the next one tried); n = layouts that reached the placement; rate_reached = among those whose earlier slots passed",
+  "script": "SCRATCH/v2/sitegen2/scripts/rates.py, make_exclusion.py"
+ },
+ "exclusion": [
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "*",
+   "type": "thermal",
+   "ok": 16,
+   "n": 82,
+   "rate": 0.1951,
+   "ok_reached": 16,
+   "n_reached": 70,
+   "rate_reached": 0.2286
+  },
+  {
+   "slot": "B-low",
+   "variant": "chase",
+   "place": "across",
+   "type": "valve_lever",
+   "ok": 1,
+   "n": 35,
+   "rate": 0.0286,
+   "ok_reached": 1,
+   "n_reached": 35,
+   "rate_reached": 0.0286
+  }
+ ],
+ "near_threshold": [
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "along",
+   "type": "lamps",
+   "ok": 7,
+   "n": 24,
+   "rate": 0.2917
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "diagonal",
+   "type": "lamps",
+   "ok": 6,
+   "n": 21,
+   "rate": 0.2857
+  },
+  {
+   "slot": "B-low",
+   "variant": "chase",
+   "place": "across",
+   "type": "level",
+   "ok": 10,
+   "n": 39,
+   "rate": 0.2564
+  }
+ ],
+ "short_samples": [
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "across",
+   "type": "gauge_63",
+   "ok": 18,
+   "n": 19,
+   "rate": 0.9474
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "diagonal",
+   "type": "gauge_63",
+   "ok": 18,
+   "n": 19,
+   "rate": 0.9474
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "diagonal",
+   "type": "valve_handwheel",
+   "ok": 17,
+   "n": 18,
+   "rate": 0.9444
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "along",
+   "type": "lamps",
+   "ok": 14,
+   "n": 17,
+   "rate": 0.8235
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "across",
+   "type": "lamps",
+   "ok": 15,
+   "n": 16,
+   "rate": 0.9375
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "diagonal",
+   "type": "lamps",
+   "ok": 16,
+   "n": 19,
+   "rate": 0.8421
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "along",
+   "type": "thermal",
+   "ok": 15,
+   "n": 19,
+   "rate": 0.7895
+  },
+  {
+   "slot": "B-step",
+   "variant": "door_sills",
+   "place": "across",
+   "type": "thermal",
+   "ok": 16,
+   "n": 19,
+   "rate": 0.8421
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "along",
+   "type": "gauge_63",
+   "ok": 17,
+   "n": 17,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "across",
+   "type": "gauge_63",
+   "ok": 10,
+   "n": 14,
+   "rate": 0.7143
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "diagonal",
+   "type": "gauge_63",
+   "ok": 17,
+   "n": 18,
+   "rate": 0.9444
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "diagonal",
+   "type": "gauge_100",
+   "ok": 8,
+   "n": 19,
+   "rate": 0.4211
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "diagonal",
+   "type": "gauge_160",
+   "ok": 9,
+   "n": 19,
+   "rate": 0.4737
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "along",
+   "type": "valve_lever",
+   "ok": 10,
+   "n": 19,
+   "rate": 0.5263
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "along",
+   "type": "valve_handwheel",
+   "ok": 14,
+   "n": 19,
+   "rate": 0.7368
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "across",
+   "type": "valve_handwheel",
+   "ok": 10,
+   "n": 18,
+   "rate": 0.5556
+  },
+  {
+   "slot": "B-step",
+   "variant": "in_room",
+   "place": "diagonal",
+   "type": "valve_handwheel",
+   "ok": 8,
+   "n": 13,
+   "rate": 0.6154
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "across",
+   "type": "gauge_63",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "along",
+   "type": "gauge_100",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "across",
+   "type": "gauge_100",
+   "ok": 16,
+   "n": 16,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "diagonal",
+   "type": "gauge_100",
+   "ok": 18,
+   "n": 19,
+   "rate": 0.9474
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "along",
+   "type": "valve_lever",
+   "ok": 18,
+   "n": 19,
+   "rate": 0.9474
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "along",
+   "type": "lamps",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "diagonal",
+   "type": "lamps",
+   "ok": 16,
+   "n": 16,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "high",
+   "place": "diagonal",
+   "type": "thermal",
+   "ok": 18,
+   "n": 19,
+   "rate": 0.9474
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "along",
+   "type": "gauge_100",
+   "ok": 18,
+   "n": 18,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "across",
+   "type": "gauge_100",
+   "ok": 16,
+   "n": 17,
+   "rate": 0.9412
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "diagonal",
+   "type": "gauge_100",
+   "ok": 18,
+   "n": 18,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "diagonal",
+   "type": "gauge_160",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "across",
+   "type": "lamps",
+   "ok": 17,
+   "n": 17,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "diagonal",
+   "type": "lamps",
+   "ok": 15,
+   "n": 15,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-kerb",
+   "variant": "low",
+   "place": "across",
+   "type": "thermal",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-low",
+   "variant": "chase",
+   "place": "along",
+   "type": "gauge_160",
+   "ok": 18,
+   "n": 18,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-low",
+   "variant": "chase",
+   "place": "across",
+   "type": "gauge_160",
+   "ok": 18,
+   "n": 18,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-low",
+   "variant": "chase",
+   "place": "diagonal",
+   "type": "thermal",
+   "ok": 15,
+   "n": 15,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "across",
+   "type": "gauge_63",
+   "ok": 19,
+   "n": 19,
+   "rate": 1.0
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "diagonal",
+   "type": "gauge_63",
+   "ok": 17,
+   "n": 19,
+   "rate": 0.8947
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "across",
+   "type": "gauge_100",
+   "ok": 17,
+   "n": 19,
+   "rate": 0.8947
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "along",
+   "type": "gauge_160",
+   "ok": 17,
+   "n": 19,
+   "rate": 0.8947
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "across",
+   "type": "gauge_160",
+   "ok": 14,
+   "n": 15,
+   "rate": 0.9333
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "diagonal",
+   "type": "gauge_160",
+   "ok": 15,
+   "n": 17,
+   "rate": 0.8824
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "across",
+   "type": "level",
+   "ok": 9,
+   "n": 18,
+   "rate": 0.5
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "diagonal",
+   "type": "level",
+   "ok": 12,
+   "n": 18,
+   "rate": 0.6667
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "diagonal",
+   "type": "valve_lever",
+   "ok": 15,
+   "n": 19,
+   "rate": 0.7895
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "along",
+   "type": "thermal",
+   "ok": 15,
+   "n": 19,
+   "rate": 0.7895
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "across",
+   "type": "thermal",
+   "ok": 13,
+   "n": 18,
+   "rate": 0.7222
+  },
+  {
+   "slot": "B-low",
+   "variant": "rack",
+   "place": "diagonal",
+   "type": "thermal",
+   "ok": 14,
+   "n": 16,
+   "rate": 0.875
+  }
+ ]
+}

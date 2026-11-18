@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Three actuator lines (one module SKU per joint type, count 4 each), one battery line, one driver line (count = 12 / channels per board) and one hub line.",
+  "properties": {
+    "battery_family": {
+      "pattern": "^[1-9][0-9]*S$",
+      "type": "string"
+    },
+    "format": {
+      "const": "bom-quad/1"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "parts": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "count": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "joint_type": {
+            "enum": [
+              "hip_roll",
+              "hip_pitch",
+              "knee"
+            ],
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "part_id": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "actuator",
+              "battery",
+              "driver",
+              "hub"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "part_id",
+          "role",
+          "count"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "total_cost_usd": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "battery_family",
+    "parts"
+  ],
+  "title": "bom-quad/1 bill of materials (per replica unit)",
+  "type": "object"
+}

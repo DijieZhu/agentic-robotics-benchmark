@@ -26,7 +26,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-TASK = Path(__file__).resolve().parents[1] / "tasks/driving/driving_safety_supervisor"
+TASK = Path(__file__).resolve().parents[1] / "tasks/ground/driving_safety_supervisor"
 TESTS = TASK / "tests"
 PAYLOAD = TASK / "environment/setup/payload"
 

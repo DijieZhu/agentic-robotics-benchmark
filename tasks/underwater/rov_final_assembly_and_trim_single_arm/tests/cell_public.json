@@ -1,0 +1,105 @@
+{
+ "schema": "rov-cell-public-trim/1",
+ "load_cells_B_mm_deck_up": {
+  "A": [
+   450.0,
+   0.0
+  ],
+  "B": [
+   -150.0,
+   300.0
+  ],
+  "C": [
+   -150.0,
+   -300.0
+  ]
+ },
+ "load_cells_note": "projection of the three cells into the vehicle frame with the deck up (index deck_up); with the keel up the vehicle is turned 180 deg about its x axis, so a cell at +y in the station is at -y in the vehicle frame. Each index tared empty. Reading = force on the cell, N, positive in compression",
+ "noise_spec": {
+  "sigma_N_per_sample": 0.4,
+  "zero_offset_N_max": 0.02,
+  "rate_Hz": 100
+ },
+ "index_start": "keel_up",
+ "holes_mm": {
+  "C1": [
+   -74.8,
+   0.0
+  ],
+  "C2": [
+   -49.8,
+   0.0
+  ],
+  "C3": [
+   -24.8,
+   0.0
+  ],
+  "C4": [
+   0.2,
+   0.0
+  ],
+  "C5": [
+   25.2,
+   0.0
+  ],
+  "C6": [
+   50.2,
+   0.0
+  ],
+  "C7": [
+   75.2,
+   0.0
+  ],
+  "C8": [
+   100.2,
+   0.0
+  ],
+  "AP1": [
+   -82.71,
+   63.75
+  ],
+  "AS1": [
+   -82.71,
+   -63.75
+  ],
+  "FP1": [
+   108.11,
+   63.75
+  ],
+  "FS1": [
+   108.11,
+   -63.75
+  ],
+  "AP2": [
+   -87.96,
+   127.5
+  ],
+  "AS2": [
+   -87.96,
+   -127.5
+  ],
+  "FP2": [
+   113.36,
+   127.5
+  ],
+  "FS2": [
+   113.36,
+   -127.5
+  ]
+ },
+ "blocked": [
+  "AP1",
+  "AP2",
+  "FS1"
+ ],
+ "weight_footprint_mm": [
+  42.74,
+  58.44
+ ],
+ "weight_orientation": "long side along y",
+ "conflict_rule": "two weights on the same plate overlap when |dx| < 42.9 mm and |dy| < 58.8 mm (footprint 42.7 x 58.4 mm + margin)",
+ "conflict_mm": {
+  "dx_below": 42.9,
+  "dy_below": 58.8
+ }
+}

@@ -77,8 +77,8 @@ tasks/<platform>/<slug>/
   metadata field anything here reads: one of the fixed keys in `tasks/platforms.json` (this
   repository owns the vocabulary; the registry export hands it to the website, which only
   displays it). Older tasks may still carry retired keys there, which nothing reads. How a
-  task is named and filed for display (title, summary, the platforms it involves, the stages
-  it covers) is its card in `tasks/cards.toml`, outside every task folder and so no part of
+  task is named and filed for display (title, summary, the platforms it involves, the one
+  stage it is filed under) is its card in `tasks/cards.toml`, outside every task folder and so no part of
   its identity; maintainers add it before the merge and label the pull request
   `ready-to-merge`, which makes CI's card check strict (`docs/task-cards.md`,
   `scripts/task_cards.py`). `scripts/gpu_types.py check` (CI, in the engine's environment)

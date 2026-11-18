@@ -1,0 +1,54 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+# The owner's engineer of a hydro-power company evaluates eight technical bids for an inspection-class ROV against a
+# tender specification copied from coastal assets: from the specification (Parts A-D), a public and exact calculation
+# procedure, the site records of a cold, deep reservoir intake (drawings, level / discharge / CTD / clarity logs, the
+# previous campaign's telemetry and notes), the eight bids (compliance matrices, descriptions, BOMs, prices, delivery
+# statements, scanned factory test reports), an image catalogue of datasheets and errata, and a budgeted enquiry and
+# witness desk (one alelab daemon, 14 paid requests), the agent submits an evaluation of every bid with the award and
+# site predictions, a QA label for every template clause, and the acceptance schedule for the award. The grader is
+# static and deterministic: it reads the three files as data and scores them against one fixed hidden world
+# (tests/world/). No judge, no played party, no practice checker.
+[task]
+name = "grounded-intelligence-initiative/rov_requirements_engineering_from_tender"
+
+[metadata]
+platform = "underwater"
+
+# The agent's sandbox: the values of the published requirements tasks (4 CPUs, 8 GB, 14 400 s, no network). The reading
+# load is 71 page images, three desk attachments, 24 CSV logs (about 3 MB) and the narrative documents; the public
+# procedure evaluates one configuration in milliseconds. The instruction prints these three numbers from this file
+# (CPUs, memory in GB, hours), so memory_mb stays a multiple of 1024 and timeout_sec a multiple of 3600. The enquiry
+# and witness desk runs inside this sandbox (environment/setup/setup.sh starts it as root and it drops to the alelab
+# account); no GPU is used.
+[environment]
+cpus = 4
+memory_mb = 8192
+gpus = 0
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission.
+# The desk does not run there (setup.sh does not run in the verifier) and the grader reads nothing it stages:
+# everything it needs is in tests/ (verify.py, grade.py, the pinned evaluation_basis.py, schemas.json,
+# grader_config.json, anchor.json, the kit, the digest copy and the hidden world) and the image's /opt/venv. test.sh
+# pins every numerical library to one thread, so the verdict is a pure function of the submission and tests/.
+#
+# Its machine and limit: timeout_sec = max(600, 5 x the measured worst case). The grader recomputes the truth table
+# (32 configurations x 12 rows), the sets and the four delivery bands (132 units each) and scores at most 24 clauses
+# per band; the worst legal submission (24 clauses, every one on a new dimension of conditions, three files of exactly
+# 128 kB) took at most 0.34 s in a container of the task image limited to 2 CPUs and 4 GB, and its verify phase through
+# the engine's separate verifier (sandbox start, submission restore, stage upload) took 5.72 s (2026-11-15). 5 x 5.72 s
+# is far below 600 s, so the limit is 600 s. 2 CPUs and 4 GB leave room for the base image's desktop session; no GPU.
+[verifier]
+timeout_sec = 600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

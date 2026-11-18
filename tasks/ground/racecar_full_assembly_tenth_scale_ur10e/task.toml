@@ -1,0 +1,77 @@
+# racecar_full_assembly_tenth_scale_ur10e (assembly stage: a UR10e-class arm with a 2F-85-class gripper builds a
+# tenth-scale car physically: the rolling chassis clamped on a work stand, eight loose units placed by the robot (the
+# battery pack, the deck assembly, the compute module, the 2D scanning LiDAR and four wheels), eight mates of total
+# weight 11.5, a coupling state machine per slot, free-spinning unpowered wheel hubs).
+#
+# The agent receives the units as delivered (STL files, the packing list), five drawings, the picture manual rendered
+# from the car model with physical scale references, the cell's commissioning document and API, the robot models and
+# the cell library; no practice. It delivers assemble.py (solve(cell): a camera-only program that builds the car from
+# the chassis on its stand), run as an unprivileged account under netguard on the 4 pre-registered hidden episodes of
+# the grader's MuJoCo cell (tests/arm/assembly_car: the stand, the deck shelf, the parts tray and the loose units placed
+# and turned around a hidden bench plan, the four hubs at random angles; two uncalibrated RGB-D cameras, top and wrist,
+# rendered by MuJoCo's Filament on CPU Vulkan in the baked factory hall; noisy F/T, no unit poses, no fastening events).
+# Score = contract_ok x the episode mean of the fastened mates' weight / 11.5; a safety violation (a robot link other
+# than the gripper's pads pressing above 150 N, tests/grader_config.json safety.robot_force_N, or a unit pressed above
+# 150 N for 0.2 s) does not end the episode, but an episode with one keeps only 30 % of its score
+# (tests/grader_config.json scoring.safety_violation_factor). The oracle submits the privileged reference program with a
+# 256-bit token on the same 4 hidden episodes. Grader knobs live in tests/grader_config.json; the cell's hidden kit
+# (tests/gt/: the units' meshes and collision pieces) is not in the repository: the grader unpacks it at verify start
+# from the benchmark's asset dataset (pinned by sha256), or from a maintainer's local copy tests/assets/gt.tar.xz when
+# that is present.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/racecar_full_assembly_tenth_scale_ur10e"
+
+[metadata]
+platform = "ground"
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+info_tier = 1
+hidden_instance = "fixed-set"
+practice_instances = []
+render_backend = "filament"
+photo_set_version = "1"
+given_from = {stage = "hardware-design", adapter = "racecar-kit"}
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "assembly-cell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "ur10e + 2f85", fastening = "coupling (seat / keyed capture, pull home, lock at rest)", joints = "unpowered free-spinning wheel hubs", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["work stand +-15 mm, yaw +-2 deg", "deck shelf +-20 mm, +-5 deg", "parts tray +-40 mm, +-10 deg", "bench units +-30 mm, +-30 deg around a hidden bench plan", "wheel hub angles uniform in [0, 60) deg", "cameras (mount, intrinsics, distortion)", "lighting", "F/T bias"]
+siblings = ["quadruped_full_assembly_12dof_ur10e", "robotic_arm_full_assembly_so101_panda", "robotic_arm_full_assembly_openarm_panda"]
+tags = ["assembly", "mujoco", "ur10e", "code-as-policy", "camera-only", "rgbd", "calibration", "picture-manual", "racecar", "oracle-token"]
+
+# The agent's sandbox: 8 CPUs, 24 GB (an assembly program, its own simulation twin and the CPU renderer share it).
+[environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0
+
+# [agent] timeout_sec: 6 h. [verifier] timeout_sec: an agent's program 4 x (cell build ~40 s + program <= the wall cap)
+# plus the hidden kit's unpacking; the oracle's verify 4 x the reference program. The verifier sandbox's start,
+# tests/test.sh's copy of the givens and the kit's download count against it too.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself, and the grader fetches the cell's hidden kit (verification
+# has network). The agent's program runs during verify (beside the cell and the Filament renderer), so the verifier
+# gets at least the agent's resources (CPU rendering: no GPU).
+[verifier]
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0

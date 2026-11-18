@@ -1,0 +1,606 @@
+{
+ "gate_v": {
+  "closing_lane": {
+   "agent_visible_leak_scan": {
+    "control_caught": true,
+    "desk_table_strings": 1825,
+    "drawn_strings": 4339,
+    "hits": 0,
+    "list_entries": 103,
+    "png_files": 74,
+    "png_non_pixel_chunks": 148,
+    "text_files": 78
+   },
+   "byte_code_files": 0,
+   "engine_runs": {
+    "dos_clause_error_flood": "1ec7c5ed",
+    "dos_unique_both_files": "13be6e1e",
+    "worst_legal_mixed": "437f8948"
+   },
+   "engine_verify_phase_s": {
+    "dos_clause_error_flood (G0: array-length gate)": 6.32,
+    "dos_unique_both_files (G0: array-length gate)": 7.81,
+    "worst_legal_mixed (reward 1.0)": 7.89
+   },
+   "lint": {
+    "ale_lint": "ok",
+    "collection_lint": "ok (tasks, templates, lint_domain of the collection)",
+    "kit_identical": true,
+    "lab_copies_identical": 4,
+    "lint_domain": "ok"
+   },
+   "note": "the closing lane's Gate V on this folder (2026-11-15); the runs were taken with this entry still 'pending' (this entry is the only difference); a confirmation run on the final bytes is recorded in the development folder's records/P2_CLOSE.md",
+   "registry_preview": {
+    "anchor": 1.0,
+    "anchor_full_at": 0.98,
+    "metric_name": "tender_evaluation_score",
+    "resources": {
+     "cpus": 4,
+     "gpus": 0,
+     "memory_mb": 8192
+    },
+    "tasks": 25,
+    "timeouts": {
+     "agent": 14400,
+     "setup": 1800,
+     "verify": 600
+    }
+   },
+   "repo_pytest": {
+    "failed": 0,
+    "passed": 435,
+    "skipped": 12
+   },
+   "task_scans": {
+    "consistency_open": [],
+    "exit": 0,
+    "unexempted_hits": 0
+   },
+   "validate": {
+    "validate-0aeb078b": {
+     "image_observed": "sha256:0cd774a0a88985f97f71621b50158e515fc9f04211ecee089058edb6ec0ebc5f",
+     "passed": true,
+     "reference": 1.0,
+     "spec_hash": "sha256:2ad8fdbec0941d6d375498a3e29d2ea37503a4058d70f908b166579c8bb3f477",
+     "untouched": 0.0,
+     "untouched_diagnostic": "G0: evaluation.json: missing | spec_review.json: missing | acceptance_schedule.json: missing",
+     "verify_phase_s": {
+      "reference": 5.971,
+      "untouched": 5.882
+     }
+    },
+    "validate-39fc9667": {
+     "image_observed": "sha256:0cd774a0a88985f97f71621b50158e515fc9f04211ecee089058edb6ec0ebc5f",
+     "passed": true,
+     "reference": 1.0,
+     "spec_hash": "sha256:2ad8fdbec0941d6d375498a3e29d2ea37503a4058d70f908b166579c8bb3f477",
+     "untouched": 0.0,
+     "untouched_diagnostic": "G0: evaluation.json: missing | spec_review.json: missing | acceptance_schedule.json: missing",
+     "verify_phase_s": {
+      "reference": 6.923,
+      "untouched": 6.094
+     }
+    }
+   },
+   "worst_verify_phase_s": 7.89
+  },
+  "date": "2026-11-15",
+  "engine": "0.1.1 (bfb75050)",
+  "history": {
+   "closing_lane_first_validate": {
+    "note": "on this folder with the closing lane's changes and the rebuilt payload in place; only the four files README.md, completability.md, fairness.md and evidence_index.json of tests/review/ were written afterwards",
+    "reference": 1.0,
+    "runs": [
+     "validate-a179f398"
+    ],
+    "untouched": 0.0
+   },
+   "p30_validate_as_is": {
+    "cause": "FileNotFoundError: tests/digest/spec_values.json (the digest copy was not in place)",
+    "reference": "task_error",
+    "runs": [
+     "validate-ef0e1677",
+     "validate-9ce99986"
+    ],
+    "untouched": "task_error"
+   },
+   "p30_validate_with_pending_changes": {
+    "note": "a gate-clone copy with the three missing changes applied",
+    "reference": 1.0,
+    "runs": [
+     "validate-1a3d73f6",
+     "validate-afccaadf"
+    ],
+    "untouched": 0.0
+   }
+  },
+  "image": {
+   "input_identity": "sha256:27ab8dad70938f1ce11d36c483f9989814fb5e5cf57c33f5e2e8635dd43fd6b7",
+   "observed_identity": "sha256:0cd774a0a88985f97f71621b50158e515fc9f04211ecee089058edb6ec0ebc5f"
+  },
+  "one_fifth_s": 120,
+  "verifier_limit_s": 600
+ },
+ "note": "evidence of completability and fairness (tests/review/README.md); report paths are relative to the task's development folder docs/plan/underwater/tasks/rov_requirements_engineering_from_tender-dev of the development repository; task files relative to the task folder. Every report was rerun by the development lane's closing lane on the bytes listed here (no overlay: everything the suites used is in the task folder)",
+ "payload_tree_digest": "01b90368514f9fa3f9edabc73ed80e7f7cde627bee447da37f0615026c1c9080",
+ "publication": {
+  "added_task_files": {
+   "environment/assets.sha256": "1c1ac81b218e4f4bce3280728fcf7f620def7ae273778181f92b4baf35ad921b",
+   "environment/fetch_assets.py": "8d16511241caa6aa0a0eb7dce60c0d6efffa4efdbfc222ddfa53722a569d4689"
+  },
+  "changed_task_files": {
+   "environment/Dockerfile": {
+    "change": "the documented task-assets fetch block appended (docs/task-assets.md section 2); every earlier line unchanged",
+    "development_form": "90c5f709119b2e2d8e6a7895da834946c482cc49bf87b0693733866258ca561d",
+    "published_form": "2b38655ea9e0869a899aafe64ecc1cf159993800e5c32001c3ba8814bfcf677c"
+   }
+  },
+  "dataset": "grounded-intelligence-initiative/ale-robotics-assets",
+  "moved_bytes": 9484088,
+  "moved_files": 95,
+  "moved_tree_sha256": "e23130412340b7a47356bafcd262b9492911f2bd82ec18a5be4e2ecdf01c88b5",
+  "note": "the published form of this folder (the benchmark pull request that adds the task): the payload's 71 page images and 24 CSV logs are served from the benchmark's asset dataset and staged into the agent home by environment/setup/setup.sh, at the same paths with the same bytes; nothing the agent sees changed. The reports above were computed on the development form, in which these files sat in environment/setup/payload/ and environment/Dockerfile had no fetch block.",
+  "prefix": "tasks/underwater/rov_requirements_engineering_from_tender/payload",
+  "revision": "e7cd7103d4de02b5e9e602962b3b3f83a0576fdc"
+ },
+ "reports": [
+  {
+   "also": {
+    "evidence/world/SEP_REPORT.md": "564bcd1630e9710caafa5830f6f6657f944ee9ceb33d1fa0049eea5de4f39e0a"
+   },
+   "bytes": 30085,
+   "computed_on": [
+    "tests/world/*",
+    "tests/grade.py",
+    "tests/schemas.json",
+    "tests/evaluation_basis.py",
+    "tests/digest/spec_values.json",
+    "solution/submission/*"
+   ],
+   "id": "WORLD",
+   "package": "P19 + closing lane",
+   "path": "evidence/world/SOLVE_REPORT.md",
+   "rows": [
+    {
+     "criterion": "DESIGN v1.3 sec. 4.6 rules on the frozen world (Gate W)",
+     "measured": "32 / 32",
+     "result": "pass",
+     "threshold": "all"
+    },
+    {
+     "criterion": "the three frozen judges on the new freeze",
+     "measured": "286, 319, 637 items identical",
+     "result": "pass",
+     "threshold": "identical to the previous freeze except metadata"
+    },
+    {
+     "criterion": "truth table recomputed in two fresh processes",
+     "measured": "PYTHONHASHSEED 0 / 4242 identical",
+     "result": "pass",
+     "threshold": "byte-identical"
+    },
+    {
+     "criterion": "reference submission in place (verify in process)",
+     "measured": "1.000 / 0.0",
+     "result": "pass",
+     "threshold": "1.000; empty submission 0.0"
+    }
+   ],
+   "sha256": "c8caa81c8da68e9b4f6cf00c9c2169655784d1cb686eda8d22a591f43b204081",
+   "verdict": "pass (sec. 8: the superseding freeze)"
+  },
+  {
+   "also": {
+    "evidence/qc/qc_overview.png": "75d6bbee173327846366e672475b9fc90df2f66605440afd7e9a2d909eef1c98"
+   },
+   "bytes": 36246,
+   "computed_on": [
+    "tests/world/*",
+    "tests/grade.py",
+    "tests/schemas.json",
+    "tests/evaluation_basis.py",
+    "tests/digest/spec_values.json",
+    "solution/submission/*"
+   ],
+   "id": "QC-1",
+   "package": "P24",
+   "path": "evidence/qc/QC_REPORT.md",
+   "rows": [
+    {
+     "criterion": "DESIGN v1.3 sec. 6 rows",
+     "measured": "6.1 32/32; 6.2 16/16; 6.3 mutants 38/38, benign 17/17 + I-ALT 4536/4536",
+     "result": "pass",
+     "threshold": "each within its threshold"
+    },
+    {
+     "criterion": "I4 / I4b fixed-ground members",
+     "measured": "0.1020",
+     "result": "pass",
+     "threshold": "<= 0.15"
+    },
+    {
+     "criterion": "I4 / I4b every other judged member",
+     "measured": "0.2194",
+     "result": "pass",
+     "threshold": "<= 0.30"
+    },
+    {
+     "criterion": "I4c zero-ask",
+     "measured": "0.2417",
+     "result": "pass",
+     "threshold": "<= 0.40"
+    },
+    {
+     "criterion": "I4c owner cells",
+     "measured": "0.4673",
+     "result": "pass",
+     "threshold": "<= 0.55"
+    },
+    {
+     "criterion": "I4d cheaper-than-award rejections grounded right",
+     "measured": "2",
+     "result": "pass",
+     "threshold": "<= floor(n/2) = 2"
+    },
+    {
+     "criterion": "(e) groups",
+     "measured": "0.000000",
+     "result": "pass",
+     "threshold": "0.000"
+    },
+    {
+     "criterion": "15 degenerate submissions",
+     "measured": "0.000000",
+     "result": "pass",
+     "threshold": "0.000"
+    },
+    {
+     "criterion": "reference submission",
+     "measured": "1.0",
+     "result": "pass",
+     "threshold": "1.000"
+    },
+    {
+     "criterion": "benign rewrites",
+     "measured": "17/17",
+     "result": "pass",
+     "threshold": "1.000"
+    },
+    {
+     "criterion": "16 single readings",
+     "measured": "0.8500 / 0.4631",
+     "result": "pass",
+     "threshold": "each <= 0.85, mean <= 0.60"
+    },
+    {
+     "criterion": "visible layer rebuilt from the rendered files vs the printed layer",
+     "measured": "40 + 320 + 768 + 18 + 8 + 24 + 8 + 40 + 288 values (nine checks), 0 differences",
+     "result": "pass",
+     "threshold": "0 differences"
+    },
+    {
+     "criterion": "rules frozen before the scores",
+     "measured": "e3af994041fa6685",
+     "result": "pass",
+     "threshold": "hash recorded"
+    }
+   ],
+   "sha256": "e444ce66049c0647b3946a44f33d51c4ccc0be32a70afa2165ea689bc81e30e7",
+   "verdict": "pass"
+  },
+  {
+   "also": {},
+   "bytes": 23829,
+   "computed_on": [
+    "tests/*",
+    "image sha256:27ab8dad70938f1ce11d36c483f9989814fb5e5cf57c33f5e2e8635dd43fd6b7"
+   ],
+   "id": "QC-2",
+   "package": "P25",
+   "path": "evidence/qc/QC2_REPORT.md",
+   "rows": [
+    {
+     "criterion": "adversarial inputs refused at G0 / G1 and verify does not crash",
+     "measured": "158 / 158 as expected, 0 tracebacks; slowest case 0.355 s (was 501.8 s before the array-length gate)",
+     "result": "pass",
+     "threshold": "all, within the limit with margin"
+    },
+    {
+     "criterion": "the same cases against the demonstrated fix",
+     "measured": "158 verdicts, rewards and exit codes identical",
+     "result": "pass",
+     "threshold": "identical"
+    },
+    {
+     "criterion": "worst legal submission",
+     "measured": "0.317 s container, 6.15 s engine",
+     "result": "pass",
+     "threshold": "<= 1/5 of the verifier limit (120 s)"
+    },
+    {
+     "criterion": "worst adversarial submissions through the engine",
+     "measured": "7.06 s and 5.73 s (was 514.9 s)",
+     "result": "pass",
+     "threshold": "<= 1/5 of the verifier limit (120 s)"
+    },
+    {
+     "criterion": "reward bit-identical under CPU settings",
+     "measured": "919 submissions x 5 settings; bc36ac3f",
+     "result": "pass",
+     "threshold": "identical"
+    },
+    {
+     "criterion": "old and new grade.py on the same stage",
+     "measured": "919 submissions identical",
+     "result": "pass",
+     "threshold": "byte-identical"
+    }
+   ],
+   "sha256": "e5e7d55f4ed18c3f9d68433bbc68568a1754be7901dd46cc82256f63e5f12e45",
+   "verdict": "pass (F1 closed)"
+  },
+  {
+   "also": {
+    "scan/exemptions.json": "3a312e2faaf9c231958b1f67a45188a851e9589f34901fcdbd71436a743cb190",
+    "scan/report.json": "431a34472c6303d786fcc27d55dff0733fac0153aa0b39e841229406adef1baf"
+   },
+   "bytes": 8981,
+   "computed_on": [
+    "payload tree 01b90368514f9fa3f9edabc73ed80e7f7cde627bee447da37f0615026c1c9080",
+    "tests/*",
+    "solution/submission/*",
+    "task.toml",
+    "instruction.md"
+   ],
+   "id": "SCAN",
+   "package": "P26",
+   "path": "scan/SCAN_REPORT.md",
+   "rows": [
+    {
+     "criterion": "every scan: 0 hits or registered exemptions",
+     "measured": "0 hits; 14 exemptions",
+     "result": "pass",
+     "threshold": "0 unexempted"
+    },
+    {
+     "criterion": "example numbers, same-key hits",
+     "measured": "0",
+     "result": "pass",
+     "threshold": "0"
+    },
+    {
+     "criterion": "example numbers vs the reference clause bounds, cross-key hits",
+     "measured": "0",
+     "result": "pass",
+     "threshold": "0"
+    },
+    {
+     "criterion": "routing words outside the vehicle card",
+     "measured": "0",
+     "result": "pass",
+     "threshold": "0"
+    },
+    {
+     "criterion": "visible numbers registered",
+     "measured": "4478 tokens, 0 unregistered",
+     "result": "pass",
+     "threshold": "all"
+    },
+    {
+     "criterion": "planted controls",
+     "measured": "25",
+     "result": "pass",
+     "threshold": "all caught"
+    },
+    {
+     "criterion": "consistency: public POLICY vs TS-01 Part A",
+     "measured": "0 open",
+     "result": "pass",
+     "threshold": "equal"
+    }
+   ],
+   "sha256": "307944c6c27b6357f82436ab6f7b51eea440823843e6091cb1424a337866bb06",
+   "verdict": "pass"
+  },
+  {
+   "also": {
+    "evidence/difficulty/zero_cost.png": "8d2da164c4abbac976125d57a39bca731b98875eaadbe8d517316804777a46d0"
+   },
+   "bytes": 48580,
+   "computed_on": [
+    "environment/setup/ref/desk_table.json",
+    "environment/setup/ref/witness_table.json",
+    "tests/world/*",
+    "tests/grade.py",
+    "tests/schemas.json",
+    "tests/evaluation_basis.py",
+    "tests/digest/spec_values.json",
+    "solution/submission/*"
+   ],
+   "id": "ZERO-COST",
+   "package": "P27",
+   "path": "evidence/difficulty/ZERO_COST.md",
+   "rows": [
+    {
+     "criterion": "C1 Hidden",
+     "measured": "0.000",
+     "result": "pass",
+     "threshold": "<= 0.10"
+    },
+    {
+     "criterion": "C2 Docs",
+     "measured": "0.160",
+     "result": "pass",
+     "threshold": "<= 0.45"
+    },
+    {
+     "criterion": "C3 Interact",
+     "measured": "1.000",
+     "result": "pass",
+     "threshold": ">= 0.90"
+    },
+    {
+     "criterion": "C5 single readings",
+     "measured": "0.4631",
+     "result": "pass",
+     "threshold": "each <= 0.85, mean <= 0.60"
+    },
+    {
+     "criterion": "C6 population model p = 0.25",
+     "measured": "0.1715",
+     "result": "pass",
+     "threshold": "mean <= 0.40"
+    },
+    {
+     "criterion": "C7 expert minimal ask set",
+     "measured": "6",
+     "result": "pass",
+     "threshold": "<= 10"
+    },
+    {
+     "criterion": "C8 single-channel facts knocked out",
+     "measured": "0.1333",
+     "result": "pass",
+     "threshold": "each >= 0.10"
+    },
+    {
+     "criterion": "C9 channel groups",
+     "measured": "0.4333",
+     "result": "pass",
+     "threshold": "each >= 0.10"
+    },
+    {
+     "criterion": "C10 ask policies",
+     "measured": "0.3167",
+     "result": "pass",
+     "threshold": "<= 0.800"
+    },
+    {
+     "criterion": "C11 zero-ask robust",
+     "measured": "0.2417",
+     "result": "pass",
+     "threshold": "<= 0.40"
+    },
+    {
+     "criterion": "C12 owner-cells robust",
+     "measured": "0.4673",
+     "result": "pass",
+     "threshold": "<= 0.55"
+    },
+    {
+     "criterion": "I5 honest noise (calibration pool and the logs of the frozen site)",
+     "measured": "1.0000 / 1.0000 on both",
+     "result": "pass",
+     "threshold": "median >= 0.95, min >= 0.80"
+    }
+   ],
+   "sha256": "5fe9a5d56153b0a573a8ac9c9c1d5465ec8a4fa49ec19f00046761e2ef573f3b",
+   "verdict": "pass"
+  },
+  {
+   "also": {},
+   "bytes": 12974,
+   "computed_on": [
+    "environment/setup/ref/desk_table.json",
+    "environment/setup/ref/witness_table.json",
+    "environment/setup/lab/desk_plugin.py",
+    "environment/setup/lab/desk.json",
+    "environment/setup/setup.sh",
+    "environment/setup/page_images.sha256",
+    "environment/Dockerfile",
+    "environment/requirements.txt",
+    "payload tree 01b90368514f9fa3f9edabc73ed80e7f7cde627bee447da37f0615026c1c9080"
+   ],
+   "id": "DESK-REAL",
+   "package": "P28",
+   "path": "evidence/lab/SMOKE_REAL.md",
+   "rows": [
+    {
+     "criterion": "ale validate of the desk smoke on the real tables (formal payload)",
+     "measured": "validate-5a9ec14b",
+     "result": "pass",
+     "threshold": "untouched 0.0, reference 1.0"
+    },
+    {
+     "criterion": "separate verifier checks",
+     "measured": "77 / 77",
+     "result": "pass",
+     "threshold": "all"
+    }
+   ],
+   "sha256": "c8feb9ebc1848d64598f8119fc8fe58755ed7b8af3ea0adea6a951fe836c7afa",
+   "verdict": "pass"
+  },
+  {
+   "also": {
+    "evidence/difficulty/PROBE_PREREG.md": "9d2c0b8e21bae6d455a5142ecbb7d15662fceeafb292444aaf43b3f77508e459"
+   },
+   "bytes": 20334,
+   "computed_on": [
+    "evidence/qc/QC_REPORT.md",
+    "evidence/difficulty/ZERO_COST.md"
+   ],
+   "id": "READOUT",
+   "package": "P29",
+   "path": "evidence/difficulty/READOUT.md",
+   "rows": [
+    {
+     "criterion": "probe pre-registration frozen before any model run",
+     "measured": "c483295d1a6501a80de5ef2cc28f7b91a74d631137541c82150ddf72e8ca9c44 (frozen); 9d2c0b8e21bae6d455a5142ecbb7d15662fceeafb292444aaf43b3f77508e459 (amendment A1, input pins only)",
+     "result": "pass",
+     "threshold": "sha256 in READOUT"
+    },
+    {
+     "criterion": "documents-only spec-review labels",
+     "measured": "0.769, at most +0.038 of the total",
+     "result": "accepted, registered",
+     "threshold": "Q <= 0.45 (design)"
+    },
+    {
+     "criterion": "worst-case transcription + log time",
+     "measured": "10437 s = 72.5 %",
+     "result": "risk, accepted",
+     "threshold": "<= 70 % of 14 400 s, else a risk item"
+    }
+   ],
+   "sha256": "09b7fc62e44204fcc96d0359da35d99915d2ffb3fe46347d78d9c91a7f8723a8",
+   "verdict": "done (time risk recorded and accepted)"
+  }
+ ],
+ "schema": "uw-req-review-index/1",
+ "task_files": {
+  "environment/Dockerfile": "2b38655ea9e0869a899aafe64ecc1cf159993800e5c32001c3ba8814bfcf677c",
+  "environment/requirements.txt": "600b3b872577d696b219b6ac9e7dea5498d15d9599cebe8d409805a6ee348740",
+  "environment/setup/lab/desk.json": "9a892d883758bd9a60b51069fa869f9edbd70f91cd57b2946b83263a3b896f3e",
+  "environment/setup/lab/desk_plugin.py": "ad3f7472fa23da6093ca8ae62ac6c6ef56f05cdbcd4a18662039fd871d099d1e",
+  "environment/setup/page_images.sha256": "e8c90a3ca54a24b8ea86a1467cd798e01961a5d233edd9f26d35e58bedfad103",
+  "environment/setup/payload/schema_check.py": "d0ca15b4d934ec936983f0d7479bfc0192505dae223d403275f6a6ed87a83a70",
+  "environment/setup/payload/tender/evaluation_basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
+  "environment/setup/ref/desk_table.json": "cf344bdf0f938a7133a624e70527f071eab0c56afa8716551a2793fcd7e2231e",
+  "environment/setup/ref/witness_table.json": "536da61b8f0aeba5c13a3665971c10a2574bfc9f46bd41e75e7ca62dd182fe32",
+  "environment/setup/setup.sh": "4bb6979fa5687852a973285873d7065989791c3c01a4856a5b8492f8d24ce01a",
+  "instruction.md": "df8c9e54ee10923c92e6c187015bc7b5863616f0a36e8121681ffcb50a94be43",
+  "solution/solve.sh": "2c1202a68d32940125bc341db34b875adbd6f94dacb21e52585a3dc4ebe6d59d",
+  "solution/submission/acceptance_schedule.json": "95b7973649de9baef58ebe6ed82ba95180c7bf85a0c365124adfc26bd923dc92",
+  "solution/submission/evaluation.json": "0cdd469fd32f1dfa761a96294609bb0108fbc8c8e8efdd077997be3a62206635",
+  "solution/submission/spec_review.json": "faf4ca75704a50bd2d42a7ff45ee2a5c3a213d963e78a958176bf4f8f6eb0e0d",
+  "task.toml": "7e11738cedb208365426763b0620d91b9aa99a0bd1fb5e9e2582e2183ce694a2",
+  "tests/NOTICE.md": "e85c94b953f0982f8c84a7eabaade6a8c27d6e3f2acbb37b3b6048182e913f6a",
+  "tests/anchor.json": "3c0cd3b85d4a036c5ef95233f70cfcad43b448afb8c03810d3e142a933772f9f",
+  "tests/digest/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "tests/evaluation_basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
+  "tests/grade.py": "1c096cee9f772cd5c09995e375d9416fb0fc889201cff172746197147c25e5e5",
+  "tests/grader_config.json": "800339e1d9f91ded33b43ada4d6e21438908d6f366e81d6e6f369a1a628a2a75",
+  "tests/schemas.json": "9e2827763b691889ea2beeafa3cb374c88065abde0d9cc405dc7889a23b5b318",
+  "tests/test.sh": "f1fca1456bee12fc53791b3984b28a801842df56526d30df38f6ab2e34fcadd7",
+  "tests/verify.py": "76d12cfb6cc5193606bb737d02cae99e675dd081e0c303a1a45548497c707956",
+  "tests/world/as_built.json": "10d11e40a63bd5a50b4c90b35b34ea3652268621855626a750cdde3fde6ce30b",
+  "tests/world/catalogue.json": "ffcb22b9dce1d1f0cef29bf15d43fef4ccbae5cb1d3d9fabad963554602e350c",
+  "tests/world/clause_map.json": "c29dc57acd5c398115f5e4d87b517575399ce4d129acd32074e1411569d3932d",
+  "tests/world/delivery_ranges.json": "48cc50fa3be92a08f7efa2267ad291af9575d1c08b6cdc28c83943f9e11ced9f",
+  "tests/world/rows.json": "a00975c5bbc23a23fa199df6fee58afe0350fdc6871cb507af4cd9958f34c264",
+  "tests/world/selection.json": "cd57c520ba1cd7309b00270e498a0bf305754dabed7129dec63a808c778232d2",
+  "tests/world/site.json": "1ade03b1986e7da9213b5bcd86914009a80a60eb9e12c66423ac21b2310e05f6",
+  "tests/world/truth_table.json": "6205ca72ba2b0b80ed177556bbd25426a78e1e57672a6ad5b651d4000a339fb9"
+ }
+}

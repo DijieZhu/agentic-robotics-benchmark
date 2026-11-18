@@ -1,0 +1,61 @@
+{
+  "schema": "racecar-sensor-params/1",
+  "lidar": {
+    "range_by_class_m": {
+      "orange_ribbed": 10.0,
+      "yellow_ribbed": 10.0,
+      "black_plain": 4.0,
+      "normal": 10.0,
+      "dark": 4.0,
+      "cardboard": 10.0
+    },
+    "range_fade_frac": 0.1,
+    "noise_sigma_m": 0.01,
+    "floor_return_prob": {
+      "painted_concrete": 0.0,
+      "sealed_concrete": 0.0,
+      "polished_concrete": 0.0,
+      "exhibition_carpet": 0.3,
+      "dust": 0.0,
+      "metal_cover": 0.0,
+      "carpet_tile": 0.3
+    },
+    "floor_shallow_max_rad": 0.35,
+    "floor_range_m": 10.0
+  },
+  "imu": {
+    "accel_noise_mps2": 0.03,
+    "gyro_noise_radps": 0.003,
+    "accel_bias_mps2": 0.3,
+    "gyro_bias_radps": 0.015,
+    "accel_bias_walk_mps2_per_sqrt_s": 0.001,
+    "gyro_bias_walk_radps_per_sqrt_s": 0.0002,
+    "accel_vibration_mps2_per_mps": 0.4,
+    "gyro_vibration_radps_per_mps": 0.02,
+    "accel_range_mps2": 156.9,
+    "gyro_range_radps": 34.9
+  },
+  "wheel_speed": {
+    "noise_mps": 0.01
+  },
+  "notes": {
+    "status": "Every number here is a starting value.",
+    "lidar.range_by_class_m": "Largest range at which a target of the class still returns. 10 m = the sensor window (0.06-10 m). black_plain and dark 4 m: the 10 % reflectance range of the 270 degree, 40 Hz class of sensor. Not measured on a real duct.",
+    "lidar.range_fade_frac": "Between R and R x (1 + this) the probability of a return falls linearly from 1 to 0 ('about 4 m'). Assumption.",
+    "lidar.noise_sigma_m": "Gaussian range noise per beam per scan; 0.01 m = the official 2D simulator's default. Not measured on hardware here.",
+    "lidar.floor_return_prob": "A beam that meets the floor at a grazing angle below floor_shallow_max_rad returns with this probability by the floor kind under the hit point (zone_at): hard floors 0 (specular, 'LiDAR beams may reflect from the ground'), carpet 0.3. Assumption.",
+    "lidar.floor_shallow_max_rad": "A floor hit steeper than this (only after a large tilt) returns like a diffuse target. Assumption.",
+    "lidar.floor_range_m": "Largest range of a floor return.",
+    "imu.accel_noise_mps2": "White noise std per 200 Hz sample. Measured at standstill on a real 1/10 car's motor-controller IMU: 0.02-0.045 m/s^2 per axis (median about 0.03), 20 runs of the TUM-AVS RoboRacer-Dynamics data (MIT).",
+    "imu.gyro_noise_radps": "White noise std per sample. Same data: 0.0010-0.0052 rad/s (two cars: about 0.0013 and 0.003).",
+    "imu.accel_bias_mps2": "Std per axis of the constant bias drawn once per venue. Same data: standstill means of x and y 0.0-0.43 m/s^2 from 0, z +0.8 to +0.9 m/s^2 on one car (the other car's IMU is mounted tilted, not comparable).",
+    "imu.gyro_bias_radps": "Std per axis of the constant bias. Same data: |standstill mean| 0.005-0.028 rad/s, RMS about 0.015.",
+    "imu.accel_bias_walk_mps2_per_sqrt_s": "Random walk of the bias (thermal drift over a 21 minute venue: about 0.035 m/s^2). Assumption.",
+    "imu.gyro_bias_walk_radps_per_sqrt_s": "Random walk of the gyro bias (about 0.007 rad/s over 21 minutes). Assumption.",
+    "imu.accel_vibration_mps2_per_mps": "Extra white noise std per m/s of drivetrain speed (drivetrain and floor vibration the rigid simulation lacks). Same data while driving at 1.1-3.0 m/s: high-pass std 0.46-1.83 m/s^2 per axis, which also holds real chassis motion, so an upper bound.",
+    "imu.gyro_vibration_radps_per_mps": "Same for the gyro. Same data: high-pass std 0.05-0.19 rad/s, mostly real chassis motion; 0.02 per m/s is a lower guess.",
+    "imu.accel_range_mps2": "Saturation (+-16 g), the range the same data's accelerometer counts in (LSB 1/2048 g).",
+    "imu.gyro_range_radps": "Saturation (+-2000 deg/s), the range of the same data's gyro (LSB 1/16.4 deg/s).",
+    "wheel_speed.noise_mps": "White noise std of the motor-speed reading. Same data at steady commands: std about a 0.2 s moving mean 0.003-0.022 m/s (median about 0.009)."
+  }
+}

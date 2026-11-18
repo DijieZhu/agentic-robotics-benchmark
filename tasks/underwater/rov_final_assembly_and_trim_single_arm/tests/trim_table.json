@@ -1,0 +1,1627 @@
+{
+ "schema": "rov-trim-table/1",
+ "package": "P11 of rov_final_assembly_and_trim_single_arm (DESIGN v1.2 sections 2.2, 2.4; rulings J8, M9)",
+ "generator": "docs/plan/underwater/tasks/rov_final_assembly_and_trim_single_arm-dev/trim/v12/build_table.py",
+ "sources": {
+  "docs/plan/underwater/tasks/rov_final_assembly_and_trim_single_arm-dev/kit/unit_map.json": "ab47a495f1b2a305368a43d700260797bfb3ce24efc63119ec9954f832da88f7",
+  "docs/plan/underwater/shared/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
+  "docs/plan/underwater/shared/vehicle_parts_manifest.json": "99b937ff958bf88e28a866059a887fcfeb3981b80e6a5b677da5056fbf448abe",
+  "docs/plan/underwater/shared/REFERENCE_VEHICLE.md": "9938c11d8d46491b92de19d2c537e3dabe2b5d713fb99049c5456a631cc21d31"
+ },
+ "frame": "vehicle frame B = FLU (x forward, y port, z up), mm; origin on the 4-inch tube axis (CAD origin)",
+ "reference_density_kg_m3": 997.0,
+ "g": 9.80665,
+ "rounding": "mass 1 g (the ballast row 0.1 g); displacement 0.1 cm3; CG / CB 0.1 mm; printed in-water mass and net buoyancy 0.1 g, formed from the rounded row values at the reference density; half away from zero",
+ "p_T_mm": [
+  12.7,
+  0.0,
+  -8.7
+ ],
+ "p_T_note": "centroid of the 4 vertical-thruster propeller centres; the vertical thrusters hold the vehicle at depth sharing the load equally",
+ "sign_convention": "pitch theta > 0 = bow down; roll phi > 0 = port side up (= starboard down)",
+ "acceptance": {
+  "net_buoyancy_N": [
+   0.2,
+   3.0
+  ],
+  "pitch_abs_deg": 3.0,
+  "roll_abs_deg": 3.0,
+  "score_shares": {
+   "net_buoyancy": 0.4,
+   "pitch": 0.3,
+   "roll": 0.3
+  },
+  "formula": "W = g sum m; B = rho g sum V; dB = B - W; d = B (r_B - p_T) - W (r_G - p_T); theta = atan2(-d_x, d_z); phi = atan2(d_y, d_z)",
+  "trim": "0.4 [lo <= dB <= hi] + 0.3 [and |theta| <= pitch limit] + 0.3 [and |phi| <= roll limit]; every bound included",
+  "rho": "TEOS-10 at 1 dbar from the work order (in-situ water temperature degC, practical salinity)"
+ },
+ "per_unit_deviation": {
+  "applies_to": "the upstream rows taken together (the base vehicle as it arrives): its mass and CG x, y; its displacement and CB as tabled",
+  "mass_kg": [
+   -0.25,
+   0.25
+  ],
+  "cg_x_mm": [
+   -7.0,
+   1.0
+  ],
+  "cg_y_mm": [
+   -4.0,
+   8.0
+  ],
+  "note": "the statistical range of this batch's delivery weighing records, relative to the tabled values (ruling N5: no cause is given)"
+ },
+ "holes_mm": {
+  "C1": [
+   -74.8,
+   0.0
+  ],
+  "C2": [
+   -49.8,
+   0.0
+  ],
+  "C3": [
+   -24.8,
+   0.0
+  ],
+  "C4": [
+   0.2,
+   0.0
+  ],
+  "C5": [
+   25.2,
+   0.0
+  ],
+  "C6": [
+   50.2,
+   0.0
+  ],
+  "C7": [
+   75.2,
+   0.0
+  ],
+  "C8": [
+   100.2,
+   0.0
+  ],
+  "AP1": [
+   -82.71,
+   63.75
+  ],
+  "AS1": [
+   -82.71,
+   -63.75
+  ],
+  "FP1": [
+   108.11,
+   63.75
+  ],
+  "FS1": [
+   108.11,
+   -63.75
+  ],
+  "AP2": [
+   -87.96,
+   127.5
+  ],
+  "AS2": [
+   -87.96,
+   -127.5
+  ],
+  "FP2": [
+   113.36,
+   127.5
+  ],
+  "FS2": [
+   113.36,
+   -127.5
+  ]
+ },
+ "blocked": [
+  "AP1",
+  "AP2",
+  "FS1"
+ ],
+ "blocked_reasons": {
+  "AP1": [
+   "mission.dvl_bracket.m5x16_bhcs.1"
+  ],
+  "AP2": [
+   "mission.dvl_bracket.m5x16_bhcs.0"
+  ],
+  "FS1": [
+   "mission.gripper_mount.m5x16_bhcs.0",
+   "mission.gripper_mount.m5x16_bhcs.1"
+  ]
+ },
+ "weight_footprint_mm": [
+  42.74,
+  58.44
+ ],
+ "conflict_rule": "two weights on the same plate overlap when |dx| < 42.9 mm and |dy| < 58.8 mm (footprint 42.7 x 58.4 mm + margin)",
+ "conflict_mm": {
+  "dx_below": 42.9,
+  "dy_below": 58.8
+ },
+ "rows": [
+  {
+   "row": "B01",
+   "name": "frame: plates, cradles, tube clamps, frame fasteners",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 2514,
+   "disp_cm3": 2345.3,
+   "cg_mm": [
+    9.9,
+    1.4,
+    -63.6
+   ],
+   "cb_mm": [
+    9.7,
+    0.2,
+    -62.5
+   ],
+   "n_parts": 45,
+   "printed": {
+    "mass_in_air_g": 2514,
+    "displacement_cm3": 2345.3,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     9.9,
+     1.4,
+     -63.6
+    ],
+    "cb_mm": [
+     9.7,
+     0.2,
+     -62.5
+    ]
+   }
+  },
+  {
+   "row": "B02",
+   "name": "battery enclosure with battery pack and end-cap fittings",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 2036,
+   "disp_cm3": 1640.6,
+   "cg_mm": [
+    9.4,
+    -0.1,
+    -115.4
+   ],
+   "cb_mm": [
+    11.5,
+    0.0,
+    -115.4
+   ],
+   "n_parts": 41,
+   "printed": {
+    "mass_in_air_g": 2036,
+    "displacement_cm3": 1640.6,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     9.4,
+     -0.1,
+     -115.4
+    ],
+    "cb_mm": [
+     11.5,
+     0.0,
+     -115.4
+    ]
+   }
+  },
+  {
+   "row": "B03",
+   "name": "horizontal thruster, front starboard",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    148.2,
+    -97.6,
+    -71.8
+   ],
+   "cb_mm": [
+    148.2,
+    -97.6,
+    -71.8
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     148.2,
+     -97.6,
+     -71.8
+    ],
+    "cb_mm": [
+     148.2,
+     -97.6,
+     -71.8
+    ]
+   }
+  },
+  {
+   "row": "B04",
+   "name": "horizontal thruster, front port",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    148.2,
+    97.6,
+    -71.8
+   ],
+   "cb_mm": [
+    148.2,
+    97.6,
+    -71.8
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     148.2,
+     97.6,
+     -71.8
+    ],
+    "cb_mm": [
+     148.2,
+     97.6,
+     -71.8
+    ]
+   }
+  },
+  {
+   "row": "B05",
+   "name": "horizontal thruster, rear starboard",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    -139.5,
+    -96.6,
+    -71.8
+   ],
+   "cb_mm": [
+    -139.5,
+    -96.6,
+    -71.8
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -139.5,
+     -96.6,
+     -71.8
+    ],
+    "cb_mm": [
+     -139.5,
+     -96.6,
+     -71.8
+    ]
+   }
+  },
+  {
+   "row": "B06",
+   "name": "horizontal thruster, rear port",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    -139.5,
+    96.6,
+    -71.8
+   ],
+   "cb_mm": [
+    -139.5,
+    96.6,
+    -71.8
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -139.5,
+     96.6,
+     -71.8
+    ],
+    "cb_mm": [
+     -139.5,
+     96.6,
+     -71.8
+    ]
+   }
+  },
+  {
+   "row": "B07",
+   "name": "horizontal thruster mounting screws (16)",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 19,
+   "disp_cm3": 2.4,
+   "cg_mm": [
+    4.7,
+    0.0,
+    -14.9
+   ],
+   "cb_mm": [
+    4.7,
+    0.0,
+    -14.9
+   ],
+   "n_parts": 16,
+   "printed": {
+    "mass_in_air_g": 19,
+    "displacement_cm3": 2.4,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     4.7,
+     0.0,
+     -14.9
+    ],
+    "cb_mm": [
+     4.7,
+     0.0,
+     -14.9
+    ]
+   }
+  },
+  {
+   "row": "B08",
+   "name": "work gripper",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 530,
+   "disp_cm3": 258.8,
+   "cg_mm": [
+    191.3,
+    -46.6,
+    -137.8
+   ],
+   "cb_mm": [
+    191.2,
+    -46.6,
+    -137.8
+   ],
+   "n_parts": 22,
+   "printed": {
+    "mass_in_air_g": 530,
+    "displacement_cm3": null,
+    "mass_in_water_g": 272.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     191.3,
+     -46.6,
+     -137.8
+    ],
+    "cb_mm": [
+     191.2,
+     -46.6,
+     -137.8
+    ]
+   }
+  },
+  {
+   "row": "B09",
+   "name": "work gripper clamp mount with screws",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 94,
+   "disp_cm3": 33.2,
+   "cg_mm": [
+    98.1,
+    -72.5,
+    -139.1
+   ],
+   "cb_mm": [
+    98.3,
+    -73.0,
+    -137.6
+   ],
+   "n_parts": 5,
+   "printed": {
+    "mass_in_air_g": 94,
+    "displacement_cm3": 33.2,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     98.1,
+     -72.5,
+     -139.1
+    ],
+    "cb_mm": [
+     98.3,
+     -73.0,
+     -137.6
+    ]
+   }
+  },
+  {
+   "row": "B10",
+   "name": "velocity log (DVL)",
+   "cls": "base",
+   "print_mode": "air_and_water",
+   "mass_g": 170,
+   "disp_cm3": 65.2,
+   "cg_mm": [
+    -1.7,
+    106.8,
+    -120.3
+   ],
+   "cb_mm": [
+    -1.7,
+    106.8,
+    -120.3
+   ],
+   "n_parts": 7,
+   "printed": {
+    "mass_in_air_g": 170,
+    "displacement_cm3": null,
+    "mass_in_water_g": 105.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -1.7,
+     106.8,
+     -120.3
+    ],
+    "cb_mm": [
+     -1.7,
+     106.8,
+     -120.3
+    ]
+   }
+  },
+  {
+   "row": "B11",
+   "name": "velocity-log bracket with screws",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 158,
+   "disp_cm3": 19.8,
+   "cg_mm": [
+    -36.9,
+    106.8,
+    -131.1
+   ],
+   "cb_mm": [
+    -36.9,
+    106.8,
+    -131.1
+   ],
+   "n_parts": 7,
+   "printed": {
+    "mass_in_air_g": 158,
+    "displacement_cm3": 19.8,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -36.9,
+     106.8,
+     -131.1
+    ],
+    "cb_mm": [
+     -36.9,
+     106.8,
+     -131.1
+    ]
+   }
+  },
+  {
+   "row": "B12",
+   "name": "guard lower brackets (4) with screws",
+   "cls": "base",
+   "print_mode": "volume",
+   "mass_g": 26,
+   "disp_cm3": 7.4,
+   "cg_mm": [
+    1.2,
+    0.0,
+    -30.7
+   ],
+   "cb_mm": [
+    1.2,
+    0.0,
+    -30.0
+   ],
+   "n_parts": 8,
+   "printed": {
+    "mass_in_air_g": 26,
+    "displacement_cm3": 7.4,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     1.2,
+     0.0,
+     -30.7
+    ],
+    "cb_mm": [
+     1.2,
+     0.0,
+     -30.0
+    ]
+   }
+  },
+  {
+   "row": "S01",
+   "name": "electronics enclosure, complete (incl. 6 clip screws)",
+   "cls": "station",
+   "print_mode": "volume",
+   "mass_g": 2388,
+   "disp_cm3": 3547.2,
+   "cg_mm": [
+    6.4,
+    -0.4,
+    0.1
+   ],
+   "cb_mm": [
+    17.4,
+    0.0,
+    0.5
+   ],
+   "n_parts": 319,
+   "printed": {
+    "mass_in_air_g": 2388,
+    "displacement_cm3": 3547.2,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     6.4,
+     -0.4,
+     0.1
+    ],
+    "cb_mm": [
+     17.4,
+     0.0,
+     0.5
+    ]
+   }
+  },
+  {
+   "row": "S02",
+   "name": "vertical thruster, front starboard",
+   "cls": "station",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    132.7,
+    -217.4,
+    -5.6
+   ],
+   "cb_mm": [
+    132.7,
+    -217.4,
+    -5.6
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     132.7,
+     -217.4,
+     -5.6
+    ],
+    "cb_mm": [
+     132.7,
+     -217.4,
+     -5.6
+    ]
+   }
+  },
+  {
+   "row": "S03",
+   "name": "vertical thruster, front port",
+   "cls": "station",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    132.7,
+    217.4,
+    -5.7
+   ],
+   "cb_mm": [
+    132.7,
+    217.4,
+    -5.7
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     132.7,
+     217.4,
+     -5.7
+    ],
+    "cb_mm": [
+     132.7,
+     217.4,
+     -5.7
+    ]
+   }
+  },
+  {
+   "row": "S04",
+   "name": "vertical thruster, rear starboard",
+   "cls": "station",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    -107.3,
+    -217.4,
+    -5.7
+   ],
+   "cb_mm": [
+    -107.3,
+    -217.4,
+    -5.7
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -107.3,
+     -217.4,
+     -5.7
+    ],
+    "cb_mm": [
+     -107.3,
+     -217.4,
+     -5.7
+    ]
+   }
+  },
+  {
+   "row": "S05",
+   "name": "vertical thruster, rear port",
+   "cls": "station",
+   "print_mode": "air_and_water",
+   "mass_g": 344,
+   "disp_cm3": 188.6,
+   "cg_mm": [
+    -107.3,
+    217.4,
+    -5.6
+   ],
+   "cb_mm": [
+    -107.3,
+    217.4,
+    -5.6
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 344,
+    "displacement_cm3": null,
+    "mass_in_water_g": 156.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -107.3,
+     217.4,
+     -5.6
+    ],
+    "cb_mm": [
+     -107.3,
+     217.4,
+     -5.6
+    ]
+   }
+  },
+  {
+   "row": "S06",
+   "name": "vertical thruster mounting screws (16)",
+   "cls": "station",
+   "print_mode": "volume",
+   "mass_g": 16,
+   "disp_cm3": 2.0,
+   "cg_mm": [
+    12.7,
+    0.0,
+    3.5
+   ],
+   "cb_mm": [
+    12.7,
+    0.0,
+    3.5
+   ],
+   "n_parts": 16,
+   "printed": {
+    "mass_in_air_g": 16,
+    "displacement_cm3": 2.0,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.7,
+     0.0,
+     3.5
+    ],
+    "cb_mm": [
+     12.7,
+     0.0,
+     3.5
+    ]
+   }
+  },
+  {
+   "row": "S07",
+   "name": "thruster guard, port (with 2 screws)",
+   "cls": "station",
+   "print_mode": "volume",
+   "mass_g": 190,
+   "disp_cm3": 194.3,
+   "cg_mm": [
+    -13.9,
+    232.3,
+    -17.0
+   ],
+   "cb_mm": [
+    -14.2,
+    233.4,
+    -17.0
+   ],
+   "n_parts": 3,
+   "printed": {
+    "mass_in_air_g": 190,
+    "displacement_cm3": 194.3,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -13.9,
+     232.3,
+     -17.0
+    ],
+    "cb_mm": [
+     -14.2,
+     233.4,
+     -17.0
+    ]
+   }
+  },
+  {
+   "row": "S08",
+   "name": "thruster guard, starboard (with 2 screws)",
+   "cls": "station",
+   "print_mode": "volume",
+   "mass_g": 190,
+   "disp_cm3": 194.3,
+   "cg_mm": [
+    -13.9,
+    -232.3,
+    -17.0
+   ],
+   "cb_mm": [
+    -14.2,
+    -233.4,
+    -17.0
+   ],
+   "n_parts": 3,
+   "printed": {
+    "mass_in_air_g": 190,
+    "displacement_cm3": 194.3,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     -13.9,
+     -232.3,
+     -17.0
+    ],
+    "cb_mm": [
+     -14.2,
+     -233.4,
+     -17.0
+    ]
+   }
+  },
+  {
+   "row": "N01",
+   "name": "corner buoyancy block, front starboard",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 209,
+   "disp_cm3": 685.4,
+   "cg_mm": [
+    137.9,
+    -110.0,
+    17.9
+   ],
+   "cb_mm": [
+    137.9,
+    -110.0,
+    17.9
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 209,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 474.3,
+    "cg_mm": [
+     137.9,
+     -110.0,
+     17.9
+    ],
+    "cb_mm": [
+     137.9,
+     -110.0,
+     17.9
+    ]
+   }
+  },
+  {
+   "row": "N02",
+   "name": "corner buoyancy block, front port",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 209,
+   "disp_cm3": 685.4,
+   "cg_mm": [
+    137.9,
+    110.0,
+    17.9
+   ],
+   "cb_mm": [
+    137.9,
+    110.0,
+    17.9
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 209,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 474.3,
+    "cg_mm": [
+     137.9,
+     110.0,
+     17.9
+    ],
+    "cb_mm": [
+     137.9,
+     110.0,
+     17.9
+    ]
+   }
+  },
+  {
+   "row": "N03",
+   "name": "corner buoyancy block, rear starboard",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 209,
+   "disp_cm3": 685.4,
+   "cg_mm": [
+    -112.4,
+    -110.0,
+    17.9
+   ],
+   "cb_mm": [
+    -112.4,
+    -110.0,
+    17.9
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 209,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 474.3,
+    "cg_mm": [
+     -112.4,
+     -110.0,
+     17.9
+    ],
+    "cb_mm": [
+     -112.4,
+     -110.0,
+     17.9
+    ]
+   }
+  },
+  {
+   "row": "N04",
+   "name": "corner buoyancy block, rear port",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 209,
+   "disp_cm3": 685.4,
+   "cg_mm": [
+    -112.4,
+    110.0,
+    17.9
+   ],
+   "cb_mm": [
+    -112.4,
+    110.0,
+    17.9
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 209,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 474.3,
+    "cg_mm": [
+     -112.4,
+     110.0,
+     17.9
+    ],
+    "cb_mm": [
+     -112.4,
+     110.0,
+     17.9
+    ]
+   }
+  },
+  {
+   "row": "N05",
+   "name": "corner fairing shells (4)",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 420,
+   "disp_cm3": 350.4,
+   "cg_mm": [
+    12.8,
+    0.0,
+    29.6
+   ],
+   "cb_mm": [
+    12.8,
+    0.0,
+    29.6
+   ],
+   "n_parts": 4,
+   "printed": {
+    "mass_in_air_g": 420,
+    "displacement_cm3": 350.4,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.8,
+     0.0,
+     29.6
+    ],
+    "cb_mm": [
+     12.8,
+     0.0,
+     29.6
+    ]
+   }
+  },
+  {
+   "row": "N06",
+   "name": "corner fairing screws (16)",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 13,
+   "disp_cm3": 1.6,
+   "cg_mm": [
+    12.8,
+    0.0,
+    -17.4
+   ],
+   "cb_mm": [
+    12.8,
+    0.0,
+    -17.4
+   ],
+   "n_parts": 16,
+   "printed": {
+    "mass_in_air_g": 13,
+    "displacement_cm3": 1.6,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.8,
+     0.0,
+     -17.4
+    ],
+    "cb_mm": [
+     12.8,
+     0.0,
+     -17.4
+    ]
+   }
+  },
+  {
+   "row": "N07",
+   "name": "centre buoyancy block, port",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 143,
+   "disp_cm3": 470.3,
+   "cg_mm": [
+    12.8,
+    110.0,
+    11.7
+   ],
+   "cb_mm": [
+    12.8,
+    110.0,
+    11.7
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 143,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 325.9,
+    "cg_mm": [
+     12.8,
+     110.0,
+     11.7
+    ],
+    "cb_mm": [
+     12.8,
+     110.0,
+     11.7
+    ]
+   }
+  },
+  {
+   "row": "N08",
+   "name": "centre buoyancy block, starboard",
+   "cls": "next",
+   "print_mode": "net_buoyancy",
+   "mass_g": 143,
+   "disp_cm3": 470.3,
+   "cg_mm": [
+    12.8,
+    -110.0,
+    11.7
+   ],
+   "cb_mm": [
+    12.8,
+    -110.0,
+    11.7
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 143,
+    "displacement_cm3": null,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": 325.9,
+    "cg_mm": [
+     12.8,
+     -110.0,
+     11.7
+    ],
+    "cb_mm": [
+     12.8,
+     -110.0,
+     11.7
+    ]
+   }
+  },
+  {
+   "row": "N09",
+   "name": "centre fairing caps (2) with screws",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 110,
+   "disp_cm3": 89.2,
+   "cg_mm": [
+    12.8,
+    0.0,
+    47.2
+   ],
+   "cb_mm": [
+    12.8,
+    0.0,
+    46.8
+   ],
+   "n_parts": 6,
+   "printed": {
+    "mass_in_air_g": 110,
+    "displacement_cm3": 89.2,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.8,
+     0.0,
+     47.2
+    ],
+    "cb_mm": [
+     12.8,
+     0.0,
+     46.8
+    ]
+   }
+  },
+  {
+   "row": "N10",
+   "name": "imaging sonar head",
+   "cls": "next",
+   "print_mode": "air_and_water",
+   "mass_g": 510,
+   "disp_cm3": 336.0,
+   "cg_mm": [
+    12.5,
+    -110.5,
+    117.1
+   ],
+   "cb_mm": [
+    12.5,
+    -110.5,
+    117.1
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 510,
+    "displacement_cm3": null,
+    "mass_in_water_g": 175.0,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.5,
+     -110.5,
+     117.1
+    ],
+    "cb_mm": [
+     12.5,
+     -110.5,
+     117.1
+    ]
+   }
+  },
+  {
+   "row": "N11",
+   "name": "imaging sonar mount with screws",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 46,
+   "disp_cm3": 15.3,
+   "cg_mm": [
+    12.7,
+    -131.0,
+    69.2
+   ],
+   "cb_mm": [
+    12.7,
+    -129.0,
+    70.0
+   ],
+   "n_parts": 7,
+   "printed": {
+    "mass_in_air_g": 46,
+    "displacement_cm3": 15.3,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.7,
+     -131.0,
+     69.2
+    ],
+    "cb_mm": [
+     12.7,
+     -129.0,
+     70.0
+    ]
+   }
+  },
+  {
+   "row": "N12",
+   "name": "light, upper starboard",
+   "cls": "next",
+   "print_mode": "air_and_water",
+   "mass_g": 119,
+   "disp_cm3": 68.8,
+   "cg_mm": [
+    197.1,
+    -187.9,
+    42.8
+   ],
+   "cb_mm": [
+    197.1,
+    -187.9,
+    42.8
+   ],
+   "n_parts": 20,
+   "printed": {
+    "mass_in_air_g": 119,
+    "displacement_cm3": null,
+    "mass_in_water_g": 50.4,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     197.1,
+     -187.9,
+     42.8
+    ],
+    "cb_mm": [
+     197.1,
+     -187.9,
+     42.8
+    ]
+   }
+  },
+  {
+   "row": "N13",
+   "name": "light, lower starboard",
+   "cls": "next",
+   "print_mode": "air_and_water",
+   "mass_g": 119,
+   "disp_cm3": 68.8,
+   "cg_mm": [
+    202.8,
+    -140.6,
+    -119.0
+   ],
+   "cb_mm": [
+    202.8,
+    -140.6,
+    -119.0
+   ],
+   "n_parts": 20,
+   "printed": {
+    "mass_in_air_g": 119,
+    "displacement_cm3": null,
+    "mass_in_water_g": 50.4,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     202.8,
+     -140.6,
+     -119.0
+    ],
+    "cb_mm": [
+     202.8,
+     -140.6,
+     -119.0
+    ]
+   }
+  },
+  {
+   "row": "N14",
+   "name": "light, upper port",
+   "cls": "next",
+   "print_mode": "air_and_water",
+   "mass_g": 119,
+   "disp_cm3": 68.8,
+   "cg_mm": [
+    197.1,
+    187.9,
+    42.7
+   ],
+   "cb_mm": [
+    197.1,
+    187.9,
+    42.7
+   ],
+   "n_parts": 20,
+   "printed": {
+    "mass_in_air_g": 119,
+    "displacement_cm3": null,
+    "mass_in_water_g": 50.4,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     197.1,
+     187.9,
+     42.7
+    ],
+    "cb_mm": [
+     197.1,
+     187.9,
+     42.7
+    ]
+   }
+  },
+  {
+   "row": "N15",
+   "name": "light, lower port",
+   "cls": "next",
+   "print_mode": "air_and_water",
+   "mass_g": 119,
+   "disp_cm3": 68.8,
+   "cg_mm": [
+    202.8,
+    140.6,
+    -119.0
+   ],
+   "cb_mm": [
+    202.8,
+    140.6,
+    -119.0
+   ],
+   "n_parts": 20,
+   "printed": {
+    "mass_in_air_g": 119,
+    "displacement_cm3": null,
+    "mass_in_water_g": 50.4,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     202.8,
+     140.6,
+     -119.0
+    ],
+    "cb_mm": [
+     202.8,
+     140.6,
+     -119.0
+    ]
+   }
+  },
+  {
+   "row": "N16",
+   "name": "light mounting screws (8)",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 8,
+   "disp_cm3": 1.0,
+   "cg_mm": [
+    197.7,
+    0.0,
+    -38.1
+   ],
+   "cb_mm": [
+    197.7,
+    0.0,
+    -38.1
+   ],
+   "n_parts": 8,
+   "printed": {
+    "mass_in_air_g": 8,
+    "displacement_cm3": 1.0,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     197.7,
+     0.0,
+     -38.1
+    ],
+    "cb_mm": [
+     197.7,
+     0.0,
+     -38.1
+    ]
+   }
+  },
+  {
+   "row": "N17",
+   "name": "guard upper brackets (4) with screws",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 34,
+   "disp_cm3": 8.4,
+   "cg_mm": [
+    12.7,
+    0.0,
+    -7.1
+   ],
+   "cb_mm": [
+    12.7,
+    0.0,
+    -5.8
+   ],
+   "n_parts": 12,
+   "printed": {
+    "mass_in_air_g": 34,
+    "displacement_cm3": 8.4,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     12.7,
+     0.0,
+     -7.1
+    ],
+    "cb_mm": [
+     12.7,
+     0.0,
+     -5.8
+    ]
+   }
+  },
+  {
+   "row": "N18",
+   "name": "external cable runs and tether termination",
+   "cls": "next",
+   "print_mode": "volume",
+   "mass_g": 110,
+   "disp_cm3": 95.7,
+   "cg_mm": [
+    0.0,
+    0.0,
+    -60.0
+   ],
+   "cb_mm": [
+    0.0,
+    0.0,
+    -60.0
+   ],
+   "n_parts": 1,
+   "printed": {
+    "mass_in_air_g": 110,
+    "displacement_cm3": 95.7,
+    "mass_in_water_g": null,
+    "net_buoyancy_g": null,
+    "cg_mm": [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    "cb_mm": [
+     0.0,
+     0.0,
+     -60.0
+    ]
+   }
+  }
+ ],
+ "ballast_unit": {
+  "row": "P01",
+  "name": "ballast unit (ballast block with its screw), one per fitted hole",
+  "cls": "ballast",
+  "print_mode": "air_and_water",
+  "mass_g": 192.8,
+  "disp_cm3": 25.2,
+  "cg_mm": [
+   0.0,
+   0.0,
+   -182.0
+  ],
+  "cb_mm": [
+   0.0,
+   0.0,
+   -182.0
+  ],
+  "xy": "hole centre",
+  "n_parts": 2,
+  "printed": {
+   "mass_in_air_g": 192.8,
+   "displacement_cm3": null,
+   "mass_in_water_g": 167.7,
+   "net_buoyancy_g": null,
+   "cg_mm": [
+    "hole",
+    "hole",
+    -182.0
+   ],
+   "cb_mm": [
+    "hole",
+    "hole",
+    -182.0
+   ]
+  }
+ },
+ "ballast_unit_vs_digest": {
+  "digest_mass_g": 192.773,
+  "digest_disp_cm3": 25.224525,
+  "tabled_mass_g": 192.8,
+  "tabled_disp_cm3": 25.2,
+  "tabled_minus_digest_g": 0.027,
+  "tabled_minus_digest_cm3": -0.024525,
+  "spec_unit_mass_g": 192.773399
+ },
+ "totals_check": {
+  "base": {
+   "n_rows": 12,
+   "mass_g": 6923,
+   "disp_cm3": 5127.1,
+   "cg_mm": [
+    22.335,
+    0.987,
+    -89.845
+   ],
+   "cb_mm": [
+    18.885,
+    -0.963,
+    -86.014
+   ],
+   "digest_mass_g": 6922.542,
+   "digest_disp_cm3": 5126.957,
+   "digest_cg_mm": [
+    22.305,
+    0.998,
+    -89.84
+   ],
+   "digest_cb_mm": [
+    18.895,
+    -0.965,
+    -86.002
+   ]
+  },
+  "station": {
+   "n_rows": 8,
+   "mass_g": 4160,
+   "disp_cm3": 4692.2,
+   "cg_mm": [
+    6.654,
+    -0.23,
+    -3.351
+   ],
+   "cb_mm": [
+    14.025,
+    0.0,
+    -1.937
+   ],
+   "digest_mass_g": 4160.362,
+   "digest_disp_cm3": 4692.022,
+   "digest_cg_mm": [
+    6.68,
+    -0.23,
+    -3.353
+   ],
+   "digest_cb_mm": [
+    14.005,
+    -0.007,
+    -1.947
+   ]
+  },
+  "next": {
+   "n_rows": 18,
+   "mass_g": 2849,
+   "disp_cm3": 4855.0,
+   "cg_mm": [
+    44.022,
+    -21.896,
+    25.735
+   ],
+   "cb_mm": [
+    23.145,
+    -8.054,
+    20.328
+   ],
+   "digest_mass_g": 2850.034,
+   "digest_disp_cm3": 4854.873,
+   "digest_cg_mm": [
+    44.0,
+    -21.891,
+    25.73
+   ],
+   "digest_cb_mm": [
+    23.141,
+    -8.054,
+    20.311
+   ]
+  }
+ },
+ "standard_pattern": {
+  "holes": [
+   "C1",
+   "C3",
+   "C5"
+  ],
+  "water": {
+   "temperature_C": 20,
+   "salinity": 0
+  },
+  "rule": "the legal layout over the usable holes with the largest smallest margin (maximin) for the batch-median vehicle (table values + the middle of each per-unit deviation range) in the water above",
+  "self_audit": {
+   "dB_N": 2.090101,
+   "theta_deg": 0.503028,
+   "phi_deg": -0.244542,
+   "trim": 1.0,
+   "rho_kg_m3": 998.212257,
+   "grader_form_maximin_agrees": true,
+   "note": "not printed (the sheet only says that the median vehicle with this plan in this water is within the window)"
+  }
+ }
+}

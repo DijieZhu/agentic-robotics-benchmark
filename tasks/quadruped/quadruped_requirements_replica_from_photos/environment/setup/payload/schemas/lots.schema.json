@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Per inspected module vendor: the delivered lot id and each lot's ratios to the datasheet (f_peak, f_speed, f_cont), its unit spread and its droop; a lot's factors apply to every SKU of the vendor (B-14 g). Per pack vendor: the delivered cell lot and each lot's mean and spread of the measured-to-rated capacity ratio.",
+  "properties": {
+    "cells": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "delivered": {
+            "type": "string"
+          },
+          "lots": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "properties": {
+                "g_mean": {
+                  "type": "number"
+                },
+                "g_spread": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "g_mean",
+                "g_spread"
+              ],
+              "type": "object"
+            },
+            "minProperties": 1,
+            "type": "object"
+          }
+        },
+        "required": [
+          "delivered",
+          "lots"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "format": {
+      "const": "quad-lots/1"
+    },
+    "modules": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "delivered": {
+            "type": "string"
+          },
+          "lots": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "properties": {
+                "droop": {
+                  "type": "number"
+                },
+                "f_cont": {
+                  "type": "number"
+                },
+                "f_peak": {
+                  "type": "number"
+                },
+                "f_speed": {
+                  "type": "number"
+                },
+                "spread": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "f_peak",
+                "f_speed",
+                "f_cont",
+                "spread",
+                "droop"
+              ],
+              "type": "object"
+            },
+            "minProperties": 1,
+            "type": "object"
+          }
+        },
+        "required": [
+          "delivered",
+          "lots"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "modules",
+    "cells"
+  ],
+  "title": "quad-lots/1 delivered lots (capability factors)",
+  "type": "object"
+}
