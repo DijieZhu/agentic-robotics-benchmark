@@ -1,0 +1,28 @@
+{
+ "schema": "racecar-referee-params/1",
+ "comment": "The cell's own knobs that are not keys of the frozen grader configuration. Every number is a starting value of the cell.",
+ "refresh_kinematics": true,
+ "touch_merge_s": 0.2,
+ "displacement_attribution_s": 1.0,
+ "track_window_m": 4.0,
+ "track_exclusion_m": 1.5,
+ "overtake_window_m": 3.0,
+ "relocation": {
+  "wheel_margin_m": 0.02,
+  "object_clearance_m": 0.15,
+  "line_clearance_m": 0.05,
+  "retreat_step_m": 0.5,
+  "max_tries": 24
+ },
+ "after_over": {
+  "max_requests": 50,
+  "max_s": 10.0
+ },
+ "stub": {
+  "speed_tau_s": 0.2,
+  "accel_max_mps2": 6.0,
+  "slow_car_accel_mps2": 2.0,
+  "slow_car_brake_mps2": 4.0,
+  "slow_car_entry_min_gap_m": 3.0
+ }
+}

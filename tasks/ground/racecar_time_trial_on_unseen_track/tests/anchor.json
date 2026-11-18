@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "race_day_score",
+ "note": "race_day_score is the gate x the mean over the six fixed hidden venues of 0.35 fast + 0.35 consecutive + 0.30 obstacle test, each scored against the privileged reference program's own frozen numbers on that venue (the scoring module calls it time_trial_score; the benchmark's domain lint does not allow the token time in a metric name), already on [0, 1]; reward = clip(score / value / full_at). full_at 0.98 is the scoring definition's. The hidden set is the real selection (tests/hidden/selection.json)",
+ "source": "the oracle's own race_day_score: the privileged reference program, whose numbers on each venue are the full-marks reference (taken by the selection in the task image the way verify.py runs a program), run by verify.py exactly as an agent's program on the same six venues; by construction 1.0, measured in one full verify of this hidden set in the task image (tests/review/anchor_verify.json)",
+ "value": 1.0
+}

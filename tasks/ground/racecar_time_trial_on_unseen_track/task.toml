@@ -1,0 +1,86 @@
+# racecar_time_trial_on_unseen_track (behavior stage: the owner's tenth-scale car, used as it is -- a 2D scanning LiDAR,
+# an IMU and the motor's speed, no camera -- arrives at a venue it has never seen and does, unattended, what every team
+# does on a competition day: a practice session that starts with a speed-limited mapping period, two timed heats and an
+# obstacle test with cardboard boxes and slow cars, on a temporary track walled with flexible air ducts on a bare hall
+# floor, judged by the league's rules: a duct pushed 5 cm or more is a crash, the car is stopped, carried to the track
+# edge and released after 20 s, the clock runs on).
+#
+# The agent receives the league's rules, notes and photographs of past venues, the car's datasheet and outer geometry,
+# the car's laboratory driving logs (every sensor, the commands and an overhead tracker's pose), the interface manual,
+# the client library and a protocol stub that replays a lab log and simulates nothing; no simulator, no venue, no racing
+# stack. It delivers drive.py (solve(car): the car's program for one venue's day), which the grader runs as an
+# unprivileged account, from a read-only copy, under two seccomp filters (no socket but a Unix-domain one; an attempt
+# kills the process and zeroes the run), in a new process per venue, on the fixed hidden venues of its MuJoCo cell
+# (tests/grader: the venue built from the venue's world file, the car, the sensors, the pushable ducts, the boxes and
+# slow cars, the referee and the staff, 40 Hz lockstep over JSON lines). Per venue 0.35 fast (fastest uninterrupted lap
+# of the two heats) + 0.35 consecutive (longest run of consecutive uninterrupted laps) + 0.30 obstacle test (best clean
+# lap of each phase), each against the privileged reference program's own frozen numbers on that venue (full marks
+# within 3 %, one lap, 10 %; zero at 1.33 x its fastest lap, 0.43 x its longest run and 1.50 x its clean laps, where
+# 1.33 and 0.43 are the ratios of a real field's median to its best, so the two zeros are a mid-field team's level only
+# if the reference program is as good as that field's best); the mean over the venues times five gates. The oracle
+# submits the privileged reference program with its 256-bit token (the cell holds only the token's sha256). Grader
+# knobs: tests/grader_config.json (the cell's, byte-identical to it) and tests/verify_config.json (the run regime).
+# The hidden set is the real selection (tests/hidden/selection.json: six venues drawn from pre-registered unseen
+# seeds; it, the reference records and the anchor stay in git under tests/). The large givens (the lab logs, the
+# photographs, the meshes) are in the benchmark's asset dataset: environment/assets.sha256 pins the dataset commit and
+# every file's sha256, and the image fetches them while it builds. The maintainers assemble the task body from its
+# frozen sources with their own build tooling, which is not part of the repository.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/racecar_time_trial_on_unseen_track"
+
+[metadata]
+platform = "ground"
+mode = "atomic"
+stage = "behavior"
+stage_key = "behavior"
+hidden_instance = "fixed-set"
+practice_instances = []
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["race team software engineer", "autonomy programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+engine = "mujoco"
+observation_tier = "lidar-imu-motor-speed"
+randomisation = ["track layout (closed duct-walled loop, class Classic or Featured)", "base floor grip in three tiers", "local grip patches (dust, steel plates, carpet tiles with raised edges)", "duct gaps and open walls", "dark ducts with short LiDAR range", "clutter outside the walls and in the infield", "cardboard boxes and slow cars of the obstacle test", "sensor noise and bias", "staff placement errors"]
+siblings = ["racecar_requirements_engineering_from_brief", "racecar_cad_design_from_requirements", "racecar_full_assembly_tenth_scale_ur10e"]
+tags = ["behavior", "racing", "mujoco", "code-as-policy", "lidar", "imu", "mapping", "localisation", "grip-estimation", "obstacle-avoidance", "unattended", "racecar", "oracle-token", "hidden-venues"]
+
+# The agent's sandbox: 8 CPUs, 16 GB, no GPU (the behavior precedent; the car has no camera, nothing renders for the
+# program). Its own twin, if it builds one, shares these.
+[environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0
+
+# [agent] timeout_sec: 4 h.
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# [verifier] timeout_sec 17000 (measured in a container on this task's numerics): one venue at its bounds = the import
+# check 120 s + desk time 540 s (60 + 300 + 120 + 60) + on-track program time 756 s (15 ms x 50 400 ticks) + after-over
+# 10 s + the grader's own work 1260 simulated s x 0.31 s (the container's worst session-weighted cell cost 0.281 s per
+# simulated second + 10 % for a program that pushes ducts) = 391 s + the venue's build 30 s = 1846.6 s; six venues +
+# one re-run of a venue whose cell failed + 600 s of fixed work (sandbox, lockdown, self-tests, scoring) = 13 526 s;
+# + 25 % margin -> 17000 s. The reference program's own full verify of six venues is about 25 minutes (it closes its
+# practice after one lap).
+#
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there and the
+# program gets nothing of the givens: it runs from its own submission folder alone. The agent's program runs during
+# verify (beside the cell), so the verifier gets the agent's resources.
+[verifier]
+timeout_sec = 17000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

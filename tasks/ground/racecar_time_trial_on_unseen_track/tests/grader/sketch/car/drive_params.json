@@ -1,0 +1,621 @@
+{
+ "schema": "racecar-drive-params/1",
+ "contract": "sketch-contract/1.0",
+ "physics_dt_s": 0.0025,
+ "tyre_model": "cone",
+ "top_speed_mps": 6.3251,
+ "speed_cmd_min_mps": -2.0,
+ "speed_cmd_max_mps": 8.0,
+ "steer_rate_max_radps": 3.2,
+ "motor_nameplate": {
+  "kind": "540-size brushed DC motor",
+  "rated_voltage_v": 7.2,
+  "kv_rpm_per_v": 2250.0,
+  "kt_nm_per_a": 0.00424,
+  "resistance_ohm": 0.105,
+  "no_load_current_a": 1.6,
+  "max_speed_rpm": 26000.0,
+  "can_dia_mm": 35.7,
+  "can_len_mm": 54.5,
+  "mass_g": 160.0
+ },
+ "battery": {
+  "kind": "6-cell NiMH stick pack",
+  "cells": 6,
+  "voltage_v": 7.2,
+  "cell_resistance_ohm": 0.0042,
+  "capacity_ah": 5.3
+ },
+ "controller": {
+  "kind": "deck motor controller board, brushed DC mode, speed loop on motor speed",
+  "current_limit_a": 40.0,
+  "brake_current_limit_a": 40.0,
+  "on_resistance_ohm": 0.006,
+  "wiring_resistance_ohm": 0.005,
+  "speed_loop_bandwidth_hz": 5.0,
+  "speed_loop_ti_ratio": 4.0
+ },
+ "drivetrain": {
+  "layout": "shaft-driven 4WD: front and rear open differentials, locked centre (propeller shaft)",
+  "efficiency": 0.9,
+  "rotor_inertia_kgm2": 3e-06,
+  "diff_carrier_inertia_kgm2": 6.4e-06,
+  "wheel_spin_inertia_kgm2": 1.77e-05,
+  "wheel_transverse_inertia_kgm2": 1.05e-05,
+  "centre_slip_stiffness_per_unit": 15.0,
+  "spin_damping_nms_per_rad": 1e-06,
+  "centre_stability_ratio": 1.0
+ },
+ "suspension": {
+  "kind": "vertical slide per corner (chassis frame z), linear spring and damper",
+  "wheel_rate_npm": 1000.0,
+  "damping_nspm": 20.0,
+  "bump_m": 0.01,
+  "droop_m": 0.007
+ },
+ "steering": {
+  "lock_rad": 0.4189,
+  "rate_max_radps": 3.2,
+  "lag_s": 0.05,
+  "servo_kp_nm_per_rad": 5.0,
+  "servo_kv_nms_per_rad": 0.066,
+  "servo_torque_max_nm": 0.35,
+  "armature_kgm2": 0.0002,
+  "joint_range_rad": 0.43,
+  "ackermann_percent": 100.0,
+  "fit_range_rad": 0.45,
+  "kingpin_solref": [
+   0.005,
+   1.0
+  ],
+  "rack_mass_kg": 0.002
+ },
+ "resistance": {
+  "rolling_coefficient": 0.015,
+  "drag_area_m2": 0.018,
+  "air_density_kgpm3": 1.2
+ },
+ "tyre": {
+  "default_grip": 1.0,
+  "geom_friction": [
+   0.7,
+   0.005,
+   0.0001
+  ],
+  "contact": {
+   "condim": 3,
+   "solref": [
+    0.01,
+    1.0
+   ],
+   "solreffriction": [
+    0.0,
+    0.0
+   ],
+   "solimp": [
+    0.9,
+    0.95,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "margin_m": 0.0
+  },
+  "cone": {},
+  "slip_angle": {
+   "pivot_offset_m": 0.02,
+   "cornering_stiffness_per_rad": {
+    "front": 4.718,
+    "rear": 5.4562
+   },
+   "pivot_damping_ratio": 0.3,
+   "pivot_range_rad": 0.6,
+   "slide_ratio": 0.8,
+   "fall_angle_rad": 0.3,
+   "low_speed_mps": 0.5,
+   "carrier_mass_kg": 0.002,
+   "normal_filter_s": 0.01
+  }
+ },
+ "hull": {
+  "friction": [
+   0.4,
+   0.005,
+   0.0001
+  ],
+  "boxes": [
+   {
+    "name": "chassis/col0",
+    "what": "tub, rear gear case, battery, motor, deck (to |y| 59 mm, clear of the tyres)",
+    "lo": [
+     -0.0533,
+     -0.059,
+     0.01469
+    ],
+    "hi": [
+     0.22,
+     0.059,
+     0.0702
+    ]
+   },
+   {
+    "name": "chassis/col1",
+    "what": "front gear case, diff cover, damper stay",
+    "lo": [
+     0.22,
+     -0.042,
+     0.01469
+    ],
+    "hi": [
+     0.3103,
+     0.042,
+     0.074
+    ]
+   },
+   {
+    "name": "chassis/col2",
+    "what": "front foam bumper, rear face moved to x 292 mm to clear the steered tyres",
+    "lo": [
+     0.292,
+     -0.07,
+     0.02719
+    ],
+    "hi": [
+     0.33446,
+     0.07,
+     0.04149
+    ]
+   },
+   {
+    "name": "chassis/col3",
+    "what": "deck electronics: compute unit, controller and power boards",
+    "lo": [
+     0.0062,
+     -0.059,
+     0.0702
+    ],
+    "hi": [
+     0.182,
+     0.059,
+     0.10666
+    ]
+   },
+   {
+    "name": "chassis/col4",
+    "what": "LiDAR",
+    "lo": [
+     0.18194,
+     -0.0204,
+     0.0699
+    ],
+    "hi": [
+     0.23355,
+     0.0204,
+     0.12702
+    ]
+   },
+   {
+    "name": "chassis/col5",
+    "what": "rear body posts",
+    "lo": [
+     -0.04338,
+     -0.0372,
+     0.0702
+    ],
+    "hi": [
+     -0.021,
+     0.0372,
+     0.13812
+    ]
+   },
+   {
+    "name": "chassis/col6",
+    "what": "rear wing frame",
+    "lo": [
+     -0.04338,
+     -0.05351,
+     0.13812
+    ],
+    "hi": [
+     -0.02654,
+     0.05351,
+     0.15252
+    ]
+   }
+  ]
+ },
+ "lidar_targets": {
+  "hull_lo": [
+   -0.0533,
+   -0.09246,
+   0.01469
+  ],
+  "hull_hi": [
+   0.33446,
+   0.09246,
+   0.10666
+  ],
+  "head_radius_m": 0.0173,
+  "head_z_m": [
+   0.098,
+   0.1217
+  ]
+ },
+ "options": {
+  "integrator": "implicitfast",
+  "impratio": 1.0,
+  "car_sleep": "never"
+ },
+ "measured": {
+  "rest_height_m": {
+   "cone": -0.0003229,
+   "slip_angle": -0.0004645
+  },
+  "source": "sketch.car.gates (calibration_table.json): gate static, 2 s at rest on grip 1.0; gate top_speed, grip 1.0, command 8 m/s",
+  "top_speed_mps": {
+   "cone": 6.3251,
+   "slip_angle": 6.3086
+  }
+ },
+ "provenance": {
+  "geometry, mass, com": "the car's shared specification values v2 and the owner model's digest (derived_geometry)",
+  "mass split and sprung inertia": "car_parts_manifest.json: 120 parts; unsprung parts and their fractions in params.UNSPRUNG; a part's own inertia = uniform box of its bounding box (OWN_BOX_MM for battery, motor, kit speed controller, servo)",
+  "motor_nameplate": "540-size brushed motor of the owner's model (can 35.7 x 54.5 mm, 160 g); electrical values = the page values the series' stage 01 world gives this car's motor (the 160 g reference motor), adopted so that the car is one car across the series; no shared key",
+  "battery": "6-cell NiMH 7.2 V of the owner's model (digest, stage 01 electrical identity); cell resistance = stage 01's page value of the 320 g reference pack; voltage held at the nominal 7.2 V (no state of charge)",
+  "controller": "the deck motor controller board is the speed controller; 40 A limit = stage 01's page value of the 40 g reference board; the speed loop runs at the physics rate; bandwidth 5 Hz on the rolling car (the drive model's choice)",
+  "drivetrain": "TT-01 layout (front and rear differentials, one propeller shaft); final drive 61/19 x 39/15 = 8.3474 (spec_values); efficiency 0.90 (estimate: spur, two bevel stages, CVDs); rotor inertia 3e-6 kg m2 (estimate: 540 armature, 45 g at 11.5 mm); differential carrier 6.4e-6 kg m2 each (32 g at 20 mm)",
+  "wheel inertia": "rim + tyre 23.7 g as a ring of radii 32.9 / 20 mm plus axle, hex and nut; estimate",
+  "suspension": "wheel rate 1000 N/m per corner (estimate for a 1/10 touring car: 8 Hz ride, 4 degrees roll at 1 g); damping ratio about 0.5; travel +10 / -7 mm (estimate); slide joints instead of double wishbones",
+  "steering": "lock 0.4189 rad and 3.2 rad/s (the car's specification values, the owner's decision of 2026-11-14); servo = rate limit then a first-order lag of 0.05 s (the drive model's estimate for an analog standard servo: proportional band of about 0.16 rad at 3.2 rad/s; the ForzaETH value 0.158 s lumps its software smoother and is compared in the record); stall torque 0.35 N m (standard servo 3.2 kg cm); 100 % Ackermann by a quartic polycoef (the CAD's linkage gives about 26 %)",
+  "resistance": "rolling resistance 0.015 x load as dry friction on the spin joints; drag area Cd A 0.018 m2 (no body shell, 185 mm wide); estimates",
+  "tyre.cone": "MuJoCo elliptic cone, condim 3, friction = grip_at under the wheel at every physics step through explicit tyre x floor contact pairs",
+  "tyre.slip_angle": "cone plus a lateral layer: a vertical pivot 20 mm ahead of the contact with a spring k = C_S N0 e, so that F_y = C_S N0 alpha below the limit and the lag is a relaxation length of 20 mm; C_S = the platform single-track values 4.718 / 5.4562 per rad (f1tenth_gym); past the limit the pair friction falls with the sliding angle to 0.8 of the grip at 0.3 rad",
+  "hull": "boxes from the part bounding boxes of car_parts_manifest.json, kept clear of the tyres' swept volume at full lock (test_s1_hull)",
+  "lidar_targets": "As the contract says (the same as the contract's stub car)",
+  "tyre.contact": "tyre x floor pairs: condim 3, solref 0.01 s (4 physics steps; 0.005 s let light sliding wheels lose contact every few steps), solreffriction 0 0 = the normal solref (a softer friction solref adds a false lateral slip of yaw rate x speed / b at every rolling wheel: MuJoCo leaves J-dot q-dot out of the constraint; measured 17 mm/s against 17.9 predicted at b = 42 1/s); single-point ellipsoid tyre r x w/2 x r (the cylinder's two edge contacts gave a Coulomb scrub torque of about 0.06 N m per tyre in tight turns)",
+  "drivetrain.centre": "the propeller shaft locks the front axle's mean spin to the rear's; with friction-cone tyres a hard lock forces sliding in every corner (measured: chatter of the light wheels at 200 Hz); modelled as the tendon `centre` with damping C_k N_series r^2 / max(v, v_lo), the longitudinal slip stiffness real tyres take the mismatch with (C_k = 15 per unit slip, estimate); v_lo from c_max dt / J_centre = 1 (numerical: c dt / J = 5 diverged at launch on grip 0.15 at 2.5 ms)",
+  "tyre.slip_angle.load": "pivot stiffness C_S N(t) e with N(t) = suspension force + unsprung weight, filtered 10 ms (load-proportional cornering stiffness; a constant stiffness saturated the unloaded inner tyre at 0.66 g on grip 1.0)",
+  "drivetrain.inertia": "rotor 3e-6 kg m2 x 8.3474^2 plus two differential carriers, a quarter on each spin joint's armature (MuJoCo 3.14 puts a fixed tendon's armature only on the mass matrix diagonal for joints in different branches, measured: a tendon armature would load the driving mode 2.2x)"
+ },
+ "derived_geometry": {
+  "wheelbase_m": 0.25783999999999996,
+  "track_front_m": 0.15591,
+  "track_rear_m": 0.15595,
+  "tyre_radius_m": 0.0329,
+  "steer_lock_rad": 0.4189,
+  "min_turn_radius_m": 0.5791,
+  "wheel_centres_c": {
+   "fl": [
+    0.25783999999999996,
+    0.077955,
+    0.0329
+   ],
+   "fr": [
+    0.25783999999999996,
+    -0.077955,
+    0.0329
+   ],
+   "rl": [
+    0.0,
+    0.077975,
+    0.0329
+   ],
+   "rr": [
+    0.0,
+    -0.077975,
+    0.0329
+   ]
+  },
+  "mass_kg": 1.8359,
+  "com_c": [
+   0.12495,
+   -0.00263,
+   0.050140000000000004
+  ],
+  "final_drive_ratio": 8.3474
+ },
+ "derived_mass": {
+  "total_kg": 1.8359,
+  "sprung_kg": 1.61675,
+  "sprung_com_c": [
+   0.123829,
+   -0.00298,
+   0.052477
+  ],
+  "sprung_fullinertia_kgm2": [
+   0.002607714,
+   0.01115276,
+   0.01146105,
+   7.367607e-05,
+   -0.000224175,
+   -0.000107238
+  ],
+  "unsprung_kg": {
+   "fl": {
+    "corner": 0.01493,
+    "knuckle": 0.00768,
+    "wheel": 0.03397
+   },
+   "fr": {
+    "corner": 0.01493,
+    "knuckle": 0.00768,
+    "wheel": 0.03404
+   },
+   "rl": {
+    "corner": 0.018955,
+    "knuckle": 0.0,
+    "wheel": 0.03397
+   },
+   "rr": {
+    "corner": 0.018955,
+    "knuckle": 0.0,
+    "wheel": 0.03404
+   }
+  },
+  "unsprung_total_kg": 0.21915
+ },
+ "derived_bodies": {
+  "chassis": {
+   "mass_kg": 1.61475,
+   "com_c": [
+    0.123663,
+    -0.0029837,
+    0.0525012
+   ],
+   "fullinertia_kgm2": [
+    0.002606929,
+    0.01111603,
+    0.01142507,
+    7.447576e-05,
+    -0.0002294286,
+    -0.0001073548
+   ]
+  },
+  "rack": {
+   "mass_kg": 0.002,
+   "pos_c": [
+    0.25783999999999996,
+    0.0,
+    0.0329
+   ],
+   "diaginertia_kgm2": [
+    1e-07,
+    1e-07,
+    1e-07
+   ]
+  },
+  "corners": {
+   "fl": {
+    "wheel": {
+     "mass_kg": 0.03397,
+     "diaginertia_kgm2": [
+      1.05e-05,
+      1.77e-05,
+      1.05e-05
+     ]
+    },
+    "carrier": {
+     "mass_kg": 0.002,
+     "diaginertia_kgm2": [
+      2e-07,
+      2e-07,
+      2e-07
+     ]
+    },
+    "corner": {
+     "mass_kg": 0.01493,
+     "diaginertia_kgm2": [
+      4e-06,
+      4e-06,
+      4e-06
+     ]
+    },
+    "knuckle": {
+     "mass_kg": 0.00568,
+     "diaginertia_kgm2": [
+      2e-06,
+      2e-06,
+      2e-06
+     ]
+    }
+   },
+   "fr": {
+    "wheel": {
+     "mass_kg": 0.03404,
+     "diaginertia_kgm2": [
+      1.05e-05,
+      1.77e-05,
+      1.05e-05
+     ]
+    },
+    "carrier": {
+     "mass_kg": 0.002,
+     "diaginertia_kgm2": [
+      2e-07,
+      2e-07,
+      2e-07
+     ]
+    },
+    "corner": {
+     "mass_kg": 0.01493,
+     "diaginertia_kgm2": [
+      4e-06,
+      4e-06,
+      4e-06
+     ]
+    },
+    "knuckle": {
+     "mass_kg": 0.00568,
+     "diaginertia_kgm2": [
+      2e-06,
+      2e-06,
+      2e-06
+     ]
+    }
+   },
+   "rl": {
+    "wheel": {
+     "mass_kg": 0.03397,
+     "diaginertia_kgm2": [
+      1.05e-05,
+      1.77e-05,
+      1.05e-05
+     ]
+    },
+    "carrier": {
+     "mass_kg": 0.002,
+     "diaginertia_kgm2": [
+      2e-07,
+      2e-07,
+      2e-07
+     ]
+    },
+    "corner": {
+     "mass_kg": 0.016955,
+     "diaginertia_kgm2": [
+      4e-06,
+      4e-06,
+      4e-06
+     ]
+    }
+   },
+   "rr": {
+    "wheel": {
+     "mass_kg": 0.03404,
+     "diaginertia_kgm2": [
+      1.05e-05,
+      1.77e-05,
+      1.05e-05
+     ]
+    },
+    "carrier": {
+     "mass_kg": 0.002,
+     "diaginertia_kgm2": [
+      2e-07,
+      2e-07,
+      2e-07
+     ]
+    },
+    "corner": {
+     "mass_kg": 0.016955,
+     "diaginertia_kgm2": [
+      4e-06,
+      4e-06,
+      4e-06
+     ]
+    }
+   }
+  }
+ },
+ "derived_static_loads": {
+  "normal_n": {
+   "fl": 4.216666,
+   "fr": 4.511119,
+   "rl": 4.484656,
+   "rr": 4.797739
+  },
+  "spring_n": {
+   "fl": 3.661616,
+   "fr": 3.955382,
+   "rl": 3.965461,
+   "rr": 4.277858
+  },
+  "front_share": 0.484603
+ },
+ "derived_steering": {
+  "fl": {
+   "polycoef": [
+    -5.362305568e-06,
+    1.000777854,
+    0.3029141301,
+    0.07327888258,
+    -0.08224819134
+   ],
+   "max_error_rad": 8.251e-05
+  },
+  "fr": {
+   "polycoef": [
+    5.362305568e-06,
+    1.000777854,
+    -0.3029141301,
+    0.07327888258,
+    0.08224819134
+   ],
+   "max_error_rad": 8.251e-05
+  }
+ },
+ "derived_motor": {
+  "ke_v_per_radps": 0.0042441318,
+  "kt_nm_per_a": 0.0042441318,
+  "circuit_resistance_ohm": 0.1412,
+  "no_load_speed_radps": 1643.229,
+  "no_load_speed_rpm": 15691.7,
+  "stall_current_a": 50.992,
+  "stall_torque_nm": 0.209624,
+  "current_limited_torque_nm": 0.162975,
+  "loss_torque_nm": 0.006791
+ },
+ "derived_drivetrain": {
+  "driveline_inertia_kgm2": 0.0002218373,
+  "spin_armature_kgm2": 5.545932e-05,
+  "tendon_frictionloss_nm": 0.056687,
+  "mean_wheel_inertia_rolling_kgm2": 0.002279834,
+  "mean_wheel_inertia_free_kgm2": 0.0002926373,
+  "speed_kp_a_per_radps": 0.269103,
+  "speed_ki_a_per_rad": 2.11353,
+  "loop_gain_free_x_dt": 0.6119,
+  "centre_n_series_n": 4.498275,
+  "centre_damping_coef_nm_per_rad": 0.0730347,
+  "centre_mode_inertia_kgm2": 7.315932e-05,
+  "centre_low_speed_mps": 2.4957,
+  "centre_damping_rest_nms": 0.0292637
+ },
+ "derived_suspension": {
+  "fl": {
+   "springref_m": -0.0036616,
+   "static_compression_m": 0.0036616
+  },
+  "fr": {
+   "springref_m": -0.0039554,
+   "static_compression_m": 0.0039554
+  },
+  "rl": {
+   "springref_m": -0.0039655,
+   "static_compression_m": 0.0039655
+  },
+  "rr": {
+   "springref_m": -0.0042779,
+   "static_compression_m": 0.0042779
+  }
+ },
+ "derived_slip_pivot": {
+  "fl": {
+   "stiffness_nm_per_rad": 0.397885,
+   "damping_nms_per_rad": 0.00185751,
+   "yaw_inertia_kgm2": 2.4088e-05,
+   "omega_x_dt": 0.3213
+  },
+  "fr": {
+   "stiffness_nm_per_rad": 0.425669,
+   "damping_nms_per_rad": 0.00192238,
+   "yaw_inertia_kgm2": 2.4116e-05,
+   "omega_x_dt": 0.3321
+  },
+  "rl": {
+   "stiffness_nm_per_rad": 0.489384,
+   "damping_nms_per_rad": 0.00206004,
+   "yaw_inertia_kgm2": 2.4088e-05,
+   "omega_x_dt": 0.3563
+  },
+  "rr": {
+   "stiffness_nm_per_rad": 0.523548,
+   "damping_nms_per_rad": 0.00213198,
+   "yaw_inertia_kgm2": 2.4116e-05,
+   "omega_x_dt": 0.3684
+  }
+ },
+ "inputs": {
+  "spec_values_sha256": "89c3b8e5dd34a9c36db66e8a707a2ef28b067c7d29bacc3b3f158e61a3e24051",
+  "manifest_sha256": "31686a6691701eb4c932c6933a792242d17abc16734fb613b209ec042ac5ddcf"
+ }
+}

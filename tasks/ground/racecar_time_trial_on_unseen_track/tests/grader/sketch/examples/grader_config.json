@@ -1,0 +1,87 @@
+{
+ "schema": "racecar-grader-config/1",
+ "sim": {
+  "tick_s": 0.025,
+  "physics_dt_s": 0.0025,
+  "physics_steps_per_tick": 10,
+  "subscans_per_tick": 5,
+  "imu_samples_per_tick": 5,
+  "cmd_delay_ticks": 1
+ },
+ "sessions": [
+  {
+   "name": "practice",
+   "duration_s": 480.0,
+   "desk_before_s": 60.0,
+   "scored": false,
+   "phases": [
+    {"name": "mapping", "t0_s": 0.0, "speed_limit_mps": 2.0},
+    {"name": "free", "t0_s": 120.0, "speed_limit_mps": null}
+   ]
+  },
+  {
+   "name": "tt1",
+   "duration_s": 300.0,
+   "desk_before_s": 300.0,
+   "scored": true,
+   "phases": [
+    {"name": "heat", "t0_s": 0.0, "speed_limit_mps": null}
+   ]
+  },
+  {
+   "name": "tt2",
+   "duration_s": 300.0,
+   "desk_before_s": 120.0,
+   "scored": true,
+   "phases": [
+    {"name": "heat", "t0_s": 0.0, "speed_limit_mps": null}
+   ]
+  },
+  {
+   "name": "avoid",
+   "duration_s": 180.0,
+   "desk_before_s": 60.0,
+   "scored": true,
+   "phases": [
+    {"name": "static", "t0_s": 0.0, "speed_limit_mps": null},
+    {"name": "dynamic", "t0_s": 90.0, "speed_limit_mps": null}
+   ]
+  }
+ ],
+ "budgets": {"program_ms_per_tick": 15.0, "cpu_factor": 4.0, "silence_s": 180.0, "import_check_s": 120.0},
+ "command": {"steer_max_rad": 0.4189, "speed_min_mps": -2.0, "speed_max_mps": 8.0},
+ "staff": {
+  "crash_displacement_m": 0.05,
+  "open_wall_wheels_over": 3,
+  "rollover_tilt_rad": 1.0,
+  "hold_s": 20.0,
+  "relocate_at_s": 5.0,
+  "relocate_pos_err_m": 0.15,
+  "relocate_yaw_err_rad": 0.261799,
+  "roadside_clearance_m": 0.3,
+  "putback_err_m": 0.03,
+  "speeding_hold_s": 0.5,
+  "warnings_end_session": 3,
+  "out_of_bounds_void_at": 3
+ },
+ "scoring": {
+  "weights": {"fast": 0.35, "cons": 0.35, "avoid": 0.3},
+  "fast": {"zero_ratio": 1.33, "span_ratio": 0.3},
+  "cons": {"zero_frac": 0.43, "full_margin_laps": 1},
+  "avoid": {
+   "phase_weights": {"static": 0.5, "dynamic": 0.5},
+   "zero_ratio": 1.5,
+   "span_ratio": 0.4,
+   "standstill_s": 1.0,
+   "standstill_speed_mps": 0.05,
+   "min_overtakes_dynamic": 1
+  },
+  "virtual_rank_ratios": [1.093, 1.109, 1.166, 1.219, 1.269, 1.281, 1.292, 1.293],
+  "full_at": 0.98
+ },
+ "route_gate": {
+  "forbidden_calls": ["torch.optim", ".backward(", "jax.grad"],
+  "forbidden_extensions": [".pt", ".pth", ".onnx", ".safetensors", ".ckpt", ".h5", ".pb", ".pkl", ".npz"],
+  "max_submission_mb": 60
+ }
+}
