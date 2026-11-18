@@ -7415,6 +7415,260 @@
     "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
    },
    "reselection": "none: no redraw, no new candidate, the kept episodes and episodes.json unchanged"
+  },
+  {
+   "id": "A5",
+   "date": "2026-11-18",
+   "written_utc": "2026-11-18T22:01:58Z",
+   "authority": "the owner's approval of 2026-11-18, relayed by the task's lead, of a fix of this merged task: a vendor mark and lettering modelled as geometry are removed from the compute unit's given part file and from the hidden kit's visual meshes, and two small inscriptions are painted over on the controller board picture; the hidden episodes, the kit's collision shapes, masses and frames, the cell physics, the scoring and the reference program unchanged; no reselection",
+   "amends": "rule 1 (Freeze) of rule_text as amended by A1 (2026-11-15), A2 (2026-11-16), A3 (2026-11-17) and A4 (2026-11-17)",
+   "rule": "Rule 1 as amended by A1 to A4 stays in force. In addition: a change of the hidden kit that removes marks from what the cameras draw re-enters the frozen table under a new amendment instead of a redraw, when (a) every other entry of the table in force is unchanged (its files and values, its trees, the kit's member count); (b) the kit archive has the same member names, the changed members are visual meshes of the kit's bodies and their textures (no collision file), and kit.json is equal once the changed files' sha256 are taken out of its files table (no body, collision shape, mass, inertia, frame or material changes); (c) inside the changed meshes the faces only lose the mark's faces, are raised flush onto a surface they belong to, move to the material of the surface they now lie in, or gain flush covers over an opening that the removal leaves; (d) a changed texture keeps its size and mode and every pixel outside the painted boxes; (e) the hidden set is unchanged: the four episodes' layout digests, recomputed from their seeds with the task's own layout code on the old and on the new kit, equal episodes.json and the candidates' records, and episodes.json has the set's sha256; (f) one ale validate of the tree that carries the amendment reproduces the validate before the change: the same per-episode grader lines of the oracle and the untouched sandbox and the same per-mate lines of the reference program (wall times aside). The table in force is this amendment's from its writing. A change of anything else in the table still means a new draw (select_set.py draw --supersedes).",
+   "why": "the hidden kit is frozen by its members' bytes, and the compute unit's visual meshes still carried a vendor mark modelled as eight thin raised shells of the silkscreen material under the carrier board, the open remains of an engraved mark on the fan cover's top plate (its black inlay and the cut outline) and a vendor date-code label under the board; the given part file had the same shells, and the controller board picture two small inscriptions that the earlier masks did not cover. The cell's cameras draw the visual meshes and textures only: the cell simulates the kit's collision shapes with the masses and inertias of kit.json, and every visual geom is massless and has no contacts, so no episode's physics, layout or score depends on these bytes. The fix applies to the kit the given generator's own de-branding of the part file (the label dropped, the plate's cut raised flush and covered, the inlay in the cover's material) and removes the mark's shells; every number the grader and the reference program use is as before",
+   "changes": {
+    "kit_archive_members_changed": [
+     "gt/kit.json",
+     "gt/meshes/textures/t0.png",
+     "gt/meshes/visual/CMP__m04.stl",
+     "gt/meshes/visual/CMP__m28.stl",
+     "gt/meshes/visual/CMP__m39.stl",
+     "gt/meshes/visual/CMP__m47.stl",
+     "gt/meshes/visual/CMP__m52.stl"
+    ],
+    "kit_json": "only the six files' sha256 of its files table",
+    "files_sha256": {
+     "meshes/textures/t0.png": [
+      "c21b37247560901d94958422865d228838f2ad529fe822b7b74845e31c7e4099",
+      "304b1df7509835d7345fe120c27f845323c4d89222e27dcab9f1a434e20255f7"
+     ],
+     "meshes/visual/CMP__m04.stl": [
+      "d9e2a7c786880296257da081f55b83dcd99534fd9b8cabc7ae8eb24e46f58a24",
+      "c31e2527e05cafab9a2dfd56587add2b4434aa13e56826f8e8c88b5cd6326af9"
+     ],
+     "meshes/visual/CMP__m28.stl": [
+      "95ad193b98628964414ceed3c1b64d33c291bc1ff15bee3c41c61854019de1d4",
+      "82162d771cc3f936f2905dbe1ed753ae02e7098e3dc9e88b59060229f04bb70f"
+     ],
+     "meshes/visual/CMP__m39.stl": [
+      "d97e32e78797f21388324130ddf6adff4784dbd8f19068d9e3a883a3d6b9c907",
+      "c13dcc1630bdab5d6705b46d2e59e76bba2cd6525168ff90ed74c5389b4d2740"
+     ],
+     "meshes/visual/CMP__m47.stl": [
+      "69a4224150e383dd3c02f7ab114246de5ed507d36548dab6a9e18af01d843ddb",
+      "9ca02c5fb6e4973a4a8e1002f213ba978d0053279f893dc0f19868b7d4a41b6d"
+     ],
+     "meshes/visual/CMP__m52.stl": [
+      "29ac90c0cfd2719ac4541645373e32f10b240fe03d5046e272bbcd9ea197f261",
+      "c71cc671ec53e96e82832387e6a13d1a9be9b629ab761ad03f4d672bcf0117a4"
+     ]
+    },
+    "kit_json_sha256": [
+     "c838e20844dcde8467f82d25916def800856629e16205ba82fb7390f3ba1a4c4",
+     "6323ccec7f0f49d1e972c47432db2276a5135e4a6ab094f93147f7b1012c740a"
+    ],
+    "meshes": {
+     "faces_before": 30437,
+     "faces_after": 30315,
+     "removed_in_the_underside_mark_box": 70,
+     "removed_in_the_label_boxes": 56,
+     "removed_elsewhere": 0,
+     "added": 4,
+     "added_flat_at_the_plate_level": 4,
+     "moved_material": {
+      "m04->m47": 13
+     },
+     "plate_top_level_body_mm": 36.47185117006302,
+     "fill_box_body_mm": [
+      [
+       -26.5773,
+       -18.3912
+      ],
+      [
+       -22.0115,
+       3.0913
+      ]
+     ],
+     "fill_depth_mm": 0.25,
+     "ok": true
+    },
+    "picture": {
+     "size": [
+      2891,
+      2355
+     ],
+     "mode": "RGB",
+     "boxes_px": [
+      [
+       1078,
+       276,
+       1198,
+       808
+      ],
+      [
+       1527,
+       578,
+       2186,
+       842
+      ]
+     ],
+     "pixels_outside_unchanged": 6570489,
+     "pixels_inside_changed": 233351,
+     "pixels_inside": 237816,
+     "ok": true
+    },
+    "not_changed": "every other member of the archive (14 613), the kit's bodies, collision shapes, masses, inertias, frames and materials, grader_config.json's values, verify.py, the trees, the robot models, the reference program and the hidden set"
+   },
+   "checked_at_writing": {
+    "before_change": {
+     "table": "amendment A4 (2026-11-17)",
+     "frozen_ok": true,
+     "episodes_is_the_set": true,
+     "recorded_changed": [],
+     "recorded_changes_entered": 13,
+     "snapshot": {
+      "described_as": "the task folder as merged, with its two asset roots at the commit it pinned",
+      "entries_as_A4": true
+     }
+    },
+    "a_other_entries": {
+     "files_unchanged": 10,
+     "trees_unchanged": 6,
+     "changed": {
+      "tests/assets/gt.tar.xz#members": [
+       "bbc2b4b934b229e219bd83c5c696e16698fe576f22cc63f9df875d938437bbf4",
+       "b1501fddbda3ddb48d99cc509cb52dbd44193e8a4169561eef302f6069e4a835"
+      ]
+     },
+     "kit_members_as_A4": true
+    },
+    "b_kit_members": {
+     "same_names": true,
+     "changed": [
+      "gt/kit.json",
+      "gt/meshes/textures/t0.png",
+      "gt/meshes/visual/CMP__m04.stl",
+      "gt/meshes/visual/CMP__m28.stl",
+      "gt/meshes/visual/CMP__m39.stl",
+      "gt/meshes/visual/CMP__m47.stl",
+      "gt/meshes/visual/CMP__m52.stl"
+     ],
+     "kit_json_equal_without_the_changed_hashes": true,
+     "collision_files_changed": 0
+    },
+    "c_meshes": {
+     "faces_before": 30437,
+     "faces_after": 30315,
+     "removed_in_the_underside_mark_box": 70,
+     "removed_in_the_label_boxes": 56,
+     "removed_elsewhere": 0,
+     "added": 4,
+     "added_flat_at_the_plate_level": 4,
+     "moved_material": {
+      "m04->m47": 13
+     },
+     "plate_top_level_body_mm": 36.47185117006302,
+     "fill_box_body_mm": [
+      [
+       -26.5773,
+       -18.3912
+      ],
+      [
+       -22.0115,
+       3.0913
+      ]
+     ],
+     "fill_depth_mm": 0.25,
+     "ok": true
+    },
+    "d_picture": {
+     "size": [
+      2891,
+      2355
+     ],
+     "mode": "RGB",
+     "boxes_px": [
+      [
+       1078,
+       276,
+       1198,
+       808
+      ],
+      [
+       1527,
+       578,
+       2186,
+       842
+      ]
+     ],
+     "pixels_outside_unchanged": 6570489,
+     "pixels_inside_changed": 233351,
+     "pixels_inside": 237816,
+     "ok": true
+    },
+    "e_layout_digests": {
+     "old_kit": {
+      "c00": true,
+      "c01": true,
+      "c02": true,
+      "c03": true
+     },
+     "new_kit": {
+      "c00": true,
+      "c01": true,
+      "c02": true,
+      "c03": true
+     },
+     "episodes_sha256_is_the_set": true
+    },
+    "f_validate": "checked by the validate of the tree that carries this amendment (after writing)",
+    "selection_json_sha256_before": "7eda6bfcd72394b0ce3a35cbedea1aab620b1b221d8b447fac742aa0a9339fb8"
+   },
+   "frozen": {
+    "tests/verify.py": "9c2263fc8c0d3659cd60b5df393a6bcfeb22daae5d41d4e131fe526c4912a559",
+    "tests/test.sh": "a3ae37dc3edaebb7da88837f221c31ac9878f7a7523ec395d7c074781aec851e",
+    "tests/netguard.py": "80747b83b161c1495a4d0ccfae439188e3c42c94c0e41bc518f2d530170a64d7",
+    "tests/episode_trace.py": "e55c7b8004c9d7819fb3f8e9daf1204338a689e027503943d00055d9a2554632",
+    "tests/hidden/bench_plan.json": "c9cbb3416fee393341baa33ecdf65b5ac53fc9f1b23cb55fd6cb973e989563d1",
+    "tests/hidden/oracle_token.sha256": "c815e5d3326fa8b94f4f004247d919d490ac7abdd0ad9ab830d5822597d76d74",
+    "solution/solve.sh": "c7a4ab9ce55396ecd0180fb72d027a2500a17a4005f7fd12cdceb09005a46681",
+    "solution/reference/assemble.py": "84c9cda5733fdc6100afe18c6ec334d1c0569461206fc7c929cbb6d21f8d2cf2",
+    "solution/reference/oracle_token": "c7c89fd14f9af6e7aa65136e212391e93c4eb3785bc99f390b303094f549dcdf",
+    "tests/grader_config.json#values": "34552e7facc8d4d27550209a4e50193970673a782c96f2631ece745bd71bf615",
+    "tests/assets/gt.tar.xz#members": "b1501fddbda3ddb48d99cc509cb52dbd44193e8a4169561eef302f6069e4a835"
+   },
+   "frozen_counts": {
+    "tests/assets/gt.tar.xz#members": 14620
+   },
+   "frozen_trees": {
+    "tests/arm": "045964d78ec01d700502aec6c1fe4e0e050a07464222a1c67a06c25ff23cdc4b",
+    "tests/common": "c72b609d5891112e376876f1881a64e8323bb680a8c492ce145663537b94b8ed",
+    "tests/render": "08473c0de3ee3a06a8788493c3b9eff78c25e4151a635cc20f77208031bc7161",
+    "tests/render_filament": "09c41d7777d46d87e462291f48186c6cde3eef26976242c128ec41c95c66a5da",
+    "tests/room": "026fbf2d79c4b5865684642e5da1ccbd3b7af962e59bb6e68f8ee5bb2b53605f",
+    "environment/assets/payload/given/robot": "7229d7c5317852782159032ffd373a7b266749bc106c35ae0cc6c0697f55fde4"
+   },
+   "recorded": {
+    "publication": {
+     "tests/assets/gt.tar.xz": "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916",
+     "tests/grader_config.json#hidden_gt.url": "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b",
+     "tests/grader_config.json#hidden_gt.sha256": "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf",
+     "tests/grader_config.json#hidden_gt.note": "c7af77de6e4efde92e9326e3133c3c7e6379a0b6b3271599335d20d8809790eb"
+    },
+    "documents": {
+     "instruction.md": "8c05d99a87354883b2f0e8ae3b83403361bd18b8b868e8d2140d740c50ea9159",
+     "environment/assets.sha256": "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f",
+     "tests/given_hashes.json": "8ba24152dd3f3a837510d34c46d8a202accd49b90fe9a9b385cb8823a6a325d0",
+     "environment/setup/payload/": "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483",
+     "environment/assets/payload/given/parts/": "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57",
+     "environment/assets/payload/given/drawings/": "dfece19a682cef21b9613a86c6cde01031573fe117cc4e13a087278a787d193c",
+     "environment/assets/payload/given/manual/": "963d5f2b2af8e26d01d9c1840adfaba50003b26cf83b90ac9212d659a113003e",
+     "environment/assets/payload/render/": "d25e9c225c66d9244a8b7a98bbb5056216e32bf16898b9f110fc8a9a3d6972ff",
+     "tests/setup_payload/": "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483"
+    }
+   },
+   "tool_at_writing": {
+    "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
+   },
+   "reselection": "none: no redraw, no new candidate, the kept episodes and episodes.json unchanged"
   }
  ],
  "recorded_changes": [
@@ -8058,6 +8312,67 @@
     "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
    },
    "frozen_checked": "amendment A4 (2026-11-17): unchanged"
+  },
+  {
+   "utc": "2026-11-18T22:02:21Z",
+   "why": "the vendor-mark fix of 2026-11-18 (amendment A5): the given part file parts/compute_module.stl without the vendor mark modelled as eight thin shells under the carrier board (70 faces), with the fan cover's 13 inlay faces in the cover's material and a second flush cover over the plate's remaining opening (two triangles), so 30 383 -> 30 315 triangles, the same bounding box and frame; kit.json's part_materials for that file; the controller board picture given/appearance/m22.png (a byte copy of the kit's picture) with two small inscriptions painted over; the givens rebuilt by their generator from the fixed kit (setup payload, tests/setup_payload, given_hashes.json); the part file and the kit archive replaced at their paths on the asset dataset in one commit, b58e095e47a2f7e7feaf666ee28f7b0c3bb9e931 (the other 194 payload files unchanged), which environment/assets.sha256 and hidden_gt.url now pin, with hidden_gt.sha256 the new archive's. No grader file, grader value, hidden set or scoring changed; the frozen table is A5's and holds (checked before this entry)",
+   "changed": {
+    "publication/tests/assets/gt.tar.xz": [
+     "328939c34609e9f9b9108da78f3e37249c1d311de60f0361ca11f2f8c5fff4f4",
+     "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916"
+    ],
+    "publication/tests/grader_config.json#hidden_gt.sha256": [
+     "7826a7d574e3595e764899fd24e63e67e256e0adc4bf71ce5801173853d2cd64",
+     "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf"
+    ],
+    "publication/tests/grader_config.json#hidden_gt.url": [
+     "ac82897db6166c0a1c549102942cd38ec2cdef31976ff505c872471fe766a734",
+     "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b"
+    ],
+    "documents/environment/assets.sha256": [
+     "65c6828e6a47314f472add17f0aef1f4ad5323e562a67934e711815b1d622cea",
+     "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f"
+    ],
+    "documents/environment/assets/payload/given/parts/": [
+     "cf7474fad80c23f25539d3a1f78b26e915466a88588ba8ef8263c4ad6dbff8e5",
+     "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57"
+    ],
+    "documents/environment/setup/payload/": [
+     "af37da4e754b08018e98d5fea1bf05765b4ed66d044297c72e1bb01999987f52",
+     "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483"
+    ],
+    "documents/tests/given_hashes.json": [
+     "c89c40461fda1742201b73517c53708a4f34778b7a3f3bcfb164e51c121ff337",
+     "8ba24152dd3f3a837510d34c46d8a202accd49b90fe9a9b385cb8823a6a325d0"
+    ],
+    "documents/tests/setup_payload/": [
+     "af37da4e754b08018e98d5fea1bf05765b4ed66d044297c72e1bb01999987f52",
+     "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483"
+    ]
+   },
+   "recorded": {
+    "publication": {
+     "tests/assets/gt.tar.xz": "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916",
+     "tests/grader_config.json#hidden_gt.url": "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b",
+     "tests/grader_config.json#hidden_gt.sha256": "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf",
+     "tests/grader_config.json#hidden_gt.note": "c7af77de6e4efde92e9326e3133c3c7e6379a0b6b3271599335d20d8809790eb"
+    },
+    "documents": {
+     "instruction.md": "8c05d99a87354883b2f0e8ae3b83403361bd18b8b868e8d2140d740c50ea9159",
+     "environment/assets.sha256": "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f",
+     "tests/given_hashes.json": "8ba24152dd3f3a837510d34c46d8a202accd49b90fe9a9b385cb8823a6a325d0",
+     "environment/setup/payload/": "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483",
+     "environment/assets/payload/given/parts/": "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57",
+     "environment/assets/payload/given/drawings/": "dfece19a682cef21b9613a86c6cde01031573fe117cc4e13a087278a787d193c",
+     "environment/assets/payload/given/manual/": "963d5f2b2af8e26d01d9c1840adfaba50003b26cf83b90ac9212d659a113003e",
+     "environment/assets/payload/render/": "d25e9c225c66d9244a8b7a98bbb5056216e32bf16898b9f110fc8a9a3d6972ff",
+     "tests/setup_payload/": "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483"
+    }
+   },
+   "tools": {
+    "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
+   },
+   "frozen_checked": "amendment A5 (2026-11-18): unchanged"
   }
  ]
 }
