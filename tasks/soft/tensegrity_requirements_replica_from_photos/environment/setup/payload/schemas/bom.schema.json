@@ -1,0 +1,1066 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Bill of materials of the order. One line per part: its category (categories.json), what identifies it (vendor and part_number, attributes, or tags), and its quantity per strut and per robot. Fields, scope and the merging of equal lines are defined in docs/conventions.md.",
+  "properties": {
+    "lines": {
+      "items": {
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "battery_cell"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "capacity_mah": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "cells_in_series": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "connector_positions": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "bearing"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "bore_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "outer_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "width_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "cable_assembly"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "connector_series": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "positions": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "terminated_ends": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "capacitor"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "value": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "diode"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "type": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "dowel_pin"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "fuse"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "rating_a": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "gearmotor"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "encoder": {
+                      "enum": [
+                        "none",
+                        "extended_shaft_only",
+                        "back_connector",
+                        "side_connector"
+                      ],
+                      "type": "string"
+                    },
+                    "encoder_counts_per_rev": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "gear_ratio": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "rated_voltage_v": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "led"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "colour": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "line_guide"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "inner_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "magnet"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "thickness_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "nut"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "style": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "thread": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "pin_header"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "orientation": {
+                      "enum": [
+                        "straight",
+                        "right_angle",
+                        "surface_mount"
+                      ],
+                      "type": "string"
+                    },
+                    "positions": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "resistor"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    },
+                    "resistance_ohm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "retaining_ring"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "shaft_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "rod"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "material": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "screw"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "head": {
+                      "enum": [
+                        "socket_head_cap",
+                        "low_profile_socket_head",
+                        "button_head",
+                        "pan_head",
+                        "flat_head",
+                        "hex_head"
+                      ],
+                      "type": "string"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "thread": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "set_screw"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "thread": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "shaft_collar"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "bore_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "outer_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "socket_header"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "orientation": {
+                      "enum": [
+                        "straight",
+                        "right_angle",
+                        "surface_mount"
+                      ],
+                      "type": "string"
+                    },
+                    "positions": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "spacer"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "inner_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "outer_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "thread": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "spring"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "free_length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "outer_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "strain_sensor"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "outline": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "switch"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "actuation": {
+                      "enum": [
+                        "pushbutton",
+                        "slide",
+                        "toggle",
+                        "rocker",
+                        "rotary"
+                      ],
+                      "type": "string"
+                    },
+                    "terminals": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "threaded_insert"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "installation": {
+                      "enum": [
+                        "heat_set",
+                        "press_in",
+                        "moulded_in",
+                        "self_tapping"
+                      ],
+                      "type": "string"
+                    },
+                    "length_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "thread": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "transistor"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "channel": {
+                      "enum": [
+                        "n_channel",
+                        "p_channel",
+                        "complementary_pair",
+                        "dual_n_channel",
+                        "dual_p_channel",
+                        "npn",
+                        "pnp"
+                      ],
+                      "type": "string"
+                    },
+                    "package": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "washer"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "inner_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "outer_diameter_mm": {
+                      "maximum": 1000000000,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "category": {
+                  "const": "wire_to_board_connector"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            },
+            "then": {
+              "properties": {
+                "attributes": {
+                  "properties": {
+                    "entry": {
+                      "enum": [
+                        "top",
+                        "side",
+                        "bottom"
+                      ],
+                      "type": "string"
+                    },
+                    "mount": {
+                      "enum": [
+                        "through_hole",
+                        "surface_mount",
+                        "panel"
+                      ],
+                      "type": "string"
+                    },
+                    "positions": {
+                      "maximum": 10000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "series": {
+                      "maxLength": 120,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "maxLength": 120,
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "maxProperties": 16,
+            "type": "object"
+          },
+          "category": {
+            "enum": [
+              "battery_cell",
+              "bearing",
+              "cable_assembly",
+              "capacitor",
+              "control_board",
+              "diode",
+              "dowel_pin",
+              "fuse",
+              "gearmotor",
+              "led",
+              "line_guide",
+              "made_part",
+              "magnet",
+              "motor_driver_board",
+              "nut",
+              "pin_header",
+              "radio_module",
+              "resistor",
+              "retaining_ring",
+              "rod",
+              "screw",
+              "sensor_board",
+              "servo",
+              "set_screw",
+              "shaft_collar",
+              "socket_header",
+              "spacer",
+              "spring",
+              "strain_sensor",
+              "switch",
+              "threaded_insert",
+              "transistor",
+              "voltage_regulator_module",
+              "washer",
+              "wire_to_board_connector",
+              "wire",
+              "tape",
+              "heat_shrink",
+              "solder",
+              "print_material",
+              "casting_material",
+              "charger",
+              "tool",
+              "consumable"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "purchased",
+              "made"
+            ],
+            "type": "string"
+          },
+          "line_id": {
+            "pattern": "^L[A-Za-z0-9_.-]{1,39}$",
+            "type": "string"
+          },
+          "part_number": {
+            "maxLength": 120,
+            "type": "string"
+          },
+          "qty_per_robot_extra": {
+            "maximum": 10000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "qty_per_strut": {
+            "maximum": 10000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "source_ids": {
+            "items": {
+              "pattern": "^(PH-[0-9]{3}|FW|HOST|CFG|CAL|FAB|DXF|VD-[0-9]{2})$",
+              "type": "string"
+            },
+            "maxItems": 3,
+            "type": "array"
+          },
+          "tags": {
+            "items": {
+              "pattern": "^P[0-9]{2}$",
+              "type": "string"
+            },
+            "maxItems": 16,
+            "type": "array"
+          },
+          "vendor": {
+            "maxLength": 120,
+            "type": "string"
+          }
+        },
+        "required": [
+          "line_id",
+          "kind",
+          "category",
+          "qty_per_strut"
+        ],
+        "type": "object"
+      },
+      "maxItems": 60,
+      "type": "array"
+    },
+    "notes": {
+      "maxLength": 2000,
+      "type": "string"
+    },
+    "robots": {
+      "const": 8
+    }
+  },
+  "required": [
+    "robots",
+    "lines"
+  ],
+  "title": "bom.json",
+  "type": "object"
+}

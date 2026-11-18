@@ -1,0 +1,109 @@
+{
+  "description": "Units a requirements.yaml entry may carry, by dimension. A value in a unit times its factor is the value in the reference unit of the dimension. Any unit of a quantity's dimension is accepted for that quantity.",
+  "dimensions": {
+    "angle": {
+      "reference": "rad",
+      "units": {
+        "deg": 0.017453292519943295,
+        "rad": 1
+      }
+    },
+    "area": {
+      "reference": "m2",
+      "units": {
+        "cm2": 0.0001,
+        "m2": 1,
+        "mm2": 1e-06
+      }
+    },
+    "capacitance_per_length": {
+      "reference": "F/m",
+      "units": {
+        "F/m": 1,
+        "pF/mm": 1e-09
+      }
+    },
+    "charge": {
+      "reference": "Ah",
+      "units": {
+        "Ah": 1,
+        "mAh": 0.001
+      }
+    },
+    "current": {
+      "reference": "A",
+      "units": {
+        "A": 1,
+        "mA": 0.001
+      }
+    },
+    "dimensionless": {
+      "reference": "none",
+      "units": {
+        "count": 1,
+        "none": 1,
+        "percent": 0.01
+      }
+    },
+    "force": {
+      "reference": "N",
+      "units": {
+        "N": 1,
+        "mN": 0.001
+      }
+    },
+    "length": {
+      "reference": "m",
+      "units": {
+        "cm": 0.01,
+        "in": 0.0254,
+        "m": 1,
+        "mm": 0.001
+      }
+    },
+    "mass": {
+      "reference": "kg",
+      "units": {
+        "g": 0.001,
+        "kg": 1
+      }
+    },
+    "speed": {
+      "reference": "m/s",
+      "units": {
+        "m/s": 1,
+        "mm/s": 0.001
+      }
+    },
+    "stiffness": {
+      "reference": "N/m",
+      "units": {
+        "N/m": 1,
+        "N/mm": 1000
+      }
+    },
+    "temperature": {
+      "reference": "degC",
+      "units": {
+        "degC": 1
+      }
+    },
+    "time": {
+      "reference": "s",
+      "units": {
+        "h": 3600,
+        "min": 60,
+        "ms": 0.001,
+        "s": 1
+      }
+    },
+    "voltage": {
+      "reference": "V",
+      "units": {
+        "V": 1,
+        "mV": 0.001
+      }
+    }
+  },
+  "format": "unit table v1"
+}

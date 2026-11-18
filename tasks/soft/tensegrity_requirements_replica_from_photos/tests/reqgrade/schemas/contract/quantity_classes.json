@@ -1,0 +1,663 @@
+{
+  "built_by": "the maintainers' contract build (not in this repository)",
+  "comparator_classes": {
+    "<=": [
+      "<=",
+      "<"
+    ],
+    "=": [
+      "=",
+      "=="
+    ],
+    ">=": [
+      ">=",
+      ">"
+    ]
+  },
+  "counts": {
+    "graded": 8,
+    "graded_share": 0.1212,
+    "total": 66,
+    "unsourced": 31,
+    "w0": 27
+  },
+  "enumerations_by_class": {
+    "graded": 2,
+    "unsourced": 4,
+    "w0": 0
+  },
+  "integers_by_class": {
+    "graded": 4,
+    "unsourced": 0,
+    "w0": 14
+  },
+  "ledger_w0_not_in_vocabulary": [
+    {
+      "key": "software_gear_ratio",
+      "ledger": "W0-07",
+      "reason": "A second ratio name next to motor_gearbox_ratio would tell the agent that the software's ratio and the motor's ratio are two different numbers. An agent cannot submit it; nothing is lost."
+    },
+    {
+      "key": "short_sensor_planform (width)",
+      "ledger": "W0-21",
+      "ledger_index": 0,
+      "reason": "Neighbouring outlines share a cut line: two honest readings of the width exist, and a W0 name must not punish either."
+    },
+    {
+      "key": "long_sensor_planform (width)",
+      "ledger": "W0-22",
+      "ledger_index": 0,
+      "reason": "Same as the short sensor's width."
+    }
+  ],
+  "meaning": {
+    "graded": "a C2 row of the ledger: matched against the reference sheet",
+    "unsourced": "nothing in the givens fixes it: a submitted entry is counted wrong",
+    "w0": "a W0 row of the ledger: value right = left out of the precision, value wrong = counted wrong"
+  },
+  "p01_candidates_not_taken": [
+    {
+      "name": "fishing_line_diameter",
+      "now": "cable_diameter",
+      "reason": "the name stated the cable material"
+    },
+    {
+      "name": "payload",
+      "now": "payload_mass",
+      "reason": "unit-bearing name"
+    },
+    {
+      "name": "max_slope",
+      "now": "slope_max",
+      "reason": "naming pattern"
+    },
+    {
+      "name": "max_drop_height",
+      "now": "drop_height_max",
+      "reason": "naming pattern"
+    },
+    {
+      "name": "operating_temperature",
+      "now": "operating_temperature_min / operating_temperature_max",
+      "reason": "a range needs two names"
+    },
+    {
+      "name": "ingress_protection",
+      "now": "ingress_protection_rating",
+      "reason": "enumeration"
+    },
+    {
+      "name": "control_loop_rate",
+      "now": null,
+      "reason": "the given software contains delays and sleeps from which a rate can be argued; a name whose answer can be argued from the givens must not be scored as unsourced"
+    },
+    {
+      "name": "resistor_value",
+      "now": null,
+      "reason": "a BOM attribute, not a requirement; it would also announce that the board carries resistors"
+    },
+    {
+      "name": "set_screw_size",
+      "now": null,
+      "reason": "a BOM attribute, not a requirement"
+    }
+  ],
+  "quantities": {
+    "actuated_cables_per_robot": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-15",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "battery_endurance": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "min"
+    },
+    "battery_packs_per_strut": {
+      "class": "graded",
+      "domain": "integer",
+      "ledger": "C2-03",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "breakout_boards_on_shared_i2c_bus": {
+      "class": "graded",
+      "domain": "integer",
+      "ledger": "C2-06",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "cable_breaking_load": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "N"
+    },
+    "cable_diameter": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "cable_length_command_min": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-04",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "cable_length_command_range": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-05",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "cable_material": {
+      "class": "unsourced",
+      "domain": "enumeration",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "cable_pretension": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "N"
+    },
+    "cable_stiffness": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "N/m"
+    },
+    "calibration_lines_per_file": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-25",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "capacitance_channels_per_controller": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-11",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "cell_capacity": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mAh"
+    },
+    "cell_discharge_current_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "A"
+    },
+    "cells_in_series_per_pack": {
+      "class": "graded",
+      "domain": "integer",
+      "ledger": "C2-04",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "charge_connector_balance_groups": {
+      "class": "graded",
+      "domain": "integer",
+      "ledger": "C2-05",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "charge_current_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "A"
+    },
+    "charge_time": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "min"
+    },
+    "controllers_per_robot": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-16",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "drop_height_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    },
+    "encoder_counts_per_motor_revolution": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-08",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "encoder_supply_voltage": {
+      "class": "graded",
+      "domain": "number",
+      "ledger": "C2-08",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "V"
+    },
+    "footprint_area": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m2"
+    },
+    "ingress_protection_rating": {
+      "class": "unsourced",
+      "domain": "enumeration",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "long_sensor_cut_length": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-22",
+      "ledger_index": 1,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "long_sensor_hole_spacing": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-20",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "long_sensors_per_cut_sheet": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-18",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "long_strain_sensors_per_robot": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-14",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "main_switch_scope": {
+      "class": "graded",
+      "domain": "enumeration",
+      "ledger": "C2-01",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "motor_gearbox_ratio": {
+      "class": "graded",
+      "domain": "number",
+      "ledger": "C2-07",
+      "ledger_index": null,
+      "tolerance_class": "gear_ratio",
+      "unit": "none"
+    },
+    "motor_stall_current": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "A"
+    },
+    "motor_supply_source": {
+      "class": "graded",
+      "domain": "enumeration",
+      "ledger": "C2-02",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "motor_winding_class": {
+      "class": "unsourced",
+      "domain": "enumeration",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "no_load_line_speed": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m/s"
+    },
+    "obstacle_height_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    },
+    "operating_temperature_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "degC"
+    },
+    "operating_temperature_min": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "degC"
+    },
+    "pads_per_sensor_connector": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-23",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "payload_mass": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "kg"
+    },
+    "position_loop_derivative_gain": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-02",
+      "ledger_index": 2,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "position_loop_integral_gain": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-02",
+      "ledger_index": 1,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "position_loop_proportional_gain": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-02",
+      "ledger_index": 0,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "position_loop_tolerance": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-03",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "pwm_duty_full_scale": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-24",
+      "ledger_index": 0,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "resting_height": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    },
+    "robot_mass": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "kg"
+    },
+    "rolling_speed": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m/s"
+    },
+    "rolling_step_length": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    },
+    "sensor_hysteresis": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "short_sensor_cut_length": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-21",
+      "ledger_index": 1,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "short_sensor_hole_spacing": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-19",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "short_sensors_per_cut_sheet": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-17",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "short_strain_sensors_per_robot": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-13",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "slope_max": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "deg"
+    },
+    "speed_command_cap": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-06",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "speed_command_full_scale": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-24",
+      "ledger_index": 1,
+      "tolerance_class": "relative",
+      "unit": "none"
+    },
+    "stall_line_force": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "N"
+    },
+    "strain_sensors_per_robot": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-12",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "strut_mass": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "kg"
+    },
+    "telemetry_fields_per_message": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-10",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "count"
+    },
+    "telemetry_udp_port": {
+      "class": "w0",
+      "domain": "integer",
+      "ledger": "W0-01",
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "terrain_class": {
+      "class": "unsourced",
+      "domain": "enumeration",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "exact",
+      "unit": "none"
+    },
+    "turning_radius": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    },
+    "winch_drum_diameter": {
+      "class": "w0",
+      "domain": "number",
+      "ledger": "W0-09",
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "mm"
+    },
+    "wireless_range": {
+      "class": "unsourced",
+      "domain": "number",
+      "ledger": null,
+      "ledger_index": null,
+      "tolerance_class": "relative",
+      "unit": "m"
+    }
+  },
+  "schema": "tensegrity_requirements_replica_from_photos/contract/quantity_classes v1 (HIDDEN; never copied into the payload, the image or the asset dataset)",
+  "tolerance_classes": {
+    "encoder_counts": {
+      "applies_to": "a derived number of encoder counts",
+      "ledger_band": {
+        "rel_full_at": 0.001,
+        "rel_zero_at": 0.003
+      }
+    },
+    "exact": {
+      "applies_to": "a quantity whose domain is integer or enumeration",
+      "ledger_band": "exact"
+    },
+    "gear_ratio": {
+      "applies_to": "a gearbox ratio",
+      "ledger_band": {
+        "abs_full_at": 0.05,
+        "abs_zero_at": 0.3
+      }
+    },
+    "relative": {
+      "applies_to": "any other number",
+      "ledger_band": {
+        "rel_full_at": 0.01,
+        "rel_zero_at": 0.05
+      }
+    }
+  }
+}

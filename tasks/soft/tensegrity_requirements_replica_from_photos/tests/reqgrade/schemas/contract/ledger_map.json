@@ -1,0 +1,218 @@
+{
+  "built_by": "the maintainers' contract build (not in this repository)",
+  "categories": {
+    "attributes_ledger_to_contract": {
+      "battery_cell": {
+        "cells_per_plug": "cells_in_series",
+        "plug_positions": "connector_positions"
+      },
+      "cable_assembly": {
+        "end_positions": "positions",
+        "end_series": "connector_series"
+      },
+      "gearmotor": {
+        "encoder_connector": "encoder",
+        "encoder_cpr": "encoder_counts_per_rev",
+        "nominal_ratio": "gear_ratio",
+        "voltage_v": "rated_voltage_v"
+      },
+      "pin_header": {
+        "angle": "orientation",
+        "positions": "positions"
+      },
+      "resistor": {
+        "package": "package"
+      },
+      "rod": {
+        "diameter_mm": "diameter_mm",
+        "length_mm": "length_mm"
+      },
+      "screw": {
+        "head": "head",
+        "length_under_head_mm": "length_mm",
+        "thread": "thread"
+      },
+      "socket_header": {
+        "positions": "positions"
+      },
+      "spacer": {
+        "length_mm": "length_mm",
+        "outer_diameter_mm": "outer_diameter_mm"
+      },
+      "switch": {
+        "kind": "actuation",
+        "pins": "terminals"
+      },
+      "threaded_insert": {
+        "thread": "thread"
+      },
+      "transistor": {
+        "package": "package",
+        "polarity": "channel"
+      },
+      "wire_to_board_connector": {
+        "entry": "entry",
+        "mount": "mount",
+        "positions": "positions",
+        "series": "series"
+      }
+    },
+    "identified_by_vendor_part_number": [
+      "control_board",
+      "motor_driver_board",
+      "radio_module",
+      "sensor_board",
+      "servo",
+      "voltage_regulator_module"
+    ],
+    "ignored_ledger_attributes": {
+      "board_value": "the author's part value on the board (hidden)",
+      "capacity": "not graded",
+      "count_mesh": "a cross-check of the ledger build",
+      "diameter_in": "the same attribute in inches; the contract carries millimetres",
+      "distributor_part_numbers": "top-level field `part_number` of a line",
+      "entry_from": "where the ledger build took the entry code from",
+      "from": "where the ledger build took the attribute from",
+      "gender": "fixed by the category (pin_header = male, socket_header = female)",
+      "length": "not graded",
+      "length_in": "the same attribute in inches; the contract carries millimetres",
+      "length_tolerance_mm": "matching tolerance (a design value)",
+      "material": "not graded",
+      "measured_head_diameter_mm": "a measurement of the ledger build, not a matching attribute",
+      "measured_head_height_mm": "a measurement of the ledger build, not a matching attribute",
+      "measured_thread_diameter_mm": "a measurement of the ledger build, not a matching attribute",
+      "mesh_check_mm": "a cross-check of the ledger build",
+      "part_numbers": "top-level field `part_number` of a line",
+      "pitch_mm_fab": "a cross-check of the ledger build",
+      "ratio_tolerance": "matching tolerance (a design value, read by the matcher from the ledger)",
+      "size": "not graded",
+      "tags_any_of": "top-level field `tags` of a line",
+      "value": "not graded",
+      "vendor": "top-level field `vendor` of a line",
+      "winding_class": "not graded"
+    },
+    "in_scope_not_in_ledger": [
+      "bearing",
+      "capacitor",
+      "diode",
+      "dowel_pin",
+      "fuse",
+      "led",
+      "line_guide",
+      "magnet",
+      "nut",
+      "radio_module",
+      "retaining_ring",
+      "servo",
+      "shaft_collar",
+      "spring",
+      "strain_sensor",
+      "voltage_regulator_module",
+      "washer"
+    ],
+    "ledger_to_contract": {
+      "cell": "battery_cell",
+      "control_board": "control_board",
+      "driver_board": "motor_driver_board",
+      "harness": "cable_assembly",
+      "insert": "threaded_insert",
+      "made_part": "made_part",
+      "motor": "gearmotor",
+      "pin_header": "pin_header",
+      "resistor": "resistor",
+      "rod": "rod",
+      "screw": "screw",
+      "sensing_board": "sensor_board",
+      "set_screw": "set_screw",
+      "socket": "socket_header",
+      "spacer": "spacer",
+      "switch": "switch",
+      "transistor": "transistor",
+      "wtb_connector": "wire_to_board_connector"
+    },
+    "notes": {
+      "line_guide": "the bought line-guide ring is on the neutral list (ledger NEU-02): a line in this category is neither rewarded nor counted",
+      "pin_header": "male by definition (ledger attribute gender = male); header strips that ship with bought boards are on the neutral list (ledger NEU-05)",
+      "strain_sensor": "the strain sensors are on the neutral list (ledger NEU-03, NEU-04): a line in this category is neither rewarded nor counted"
+    },
+    "tokens_ledger_to_contract": {
+      "gearmotor": {
+        "encoder": {
+          "back": "back_connector"
+        }
+      },
+      "pin_header": {
+        "orientation": {
+          "right": "right_angle"
+        }
+      },
+      "transistor": {
+        "channel": {
+          "N+P": "complementary_pair"
+        }
+      }
+    }
+  },
+  "counts": {
+    "hooks_per_end_cap": "C1N-01"
+  },
+  "derived": {
+    "encoder_counts_over_command_range": {
+      "ledger": "C3-05",
+      "tolerance_class": "encoder_counts"
+    },
+    "long_sensor_sheets_for_order": {
+      "ledger": "C3-04",
+      "tolerance_class": "exact"
+    },
+    "mean_short_sensor_sensitivity": {
+      "ledger": "C3-08",
+      "tolerance_class": "relative"
+    },
+    "pwm_8bit_at_speed_cap": {
+      "ledger": "C3-07",
+      "tolerance_class": "exact"
+    },
+    "short_sensor_sheets_for_order": {
+      "ledger": "C3-03",
+      "tolerance_class": "exact"
+    },
+    "short_sensor_strain_at_max_command": {
+      "ledger": "C3-02",
+      "tolerance_class": "relative"
+    },
+    "short_sensor_strain_at_min_command": {
+      "ledger": "C3-01",
+      "tolerance_class": "relative"
+    },
+    "winch_turns_over_command_range": {
+      "ledger": "C3-06",
+      "tolerance_class": "relative"
+    }
+  },
+  "geometry": {
+    "cover_sphere_radius": "C1D-07",
+    "electronics_bay_length": "C1D-11",
+    "envelope_diameter": "C1D-06",
+    "hook_circle_radius": "C1D-10",
+    "motor_module_outer_face_station": "C1D-03",
+    "node_spacing": "C1D-02",
+    "rod_insertion_in_end_cap": "C1D-08",
+    "strut_overall_length": "C1D-01",
+    "winch_axis_offset": "C1D-04",
+    "winch_flange_diameter": "C1D-09"
+  },
+  "ruled_out_ledger_rows": {
+    "C1D-05": {
+      "key": "line_exit_offset",
+      "reason": "Taken off the graded list (cannot be measured as defined, no evidence); gt/freeze.json carries that out. The contract no longer defines it. The ledger row is still flagged graded; the freeze's graded list decides.",
+      "ruling": "taken off the graded list before the freeze"
+    },
+    "C1N-02": {
+      "key": "line_exits_per_motor_module",
+      "reason": "Off the graded list together with line_exit_offset; the mesh draws the ring on one motor module only.",
+      "ruling": "taken off the graded list before the freeze"
+    }
+  },
+  "schema": "tensegrity_requirements_replica_from_photos/contract/ledger_map v1 (HIDDEN)"
+}

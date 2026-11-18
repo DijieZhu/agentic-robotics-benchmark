@@ -1,0 +1,247 @@
+{
+ "controllers": [
+  {
+   "controller_index": 0,
+   "strut": "red"
+  },
+  {
+   "controller_index": 1,
+   "strut": "green"
+  },
+  {
+   "controller_index": 2,
+   "strut": "blue"
+  }
+ ],
+ "cables": [
+  {
+   "motor_index": 0,
+   "winch": {
+    "strut": "blue",
+    "end": "D"
+   },
+   "hook": {
+    "strut": "green",
+    "end": "D"
+   },
+   "motor_connector": "X11"
+  },
+  {
+   "motor_index": 1,
+   "winch": {
+    "strut": "green",
+    "end": "D"
+   },
+   "hook": {
+    "strut": "red",
+    "end": "D"
+   },
+   "motor_connector": "X11"
+  },
+  {
+   "motor_index": 2,
+   "winch": {
+    "strut": "red",
+    "end": "D"
+   },
+   "hook": {
+    "strut": "blue",
+    "end": "D"
+   },
+   "motor_connector": "X11"
+  },
+  {
+   "motor_index": 3,
+   "winch": {
+    "strut": "green",
+    "end": "U"
+   },
+   "hook": {
+    "strut": "red",
+    "end": "U"
+   },
+   "motor_connector": "X15"
+  },
+  {
+   "motor_index": 4,
+   "winch": {
+    "strut": "red",
+    "end": "U"
+   },
+   "hook": {
+    "strut": "blue",
+    "end": "U"
+   },
+   "motor_connector": "X15"
+  },
+  {
+   "motor_index": 5,
+   "winch": {
+    "strut": "blue",
+    "end": "U"
+   },
+   "hook": {
+    "strut": "green",
+    "end": "U"
+   },
+   "motor_connector": "X15"
+  }
+ ],
+ "sensors": [
+  {
+   "sensor_index": 0,
+   "between": [
+    {
+     "strut": "green",
+     "end": "D"
+    },
+    {
+     "strut": "blue",
+     "end": "D"
+    }
+   ],
+   "connector_pad": "X04.4"
+  },
+  {
+   "sensor_index": 1,
+   "between": [
+    {
+     "strut": "red",
+     "end": "D"
+    },
+    {
+     "strut": "green",
+     "end": "D"
+    }
+   ],
+   "connector_pad": "X04.4"
+  },
+  {
+   "sensor_index": 2,
+   "between": [
+    {
+     "strut": "red",
+     "end": "D"
+    },
+    {
+     "strut": "blue",
+     "end": "D"
+    }
+   ],
+   "connector_pad": "X04.4"
+  },
+  {
+   "sensor_index": 3,
+   "between": [
+    {
+     "strut": "red",
+     "end": "U"
+    },
+    {
+     "strut": "green",
+     "end": "U"
+    }
+   ],
+   "connector_pad": "X20.2"
+  },
+  {
+   "sensor_index": 4,
+   "between": [
+    {
+     "strut": "red",
+     "end": "U"
+    },
+    {
+     "strut": "blue",
+     "end": "U"
+    }
+   ],
+   "connector_pad": "X20.2"
+  },
+  {
+   "sensor_index": 5,
+   "between": [
+    {
+     "strut": "green",
+     "end": "U"
+    },
+    {
+     "strut": "blue",
+     "end": "U"
+    }
+   ],
+   "connector_pad": "X20.2"
+  },
+  {
+   "sensor_index": 6,
+   "between": [
+    {
+     "strut": "green",
+     "end": "U"
+    },
+    {
+     "strut": "blue",
+     "end": "D"
+    }
+   ],
+   "connector_pad": "X04.2"
+  },
+  {
+   "sensor_index": 7,
+   "between": [
+    {
+     "strut": "red",
+     "end": "U"
+    },
+    {
+     "strut": "green",
+     "end": "D"
+    }
+   ],
+   "connector_pad": "X04.2"
+  },
+  {
+   "sensor_index": 8,
+   "between": [
+    {
+     "strut": "red",
+     "end": "D"
+    },
+    {
+     "strut": "blue",
+     "end": "U"
+    }
+   ],
+   "connector_pad": "X04.2"
+  }
+ ],
+ "spare_inputs": [
+  {
+   "strut": "blue",
+   "connector_pad": "X20.4"
+  },
+  {
+   "strut": "green",
+   "connector_pad": "X20.4"
+  },
+  {
+   "strut": "red",
+   "connector_pad": "X20.4"
+  }
+ ],
+ "geometry": {
+  "strut_overall_length": 0.32580000000000003,
+  "node_spacing": 0.2908,
+  "motor_module_outer_face_station": 0.13140000000000002,
+  "winch_axis_offset": 0.0092,
+  "envelope_diameter": 0.048248,
+  "cover_sphere_radius": 0.0175,
+  "rod_insertion_in_end_cap": 0.021,
+  "winch_flange_diameter": 0.0127,
+  "hook_circle_radius": 0.01,
+  "electronics_bay_length": 0.143
+ },
+ "counts": {
+  "hooks_per_end_cap": 4
+ }
+}

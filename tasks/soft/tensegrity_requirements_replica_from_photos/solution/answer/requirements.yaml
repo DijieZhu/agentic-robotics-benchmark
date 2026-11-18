@@ -1,0 +1,138 @@
+items:
+- id: REQ-001
+  quantity: main_switch_scope
+  comparator: '='
+  bound: logic_supply_only
+  unit: none
+  source_ids:
+  - FAB
+  - VD-01
+  note: ledger C2-01
+- id: REQ-002
+  quantity: motor_supply_source
+  comparator: '='
+  bound: dedicated_pack
+  unit: none
+  source_ids:
+  - FAB
+  - VD-02
+  - VD-05
+  note: ledger C2-02
+- id: REQ-003
+  quantity: battery_packs_per_strut
+  comparator: '='
+  bound: 2
+  unit: count
+  source_ids:
+  - FAB
+  note: ledger C2-03
+- id: REQ-004
+  quantity: cells_in_series_per_pack
+  comparator: '='
+  bound: 2
+  unit: count
+  source_ids:
+  - FAB
+  note: ledger C2-04
+- id: REQ-005
+  quantity: charge_connector_balance_groups
+  comparator: '='
+  bound: 2
+  unit: count
+  source_ids:
+  - FAB
+  note: ledger C2-05
+- id: REQ-006
+  quantity: breakout_boards_on_shared_i2c_bus
+  comparator: '='
+  bound: 3
+  unit: count
+  source_ids:
+  - FAB
+  - VD-01
+  - VD-03
+  note: ledger C2-06
+- id: REQ-007
+  quantity: motor_gearbox_ratio
+  comparator: '='
+  bound: 150.58
+  unit: none
+  source_ids:
+  - VD-06
+  note: ledger C2-07
+- id: REQ-008
+  quantity: encoder_supply_voltage
+  comparator: '='
+  bound: 3.3
+  unit: V
+  source_ids:
+  - FAB
+  - VD-01
+  - VD-06
+  note: ledger C2-08
+derived:
+- id: DER-001
+  quantity: short_sensor_strain_at_min_command
+  value: 0.538462
+  unit: none
+  inputs:
+  - HOST
+  - DXF
+  derivation: ledger C3-01
+- id: DER-002
+  quantity: short_sensor_strain_at_max_command
+  value: 2.076923
+  unit: none
+  inputs:
+  - HOST
+  - DXF
+  derivation: ledger C3-02
+- id: DER-003
+  quantity: short_sensor_sheets_for_order
+  value: 3
+  unit: count
+  inputs:
+  - HOST
+  - CFG
+  - DXF
+  derivation: ledger C3-03
+- id: DER-004
+  quantity: long_sensor_sheets_for_order
+  value: 2
+  unit: count
+  inputs:
+  - HOST
+  - CFG
+  - DXF
+  derivation: ledger C3-04
+- id: DER-005
+  quantity: encoder_counts_over_command_range
+  value: 9057.846172
+  unit: count
+  inputs:
+  - HOST
+  - VD-06
+  derivation: ledger C3-05
+- id: DER-006
+  quantity: winch_turns_over_command_range
+  value: 5.012754
+  unit: none
+  inputs:
+  - HOST
+  derivation: ledger C3-06
+- id: DER-007
+  quantity: pwm_8bit_at_speed_cap
+  value: 180
+  unit: count
+  inputs:
+  - HOST
+  - FW
+  derivation: ledger C3-07
+- id: DER-008
+  quantity: mean_short_sensor_sensitivity
+  value: 0.036839
+  unit: pF/mm
+  inputs:
+  - HOST
+  - CAL
+  derivation: ledger C3-08

@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Cable net and key dimensions of the robot. controllers, cables, sensors, spare_inputs: records with the indices of the host software, nodes written as strut colour and end, and the designators of board/fab_data.json. geometry: lengths in metres. counts: whole numbers. Every field is defined in docs/conventions.md. A record, a field or a section that is left out earns nothing and is not an error.",
+  "properties": {
+    "cables": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "hook": {
+            "additionalProperties": true,
+            "properties": {
+              "end": {
+                "enum": [
+                  "U",
+                  "D"
+                ],
+                "type": "string"
+              },
+              "strut": {
+                "enum": [
+                  "red",
+                  "green",
+                  "blue"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "strut",
+              "end"
+            ],
+            "type": "object"
+          },
+          "motor_connector": {
+            "pattern": "^X[0-9]{2}$",
+            "type": "string"
+          },
+          "motor_index": {
+            "maximum": 63,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "winch": {
+            "additionalProperties": true,
+            "properties": {
+              "end": {
+                "enum": [
+                  "U",
+                  "D"
+                ],
+                "type": "string"
+              },
+              "strut": {
+                "enum": [
+                  "red",
+                  "green",
+                  "blue"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "strut",
+              "end"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "motor_index"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    },
+    "controllers": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "controller_index": {
+            "maximum": 63,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "strut": {
+            "enum": [
+              "red",
+              "green",
+              "blue"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "controller_index"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    },
+    "counts": {
+      "additionalProperties": false,
+      "properties": {
+        "hooks_per_end_cap": {
+          "description": "Number of hook posts on one end cap.",
+          "maximum": 10000,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "geometry": {
+      "additionalProperties": false,
+      "properties": {
+        "cover_sphere_radius": {
+          "description": "Radius of the sphere to which the outer surface of a cover belongs.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "electronics_bay_length": {
+          "description": "Length of the closed electronics enclosure along the rod axis, between its two outermost end faces.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "envelope_diameter": {
+          "description": "Diameter of the smallest cylinder coaxial with the rod that contains the whole assembled strut, covers and everything mounted on the strut included: twice the largest distance of any point of the strut from the rod axis.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "hook_circle_radius": {
+          "description": "Radius of the circle, centred on the rod axis, that passes through the axes of the hook posts of an end cap: the distance from the rod axis to the axis of a hook post.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "motor_module_outer_face_station": {
+          "description": "Distance along the rod axis from the mid-length point of the rod to the outer end face of a motor module. The outer end face is the flat face of the module's housing, perpendicular to the rod axis, against which the neighbouring end cap sits.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "node_spacing": {
+          "description": "Distance between the centres of the two spheres to which the outer surfaces of the covers at the two ends of the strut belong.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rod_insertion_in_end_cap": {
+          "description": "Length of rod inside an end cap, along the rod axis: from the end face of the rod to the face of the end cap at which the rod enters it (the face of the end cap nearest the middle of the strut).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "strut_overall_length": {
+          "description": "Length of the assembled strut along the rod axis, covers on: the distance between the two planes perpendicular to the rod axis that touch the outermost point of the cover at each end.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "winch_axis_offset": {
+          "description": "Perpendicular distance between the rod axis and the rotation axis of a winch (the axis of the gearmotor shaft that carries it).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "winch_flange_diameter": {
+          "description": "Largest outside diameter of a winch about its rotation axis (the diameter over its flanges).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "sensors": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "between": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "end": {
+                  "enum": [
+                    "U",
+                    "D"
+                  ],
+                  "type": "string"
+                },
+                "strut": {
+                  "enum": [
+                    "red",
+                    "green",
+                    "blue"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "strut",
+                "end"
+              ],
+              "type": "object"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "connector_pad": {
+            "pattern": "^X[0-9]{2}\\.[0-9]{1,3}$",
+            "type": "string"
+          },
+          "sensor_index": {
+            "maximum": 63,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sensor_index"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    },
+    "spare_inputs": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "connector_pad": {
+            "pattern": "^X[0-9]{2}\\.[0-9]{1,3}$",
+            "type": "string"
+          },
+          "strut": {
+            "enum": [
+              "red",
+              "green",
+              "blue"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "strut"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    }
+  },
+  "title": "cable_net.json",
+  "type": "object"
+}

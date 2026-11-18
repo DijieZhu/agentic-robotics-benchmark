@@ -1,0 +1,603 @@
+{
+  "attribute_types": {
+    "integer": "a whole number",
+    "number": "a number in the unit shown",
+    "string": "a short text, compared without regard to case, spaces and hyphens",
+    "token": "one of the tokens listed for the attribute"
+  },
+  "description": "Categories a line of bom.json may carry. in_scope: recognised_by says what identifies a line of the category (its vendor and part_number, its attributes, or its tags); attributes lists the attribute keys of the category with their type and unit. out_of_scope: lines in these categories are ignored.",
+  "format": "bill-of-materials categories v1",
+  "in_scope": {
+    "battery_cell": {
+      "attributes": {
+        "capacity_mah": {
+          "description": "rated capacity",
+          "type": "number",
+          "unit": "mAh"
+        },
+        "cells_in_series": {
+          "description": "cells in series inside the item; a single cell is one",
+          "type": "integer",
+          "unit": "count"
+        },
+        "connector_positions": {
+          "description": "positions of the plug on its lead",
+          "type": "integer",
+          "unit": "count"
+        }
+      },
+      "description": "A rechargeable cell, or several cells sold as one item, with its lead and plug.",
+      "recognised_by": "attributes"
+    },
+    "bearing": {
+      "attributes": {
+        "bore_mm": {
+          "description": "bore diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "outer_diameter_mm": {
+          "description": "outside diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "width_mm": {
+          "description": "width",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A rolling or plain bearing.",
+      "recognised_by": "attributes"
+    },
+    "cable_assembly": {
+      "attributes": {
+        "connector_series": {
+          "description": "series of the fitted connector, as its maker names it",
+          "type": "string"
+        },
+        "length_mm": {
+          "description": "cable length",
+          "type": "number",
+          "unit": "mm"
+        },
+        "positions": {
+          "description": "positions of the fitted connector",
+          "type": "integer",
+          "unit": "count"
+        },
+        "terminated_ends": {
+          "description": "number of ends that carry a connector",
+          "type": "integer",
+          "unit": "count"
+        }
+      },
+      "description": "A bought, ready-made cable with a connector fitted on one end or on both.",
+      "recognised_by": "attributes"
+    },
+    "capacitor": {
+      "attributes": {
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        },
+        "value": {
+          "description": "capacitance with its unit",
+          "type": "string"
+        }
+      },
+      "description": "A capacitor soldered on a board you list as a made part.",
+      "recognised_by": "attributes"
+    },
+    "control_board": {
+      "attributes": {},
+      "description": "A bought microcontroller board.",
+      "recognised_by": "vendor_part_number"
+    },
+    "diode": {
+      "attributes": {
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        },
+        "type": {
+          "description": "kind of diode",
+          "type": "string"
+        }
+      },
+      "description": "A diode soldered on a board you list as a made part.",
+      "recognised_by": "attributes"
+    },
+    "dowel_pin": {
+      "attributes": {
+        "diameter_mm": {
+          "description": "diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "length_mm": {
+          "description": "length",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A plain cylindrical pin.",
+      "recognised_by": "attributes"
+    },
+    "fuse": {
+      "attributes": {
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        },
+        "rating_a": {
+          "description": "rated current",
+          "type": "number",
+          "unit": "A"
+        }
+      },
+      "description": "A fuse or resettable fuse.",
+      "recognised_by": "attributes"
+    },
+    "gearmotor": {
+      "attributes": {
+        "encoder": {
+          "description": "encoder option: none; no encoder but a motor shaft extended at the rear; an encoder whose connector points along the motor; an encoder whose connector points across the motor",
+          "tokens": [
+            "none",
+            "extended_shaft_only",
+            "back_connector",
+            "side_connector"
+          ],
+          "type": "token"
+        },
+        "encoder_counts_per_rev": {
+          "description": "encoder counts per revolution of the motor shaft",
+          "type": "integer",
+          "unit": "count"
+        },
+        "gear_ratio": {
+          "description": "reduction ratio of the gearbox",
+          "type": "number",
+          "unit": "none"
+        },
+        "rated_voltage_v": {
+          "description": "rated voltage of the motor",
+          "type": "number",
+          "unit": "V"
+        }
+      },
+      "description": "A motor with a gearbox, with or without an encoder.",
+      "recognised_by": "attributes"
+    },
+    "led": {
+      "attributes": {
+        "colour": {
+          "description": "colour",
+          "type": "string"
+        },
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        }
+      },
+      "description": "A light-emitting diode soldered on a board you list as a made part.",
+      "recognised_by": "attributes"
+    },
+    "line_guide": {
+      "attributes": {
+        "inner_diameter_mm": {
+          "description": "inside diameter",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A bought ring, eyelet or tube that guides a cable.",
+      "recognised_by": "attributes"
+    },
+    "made_part": {
+      "attributes": {},
+      "description": "A part made in the lab (printed, cast, cut or a bare circuit board) that carries a paper tag in the photos.",
+      "recognised_by": "tags"
+    },
+    "magnet": {
+      "attributes": {
+        "diameter_mm": {
+          "description": "diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "thickness_mm": {
+          "description": "thickness",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A permanent magnet.",
+      "recognised_by": "attributes"
+    },
+    "motor_driver_board": {
+      "attributes": {},
+      "description": "A bought breakout board whose function is to drive motors.",
+      "recognised_by": "vendor_part_number"
+    },
+    "nut": {
+      "attributes": {
+        "style": {
+          "description": "kind of nut",
+          "type": "string"
+        },
+        "thread": {
+          "description": "thread designation",
+          "type": "string"
+        }
+      },
+      "description": "A threaded nut.",
+      "recognised_by": "attributes"
+    },
+    "pin_header": {
+      "attributes": {
+        "orientation": {
+          "description": "how the pins leave the board: straight up, bent parallel to the board, or soldered flat on the surface",
+          "tokens": [
+            "straight",
+            "right_angle",
+            "surface_mount"
+          ],
+          "type": "token"
+        },
+        "positions": {
+          "description": "number of pins",
+          "type": "integer",
+          "unit": "count"
+        },
+        "rows": {
+          "description": "number of rows",
+          "type": "integer",
+          "unit": "count"
+        }
+      },
+      "description": "An unshrouded strip of pins soldered to a board.",
+      "recognised_by": "attributes"
+    },
+    "radio_module": {
+      "attributes": {},
+      "description": "A bought wireless module or breakout board.",
+      "recognised_by": "vendor_part_number"
+    },
+    "resistor": {
+      "attributes": {
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        },
+        "resistance_ohm": {
+          "description": "resistance",
+          "type": "number",
+          "unit": "ohm"
+        }
+      },
+      "description": "A resistor soldered on a board you list as a made part.",
+      "recognised_by": "attributes"
+    },
+    "retaining_ring": {
+      "attributes": {
+        "shaft_diameter_mm": {
+          "description": "diameter of the shaft it fits",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A retaining ring or clip on a shaft.",
+      "recognised_by": "attributes"
+    },
+    "rod": {
+      "attributes": {
+        "diameter_mm": {
+          "description": "outside diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "length_mm": {
+          "description": "length",
+          "type": "number",
+          "unit": "mm"
+        },
+        "material": {
+          "description": "material",
+          "type": "string"
+        }
+      },
+      "description": "Round bar stock, solid or hollow, cut to length.",
+      "recognised_by": "attributes"
+    },
+    "screw": {
+      "attributes": {
+        "head": {
+          "description": "head style",
+          "tokens": [
+            "socket_head_cap",
+            "low_profile_socket_head",
+            "button_head",
+            "pan_head",
+            "flat_head",
+            "hex_head"
+          ],
+          "type": "token"
+        },
+        "length_mm": {
+          "description": "length under the head (for a flat head: overall length)",
+          "type": "number",
+          "unit": "mm"
+        },
+        "thread": {
+          "description": "thread designation",
+          "type": "string"
+        }
+      },
+      "description": "A screw with a head.",
+      "recognised_by": "attributes"
+    },
+    "sensor_board": {
+      "attributes": {},
+      "description": "A bought breakout board whose function is to measure something.",
+      "recognised_by": "vendor_part_number"
+    },
+    "servo": {
+      "attributes": {},
+      "description": "A bought servo actuator.",
+      "recognised_by": "vendor_part_number"
+    },
+    "set_screw": {
+      "attributes": {
+        "length_mm": {
+          "description": "overall length",
+          "type": "number",
+          "unit": "mm"
+        },
+        "thread": {
+          "description": "thread designation",
+          "type": "string"
+        }
+      },
+      "description": "A headless screw.",
+      "recognised_by": "attributes"
+    },
+    "shaft_collar": {
+      "attributes": {
+        "bore_mm": {
+          "description": "bore diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "outer_diameter_mm": {
+          "description": "outside diameter",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A collar clamped or screwed on a shaft.",
+      "recognised_by": "attributes"
+    },
+    "socket_header": {
+      "attributes": {
+        "orientation": {
+          "description": "how the receptacles leave the board: straight up, bent parallel to the board, or soldered flat on the surface",
+          "tokens": [
+            "straight",
+            "right_angle",
+            "surface_mount"
+          ],
+          "type": "token"
+        },
+        "positions": {
+          "description": "number of receptacles",
+          "type": "integer",
+          "unit": "count"
+        },
+        "rows": {
+          "description": "number of rows",
+          "type": "integer",
+          "unit": "count"
+        }
+      },
+      "description": "A strip of receptacles soldered to a board, into which the pins of another board plug.",
+      "recognised_by": "attributes"
+    },
+    "spacer": {
+      "attributes": {
+        "inner_diameter_mm": {
+          "description": "inside diameter of an unthreaded body",
+          "type": "number",
+          "unit": "mm"
+        },
+        "length_mm": {
+          "description": "length of the body",
+          "type": "number",
+          "unit": "mm"
+        },
+        "outer_diameter_mm": {
+          "description": "outside diameter (across flats for a hexagonal body)",
+          "type": "number",
+          "unit": "mm"
+        },
+        "thread": {
+          "description": "thread designation of a threaded body",
+          "type": "string"
+        }
+      },
+      "description": "A spacer or standoff, threaded or not, that holds parts apart.",
+      "recognised_by": "attributes"
+    },
+    "spring": {
+      "attributes": {
+        "free_length_mm": {
+          "description": "free length",
+          "type": "number",
+          "unit": "mm"
+        },
+        "outer_diameter_mm": {
+          "description": "outside diameter",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A coil spring.",
+      "recognised_by": "attributes"
+    },
+    "strain_sensor": {
+      "attributes": {
+        "outline": {
+          "description": "`short` or `long`, after the cut file",
+          "type": "string"
+        }
+      },
+      "description": "An elastic strain sensor made in the lab from one of the given cut outlines.",
+      "recognised_by": "attributes"
+    },
+    "switch": {
+      "attributes": {
+        "actuation": {
+          "description": "how it is worked",
+          "tokens": [
+            "pushbutton",
+            "slide",
+            "toggle",
+            "rocker",
+            "rotary"
+          ],
+          "type": "token"
+        },
+        "terminals": {
+          "description": "number of terminals",
+          "type": "integer",
+          "unit": "count"
+        }
+      },
+      "description": "A switch worked by hand.",
+      "recognised_by": "attributes"
+    },
+    "threaded_insert": {
+      "attributes": {
+        "installation": {
+          "description": "how it is set into the part",
+          "tokens": [
+            "heat_set",
+            "press_in",
+            "moulded_in",
+            "self_tapping"
+          ],
+          "type": "token"
+        },
+        "length_mm": {
+          "description": "length",
+          "type": "number",
+          "unit": "mm"
+        },
+        "thread": {
+          "description": "thread designation",
+          "type": "string"
+        }
+      },
+      "description": "A threaded metal insert set into a plastic part.",
+      "recognised_by": "attributes"
+    },
+    "transistor": {
+      "attributes": {
+        "channel": {
+          "description": "what the package holds: one field-effect transistor of either polarity, one of each polarity, a pair of one polarity, or one bipolar transistor of either polarity",
+          "tokens": [
+            "n_channel",
+            "p_channel",
+            "complementary_pair",
+            "dual_n_channel",
+            "dual_p_channel",
+            "npn",
+            "pnp"
+          ],
+          "type": "token"
+        },
+        "package": {
+          "description": "case code or package name",
+          "type": "string"
+        }
+      },
+      "description": "One transistor, or several in one package, soldered on a board you list as a made part.",
+      "recognised_by": "attributes"
+    },
+    "voltage_regulator_module": {
+      "attributes": {},
+      "description": "A bought voltage regulator or converter board.",
+      "recognised_by": "vendor_part_number"
+    },
+    "washer": {
+      "attributes": {
+        "inner_diameter_mm": {
+          "description": "inside diameter",
+          "type": "number",
+          "unit": "mm"
+        },
+        "outer_diameter_mm": {
+          "description": "outside diameter",
+          "type": "number",
+          "unit": "mm"
+        }
+      },
+      "description": "A flat or spring washer.",
+      "recognised_by": "attributes"
+    },
+    "wire_to_board_connector": {
+      "attributes": {
+        "entry": {
+          "description": "direction from which the mating plug enters, seen from the board: from above, parallel to the board, or from below through the board",
+          "tokens": [
+            "top",
+            "side",
+            "bottom"
+          ],
+          "type": "token"
+        },
+        "mount": {
+          "description": "how it is fixed: pins through the board, pads on the board surface, or on a panel",
+          "tokens": [
+            "through_hole",
+            "surface_mount",
+            "panel"
+          ],
+          "type": "token"
+        },
+        "positions": {
+          "description": "number of positions",
+          "type": "integer",
+          "unit": "count"
+        },
+        "series": {
+          "description": "series of the connector family, as its maker names it",
+          "type": "string"
+        }
+      },
+      "description": "The board-side part of a keyed wire-to-board connector family: a shrouded header soldered to a board.",
+      "recognised_by": "attributes"
+    }
+  },
+  "out_of_scope": {
+    "casting_material": "Material for cast and moulded parts.",
+    "charger": "Battery chargers and their leads.",
+    "consumable": "Glue, cleaning material and other supplies used up in the build.",
+    "heat_shrink": "Heat-shrink tubing.",
+    "print_material": "Filament and resin for printed parts.",
+    "solder": "Solder and flux.",
+    "tape": "Adhesive tape.",
+    "tool": "Tools and fixtures.",
+    "wire": "Wire, cord and line sold by length, and the crimp contacts and wire-side housings used to make up leads in the lab."
+  },
+  "recognised_by": {
+    "attributes": "the line's `attributes`",
+    "tags": "the line's `tags`",
+    "vendor_part_number": "the line's `vendor` and `part_number`"
+  },
+  "writing_rules": {
+    "package": "Write a package by its usual case code or package name.",
+    "thread": "Write a thread designation the way its standard does and without spaces: a unified thread as `<size>-<threads per inch>`, a metric thread as `M<diameter>x<pitch>`."
+  }
+}
