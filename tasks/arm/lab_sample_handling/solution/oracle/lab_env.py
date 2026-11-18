@@ -33,7 +33,7 @@ import mujoco
 import numpy as np
 
 import lab_sim as S
-from lab_sim import B, RenderError, cam_pose, intrinsics, render  # noqa: F401 - RenderError for the grader
+from lab_sim import B, RenderError, cam_pose, close_renderers, intrinsics, render  # noqa: F401 - RenderError for the grader
 
 MAX_DPOS, MAX_DROT, MAX_DQ = B.MAX_DPOS, B.MAX_DROT, S.MAX_DQ
 CAMS = {"left": (1, B.CAMERAS["left"][3], B.CAMERAS["left"][4], B.CAMERAS["left"][2], "left"),
@@ -75,9 +75,11 @@ class LabEnv:
         self.props = {k: float(props[k]) for k in S.UNIT_PROPS}
         self.unit_id = unit_id
         self.render_images = render
+        self.renderers = {}              # one per image size, for this episode's model (lab_sim.render)
 
     def reset(self, seed):
         self.seed = int(seed)
+        close_renderers(self.renderers)  # they belong to the last episode's model
         self.a = S.sim_args(self.seed)
         self.episode = S.draw_episode(self.seed, self.props)
         self.p, self.src, self.names, self.cold, self.masses = S.world(self.a, self.episode)
@@ -155,7 +157,7 @@ class LabEnv:
             obs[f"T_world_{cam}"] = self.camera_pose(cam)
             obs[f"K_{cam}"] = self.camera_matrix(cam)
             if self.render_images and self.render_next & bit:
-                obs[cam] = render(p.model, d, name, w, h, self.rng)
+                obs[cam] = render(p.model, d, name, w, h, self.rng, self.renderers)
             else:
                 obs[cam] = np.zeros((0, 0, 3), np.uint8)
         return obs
@@ -181,7 +183,8 @@ class LabEnv:
         return out
 
     def close(self):
-        """Nothing to release (the renderer is made and closed per image)."""
+        """Release the episode's renderers (one per image size, made at the first image of that size)."""
+        close_renderers(self.renderers)
 
     def truth(self):
         """The full state, for a token run only (the reference's shadow): the unit, the seed, qpos and qvel."""

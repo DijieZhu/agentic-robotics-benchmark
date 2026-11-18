@@ -17,7 +17,6 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-sys.path.insert(1, os.path.join(HERE, "..", "box_env"))
 import box_transport_env as B
 import mujoco
 import numpy as np
@@ -830,18 +829,38 @@ class RenderError(RuntimeError):
     never the controller's."""
 
 
-def render(m, d, cam, w, h, rng):
+def render(m, d, cam, w, h, rng, cache=None):
+    """One camera image with the sensor's pixel noise. `cache` (a dict its caller keeps for one model) holds one
+    renderer per image size, made at the first image of that size and closed by `close_renderers`: making a renderer
+    takes far longer than drawing with it. Without a cache the renderer is made and closed here."""
     try:
-        r = mujoco.Renderer(m, h, w)
+        r = None if cache is None else cache.get((h, w))
+        if r is None:
+            r = mujoco.Renderer(m, h, w)
+            if cache is not None:
+                cache[(h, w)] = r
         try:
             r.update_scene(d, camera=cam)
             img = r.render().astype(np.float32)
         finally:
-            r.close()
+            if cache is None:
+                r.close()
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
+        if cache is not None:
+            cache.pop((h, w), None)
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, B.RGB_NOISE, img.shape)
     return np.clip(img, 0, 255).astype(np.uint8)
+
+
+def close_renderers(cache):
+    """Close and forget every renderer of `cache` (they belong to one model)."""
+    for r in list(cache.values()):
+        try:
+            r.close()
+        except Exception:  # noqa: BLE001 - a renderer that fails to close is dropped all the same
+            pass
+    cache.clear()
 
 
 # the bench (worklist_scene.py)

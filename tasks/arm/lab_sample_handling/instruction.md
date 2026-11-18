@@ -74,7 +74,10 @@ A controller tuned only on the practice units will meet rotors that answer a tur
 | `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit. |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic). |
 
-Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow). There is no network.
+Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow). There is no network. The sandbox has
+4 CPUs and 12 GB of memory, while grading too. Every `/opt/venv` Python runs NumPy's linear algebra on one fixed set
+of kernels (`OPENBLAS_CORETYPE=Haswell`, which the image also sets when the variable is missing), here and in the
+graded run, so the simulator computes the same on every machine.
 
 ## Credit
 
@@ -131,9 +134,14 @@ large (the rack image alone is about 1.2 MB on the wire), so ask for one only wh
 
 ## Deliverable and grading
 
-Put your controller in `/home/user/submission/` with a `run.sh`. The grader starts it with `bash run.sh` in that
-folder, as your user, with only local (AF_UNIX) sockets, and speaks one JSON object per line on its stdin and
-stdout:
+Put your controller in `/home/user/submission/` with a `run.sh`. Everything it needs must be inside that folder (at
+most 5000 files and 200 MiB; a larger folder scores 0), and the controller may write there. It is graded in a fresh
+sandbox: nothing else of your home directory is there (no `lab_sim.py`, no `units.json`: copy what you use into the
+folder), there is no desktop session, and the only processes of your account are the ones `run.sh` starts. A
+process of your account that was started any other way ends the run: that episode and every later one score 0.
+
+The grader starts the controller with `bash run.sh` in that folder, as your user, with only local (AF_UNIX) sockets,
+and speaks one JSON object per line on its stdin and stdout:
 
 - your controller prints `READY` within 120 s;
 - `{"type": "reset"}` → `{"ok": true}` (an episode starts);
@@ -157,6 +165,10 @@ repeated `t` from a cache, fails. Which steps are probed depends only on the epi
 - Before the first episode the grader draws one test image of each camera, which takes a few seconds of its budget.
 - A crash, a late reply, a malformed action or an unstable simulation scores the episode 0. After 3 restarts the
   remaining episodes score 0.
-- The grader's time budget is 9000 s in all. Episodes it cannot start in time score 0.
+- Your controller's time budget is 9000 s in all: the time it takes to print `READY` and to answer each request,
+  summed over the run, plus 0.2 s for every image you ask for (a fixed price, whatever the grader's machine takes to
+  draw it; the four images of an episode's first observation are free). The simulation itself is not counted. Once
+  the budget is used up, the episode under way and the episodes not yet started score 0. The practice grader reports
+  the same sum (`controller_seconds`).
 - Your controller is one process for the whole run, so it may carry what it learns about a unit, or a rotor, from
   one episode to the next.

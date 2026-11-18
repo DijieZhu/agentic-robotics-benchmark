@@ -11,13 +11,19 @@ shadow, whose state is the truth, so it requests none.
 A repeated step index (a probe of the lock) is answered without the reference: a Cartesian step's target (the
 hand's pose it aimed at) re-based on that copy's hand pose; a joint step as sent.
 
-v2 : the scale's reading is the observation's `scale_g`. The reference thinks between some steps for
-longer than a reply may take (its reach table, about 30 s): when it has not sent its next command within THINK_S,
-the oracle answers with a hold, and keeps answering holds without syncing the shadow (which the thread is reading)
-until the command comes; a Cartesian command is a target pose, re-based on the observation it answers.
+v2 : the scale's reading is the observation's `scale_g`. A Cartesian command is a target pose, re-based on the
+observation it answers.
+
+v3 : nothing is answered from the clock. The reference thinks between some steps (its reach table); the oracle
+waits for its next command as long as that takes, so the actions are a function of the observations alone and a
+run repeats on a slower or busier machine. (v2 answered a hold whenever the command had not come within 10 s of
+wall time, which made the number of steps depend on the host.) The only clock left is the wire's own reply deadline
+(30 s, the grader's): a think longer than that aborts the episode there, visibly. The longest think measured on the
+maintainers' host under load was 3.7 s.
 """
 
 import queue
+import sys
 import threading
 
 import mujoco
@@ -33,7 +39,6 @@ class EpisodeOver(BaseException):
 
 
 HOLD = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0]
-THINK_S = 10.0                  # s, the longest the oracle waits for the reference's next command before a hold
 
 
 class WireWorld(C.World):
@@ -125,11 +130,10 @@ class Oracle:
         self.last_t, self.last_cmd = None, None
         self.finished = False
         self.result = None
-        self.pending = False
 
     def reset(self):
         self.stop()
-        self.last_t, self.last_cmd, self.finished, self.result, self.pending = None, None, False, None, False
+        self.last_t, self.last_cmd, self.finished, self.result = None, None, False, None
 
     def stop(self):
         if self.thread is not None and self.thread.is_alive():
@@ -154,6 +158,9 @@ class Oracle:
                 self.result = W.run_worklist(p, a, ep, src, names, cold, masses)
             except EpisodeOver:
                 return
+            except Exception:  # noqa: BLE001 - the reference failed: say so and hold from here on, never hang
+                import traceback
+                traceback.print_exc(file=sys.stderr)
             self.out_q.put("done")
 
         self.thread = threading.Thread(target=run, daemon=True)
@@ -166,18 +173,12 @@ class Oracle:
             return action_for(self.last_cmd, obs)
         if self.thread is None and not self.finished:
             self._start(obs)
-        elif not self.finished and not self.pending:
+        elif not self.finished:
             self.p.sync(obs, obs["truth"])
             self.in_q.put("go")
         cmd = None
         if not self.finished:
-            try:
-                got = self.out_q.get(timeout=THINK_S)
-            except queue.Empty:
-                self.pending = True            # still thinking: hold this step
-                self.last_t, self.last_cmd = t, None
-                return list(HOLD)
-            self.pending = False
+            got = self.out_q.get()             # the reference's next command, however long it thinks
             if got == "done":
                 self.finished = True
             else:

@@ -47,7 +47,7 @@ STIFF_TORSION = 0.003                # m, torsional friction (condim 4) of the p
 STIFF_ARENA_BYTES = 64 * 2 ** 20     # the default (about 13 MB here) overflowed in 9 of 600 trials
 
 TABLE_Z = 0.80
-TABLE_HALF = (0.45, 0.60)         # half size (x, y); the table spans x in [-0.15, 0.75]
+TABLE_HALF = (0.45, 0.80)         # half size (x, y); the table spans x in [-0.15, 0.75], y in [-0.80, 0.80]
 TABLE_CENTRE_X = 0.30
 HOME_Q = np.array([0.0, -0.35, 0.0, -2.30, 0.0, 1.95, math.pi / 4])
 

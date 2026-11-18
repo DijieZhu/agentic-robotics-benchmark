@@ -1,12 +1,33 @@
 """Hidden grader for lab_sample_handling (closed loop, hidden rotor units).
 
-Runs as root in a SEPARATE verifier sandbox: no agent process exists there; the engine restores only the declared
-artifact /home/user/submission. Structure and safeguards follow kitchen_appliance_tending's grader: it stops any
-agent-UID process first, hands the restored submission (size-capped) to the agent account in place, starts
-`bash run.sh` through nonet_exec.py (a seccomp filter: only AF_UNIX sockets) at the agent's UID, and speaks the kit
-wire (Solver, per-request deadline, restarts; a ProbeLock, repeated `t` with a perturbed copy in a hidden order,
-that does not count a pair in which both replies command no motion: IdleAwareProbeLock). Before anything else it
-reclaims root's PATH directories (robotics_grader.stage.secure_exec_path).
+Runs as root in a SEPARATE verifier sandbox, whose image (tests/Dockerfile) starts no desktop session: no process
+of the agent's account exists there, and the engine restores only the declared artifact /home/user/submission.
+Structure and safeguards follow kitchen_appliance_tending's grader: it kills any agent-UID process first, hands the
+restored submission (size-capped) to the agent account in place, starts `bash run.sh` through nonet_exec.py (a
+seccomp filter: only AF_UNIX sockets) at the agent's UID, and speaks the kit wire (Solver, per-request deadline,
+restarts; a ProbeLock, repeated `t` with a perturbed copy in a hidden order, that does not count a pair in which
+both replies command no motion: IdleAwareProbeLock). Before anything else it reclaims root's PATH directories
+(robotics_grader.stage.secure_exec_path).
+
+The agent's account: the only processes of the agent's account are the ones the grader starts. After the
+verify-start kill nothing of the account may appear by itself for QUIET_S (`require_empty_account`): an image that
+runs a session as that account (the base image's desktop, which its supervisord restarts when it dies) would run
+code of the account outside the launcher's filter, so that sandbox is not the one this grader is written for and
+the run ends as a task error. During the episodes every process of the account must carry the launcher's
+no_new_privs mark (nonet_exec.py sets it before it drops to the account; every descendant inherits it and none can
+clear it), looked at every CHECK_EVERY control steps and at each episode's end (`outside_processes`): one without it
+is killed, that episode and every later one score 0 (metric `processes_outside_launcher`).
+
+Numerics: the operational-space controller inside the simulation calls LAPACK every physics step, and OpenBLAS picks
+its kernels by CPU, so the same controller could run a different trajectory on another machine. The image pins the
+kernels (OPENBLAS_CORETYPE=Haswell, also for a Python started without the variable: environment/Dockerfile);
+`check_numerics` runs numerics_check.py (a short scripted run of the simulation, hashed) before anything is graded
+and ends the run as a task error if this machine does not reproduce tests/numerics.json.
+
+Time: `grader_budget_s` is charged to the controller's own time, the time the grader waits for READY and for each
+reply (`Clock`), plus `image_cost_s` for every image an applied action asks for: a fixed price, whatever this
+machine takes to draw it. The simulation and the drawing itself are the grader's and are not counted, so the budget
+does not depend on how fast the grading machine simulates or renders.
 
 Episodes: the fixed hidden set tests/hidden/episodes.json, the same for every submission: `episodes_per_unit`
 episodes on every hidden unit (tests/units.json: the rotor's hinge friction, handle play and inertia), each a 64-bit
@@ -18,7 +39,7 @@ perturbation from one stream per episode (probe_stream): the kit's `seed_rng` ke
 tag, the episode's index in the set and its hidden seed. An episode's probe schedule is therefore a function of the
 episode alone, not of the controller's replies, of how many steps earlier episodes took, of the clock or of the
 process, and the grader adds no run-to-run randomness of its own: a deterministic controller that stays inside the
-time limits (the step deadline and the grader budget are wall-clock) gets one result. The lock's counts are run-wide
+time limits (the step deadline and the budget on its own time are wall-clock) gets one result. The lock's counts are run-wide
 and are the only thing about it that is logged or written. episode.py owns the credit (byte-identical to the agent's
 copy); lab_env.py and lab_sim.py are the environment (byte-identical too). The metric `mean_episode_credit` is the mean over episodes of
 the episode credit (0.2 for the cold tubes in their named positions, 0.6 for the rotor's balanced opposite pairs,
@@ -80,6 +101,11 @@ STILL = 1e-9                # an 8-number reply whose six motion numbers are all
 SELFTEST_SEED = 1           # the render self-test's episode (not one of the graded seeds)
 PROBE_TAG = b"lab_sample_handling verify probe schedule 1"   # probe_stream's domain tag
 MAX_LINE = 1 << 22          # replies are short (an action is at most 15 numbers)
+NUMERICS = os.path.join(STAGE, "numerics_check.py")
+NUMERICS_REF = os.path.join(STAGE, "numerics.json")
+NUMERICS_TIMEOUT_S = 300
+QUIET_S = 5.0               # after the verify-start kill nothing of the agent's account may appear by itself this long
+CHECK_EVERY = 10            # control steps between two looks at the agent account's processes
 
 
 def log(msg):
@@ -128,45 +154,93 @@ def kill_agent_processes(uid, rounds=20, pause=0.25):
     return not _agent_pids(uid)
 
 
-def _proc_state(pid):
-    """The /proc state letter of `pid` ("X" once it is gone)."""
+def _describe(pid):
+    try:
+        with open("/proc/{}/cmdline".format(pid), "rb") as f:
+            return "{} {}".format(pid, f.read(120).replace(b"\0", b" ").decode("utf-8", "replace").strip())
+    except OSError:
+        return "{} (gone)".format(pid)
+
+
+def require_empty_account(uid, quiet_s=QUIET_S):
+    """The grading sandbox must run nothing as the agent's account by itself (tests/Dockerfile starts no desktop
+    session). Called right after the verify-start kill, before the controller exists: a process of the account that
+    is there, or appears within `quiet_s`, was started by the image, and a session that an image restarts runs
+    outside the controller's launcher. That sandbox is not the one this grader is written for: a task error."""
+    deadline = time.monotonic() + quiet_s
+    while True:
+        pids = _agent_pids(uid)
+        if pids:
+            fail("the grading sandbox starts processes as the agent's account by itself ({}); its image must run no "
+                 "session as that account: the grading sandbox is not isolated".format(
+                     "; ".join(map(_describe, pids[:5]))))
+        if time.monotonic() >= deadline:
+            return
+        time.sleep(0.1)
+
+
+def outside_launcher(pid):
+    """True if `pid` is a live process without the no_new_privs mark. nonet_exec.py sets the mark before it drops to
+    the agent's account, every descendant inherits it and none can clear it, so a process of the account without it
+    was not started through the launcher (and so runs without its filter). A zombie runs nothing and does not count;
+    a kernel that does not report the mark gives no finding."""
     try:
         with open("/proc/{}/status".format(pid)) as f:
-            for line in f:
-                if line.startswith("State:"):
-                    return line.split()[1]
-    except (OSError, IndexError):
-        pass
-    return "X"
+            status = f.read()
+    except OSError:
+        return False
+    fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+    if fields.get("State", "").strip()[:1] in ("Z", "X"):
+        return False
+    return fields.get("NoNewPrivs", "").strip() == "0"
 
 
-def _still_running(uid, bound_s=3.0):
-    """SIGSTOP every live process of `uid` until a pass finds none still running (a respawn that appears meanwhile is
-    stopped by the next pass) or `bound_s` elapsed; returns the PIDs still running (empty: every one is stopped)."""
-    deadline = time.monotonic() + float(bound_s)
-    while True:
-        for pid in _agent_pids(uid):
+def outside_processes(uid):
+    """The agent account's processes that run outside the launcher, described; each is killed."""
+    found = []
+    for pid in _agent_pids(uid):
+        if outside_launcher(pid):
+            found.append(_describe(pid))
             try:
-                os.kill(pid, signal.SIGSTOP)
+                os.kill(pid, signal.SIGKILL)
             except OSError:
                 pass
-        time.sleep(0.05)
-        running = [pid for pid in _agent_pids(uid) if _proc_state(pid) not in ("T", "t", "X")]
-        if not running or time.monotonic() > deadline:
-            return running
+    return found
 
 
-def stop_agent_processes(uid):
-    """kill_agent_processes, then: True when none is left or every one left is stopped. The base image's supervisord
-    respawns the agent account's desktop as fast as it is killed, so in the separate verifier a process that outlives
-    the bounded kill is the image's own; it is stopped (a stopped process does not exit, so it is not respawned) and
-    only one still running once stopped fails the run (cleanup_failed), as before."""
-    if kill_agent_processes(uid):
-        return True
-    running = _still_running(uid)
-    log("{} process(es) of the agent account outlived the kill, {} still running after the freeze".format(
-        len(_agent_pids(uid)), len(running)))
-    return not running
+def check_numerics():
+    """Run numerics_check.py in a fresh interpreter (a short scripted run of the simulation; the sha256 of its
+    states) and compare with tests/numerics.json. Returns the fingerprint; a machine that does not reproduce the
+    recorded one would run every controller along another trajectory, so it must not grade: a task error."""
+    with open(NUMERICS_REF) as fh:
+        want = json.load(fh)["fingerprint"]
+    try:
+        proc = subprocess.run([sys.executable, "-I", NUMERICS], cwd=STAGE, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, timeout=NUMERICS_TIMEOUT_S, env=dict(os.environ))
+        report = json.loads(proc.stdout.decode("utf-8", "replace").strip().splitlines()[-1])
+        got = str(report["fingerprint"])
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+        fail("the numerics check did not run: {}: {}".format(type(exc).__name__, str(exc)[:200]))
+    if got != want:
+        fail("this machine does not reproduce the simulation's recorded numerics (tests/numerics.json): got {}, "
+             "recorded {}; OPENBLAS_CORETYPE={!r}. Grading here would run every controller along another "
+             "trajectory".format(got[:16], want[:16], os.environ.get("OPENBLAS_CORETYPE")))
+    return got
+
+
+class Clock(object):
+    """The controller's own time (s): what the grader waited for READY and for each reply, and what `run_episodes`
+    adds for the images it asks for. The simulation and the drawing of the images happen outside `timed`."""
+
+    def __init__(self):
+        self.s = 0.0
+
+    def timed(self, fn, *args, **kwargs):
+        t0 = time.monotonic()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            self.s += time.monotonic() - t0
 
 
 class GuardedSolver(Solver):
@@ -176,6 +250,7 @@ class GuardedSolver(Solver):
     nproc = 0
 
     def _spawn(self):
+        secure_exec_path()               # again before every start: nothing agent-writable ahead of root's tools
         uid, gid = _agent_ids()
         cmd = [sys.executable, "-I", NONET, "--uid", str(uid), "--gid", str(gid), "--rlimit-nproc", str(self.nproc),
                "--cwd", self.submission, "--", "bash", self.entry]
@@ -341,17 +416,19 @@ def probe_stream(index, seed):
     return seed_rng(entropy=int.from_bytes(digest, "little"))
 
 
-def ask(lock, solver, ep, t, obs, unit, truth):
+def ask(lock, solver, ep, t, obs, unit, truth, clock=None):
     """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
     the stream (lock.due); a probed step draws twice more, both before either request is written: the seed of the
     perturbation, then the order of the pair (ProbeLock.probe). The draws a step consumes never depend on the
     replies, and a pair that is not counted (both replies command no motion) has consumed the same draws as a
-    counted one."""
+    counted one. Only the wire (the requests' round trips) is charged to `clock`."""
+    clock = Clock() if clock is None else clock
     w = wire_obs(ep, obs, unit, truth)
     if lock.due():
         other = ep.env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
-        return lock.probe(solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
-    return solver.act(t, w)
+        pw = wire_obs(ep, other, unit, truth)
+        return clock.timed(lock.probe, solver, t, w, perturbed=pw)
+    return clock.timed(solver.act, t, w)
 
 
 def render_selftest(props, unit, seed=SELFTEST_SEED):
@@ -410,48 +487,72 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
     faults, per_unit, per_part, egress_hits, budget_exhausted, lock, records); a record per episode: its index in
     the set, unit, score, reason and steps. During episode n the probe lock draws from probe_stream(n, seed); its
     counts run over all episodes. A renderer failure (E.RenderError) is not caught here: it is the caller's task
-    error."""
+    error.
+
+    The budget (`grader_budget_s`) is charged to the controller's own time, `lock.clock`: what the grader waited for
+    READY, for each reset and for each reply, plus `image_cost_s` for every image an applied action asks for (the
+    first observation's four images are free). `t_start` is no longer used (the simulation and the drawing are not
+    charged); it stays in the signature for the review tools. Under the seccomp launcher every process of the agent's
+    account must carry its no_new_privs mark: `lock.outside` lists the ones found without it (each killed); after
+    the first, that episode and every later one score 0."""
     budget = float(config.get("grader_budget_s", 9000))
+    image_cost = float(config.get("image_cost_s", 0.2))
     lock = IdleAwareProbeLock(None, rate=config.get("probe_rate", 0.01),
                               pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
+    clock = lock.clock = Clock()
+    outside = lock.outside = []
+    watch = egress_mode == "seccomp"     # only the launcher sets the mark
     scores, aborted, faults, records = [], 0, 0, []
     per_unit, per_part = {}, {"cold": [], "pairs": [], "lid": [], "kept": []}
     egress_hits = 0
     budget_exhausted = False
     GuardedSolver.guard = egress_mode == "seccomp"
     GuardedSolver.nproc = int(config.get("solver_nproc_limit", 0))
-    solver = GuardedSolver(step_timeout=config.get("step_timeout_s", 30), submission=workdir)
+    solver = clock.timed(GuardedSolver, step_timeout=config.get("step_timeout_s", 30), submission=workdir)
     try:
         for n, (unit, seed) in enumerate(episodes):
-            if time.monotonic() - t_start > budget:
+            skipped = None
+            if outside:
+                skipped = "a process of the controller's account ran outside the launcher"
+            elif clock.s > budget:
                 budget_exhausted = True
+                skipped = "controller time budget exhausted"
+            if skipped:
                 scores.append(0.0)
                 per_unit.setdefault(unit, []).append(0.0)
-                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "grader budget exhausted",
-                                "steps": 0})
-                log("episode {} ({}): score=0.0000 not run (grader budget exhausted)".format(n, unit))
+                records.append({"index": n, "unit": unit, "score": 0.0, "reason": skipped, "steps": 0})
+                log("episode {} ({}): score=0.0000 not run ({})".format(n, unit, skipped))
                 continue
             lock.rng = probe_stream(n, seed)
             ep = EP.Episode(E.LabEnv(units[unit], unit, render=True), seed)
             score, reason = 0.0, "ok"
             try:
                 obs = ep.reset()
-                solver.reset()
+                clock.timed(solver.reset)
                 t, done = 0, False
                 while not done:
-                    if time.monotonic() - t_start > budget:
+                    if clock.s > budget:
                         budget_exhausted = True
-                        raise SolverAborted("grader budget exhausted")
+                        raise SolverAborted("controller time budget exhausted")
+                    if watch and t % CHECK_EVERY == 0:
+                        outside.extend(outside_processes(uid))
+                        if outside:
+                            raise SolverAborted("a process of the controller's account runs outside the launcher")
                     if egress_mode == "detect" and agent_inet_sockets(uid):
                         egress_hits += 1
-                    action = ask(lock, solver, ep, t, obs, unit, truth)
+                    action = ask(lock, solver, ep, t, obs, unit, truth, clock)
                     if not valid_action(action):
                         raise SolverAborted("malformed action")
+                    clock.s += image_cost * bin(int(action[8] if len(action) == 9 else action[7])).count("1")
                     obs, done, _info = ep.step(action)
                     t += 1
                     if ep.env.unstable():
                         faults += 1
                         raise SolverAborted("simulation unstable")
+                if watch:
+                    outside.extend(outside_processes(uid))
+                    if outside:
+                        raise SolverAborted("a process of the controller's account runs outside the launcher")
                 sc = ep.score()
                 score = sc["credit"]
                 per_part["cold"].append(sum(sc["cold"].values()) / len(sc["cold"]))
@@ -490,10 +591,10 @@ def main():
     except KeyError:
         write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None, extra=secured))
         return
-    if not stop_agent_processes(uid):
-        write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
-                                   anchored=anchor is not None, extra=secured))
-        return
+    kill_agent_processes(uid)
+    require_empty_account(uid)           # a task error if the sandbox runs anything as the account by itself
+    check_numerics()                     # a task error on a machine that computes the simulation differently
+    secured["numerics_ok"] = 1.0
     with open(UNITS) as fh:
         units = dict(sorted(json.load(fh)["units"].items()))
     episodes = load_episode_set(config, units)
@@ -525,7 +626,7 @@ def main():
         kill_agent_processes(uid)
         write_verdict(zero_verdict(reason=str(exc)[:200], anchored=anchor is not None, extra=secured))
         return
-    cleanup_ok = stop_agent_processes(uid)
+    cleanup_ok = kill_agent_processes(uid)
     measured = sum(scores) / len(scores) if scores else 0.0
     if egress_hits or not cleanup_ok or not math.isfinite(measured) or measured < 0:
         measured = 0.0
@@ -536,6 +637,7 @@ def main():
                  sim_faults=float(faults),
                  egress_guard_seccomp=1.0 if egress_mode == "seccomp" else 0.0,
                  egress_detected=float(egress_hits),
+                 processes_outside_launcher=float(len(lock.outside)),
                  cleanup_failed=0.0 if cleanup_ok else 1.0,
                  budget_exhausted=1.0 if budget_exhausted else 0.0,
                  oracle_token=1.0 if truth else 0.0,
@@ -549,9 +651,12 @@ def main():
                             metric_name="mean_episode_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))
     write_verdict(verdict)
-    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={}".format(
-        measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
-        egress_mode))
+    for line in lock.outside[:5]:
+        log("outside the launcher: {}".format(line))
+    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={} "
+        "controller_time={:.0f}s of {:.0f}s wall={:.0f}s".format(
+            measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
+            egress_mode, lock.clock.s, float(config.get("grader_budget_s", 9000)), time.monotonic() - t_start))
 
 
 if __name__ == "__main__":

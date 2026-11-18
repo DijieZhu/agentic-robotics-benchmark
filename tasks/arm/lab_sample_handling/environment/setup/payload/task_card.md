@@ -6,7 +6,8 @@ nominal, the episode draws the real one around it (`lab_sim.bench_draw`). Your c
 
 ## Frames and the robot
 
-- World frame: z up, metres, radians, seconds; quaternions are (w, x, y, z). The table top is at z = 0.80.
+- World frame: z up, metres, radians, seconds; quaternions are (w, x, y, z). The table top is at z = 0.80 and spans
+  x from -0.15 to 0.75 and y from -0.80 to 0.80.
 - A Franka Panda (robosuite 1.5.2 model) with its base at (0, 0, 0.80), facing +x. Start posture `HOME_Q`
   (`box_transport_env.py`).
 - Control: 10 Hz (50 physics steps of 2 ms). The three action shapes are in the instruction and `lab_env.py`.

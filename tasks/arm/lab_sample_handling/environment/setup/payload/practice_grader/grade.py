@@ -7,9 +7,12 @@ Runs your controller (bash run.sh in --submission) against /home/user/lab_env.py
 (/home/user/units.json: each unit's rotor properties), the episodes and credit of /home/user/episode.py. It speaks the same wire as the hidden grader: READY within 120 s, each reply within
 30 s, repeated step indices with perturbed observations (only the reply to the real observation is
 applied), an aborted episode scores 0 and the controller is restarted (at most 3 restarts), and the
-controller runs with only AF_UNIX sockets (the same seccomp filter as at grading time). It reports
-whether the run stayed inside the grading time budget. It never touches the hidden units, does not know
-the reference value and prints no score.
+controller runs with only AF_UNIX sockets (the same seccomp filter as at grading time). It reports the
+controller's own time (what it took to print READY and to answer each request, plus 0.2 s for every image
+it asked for: the grading budget is 9000 s of it over 12 episodes; the simulation and the drawing of the
+images are not counted) and whether the run stayed inside that budget. It never touches the hidden units, does not know the reference value and prints
+no score. One thing it cannot show: it starts your controller in your own home directory, while the graded
+run starts it in a fresh sandbox that holds only your submission folder (see the instruction).
 """
 
 import argparse
@@ -38,6 +41,7 @@ STEP_TIMEOUT = 30.0
 MAX_RESTARTS = 3
 MAX_LINE = 1 << 22
 BUDGET_PER_EPISODE = 9000.0 / 12
+IMAGE_COST = 0.2                 # s of the budget per image asked for, as in grading
 PROBE_RATE = 0.01
 
 _FILTER_SRC = r'''
@@ -70,9 +74,17 @@ class Wire(object):
         self.restarts = 0
         self.dead = False
         self.broken = False
+        self.controller_s = 0.0          # the controller's own time: READY and every reply
         self._start()
 
     def _start(self):
+        t0 = time.monotonic()
+        try:
+            self._launch()
+        finally:
+            self.controller_s += time.monotonic() - t0
+
+    def _launch(self):
         self.proc = subprocess.Popen([sys.executable, "-I", "-c", _FILTER_SRC], cwd=self.submission,
                                      stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True,
                                      bufsize=1, start_new_session=True)
@@ -115,6 +127,13 @@ class Wire(object):
             pass
 
     def request(self, msg):
+        t0 = time.monotonic()
+        try:
+            return self._request(msg)
+        finally:
+            self.controller_s += time.monotonic() - t0
+
+    def _request(self, msg):
         if self.dead:
             raise WireError("solver could not be restarted after an earlier abort")
         try:
@@ -246,6 +265,7 @@ def main():
                             act = wire.act(t, wobs)
                         if not valid_action(act):
                             raise WireError("malformed action: 8, 15 or 9 finite numbers, the camera bits an integer 0-15")
+                        wire.controller_s += IMAGE_COST * bin(int(act[8] if len(act) == 9 else act[7])).count("1")
                         obs, done, _info = ep.step(act)
                         t += 1
                         if ep.env.unstable():
@@ -269,7 +289,8 @@ def main():
         "repeated_t_pairs_that_differed": differed,
         "repeated_t_pairs_not_counted_no_motion": idle,
         "wall_seconds": round(wall, 1),
-        "within_grading_time_budget": wall <= BUDGET_PER_EPISODE * max(1, len(results)),
+        "controller_seconds": round(wire.controller_s, 1),
+        "within_grading_time_budget": wire.controller_s <= BUDGET_PER_EPISODE * max(1, len(results)),
         "note": "dev sim with the practice units; this is not your score",
     }, indent=1))
     return 0
