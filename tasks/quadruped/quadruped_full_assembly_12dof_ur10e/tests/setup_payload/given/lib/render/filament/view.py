@@ -8,14 +8,17 @@
     view.close()
 
 The scene is your MjSpec (or MJCF file) in its own frame, the room bundle (`room/`: an arb-room/1 bundle with baked
-lightmaps, its lamps and its HDR image light `ibl/ibl.ktx`) placed in that frame as it was baked, and a look file (JSON:
-the fields of `render.filament.backend.Look`: light units, exposure, the filmic display transform, PBR terms per
-material class). It is compiled once (`open_view`, about 5-30 s on a CPU with the room); each frame copies the state,
-updates the Filament scene and renders RGB as an exact pinhole (OpenCV conventions, below), then the display transform
-through an 8-bit lookup table (built once per process, about 10 s). Depth comes from MuJoCo's own renderer on the same
-geometry (your scene plus the room's meshes): metres along the optical axis, registered pixel for pixel with the RGB,
-0.0 where nothing is hit. No noise, blur or lens distortion is added; `view.session.render(...)` runs the render layer's
-photo pipeline (render.spec.PhotoSpec) on the same frames if you want it.
+lightmaps, its lamps and its HDR image light `ibl/ibl.ktx`) placed in that frame as it was baked, and a look file
+(JSON: the fields of `render.filament.backend.Look`: light units, exposure, the filmic display transform, PBR terms per
+material class). It is compiled once (`open_view`: about 5-20 s on 8 CPUs for a full robot cell in the room, the
+display transform's 8-bit lookup table, about 2 s, included and then kept for the process); each frame copies the
+state, updates the Filament scene and renders RGB as an exact pinhole (OpenCV conventions, below), then the display
+transform through that table: there about 1.2-1.5 s at 1280 x 960 and 0.6-0.8 s at 640 x 480 with depth, except the
+first frame after Filament's context is made (about 10-15 s) and the first frame of each further image size (a few
+seconds more). Depth comes from MuJoCo's own renderer on the same geometry (your scene plus the room's meshes): metres
+along the optical axis, registered pixel for pixel with the RGB, 0.0 where nothing is hit. No noise, blur or lens
+distortion is added; `view.session.render(...)` runs the render layer's photo pipeline (render.spec.PhotoSpec) on the
+same frames if you want it.
 
 What the view changes in its copy of your scene (never your MjSpec): geoms in groups above `max_group` (MuJoCo's
 collision group 3 by convention) and geoms whose names start with one of `drop_prefixes` are removed; the room is
@@ -32,12 +35,16 @@ Cameras (`render`'s `camera`):
 State (`render`'s `state`): an `MjData` (of this scene's model or of any model: joints are copied by name, a free joint
 moves its body), a `(model, data)` pair, a dict {joint name: value} (a hinge / slide joint a number, a ball joint a
 quaternion wxyz, a free joint [x, y, z, qw, qx, qy, qz]) applied on top of the current state, a full qpos array of the
-view's own model (`view.model`), or None (the current state).
+view's own model (`view.model`), or None (the current state; until a state is given, the model's own pose: qpos0,
+with its bodies, cameras and lights placed).
 
 Runs offscreen: the display variables are dropped before Filament starts (a display server that does not answer would
 block it). One render target and one pixel readback per image size are reused for the life of the view. One view (or
-cell session) per process at a time: close it before opening the next (a second open raises RuntimeError). Close
-views before the interpreter exits (an exit handler also does it): Filament's context must outlive every scene object.
+cell session) per process at a time: close it before opening the next (a second open raises RuntimeError). Closing the
+last open view or session of the process releases Filament's context and hands its memory back (about 6-7 GB for a full
+cell while open; a closed view keeps its MuJoCo models until you drop it), so the next one's first frame pays for a new
+context again; ARB_FILAMENT_KEEP_CONTEXT=1 keeps the context and its memory. Close views before the interpreter exits
+(an exit handler also does it): Filament's context must outlive every scene object.
 """
 import atexit
 import copy
@@ -80,6 +87,30 @@ def _shutdown():
 
 
 atexit.register(_shutdown)
+
+
+def _release_context():
+    """Once no Filament session of the process is open (render.filament.view's and the task cell's own share `_OPEN`):
+    drop Filament's context too, then hand the freed heap back (glibc's malloc_trim). The context keeps every earlier
+    scene's objects while it lives, so a closed view or session would keep most of its memory; the next open makes a
+    fresh context (its first frame is slow again). ARB_FILAMENT_KEEP_CONTEXT=1 keeps the context. True if released."""
+    if any(getattr(s, "scn", None) is not None for s in _OPEN):
+        return False
+    if os.environ.get("ARB_FILAMENT_KEEP_CONTEXT", "") == "1":
+        return False
+    gc.collect()
+    try:
+        from render.filament import backend as FB
+        FB._CTX.clear()
+    except Exception:  # noqa: BLE001
+        pass
+    gc.collect()
+    try:
+        import ctypes
+        ctypes.CDLL("libc.so.6").malloc_trim(0)
+    except Exception:  # noqa: BLE001
+        pass
+    return True
 
 
 def _headless():
@@ -321,6 +352,7 @@ class FilamentViewSession(RenderSession):
         self.t_open_s = time.perf_counter() - t0
         self._digest = None
         _OPEN.add(self)
+        self._update()      # the model's own pose (qpos0) until a state is given: bodies, cameras, lights, depth twin
 
     # ---- state
     def _update(self):
@@ -415,7 +447,8 @@ class FilamentViewSession(RenderSession):
                 "room": self.room_record.get("room")}
 
     def close(self):
-        """Free the Filament objects in dependency order (the context outlives every session: _shutdown)."""
+        """Free the Filament objects in dependency order, then (no other session open) Filament's context itself
+        (_release_context); the context outlives every scene object (and at exit: _shutdown)."""
         if self.scn is None:
             return
         _OPEN.discard(self)
@@ -433,6 +466,8 @@ class FilamentViewSession(RenderSession):
         gc.collect()
         self.depth.close()
         _SPECS.pop(self._key, None)
+        self.ctx = None
+        _release_context()
 
 
 class FilamentViewBackend(MujocoBackend):

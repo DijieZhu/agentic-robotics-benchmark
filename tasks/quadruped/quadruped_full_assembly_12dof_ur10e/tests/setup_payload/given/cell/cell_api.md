@@ -95,10 +95,18 @@ rgb_w = view.render({"my_hinge": 0.5}, "my_camera", 640, 480)            # a joi
 view.close()
 ```
 
-What it costs here (8 CPUs): opening a session of a full twin of the cell takes about 10-15 s (the display transform's
-lookup table included), the first frame of each image size about 2-9 s more; then a 1280 x 960 frame about 0.8 s with
-depth (about 1.3 s through the photo pipeline) and a 640 x 480 frame about 0.4 s (0.5 s). One Filament session per
-process at a time: close it before opening the next (a second one is refused). Your program may use the layer during
-an episode too (it finds the hall next to `$ARB_GIVEN_DIR`); it then has 2 render threads (about 1.3 s / 1.8 s and
-0.6 s / 0.8 s per frame), and the time counts against the episode's wall clock. MuJoCo's classic renderer stays
-available: the render layer's MuJoCo backend (`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.
+What it costs here (8 CPUs, a twin of the whole cell): `open_session` takes about 13-15 s (up to about 30 s on a busy
+machine), the display transform's lookup table (about 2 s) included, and the open session holds about 6-7 GB. Its first
+frame takes about 10-15 s: that is the first frame after Filament's context is made, which the first session or view of
+a process pays, and again the next one after the last was closed; the first frame of each further image size takes a
+few seconds more (the photo pipeline renders a slightly larger image per camera; its first `top` picture took 5-20 s
+here). Then a 1280 x 960 frame takes about 1.2-1.5 s with depth (about 2 s through the photo pipeline) and a 640 x 480
+frame about 0.6-0.8 s (0.8-0.9 s); `open_view` takes about 5-20 s on the same scene and renders as fast. Until you give
+a state (`sync_from`, `set_state`, or `state` in `view.render`), a session or view shows your twin's own pose (`qpos0`:
+the bodies where your spec puts them). One Filament session per process at a time: close it before opening the next (a
+second one is refused). Closing the last one also releases Filament's context and its memory once nothing refers to the
+closed session (about 0.3-1.4 GB stays with the process), so the next session's or view's first frame takes the 10-15 s
+again. Your program may use the layer during an episode too (it finds the hall next to `$ARB_GIVEN_DIR`); it then has 2
+render threads (about 1.5-1.9 s / 2.0-2.4 s and 0.7-0.9 s / 0.8-1.0 s per frame, its first frame about 10-14 s), and
+the time counts against the episode's wall clock. MuJoCo's classic renderer stays available: the render layer's MuJoCo
+backend (`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.
