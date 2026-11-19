@@ -1,0 +1,168 @@
+{
+ "note": "every number of the grader (grade.py and cadgrade/, run.py's docstring for the rules): bands are [full credit, zero credit] for errors and [zero, full] for rising quantities; lengths mm, areas mm2, volumes mm3, angles deg unless named rad; sample counts are area x density per tag clamped to [min, max]",
+ "document": "unit.FCStd",
+ "extract_timeout_s": 600,
+ "grade_timeout_s": 1080,
+ "verifier_timeout_s": 3600,
+ "grader_cpus": 1,
+ "weights": {
+  "surface": 0.65,
+  "joint_axes": 0.25,
+  "structure": 0.1
+ },
+ "floor": {
+  "ramp": [
+   0.15,
+   0.55
+  ],
+  "of": "surface",
+  "multiplies": [
+   "joint_axes",
+   "structure"
+  ]
+ },
+ "surface": {
+  "p90_mm": [
+   0.6,
+   6.0
+  ],
+  "quantile": 0.9
+ },
+ "joint_axes": {
+  "offset_mm": [
+   0.3,
+   3.0
+  ],
+  "angle_deg": [
+   0.5,
+   5.0
+  ],
+  "w_offset": 0.6,
+  "w_angle": 0.4
+ },
+ "part_weights": {
+  "P01": 3.0,
+  "P02": 3.0,
+  "P03": 3.0,
+  "P04": 0.5,
+  "P05": 0.5,
+  "P06": 1.5,
+  "P07": 1.5,
+  "P08": 1.5,
+  "P09": 0.75,
+  "P10": 0.75,
+  "P11": 0.75,
+  "P12": 0.75
+ },
+ "pairs": [
+  [
+   "P02",
+   "P03"
+  ],
+  [
+   "P04",
+   "P05"
+  ]
+ ],
+ "grounded": "P01",
+ "fixed_parts": [
+  "P02",
+  "P03",
+  "P04",
+  "P05",
+  "P06"
+ ],
+ "revolute_pairs": [
+  [
+   "P06",
+   "P07"
+  ],
+  [
+   "P07",
+   "P08"
+  ],
+  [
+   "P08",
+   "P09"
+  ],
+  [
+   "P09",
+   "P10"
+  ],
+  [
+   "P08",
+   "P11"
+  ],
+  [
+   "P11",
+   "P12"
+  ]
+ ],
+ "sampling": {
+  "seed": 20261117,
+  "dense_per_mm2": 2.0,
+  "query_per_mm2": 0.25,
+  "disk_mm": 0.4,
+  "dense_min": 4000,
+  "query_min": 1500,
+  "dense_max": 3200000,
+  "query_max": 400000
+ },
+ "gates": {
+  "max_solids": 6000,
+  "min_volume_mm3": 1e-06,
+  "recheck_validity": true
+ },
+ "mesh": {
+  "deflection_mm": 0.2,
+  "angle_rad": 0.5,
+  "retry": [
+   [
+    0.1,
+    0.3
+   ],
+   [
+    0.3,
+    0.6
+   ],
+   [
+    0.05,
+    0.25
+   ]
+  ],
+  "weld_mm": 0.0001,
+  "volume_tol_rel": 0.02,
+  "fill_max_loop": 4000
+ },
+ "alignment": {
+  "coarse_stride": 16,
+  "fine_stride": 2,
+  "n_coarse": 1000,
+  "coarse_iters": 12,
+  "refine_candidates": 6,
+  "n_mid": 5000,
+  "mid_iters": 20,
+  "n_fine": 20000,
+  "icp_iters": 40,
+  "icp_tol": 1e-08,
+  "trim": 0.9,
+  "bound_mm": 60.0,
+  "fine_bound_mm": 10.0,
+  "tie_abs_mm": 0.3,
+  "tie_rel": 0.25,
+  "assembly_cap_mm": 50.0
+ },
+ "search": {
+  "coarse_stride": 16,
+  "caps_mm": [
+   64.0,
+   512.0,
+   4096.0
+  ]
+ },
+ "reference": {
+  "maker_root": "reference/maker",
+  "placement": "reference/placement.json",
+  "seen_index": "reference/seen.json"
+ }
+}

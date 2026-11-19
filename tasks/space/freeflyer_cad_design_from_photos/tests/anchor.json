@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "design_score",
+ "note": "design_score = 0.65 surface + floor x (0.25 joint_axes + 0.10 structure), times public_model_reuse, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the reference submission's own measured design_score: the native FreeCAD document built at oracle time by solution/solve.sh from the maker's triangles (closed pieces as they are, open patches with a 0.3 mm skin) scores 1.0 through the real extraction and grading path; the grader is deterministic (fixed sampling seed), so full_at = 1.0",
+ "value": 1.0
+}

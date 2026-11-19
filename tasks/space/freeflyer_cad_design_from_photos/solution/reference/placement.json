@@ -1,0 +1,2100 @@
+{
+ "schema": "ffcad.placement/1",
+ "rule": "Derived from the four pinned texts by makerstd/placement.py; the standard is those texts, not this file. The grader re-derives it at the start of every verify and stops with a task error when any item differs (numbers by more than 1e-12). Values read from a file carry file, line and the text as written; 3.14 and 3.1415 are kept as written.",
+ "frame": "the description's body frame; metres and radians; T_body_file_m maps the maker file's coordinates (metres, node matrices applied) into the body frame at configuration Z",
+ "sources": [
+  "description/model.urdf.xacro",
+  "description/macro_perching_arm.urdf.xacro",
+  "context/gazebo_model_plugin_perching_arm.cc",
+  "context/astrobee.launch"
+ ],
+ "launch": {
+  "top_aft": {
+   "file": "context/astrobee.launch",
+   "line": 39,
+   "attr": "default",
+   "text": "perching_arm"
+  },
+  "bot_aft": {
+   "file": "context/astrobee.launch",
+   "line": 40,
+   "attr": "default",
+   "text": "empty"
+  },
+  "bot_front": {
+   "file": "context/astrobee.launch",
+   "line": 41,
+   "attr": "default",
+   "text": "empty"
+  },
+  "ns": {
+   "file": "context/astrobee.launch",
+   "line": 23,
+   "attr": "default",
+   "text": ""
+  },
+  "description_command_line": 70,
+  "xacro_ns_argument": {
+   "file": "context/astrobee.launch",
+   "line": 70,
+   "written": "_$(arg ns)",
+   "value": "_"
+  }
+ },
+ "bay": {
+  "name": {
+   "file": "description/model.urdf.xacro",
+   "line": 138,
+   "attr": "bay",
+   "text": "top_aft"
+  },
+  "condition": {
+   "file": "description/model.urdf.xacro",
+   "line": 137,
+   "attr": "value",
+   "text": "${pay_top_aft == 'perching_arm'}"
+  },
+  "xyz": {
+   "file": "description/model.urdf.xacro",
+   "line": 139,
+   "attr": "xyz",
+   "text": "-0.01 0.0 -0.065",
+   "value": [
+    -0.01,
+    0.0,
+    -0.065
+   ]
+  },
+  "rpy": {
+   "file": "description/model.urdf.xacro",
+   "line": 140,
+   "attr": "rpy",
+   "text": "0.0 3.1415 0.0",
+   "value": [
+    0.0,
+    3.1415,
+    0.0
+   ]
+  },
+  "inactive_calls": [
+   {
+    "condition": {
+     "file": "description/model.urdf.xacro",
+     "line": 142,
+     "attr": "value",
+     "text": "${pay_bot_aft == 'perching_arm'}"
+    },
+    "bay": {
+     "file": "description/model.urdf.xacro",
+     "line": 143,
+     "attr": "bay",
+     "text": "bot_aft"
+    }
+   },
+   {
+    "condition": {
+     "file": "description/model.urdf.xacro",
+     "line": 147,
+     "attr": "value",
+     "text": "${pay_bot_front == 'perching_arm'}"
+    },
+    "bay": {
+     "file": "description/model.urdf.xacro",
+     "line": 148,
+     "attr": "bay",
+     "text": "bot_aft"
+    }
+   }
+  ]
+ },
+ "configuration_Z": {
+  "definition": "the description's own start values (plugin block of the arm macro) with the default bay layout of the launch file; the gripper start value maps to the four finger joints by the plugin's arithmetic (left fingers take r, right fingers 1 - r; value = lower + ratio x (upper - lower))",
+  "proximal": {
+   "file": "description/macro_perching_arm.urdf.xacro",
+   "line": 388,
+   "element": "proximal",
+   "text": "1.57079632679",
+   "value": 1.57079632679
+  },
+  "distal": {
+   "file": "description/macro_perching_arm.urdf.xacro",
+   "line": 389,
+   "element": "distal",
+   "text": "0",
+   "value": 0.0
+  },
+  "gripper": {
+   "file": "description/macro_perching_arm.urdf.xacro",
+   "line": 390,
+   "element": "gripper",
+   "text": "0",
+   "value": 0.0
+  },
+  "gripper_ratio_r": 0.0,
+  "joint_values": {
+   "top_aft_arm_proximal_joint": 1.57079632679,
+   "top_aft_arm_distal_joint": 0.0,
+   "top_aft_gripper_left_proximal_joint": 0.349066,
+   "top_aft_gripper_left_distal_joint": -1.22173,
+   "top_aft_gripper_right_proximal_joint": -0.349066,
+   "top_aft_gripper_right_distal_joint": 1.22173
+  }
+ },
+ "gripper_mapping": {
+  "open_constant": {
+   "file": "context/gazebo_model_plugin_perching_arm.cc",
+   "line": 87,
+   "code": "static constexpr double GRIPPER_OPEN          = 100.0;",
+   "value": 100.0
+  },
+  "closed_constant": {
+   "file": "context/gazebo_model_plugin_perching_arm.cc",
+   "line": 88,
+   "code": "static constexpr double GRIPPER_CLOSED        = 0.0;",
+   "value": 0.0
+  },
+  "ratio": {
+   "file": "context/gazebo_model_plugin_perching_arm.cc",
+   "line": 294,
+   "code": "double r = (position - GRIPPER_CLOSED) / (GRIPPER_OPEN - GRIPPER_CLOSED);"
+  },
+  "joint_value": {
+   "file": "context/gazebo_model_plugin_perching_arm.cc",
+   "line": 288,
+   "code": "double value = lower + position * (upper - lower);"
+  },
+  "joint_set": {
+   "file": "context/gazebo_model_plugin_perching_arm.cc",
+   "line": 289,
+   "code": "joint->SetPosition(0, value);"
+  },
+  "fingers": {
+   "gripper_left_proximal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 295,
+    "code": "SetGripperJointPosition(bay_+\"_gripper_left_proximal_joint\", r);",
+    "takes": "r"
+   },
+   "gripper_left_distal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 296,
+    "code": "SetGripperJointPosition(bay_+\"_gripper_left_distal_joint\", r);",
+    "takes": "r"
+   },
+   "gripper_right_proximal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 297,
+    "code": "SetGripperJointPosition(bay_+\"_gripper_right_proximal_joint\", 1.0 - r);",
+    "takes": "1.0 - r"
+   },
+   "gripper_right_distal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 298,
+    "code": "SetGripperJointPosition(bay_+\"_gripper_right_distal_joint\", 1.0 - r);",
+    "takes": "1.0 - r"
+   }
+  },
+  "start": {
+   "default": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 106,
+    "code": "double grip = GRIPPER_CLOSED;"
+   },
+   "read": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 108,
+    "code": "grip = sdf->Get<double>(\"gripper\");"
+   },
+   "applied": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 113,
+    "code": "SetGripperPosition(grip);"
+   },
+   "proximal_read": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 102,
+    "code": "prox = sdf->Get<double>(\"proximal\");"
+   },
+   "distal_read": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 105,
+    "code": "dist = sdf->Get<double>(\"distal\");"
+   },
+   "proximal_applied": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 111,
+    "code": "model->GetJoint(bay_+\"_arm_proximal_joint\")->SetPosition(0, prox);"
+   },
+   "distal_applied": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 112,
+    "code": "model->GetJoint(bay_+\"_arm_distal_joint\")->SetPosition(0, dist);"
+   }
+  },
+  "comment_table": {
+   "gripper_left_proximal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 54,
+    "code": "o gripper_left_proximal_joint    1.0  | 0.0",
+    "open": 1.0,
+    "closed": 0.0
+   },
+   "gripper_left_distal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 55,
+    "code": "o gripper_left_distal_joint      1.0  | 0.0",
+    "open": 1.0,
+    "closed": 0.0
+   },
+   "gripper_right_proximal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 56,
+    "code": "o gripper_right_proximal_joint   0.0  | 1.0",
+    "open": 0.0,
+    "closed": 1.0
+   },
+   "gripper_right_distal_joint": {
+    "file": "context/gazebo_model_plugin_perching_arm.cc",
+    "line": 57,
+    "code": "o gripper_right_distal_joint     0.0  | 1.0",
+    "open": 0.0,
+    "closed": 1.0
+   }
+  }
+ },
+ "gripper_open": {
+  "use": "the photographs of the open gripper only; never graded",
+  "position": 100.0,
+  "gripper_ratio_r": 1.0,
+  "joint_values": {
+   "top_aft_gripper_left_proximal_joint": 0.698132,
+   "top_aft_gripper_left_distal_joint": -0.69813,
+   "top_aft_gripper_right_proximal_joint": -0.698132,
+   "top_aft_gripper_right_distal_joint": 0.69813
+  },
+  "T_body_file_m": {
+   "P09": [
+    [
+     -0.7660442475073077,
+     0.642787836129679,
+     9.265358966049026e-05,
+     0.00955141751600648
+    ],
+    [
+     0.6427878388887455,
+     0.766044250795433,
+     0.0,
+     -0.010002
+    ],
+    [
+     -7.097674967497774e-05,
+     5.9556600663151146e-05,
+     -0.9999999957076562,
+     -0.08029818855664927
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "P10": [
+    [
+     -0.9999999957056562,
+     1.9999999913422606e-06,
+     9.265358966049026e-05,
+     0.04785362989137187
+    ],
+    [
+     1.999999999946489e-06,
+     0.999999999998,
+     0.0,
+     -0.04214139194443728
+    ],
+    [
+     -9.265358966030495e-05,
+     1.8530717931663663e-10,
+     -0.9999999957076562,
+     -0.08029463971916552
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "P11": [
+    [
+     -0.7660442475073077,
+     -0.642787836129679,
+     9.265358966049026e-05,
+     0.00955141751600648
+    ],
+    [
+     -0.6427878388887455,
+     0.766044250795433,
+     0.0,
+     0.010002
+    ],
+    [
+     -7.097674967497774e-05,
+     -5.9556600663151146e-05,
+     -0.9999999957076562,
+     -0.08029818855664927
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "P12": [
+    [
+     -0.9999999957056562,
+     -1.9999999913422606e-06,
+     9.265358966049026e-05,
+     0.04785362989137187
+    ],
+    [
+     -1.999999999946489e-06,
+     0.999999999998,
+     0.0,
+     0.04214139194443728
+    ],
+    [
+     -9.265358966030495e-05,
+     -1.8530717931663663e-10,
+     -0.9999999957076562,
+     -0.08029463971916552
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ },
+ "tags": [
+  {
+   "tag": "P01",
+   "maker_file": "body.dae",
+   "description_element": "body_visual",
+   "link": "body",
+   "visual_name_line": {
+    "file": "description/model.urdf.xacro",
+    "line": 37,
+    "attr": "name",
+    "text": "body_visual"
+   },
+   "mesh": {
+    "file": "description/model.urdf.xacro",
+    "line": 40,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/body.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/body.dae"
+   },
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 38,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 38,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P02",
+   "maker_file": "pmc.dae",
+   "description_element": "pmc_port_visual",
+   "link": "body",
+   "visual_name_line": {
+    "file": "description/model.urdf.xacro",
+    "line": 50,
+    "attr": "name",
+    "text": "pmc_port_visual"
+   },
+   "mesh": {
+    "file": "description/model.urdf.xacro",
+    "line": 53,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/pmc.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/pmc.dae"
+   },
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 51,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 51,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P03",
+   "maker_file": "pmc.dae",
+   "description_element": "pmc_stbd_visual",
+   "link": "body",
+   "visual_name_line": {
+    "file": "description/model.urdf.xacro",
+    "line": 75,
+    "attr": "name",
+    "text": "pmc_stbd_visual"
+   },
+   "mesh": {
+    "file": "description/model.urdf.xacro",
+    "line": 78,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/pmc.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/pmc.dae"
+   },
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 76,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 76,
+    "attr": "rpy",
+    "text": "0 3.14 3.14",
+    "value": [
+     0.0,
+     3.14,
+     3.14
+    ]
+   },
+   "T_body_file_m": [
+    [
+     0.9999974634566875,
+     -0.0015926529164868282,
+     -0.0015926508965689952,
+     0.0
+    ],
+    [
+     -0.0015926508965689952,
+     -0.9999987317275395,
+     2.5365433123939997e-06,
+     0.0
+    ],
+    [
+     -0.0015926529164868282,
+     0.0,
+     -0.9999987317275395,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P04",
+   "maker_file": "pmc_bumper.dae",
+   "description_element": "pmc_port_bumper_visual",
+   "link": "body",
+   "visual_name_line": {
+    "file": "description/model.urdf.xacro",
+    "line": 56,
+    "attr": "name",
+    "text": "pmc_port_bumper_visual"
+   },
+   "mesh": {
+    "file": "description/model.urdf.xacro",
+    "line": 59,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/pmc_bumper.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/pmc_bumper.dae"
+   },
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 57,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 57,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P05",
+   "maker_file": "pmc_bumper.dae",
+   "description_element": "pmc_stbd_bumper_visual",
+   "link": "body",
+   "visual_name_line": {
+    "file": "description/model.urdf.xacro",
+    "line": 81,
+    "attr": "name",
+    "text": "pmc_stbd_bumper_visual"
+   },
+   "mesh": {
+    "file": "description/model.urdf.xacro",
+    "line": 84,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/pmc_bumper.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/pmc_bumper.dae"
+   },
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 82,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 82,
+    "attr": "rpy",
+    "text": "0 3.14 3.14",
+    "value": [
+     0.0,
+     3.14,
+     3.14
+    ]
+   },
+   "T_body_file_m": [
+    [
+     0.9999974634566875,
+     -0.0015926529164868282,
+     -0.0015926508965689952,
+     0.0
+    ],
+    [
+     -0.0015926508965689952,
+     -0.9999987317275395,
+     2.5365433123939997e-06,
+     0.0
+    ],
+    [
+     -0.0015926529164868282,
+     0.0,
+     -0.9999987317275395,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P06",
+   "maker_file": "base_link.dae",
+   "description_element": "link top_aft",
+   "link": "top_aft",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 26,
+    "attr": "name",
+    "text": "${prefix}${bay}"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 48,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/base_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/base_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 44,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 45,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.9999999957076562,
+     0.0,
+     9.265358966049026e-05,
+     -0.01
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     -9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562,
+     -0.065
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P07",
+   "maker_file": "arm_proximal_link.dae",
+   "description_element": "link top_aft_arm_proximal_link",
+   "link": "top_aft_arm_proximal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 71,
+    "attr": "name",
+    "text": "${prefix}${bay}_arm_proximal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 93,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/arm_proximal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/arm_proximal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 89,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 90,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.9999999957076562,
+     0.0,
+     9.265358966049026e-05,
+     -0.1294439770039516
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     -9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562,
+     -0.13001106719228261
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P08",
+   "maker_file": "arm_distal_link.dae",
+   "description_element": "link top_aft_arm_distal_link",
+   "link": "top_aft_arm_distal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 123,
+    "attr": "name",
+    "text": "${prefix}${bay}_arm_distal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 145,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/arm_distal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/arm_distal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 141,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 142,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.9999999957076562,
+     0.0,
+     9.265358966049026e-05,
+     -0.029443977433185983
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     -9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562,
+     -0.13000180183331655
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P09",
+   "maker_file": "gripper_left_proximal_link.dae",
+   "description_element": "link top_aft_gripper_left_proximal_link",
+   "link": "top_aft_gripper_left_proximal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 175,
+    "attr": "name",
+    "text": "${prefix}${bay}_gripper_left_proximal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 197,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/gripper_left_proximal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/gripper_left_proximal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 193,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 194,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.939692565585813,
+     0.342020282436678,
+     9.265358966049026e-05,
+     0.00955141751600648
+    ],
+    [
+     0.34202028390474665,
+     0.9396925696192966,
+     0.0,
+     -0.010002
+    ],
+    [
+     -8.706588975251798e-05,
+     3.168940704047478e-05,
+     -0.9999999957076562,
+     -0.08029818855664927
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P10",
+   "maker_file": "gripper_left_distal_link.dae",
+   "description_element": "link top_aft_gripper_left_distal_link",
+   "link": "top_aft_gripper_left_distal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 227,
+    "attr": "name",
+    "text": "${prefix}${bay}_gripper_left_distal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 249,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/gripper_left_distal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/gripper_left_distal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 245,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 246,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.6427880864689954,
+     -0.7660440374474824,
+     9.265358966049026e-05,
+     0.056536045795297134
+    ],
+    [
+     -0.7660440407356068,
+     0.6427880892280629,
+     0.0,
+     -0.027103014195237335
+    ],
+    [
+     -5.955662385798754e-05,
+     -7.09767302121808e-05,
+     -0.9999999957076562,
+     -0.08029383526216165
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P11",
+   "maker_file": "gripper_right_proximal_link.dae",
+   "description_element": "link top_aft_gripper_right_proximal_link",
+   "link": "top_aft_gripper_right_proximal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 279,
+    "attr": "name",
+    "text": "${prefix}${bay}_gripper_right_proximal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 301,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/gripper_right_proximal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/gripper_right_proximal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 297,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 298,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.939692565585813,
+     -0.342020282436678,
+     9.265358966049026e-05,
+     0.00955141751600648
+    ],
+    [
+     -0.34202028390474665,
+     0.9396925696192966,
+     0.0,
+     0.010002
+    ],
+    [
+     -8.706588975251798e-05,
+     -3.168940704047478e-05,
+     -0.9999999957076562,
+     -0.08029818855664927
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "tag": "P12",
+   "maker_file": "gripper_right_distal_link.dae",
+   "description_element": "link top_aft_gripper_right_distal_link",
+   "link": "top_aft_gripper_right_distal_link",
+   "link_name": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 331,
+    "attr": "name",
+    "text": "${prefix}${bay}_gripper_right_distal_link"
+   },
+   "mesh": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 353,
+    "attr": "filename",
+    "text": "package://astrobee_freeflyer/meshes/gripper_right_distal_link.dae",
+    "resolved": "package://astrobee_freeflyer/meshes/gripper_right_distal_link.dae"
+   },
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 349,
+    "attr": "xyz",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 350,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "T_body_file_m": [
+    [
+     -0.6427880864689954,
+     0.7660440374474824,
+     9.265358966049026e-05,
+     0.056536045795297134
+    ],
+    [
+     0.7660440407356068,
+     0.6427880892280629,
+     0.0,
+     0.027103014195237335
+    ],
+    [
+     -5.955662385798754e-05,
+     7.09767302121808e-05,
+     -0.9999999957076562,
+     -0.08029383526216165
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ ],
+ "joints": [
+  {
+   "name": "top_aft",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 61,
+    "attr": "name",
+    "text": "${bay}"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 62,
+    "attr": "type",
+    "text": "fixed"
+   },
+   "parent_link": "body",
+   "child_link": "top_aft",
+   "tags": [
+    "P01",
+    "P06"
+   ],
+   "origin_xyz": {
+    "file": "description/model.urdf.xacro",
+    "line": 139,
+    "attr": "xyz",
+    "text": "-0.01 0.0 -0.065",
+    "value": [
+     -0.01,
+     0.0,
+     -0.065
+    ],
+    "written_in_macro": {
+     "file": "description/macro_perching_arm.urdf.xacro",
+     "line": 64,
+     "attr": "xyz",
+     "text": "${xyz}"
+    }
+   },
+   "origin_rpy": {
+    "file": "description/model.urdf.xacro",
+    "line": 140,
+    "attr": "rpy",
+    "text": "0.0 3.1415 0.0",
+    "value": [
+     0.0,
+     3.1415,
+     0.0
+    ],
+    "written_in_macro": {
+     "file": "description/macro_perching_arm.urdf.xacro",
+     "line": 65,
+     "attr": "rpy",
+     "text": "${rpy}"
+    }
+   }
+  },
+  {
+   "name": "top_aft_arm_proximal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 106,
+    "attr": "name",
+    "text": "${bay}_arm_proximal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 107,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft",
+   "child_link": "top_aft_arm_proximal_link",
+   "tags": [
+    "P06",
+    "P07"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 109,
+    "attr": "xyz",
+    "text": "0.11945 0 0.065",
+    "value": [
+     0.11945,
+     0.0,
+     0.065
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 110,
+    "attr": "rpy",
+    "text": "0 1.57079632679 0",
+    "value": [
+     0.0,
+     1.57079632679,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 116,
+    "attr": "xyz",
+    "text": "0 -1 0",
+    "value": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 119,
+    "attr": "lower",
+    "text": "-2.0944",
+    "value": -2.0944
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 120,
+    "attr": "upper",
+    "text": "1.57079",
+    "value": 1.57079
+   },
+   "value_at_Z": 1.57079632679,
+   "axis_line_at_Z": {
+    "point_m": [
+     -0.1294439770039516,
+     0.0,
+     -0.13001106719228261
+    ],
+    "point_mm": [
+     -129.4439770039516,
+     0.0,
+     -130.0110671922826
+    ],
+    "dir": [
+     -0.0,
+     -1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "top_aft_arm_distal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 158,
+    "attr": "name",
+    "text": "${bay}_arm_distal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 159,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft_arm_proximal_link",
+   "child_link": "top_aft_arm_distal_link",
+   "tags": [
+    "P07",
+    "P08"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 161,
+    "attr": "xyz",
+    "text": "-0.1 0 0",
+    "value": [
+     -0.1,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 162,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 168,
+    "attr": "xyz",
+    "text": "0 0 1",
+    "value": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 171,
+    "attr": "lower",
+    "text": "-1.57079",
+    "value": -1.57079
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 172,
+    "attr": "upper",
+    "text": "1.57079",
+    "value": 1.57079
+   },
+   "value_at_Z": 0.0,
+   "axis_line_at_Z": {
+    "point_m": [
+     -0.029443977433185983,
+     0.0,
+     -0.13000180183331655
+    ],
+    "point_mm": [
+     -29.44397743318598,
+     0.0,
+     -130.00180183331656
+    ],
+    "dir": [
+     9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562
+    ]
+   }
+  },
+  {
+   "name": "top_aft_gripper_left_proximal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 210,
+    "attr": "name",
+    "text": "${bay}_gripper_left_proximal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 211,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft_arm_distal_link",
+   "child_link": "top_aft_gripper_left_proximal_link",
+   "tags": [
+    "P08",
+    "P09"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 213,
+    "attr": "xyz",
+    "text": "-0.039 -0.010002 -0.0497",
+    "value": [
+     -0.039,
+     -0.010002,
+     -0.0497
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 214,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 220,
+    "attr": "xyz",
+    "text": "0 0 1",
+    "value": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 223,
+    "attr": "lower",
+    "text": "0.349066",
+    "value": 0.349066
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 224,
+    "attr": "upper",
+    "text": "0.698132",
+    "value": 0.698132
+   },
+   "value_at_Z": 0.349066,
+   "axis_line_at_Z": {
+    "point_m": [
+     0.00955141751600648,
+     -0.010002,
+     -0.08029818855664927
+    ],
+    "point_mm": [
+     9.551417516006481,
+     -10.002,
+     -80.29818855664928
+    ],
+    "dir": [
+     9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562
+    ]
+   }
+  },
+  {
+   "name": "top_aft_gripper_left_distal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 262,
+    "attr": "name",
+    "text": "${bay}_gripper_left_distal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 263,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft_gripper_left_proximal_link",
+   "child_link": "top_aft_gripper_left_distal_link",
+   "tags": [
+    "P09",
+    "P10"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 265,
+    "attr": "xyz",
+    "text": "-0.05 0 0",
+    "value": [
+     -0.05,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 266,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 272,
+    "attr": "xyz",
+    "text": "0 0 1",
+    "value": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 275,
+    "attr": "lower",
+    "text": "-1.22173",
+    "value": -1.22173
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 276,
+    "attr": "upper",
+    "text": "-0.69813",
+    "value": -0.69813
+   },
+   "value_at_Z": -1.22173,
+   "axis_line_at_Z": {
+    "point_m": [
+     0.056536045795297134,
+     -0.027103014195237335,
+     -0.08029383526216165
+    ],
+    "point_mm": [
+     56.536045795297134,
+     -27.103014195237336,
+     -80.29383526216165
+    ],
+    "dir": [
+     9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562
+    ]
+   }
+  },
+  {
+   "name": "top_aft_gripper_right_proximal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 314,
+    "attr": "name",
+    "text": "${bay}_gripper_right_proximal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 315,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft_arm_distal_link",
+   "child_link": "top_aft_gripper_right_proximal_link",
+   "tags": [
+    "P08",
+    "P11"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 317,
+    "attr": "xyz",
+    "text": "-0.039 0.010002 -0.0497",
+    "value": [
+     -0.039,
+     0.010002,
+     -0.0497
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 318,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 324,
+    "attr": "xyz",
+    "text": "0 0 1",
+    "value": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 327,
+    "attr": "lower",
+    "text": "-0.698132",
+    "value": -0.698132
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 328,
+    "attr": "upper",
+    "text": "-0.349066",
+    "value": -0.349066
+   },
+   "value_at_Z": -0.349066,
+   "axis_line_at_Z": {
+    "point_m": [
+     0.00955141751600648,
+     0.010002,
+     -0.08029818855664927
+    ],
+    "point_mm": [
+     9.551417516006481,
+     10.002,
+     -80.29818855664928
+    ],
+    "dir": [
+     9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562
+    ]
+   }
+  },
+  {
+   "name": "top_aft_gripper_right_distal_joint",
+   "name_src": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 366,
+    "attr": "name",
+    "text": "${bay}_gripper_right_distal_joint"
+   },
+   "type": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 367,
+    "attr": "type",
+    "text": "revolute"
+   },
+   "parent_link": "top_aft_gripper_right_proximal_link",
+   "child_link": "top_aft_gripper_right_distal_link",
+   "tags": [
+    "P11",
+    "P12"
+   ],
+   "origin_xyz": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 369,
+    "attr": "xyz",
+    "text": "-0.05 0 0",
+    "value": [
+     -0.05,
+     0.0,
+     0.0
+    ]
+   },
+   "origin_rpy": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 370,
+    "attr": "rpy",
+    "text": "0 0 0",
+    "value": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 376,
+    "attr": "xyz",
+    "text": "0 0 1",
+    "value": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "lower": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 379,
+    "attr": "lower",
+    "text": "0.69813",
+    "value": 0.69813
+   },
+   "upper": {
+    "file": "description/macro_perching_arm.urdf.xacro",
+    "line": 380,
+    "attr": "upper",
+    "text": "1.22173",
+    "value": 1.22173
+   },
+   "value_at_Z": 1.22173,
+   "axis_line_at_Z": {
+    "point_m": [
+     0.056536045795297134,
+     0.027103014195237335,
+     -0.08029383526216165
+    ],
+    "point_mm": [
+     56.536045795297134,
+     27.103014195237336,
+     -80.29383526216165
+    ],
+    "dir": [
+     9.265358966049026e-05,
+     0.0,
+     -0.9999999957076562
+    ]
+   }
+  }
+ ],
+ "links_at_Z": {
+  "top_aft": [
+   [
+    -0.9999999957076562,
+    0.0,
+    9.265358966049026e-05,
+    -0.01
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    -9.265358966049026e-05,
+    0.0,
+    -0.9999999957076562,
+    -0.065
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_arm_proximal_link": [
+   [
+    -0.9999999957076562,
+    0.0,
+    9.265358966049026e-05,
+    -0.1294439770039516
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    -9.265358966049026e-05,
+    0.0,
+    -0.9999999957076562,
+    -0.13001106719228261
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_arm_distal_link": [
+   [
+    -0.9999999957076562,
+    0.0,
+    9.265358966049026e-05,
+    -0.029443977433185983
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    -9.265358966049026e-05,
+    0.0,
+    -0.9999999957076562,
+    -0.13000180183331655
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_gripper_left_proximal_link": [
+   [
+    -0.939692565585813,
+    0.342020282436678,
+    9.265358966049026e-05,
+    0.00955141751600648
+   ],
+   [
+    0.34202028390474665,
+    0.9396925696192966,
+    0.0,
+    -0.010002
+   ],
+   [
+    -8.706588975251798e-05,
+    3.168940704047478e-05,
+    -0.9999999957076562,
+    -0.08029818855664927
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_gripper_left_distal_link": [
+   [
+    -0.6427880864689954,
+    -0.7660440374474824,
+    9.265358966049026e-05,
+    0.056536045795297134
+   ],
+   [
+    -0.7660440407356068,
+    0.6427880892280629,
+    0.0,
+    -0.027103014195237335
+   ],
+   [
+    -5.955662385798754e-05,
+    -7.09767302121808e-05,
+    -0.9999999957076562,
+    -0.08029383526216165
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_gripper_right_proximal_link": [
+   [
+    -0.939692565585813,
+    -0.342020282436678,
+    9.265358966049026e-05,
+    0.00955141751600648
+   ],
+   [
+    -0.34202028390474665,
+    0.9396925696192966,
+    0.0,
+    0.010002
+   ],
+   [
+    -8.706588975251798e-05,
+    -3.168940704047478e-05,
+    -0.9999999957076562,
+    -0.08029818855664927
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "top_aft_gripper_right_distal_link": [
+   [
+    -0.6427880864689954,
+    0.7660440374474824,
+    9.265358966049026e-05,
+    0.056536045795297134
+   ],
+   [
+    0.7660440407356068,
+    0.6427880892280629,
+    0.0,
+    0.027103014195237335
+   ],
+   [
+    -5.955662385798754e-05,
+    7.09767302121808e-05,
+    -0.9999999957076562,
+    -0.08029383526216165
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "not_in_the_standard": {
+  "default_skin": {
+   "use": "the assembled photographs and the occlusion of the scoring samples only; not a tag, never graded",
+   "instances": [
+    {
+     "description_element": "pmc_port_skin_visual",
+     "maker_file": "pmc_skin_.dae",
+     "visual_name_line": {
+      "file": "description/model.urdf.xacro",
+      "line": 62,
+      "attr": "name",
+      "text": "pmc_port_skin_visual"
+     },
+     "mesh": {
+      "file": "description/model.urdf.xacro",
+      "line": 65,
+      "attr": "filename",
+      "text": "package://astrobee_freeflyer/meshes/pmc_skin${ns}.dae",
+      "resolved": "package://astrobee_freeflyer/meshes/pmc_skin_.dae"
+     },
+     "origin_xyz": {
+      "file": "description/model.urdf.xacro",
+      "line": 63,
+      "attr": "xyz",
+      "text": "0 0 0",
+      "value": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "origin_rpy": {
+      "file": "description/model.urdf.xacro",
+      "line": 63,
+      "attr": "rpy",
+      "text": "0 0 0",
+      "value": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "T_body_file_m": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ]
+    },
+    {
+     "description_element": "pmc_stbd_skin_visual",
+     "maker_file": "pmc_skin_.dae",
+     "visual_name_line": {
+      "file": "description/model.urdf.xacro",
+      "line": 87,
+      "attr": "name",
+      "text": "pmc_stbd_skin_visual"
+     },
+     "mesh": {
+      "file": "description/model.urdf.xacro",
+      "line": 90,
+      "attr": "filename",
+      "text": "package://astrobee_freeflyer/meshes/pmc_skin${ns}.dae",
+      "resolved": "package://astrobee_freeflyer/meshes/pmc_skin_.dae"
+     },
+     "origin_xyz": {
+      "file": "description/model.urdf.xacro",
+      "line": 88,
+      "attr": "xyz",
+      "text": "0 0 0",
+      "value": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "origin_rpy": {
+      "file": "description/model.urdf.xacro",
+      "line": 88,
+      "attr": "rpy",
+      "text": "0 3.14 3.14",
+      "value": [
+       0.0,
+       3.14,
+       3.14
+      ]
+     },
+     "T_body_file_m": [
+      [
+       0.9999974634566875,
+       -0.0015926529164868282,
+       -0.0015926508965689952,
+       0.0
+      ],
+      [
+       -0.0015926508965689952,
+       -0.9999987317275395,
+       2.5365433123939997e-06,
+       0.0
+      ],
+      [
+       -0.0015926529164868282,
+       0.0,
+       -0.9999987317275395,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ]
+    }
+   ],
+   "file_name_rule": "the description's mesh name pmc_skin${ns}.dae with ns from the launch file's description command"
+  },
+  "named_skins": [
+   "pmc_skin_bumble.dae",
+   "pmc_skin_honey.dae",
+   "pmc_skin_queen.dae"
+  ],
+  "carriage": {
+   "maker_file": "carriage.dae",
+   "use": "not used: included by the description only for the ground-test world",
+   "conditions": [
+    {
+     "file": "description/model.urdf.xacro",
+     "line": 154,
+     "attr": "value",
+     "text": "${world == 'granite'}"
+    }
+   ]
+  }
+ }
+}
