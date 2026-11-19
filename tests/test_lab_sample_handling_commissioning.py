@@ -259,5 +259,21 @@ class Credit(unittest.TestCase):
         self.assertIn('depth_in > h.get("depth", HOLE_DEPTH) - 0.006', seated)
 
 
+class Grader(unittest.TestCase):
+    def test_the_account_is_cleared_before_the_check_and_outside_the_clock(self):
+        """The kit's clearing takes seconds in an image with a desktop session. It runs before the empty-account
+        check and before the controller's clock exists, so it is never charged to the controller's time budget
+        (Solver.__init__ calls it again inside the timed start and gets the first call's report back)."""
+        src = (TASK / "tests/verify.py").read_text()
+        main = src[src.index("\ndef main():"):]
+        clear, kill, check = (main.index("cleared = clear_agent_account()"), main.index("kill_agent_processes(uid)"),
+                              main.index("require_empty_account(uid)"))
+        self.assertTrue(clear < kill < check < main.index("check_numerics()"))
+        run = src[src.index("\ndef run_episodes("):src.index("\ndef main():")]
+        self.assertIn("clock.timed(GuardedSolver", run)
+        self.assertNotIn("clear_agent_account", run)
+        self.assertNotIn("clear_account=False", src)                  # the kit's own call stays on
+
+
 if __name__ == "__main__":
     unittest.main()

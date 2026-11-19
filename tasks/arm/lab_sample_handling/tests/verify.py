@@ -9,11 +9,12 @@ restarts; a ProbeLock, repeated `t` with a perturbed copy in a hidden order, tha
 both replies command no motion: IdleAwareProbeLock). Before anything else it reclaims root's PATH directories
 (robotics_grader.stage.secure_exec_path).
 
-The agent's account: the only processes of the agent's account are the ones the grader starts. After the
-verify-start kill nothing of the account may appear by itself for QUIET_S (`require_empty_account`): an image that
-runs a session as that account (the base image's desktop, which its supervisord restarts when it dies) would run
-code of the account outside the launcher's filter, so that sandbox is not the one this grader is written for and
-the run ends as a task error. During the episodes every process of the account must carry the launcher's
+The agent's account: the only processes of the agent's account are the ones the grader starts. First the kit clears
+the account (`clear_agent_account`: a session the image runs as that account is taken down for good; in this task's
+own grading image, tests/Dockerfile, there is none and it finds nothing to do; metric `agent_account_cleared`). Then,
+after the verify-start kill, nothing of the account may appear by itself for QUIET_S (`require_empty_account`): a
+sandbox that still runs something as that account (a session that comes back) would run code of the account outside
+the launcher's filter, so it is not the one this grader is written for and the run ends as a task error. During the episodes every process of the account must carry the launcher's
 no_new_privs mark (nonet_exec.py sets it before it drops to the account; every descendant inherits it and none can
 clear it), looked at every CHECK_EVERY control steps and at each episode's end (`outside_processes`): one without it
 is killed, that episode and every later one score 0 (metric `processes_outside_launcher`).
@@ -84,6 +85,7 @@ from robotics_grader import (  # noqa: E402
     SolverAborted,
     SolverMissing,
     agent_user,
+    clear_agent_account,
     ratio_rewards,
     read_anchor,
     seed_rng,
@@ -595,8 +597,14 @@ def main():
     except KeyError:
         write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None, extra=secured))
         return
+    # The kit's clearing of the account (robotics_grader.account: every supervisord program switched off, every
+    # process of the account killed until none comes back), called here: before the empty-account check, and before
+    # the controller's clock exists. Solver.__init__ calls it again inside the timed start and gets this report back
+    # at once, so none of its seconds is charged to the controller's budget.
+    cleared = clear_agent_account()
+    secured["agent_account_cleared"] = 1.0 if cleared.get("cleared") else 0.0
     kill_agent_processes(uid)
-    require_empty_account(uid)           # a task error if the sandbox runs anything as the account by itself
+    require_empty_account(uid)           # a task error if the sandbox still runs anything as the account by itself
     check_numerics()                     # a task error on a machine that computes the simulation differently
     secured["numerics_ok"] = 1.0
     with open(UNITS) as fh:
