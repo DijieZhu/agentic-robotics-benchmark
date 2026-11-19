@@ -1,0 +1,41 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+# A closed-loop recovery controller for a RoboCasa PandaOmron mobile manipulator: it takes over from real end-of-rollout
+# failure states of a frozen learned policy, restored exactly, in RoboCasa's held-out kitchens (fixed hidden set in
+# tests/hidden/, selected by the rule and the amendments recorded in tests/hidden/selection.json), from cameras,
+# proprioception and wrist force.
+[task]
+name = "grounded-intelligence-initiative/longtail_manipulation_recovery"
+
+[metadata]
+platform = "arm"
+# The oracle submits the oracle token (solution/oracle_token; its sha256 is tests/oracle_token.sha256): the grader then
+# tells it which hidden state each episode is, and it replays that state's recorded rescue actions.
+oracle_kind = "token-privileged"
+
+# Setup only stages the practice kit into the agent's home (seconds; the engine's setup bound applies, no field here).
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 8 hours, as the merged arm controller tasks: perception, grasping and placing must be developed against a practice
+# simulator whose kitchen build takes about 10 s and whose 1500-step practice episode takes 1 to 3 minutes.
+[agent]
+timeout_sec = 28800
+network_mode = "no-network"
+
+# Verification runs in its own sandbox built from tests/Dockerfile, which holds the graded kitchens' assets the agent's
+# image does not carry and starts no desktop session. Timeout arithmetic (measured on the authoring host, i9-14900KF,
+# CPU rendering, on the 32 states the set had before amendment A4): a controller that requested every camera with depth
+# at every step took 4,993 s (about 156 s per state for build, prefix replay, simulation, rendering and the wire, with
+# other grading runs sharing the machine); the worst case per state adds the 400 s controller cap and a 40 s restart,
+# about 600 s, so about 16,100 s for the 27 states of the set; 28,800 s leaves a factor of 1.8.
+[verifier]
+timeout_sec = 28800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0

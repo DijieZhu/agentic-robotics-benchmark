@@ -41,6 +41,12 @@ summary = "A fixed Franka Panda must switch and set cooktop burners, ovens and m
 platforms = ["arm"]
 stages = ["behavior"]
 
+[longtail_manipulation_recovery]
+title = "Rescue failed kitchen jobs with a mobile Panda"
+summary = "Write the fallback controller of a mobile Panda: from the exact states where a learned policy failed its kitchen jobs, finish them from the robot's cameras, joint readings and wrist force."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [novel_object_6dof_grasp_detection]
 title = "Detect grasps on objects never seen before"
 summary = "Improve a 6-DoF parallel-jaw grasp detector that works from one RGB-D frame of a cluttered table, scored on objects it has never seen."

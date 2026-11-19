@@ -1,0 +1,198 @@
+{
+ "states": [
+  {
+   "id": "p00",
+   "task": "CoffeeSetupMug",
+   "seed": 4006000,
+   "split": "pretrain",
+   "prefix": "p00_prefix.npz",
+   "qpos": "p00_state.npz",
+   "card": "p00_card.json",
+   "roles": {
+    "coffee_machine_main_group_1": "target",
+    "counter_2_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p01",
+   "task": "CoffeeSetupMug",
+   "seed": 4006002,
+   "split": "pretrain",
+   "prefix": "p01_prefix.npz",
+   "qpos": "p01_state.npz",
+   "card": "p01_card.json",
+   "roles": {
+    "coffee_machine_right_group_1": "target",
+    "counter_2_right_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p02",
+   "task": "CoffeeSetupMug",
+   "seed": 4006003,
+   "split": "pretrain",
+   "prefix": "p02_prefix.npz",
+   "qpos": "p02_state.npz",
+   "card": "p02_card.json",
+   "roles": {
+    "coffee_machine_main_group_1": "target",
+    "counter_2_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p03",
+   "task": "CoffeeSetupMug",
+   "seed": 4006006,
+   "split": "pretrain",
+   "prefix": "p03_prefix.npz",
+   "qpos": "p03_state.npz",
+   "card": "p03_card.json",
+   "roles": {
+    "coffee_machine_main_group_1": "target",
+    "counter_2_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p04",
+   "task": "CoffeeSetupMug",
+   "seed": 4006008,
+   "split": "pretrain",
+   "prefix": "p04_prefix.npz",
+   "qpos": "p04_state.npz",
+   "card": "p04_card.json",
+   "roles": {
+    "coffee_machine_main_group": "target",
+    "counter_2_main_group": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p05",
+   "task": "CoffeeSetupMug",
+   "seed": 4006009,
+   "split": "pretrain",
+   "prefix": "p05_prefix.npz",
+   "qpos": "p05_state.npz",
+   "card": "p05_card.json",
+   "roles": {
+    "coffee_machine_left_group": "target",
+    "counter_1_left_group": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p06",
+   "task": "PickPlaceCounterToStove",
+   "seed": 4021007,
+   "split": "pretrain",
+   "prefix": "p06_prefix.npz",
+   "qpos": "p06_state.npz",
+   "card": "p06_card.json",
+   "roles": {
+    "counter_3_main_group_1": "support",
+    "stove_main_group_1": "target"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p07",
+   "task": "PickPlaceCounterToStove",
+   "seed": 4021032,
+   "split": "pretrain",
+   "prefix": "p07_prefix.npz",
+   "qpos": "p07_state.npz",
+   "card": "p07_card.json",
+   "roles": {
+    "dining_front_group_1": "support",
+    "stove_left_group_1": "target"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p08",
+   "task": "PickPlaceCounterToStove",
+   "seed": 4021037,
+   "split": "pretrain",
+   "prefix": "p08_prefix.npz",
+   "qpos": "p08_state.npz",
+   "card": "p08_card.json",
+   "roles": {
+    "counter_1_main_group_1": "support",
+    "stove_main_group_1": "target"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p09",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 4022014,
+   "split": "pretrain",
+   "prefix": "p09_prefix.npz",
+   "qpos": "p09_state.npz",
+   "card": "p09_card.json",
+   "roles": {
+    "counter_1_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p10",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 4022016,
+   "split": "pretrain",
+   "prefix": "p10_prefix.npz",
+   "qpos": "p10_state.npz",
+   "card": "p10_card.json",
+   "roles": {
+    "counter_1_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p11",
+   "task": "PickPlaceCounterToCabinet",
+   "seed": 4020003,
+   "split": "pretrain",
+   "prefix": "p11_prefix.npz",
+   "qpos": "p11_state.npz",
+   "card": "p11_card.json",
+   "roles": {
+    "singlecabinet_1_main_group_1": "target",
+    "counter_1_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p12",
+   "task": "PickPlaceCounterToCabinet",
+   "seed": 4020012,
+   "split": "pretrain",
+   "prefix": "p12_prefix.npz",
+   "qpos": "p12_state.npz",
+   "card": "p12_card.json",
+   "roles": {
+    "cab_1_main_group_1": "target",
+    "counter_1_main_group_1": "support"
+   },
+   "step_budget": 1500
+  },
+  {
+   "id": "p13",
+   "task": "PickPlaceSinkToCounter",
+   "seed": 4023014,
+   "split": "pretrain",
+   "prefix": "p13_prefix.npz",
+   "qpos": "p13_state.npz",
+   "card": "p13_card.json",
+   "roles": {
+    "sink_1_island_group_1": "source",
+    "island_island_group_1": "support"
+   },
+   "step_budget": 1500
+  }
+ ]
+}

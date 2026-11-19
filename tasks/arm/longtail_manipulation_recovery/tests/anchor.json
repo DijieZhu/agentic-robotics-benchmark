@@ -1,0 +1,8 @@
+{
+  "metric": "job_balanced_recovered_fraction",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 1.0,
+  "source": "measured: the token-gated reference (solution/) on the fixed hidden states with this grader in the verifier image (CPU rendering, 4 CPUs, 12 GB): job_balanced_recovered_fraction 1.0. On the 27 states of the set after amendment A4 (the mug must be upright; tests/hidden/selection.json): 27 of 27 in a standalone grading run of 2026-11-17 on the maintainers' machine (AMD Threadripper PRO 5975WX; 0 episodes aborted, prefix error 0.0, 1,349 s), every state at the step count of the earlier runs. On the 32 states before A4: 32 of 32 in each of 2 standalone grading runs (2026-11-11, the author's machine, identical step counts per state) and in the ale validate oracle on both machines; during selection every kept state's replay recovered in 3 of 3 runs and in 2 of 2 runs with 1e-9 restore noise",
+  "note": "full_at 1.0: the oracle is an exact replay and shows no spread on either host; clause C6 keeps only states whose replay survives a 1e-9 perturbation of the restored joint positions, and the grader fails as a task error (never a silent oracle loss) if a host's replayed prefix differs from the recording by more than 1e-9."
+}
