@@ -4,7 +4,9 @@ raw outcome per state and per job. It uses the grader's own wire rules (`wire_ru
 imports): deadlines, READY, the controller time cap, the action check, the 64 KiB line cap, the bounded reply queue,
 discarding lines written without a request, restarts after an aborted episode (at most 3), the image cap, the success
 rule and the step budget. Like the grader it pauses the controller (SIGSTOP) whenever no request is outstanding; here
-that pauses run.sh's process group (the grader pauses every process of your account and also caps their number).
+that pauses run.sh's process group (the grader pauses every process of your account and also caps their number), and
+the pause is not checked: the grader confirms that every thread of every process of your account has stopped and
+ends the episode when one has not within 5 s.
 It starts run.sh with the grader's environment: PATH, HOME and LANG only, nothing inherited from your shell. Each
 request's 10 s deadline and its controller time start before the request is written, as in grading.
 The kitchens and states are practice ones (RoboCasa pretrain split). It prints the raw outcome only: per state whether
@@ -189,6 +191,7 @@ class Controller:
         if self.broken:
             if self.restarts >= W.MAX_RESTARTS:
                 self.dead = True
+                self._stop()             # as the grader: no controller is left behind once the restarts are used up
                 raise Aborted("already restarted {} times".format(self.restarts))
             self.restarts += 1
             self._stop()
@@ -208,13 +211,15 @@ class Controller:
         return reply["action"]
 
     def close(self):
+        """As the grader: the close message is written under a 1 s deadline, never blocking, and not at all once an
+        exchange has failed (a request that timed out in the write has left the pipe full)."""
         self._signal(signal.SIGCONT)
-        try:
-            self.proc.stdin.write(json.dumps({"type": "close"}) + "\n")
-            self.proc.stdin.flush()
-            self.proc.wait(timeout=10)
-        except Exception:  # noqa: BLE001
-            pass
+        if self.proc.poll() is None and not self.broken and not self.dead:
+            try:
+                self._write_within(json.dumps({"type": "close"}) + "\n", time.monotonic() + 1.0)
+                self.proc.wait(timeout=10)
+            except Exception:  # noqa: BLE001
+                pass
         self._stop()
 
 

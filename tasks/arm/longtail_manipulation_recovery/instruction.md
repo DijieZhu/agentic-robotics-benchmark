@@ -64,7 +64,8 @@ the protocol, use stderr for logs. Print `READY` within **40 s** of start, as on
 - `{"type": "reset"}` starts an episode: reply `{"ok": true}`.
 - `{"type": "act", "t": T, "obs": {...}}`: reply `{"action": [...]}`. `t` counts control steps from 0 within the episode
   and is asked once per step. The reply to each request must arrive within **10 s**.
-- `{"type": "close"}`: reply `{"ok": true}` and exit.
+- `{"type": "close"}`: reply `{"ok": true}` and exit. It is sent once, after the last state, and only when the last
+  exchange succeeded: after an aborted episode the controller is stopped without it.
 
 Your process runs for the whole grading run and may keep state freely between episodes, and may also keep files in
 its submission folder. Lines you write while no request is outstanding are discarded; at most 64 reply lines are
@@ -147,9 +148,10 @@ only processes of your account there are the ones `run.sh` starts. Every one of 
 from the moment your reply is read
 until the grader starts writing the next request, which includes kitchen builds, simulation and rendering; background
 threads and processes therefore only run while a request is outstanding, and that time is charged to you. A pause
-holds only once every process of your account shows as stopped; one that has not stopped within 5 s ends the episode.
-The practice grader starts `run.sh` with the same three variables and the same deadlines (it pauses only `run.sh`'s
-process group, where the grader pauses every process of your account).
+holds only once every thread of every process of your account shows as stopped; one that has not stopped within 5 s
+ends the episode. The practice grader starts `run.sh` with the same three variables and the same deadlines (it pauses
+only `run.sh`'s process group, where the grader pauses every process of your account, and it does not check that the
+pause holds or apply the 5 s rule).
 
 The whole grading run has an outer limit of 8 hours (28,800 s), which these caps keep out of reach: on the author's
 machine a controller that requested every camera with depth at every step took about 156 s per state for simulation,
