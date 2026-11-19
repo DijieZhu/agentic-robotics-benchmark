@@ -12,6 +12,7 @@ Control at 10 Hz. An action is a JSON object {"l": [...], "r": [...], "cams": ma
   on (the start posture until set);
 - 8 numbers [q1..q7, grip]: a joint step: a gravity-compensated joint PD toward q, each joint's target at most MAX_DQ
   from its current angle; q also becomes the null-space posture.
+Joint angles in an action (a posture, a joint step's q) are clipped to the joints' limits.
 `cams` is a bitmask of the images the next observation carries: 1 overhead, 2 front, 4 tray, 8 left wrist, 16 right
 wrist.
 
@@ -92,10 +93,12 @@ class JarEnv:
         self.unit = unit
         self.unit_id = unit_id
         self.render_images = render
+        self.renderers = {}                     # one renderer per image size, for this episode's model (jar_sim.render)
 
     def reset(self, seed):
         self.seed = int(seed)
         self.episode = S.draw_episode(self.seed, self.unit)
+        S.close_renderers(self.renderers)       # a new episode is a new model
         self.w = S.World(self.unit, self.episode)
         self.rng = np.random.default_rng([self.seed % 2 ** 32, self.seed >> 32, 31])
         self.render_next = S.ALL_CAMS
@@ -147,34 +150,52 @@ class JarEnv:
             obs[f"T_world_{cam}"] = self.camera_pose(cam)
             obs[f"K_{cam}"] = self.camera_matrix(cam)
             if self.render_images and self.render_next & S.CAMERA_BITS[cam]:
-                obs[cam] = S.render(self.w.m, self.w.d, cam, self.rng)
+                obs[cam] = S.render(self.w.m, self.w.d, cam, self.rng, self.renderers)
             else:
                 obs[cam] = np.zeros((0, 0, 3), np.uint8)
         return obs
 
     def perturbed_observation(self, obs, rng):
         """The probe lock's other copy: each arm's joints offset by up to 1 mrad, the hand's and the wrist camera's
-        poses recomputed from them, each force offset by up to 0.2 N; images unchanged."""
+        poses moved by what those offsets move them, each force offset by up to 0.2 N; images unchanged.
+
+        The observed hand pose is the simulation's own, computed one physics step before the observed joint angles,
+        so it is not exactly the forward kinematics of `q`. The copy keeps that relation: its poses are the observed
+        ones moved by the difference between the kinematics of the offset joints and of the observed joints. (A copy
+        whose poses were the exact kinematics of its joints could be told from the real observation by anyone holding
+        the model.)"""
         w, m = self.w, self.w.m
         out = dict(obs)
-        d = mujoco.MjData(m)
-        d.qpos[:] = w.d.qpos
+        d0, d1 = mujoco.MjData(m), mujoco.MjData(m)           # kinematics of the observed and of the offset joints
+        d0.qpos[:] = w.d.qpos
+        d1.qpos[:] = w.d.qpos
         for s in ("l", "r"):
             a = w.arms[s]
-            d.qpos[a.jq] = np.asarray(obs[s]["q"], float) + rng.uniform(-0.001, 0.001, 7)
-        mujoco.mj_kinematics(m, d)
-        mujoco.mj_camlight(m, d)
+            q = np.asarray(obs[s]["q"], float)
+            d0.qpos[a.jq] = q
+            d1.qpos[a.jq] = q + rng.uniform(-0.001, 0.001, 7)
+        for d in (d0, d1):
+            mujoco.mj_kinematics(m, d)
+            mujoco.mj_camlight(m, d)
         for s in ("l", "r"):
             a = w.arms[s]
             arm = dict(obs[s])
-            Rs = d.site_xmat[a.site].reshape(3, 3)
+            R0, R1 = d0.site_xmat[a.site].reshape(3, 3), d1.site_xmat[a.site].reshape(3, 3)
+            Robs = np.empty(9)
+            mujoco.mju_quat2Mat(Robs, np.asarray(obs[s]["ee_quat"], float))
             qq = np.empty(4)
-            mujoco.mju_mat2Quat(qq, Rs.flatten())
+            mujoco.mju_mat2Quat(qq, (R1 @ R0.T @ Robs.reshape(3, 3)).flatten())
             wr = np.asarray(obs[s]["wrench"], float).copy()
             wr[:3] += rng.uniform(-0.2, 0.2, 3)
-            arm.update(q=d.qpos[a.jq].copy(), ee_pos=d.site_xpos[a.site].copy(), ee_quat=qq, wrench=wr)
+            arm.update(q=d1.qpos[a.jq].copy(), ee_quat=qq, wrench=wr,
+                       ee_pos=np.asarray(obs[s]["ee_pos"], float) + d1.site_xpos[a.site] - d0.site_xpos[a.site])
             out[s] = arm
-            out[f"T_world_wrist_{s}"] = self.camera_pose(f"wrist_{s}", d)
+            cam = f"wrist_{s}"
+            T0, T1 = self.camera_pose(cam, d0), self.camera_pose(cam, d1)
+            T = np.array(obs[f"T_world_{cam}"], float)
+            T[:3, :3] = T1[:3, :3] @ T0[:3, :3].T @ T[:3, :3]
+            T[:3, 3] += T1[:3, 3] - T0[:3, 3]
+            out[f"T_world_{cam}"] = T
         return out
 
     def truth(self):
@@ -188,4 +209,5 @@ class JarEnv:
                 "jar_start": [p.tolist() for p in w.jar_start]}
 
     def close(self):
-        """Nothing to release (the renderer is made and closed per image)."""
+        """Close the episode's renderers."""
+        S.close_renderers(self.renderers)

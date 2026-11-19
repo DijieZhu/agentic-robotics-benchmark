@@ -23,10 +23,15 @@ memory_mb = 12288
 timeout_sec = 7200
 network_mode = "no-network"
 
-# 12 episodes (2 per hidden unit), each at most 12000 control steps; the grader's own budget is 9000 s
-# (grader_config.json), and starting the solver, the render self-test and the stops need a little more.
+# 12 episodes (2 per hidden unit), each at most 12000 control steps. The grader's budget (grader_config.json:
+# 9000 s) is the controller's own time: its replies, plus 0.2 s for every image it asks for; the simulation is not
+# in it, so the timeout covers both. Worst case: 144000 control steps at 45 ms (10-25 ms measured on idle hosts, the
+# higher figure for a busy 4-CPU sandbox) = 6480 s of simulation; 9000 s of controller time (if the whole budget
+# went into images, 45000 of them, drawing them takes less than their price); the numerics check, the clearing of
+# the account and the render self-test 60 s. 15540 s; with 35 % margin 21000 s. The reference's whole verify takes
+# about 35-65 minutes.
 [verifier]
-timeout_sec = 9600
+timeout_sec = 21600
 environment_mode = "separate"
 
 [verifier.environment]

@@ -11,7 +11,7 @@ the episode draws the real one around it (`jar_sim.draw_episode`). Your controll
   (0, -0.28, 0.80) (`r`), both facing +x. Start posture `HOME_Q` for both.
 - Control: 10 Hz (50 physics steps of 2 ms). Each arm takes one of the three action shapes in the instruction
   (`jar_env.py`): an operational-space step (at most 0.03 m and 0.2 rad), the same with a null-space posture, or a joint
-  step (at most 0.1 rad a joint).
+  step (at most 0.1 rad a joint). Joint angles in an action are clipped to the joints' limits.
 - Gripper: `grip` -1 = fully open (80 mm between the fingers) ... +1 = closed. The finger pads' friction is 2.0.
 - Wrist force sensor: the force and torque at the wrist, in the world frame, with noise of 0.3 N and 0.03 N m.
 
@@ -83,3 +83,7 @@ intrinsics `K_<cam>` (f = (H / 2) / tan(fov / 2), principal point (W / 2, H / 2)
   0.12 m from every jar's top (the neck's top centre).
 - Unstable: an arm joint faster than 8 rad/s, or a jar, lid or piece faster than 5 m/s. The episode ends and scores 0.
 - The refill list names two of the three jars by kind, 2-4 pieces each.
+- Credit (`episode.py`): a listed jar is done when it holds exactly the listed pieces of its kind and nothing else,
+  and is closed again (opened in the episode, its own lid seated, closing torque 0.5-2.5 N m). The episode's credit is
+  the done jars over the listed jars, halved if the unlisted jar is not as it was, a jar is tilted more than 45 deg or
+  a piece is off the counter.

@@ -12,3 +12,7 @@
   and solution/oracle/ (the grader, the agent and the reference run the same simulator); a change to one is a change
   to all three, and to the frozen hashes of the episode selection. `jar_grade.py` is the grader's episode loop;
   `robotics_grader/` is the repository's kit, byte-identical to `shared/robotics_grader/`.
+- **Numerics**: `numerics_check.py` and `numerics.json` are the fingerprint of the simulation under the image's pinned
+  OpenBLAS kernel (`OPENBLAS_CORETYPE=Haswell`, `OPENBLAS_L2_SIZE=256`, environment/Dockerfile); `verify.py` refuses
+  to grade on a machine that does not reproduce it. After a change of `jar_sim.py` or `jar_env.py`:
+  `/opt/venv/bin/python3 -I numerics_check.py --write numerics.json` in the task image.

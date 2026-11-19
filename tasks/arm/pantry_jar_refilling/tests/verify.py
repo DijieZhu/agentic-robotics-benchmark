@@ -18,11 +18,23 @@ controller that stays inside the time limits gets one result. episode.py owns th
 are the environment (all three byte-identical to the agent's copies). The metric `mean_episode_credit` is the mean
 over the set of each episode's credit (episode.py); an episode that is aborted or not run counts 0.
 
-The grader's budget (grader_config.json `grader_budget_s`) pays for the simulation, the images the controller asks
-for and the controller's own time (the reference's time per episode over the wire, and the host it was measured on,
-are in tests/anchor.json). The episode running when the budget runs
-out is aborted and the later ones are not run: they score 0 and the metric `episodes_scored` does not count them. A
-simulator fatal error (mujoco.FatalError) or an unstable simulation scores that episode 0 and grading goes on.
+The budget (grader_config.json `grader_budget_s`) is the controller's own time: what the grader waits for READY and
+for every reply (jar_grade.Clock), plus `image_cost_s` for every image an applied action asks for, a fixed price
+whatever this machine takes to draw it. The simulation and the drawing are not charged. The episode running when the
+budget runs out is aborted and the later ones are not run: they score 0 and the metric `episodes_scored` does not
+count them. A simulator fatal error (mujoco.FatalError) or an unstable simulation scores that episode 0 and grading
+goes on.
+
+Before any agent code runs, and before the controller's clock exists, the grader clears the agent's account with the
+kit (robotics_grader.account.clear_agent_account: the desktop session the sandbox image runs as that account is taken
+down for good) and reads the report: an account that could not be cleared is a task error, because the controller's
+confinement (no network, one process tree) could not be relied on.
+
+Numerics: the simulation's operational-space controller calls LAPACK every physics step, and OpenBLAS picks its
+kernels by CPU; on another kernel the same controller runs another trajectory. The image pins the kernels
+(OPENBLAS_CORETYPE=Haswell with OPENBLAS_L2_SIZE=256, also for a Python started without the variables:
+environment/Dockerfile); tests/numerics_check.py runs a short scripted simulation and the grader compares its
+fingerprint with tests/numerics.json before grading. A machine that does not reproduce it is a task error.
 
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference; only
 then does every observation also carry `truth` (the unit, the seed, the full simulation state). An untokened
@@ -64,6 +76,7 @@ from robotics_grader import (  # noqa: E402
     write_verdict,
     zero_verdict,
 )
+from robotics_grader.account import clear_agent_account  # noqa: E402
 from robotics_grader.stage import fail, secure_exec_path  # noqa: E402
 
 STAGE = os.path.dirname(os.path.abspath(__file__))
@@ -73,6 +86,9 @@ NONET = os.path.join(STAGE, "nonet_exec.py")
 UNITS = os.path.join(STAGE, "units.json")
 TOKEN_SHA = os.path.join(STAGE, "hidden", "oracle_token.sha256")
 EPISODES = os.path.join(STAGE, "hidden", "episodes.json")
+NUMERICS = os.path.join(STAGE, "numerics_check.py")
+NUMERICS_REF = os.path.join(STAGE, "numerics.json")
+NUMERICS_TIMEOUT_S = 300
 
 
 def log(msg):
@@ -162,6 +178,26 @@ def stop_agent_processes(uid):
     return not running
 
 
+def check_numerics():
+    """Run numerics_check.py in a fresh interpreter (a short scripted run of the simulation; the sha256 of its
+    states) and compare with tests/numerics.json. Returns the fingerprint; a machine that does not reproduce the
+    recorded one would run every controller along another trajectory, so it must not grade: a task error."""
+    with open(NUMERICS_REF) as fh:
+        want = json.load(fh)["fingerprint"]
+    try:
+        proc = subprocess.run([sys.executable, "-I", NUMERICS], cwd=STAGE, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, timeout=NUMERICS_TIMEOUT_S, env=dict(os.environ))
+        report = json.loads(proc.stdout.decode("utf-8", "replace").strip().splitlines()[-1])
+        got = str(report["fingerprint"])
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+        fail("the numerics check did not run: {}: {}".format(type(exc).__name__, str(exc)[:200]))
+    if got != want:
+        fail("this machine does not reproduce the simulation's recorded numerics (tests/numerics.json): got {}, "
+             "recorded {}; OPENBLAS_CORETYPE={!r}. Grading here would run every controller along another "
+             "trajectory".format(got[:16], want[:16], os.environ.get("OPENBLAS_CORETYPE")))
+    return got
+
+
 class GuardedSolver(Solver):
     """The kit Solver, spawned through the seccomp launcher, with a reply-line cap."""
 
@@ -169,6 +205,7 @@ class GuardedSolver(Solver):
     nproc = 0
 
     def _spawn(self):
+        secure_exec_path()               # again before every start: nothing agent-writable ahead of root's tools
         uid, gid = _agent_ids()
         cmd = [sys.executable, "-I", NONET, "--uid", str(uid), "--gid", str(gid), "--rlimit-nproc", str(self.nproc),
                "--cwd", self.submission, "--", "bash", self.entry]
@@ -326,10 +363,23 @@ def main():
     except KeyError:
         write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None, extra=secured))
         return
+    # The kit's clearing of the account (every supervisord program switched off, every process of the account killed
+    # until none comes back), called here: before any agent code and before the controller's clock exists. Its report
+    # is read: outside the engine's verify stage it is skipped (a maintainer's tool), inside it must say `cleared`.
+    # Solver.__init__ calls it again inside the timed start and gets this report back at once, so none of its
+    # seconds is charged to the controller.
+    cleared = clear_agent_account()
+    if not cleared.get("cleared") and not cleared.get("skipped"):
+        fail("the agent's account could not be cleared before grading ({} process(es) keep coming back: {}); the "
+             "controller's confinement cannot be relied on in this sandbox".format(
+                 len(cleared.get("left", [])), "; ".join(cleared.get("left", []))[:300] or "?"))
+    secured["agent_account_cleared"] = 1.0 if cleared.get("cleared") else 0.0
     if not stop_agent_processes(uid):
         write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
                                    anchored=anchor is not None, extra=secured))
         return
+    check_numerics()                     # a task error on a machine that computes the simulation differently
+    secured["numerics_ok"] = 1.0
     with open(UNITS) as fh:
         units = dict(sorted(json.load(fh)["units"].items()))
     episodes = load_episode_set(config, units)
@@ -360,11 +410,12 @@ def main():
             egress["hits"] += 1
 
     gconfig = grader_config(config)
+    clock = G.Clock()                    # the controller's own time: READY, every reply, the images' fixed price
     try:
-        solver = GuardedSolver(step_timeout=gconfig["step_timeout_s"], submission=workdir)
+        solver = clock.timed(GuardedSolver, step_timeout=gconfig["step_timeout_s"], submission=workdir)
         try:
             records, lock = G.run_episodes(solver, episodes, units, truth, log=log, config=gconfig,
-                                           t_start=t_start, on_step=watch)
+                                           clock=clock, on_step=watch)
         finally:
             try:
                 solver.close()
@@ -392,6 +443,7 @@ def main():
                  egress_detected=float(egress["hits"]),
                  cleanup_failed=0.0 if cleanup_ok else 1.0,
                  budget_exhausted=1.0 if any("budget" in r["reason"] for r in records) else 0.0,
+                 controller_seconds=round(float(clock.s), 1),
                  oracle_token=1.0 if truth else 0.0,
                  **secured)
     per_unit = {}
@@ -406,9 +458,11 @@ def main():
                             metric_name="mean_episode_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))
     write_verdict(verdict)
-    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} scored={} faults={} egress={}".format(
-        measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok,
-        extra["episodes_scored"], extra["sim_faults"], egress_mode))
+    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} scored={} faults={} egress={} "
+        "controller_time={:.0f}s of {:.0f}s wall={:.0f}s".format(
+            measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok,
+            extra["episodes_scored"], extra["sim_faults"], egress_mode, clock.s,
+            float(gconfig["grader_budget_s"] or 0), time.monotonic() - t_start))
 
 
 if __name__ == "__main__":

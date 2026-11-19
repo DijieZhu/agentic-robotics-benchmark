@@ -83,6 +83,7 @@ CAMERAS = {                         # name: (position, look-at, vertical fov deg
 WRIST = {"fovy": 75.0, "width": 320, "height": 240}
 CAMERA_BITS = {"overhead": 1, "front": 2, "tray": 4, "wrist_l": 8, "wrist_r": 16}
 ALL_CAMS = 31
+HIDDEN_GROUP = 4                    # geom group no camera shows: the robots' collision shells (see build)
 MJ_CAMERA = {"overhead": "overhead", "front": "front", "tray": "tray", "wrist_l": "l_eye_in_hand",
              "wrist_r": "r_eye_in_hand"}
 
@@ -325,6 +326,13 @@ def build(unit, episode):
             gid = m.geom(f"{side}_g_{f}_pad_collision").id
             m.geom_condim[gid] = 4
             m.geom_friction[gid, 1] = TORSION
+    # The robots' collision shells are not drawn. The Panda model keeps them in geom group 0 beside its visual
+    # meshes (group 1), and the counter's own geoms are in group 0 too, so showing group 0 drew every arm twice,
+    # shell over mesh. The shells move to HIDDEN_GROUP, which scene_option() switches off; a geom's group is a
+    # rendering label only (the contacts are unchanged).
+    for g in range(m.ngeom):
+        if m.geom_group[g] == 0 and m.body(m.geom_bodyid[g]).name.startswith(tuple(f"{side}_" for side in BASES)):
+            m.geom_group[g] = HIDDEN_GROUP
     return m
 
 
@@ -346,6 +354,8 @@ class Arm:
         self.f_adr = m.sensor(f"{p}_g_force_ee").adr[0]
         self.t_adr = m.sensor(f"{p}_g_torque_ee").adr[0]
         self.pads = (m.geom(f"{p}_g_finger1_pad_collision").id, m.geom(f"{p}_g_finger2_pad_collision").id)
+        jid = [m.joint(f"{p}_joint{i}").id for i in range(1, 8)]
+        self.q_lo, self.q_hi = m.jnt_range[jid, 0].copy(), m.jnt_range[jid, 1].copy()   # the joints' limits
         self._jp, self._jr = np.zeros((3, m.nv)), np.zeros((3, m.nv))
         self._M = np.zeros((m.nv, m.nv))
         self.q_null = HOME_Q.copy()
@@ -373,17 +383,20 @@ class Arm:
         return np.concatenate([R @ d.sensordata[self.f_adr:self.f_adr + 3], R @ d.sensordata[self.t_adr:self.t_adr + 3]])
 
     def command(self, a):
-        """Set this control step's command from one arm's action (8, 15 or 9 numbers, already checked)."""
+        """Set this control step's command from one arm's action (8, 15 or 9 numbers, already checked). Joint angles
+        in an action (a joint step's target, a null-space posture) are clipped to the joints' limits: an angle far
+        outside them made the posture term overflow, and MuJoCo then switched every actuator off for the step."""
         d = self.d
         if len(a) == 9:
             q = d.qpos[self.jq].copy()
-            self.q_goal = q + np.clip(np.asarray(a[:7], float) - q, -MAX_DQ, MAX_DQ)
-            self.q_null = np.asarray(a[:7], float).copy()
+            qt = np.clip(np.asarray(a[:7], float), self.q_lo, self.q_hi)     # joint angles: inside the joints' limits
+            self.q_goal = q + np.clip(qt - q, -MAX_DQ, MAX_DQ)
+            self.q_null = qt.copy()
             self.mode = "joint"
             grip = a[7]
         else:
             if len(a) == 15:
-                self.q_null = np.asarray(a[8:15], float).copy()
+                self.q_null = np.clip(np.asarray(a[8:15], float), self.q_lo, self.q_hi)
             dp, dr = np.asarray(a[0:3], float), np.asarray(a[3:6], float)
             n = np.linalg.norm(dp)
             if n > MAX_DPOS:
@@ -422,6 +435,8 @@ class Arm:
         tau -= 0.5 * dq
         over = np.abs(dq) - 1.5
         tau -= np.where(over > 0, 30.0 * over * np.sign(dq), 0.0)
+        if not np.all(np.isfinite(tau)):                 # never hand MuJoCo a non-finite control
+            raise FloatingPointError("unstable")
         return tau
 
 
@@ -651,6 +666,7 @@ def scene_option():
         _SCENE_OPT = mujoco.MjvOption()
         _SCENE_OPT.sitegroup[:] = 0            # no site markers in the images
         _SCENE_OPT.geomgroup[:] = 1
+        _SCENE_OPT.geomgroup[HIDDEN_GROUP] = 0  # the robots' collision shells (build)
     return _SCENE_OPT
 
 
@@ -661,16 +677,35 @@ def camera_size(cam):
     return w, h, fovy
 
 
-def render(m, d, cam, rng):
+def render(m, d, cam, rng, cache=None):
+    """One camera's image of the state `d`, with the pixel noise drawn from `rng`. `cache` (a dict the caller keeps
+    for this model, {(width, height): renderer}) makes one renderer per image size and reuses it; without it a
+    renderer is made and closed for the image. The image is the same either way: a renderer keeps nothing of the
+    images it drew before (it reads the model and the state at every update_scene)."""
     w, h, _fovy = camera_size(cam)
     try:
-        r = mujoco.Renderer(m, h, w)
+        r = cache.get((w, h)) if cache is not None else None
+        if r is None:
+            r = mujoco.Renderer(m, h, w)
+            if cache is not None:
+                cache[(w, h)] = r
         try:
             r.update_scene(d, camera=MJ_CAMERA[cam], scene_option=scene_option())
             img = r.render().astype(np.float32)
         finally:
-            r.close()
+            if cache is None:
+                r.close()
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, RGB_NOISE, img.shape)
     return np.clip(img, 0, 255).astype(np.uint8)
+
+
+def close_renderers(cache):
+    """Close the renderers of a `render` cache and empty it."""
+    for r in list(cache.values()):
+        try:
+            r.close()
+        except Exception:  # noqa: BLE001 - a renderer that fails to close must not fail the episode
+            pass
+    cache.clear()

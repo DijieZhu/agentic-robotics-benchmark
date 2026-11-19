@@ -9,10 +9,13 @@
   in the set and its seed alone.
 - Images are rendered for the cameras an action's `cams` asks for (the next observation carries them).
 - `truth` (`JarEnv.truth()`) is added to every observation only in a token run (the caller decides).
-- The grader's budget (`grader_budget_s`): the episode running when it runs out is aborted and the episodes after it
-  are not run; both score 0 and neither counts as scored. A simulator fatal error (`mujoco.FatalError`) or an unstable
-  simulation ends that episode at 0 and grading goes on. A renderer failure (`jar_env.RenderError`) propagates: it is
-  the grader's own error, not the controller's.
+- The budget (`grader_budget_s`) is the controller's own time, kept by a `Clock`: what the grader waits for READY, for
+  each reset and for each reply, plus `image_cost_s` for every image an applied action asks for (a fixed price; the
+  first observation's five images are free). The simulation and the drawing of the images are not charged, so the
+  budget does not depend on the grader's machine or its load. The episode running when it runs out is aborted and
+  the episodes after it are not run; both score 0 and neither counts as scored. A simulator fatal error
+  (`mujoco.FatalError`) or an unstable simulation ends that episode at 0 and grading goes on. A renderer failure
+  (`jar_env.RenderError`) propagates: it is the grader's own error, not the controller's.
 """
 
 import hashlib
@@ -29,9 +32,26 @@ from robotics_grader import ProbeLock, SolverAborted, seed_rng
 
 STILL = 1e-9                # an arm's 7-number step whose six motion numbers are all within this of zero: no motion
 PROBE_TAG = b"pantry_jar_refilling verify probe schedule 1"   # probe_stream's domain tag
-CONFIG = {"probe_rate": 0.01, "probe_pass_fraction": 0.1, "step_timeout_s": 30, "grader_budget_s": None}
+CONFIG = {"probe_rate": 0.01, "probe_pass_fraction": 0.1, "step_timeout_s": 30, "grader_budget_s": None,
+          "image_cost_s": 0.2}
 MAX_LINE = 1 << 22          # a reply line longer than 4 MiB closes the wire (the episode aborts); an action is ~300 B
 SELFTEST_SEED = 1           # the render self-test's episode (not a graded seed)
+
+
+class Clock(object):
+    """The controller's own time (s): what the grader waited for READY and for each reply (`timed`), and what
+    `run_episodes` adds for the images an applied action asks for. The simulation and the drawing of the images
+    happen outside `timed`."""
+
+    def __init__(self):
+        self.s = 0.0
+
+    def timed(self, fn, *args, **kwargs):
+        t0 = time.monotonic()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            self.s += time.monotonic() - t0
 
 
 def flat_action(action):
@@ -99,15 +119,18 @@ def wire_obs(env, obs, unit_id, truth):
     return w
 
 
-def ask(lock, solver, env, t, obs, unit_id, truth):
+def ask(lock, solver, env, t, obs, unit_id, truth, clock=None):
     """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
     the stream (lock.due); a probed step draws twice more before either request is written (the perturbation's seed,
-    then the pair's order), so the draws never depend on the replies."""
+    then the pair's order), so the draws never depend on the replies. Only the requests' round trips are charged to
+    `clock`."""
+    clock = Clock() if clock is None else clock
     w = wire_obs(env, obs, unit_id, truth)
     if lock.due():
         other = env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
-        return lock.probe(solver, t, w, perturbed=wire_obs(env, other, unit_id, truth))
-    return solver.act(t, w)
+        pw = wire_obs(env, other, unit_id, truth)
+        return clock.timed(lock.probe, solver, t, w, perturbed=pw)
+    return clock.timed(solver.act, t, w)
 
 
 def render_selftest(unit, unit_id, seed=SELFTEST_SEED):
@@ -127,21 +150,26 @@ def render_selftest(unit, unit_id, seed=SELFTEST_SEED):
         env.close()
 
 
-def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_start=None, on_step=None):
+def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, clock=None, on_step=None):
     """Run `episodes` ([(index in the run, unit id, seed)], in order) over one controller. Returns (records, lock); a
     record per episode: index, unit, seed, credit, reason, `scored` (it ran to its end), steps and the score's parts.
-    The grader's budget (config `grader_budget_s`, counted from `t_start`) aborts the episode running when it runs out
-    and skips the rest (credit 0, not scored). A simulator fatal error or an unstable simulation ends that episode
-    (credit 0, not scored, `sim_fault`). A renderer failure (E.RenderError) propagates: it is the grader's own
-    error. `on_step()`, if given, runs before every step (the grader's egress watch)."""
+
+    The budget (config `grader_budget_s`) is charged to the controller's own time, `clock` (`lock.clock` afterwards;
+    the caller starts it around the solver's start, so the wait for READY is in it): the waits for each reset and each
+    reply, plus config `image_cost_s` for every image an applied action asks for. When it is used up the episode
+    running is aborted and the rest are skipped (credit 0, not scored). A simulator fatal error or an unstable
+    simulation ends that episode (credit 0, not scored, `sim_fault`). A renderer failure (E.RenderError) propagates:
+    it is the grader's own error. `on_step()`, if given, runs before every step (the grader's egress watch)."""
     budget = config.get("grader_budget_s")
-    t_start = time.monotonic() if t_start is None else t_start
+    image_cost = float(config.get("image_cost_s", 0.0))
+    clock = Clock() if clock is None else clock
 
     def over():
-        return budget is not None and time.monotonic() - t_start > budget
+        return budget is not None and clock.s > budget
 
     lock = IdleAwareProbeLock(None, rate=config["probe_rate"], pass_fraction=config["probe_pass_fraction"],
                               tolerance=1e-4)
+    lock.clock = clock
     records = []
     for n, uid, seed in episodes:
         lock.rng = probe_stream(n, seed)
@@ -151,19 +179,20 @@ def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_star
                "sim_fault": False}
         t0 = time.monotonic()
         if over():
-            rec.update(reason="not run: grader budget exhausted", steps=0, wall=0.0)
+            rec.update(reason="not run: controller time budget exhausted", steps=0, wall=0.0)
             records.append(rec)
             continue
         try:
             obs = ep.reset()
-            solver.reset()
+            clock.timed(solver.reset)
             t, done = 0, False
             while not done:
                 if over():
-                    raise SolverAborted("grader budget exhausted")
+                    raise SolverAborted("controller time budget exhausted")
                 if on_step is not None:
                     on_step()
-                action = ask(lock, solver, env, t, obs, uid, truth)
+                action = ask(lock, solver, env, t, obs, uid, truth, clock)
+                clock.s += image_cost * bin(E.check_action(action)["cams"]).count("1")    # the images it asks for
                 obs, done, _info = ep.step(action)
                 t += 1
                 if env.unstable():
@@ -186,14 +215,16 @@ def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_star
 
 
 def parts(records):
-    """Per scored episode, the mean over its listed jars of each part (refill, sealed) and whether it was halved."""
-    out = {"refill": [], "sealed": [], "halved": []}
+    """Per scored episode, over its listed jars: the fraction done, the fraction holding exactly the listed pieces,
+    the fraction closed again, and whether the episode was halved."""
+    out = {"done": [], "filled": [], "sealed": [], "halved": []}
     for r in records:
         sc = r.get("score")
         if not r.get("scored") or not sc:
             continue
         jars = list(sc["jars"].values())
-        out["refill"].append(sum(j["refill"] for j in jars) / len(jars))
+        out["done"].append(sum(1.0 for j in jars if j["done"]) / len(jars))
+        out["filled"].append(sum(1.0 for j in jars if j["filled"]) / len(jars))
         out["sealed"].append(sum(1.0 for j in jars if j["sealed"]) / len(jars))
         out["halved"].append(1.0 if sc["penalized"] else 0.0)
     return out

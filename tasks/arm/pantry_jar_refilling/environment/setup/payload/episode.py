@@ -4,21 +4,29 @@ An episode ends after EPISODE_STEPS control steps; or once every listed jar has 
 (its own lid in the thread and seated) with both hands open and at least CLEAR m from every jar's top for HOLD steps;
 or at an unstable simulation (credit 0).
 
-The credit is the mean over the listed jars of two halves, counted from the simulation at the end:
-- REFILL: the pieces of the jar's kind inside it over the pieces listed; 0 if it holds more than listed or any piece
-  of another kind;
-- SEALED: the jar was opened during the episode and its own lid is back in the thread, seated, with the largest
+The credit follows the job, counted from the simulation at the end. A listed jar is DONE when both hold:
+- it holds exactly the pieces listed for it: the listed number of its own kind and nothing else (one piece too few,
+  one too many or one piece of another kind and the jar is not done);
+- it is closed again: opened during the episode, its own lid back in the thread and seated, with the largest
   closing torque since the lid last entered the thread within TORQUE_WINDOW (N m).
-An untouched run scores 0 (nothing refilled, nothing opened).
-The episode's credit is halved if a jar not on the list was opened, a jar fell over (more than FALLEN deg), or a piece
-left the counter.
+The episode's credit is the number of listed jars that are done over the number listed. A jar that was opened and
+closed again without the right contents earns nothing, and neither does a jar with the right contents left open: a
+refill list is a list of jars to hand back full and shut. A lid resting on a jar that is not its own closes nothing
+(it never enters the thread), so both jars of a swap stay open.
+
+The credit is halved (PENALTY) if, at the end, any of these holds:
+- the jar that is not on the list is not as it was: something was put into it, or it was opened and is not closed
+  again as a listed jar must be (seated, the closing torque within the window). Opening it and closing it properly
+  again costs time and nothing else;
+- a jar lies tilted more than FALLEN deg;
+- a piece left the counter.
+An untouched run scores 0 (nothing done).
 """
 
 
 EPISODE_STEPS = 12000           # 20 simulated minutes
 HOLD = 20
 CLEAR = 0.12
-REFILL, SEALED = 0.5, 0.5
 TORQUE_WINDOW = (0.5, 2.5)        # hand-tight; 2.5 N m is about what turning hard at the seat reaches
 FALLEN = 45.0
 PENALTY = 0.5
@@ -63,32 +71,42 @@ class Episode:
         ep = env.episode
         kinds = [jar["kind"] for jar in env.unit["jars"]]
         where = [w.piece_in_jar(i) for i in range(len(w.pieces))]
+        inside = {j: [ep["pieces"][i]["kind"] for i in range(len(w.pieces)) if where[i] == j] for j in range(w.nj)}
+
+        def closed_again(j):
+            """Opened in this episode and shut as the job asks: its own lid seated, the closing torque in the window."""
+            return bool(w.opened[j] and w.seated(j) and TORQUE_WINDOW[0] <= w.seat_peak[j] <= TORQUE_WINDOW[1])
+
         jars = {}
         for j in ep["listed"]:
             k = kinds[j]
             listed_n = ep["refill"][k]
-            inside = [ep["pieces"][i]["kind"] for i in range(len(w.pieces)) if where[i] == j]
-            right = sum(1 for x in inside if x == k)
-            refill = 0.0 if (len(inside) > right or right > listed_n) else right / listed_n
-            opened = bool(w.opened[j])
-            sealed = bool(opened and w.seated(j) and TORQUE_WINDOW[0] <= w.seat_peak[j] <= TORQUE_WINDOW[1])
+            right = sum(1 for x in inside[j] if x == k)
+            wrong = len(inside[j]) - right
+            filled = bool(wrong == 0 and right == listed_n)
+            sealed = closed_again(j)
+            done = bool(filled and sealed)
             moved = float(((w.jar_pos(j)[:2] - w.jar_start[j][:2]) ** 2).sum() ** 0.5)
-            jars[k] = {"refill": round(refill, 4), "sealed": sealed, "opened": opened, "seated": bool(w.seated(j)),
-                       "pieces_in": right, "wrong_in": len(inside) - right, "seat_peak": round(w.seat_peak[j], 3),
-                       "tilt": round(w.jar_tilt_deg(j), 2), "moved": round(moved, 4),
-                       "credit": round(REFILL * refill + SEALED * sealed, 4)}
+            jars[k] = {"done": done, "filled": filled, "sealed": sealed, "opened": bool(w.opened[j]),
+                       "seated": bool(w.seated(j)), "pieces_in": right, "wrong_in": wrong, "listed": int(listed_n),
+                       "seat_peak": round(w.seat_peak[j], 3), "tilt": round(w.jar_tilt_deg(j), 2),
+                       "moved": round(moved, 4), "credit": 1.0 if done else 0.0}
         credit = sum(v["credit"] for v in jars.values()) / len(jars)
-        unlisted_opened = [kinds[j] for j in range(w.nj) if j not in ep["listed"] and w.opened[j]]
+        unlisted = [j for j in range(w.nj) if j not in ep["listed"]]
+        unlisted_opened = [kinds[j] for j in unlisted if w.opened[j]]
+        unlisted_not_restored = [kinds[j] for j in unlisted
+                                 if inside[j] or (w.opened[j] and not closed_again(j))]
         fallen = [kinds[j] for j in range(w.nj) if w.jar_tilt_deg(j) > FALLEN]
         off = sum(1 for i in range(len(w.pieces)) if not w.piece_on_counter(i))
-        penalized = bool(unlisted_opened or fallen or off)
+        penalized = bool(unlisted_not_restored or fallen or off)
         if penalized:
             credit *= PENALTY
         unstable = env.unstable()
         if unstable:
             credit = 0.0
-        return {"credit": round(float(credit), 4), "jars": jars, "unlisted_opened": unlisted_opened, "fallen": fallen,
-                "pieces_off_counter": off, "penalized": penalized, "unstable": unstable, "steps": int(env.t)}
+        return {"credit": round(float(credit), 4), "jars": jars, "unlisted_opened": unlisted_opened,
+                "unlisted_not_restored": unlisted_not_restored, "fallen": fallen, "pieces_off_counter": off,
+                "penalized": penalized, "unstable": unstable, "steps": int(env.t)}
 
 
 def hold_action():

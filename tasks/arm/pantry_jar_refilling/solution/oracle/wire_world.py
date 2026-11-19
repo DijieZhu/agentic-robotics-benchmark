@@ -12,11 +12,13 @@ its grip. `action_for` turns them back into steps from the hand poses of the obs
 observation the shadow was synced to, that is the reference's own step; on the perturbed copy of a repeated step
 index (a probe of the lock) it is the same target seen from the copy's hand pose.
 
-If the reference has not sent its next action within THINK_S, the oracle answers with a hold and keeps answering
-holds without syncing the shadow (which the thread is reading) until the action comes.
+The oracle waits for the reference's next action however long the reference thinks: no wall-clock branch, so the
+reference's actions are a function of the observations alone. Only if the reference's thread has died (an error in
+the reference) does the oracle say so on stderr and hold still for the rest of the episode.
 """
 
 import queue
+import sys
 import threading
 
 import mujoco
@@ -25,7 +27,7 @@ import numpy as np
 import jar_sim as S
 import reference as R
 
-THINK_S = 20.0                  # s, the longest the oracle waits for the reference's next action before a hold
+ALIVE_S = 1.0                   # s, how often the oracle looks whether the reference's thread is still alive
 HOLD = {"l": [0.0] * 6 + [-1.0], "r": [0.0] * 6 + [-1.0], "cams": 0}
 
 
@@ -114,7 +116,7 @@ class Oracle:
         self.reset_state()
 
     def reset_state(self):
-        self.last_t, self.last_cmd, self.pending = None, None, False
+        self.last_t, self.last_cmd, self.dead = None, None, False
 
     def reset(self):
         self.stop()
@@ -138,6 +140,9 @@ class Oracle:
                 ref.run()
             except EpisodeOver:
                 return
+            except BaseException as exc:  # noqa: BLE001 - the reference failed: say so, the oracle then holds still
+                sys.stderr.write("[oracle] the reference failed: {}: {}\n".format(type(exc).__name__, str(exc)[:200]))
+                sys.stderr.flush()
 
         self.thread = threading.Thread(target=run, daemon=True)
         self.thread.start()
@@ -147,14 +152,20 @@ class Oracle:
             return action_for(None, obs)
         if t == self.last_t:                       # a repeated step index: the same targets, this copy's poses
             return action_for(self.last_cmd, obs)
-        if self.thread is None:
-            self._start(obs)
-        elif not self.pending:
-            self.in_q.put(obs)
-        try:
-            cmd = self.out_q.get(timeout=THINK_S)
-            self.pending = False
-        except queue.Empty:
-            cmd, self.pending = None, True         # still thinking: hold this step
+        if self.dead:
+            cmd = None
+        else:
+            if self.thread is None:
+                self._start(obs)
+            else:
+                self.in_q.put(obs)
+            while True:                            # the reference's next action, however long it thinks
+                try:
+                    cmd = self.out_q.get(timeout=ALIVE_S)
+                    break
+                except queue.Empty:
+                    if not self.thread.is_alive():  # the reference is gone (it said why on stderr): hold from now on
+                        cmd, self.dead = None, True
+                        break
         self.last_t, self.last_cmd = t, cmd
         return action_for(cmd, obs)

@@ -30,6 +30,20 @@ The rule, fixed before any unit or candidate was drawn:
     python3 -B tests/review/select_set.py draw --record tests/hidden/episode_selection.json
     python3 -B tests/review/select_set.py run --record tests/hidden/episode_selection.json --work DIR [--workers 24]
     python3 -B tests/review/select_set.py make --record tests/hidden/episode_selection.json --out tests/hidden/episodes.json
+    python3 -B tests/review/select_set.py amend --record tests/hidden/episode_selection.json --reason TEXT \
+        --evidence EVIDENCE.json
+
+7. Amend (added 2026-11-19 by the maintainers; a maintainer's decision to keep a made set when frozen files changed
+   in a way that changes no episode: not its counter, its refill list, its tray or its unit; the amendments of
+   kitchen_appliance_tending's and lab_sample_handling's selections). `amend` refuses while a frozen file differs
+   from the checkout's HEAD and appends to the record's `amendments`: the reason, the frozen files that changed (their
+   recorded and their new sha256), the commit that holds them (the last commit that changed any frozen file) and the
+   maintainer's evidence, a JSON file with one full verify of the privileged reference on the made set as the grader
+   runs it (the real wire, the grader's probe schedule, the grading image) with the files of that commit: every
+   episode, in the graded order, with its credit and steps. `amend` refuses unless each of them scored credit 1.0
+   again; then the draw must be voided instead. Then it pins the frozen files' new hashes and that commit, so `run` /
+   `make` check against them again; tests/hidden/episodes.json is not touched. A later change of a frozen file needs
+   a new amendment (or a new draw).
 
 `run` needs the task image's Python (3.12, MuJoCo 3.16.0, NumPy 2.5.4; environment/requirements.txt, and robosuite
 1.5.2's model files) and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
@@ -324,6 +338,43 @@ def cmd_make(a):
     print("wrote %d episodes to %s" % (len(graded), a.out))
 
 
+def cmd_amend(a):
+    rec = load(a.record)
+    if not frozen_committed():
+        raise SystemExit("commit the frozen files first: " + ", ".join(FROZEN))
+    made = [d for d in rec["draws"] if d["status"] == "made"]
+    if not made or rec["draws"][-1] is not made[-1]:
+        raise SystemExit("amend keeps the latest draw, which must be made")
+    d = made[-1]
+    now = frozen_hashes()
+    changed = {p: {"recorded": rec["frozen"].get(p), "now": now[p]} for p in FROZEN if rec["frozen"].get(p) != now[p]}
+    if not changed:
+        raise SystemExit("no frozen file changed since the record's hashes: nothing to amend")
+    evidence = load(a.evidence)
+    episodes = evidence.get("episodes", [])
+    order = [name.split("#")[0] for name in d["graded_order"]]
+    if [e.get("unit") for e in episodes] != order:
+        raise SystemExit("the evidence must list the made set's episodes in the graded order: " + " ".join(order))
+    bad = [n for n, e in enumerate(episodes) if float(e.get("credit", 0.0)) != 1.0 or e.get("reason") != "ok"]
+    if bad:
+        raise SystemExit("the reference no longer completes episode(s) %s: void the draw instead" % bad)
+    # the commit that holds the frozen files as they are now: the last one that changed any of them
+    commit = git("log", "-1", "--format=%H", "--", *FROZEN).stdout.strip()
+    amendments = rec.setdefault("amendments", [])
+    amendments.append({
+        "amendment": len(amendments) + 1, "amended_utc": utc_now(), "draw": d["draw"], "commit": commit,
+        "reason": a.reason, "changed": changed, "frozen_before": rec["frozen"],
+        "frozen_commit_before": rec["frozen_commit"],
+        "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen "
+                "files of the commit; every episode scored credit 1.0 again",
+        "evidence": evidence})
+    rec["frozen"], rec["frozen_commit"] = now, commit
+    save(a.record, rec)
+    check_frozen(rec)
+    print("amendment %d written to %s (%d frozen files re-pinned at %s)" % (len(amendments), a.record, len(changed),
+                                                                          commit[:12]))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -338,8 +389,12 @@ def main():
     p = sub.add_parser("make")
     p.add_argument("--record", required=True)
     p.add_argument("--out", required=True)
+    p = sub.add_parser("amend")
+    p.add_argument("--record", required=True)
+    p.add_argument("--reason", required=True)
+    p.add_argument("--evidence", required=True, help="a JSON file: the full reference verify on the made set")
     a = ap.parse_args()
-    {"units": cmd_units, "draw": cmd_draw, "run": cmd_run, "make": cmd_make}[a.cmd](a)
+    {"units": cmd_units, "draw": cmd_draw, "run": cmd_run, "make": cmd_make, "amend": cmd_amend}[a.cmd](a)
 
 
 if __name__ == "__main__":
