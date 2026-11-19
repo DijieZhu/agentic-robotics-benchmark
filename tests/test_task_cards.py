@@ -60,9 +60,9 @@ def test_a_missing_card_warns_and_fails_strict(tmp_path):
 
 
 @pytest.mark.parametrize("card, needle", [
-    ('title = "Open a box"\nplatforms = ["uav"]\nstages = ["behavior"]', "the first platform is the folder's"),
+    ('title = "Open a box"\nplatforms = ["uav"]\nstages = ["behavior"]', "the platform is the folder's"),
     ('title = "Open a box"\nplatforms = ["arm", "rover"]\nstages = ["behavior"]', "'rover' is not a key"),
-    ('title = "Open a box"\nplatforms = ["arm", "arm"]\nstages = ["behavior"]', "lists a key twice"),
+    ('title = "Open a box"\nplatforms = ["arm", "uav"]\nstages = ["behavior"]', "exactly one platform"),
     ('title = "Open a box"\nplatforms = ["arm"]\nstages = ["planning"]', "'planning' is not one of"),
     ('title = "Open a box"\nplatforms = ["arm"]\nstages = "behavior"', "a list of one stage key"),
     ('title = "open a box"\nplatforms = ["arm"]\nstages = ["behavior"]', "sentence case"),
@@ -106,7 +106,7 @@ def test_a_card_must_hold_exactly_one_stage(tmp_path, stages):
 
 
 def test_one_stage_and_end_to_end_pass(tmp_path):
-    cards = ('[box]\ntitle = "Open a box"\nplatforms = ["arm", "ground"]\nstages = ["behavior"]\n'
+    cards = ('[box]\ntitle = "Open a box"\nplatforms = ["arm"]\nstages = ["behavior"]\n'
              '[line]\ntitle = "Build a robot end to end"\nplatforms = ["uav"]\nstages = ["end-to-end"]\n')
     root = _tree(tmp_path, {"box": "arm", "line": "uav"}, cards)
     assert tc.check(root, strict=True) == ([], [])

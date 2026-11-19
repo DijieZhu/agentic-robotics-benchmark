@@ -2,7 +2,7 @@
 """Task cards: each task's display card in `tasks/cards.toml`, checked against the task tree.
 
 A card names and files a task for the website and other displays: a readable `title`, a one-sentence `summary`, the
-`platforms` the task involves (the first one is its folder's) and its one workflow stage (`stages`, a list of exactly
+one platform it is filed under (`platforms`, a list of exactly one entry: the folder's) and its one workflow stage (`stages`, a list of exactly
 one entry: the last stage of the workflow that the task's score depends on). Maintainers keep
 the file; it sits outside every task folder, so a card is no part of a task's identity (`spec_hash`,
 `content_digest`).
@@ -109,10 +109,11 @@ def card_problems(slug: str, card: object, tasks: dict[str, str], platforms: tup
             for key in plats:
                 if key not in platforms:
                     problems.append(f"{where}: platform {key!r} is not a key of tasks/platforms.json")
-            if len(set(plats)) != len(plats):
-                problems.append(f"{where}: platforms lists a key twice")
+            if len(plats) != 1:
+                problems.append(f"{where}: platforms holds exactly one platform, not {len(plats)} (a task is filed "
+                                "under one platform, its folder's)")
             if slug in tasks and plats[0] != tasks[slug]:
-                problems.append(f"{where}: the first platform is the folder's, {tasks[slug]!r}, not {plats[0]!r}")
+                problems.append(f"{where}: the platform is the folder's, {tasks[slug]!r}, not {plats[0]!r}")
 
     stages = card.get("stages")
     if "stages" in card:

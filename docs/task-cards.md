@@ -14,7 +14,7 @@ agent's result is tied to.)
 [hazard_bay_build]
 title = "Rebuild a hazard bay, design and run its fleet"
 summary = "Rebuild a plant's hazard bay in Isaac Sim from photos, design a fleet of flying and ground robots from a catalog, and program it through the job."
-platforms = ["swarm", "uav", "ground", "arm"]
+platforms = ["swarm"]
 stages = ["behavior"]
 ```
 
@@ -24,7 +24,7 @@ stages = ["behavior"]
 |---|---|
 | `title` | Required. A readable name in sentence case, at most 48 characters, no closing period, unique across the cards. It leads with what the agent does and names the robot: "Assemble a desktop arm with a Panda", "Fly a gate course by camera alone". |
 | `summary` | One sentence, at most 200 characters, a capital letter first and a period last. Displays fall back to the brief's first paragraph without it. |
-| `platforms` | Required. The keys of [`tasks/platforms.json`](../tasks/platforms.json) of every platform the task involves. The first is the folder's (`[metadata].platform`); the others are cross-references, for a task that also involves another kind of robot. |
+| `platforms` | Required. A list of exactly one entry: the key in [`tasks/platforms.json`](../tasks/platforms.json) of the platform the task is filed under, which is its folder's (`[metadata].platform`). A task is filed under one platform, also when it involves another kind of robot. |
 | `stages` | Required. A list of exactly one entry, the stage the task is filed under: `requirements`, `hardware-design`, `assembly`, `robot-description`, `control`, `environment` or `behavior`, the stages of the workflow in order, or `end-to-end`, the category of a task that runs the whole chain. "Which stage" below says which one. |
 
 ## Conventions
@@ -43,9 +43,11 @@ stages = ["behavior"]
   hand motion to robot hands).
 - **Which platform.** The most specific one wins. A legged robot is `quadruped` or `humanoid`.
   `ground` ("Ground vehicle") is any wheeled or tracked ground vehicle or robot: a car at any
-  scale on a road or a track (autonomous driving, racecars), an AMR, AGV or UGV, a rover, a
-  wheeled mobile manipulator. A task that also uses another kind of robot lists it after the
-  folder's platform.
+  scale on a road or a track (autonomous driving, racecars), an AMR, AGV or UGV, a rover. A task
+  that uses several kinds of robot is filed under the one its
+  scored work is about: a robot's own assembly by an industrial arm under that robot's platform,
+  a mixed fleet under `swarm`, a mobile manipulator whose scored work is manipulation under
+  `arm`.
 
 ## Before a merge
 
@@ -59,7 +61,7 @@ Nothing asks the contributor for a card.
 ## Checks
 
 `uv run python scripts/task_cards.py check` runs in CI (`pr-checks`, static-checks): every card
-is well formed, names a task on the tree, starts with its folder's platform and holds exactly
+is well formed, names a task on the tree, holds exactly one platform, its folder's, and exactly
 one valid stage, and no two cards share a title. A task without a card is a warning there;
 `check --strict` (on `main`, and on a pull request labelled `ready-to-merge`) makes it an error. `task_cards.py todo` lists the
 tasks without a card and the cards without a task; `task_cards.py context <task>` prints what
