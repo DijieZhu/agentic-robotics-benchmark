@@ -2,6 +2,16 @@
 
 - **The robot** is the Franka Panda model of robosuite 1.5.2 (MIT), installed unmodified in the task image.
 - **The bench** is built from MuJoCo primitives and one generated mesh (`lab_sim.py`); no third-party assets.
+- **The cameras' pictures** are drawn by `lab_render.py` (MuJoCo 3.16's Filament renderer on Mesa's lavapipe) with
+  the numbers of `lab_look.json`, from a render bundle that both images fetch at the dataset commit pinned in
+  `environment/assets.sha256` and `tests/assets.sha256` (the benchmark's Hugging Face asset dataset,
+  `tasks/arm/lab_sample_handling/payload/render/`): `room.npz` and `room.json`, a bench bay of the Unity Asset Store
+  pack "Archviz Laboratory Pack" (wall benches, shelf structures, bench-top glassware and boxes, ceiling
+  luminaires; the pack's tube racks left out) as decimated meshes with base-colour maps, with the bench's worktop
+  and cabinet; `ibl.ktx`, the image light, from a path-traced light probe of that bay over the bench (OVRTX; sky:
+  Poly Haven's `kloofendal_48d_partly_cloudy_puresky`, CC0), prefiltered with Filament's cmgen. The bundle is public
+  (it holds nothing of the bench's parts, the units or the episodes) and is kept from the agent's account all the
+  same: root and the commissioning service's account read it. The record: `review/rendering.md`.
 - **The scored units** (tests/units.json, solution/oracle/units.json: hidden u0-u5) are the rotor's hidden turn
   properties, a Latin hypercube over `lab_sim.UNIT_RANGES`. `hidden/selection.json` holds the rule, the os.urandom
   key and the 20 recheck seeds (committed before the recheck); `hidden/recheck.json` the reference's results on them.
@@ -15,8 +25,8 @@
 - **The hidden episodes** (`hidden/episodes.json`) were chosen by `review/select_set.py` under the rule in its
   docstring; `hidden/episode_selection.json` is its record (the key, the frozen files' sha256, every candidate run,
   the amendments).
-- **The code**: `lab_sim.py`, `lab_env.py` and `box_transport_env.py` are byte-identical in tests/,
-  solution/oracle/ and environment/commission_service/ (the grader, the reference and the commissioning service run
-  the same simulator); `episode.py` (the episode and its credit) is byte-identical in tests/ and solution/oracle/
+- **The code**: `lab_sim.py`, `lab_env.py`, `box_transport_env.py`, `lab_render.py` and `lab_look.json` are
+  byte-identical in tests/, solution/oracle/ and environment/commission_service/ (the grader, the reference and the
+  commissioning service run the same simulator and draw the same pictures); `episode.py` (the episode and its credit) is byte-identical in tests/ and solution/oracle/
   and is not in the service's folder nor anywhere the agent can read. A change to one copy is a change to all, and
   to the frozen hashes of the episode selection.

@@ -44,6 +44,12 @@ Every observation carries each camera's pose `T_world_<cam>` (4 x 4, OpenCV conv
 and intrinsics `K_<cam>` (a pixel's centre at its index + 0.5). Images carry pixel noise (sd 2 levels per channel).
 There is no depth image.
 
+The pictures show the bench where it stands, in a bay of a laboratory: the room's wall benches, shelves, glassware,
+floor and ceiling lights are in them, and the `rack` camera looks past the incoming rack into the room. Nothing of
+the room is part of the task, and nothing of it stands on the bench: what you handle is described in sections 4 to
+8, in the colours named there. The light is the bay's ceiling light at a fixed exposure; parts shade each other
+softly where they meet, and nothing casts a sharp shadow.
+
 ## 4. The tubes
 
 - 15 mL conical tubes: body 17 mm across with a rounded tip, 120 mm long including a blue cap 19 mm across and

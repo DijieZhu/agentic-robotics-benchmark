@@ -470,6 +470,9 @@ def add_lid(wb, wall_top, a):
 
 
 TUBE_OPAQUE_RGBA = (0.90, 0.89, 0.84, 1)
+# the kinds of drawn part (lab_render.PARTS): each has a material look_<part> in the model, for the cameras only
+LOOK_PARTS = ("cabinet", "shield", "rotor", "hub", "bore", "mark", "knob", "lid", "lid_handle", "ring", "ring_floor",
+              "tube", "cap", "liquid", "scale", "holder", "hand", "finger", "pad", "other")
 
 
 def build(a, fills=None, extra=None):
@@ -631,6 +634,8 @@ def build(a, fills=None, extra=None):
         for gg in tb.geoms:
             if gg.name.endswith("_body"):
                 gg.rgba = list(TUBE_OPAQUE_RGBA)
+    for part in LOOK_PARTS:                        # the cameras' materials, one per kind of part (lab_render.py sets
+        w.add_material(name="look_" + part)        # and binds them in its own copy of the model; nothing here uses them)
     m = w.compile()
     for name in [n for n in names if n is not None] + list(getattr(a, "extra_tubes", {})):
         set_tube_mass(m, name, a)
@@ -830,24 +835,25 @@ class RenderError(RuntimeError):
 
 
 def render(m, d, cam, w, h, rng, cache=None):
-    """One camera image with the sensor's pixel noise. `cache` (a dict its caller keeps for one model) holds one
-    renderer per image size, made at the first image of that size and closed by `close_renderers`: making a renderer
-    takes far longer than drawing with it. Without a cache the renderer is made and closed here."""
+    """One camera image with the sensor's pixel noise, drawn by lab_render.py (MuJoCo's Filament renderer: the bench in
+    its laboratory, physically based materials). `cache` (a dict its caller keeps for one model) holds the model's
+    view, made at the first image and closed by `close_renderers`: making it takes far longer than drawing with it.
+    Without a cache the view is made and closed here."""
     try:
-        r = None if cache is None else cache.get((h, w))
-        if r is None:
-            r = mujoco.Renderer(m, h, w)
+        import lab_render
+        v = None if cache is None else cache.get("view")
+        if v is None:
+            v = lab_render.open_view(m)
             if cache is not None:
-                cache[(h, w)] = r
+                cache["view"] = v
         try:
-            r.update_scene(d, camera=cam)
-            img = r.render().astype(np.float32)
+            img = v.render(cam, d, w, h).astype(np.float32)
         finally:
             if cache is None:
-                r.close()
+                v.close()
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
         if cache is not None:
-            cache.pop((h, w), None)
+            cache.pop("view", None)
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, B.RGB_NOISE, img.shape)
     return np.clip(img, 0, 255).astype(np.uint8)

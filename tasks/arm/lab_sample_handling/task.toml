@@ -32,7 +32,7 @@ network_mode = "no-network"
 # 9000 s) is the controller's own time: its replies, plus 0.2 s for every image it asks for; the simulation is not
 # in it, so the timeout covers both. Worst case: 240000 control steps at 45 ms (20-30 ms measured, the higher figure
 # over the wire on a busy 4-CPU sandbox) = 10800 s of simulation; 9000 s of controller time (if the whole budget
-# went into images, 45000 of them, drawing them at 0.03-0.08 s each would take less than that); the numerics check,
+# went into images, 45000 of them, drawing them at 0.10-0.15 s each would take less than that); the numerics check,
 # the empty-account check and the render self-test 30 s. 19830 s; with 35 % margin 26800 s. The reference's whole
 # verify takes about 80 minutes. The verifier image (tests/Dockerfile) runs no desktop session.
 [verifier]

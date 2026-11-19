@@ -52,8 +52,8 @@ Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_tok
 then does every observation also carry `truth` (the unit, the seed, the full simulation state). An untokened
 submission never sees it. Every path agent behaviour can reach is charged as a score, never a crash.
 
-Images: lab_sim.render draws the cameras with MuJoCo's renderer on OSMesa, exactly as the commissioning service's
-copy does. Before
+Images: lab_sim.render draws the cameras through lab_render.py (MuJoCo's Filament renderer on Mesa's lavapipe, on
+the CPU, with the render bundle of LAB_RENDER_DIR), exactly as the commissioning service's copy does. Before
 the first episode a render self-test draws the four cameras of one episode (the set's first unit at a fixed seed, not
 a graded episode) and checks their shapes, that none is flat and that their brightness is sane; the metric
 `render_selftest` records that it passed. A renderer failure, in the self-test or at any later image

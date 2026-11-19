@@ -74,12 +74,13 @@ sys.dont_write_bytecode = True
 FORMAT = "lab_sample_handling episode selection 1"
 SET_FORMAT = "lab_sample_handling fixed set 1"
 ORACLE_MODULES = ("bench_estimators.py", "box_transport_env.py", "centrifuge_probe.py", "episode.py", "fill_read.py",
-                  "lab_env.py", "lab_sim.py", "localize_probe.py", "mass_probe.py", "oracle_main.py", "rotor_angle.py",
-                  "tube_insert_probe.py", "turn_probe.py", "wire_world.py", "worklist_probe.py", "worklist_scene.py")
+                  "lab_env.py", "lab_render.py", "lab_sim.py", "localize_probe.py", "mass_probe.py", "oracle_main.py",
+                  "rotor_angle.py", "tube_insert_probe.py", "turn_probe.py", "wire_world.py", "worklist_probe.py",
+                  "worklist_scene.py")
 FROZEN = (("tests/verify.py", "tests/episode.py", "tests/lab_env.py", "tests/lab_sim.py", "tests/box_transport_env.py",
-           "tests/units.json", "tests/grader_config.json")
+           "tests/lab_render.py", "tests/lab_look.json", "tests/units.json", "tests/grader_config.json")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES)
-          + ("solution/oracle/units.json", "solution/solve.sh"))
+          + ("solution/oracle/lab_look.json", "solution/oracle/units.json", "solution/solve.sh"))
 PER_UNIT = 2
 WIRE_RUNS = 3
 MAX_CANDIDATES = 8

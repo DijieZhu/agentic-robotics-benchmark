@@ -1,6 +1,7 @@
 # Verification image of lab_sample_handling (build context: tests/). The same stack as the agent's image
 # (environment/Dockerfile: the same base, requirements, renderer and numerics pin), without a desktop session.
-# Nothing hidden is copied into it: the engine stages tests/ at verify time, root-only.
+# Nothing hidden is copied into it: the engine stages tests/ at verify time, root-only. The cameras' render bundle (a
+# public asset) is fetched into /opt/task-assets, root-only.
 FROM ghcr.io/agentslastexam/container-ubuntu22-base:0.1.1
 
 ENV VIRTUAL_ENV=/opt/venv
@@ -47,6 +48,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libg
     && rm -rf /var/lib/apt/lists/*
 ENV MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa MPLBACKEND=Agg OMP_NUM_THREADS=1 LP_NUM_THREADS=2
 
+# The bench cameras' renderer (tests/lab_render.py): MuJoCo's Filament module (in the mujoco wheel) on Vulkan; Mesa's
+# lavapipe is the CPU Vulkan driver (the task has no GPU).
+RUN apt-get update && apt-get install -y --no-install-recommends mesa-vulkan-drivers libvulkan1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# ---- task assets: fetched at the dataset commit pinned in assets.sha256, checked file by file (docs/task-assets.md):
+# render/ (the cameras' render bundle: room.npz, room.json, ibl.ktx; the same list as environment/assets.sha256).
+# The grader (root) reads it in place; the controller's account cannot.
+COPY fetch_assets.py assets.sha256 /opt/task-assets/
+RUN python3 /opt/task-assets/fetch_assets.py /opt/task-assets/assets.sha256 /opt/task-assets/payload \
+    && chown -R root:root /opt/task-assets && chmod -R u=rwX,go= /opt/task-assets
+ENV LAB_RENDER_DIR=/opt/task-assets/payload/render
+
 RUN mkdir -p /home/user/submission && chown -R user:user /home/user/submission
 
 # No job schedulers: nothing may run later as anyone.
@@ -73,3 +87,14 @@ RUN python3 -c "import numpy, scipy, cv2, mujoco; print('[image] mujoco', mujoco
     && runuser -u user -- env -i HOME=/tmp PATH=/opt/venv/bin:/usr/bin:/bin /opt/venv/bin/python3 -I -c "import os, numpy, scipy, cv2, mujoco; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell'; print('[image] agent-UID import OK')" \
     && runuser -u user -- env HOME=/tmp /opt/venv/bin/python3 -c "import mujoco; m = mujoco.MjModel.from_xml_string('<mujoco><worldbody><light pos=\"0 0 1\"/><geom type=\"sphere\" size=\".1\"/></worldbody></mujoco>'); d = mujoco.MjData(m); mujoco.mj_forward(m, d); r = mujoco.Renderer(m, 48, 64); r.update_scene(d); im = r.render(); assert im.max() > 0; print('[image] agent-UID MuJoCo OSMesa render OK', im.shape)" \
     && [ -z "$(ls /etc/supervisor/conf.d 2>/dev/null)" ] && [ "$(stat -c %U /usr/local/bin)" = root ]
+
+# The grader's account (root) draws the four cameras of a bench through lab_render.py from the render bundle (the
+# simulator's files are mounted from the build context for this step only: nothing of them stays in the image; the
+# unit is a maintainer's, inside the documented ranges); the controller's account cannot list or read the bundle.
+RUN --mount=type=bind,source=.,target=/tmp/lab-draw-check,readonly \
+    env -i HOME=/root PATH=/opt/venv/bin:/usr/bin:/bin MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa OMP_NUM_THREADS=1 LP_NUM_THREADS=2 \
+      MESA_SHADER_CACHE_DISABLE=true PYTHONDONTWRITEBYTECODE=1 \
+      /opt/venv/bin/python3 -B -s -c "import sys; sys.path.insert(0, '/tmp/lab-draw-check'); import lab_env as E; env = E.LabEnv({'rotor_friction': 0.21, 'handle_play': 7.0, 'rotor_inertia': 0.019}, 'image', render=True); o = env.reset(1); o = env.step([0.0] * 6 + [-1.0, 15.0]); assert o['rack'].shape == (480, 640, 3); assert all(o[c].ndim == 3 and o[c].std() > 8 and 20 < o[c].mean() < 235 for c in ('left', 'right', 'wrist', 'rack')); env.close(); print('[image] the grader draws the four cameras')" \
+    && ! runuser -u user -- ls /opt/task-assets \
+    && ! runuser -u user -- cat /opt/task-assets/payload/render/room.json \
+    && [ -z "$(find /opt/task-assets -perm /077)" ]

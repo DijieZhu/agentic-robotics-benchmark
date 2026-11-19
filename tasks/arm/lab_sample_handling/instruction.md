@@ -155,7 +155,8 @@ The controller runs at 10 Hz. The observation is a JSON object:
 
   The four cameras are `left` and `right` (320 x 240, fixed, over the bench), `wrist` (256 x 192, on the hand)
   and `rack` (640 x 480, fixed, facing the incoming rack). An image is empty (`[0, 0, 3]`) unless the previous
-  action asked for it; the first observation has all four. There is no depth image.
+  action asked for it; the first observation has all four. There is no depth image. The pictures show the bench in
+  its laboratory; the room around it is not part of the task (`task_card.md`, section 3).
 - **The worklist:** `worklist`, `{"cold": {incoming position: cold position}, "spin": [incoming positions],
   "preloaded": {rotor position: grams}}`.
 

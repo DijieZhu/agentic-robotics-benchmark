@@ -23,7 +23,7 @@ PAYLOAD = TASK / "environment/setup/payload"
 BENCH = json.loads((SERVICE / "bench.json").read_text())
 INSTRUCTION = (TASK / "instruction.md").read_text()
 SHEETS = (PAYLOAD / "task_card.md").read_text()
-SIMULATOR = ("lab_sim.py", "lab_env.py", "box_transport_env.py")
+SIMULATOR = ("lab_sim.py", "lab_env.py", "box_transport_env.py", "lab_render.py", "lab_look.json")
 
 
 def constants(path, names):
@@ -55,7 +55,8 @@ class CommissioningService(unittest.TestCase):
         self.assertEqual((TASK / "solution/oracle/episode.py").read_bytes(), (TASK / "tests/episode.py").read_bytes())
         files = sorted(p.relative_to(SERVICE).as_posix() for p in SERVICE.rglob("*")
                        if p.is_file() and "__pycache__" not in p.parts)
-        self.assertEqual(files, ["bench.json", "box_transport_env.py", "commissiond.py", "lab_env.py", "lab_sim.py"],
+        self.assertEqual(files, ["bench.json", "box_transport_env.py", "commissiond.py", "lab_env.py", "lab_look.json",
+                                 "lab_render.py", "lab_sim.py"],
                          "the service's folder holds the daemon, the simulator and the units; never the credit")
 
     def test_development_units_are_not_scored_units(self):
