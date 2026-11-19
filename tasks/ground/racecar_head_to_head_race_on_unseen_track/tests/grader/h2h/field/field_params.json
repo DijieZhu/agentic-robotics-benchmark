@@ -1,0 +1,64 @@
+{
+ "schema": "racecar-h2h-field-params/1",
+ "comment": "The field of a head-to-head venue: the grid, the three field cars of each heat (line and pace draws, the redraw of a heat whose field fails alone), the predicates a venue must pass and the field-alone run. The draw blocks (grid, field, tiers, streams, redraw) decide the world-file additions; the remaining blocks are the predicates' and the measurements' own numbers.",
+ "world_schema": "racecar-venue-world-h2h/1",
+ "base_world_schema": "racecar-venue-world/1",
+ "world_id_prefix": "h2",
+ "grid": {
+  "slots": 4,
+  "car_slot": 4,
+  "spacing_m": 1.5,
+  "car_lateral_m": 0.15
+ },
+ "field": {
+  "cars": 3,
+  "id_format": "F%d",
+  "sessions": ["heat1", "heat2"],
+  "gap_keep_m": 0.8,
+  "pace_half_steps": 20,
+  "pace_step": 0.001,
+  "line_weight_log10_range": [-6.0, -3.0],
+  "line_attempts": 20,
+  "line_wall_clear_min_m": 0.06
+ },
+ "tiers": {
+  "fast": [0.80, 0.75, 0.70],
+  "mid": [0.80, 0.70, 0.60],
+  "slow": [0.70, 0.60, 0.50]
+ },
+ "streams": {
+  "car_side": 71,
+  "line_weight": 72,
+  "pace": 73
+ },
+ "redraw": {
+  "comment": "A heat whose field fails the field-alone run is drawn again: its three lines and three paces, from the line and pace streams extended by the attempt index 1 to attempts_max (index 0 is the stream without the extension). The index of each heat is written to truth.head_to_head under attempts_key.",
+  "attempts_max": 4,
+  "attempts_key": "field_attempts"
+ },
+ "predicates": {
+  "wheel_margin_m": 0.15,
+  "slot_clearance_m": 0.5,
+  "pace_tolerance": 0.02,
+  "laps_min": 5,
+  "laps_max": 20,
+  "station_tolerance_m": 0.01,
+  "pose_tolerance_m": 0.0005
+ },
+ "alone": {
+  "run_s": 300.0,
+  "trail_window_s": 1.5
+ },
+ "crash_line_rule": {
+  "start_m": 0.18,
+  "undisturbed_factor": 2.0,
+  "empty_band_low_m": 0.16,
+  "empty_band_high_m": 0.20,
+  "search_range_m": [0.10, 0.35],
+  "min_width_m": 0.04,
+  "round_to_m": 0.01,
+  "min_contact_bouts": 60,
+  "contact_merge_s": 1.0,
+  "window_after_s": 1.5
+ }
+}

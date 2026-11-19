@@ -1,0 +1,16 @@
+{
+ "schema": "racecar-verify-config/1",
+ "note": "The verify stage's own knobs (the cell's are tests/grader_config.json, byte-identical to the cell's configuration). runner_account: the account every process of the agent's program runs as (never root, never the agent account). limits: the import check (the design: 120 s wall, 120 CPU s); the address space and file size every program process gets (prlimit); survivor_wait_s: how long after its process group was killed a process of the runner account may still exist before it counts as a survivor. The CPU backstop of a venue's process is the cell's own CPU cap + 60 s (sketch.wire.runner did the same). program_env_extra: variables added to the cell's program environment (sketch.wire.runner.child_env), never replacing one of its: MUJOCO_GL and PYOPENGL_PLATFORM = osmesa, as in the agent's session (the image's ENV); without them `import mujoco` loads its GLFW backend, whose loader starts a process, which the run regime refuses.",
+ "runner_account": "nobody",
+ "limits": {
+  "import_check_s": 120.0,
+  "import_cpu_s": 120.0,
+  "address_space_mb": 12288,
+  "file_size_mb": 1024,
+  "survivor_wait_s": 3.0
+ },
+ "program_env_extra": {
+  "MUJOCO_GL": "osmesa",
+  "PYOPENGL_PLATFORM": "osmesa"
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-score-records-h2h/1",
+ "title": "Venue reference and score record of racecar_head_to_head_race_on_unseen_track",
+ "$defs": {
+  "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "unit": {"type": "number", "minimum": 0, "maximum": 1},
+  "reference": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["schema", "world_id", "layout_digest", "heat_laps", "C_ref", "T_N_s"],
+   "properties": {
+    "schema": {"const": "racecar-venue-reference-h2h/1"},
+    "world_id": {"type": "string", "pattern": "^[a-z0-9_]{1,64}$"},
+    "layout_digest": {"$ref": "#/$defs/sha256"},
+    "heat_laps": {"type": "integer", "minimum": 1, "description": "N: the venue sheet's heat_laps of the final world."},
+    "C_ref": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 5},
+              "description": "The reference program's clean overtake balance in heat 1 and heat 2 (never published)."},
+    "T_N_s": {"type": "array", "minItems": 2, "maxItems": 2,
+              "items": {"oneOf": [{"type": "number", "exclusiveMinimum": 0, "maximum": 300}, {"type": "null"}]},
+              "description": "Session time of the reference program's N-th lap in heat 1 and heat 2 (null only for a stand-in venue); not read by the score."},
+    "environments": {"description": "What the selection recorded of the environments the reference numbers were taken in; not read by the score."}
+   }
+  },
+  "terms": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["opened", "classified", "place", "pass", "conduct", "heat"],
+   "properties": {
+    "opened": {"type": "boolean", "description": "False: the heat was never opened and every term is 0."},
+    "classified": {"enum": [0, 1]},
+    "place": {"$ref": "#/$defs/unit", "description": "Beaten field cars over the number of field cars."},
+    "pass": {"$ref": "#/$defs/unit", "description": "clip(C / (C_ref - pass_margin), 0, 1)."},
+    "conduct": {"$ref": "#/$defs/unit", "description": "max(0, 1 - K / warnings_zero_at)."},
+    "heat": {"$ref": "#/$defs/unit", "description": "classified x conduct x (place_weight x place + pass_weight x pass)."}
+   }
+  },
+  "venue_row": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["world_id", "heat1", "heat2", "venue"],
+   "properties": {
+    "world_id": {"type": "string"},
+    "heat1": {"$ref": "#/$defs/terms"},
+    "heat2": {"$ref": "#/$defs/terms"},
+    "venue": {"$ref": "#/$defs/unit", "description": "Mean of the two heats."}
+   }
+  },
+  "score": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["schema", "venues", "gates", "gate", "head_to_head_score", "anchor", "reward"],
+   "properties": {
+    "schema": {"const": "racecar-score-h2h/1"},
+    "venues": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/venue_row"}},
+    "gates": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["submission_ok", "step_called", "clean_run", "no_network", "no_late_write"],
+     "properties": {
+      "submission_ok": {"type": "boolean"},
+      "step_called": {"type": "boolean"},
+      "clean_run": {"type": "boolean"},
+      "no_network": {"type": "boolean"},
+      "no_late_write": {"type": "boolean"}
+     }
+    },
+    "gate": {"enum": [0, 1]},
+    "head_to_head_score": {"$ref": "#/$defs/unit"},
+    "anchor": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["value", "full_at"],
+     "properties": {
+      "value": {"type": "number", "exclusiveMinimum": 0},
+      "full_at": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+     }
+    },
+    "reward": {"$ref": "#/$defs/unit"}
+   }
+  }
+ }
+}

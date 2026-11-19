@@ -1,0 +1,101 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-venue-world-h2h/1",
+ "title": "Head-to-head venue world: a base venue world with the additions of a head-to-head day",
+ "description": "The base part (every key not named here, and the base keys named here) is the venue generator's world for the seed, unchanged; it is checked through the base view by the shared world checker. This schema covers the additions: the top-level identity keys, venue_sheet.heat_laps and truth.head_to_head.",
+ "type": "object",
+ "required": ["schema", "world_id", "base_world_id", "base_layout_digest", "generator", "layout_digest", "venue_sheet", "truth"],
+ "additionalProperties": false,
+ "properties": {
+  "schema": {"const": "racecar-venue-world-h2h/1"},
+  "world_id": {"type": "string", "pattern": "^h2[cf]_(low|mid|high)_[0-9a-f]{12}$"},
+  "base_world_id": {"type": "string", "pattern": "^s3[cf]_(low|mid|high)_[0-9a-f]{12}$"},
+  "base_layout_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "generator": {"type": "object"},
+  "layout_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "venue_sheet": {
+   "type": "object",
+   "required": ["heat_laps"],
+   "properties": {
+    "heat_laps": {"description": "N: laps of a heat; null in a draft world", "oneOf": [{"type": "null"}, {"type": "integer", "minimum": 5, "maximum": 20}]}
+   }
+  },
+  "truth": {
+   "type": "object",
+   "required": ["head_to_head", "seeds", "start_pose", "centreline"],
+   "properties": {
+    "head_to_head": {"$ref": "#/$defs/head_to_head"}
+   }
+  }
+ },
+ "$defs": {
+  "pose": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3},
+  "slot": {
+   "type": "object",
+   "required": ["slot", "pose", "s_m"],
+   "additionalProperties": false,
+   "properties": {
+    "slot": {"type": "integer", "minimum": 1, "maximum": 4},
+    "pose": {"$ref": "#/$defs/pose", "description": "car frame [x, y, yaw] as the start pose"},
+    "s_m": {"type": "number", "minimum": 0, "description": "station of the slot's reference point along the centreline"}
+   }
+  },
+  "field_car": {
+   "type": "object",
+   "required": ["id", "slot", "nominal_factor", "speed_factor", "gap_keep_m", "entry_s_m", "staging_pose", "path"],
+   "additionalProperties": false,
+   "properties": {
+    "id": {"type": "string", "pattern": "^F[123]$", "description": "F and the slot number"},
+    "slot": {"type": "integer", "minimum": 1, "maximum": 3},
+    "nominal_factor": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "speed_factor": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "gap_keep_m": {"type": "number", "exclusiveMinimum": 0},
+    "entry_s_m": {"type": "number", "minimum": 0},
+    "staging_pose": {"$ref": "#/$defs/pose"},
+    "path": {
+     "type": "object",
+     "required": ["closed", "samples"],
+     "additionalProperties": false,
+     "properties": {
+      "closed": {"const": true},
+      "samples": {"type": "array", "minItems": 16,
+                  "items": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3}}
+     }
+    }
+   }
+  },
+  "heat": {
+   "type": "object",
+   "required": ["session", "field"],
+   "additionalProperties": false,
+   "properties": {
+    "session": {"enum": ["heat1", "heat2"]},
+    "field": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/field_car"}}
+   }
+  },
+  "head_to_head": {
+   "type": "object",
+   "required": ["tier", "grid", "heats", "field_attempts"],
+   "additionalProperties": false,
+   "properties": {
+    "tier": {"enum": ["fast", "mid", "slow"]},
+    "grid": {
+     "type": "object",
+     "required": ["spacing_m", "car_lateral_m", "car_side", "slots"],
+     "additionalProperties": false,
+     "properties": {
+      "spacing_m": {"type": "number", "exclusiveMinimum": 0},
+      "car_lateral_m": {"type": "number", "minimum": 0},
+      "car_side": {"enum": [-1, 1], "description": "+1: the car's slot is left of the centreline, -1: right"},
+      "slots": {"type": "array", "minItems": 2, "maxItems": 2,
+                "items": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/slot"}}}
+     }
+    },
+    "heats": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/heat"}},
+    "field_attempts": {"type": "array", "minItems": 2, "maxItems": 2,
+                       "description": "per heat, in heat order: the attempt index of its field's draw (0: the first draw; 1 to 4: drawn again after the field failed to run alone)",
+                       "items": {"type": "integer", "minimum": 0, "maximum": 4}}
+   }
+  }
+ }
+}

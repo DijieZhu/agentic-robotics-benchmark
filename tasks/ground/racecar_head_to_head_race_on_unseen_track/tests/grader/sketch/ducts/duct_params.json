@@ -1,0 +1,125 @@
+{
+  "schema": "racecar-duct-params/1",
+  "contract": "sketch-contract/1.0",
+  "mass_per_m_kg": 0.5,
+  "floor_friction": 0.5,
+  "bend_stiffness_nm_per_rad": 5.0,
+  "bend_damping_nms_per_rad": 0.3,
+  "mode": "active_window",
+  "duct_duct_contact": false,
+  "piece_model": "planar_pieces",
+  "nominal_piece_length_m": 0.508,
+  "friction_constraint": {
+    "solref": [
+      0.005,
+      1.0
+    ],
+    "solimp": [
+      0.999,
+      0.9999,
+      0.001,
+      0.5,
+      2.0
+    ]
+  },
+  "pin": {
+    "solref": [
+      0.005,
+      1.0
+    ],
+    "solimp": [
+      0.9,
+      0.95,
+      0.001,
+      0.5,
+      2.0
+    ]
+  },
+  "bend": {
+    "solimp_d": 0.95,
+    "width_rad": 0.001
+  },
+  "contact": {
+    "friction": [
+      0.5,
+      0.005,
+      0.0001
+    ],
+    "solref": [
+      0.02,
+      1.0
+    ],
+    "solimp": [
+      0.9,
+      0.95,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "condim": 3
+  },
+  "sleep": {
+    "policy": "init",
+    "tolerance": 0.001
+  },
+  "window": {
+    "slots": 6,
+    "slot_sleep": false,
+    "margin_on_m": 0.15,
+    "margin_off_m": 0.45,
+    "check_every_steps": 4,
+    "rest_speed_mps": 0.0001,
+    "rest_steps": 8,
+    "bvh_inflate_m": 0.15,
+    "park_origin_m": [
+      400.0,
+      400.0
+    ],
+    "sync_tol": 1e-06
+  },
+  "putback": {
+    "max_err_m": 0.03,
+    "stream_key": 4
+  },
+  "rgba": {
+    "orange_ribbed": [
+      0.95,
+      0.45,
+      0.1,
+      1.0
+    ],
+    "yellow_ribbed": [
+      0.95,
+      0.8,
+      0.1,
+      1.0
+    ],
+    "black_plain": [
+      0.08,
+      0.08,
+      0.08,
+      1.0
+    ],
+    "collision": [
+      0.3,
+      0.3,
+      0.3,
+      0.3
+    ]
+  },
+  "provenance": {
+    "mass_per_m_kg": "The design starting value 0.5 kg/m*, kept. The BOM's duct (VEVOR 25 ft PVC flexible duct hosing, 12 inch) product pages (US, CA, UK, AU, fetched 2026-11-16) give colour, PVC, 7.6 m, 12 in (30.48 cm) and the construction (2-ply vinyl-coated woven polyester, carbon spring-steel wire helix, adhesive tape) but no weight. A construction estimate (fabric 2 x 150-250 g/m2 over 0.96 m2/m, wire 1.2-2 mm at 75-100 mm pitch) gives 0.37-0.8 kg/m; 0.5 sits in that range. The sensitivity table covers 0.25 and 0.75 kg/m.",
+    "floor_friction": "Coulomb friction of the duct's PVC skin on the hall floor, one value for every floor kind: 0.5 (the value of an early probe; PVC on dry concrete is usually quoted 0.4-0.6). Not measured on a real duct. Sensitivity 0.25 and 0.75.",
+    "bend_stiffness_nm_per_rad": "Hinge stiffness between two 0.508 m pieces, k = EI / c with EI about 2.5 N m^2: a 1 m end of such a duct held level sags of the order of 0.2 m under its own weight (q L^4 / 8 EI with q = 4.9 N/m), an estimate, not a measurement. Pieces of another length c get k_nom * 0.508 / c. Bending acts toward the shape the duct was laid in (plastic memory of a laid duct).",
+    "bend_damping_nms_per_rad": "0.3, an early probe's value; numerical, small against the floor friction.",
+    "mode": "active_window, by the cost gate G3: with every piece carrying its own floor friction, 902 sleeping piece bodies cost 323 us per mj_step on this host (broad phase, kinematics and constraint assembly are not skipped for sleeping bodies in MuJoCo 3.14) against 94 us for the window's frozen layer; G5 (same verdicts on three machines) holds for every mode, so 'sleep' and 'awake' (the reference physics) remain available.",
+    "piece_model": "planar_pieces: every piece is its own body with slides along and across its laid axis and a yaw hinge about its centre, each with frictionloss = its own floor friction (mu m g, mu m g, mu m g c / 4); consecutive pieces are pinned by connect equalities at the shared end point; bending is a soft joint equality on the two yaws with the stiffness and damping above (negative solref, derived per piece in params.py). Chosen over a hinge chain because a chain's dof friction lumps the floor drag of all downstream pieces on the root.",
+    "friction_constraint": "solreffriction = 2 x physics step, solimpfriction 0.999 / 0.9999: MuJoCo's frictionloss creeps under a load below its limit; with these values the creep at half the limit is 6e-6 m/s (probe creep2.py), against 2.6e-3 m/s with the defaults.",
+    "pin": "connect equality, solref 2 x physics step; stretch under impact loads is reported by the impact gate.",
+    "bend": "constant impedance d = 0.95 (solimp dmin = dmax) so the spring is linear; params.bend_solref turns stiffness and damping into the negative solref MuJoCo needs: K = -s0 / ((1 - d) (1/Izz_a + 1/Izz_b)), checked statically in test_s4_params.",
+    "contact": "duct skin against the car: friction 0.5 (MuJoCo takes the larger of the two geoms, so tyre on duct 0.7, hull on duct 0.5); MuJoCo default solref / solimp.",
+    "sleep": "mode 'sleep' only: pieces start asleep (policy init), MuJoCo's default sleep tolerance.",
+    "window": "mode 'active_window': slots = number of dynamic duct chains in the model; a duct becomes dynamic when a window centre (ego car, slow cars, boxes) comes within margin_on_m + its travel per check of the duct's skin, and frozen again when no centre is within margin_off_m and the duct has been at rest (all piece speeds below rest_speed_mps) for rest_steps checks. check_every_steps: the window is checked every 4 physics steps (10 ms; the travel margin covers it). bvh_inflate_m: frozen-layer leaf boxes of the world body's bounding volume hierarchy are built this much larger in x and y, so a frozen piece moved by less is still found by collision and rays without a refit (a larger move refits the leaf and its ancestors). sync_tol: an active duct's poses are re-read when a joint value moved by more than this (m or rad), so frictionloss creep of a resting duct does not cost a sync every step.",
+    "putback": "staff.putback_err_m* starting value 0.03 m (grader config). The staff re-lay a displaced duct as a whole: a rigid planar offset of its laid shape, translation uniform in a disc of radius max_err / 2 and a rotation about its midpoint up to (max_err / 2) / (half its length), so no end point is more than max_err from the world file. stream_key: when the tracker is given an integer seed it draws from default_rng([seed, stream_key])."
+  }
+}

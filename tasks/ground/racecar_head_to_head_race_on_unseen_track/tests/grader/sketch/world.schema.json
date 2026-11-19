@@ -1,0 +1,306 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-venue-world/1",
+ "title": "World file of one venue of racecar_time_trial_on_unseen_track (sketch contract sketch-contract/1.0)",
+ "description": "One venue. `venue_sheet` is the only public part (describe() returns it verbatim); `truth` and everything else belong to the grader. Frames and units: world frame, x and y horizontal, z up, metres; yaw counter-clockwise from +x in radians; a point is [x, y], a pose is [x, y, yaw]. Every float is rounded to 6 decimals when written. The semantic rules that a schema cannot express are in the contract and in sketch/examples/check.py.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["schema", "world_id", "generator", "layout_digest", "venue_sheet", "truth"],
+ "properties": {
+  "schema": {"const": "racecar-venue-world/1"},
+  "world_id": {"$ref": "#/$defs/id", "description": "Hidden identifier of the venue (file name stem)."},
+  "generator": {"$ref": "#/$defs/generator"},
+  "layout_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "sha256 of the canonical JSON text of {schema, venue_sheet, truth}; verify compares it at every reset."},
+  "venue_sheet": {"$ref": "#/$defs/venue_sheet"},
+  "truth": {"$ref": "#/$defs/truth"}
+ },
+ "$defs": {
+  "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"},
+  "point": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "description": "[x, y] in metres, world frame."},
+  "pose": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number", "minimum": -3.141593, "maximum": 3.141593}], "items": false, "minItems": 3, "description": "[x, y, yaw]: metres, metres, radians counter-clockwise from +x."},
+  "unit_vector": {"type": "array", "prefixItems": [{"type": "number", "minimum": -1, "maximum": 1}, {"type": "number", "minimum": -1, "maximum": 1}], "items": false, "minItems": 2},
+  "segment": {"type": "array", "prefixItems": [{"$ref": "#/$defs/point"}, {"$ref": "#/$defs/point"}], "items": false, "minItems": 2},
+  "seed": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+  "wall_class": {"enum": ["orange_ribbed", "yellow_ribbed", "black_plain"], "description": "Orange / yellow duct with black ribs (full LiDAR range) or plain black duct (short LiDAR range; the range per class is the sensor model's sensor parameter)."},
+  "floor_kind": {"enum": ["painted_concrete", "sealed_concrete", "polished_concrete", "exhibition_carpet"]},
+  "patch_kind": {"enum": ["dust", "metal_cover", "carpet_tile"]},
+  "feature": {"enum": ["duct_gaps", "open_wall", "floor_patch_dust", "floor_patch_metal_cover", "floor_patch_carpet_tile", "black_ducts", "narrow_section", "shared_wall", "outside_clutter"]},
+
+  "generator": {
+   "type": "object", "additionalProperties": false,
+   "required": ["name", "version", "seed_hex"],
+   "properties": {
+    "name": {"type": "string", "description": "`hand` for a hand-written world, otherwise the generator's name."},
+    "version": {"type": "string"},
+    "seed_hex": {"type": ["string", "null"], "pattern": "^[0-9a-f]{16,64}$", "description": "The os.urandom candidate seed (hex) the world was generated from; null for a hand-written world."}
+   }
+  },
+
+  "venue_sheet": {
+   "description": "PUBLIC. What the organiser tells every team about this venue: kinds and bounds, no layout, no positions, no grip value of this car.",
+   "type": "object", "additionalProperties": false,
+   "required": ["venue_label", "floor", "walls", "track", "features"],
+   "properties": {
+    "venue_label": {"type": "string", "minLength": 1, "maxLength": 60, "description": "A neutral label of the venue; never a real place, platform or vendor name."},
+    "floor": {
+     "type": "object", "additionalProperties": false, "required": ["kind", "side_pull"],
+     "properties": {
+      "kind": {"$ref": "#/$defs/floor_kind"},
+      "side_pull": {
+       "description": "The organiser's side-pull reading: peak sideways force that moved the organiser's reference car (its own mass, its own tyres) at one spot. A hint only: implied friction = peak_force_n / (test_mass_kg * 9.81) of another tyre. null when the organiser publishes none (lever T2).",
+       "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["peak_force_n", "test_mass_kg"],
+         "properties": {"peak_force_n": {"type": "number", "exclusiveMinimum": 0}, "test_mass_kg": {"type": "number", "exclusiveMinimum": 0}}}
+       ]
+      }
+     }
+    },
+    "walls": {
+     "type": "object", "additionalProperties": false, "required": ["kinds", "height_m"],
+     "properties": {
+      "kinds": {"type": "array", "items": {"$ref": "#/$defs/wall_class"}, "minItems": 1, "uniqueItems": true, "description": "Wall kinds that may stand at this venue (every kind in use, possibly more)."},
+      "height_m": {"type": "number", "const": 0.33}
+     }
+    },
+    "track": {
+     "type": "object", "additionalProperties": false, "required": ["min_width_m", "max_footprint_m"],
+     "properties": {
+      "min_width_m": {"type": "number", "minimum": 1.0, "description": "The organiser's promise: no section is narrower (a lower bound of the real minimum)."},
+      "max_footprint_m": {"type": "array", "prefixItems": [{"type": "number", "exclusiveMinimum": 0}, {"type": "number", "exclusiveMinimum": 0}], "items": false, "minItems": 2, "description": "[x, y] size of the area the track fits in (an upper bound of the real footprint)."}
+     }
+    },
+    "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}, "uniqueItems": true, "description": "Exactly the feature kinds present at this venue; no counts, no positions."}
+   }
+  },
+
+  "truth": {
+   "description": "HIDDEN. The as-built venue.",
+   "type": "object", "additionalProperties": false,
+   "required": ["cell", "bounds", "stats", "centreline", "walls", "ducts", "gaps", "open_walls", "floor", "clutter", "timing_line", "checkpoints", "start_pose", "avoidance", "seeds"],
+   "properties": {
+    "cell": {
+     "type": "object", "additionalProperties": false, "required": ["grip_tier", "layout_class"],
+     "properties": {
+      "grip_tier": {"enum": ["low", "mid", "high", "lab"], "description": "Tier of the base grip: low 0.45-0.55, mid 0.60-0.75, high 0.80-0.95; `lab` for a world outside the hidden set."},
+      "layout_class": {"enum": ["classic", "featured", "example"]}
+     }
+    },
+    "bounds": {
+     "description": "Axis-aligned footprint of the track including its walls, centred on the world origin, longer side along x.",
+     "type": "object", "additionalProperties": false, "required": ["xmin", "ymin", "xmax", "ymax"],
+     "properties": {"xmin": {"type": "number"}, "ymin": {"type": "number"}, "xmax": {"type": "number"}, "ymax": {"type": "number"}}
+    },
+    "stats": {
+     "description": "Numbers the generator reports about the layout; the checker recomputes them.",
+     "type": "object", "additionalProperties": false,
+     "required": ["length_m", "min_width_m", "width_ge_1p5_frac", "min_radius_m", "footprint_m", "n_ducts", "n_pieces"],
+     "properties": {
+      "length_m": {"type": "number", "exclusiveMinimum": 0},
+      "min_width_m": {"type": "number", "exclusiveMinimum": 0},
+      "width_ge_1p5_frac": {"type": "number", "minimum": 0, "maximum": 1, "description": "Share of the centreline length where the track is at least 1.5 m wide."},
+      "min_radius_m": {"type": "number", "exclusiveMinimum": 0},
+      "footprint_m": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2},
+      "n_ducts": {"type": "integer", "minimum": 1},
+      "n_pieces": {"type": "integer", "minimum": 1}
+     }
+    },
+    "centreline": {
+     "description": "The closed centreline in driving order and the half widths at every sample. Station s = polyline length from sample 0; `left` / `right` = distance from the centreline to the track-side face of the wall on the left / right of the driving direction.",
+     "type": "object", "additionalProperties": false, "required": ["closed", "direction", "length_m", "samples"],
+     "properties": {
+      "closed": {"const": true},
+      "direction": {"enum": ["ccw", "cw"]},
+      "length_m": {"type": "number", "exclusiveMinimum": 0},
+      "samples": {
+       "type": "array", "minItems": 16,
+       "items": {"type": "array", "minItems": 4, "items": false,
+                 "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number", "minimum": 0.3, "maximum": 1.5}, {"type": "number", "minimum": 0.3, "maximum": 1.5}],
+                 "description": "[x, y, half width left, half width right] in metres."}
+      }
+     }
+    },
+    "walls": {
+     "description": "Wall lines: each an ordered chain of ducts. Between consecutive ducts of a chain (and between the last and the first of a closed chain) there is exactly one entry of `gaps` or `open_walls`.",
+     "type": "array", "minItems": 1,
+     "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "side", "closed", "ducts"],
+      "properties": {
+       "id": {"$ref": "#/$defs/id"},
+       "side": {"enum": ["left", "right", "shared"], "description": "Which side of the driving direction the wall bounds; `shared` = one row of ducts between two sections of the track less than 0.5 m apart."},
+       "closed": {"type": "boolean"},
+       "ducts": {"type": "array", "items": {"$ref": "#/$defs/id"}, "minItems": 1, "uniqueItems": true}
+      }
+     }
+    },
+    "ducts": {
+     "description": "Every duct as a chain of rigid pieces lying on the floor. A full duct is 7.62 m = 15 pieces of 0.508 m; a compressed duct is shorter. Piece k (0-based, in the order of the wall) is the cylinder of diameter 0.33 m and length piece_length_m whose axis midpoint is at [x, y] (0.165 m above the floor) and whose axis points along yaw toward piece k + 1; consecutive pieces share their end points.",
+     "type": "array", "minItems": 1,
+     "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "wall", "wall_class", "diameter_m", "length_m", "piece_length_m", "pieces"],
+      "properties": {
+       "id": {"$ref": "#/$defs/id"},
+       "wall": {"$ref": "#/$defs/id"},
+       "wall_class": {"$ref": "#/$defs/wall_class"},
+       "diameter_m": {"const": 0.33},
+       "length_m": {"type": "number", "exclusiveMinimum": 0, "maximum": 7.620001},
+       "piece_length_m": {"type": "number", "minimum": 0.35, "maximum": 0.65},
+       "pieces": {"type": "array", "minItems": 1, "maxItems": 21, "items": {"$ref": "#/$defs/pose"}}
+      }
+     }
+    },
+    "gaps": {
+     "description": "Every junction of two consecutive ducts of a wall that is not an open wall: the end gap between the head end of ducts[0] and the tail end of ducts[1]; width 0 = butted.",
+     "type": "array",
+     "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "wall", "ducts", "ends", "width_m"],
+      "properties": {
+       "id": {"$ref": "#/$defs/id"},
+       "wall": {"$ref": "#/$defs/id"},
+       "ducts": {"type": "array", "prefixItems": [{"$ref": "#/$defs/id"}, {"$ref": "#/$defs/id"}], "items": false, "minItems": 2},
+       "ends": {"$ref": "#/$defs/segment", "description": "Centres of the two facing end faces (on the duct axes): head of ducts[0], tail of ducts[1]."},
+       "width_m": {"type": "number", "minimum": 0, "maximum": 0.150001}
+      }
+     }
+    },
+    "open_walls": {
+     "description": "Openings of 0.6-1.2 m in a wall whose boundary is a tape line on the floor, invisible to the LiDAR.",
+     "type": "array",
+     "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "wall", "ducts", "ends", "width_m", "tape", "outward", "s_m", "track_width_m"],
+      "properties": {
+       "id": {"$ref": "#/$defs/id"},
+       "wall": {"$ref": "#/$defs/id"},
+       "ducts": {"type": "array", "prefixItems": [{"$ref": "#/$defs/id"}, {"$ref": "#/$defs/id"}], "items": false, "minItems": 2},
+       "ends": {"$ref": "#/$defs/segment", "description": "Centres of the two facing end faces: head of ducts[0], tail of ducts[1]."},
+       "width_m": {"type": "number", "minimum": 0.6, "maximum": 1.2},
+       "tape": {"$ref": "#/$defs/segment", "description": "The tape line: the straight segment between the track-side edges of the two duct ends, i.e. each end centre moved one duct radius toward the track, square to the axis of its end piece (tape[0] at ducts[0], tape[1] at ducts[1])."},
+       "outward": {"$ref": "#/$defs/unit_vector", "description": "Unit normal of the tape pointing out of the track."},
+       "s_m": {"type": "number", "minimum": 0, "description": "Station of the tape's midpoint."},
+       "track_width_m": {"type": "number", "exclusiveMinimum": 0, "description": "Track width at s_m; the opening is narrower."}
+      }
+     }
+    },
+    "floor": {
+     "description": "The floor as data. grip = the friction coefficient of this car's tyres on the surface (full braking decelerates at grip x g; the drive model's gate). grip_at(x, y) = grip of the last listed patch containing the point, otherwise base_grip.",
+     "type": "object", "additionalProperties": false, "required": ["kind", "base_grip", "patches"],
+     "properties": {
+      "kind": {"$ref": "#/$defs/floor_kind"},
+      "base_grip": {"type": "number", "minimum": 0.2, "maximum": 1.3},
+      "patches": {
+       "type": "array", "maxItems": 8,
+       "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "kind", "polygon", "grip", "edge_height_m", "on_racing_line", "s_m"],
+        "properties": {
+         "id": {"$ref": "#/$defs/id"},
+         "kind": {"$ref": "#/$defs/patch_kind"},
+         "polygon": {"type": "array", "minItems": 3, "maxItems": 32, "items": {"$ref": "#/$defs/point"}, "description": "Simple polygon, counter-clockwise; a rectangle when edge_height_m > 0."},
+         "grip": {"type": "number", "minimum": 0.1, "maximum": 1.3},
+         "edge_height_m": {"type": "number", "minimum": 0, "maximum": 0.007, "description": "Height of the patch's top face above the floor; 0 = flush (no geometry in the model)."},
+         "on_racing_line": {"type": "boolean", "description": "True when the patch covers the driving line in a bend."},
+         "s_m": {"type": "number", "minimum": 0, "description": "Station of the patch's centre."}
+        }
+       }
+      }
+     }
+    },
+    "clutter": {
+     "description": "Proxies of what stands outside the track (hall pillars, table legs, crates, roll-up banners): static, no contact, LiDAR targets seen through gaps and open walls; at least 0.5 m from any wall.",
+     "type": "array",
+     "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "shape", "pose", "size_m", "reflectivity"],
+      "properties": {
+       "id": {"$ref": "#/$defs/id"},
+       "kind": {"enum": ["pillar", "table_leg", "crate", "banner", "other"]},
+       "shape": {"enum": ["box", "cylinder"]},
+       "pose": {"$ref": "#/$defs/pose", "description": "Centre of the footprint on the floor and yaw."},
+       "size_m": {"type": "array", "minItems": 3, "items": false, "prefixItems": [{"type": "number", "exclusiveMinimum": 0}, {"type": "number", "exclusiveMinimum": 0}, {"type": "number", "exclusiveMinimum": 0}], "description": "[size along local x, size along local y, height]; a cylinder has size[0] == size[1] = its diameter. The proxy stands on the floor."},
+       "reflectivity": {"enum": ["normal", "dark"], "description": "LiDAR class: `dark` has the short range of the plain black duct."}
+      }
+     }
+    },
+    "timing_line": {"$ref": "#/$defs/line", "description": "The start / finish line. A lap is timed between two forward crossings of this line by the car's reference point with every checkpoint crossed forward in order in between."},
+    "checkpoints": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/checkpoint"}, "description": "Hidden gates in driving order after the timing line."},
+    "start_pose": {
+     "description": "Where the car (car frame origin and yaw) stands, at rest, when a session opens.",
+     "type": "object", "additionalProperties": false, "required": ["pose", "s_m"],
+     "properties": {"pose": {"$ref": "#/$defs/pose"}, "s_m": {"type": "number", "minimum": 0}}
+    },
+    "avoidance": {
+     "description": "What the organiser puts on the track in the avoidance test; none of it exists in the other sessions.",
+     "type": "object", "additionalProperties": false, "required": ["boxes", "slow_cars"],
+     "properties": {
+      "boxes": {
+       "type": "array", "maxItems": 3,
+       "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "size_m", "mass_kg", "pose", "s_m", "free_passage_m"],
+        "properties": {
+         "id": {"$ref": "#/$defs/id"},
+         "size_m": {"type": "array", "minItems": 3, "items": false, "prefixItems": [{"type": "number", "minimum": 0.1, "maximum": 0.35}, {"type": "number", "minimum": 0.1, "maximum": 0.32}, {"type": "number", "minimum": 0.1, "maximum": 0.30}], "description": "[x, y, z] size of the cardboard box."},
+         "mass_kg": {"type": "number", "minimum": 0.3, "maximum": 0.6},
+         "pose": {"$ref": "#/$defs/pose", "description": "Centre of the footprint on the floor and yaw at the start of the session."},
+         "s_m": {"type": "number", "minimum": 0},
+         "free_passage_m": {"type": "number", "minimum": 0.8, "description": "Width of the wider passage the box leaves between itself and a wall."}
+        }
+       }
+      },
+      "slow_cars": {
+       "type": "array", "maxItems": 2,
+       "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "speed_factor", "gap_keep_m", "entry_s_m", "staging_pose", "path"],
+        "properties": {
+         "id": {"$ref": "#/$defs/id"},
+         "speed_factor": {"type": "number", "minimum": 0.35, "maximum": 0.5, "description": "The slow car drives at speed_factor x the reference speed of its path."},
+         "gap_keep_m": {"type": "number", "minimum": 0.5, "maximum": 1.5, "description": "It slows down when something is within this distance ahead (0.8 m)."},
+         "entry_s_m": {"type": "number", "minimum": 0, "description": "Station where the car is put on the track when the dynamic phase starts (the obstacle model's placement rule may shift it away from the ego car)."},
+         "staging_pose": {"$ref": "#/$defs/pose", "description": "Where the car waits, hidden and without contact, before it enters: at least 1 m outside bounds."},
+         "path": {
+          "type": "object", "additionalProperties": false, "required": ["closed", "samples"],
+          "properties": {
+           "closed": {"const": true},
+           "samples": {"type": "array", "minItems": 16, "items": {"type": "array", "minItems": 3, "items": false, "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number", "exclusiveMinimum": 0}], "description": "[x, y, reference speed in m/s] in driving order."}}
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "seeds": {
+     "description": "Fixed seeds of this venue; each feeds one numpy.random.default_rng(seed) created when the venue is built.",
+     "type": "object", "required": ["relocation", "putback", "sensors", "others"],
+     "properties": {
+      "relocation": {"$ref": "#/$defs/seed", "description": "Position and heading errors of the car when the staff put it back."},
+      "putback": {"$ref": "#/$defs/seed", "description": "Errors of ducts and boxes when the staff put them back."},
+      "sensors": {"$ref": "#/$defs/seed", "description": "Noise and bias of the LiDAR, the IMU and the wheel speed."},
+      "others": {"$ref": "#/$defs/seed", "description": "Slow cars."}
+     },
+     "additionalProperties": {"$ref": "#/$defs/seed"}
+    }
+   }
+  },
+
+  "line": {
+   "type": "object", "additionalProperties": false, "required": ["s_m", "a", "b", "forward"],
+   "properties": {
+    "s_m": {"type": "number", "minimum": 0, "description": "Station of the line."},
+    "a": {"$ref": "#/$defs/point", "description": "End point on the left boundary of the corridor."},
+    "b": {"$ref": "#/$defs/point", "description": "End point on the right boundary of the corridor."},
+    "forward": {"$ref": "#/$defs/unit_vector", "description": "Unit vector of the driving direction at the line; a crossing counts when the reference point passes the segment a-b along it."}
+   }
+  },
+  "checkpoint": {
+   "type": "object", "additionalProperties": false, "required": ["id", "s_m", "a", "b", "forward"],
+   "properties": {
+    "id": {"$ref": "#/$defs/id"},
+    "s_m": {"type": "number", "minimum": 0},
+    "a": {"$ref": "#/$defs/point"},
+    "b": {"$ref": "#/$defs/point"},
+    "forward": {"$ref": "#/$defs/unit_vector"}
+   }
+  }
+ }
+}
