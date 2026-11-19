@@ -11,8 +11,12 @@
 # matplotlib folders point at root's own, PYTHONNOUSERSITE=1 and `-s` keep any user site-packages out.  The cell renders
 # the camera through MuJoCo's classic renderer on OSMesa, one rasteriser thread, single-threaded numerics (the practice
 # ground's cell uses the same path and settings); OpenBLAS's kernels and numpy's SIMD paths are pinned so that the
-# cell's numerics are the same on every x86-64 CPU.  The program under test keeps its own minimal environment
-# (cellkit.runner.child_env).
+# cell's numerics are the same on every x86-64 CPU.  OPENBLAS_L2_SIZE=256 belongs to the kernel pin (amendment 04): the
+# OpenBLAS that numpy 2.5.x bundles (0.3.34) otherwise enlarges the pinned Haswell kernel's blocks on CPUs with 1 MB
+# of L2 per core and AVX-512 (AMD Zen 4 / Zen 5), where that kernel overruns its stack buffer in float64 matrix
+# products with an inner dimension of about 300 or more; with it the kernel keeps its own blocks on every host.  The
+# practice service's launcher (environment/setup/setup.sh) sets the same values.  The program under test keeps its
+# own minimal environment (cellkit.runner.child_env), without these pins.
 set -euo pipefail
 STAGE="$(pwd -P)"
 export ARB_STAGE_MODE="$(stat -c %a "$STAGE")"
@@ -35,6 +39,6 @@ chmod -R u+rwX,go+rX,go-w "$ROOT_PAYLOAD"
 export HOME=/root PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 XDG_CONFIG_HOME=/root/.config XDG_CACHE_HOME=/root/.cache \
   MPLCONFIGDIR=/root/.config/matplotlib
 export MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-export OPENBLAS_CORETYPE=Haswell NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
+export OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256 NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
 unset DISPLAY
 exec "${ALE_VERIFY_PYTHON:-python3}" -s verify.py

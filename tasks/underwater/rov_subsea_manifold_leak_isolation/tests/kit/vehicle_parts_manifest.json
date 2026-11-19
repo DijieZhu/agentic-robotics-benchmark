@@ -4,7 +4,7 @@
  "generator": "docs/plan/underwater/shared/gen/write_outputs.py (run_all.sh)",
  "frame": "B = body FLU: x forward (towards the dome), y port, z up; origin = CAD origin of the vendor full-vehicle STEP (4-inch electronics-tube axis). STEP frame -> B: x_B = Z_step, y_B = X_step, z_B = Y_step (proper rotation), mm -> m",
  "units": "SI: m, kg, m3, kg m2; quaternions (w, x, y, z) as MuJoCo",
- "mesh_root": "/data/xiatao/tmp/underwater_20261114/work/D1/meshlib",
+ "mesh_root": "",
  "mesh_note": "prototype meshes are in the prototype native STEP frame (m); instance pose T_B maps it to B. visual_hi = 0.2 mm / 0.3 rad tessellation; visual_lo = quadric-decimated (<= 200k faces / file); collision = convex pieces (CoACD for plates, shells and brackets, convex hull otherwise); none for fasteners, seals and internals",
  "configs": {
   "std": "vendor 6-thruster base vehicle (STEP + guide fixes)",
