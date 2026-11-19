@@ -133,7 +133,8 @@ drawings and its manual, and the only run of your program on the cell is the gra
 - Do not modify the given files in your home directory; the grader reads its own copies.
 - Machine: your session's sandbox has 8 CPUs and 24 GB of memory, no GPU and no network. The grading machine has
   the same size, and there your program shares it with the cell's physics and its camera renderer, which take about
-  7 GB between them.
+  7 GB between them in the first episode and grow to about 12 GB by the fourth (`cell_api.md`, "Rendering your own
+  frames").
 - Environment facts (harness limits): a single tool call whose input runs above roughly 25-30k tokens is dropped by
   the harness (it is never executed and no error comes back), and a response that reaches the 64k output-token limit
   is lost and, after at most a few retries, ends the session with whatever is in `/home/user/submission/` at that
