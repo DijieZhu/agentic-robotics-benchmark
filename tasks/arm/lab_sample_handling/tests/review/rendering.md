@@ -39,7 +39,7 @@ adds the sensor noise as before.
 
 | | how |
 |---|---|
-| physics, the wire, the units, the episodes | the renderer reads `model` and `data` only; amendment 4 of the episode selection repeats the reference on the fixed set: 12 of 12 episodes at credit 1.0 with the same number of steps as before the change (`validate-4d9f1355`) |
+| physics, the wire, the units, the episodes | the renderer reads `model` and `data` only; amendments 4 and 5 of the episode selection repeat the reference on the fixed set: 12 of 12 episodes at credit 1.0 with the same number of steps as before the change, both times (`validate-4d9f1355`, `validate-567b3c6c`) |
 | camera poses and intrinsics | Filament is given the camera MuJoCo itself computes for the episode's model (`mjv_updateCamera`: position, axes) and the frustum of the camera's vertical field of view at the image's aspect ratio; `K_<cam>` and `T_world_<cam>` are computed as before |
 | image sizes | 320 x 240, 256 x 192, 640 x 480; the three small ones are drawn at twice the size and averaged in linear light |
 | sensor noise | the same line in `lab_sim.render`, from the episode's generator: the same number of draws per image, so the wrench noise of an episode is what it was |
@@ -104,11 +104,11 @@ Median colour per class of surface, Filament against the reference's display ima
 
 | bench top | bench cabinet, centrifuge housing | room furniture | floor | wall | robot, white | hand | caps | boxes |
 |---|---|---|---|---|---|---|---|---|
-| 0.97 (1.01) | 1.01 (0.99) | 0.94 (0.93) | 1.01 (1.03) | 0.98 (0.95) | 1.06 (1.04) | 1.03 (0.92) | 1.01 (0.97) | 0.98 (1.00) |
+| 0.97 (1.01) | 1.01 (0.99) | 0.94 (0.93) | 1.01 (1.03) | 0.98 (0.95) | 1.06 (1.04) | 1.04 (0.92) | 1.01 (0.97) | 0.98 (1.00) |
 
 | tubes | sleeves | rotor | shield | lid handle | scale | scale's holder | robot, black | fingers |
 |---|---|---|---|---|---|---|---|---|
-| 1.21 (1.16) | 0.83 (0.88) | 0.85 (0.87) | 0.88 (0.90) | 0.89 | 0.75 (0.61) | 0.67 (0.63) | 0.48 (0.33) | 0.53 |
+| 1.21 (1.16) | 0.83 (0.88) | 0.85 (0.87) | 0.88 (0.90) | 0.89 | 0.75 (0.61) | 0.67 (0.63) | 0.48 (0.33) | 0.51 |
 
 What the image light cannot do, and so differs from the reference: nothing casts a shadow (contact shading only);
 dark and metallic parts (the scale, its holder, the robot's black joints, the steel fingers) are a quarter to a half
@@ -156,19 +156,20 @@ proof that the stated facts can be read):
   placed; 3 -> 1 failed readings); seeds 2 and 3 stop at the rotor's turn before and after (61 -> 59 and 81 -> 81
   failed readings of an almost empty rotor).
 
-**Cost** (the task's 4 CPUs and 12 GB, on a host under load; one process, as the grader runs, 45 images per camera
-over three episodes):
+**Cost** (the task's 4 CPUs and 12 GB; one process, as the grader runs, 45 images per camera over three episodes;
+both renderers on the same day on a host with a load of about 30, twice the load of the fit's measurements, at
+which the new renderer took 0.149 / 0.142 / 0.103 / 0.132 s):
 
 | | before | after |
 |---|---|---|
-| seconds per image, median (largest): left / right / wrist / rack | 0.055 / 0.059 / 0.040 / 0.044 (0.08) | 0.149 / 0.142 / 0.103 / 0.132 (0.18) |
-| a process's first reset (four images; lavapipe compiles the shaders) | 2.7 s | 6.2 s |
-| a later reset | 2.4 to 2.8 s | 1.9 to 2.1 s |
+| seconds per image, median (largest): left / right / wrist / rack | 0.059 / 0.062 / 0.042 / 0.047 (0.08) | 0.165 / 0.149 / 0.112 / 0.140 (0.19) |
+| a process's first reset (four images; lavapipe compiles the shaders) | 3.2 s | 6.4 to 7.0 s |
+| a later reset | 2.6 s | 2.0 to 2.1 s |
 | a control step without an image | 22 ms | 22 ms |
-| peak resident memory after 1 / 4 / 16 episodes in one process | 0.76 / 0.88 / 0.99 GB | 0.94 / 1.09 / 1.21 GB |
+| peak resident memory after 1 / 4 / 16 episodes in one process | 0.76 / 0.88 / 0.99 GB | 1.03 / 1.13 / 1.28 GB |
 
 Through the commissioning service's socket, as the agent's account (a step with one camera against a step with
-none): 0.152 / 0.147 / 0.106 / 0.144 s; a connection's first reset 6 to 8 s, a later one 2 s.
+none), on the same loaded host: 0.182 / 0.171 / 0.116 / 0.172 s; a connection's first reset 6 to 8 s, a later one 2 s.
 
 The price of an image stays 0.2 s: every camera draws in less, so the verifier's timeout arithmetic in `task.toml`
 (45000 images within the 9000 s budget) holds. That is what decided against shadow maps: with one for each lamp an
