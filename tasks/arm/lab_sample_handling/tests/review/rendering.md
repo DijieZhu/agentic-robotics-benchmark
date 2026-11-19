@@ -18,7 +18,8 @@ adds the sensor noise as before.
   the green mark and the knob bar are what `lab_sim` gives them, nothing is added to the bench and nothing taken
   from it. The physics model is read and never written.
 - **The robot**: the model's visual meshes of the arm, the hand and the fingers and the fingers' rubber pads (not
-  its collision hulls), in white and black shells and steel fingers, where the simulator's state has them.
+  its collision hulls), in white and black shells and steel fingers, where the simulator's state has them. They
+  are MuJoCo's own renderables of a robot-only copy of the model, which a process makes once (below).
 - **The room** (`render/room.npz`, `room.json` of the render bundle, 226,397 triangles, 53 colour maps): a
   laboratory bay with wall benches, shelf structures, glassware and boxes on them, the floor, the ceiling's ducts and
   luminaires, and the bench's own worktop and cabinet. Drawn only; the model's floor plane and table block are not
@@ -46,27 +47,45 @@ adds the sensor noise as before.
 | the price of an image | 0.2 s of the controller's budget, as before (`grader_config.json`); measured below |
 | the service and the grader draw the same image | byte copies of `lab_sim.py`, `lab_env.py`, `lab_render.py`, `lab_look.json` (a repository test); `test_draw_determinism.py` |
 
-`test_draw_determinism.py`, three processes on a maintainer's unit. A imports the grader's copy and B the
-service's; both run the same two episodes with the arm moving; A draws each camera once per step, B draws an extra
-image first, each camera ten times, then another order with repeats: 48 images compared, 0 differ; 0 repeated draws
-differ. R keeps two benches open and draws the left and right camera of each in turn twelve times, so that every
-turn loads the other bench's model into the renderer again: 0 of the 48 images differ from their first. Four runs in
-the task image and one in the verifier image, all passed. The images are also the same bytes with 2, 3 and 4
-rasteriser threads (48 of 48).
-Three things were needed for it:
+`test_draw_determinism.py`, on a maintainer's unit:
 
-- Filament's temporal dithering (a new noise per frame) is switched off (`lab_render._undither`);
+- A imports the grader's copy and B the service's; both run the same two episodes with the arm moving; A draws each
+  camera once per step, B draws an extra image first, each camera ten times, then another order with repeats: 48
+  images compared, 0 differ; 0 repeated draws differ;
+- R keeps two benches open and draws the left and right camera of each in turn twelve times, so that every turn
+  loads the other bench's model into the renderer again: 0 of the 48 images differ from their first;
+- twelve more fresh processes, by turns from the two copies, draw the first two steps of A's episodes: every image
+  is A's.
+
+Passed in the task image and in the verifier image. The images are also the same bytes with 2, 3 and 4 rasteriser threads (48 of 48). Three things were
+needed for it:
+
+- Filament's temporal dithering (a new noise per frame) is switched off (`lab_render._undither`). The view it
+  belongs to is found by a breadth-first search from the scene object: a depth-first one missed it once in about a
+  hundred process starts (a renderer error at a process's first image); breadth first, 480 of 480 starts found it;
 - every drawn box's faces are set in by 0.02 to 0.26 mm (by its place in the model): the bench is built from boxes
   whose faces lie in one plane (a sleeve's wall segments, the shield's plates), and which of two coplanar faces wins
   a pixel differed between processes;
-- the robot is not drawn from the episode's model but from renderables that a process makes once, at its first
-  episode, and moves every image (`lab_render.robot_parts`). The arm's shells pass through each other at the joints;
-  at a sample where two of them compute the same depth the one drawn first wins, and for renderables made anew per
-  episode Filament's order changed from one loading of a model to the next: about one loading in seven gave another
-  picture (one sample before the anti-aliasing and the ambient occlusion, a few dozen pixels by one level along the
-  robot's seams after them), in the second and later episodes of a process only. The first version of this test,
-  with two episodes per process, passed five times before it failed; phase R is what shows it every time (6 to 7
-  of 48 images on the renderer before the change).
+- the robot is not drawn from the episode's model but from MuJoCo's renderables of a robot-only copy of the
+  process's first episode's model, made once, before anything of an episode, and moved every image
+  (`lab_render.robot_model`). The arm's shells pass through each other at the joints; at a sample where two of them
+  compute the same depth the one drawn first wins, and for renderables made anew per episode Filament's order
+  changed from one loading of a model to the next: about one loading in seven gave another picture (one sample
+  before the anti-aliasing and the ambient occlusion, a few dozen pixels by one level along the robot's seams after
+  them), in the second and later episodes of a process only. A test with two episodes per process passed five times
+  before it failed; phase R shows it every time (6 to 7 of 48 images on the renderer before the change). The first
+  form of the fix (commit `d7a0f55`: the robot's meshes built from the model's arrays) passed the same tests; this
+  form draws the robot exactly as MuJoCo's renderables do (its fingers were 2 levels lighter in the first form),
+  as `keyed_nut_peg_assembly` does.
+
+Fresh processes beyond the test (maintainer runs: 288 processes that draw two benches at three states through the
+four cameras, 480 that draw one state through the `rack` and `left` cameras): one picture per view in all of them
+but one. That one process (of
+the 768 with the final renderer; none of the 96 with the first form) drew the `rack` camera's six pictures of both
+benches differently from every other process and its other eighteen pictures the same; the pictures were not kept,
+480 further starts with the pictures kept did not show it again, and no part of the robot is in that camera's
+view. Its cause is open: what a process draws is a function of the state in every case measured since, and an
+image of the service against the grader's may differ in that camera once in several hundred process pairs.
 
 ## The look and how close it is
 

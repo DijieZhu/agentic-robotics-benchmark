@@ -10,7 +10,7 @@ What is drawn
     nothing is added to the bench and nothing is taken from it;
   * the robot: the model's visual meshes of the arm, the hand and the fingers (its collision shapes are not drawn,
     except the fingers' rubber pads) where the simulator's state has them, as renderables that the process keeps
-    (robot_parts says why). The wrist camera sees the underside of the hand it is mounted in along its lower edge
+    (robot_model says why). The wrist camera sees the underside of the hand it is mounted in along its lower edge
     and the two fingers, where MuJoCo's own renderer showed the hand's collision box;
   * the room around the bench (room.npz / room.json of the render bundle in LAB_RENDER_DIR, default
     /opt/task-assets/payload/render): a laboratory's wall benches, cabinets and floor, and the bench's own worktop
@@ -31,7 +31,7 @@ An image is a function of the model, the simulator's state and the camera alone:
 gives the same bytes however often it is drawn, whatever was drawn before it, however many other episodes the
 process has drawn and in whichever process of the same image (Filament's temporal dithering, a new noise per frame,
 is off: _undither; no two drawn boxes share a face's plane: _drawn_model; the robot's shells are drawn in one
-order: robot_parts). The sensor noise stays lab_sim.render's.
+order: robot_model). The sensor noise stays lab_sim.render's.
 
 Filament runs in one dedicated thread per process (its engine is thread-bound; a forked child starts its own).
 Objects that live for the process: the context, the room and the robot (meshes, textures, materials, renderables),
@@ -126,7 +126,7 @@ CAM_FAR = 40.0                 # the room's far corner; the near plane is the si
 GEOM_GROUP = 1                 # what the cameras show of the episode's model, after _drawn_model regroups it
 HIDDEN_GROUP = 4
 SCENERY = ("table",)             # and every plane: the bundle draws the floor and the bench
-ROBOT_PARTS = ("robot", "hand", "finger", "pad")   # drawn by the process's own renderables (robot_parts), not the episode's
+ROBOT_PARTS = ("robot", "hand", "finger", "pad")   # drawn by the process's renderables (robot_model), not the episode's
 
 
 class RenderError(RuntimeError):
@@ -243,7 +243,7 @@ def part_of_geom(m, g):
 
 def _drawn_model(m, look):
     """A copy of the episode's model with the render-only fields set for Filament (the physics model is untouched):
-    the bench's drawn geoms in group GEOM_GROUP and everything else in HIDDEN_GROUP (the robot too: robot_parts);
+    the bench's drawn geoms in group GEOM_GROUP and everything else in HIDDEN_GROUP (the robot too: robot_model);
     every part of the bench on the material lab_sim.build added for its kind (look_<part>), in the geoms' own colour
     and opacity (the lid's plate stays as see-through as the model has it); PBR terms from the look. All geoms of one
     kind have one colour in a model; a model in which they do not is refused. Boxes are drawn a hair smaller (below)."""
@@ -254,7 +254,7 @@ def _drawn_model(m, look):
     part_mat = {}
     for g in range(d.ngeom):
         part = part_of_geom(m, g)
-        if part is None or part in ROBOT_PARTS:         # the robot: the process's own renderables (robot_parts)
+        if part is None or part in ROBOT_PARTS:         # the robot: the process's renderables (robot_model)
             d.geom_group[g] = HIDDEN_GROUP
             continue
         d.geom_group[g] = GEOM_GROUP
@@ -285,78 +285,91 @@ def _drawn_model(m, look):
     return d
 
 
-def _box_arrays(half):
-    """A box with the half sizes `half`: 24 vertices, their normals, 12 triangles (counter-clockwise from outside)."""
-    V, N, I = [], [], []
-    for ax in range(3):
-        for sgn in (1.0, -1.0):
-            n = np.zeros(3)
-            n[ax] = sgn
-            u = np.zeros(3)
-            u[(ax + 1) % 3] = 1.0
-            w = np.cross(n, u)
-            k = len(V)
-            for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
-                V.append((n + a * u + b * w) * half)
-                N.append(n)
-            I += [k, k + 1, k + 2, k, k + 2, k + 3]
-    return np.asarray(V, np.float32), np.asarray(N, np.float32), np.asarray(I, np.uint32)
-
-
-def _mesh_arrays(m, j):
-    """Mesh `j` of the model as separate triangles: every corner its vertex and its normal (in the mesh's frame)."""
-    va, na, fa, fn = int(m.mesh_vertadr[j]), int(m.mesh_normaladr[j]), int(m.mesh_faceadr[j]), int(m.mesh_facenum[j])
-    V = m.mesh_vert[va:va + int(m.mesh_vertnum[j])][m.mesh_face[fa:fa + fn].ravel()]
-    N = m.mesh_normal[na:na + int(m.mesh_normalnum[j])][m.mesh_facenormal[fa:fa + fn].ravel()]
-    return np.ascontiguousarray(V, np.float32), np.ascontiguousarray(N, np.float32), np.arange(len(V), dtype=np.uint32)
-
-
-def robot_parts(m, look):
-    """The robot as the cameras draw it: for every drawn geom of the arm, the hand and the fingers (the visual
-    meshes; of the collision shapes only the fingers' rubber pads) its index in the model, its shape and its
-    material from the look (the arm's shells by the colour of the model's own material: white, black or other; the
-    hand, the fingers and the pads by their kind). Returns (parts, signature): the signature is the same for two
-    models whose robot is drawn the same.
-
-    These geoms are not drawn from the episode's model: the renderer keeps one set of renderables for the robot for
-    the life of the process (made at its first episode) and moves them every image. The reason is the order in which
-    Filament draws: the shells of the arm pass through each other at the joints, and at a sample where two of them
-    compute the same depth the one drawn first wins. For renderables made anew per episode that order changed
-    from one loading to the next and from process to process (about one loading in seven; a few dozen pixels by
-    one level along the seams after the anti-aliasing and the ambient occlusion); for renderables made once, in
-    the model's order, before anything else of an episode, it is the same in every process."""
-    rules = look["model_materials"]
-    parts, sig = [], hashlib.sha256()
+def robot_geoms(m, look):
+    """The robot's drawn geoms (the visual meshes of the arm, the hand and the fingers; of the collision shapes only
+    the fingers' rubber pads): (their indices in the model, in the model's order; a signature). The signature is the
+    same for two models whose robot is the same, geom for geom in that order, wherever in the model it stands (a
+    bench with other parts before the robot has it at other indices): every episode of a process must have the
+    robot of the first, whose renderables the process keeps (robot_model)."""
+    idx, sig = [], hashlib.sha256()
+    meshes = {}
     for g in range(m.ngeom):
         part = part_of_geom(m, g)
         if part not in ROBOT_PARTS:
             continue
-        mid = int(m.geom_matid[g])
-        own = np.asarray(m.mat_rgba[mid, :3] if mid >= 0 else m.geom_rgba[g, :3], float)
-        if part == "robot":
-            r = rules["robot_default"]
-            for rule in rules["robot_by_colour"]:
-                if rule["lum_min"] <= float(np.mean(own)) < rule["lum_max"] and float(np.ptp(own)) <= rule.get("chroma_max", 9.0):
-                    r = rule
-                    break
-        else:
-            r = rules[part]
-        rgb = _gain_srgb(r.get("srgb", own), r.get("gain", 1.0))
-        gt = int(m.geom_type[g])
-        if gt == int(mujoco.mjtGeom.mjGEOM_MESH):
-            shape = ("mesh", int(m.geom_dataid[g]))
-            j = shape[1]
+        idx.append(g)
+        mid, j = int(m.geom_matid[g]), int(m.geom_dataid[g])
+        if j >= 0 and j not in meshes:
             va, fa = int(m.mesh_vertadr[j]), int(m.mesh_faceadr[j])
-            sig.update(m.mesh_vert[va:va + int(m.mesh_vertnum[j])].tobytes())
-            sig.update(m.mesh_face[fa:fa + int(m.mesh_facenum[j])].tobytes())
-        elif gt == int(mujoco.mjtGeom.mjGEOM_BOX):
-            shape = ("box", tuple(float(x) for x in m.geom_size[g]))
-        else:
-            raise RenderError("renderer: a drawn robot geom that is neither a mesh nor a box (%s)" % m.geom(g).name)
-        mat = (tuple(float(x) for x in rgb), float(r["roughness"]), float(r["metallic"]), float(r.get("specular", 0.5)))
-        sig.update(repr((part, m.body(m.geom_bodyid[g]).name, shape[0], shape[1] if shape[0] == "box" else 0, mat)).encode())
-        parts.append({"geom": g, "shape": shape, "material": mat})
-    return parts, sig.hexdigest()
+            meshes[j] = hashlib.sha256(m.mesh_vert[va:va + int(m.mesh_vertnum[j])].tobytes()
+                                       + m.mesh_face[fa:fa + int(m.mesh_facenum[j])].tobytes()).hexdigest()
+        sig.update(repr((part, m.body(m.geom_bodyid[g]).name, int(m.geom_type[g]), meshes.get(j), m.geom_size[g].tolist(),
+                         m.geom_rgba[g].tolist(), m.geom_pos[g].tolist(), m.geom_quat[g].tolist(),
+                         (m.mat_rgba[mid].tolist(), float(m.mat_shininess[mid])) if mid >= 0 else None)).encode())
+    sig.update(json.dumps(look["model_materials"], sort_keys=True).encode())
+    return np.asarray(idx, np.intp), sig.hexdigest()
+
+
+def robot_model(m, look):
+    """A copy of an episode's model in which only the robot is drawn, with the render-only fields set for Filament
+    (the episode's model is untouched): the robot's drawn geoms in group GEOM_GROUP, everything else in
+    HIDDEN_GROUP; the hand, the fingers and their pads on the materials lab_sim.build added for them (look_hand,
+    look_finger, look_pad); the arm's shells on their own materials, with the look's PBR terms by the material's
+    colour (white covers, dark joints, the rest).
+
+    The process keeps the copy of its first episode and MuJoCo's renderables of it for good, and every image moves
+    them to the state's poses (_Filament.draw). The reason is the order in which Filament draws: the shells of the
+    arm pass through each other at the joints, and at a sample where two of them compute the same depth the one
+    drawn first wins. For renderables that MuJoCo made anew per episode that order changed from one loading of a
+    model to the next (about one loading in seven; a few dozen pixels by one level along the seams after the
+    anti-aliasing and the ambient occlusion); the renderables of a process's first loading are drawn in the same
+    order in every process."""
+    d = copy.copy(m)
+    rules = look["model_materials"]
+    for t in range(d.ntex):
+        d.tex_colorspace[t] = int(mujoco.mjtColorSpace.mjCOLORSPACE_SRGB)        # Filament reads "auto" as linear
+    part_mat = {}
+    for g in range(d.ngeom):
+        part = part_of_geom(m, g)
+        if part not in ROBOT_PARTS:
+            d.geom_group[g] = HIDDEN_GROUP
+            continue
+        d.geom_group[g] = GEOM_GROUP
+        if part == "robot":
+            continue
+        name = "look_" + part
+        if part not in part_mat:
+            mid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_MATERIAL, name)
+            if mid < 0:
+                raise RenderError("renderer: the model has no material %r (lab_sim.build adds them)" % name)
+            r = rules[part]
+            d.mat_rgba[mid, :3] = _gain_srgb(r.get("srgb", m.geom_rgba[g, :3]), r.get("gain", 1.0))
+            d.mat_rgba[mid, 3] = 1.0
+            d.mat_roughness[mid] = r["roughness"]
+            d.mat_metallic[mid] = r["metallic"]
+            d.mat_specular[mid] = r.get("specular", 0.5)
+            part_mat[part] = mid
+        d.geom_matid[g] = part_mat[part]
+        d.geom_rgba[g] = [0.5, 0.5, 0.5, 1.0]           # MuJoCo's default: the material's colour is the geom's
+    for i in range(d.nmat):
+        name = d.mat(i).name
+        if name.startswith("look_") or (d.mat_texid[i] >= 0).any():
+            continue                                    # (PBR terms on a textured material crash MuJoCo 3.16's Filament)
+        r = rules["robot_default"]
+        lum = float(np.mean(d.mat_rgba[i, :3]))
+        for rule in rules["robot_by_colour"]:
+            if rule["lum_min"] <= lum < rule["lum_max"] and float(np.ptp(d.mat_rgba[i, :3])) <= rule.get("chroma_max", 9.0):
+                r = rule
+                break
+        d.mat_roughness[i] = r["roughness"]
+        d.mat_metallic[i] = r["metallic"]
+        d.mat_specular[i] = r.get("specular", 0.5)
+        if "srgb" in r:
+            d.mat_rgba[i, :3] = r["srgb"]
+        d.mat_rgba[i, :3] = _gain_srgb(d.mat_rgba[i, :3], r.get("gain", 1.0))
+    d.light_intensity[:] = 0.0
+    d.light_castshadow[:] = 0
+    return d
 
 
 class Episode(object):
@@ -364,8 +377,9 @@ class Episode(object):
 
     def __init__(self, m, look):
         t0 = time.perf_counter()
+        self.source = m                                 # the episode's own model (read only: robot_model copies it)
         self.model = _drawn_model(m, look)
-        self.robot, self.robot_sig = robot_parts(m, look)
+        self.robot, self.robot_sig = robot_geoms(m, look)
         if str(look["render"].get("mount_camera", "")):
             raise RenderError("renderer: render.mount_camera is not supported (the hand's shell is drawn for every camera)")
         self.gain = float(look["exposure_scale"])
@@ -473,7 +487,7 @@ class _Filament(object):
         self.next_sid = 0
         self.view = None                               # the filament::View, once its dithering is off (_undither)
         self.stats = {"activations": 0, "frames": 0, "targets_created": 0}
-        self.robot = self.robot_sig = None                 # the robot's renderables, for the process (_robot)
+        self.robot = None                              # the robot's model, data and renderables, for the process (_robot)
         self.thread = threading.Thread(target=self._loop, name="lab-filament", daemon=True)
         self.thread.start()
         try:
@@ -697,7 +711,7 @@ class _Filament(object):
         t0 = time.perf_counter()
         ep = self.sessions[sid]
         self._evict()
-        self._robot(ep)                                 # before anything of the episode is made (robot_parts)
+        self._robot(ep)                                 # before anything of the episode is made (robot_model)
         res = F.ModelResources(self.ctx, ep.model)
         rends = F.ModelRenderables(self.scn, res)
         opt = mujoco.MjvOption()
@@ -713,29 +727,26 @@ class _Filament(object):
         self.last_activation_s = time.perf_counter() - t0
 
     def _robot(self, ep):
-        """The robot's renderables: made once, at the process's first episode, in the model's order (robot_parts);
-        every later episode must draw the same robot."""
+        """The robot's renderables: MuJoCo's own, of a robot-only copy of the process's first episode's model
+        (robot_model), made once, before anything of an episode; every later episode must draw the same robot
+        (robot_geoms)."""
         if self.robot is not None:
-            if ep.robot_sig != self.robot_sig:
+            if ep.robot_sig != self.robot["sig"]:
                 raise RenderError("renderer: this episode's robot is not the one the process draws")
             return
         F = self.F
-        made, meshes = [], {}
-        for p in ep.robot:
-            shape = p["shape"]
-            if shape not in meshes:
-                V, N, I = _mesh_arrays(ep.model, shape[1]) if shape[0] == "mesh" else _box_arrays(np.asarray(shape[1]))
-                meshes[shape] = (self._mesh(V, N, np.zeros((len(V), 2), np.float32), I), len(I))
-            mesh, count = meshes[shape]
-            rgb, rough, metal, spec = p["material"]
-            mat = F.Material(color=np.array([rgb[0], rgb[1], rgb[2], 1.0], np.float32), roughness=rough, metallic=metal, specular=spec)
-            r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=True, receive_shadow=True))
-            r.set_mesh(mesh, 0, count)
-            r.set_material(mat)
-            r.set_size(np.ones(3, np.float32))
-            self.scn.add_renderable(r)
-            made.append((r, mesh, mat))
-        self.robot, self.robot_sig = made, ep.robot_sig
+        model = robot_model(ep.source, self.look)
+        data = mujoco.MjData(model)
+        mujoco.mj_forward(model, data)
+        res = F.ModelResources(self.ctx, model)
+        rends = F.ModelRenderables(self.scn, res)
+        opt = mujoco.MjvOption()
+        opt.geomgroup[:] = 0
+        opt.geomgroup[GEOM_GROUP] = 1
+        opt.sitegroup[:] = 0
+        rends.set_options(opt)
+        self.robot = {"sig": ep.robot_sig, "idx": ep.robot.copy(), "model": model, "data": data, "res": res,
+                      "rends": rends, "opt": opt}
 
     def _lamps(self, ep):
         F = self.F
@@ -788,9 +799,10 @@ class _Filament(object):
         self._activate(sid)
         ep = self.sessions[sid]
         self.live["rends"].update(data)
-        for (r, _mesh, _mat), p in zip(self.robot, ep.robot):          # the robot's shells, where the state has them
-            g = p["geom"]
-            r.set_pose(np.asarray(data.geom_xpos[g], np.float32), np.asarray(data.geom_xmat[g], np.float32))
+        R = self.robot                                  # the robot: MuJoCo's renderables of the process's copy, at
+        R["data"].geom_xpos[R["idx"]] = data.geom_xpos[ep.robot]       # this state's poses (geom for geom: this
+        R["data"].geom_xmat[R["idx"]] = data.geom_xmat[ep.robot]       # episode's robot may stand at other indices)
+        R["rends"].update(R["data"])
         self.head.set_pose(np.asarray(pos, np.float32), np.asarray(forward, np.float32))
         self.head.set_intensity(float(ep.head_lux))
         tgt, read, buf = self._target(width, height)
@@ -805,8 +817,7 @@ class _Filament(object):
         self.ctx.wait_for_frame(self.ctx.render([req], [read]))
         self.stats["frames"] += 1
         if self.view is None:                          # the process's first image: switch the dithering off, again
-            self._undither(width, height, bool(rv["shadows"]), bool(rv["post_processing"]),
-                           lambda: self.ctx.wait_for_frame(self.ctx.render([req], [read])))
+            self._undither(width, height, bool(rv["shadows"]), bool(rv["post_processing"]))
             self.ctx.wait_for_frame(self.ctx.render([req], [read]))
         return buf.copy()
 
@@ -822,7 +833,7 @@ class _Filament(object):
     VIEW_SET_DITHERING = "_ZN8filament4View12setDitheringENS_9DitheringE"
     VIEW_GET_DITHERING = "_ZNK8filament4View12getDitheringEv"
 
-    def _undither(self, width, height, shadows, post, redraw):
+    def _undither(self, width, height, shadows, post):
         lib = ctypes.CDLL(self.F.__file__)
         try:
             setd, getd = getattr(lib, self.VIEW_SET_DITHERING), getattr(lib, self.VIEW_GET_DITHERING)
@@ -840,37 +851,33 @@ class _Filament(object):
             k = libc.write(wfd, addr, n)
             return os.read(rfd, k) if k > 0 else None
 
-        def walk(addr, n, depth, span, levels):        # pointers within n bytes of addr, `levels` levels deep
-            b = read(addr, n)
-            for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
-                if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
-                    continue
-                seen.add(p)
-                v = None if p % 16 else read(p + 0x268, 0x4e)
-                if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
-                    found.add(p)
-                if depth < levels:
-                    walk(p, span, depth + 1, span, levels)
-        tried = []
+        # Every pointer within three steps of the Scene object, breadth first: the pointers in the object's first 64
+        # bytes, then the ones in the 512 bytes each of those points at, then once more. (A depth-first walk with one
+        # set of visited pointers for all depths can miss the view: a block that it meets first at its last level,
+        # through some other pointer, is then never read at the level where its own pointers still count. Seen once
+        # in about a hundred process starts here, as a RenderError at the process's first image, and in
+        # keyed_nut_peg_assembly, where the breadth-first search then found the view in 200 of 200 starts.)
         try:
-            # 512 bytes and three levels find it; once in about a hundred process starts they found nothing (seen
-            # once, on a loaded host), so a search that fails is repeated wider, then after one more frame
-            for span, levels, again in ((512, 3, False), (1024, 4, False), (2048, 4, True)):
-                if again:
-                    redraw()
-                found.clear()
-                seen.clear()
-                walk(id(self.scn), 64, 1, span, levels)
-                tried.append(len(found))
-                if len(found) == 1:
-                    break
+            level = [(id(self.scn), 64)]
+            for _depth in range(3):
+                nxt = []
+                for addr, n in level:
+                    b = read(addr, n)
+                    for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
+                        if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
+                            continue
+                        seen.add(p)
+                        v = None if p % 16 else read(p + 0x268, 0x4e)
+                        if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
+                            found.add(p)
+                        nxt.append((p, 512))
+                level = nxt
         finally:
             os.close(rfd)
             os.close(wfd)
         if len(found) != 1:
-            raise RenderError("renderer: cannot find the Filament view to switch its dithering off (candidates per "
-                              "search: %s)" % tried)
-        self.undither_searches = len(tried)
+            raise RenderError("renderer: cannot find the Filament view to switch its dithering off (%d candidates)"
+                              % len(found))
         self.view = found.pop()
         setd(self.view, 0)                             # filament::View::Dithering::NONE
         if getd(self.view) != 0:
@@ -899,6 +906,9 @@ class _Filament(object):
         self.targets.clear()
         self.lamps = {}
         self.room = []
+        R = getattr(self, "robot", None) or {}
+        for k in ("rends", "res"):                      # renderables before the resources they draw
+            R.pop(k, None)
         self.robot = None
         self.room_textures = []
         self.head = self.ibl = None

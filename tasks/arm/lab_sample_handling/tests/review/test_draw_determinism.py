@@ -3,6 +3,7 @@ the bench draw the same bytes? (lab_render; a review tool, run in the task image
 the grader never runs it)
 
     python3 -B test_draw_determinism.py [--tests DIR] [--service DIR] [--seeds 9001,9002] [--steps 6] [--reloads 12]
+        [--processes 12]
 
 DIR defaults: --tests the task's tests/ (this file's parent directory when it sits in tests/review/, else
 /task/tests); --service the commissioning service's folder (/opt/labbench-commission in the task image, the task's
@@ -13,10 +14,13 @@ imports lab_env, lab_sim and lab_render from --tests and draws left, right, wris
 sensor noise). Child B imports them from --service, draws one extra image before the episode, each camera 10 times
 at the first step, then per step another order with repeats. Child R (from --tests) keeps two benches open and
 draws the left and right camera of each in turn, --reloads times: every turn loads the other bench's model into the
-renderer again. Fails (exit 1) when a repeated draw in B differs from the first, an image of B differs from A's
-image of the same (seed, step, camera), or a bench's image in R differs from its first: what is drawn before an
-image, how often, in which process, from which of the two copies and after how many other benches must not change
-it. (The reloads are what found the draw order of the robot's shells: lab_render.robot_parts.)
+renderer again. Then --processes more fresh processes, by turns from --tests and from --service, each draw the first
+two steps of A's episodes. Fails (exit 1) when a repeated draw in B differs from the first, an image of B or of one
+of the fresh processes differs from A's image of the same (seed, step, camera), or a bench's image in R differs
+from its first: what is drawn before an image, how often, in which process, from which of the two copies and after
+how many other benches must not change it. (The reloads are what found the draw order of the robot's shells:
+lab_render.robot_model. The fresh processes are there because an order that holds within a process need not be the
+same in the next one: keyed_nut_peg_assembly's record.)
 """
 import argparse
 import hashlib
@@ -52,7 +56,7 @@ class NoNoise(object):
 
 
 def child(args):
-    sys.path.insert(0, args.service if args.child == "B" else args.tests)
+    sys.path.insert(0, args.service if args.child in ("B", "S") else args.tests)
     import numpy as np
     import lab_env as E
     import lab_render as R
@@ -96,7 +100,7 @@ def child(args):
             draw("wrist")                          # an extra image before the episode's first
         for step in range(args.steps):
             env.step(ACTION)
-            if args.child == "A":
+            if args.child in ("A", "S"):                # S: A's draws, from the service's copy
                 seq = list(CAMS)
             elif step == 0:
                 seq = [c for c in CAMS for _ in range(10)]
@@ -119,6 +123,7 @@ def main():
     ap.add_argument("--seeds", default="9001,9002")
     ap.add_argument("--steps", type=int, default=6)
     ap.add_argument("--reloads", type=int, default=12)
+    ap.add_argument("--processes", type=int, default=12)
     ap.add_argument("--child", default=None)
     args = ap.parse_args()
     if args.service is None:
@@ -126,15 +131,29 @@ def main():
     if args.child:
         return child(args)
     res = {}
-    for name in ("A", "B", "R"):
+
+    def run_child(name, steps):
         cmd = [sys.executable, "-B", os.path.abspath(__file__), "--child", name, "--tests", args.tests,
-               "--service", args.service, "--seeds", args.seeds, "--steps", str(args.steps), "--reloads", str(args.reloads)]
+               "--service", args.service, "--seeds", args.seeds, "--steps", str(steps), "--reloads", str(args.reloads)]
         p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         lines = [l for l in p.stdout.splitlines() if l.startswith("RESULT ")]
         if p.returncode != 0 or not lines:
             print("child %s failed (exit %d):\n%s" % (name, p.returncode, p.stderr[-3000:]))
+            return None
+        return json.loads(lines[-1][7:])
+
+    for name in ("A", "B", "R"):
+        res[name] = run_child(name, args.steps)
+        if res[name] is None:
             return 2
-        res[name] = json.loads(lines[-1][7:])
+    fresh_off = []                                      # fresh processes whose images are not A's
+    for i in range(args.processes):
+        f = run_child("A" if i % 2 == 0 else "S", min(args.steps, 2))
+        if f is None:
+            return 2
+        bad = sorted(k for k, v in f["img"].items() if res["A"]["img"].get(k) != v)
+        if bad or not f["img"]:
+            fresh_off.append("process %d (%s): %s" % (i, "tests" if i % 2 == 0 else "service", bad[:4]))
     a, b, r = res["A"], res["B"], res["R"]
     differ = sorted(k for k in a["img"] if b["img"].get(k) != a["img"][k])
     print("A: %s, %s" % (a["env"], a["renderer"]))
@@ -144,7 +163,9 @@ def main():
     print("repeated draws in B that differ from the first: %d" % len(b["repeat_fail"]), b["repeat_fail"][:8])
     print("R: %d reloads of two benches, %d images each time; images that differ from their first: %d"
           % (args.reloads, len(r["img"]), len(r["repeat_fail"])), r["repeat_fail"][:8])
-    ok = (not differ and not b["repeat_fail"] and not r["repeat_fail"] and len(a["img"]) == len(b["img"])
+    print("fresh processes: %d, each %d images; processes with an image that is not A's: %d"
+          % (args.processes, len(args.seeds.split(",")) * min(args.steps, 2) * len(CAMS), len(fresh_off)), fresh_off[:6])
+    ok = (not differ and not b["repeat_fail"] and not r["repeat_fail"] and not fresh_off and len(a["img"]) == len(b["img"])
           and os.path.dirname(a["renderer"]) != os.path.dirname(b["renderer"]))
     print("PASS" if ok else "FAIL")
     return 0 if ok else 1
