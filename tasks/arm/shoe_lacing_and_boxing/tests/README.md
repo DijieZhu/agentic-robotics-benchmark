@@ -197,7 +197,9 @@ anchor is the oracle's full or near-full score with `full_at` near 1. Here:
   1001, 1040) the image reproduced the host venv's runs of the oracle report exactly (work score, simulated time, every
   event and the final qpos sha256; CPython 3.12.14 against 3.12.11, OpenBLAS with 2 threads against 1, the wire and two
   camera frames against an in-process call). In the verify each of the six episodes repeated its selection run (the
-  same score, simulated time, ticks and per-pair detail).
+  same score, simulated time, ticks and per-pair detail). On a host with AVX-512 the reference takes other
+  trajectories unless numpy's dispatch and OpenBLAS's kernels are held to the selection host's (the wire
+  amendment below).
 * The anchor, `tests/anchor.json`: one full verify of the `solve.sh` submission in a fresh container of the image laid
   out as the separate verifier (`tests/review/regrade.sh`: tests/ root-only at /opt/ale/tests, only the submission
   restored, `bash test.sh` as root, no network, 8 CPUs; from the committed tests/ of `8f876cc`): all six episodes 1.0,
@@ -228,6 +230,48 @@ anchor is the oracle's full or near-full score with `full_at` near 1. Here:
   (`tests/` of d81821e, run `survivor-shoe-verify-3`) repeated every kept selection run, the same score, simulated
   time, ticks and per-pair detail in all six (each 1.00; verify wall 4593 s). The anchor keeps all three verifies;
   value and full_at are unchanged.
+* The wire amendment (2026-11-19, the third in `amendments`, kind `wire`): the program launcher's wire binding alone.
+  `shoecell.client.connect_stdio` kept a copy of file descriptor 1 for the wire and rebound only `sys.stdout` to
+  stderr, so output a native library wrote to descriptor 1 reached the wire, where the grader's wire ends the episode
+  at the first line that is not JSON (`protocol`). Measured in the task image as the run account: SciPy's HiGHS with
+  its log on (`linprog(..., options={"disp": True})`) wrote its first log line there before the program's first
+  request, so all six episodes of a verify ended `protocol` and, with no step made, contract_ok was 0. MuJoCo's
+  Filament renderer (a `LocalCell` frame) writes seven start-up lines there, once per process: 473 bytes on a 48-thread
+  host, where the first of them (a thread-pool notice) appears only on hosts with many hardware threads. In the
+  program's own process C stdio holds them in its buffer until the process exits, after `finish`. A worker process
+  that renders (`multiprocessing`, spawn start method) flushes them when it exits, before `finish`: under the old
+  client that ended all six episodes of a verify `protocol` (contract_ok 0), and with this change they end `finish`.
+  `connect_stdio` now also points descriptor 1 at stderr (`os.dup2(2, 1)` after the wire's copy), and `cell_api.md`
+  says so. The client's three copies and `cell_api.md`'s two changed (byte-identical, pinned by `given_hashes.json`);
+  the frozen files among them are `tests/shoecell/client.py` and `tests/given_hashes.json` (the repository test allows
+  only these two for this kind). The amendment records the two given-file pins it changed, before and after
+  (`given_pins`), and the repository test rebuilds the previous `given_hashes.json` from them: only those two pins
+  differ.
+  No episode runs or scores differently for a program that does not write to descriptor 1 itself, and the image's
+  inputs are unchanged. The check is the same as for the amendments before, the reference's full verify on an image
+  rebuilt from the unchanged `environment/` (`wirefix-shoe-task:84b81b9`), on a host with AVX-512: there numpy's SIMD
+  dispatch and OpenBLAS's SkylakeX kernels give the reference other last bits than on the selection host (no AVX-512),
+  so the verify ran with numpy held to its AVX2 paths and OpenBLAS on its Zen kernels
+  (`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL OPENBLAS_CORETYPE=Zen`) and repeated every kept selection run, the same
+  score, simulated time, ticks and per-pair detail in all six (run `wirefix-shoe-verify-2`, each 1.00; verify wall
+  5302 s). Without the pins (run `wirefix-shoe-verify-1`) every episode scored its selection run's score (work_score
+  1) on another trajectory, and on two seeds (one episode each through `verify.run_episode`) the old and the new
+  `tests/` gave the same trajectory to the bit. The anchor keeps all five verifies; value and full_at are unchanged.
+* The second lockdown amendment (2026-11-19, the fourth in `amendments`, kind `lockdown`): `tests/verify.py`'s
+  verify-start lockdown alone. A race between the image's desktop and the first episode's network audit failed
+  `ale validate` of the oracle: without this change 5 of 6 runs failed (all 4 on the remote validate host, 1 of 2
+  locally), with 2 or 6 TCP active opens counted and every episode at 1.0 before the gate. The verify-start kill stops
+  the agent account's desktop, and supervisord starts it once more after its 1 s backoff, about 1 s after the kill. In
+  the few milliseconds before the freezer stops them, the respawned X clients (`xdpyinfo -display :1` from the image's
+  `start-gnome.sh`, `dbus-launch --autolaunch` from pulseaudio) find no X server listening on :1, and libxcb falls
+  back to TCP on localhost:6001, which refuses: 2 active opens per attempt. All 6 counted opens of an instrumented
+  remote run came at about 1.1 s, inside episode 1; one instrumented local run passed because its first episode began
+  after the burst. The grader now waits, after the lockdown, until the account has had no new and no running process
+  for 5 s (at most 30 s), freezes it every 50 ms meanwhile, and logs the wait. No episode runs or scores differently,
+  and the image is unchanged (the repository test allows only `tests/verify.py` for this kind). The check is the wire
+  amendment's, with its pinned numerics: the reference's full verify on the same image (run `netgate-shoe-verify-1`)
+  repeated every kept selection run, the same score, simulated time, ticks and per-pair detail in all six (each 1.00;
+  verify wall 4467 s). The anchor keeps all six verifies; value and full_at are unchanged.
 * What the agent sees: `instruction.md` says the hidden episodes use other seeds and that the cell builds their scenes
   with the same code (it said "fresh seeds of the same distribution" before; a selected set is neither). Nothing
   agent-visible names the set, its selection or the token (the repository test); the cell library's own mentions of

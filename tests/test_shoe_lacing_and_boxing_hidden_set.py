@@ -9,8 +9,9 @@ tests/review/select_set.py), and verify.py runs that list as it stands. The cell
 agent's givens and the grader's copy of the givens) are byte-identical and pinned by tests/given_hashes.json, and the
 lid tray's delivery spot keeps even the biggest lid inside the rim. The files the set was selected with (the reference, the cell, the grader, the
 image's inputs) are unchanged since (their sha256 in the selection record), or changed only by a recorded amendment
-that touched the cameras' renderer alone, or the grader's verify-start lockdown alone, and after which the reference's
-full verify on the amended image repeated every selection run (score, simulated time, ticks and per-pair detail).
+that touched the cameras' renderer alone, or the grader's verify-start lockdown alone, or the program launcher's wire
+binding alone (with the given-file pins it changed recorded), and after which the reference's full verify on the amended image repeated every selection run (score,
+simulated time, ticks and per-pair detail).
 The anchor is the lowest work_score of the recorded full verifies of the privileged submission on the set, with a
 full_at under which those verifies still read reward 1.0. Nothing the agent sees names the token, the set or its selection; the cell library's own mentions of its
 privileged calls (the PR author's public cell code, byte-identical to the grader's) are pinned as they are.
@@ -56,7 +57,13 @@ AMENDMENTS = SELECTION.get("amendments", [])
 RENDER_ONLY = ("tests/shoecell/cameras.py", "tests/shoecell/physics.py", "tests/shoecell/look.py",
                "tests/given_hashes.json", "environment/Dockerfile")
 # ... or the grader's verify-start lockdown alone (kind "lockdown": tests/verify.py, nothing an episode runs or scores)
-AMENDABLE = {"renderer": RENDER_ONLY, "lockdown": ("tests/verify.py",)}
+# ... or the program launcher's wire binding alone (kind "wire": the given client's connect_stdio also points file
+# descriptor 1 at stderr, so native output cannot corrupt the wire; tests/shoecell/client.py and its given-file pins in
+# tests/given_hashes.json; nothing an episode runs or scores for a program that does not write to fd 1 itself)
+AMENDABLE = {"renderer": RENDER_ONLY, "lockdown": ("tests/verify.py",),
+             "wire": ("tests/shoecell/client.py", "tests/given_hashes.json")}
+# the given-file pins a "wire" amendment may change in tests/given_hashes.json (it records them: given_pins)
+WIRE_GIVEN = ("given/lib/shoecell/client.py", "given/cell/cell_api.md")
 
 
 def current_frozen():
@@ -219,6 +226,35 @@ class FrozenTests(unittest.TestCase):
             for e in v["episodes"]:
                 self.assertTrue(e["equals_selection_run"] and e["same_trajectory"], e["seed"])
             prev = am["frozen"]
+
+    def test_a_wire_amendment_changed_only_the_given_pins_it_records(self):
+        """Kind "wire": tests/given_hashes.json differs from its version before the amendment only in the pins the
+        amendment records (given_pins, before and after; the launcher and cell_api.md at most). The earlier version is
+        rebuilt from the later one and those pins, and must hash to the earlier frozen digest. The walk goes back from
+        the last amendment and ends at the first one that changed given_hashes.json without recording its pins."""
+        given = json.loads((TASK / "tests/given_hashes.json").read_text())
+        frozen_before = [SELECTION["frozen"]] + [am["frozen"] for am in AMENDMENTS[:-1]]
+        checked = 0
+        for am, before in reversed(list(zip(AMENDMENTS, frozen_before))):
+            if "tests/given_hashes.json" not in am["changed"]:
+                continue
+            if am.get("kind") != "wire":
+                break
+            pins = am["given_pins"]
+            self.assertTrue(pins)
+            self.assertTrue(set(pins) <= set(WIRE_GIVEN), set(pins) - set(WIRE_GIVEN))
+            for key, pin in sorted(pins.items()):
+                self.assertEqual(given[key], pin["after"], key)
+                self.assertNotEqual(pin["before"], pin["after"], key)
+                given[key] = pin["before"]
+            text = json.dumps(given, indent=1, sort_keys=True) + "\n"
+            self.assertEqual(hashlib.sha256(text.encode()).hexdigest(), before["tests/given_hashes.json"],
+                             "given_hashes.json before the wire amendment differs in more than its given_pins")
+            checked += 1
+        # the last amendment that changed given_hashes.json is the one checked, whatever came after it
+        touched = [am for am in AMENDMENTS if "tests/given_hashes.json" in am["changed"]]
+        if touched and touched[-1].get("kind") == "wire":
+            self.assertGreaterEqual(checked, 1)
 
     def test_every_reference_and_cell_file_is_frozen(self):
         frozen = set(current_frozen())
