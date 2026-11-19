@@ -239,7 +239,7 @@ def secure_exec_path(dirs=None):
     return changed
 
 
-def deprivileged(argv, **kwargs):
+def deprivileged(argv, clear_account=True, **kwargs):
     """Run `argv` as the agent account instead of as root.
 
     Two callers need this and both are security-critical:
@@ -259,8 +259,17 @@ def deprivileged(argv, **kwargs):
     kit inherited it: `runuser -u <user> --` preserves it, and the agent's `run.sh` is the
     agent's own code, which must keep its normal PATH (the venv's `python3` lives on it).
     After `secure_exec_path`, that inherited PATH holds no agent-writable directory anyway.
+
+    The agent's account is cleared first too (`account.clear_agent_account`, once per sandbox):
+    the image's desktop session runs as that account under a supervisor that restarts it, and a
+    process the agent's code can get restarted, or can talk to, runs outside everything the
+    grader imposes on what it starts here. `clear_account=False` keeps the session, for a grader
+    that needs the sandbox's desktop while agent code runs and accepts what that leaves open.
     """
     secure_exec_path()
+    if clear_account:
+        from .account import clear_agent_account  # here, not at the top: account imports this module
+        clear_agent_account()
     return subprocess.Popen(  # noqa: S603 — caller-fixed argv, no shell
         [_resolve_root_tool("runuser"), "-u", agent_user(), "--"] + list(argv), **kwargs
     )

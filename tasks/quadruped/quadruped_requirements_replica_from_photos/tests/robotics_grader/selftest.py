@@ -16,7 +16,7 @@ import sys
 import tempfile
 import time
 
-from . import scoring, seeds, solver as solver_mod, stage
+from . import account, scoring, seeds, solver as solver_mod, stage
 
 FAILURES = []
 
@@ -349,11 +349,13 @@ def test_probe_lock():
 # solver wire (real subprocesses; UID drop excluded — see the module docstring)
 # --------------------------------------------------------------------------- #
 class _LocalSolver(solver_mod.Solver):
-    """Same wire, spawned in-process instead of through `runuser`."""
+    """Same wire, spawned in-process instead of through `runuser`. The agent's account is left
+    as it is (`clear_account=False`): a self-test clears nothing, wherever it runs."""
 
-    def __init__(self, script, step_timeout=5.0):
+    def __init__(self, script, step_timeout=5.0, clear_account=False):
         super(_LocalSolver, self).__init__(
-            step_timeout, submission=os.path.dirname(script), entry=os.path.basename(script)
+            step_timeout, submission=os.path.dirname(script), entry=os.path.basename(script),
+            clear_account=clear_account,
         )
 
     def _spawn(self):
@@ -887,7 +889,8 @@ def test_exec_hardening():
 
     stage.subprocess.Popen = fake_popen
     try:
-        stage.deprivileged(["bash", "run.sh"])
+        # clear_account=False: this is a self-test, wherever it runs; the account stays as it is.
+        stage.deprivileged(["bash", "run.sh"], clear_account=False)
     finally:
         stage.subprocess.Popen = saved
     argv = captured.get("argv", [])
@@ -946,6 +949,83 @@ def _stat_namedtuple():
     return collections.namedtuple("_Info", "st_uid st_gid st_mode")
 
 
+def test_account_clearing():
+    print("[account clearing]")
+    # The rewrite of a supervisord configuration file: every program off, the rest untouched.
+    with tempfile.TemporaryDirectory() as tmp:
+        path = os.path.join(tmp, "30-gnome.conf")
+        original = ("[program:gnome]\n"
+                    "command=/usr/local/bin/start-gnome.sh ; the session\n"
+                    "autostart=true\n"
+                    "autorestart=true\n"
+                    "user=user\n"
+                    'environment=HOME="/home/user",DISPLAY=":1"\n'
+                    "\n"
+                    "[group:desk]\n"
+                    "programs=gnome\n")
+        with open(path, "w") as handle:
+            handle.write(original)
+        check("a program supervisord would start is found", account.enabled_programs(path) == ["program:gnome"])
+        check("the rewrite names the section it switched off", account.disable_programs(path) == ["program:gnome"])
+        parser = account._read_config(path)
+        check("the program neither starts nor restarts afterwards",
+              parser.get("program:gnome", "autostart") == "false"
+              and parser.get("program:gnome", "autorestart") == "false")
+        check("its command and environment are untouched",
+              parser.get("program:gnome", "command") == "/usr/local/bin/start-gnome.sh"
+              and parser.get("program:gnome", "environment") == 'HOME="/home/user",DISPLAY=":1"'
+              and parser.get("group:desk", "programs") == "gnome")
+        with open(path) as handle:
+            rewritten = handle.read()
+        check("a second rewrite changes nothing", account.disable_programs(path) == [] and
+              open(path).read() == rewritten)
+        check("no draft file is left behind", os.listdir(tmp) == ["30-gnome.conf"])
+
+    # Only what the caller did not start counts as the account's processes.
+    child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"])
+    try:
+        others = account.account_processes(os.getuid())
+        check("the caller and what it started are not the account's strays",
+              os.getpid() not in others and child.pid not in others)
+    finally:
+        child.kill()
+        child.wait()
+
+    # It acts only as root inside the engine's verify stage; a self-test must never clear anything.
+    saved = os.environ.pop("ALE_VERIFY_PYTHON", None)
+    ran = []
+    real = account._clear
+    account._clear = lambda *args, **kwargs: ran.append(1) or real(*args, **kwargs)
+    try:
+        report = account.clear_agent_account()
+    finally:
+        account._clear = real
+        if saved is not None:
+            os.environ["ALE_VERIFY_PYTHON"] = saved
+    check("outside the verify stage the clearing is skipped", bool(report["skipped"]) and not ran
+          and report["cleared"] is False, str(report))
+
+    # Solver clears before its first start (so a subclass with its own launcher gets it), once.
+    calls = []
+    saved_clear = solver_mod.clear_agent_account
+    solver_mod.clear_agent_account = lambda: calls.append("clear")
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            script = _write(tmp, "import sys\nprint('READY', flush=True)\n"
+                                 "for line in sys.stdin:\n    print('{\"ok\": true}', flush=True)\n")
+            solver = _LocalSolver(script, clear_account=True)
+            solver._broken = True
+            solver.reset()
+            solver.close()
+            quiet = _LocalSolver(script)
+            quiet.close()
+    finally:
+        solver_mod.clear_agent_account = saved_clear
+    check("Solver clears the account once, before its first start, not on a restart",
+          calls == ["clear"] and solver.restarts == 1, str(calls))
+    check("Solver(clear_account=False) leaves the account alone", quiet.clear_account is False)
+
+
 def main():
     print("robotics_grader selftest (python {}.{})".format(*sys.version_info[:2]))
     test_seeds()
@@ -956,6 +1036,7 @@ def main():
     test_probe_wire()
     test_stage_identity()
     test_exec_hardening()
+    test_account_clearing()
     print()
     if FAILURES:
         print("FAILED: {}".format(", ".join(FAILURES)))
