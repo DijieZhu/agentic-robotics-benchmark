@@ -26,7 +26,25 @@ renderer, now with 8 rasteriser threads (decided on 2026-11-16: a Filament rende
 baked building was prototyped and not adopted). Sections or paragraphs marked "v2" describe version 2; where a
 paragraph gives version 1's record it says so. The reference value, the verifier's time limit and the documents' cost
 figures are version 2's, measured on the grading machine (sections 6 and 7). Amendment 1 (2026-11-17, the corrections
-of the three reviews of the sealed version 2; scores unchanged): section 10.
+of the three reviews of the sealed version 2; scores unchanged): section 10. Amendment 2 (2026-11-18, the text for
+publication): section 12. Amendment 3 (2026-11-18, a guard beside the BLAS kernel pin and text corrections; scores
+unchanged): section 13.
+
+**How to validate.** From the engine checkout `vendor/ale`, with the repository's gate (`CONTRIBUTING.md`):
+
+```bash
+uv run ale validate ../../tasks/quadruped/quadruped_hazardous_plant_inspection --runs-dir <runs>
+```
+
+It needs no GPU (`task.toml`: the sandbox and the separate verifier each take 8 CPUs and 16 GB; every camera renders on
+the CPU). The first run builds the image and fetches the render bundle from the asset dataset. The untouched case ends
+within seconds; the oracle's verify runs the reference on all twelve scored buildings and took 1.3 to 1.7 hours on the
+loaded grading machine (6,121 s in the sealing validate of version 2.1, 4,639 s in that of the folder as first
+published). The expected line:
+
+```
+ok    grounded-intelligence-initiative/quadruped_hazardous_plant_inspection: untouched={'reward': 0.0}, oracle={'reward': 1.0}
+```
 
 ## 1. The task
 
@@ -44,7 +62,7 @@ mission within 1350 s of simulated time (version 2.0: 2400 s).
 
 | path | what |
 |---|---|
-| `test.sh` | closes the stage and its parent (chmod 700) before Python starts; builds the root-owned givens at `/opt/arb` from `setup_payload/`; pins HOME, the user site, OSMesa, the BLAS and NumPy CPU paths; v2: exports every thread count itself (8 rasteriser threads, OpenMP / BLAS / MKL 2) and the render bundle's switch and path (`SITE_GEN_DRESS=1`, `SITE_GEN_DRESS_BUNDLE=/opt/task-assets/look`), checks the bundle's manifest against its pin (`plantcell/_lib/mission/config/render_bundle.json`: the manifest's sha256; the cell checks the same at every mission) and every bundle file against the manifest (a broken or other bundle exits 1, a task error); `exec "${ALE_VERIFY_PYTHON:-python3}" -s verify.py` |
+| `test.sh` | closes the stage and its parent (chmod 700) before Python starts; builds the root-owned givens at `/opt/arb` from `setup_payload/`; pins HOME, the user site, OSMesa, the BLAS and NumPy CPU paths (the BLAS kernel with its block-size guard, section 13); v2: exports every thread count itself (8 rasteriser threads, OpenMP / BLAS / MKL 2) and the render bundle's switch and path (`SITE_GEN_DRESS=1`, `SITE_GEN_DRESS_BUNDLE=/opt/task-assets/look`), checks the bundle's manifest against its pin (`plantcell/_lib/mission/config/render_bundle.json`: the manifest's sha256; the cell checks the same at every mission) and every bundle file against the manifest (a broken or other bundle exits 1, a task error); `exec "${ALE_VERIFY_PYTHON:-python3}" -s verify.py` |
 | `verify.py` | the grader (section 4) |
 | `grader_config.json` | run settings only: episodes, the program-time, silence and CPU caps, the sim cap and the frame and report budgets (deep-merged over the cell's defaults), the route gate |
 | `anchor.json` | metric `inspection_score` (higher), `value` = the reference's measured score on the hidden set, `full_at` 0.95 |
@@ -225,18 +243,18 @@ lowest median to the highest 95th percentile over the runs).
   sheet place, in k order, complete at twelve), row 3's time part the absolute bound it meant (the reference finishes
   within 1200 s of simulated time; 50 % of the dose rating and 60 % of each frame budget as before), rows 1, 2 and 4
   unchanged. The amended rule was fixed on 2026-11-17 at 12:14 EST (in the maintainers' records, with its set) before
-  version 2.0's submission was run on the candidates, and pre-registered before admission A4 ran (in the maintainers'
-  pre-registration record, written 14:38:54 from what the version 2.1 tool's `rule` wrote: pre-registered part
-  d1071ea2...; only `rule` and `rule_at` differ from version 2.0's record, which is kept, 4167b0e0...). Frozen: 114
-  files, A3's with three changed (`review/select_set.py`, `grader_config.json`, the cell's `mission.yaml`; a freeze
-  amendment of the maintainers' sources), and the 48 packages, A3's bytes. **Admission A4** (`amendments` A2, A3, A4;
-  `a3_admission`, `notes_a4`): all 46 hidden and 11 practice oracle runs (on the admission's machine, 2026-11-17
-  14:39-15:20, in an image of the version 2.1 task built with the render bundle from the Hub) end in A3's final states
-  bit for bit, with A3's score, time, dose, frame counts, reports, holds, model hash, attempts and row-4 scores; the
-  same 40 admitted; the same practice triple (practice k 1 2 6; the practice ground's index and packages
-  byte-identical); only the status words of candidates whose place the doubled quotas change differ; the route-health
-  check on all 57 runs: no defect. The set: k 1 2 3 5 6 7 8 9 10 11 28 36 = h01..h12; version 2.0's six are among them
-  with the same packages and seeds (k 28 is h11 now, h06 before).
+  version 2.0's submission was run on the candidates, and pre-registered before admission A4 ran (the registered part,
+  as the version 2.1 tool's `rule` wrote it, was fixed by its digest at 14:38:54, before any mission of A4: d1071ea2...,
+  the digest of the same part in `hidden/selection.json`; only `rule` and `rule_at` differ from version 2.0's registered
+  part, digest 4167b0e0...). Frozen: 114 files, A3's with three changed (`review/select_set.py`, `grader_config.json`,
+  the cell's `mission.yaml`; a freeze amendment of the maintainers' sources), and the 48 packages, A3's bytes.
+  **Admission A4** (`amendments` A2, A3, A4; `a3_admission`, `notes_a4`): all 46 hidden and 11 practice oracle runs (on
+  the admission's machine, 2026-11-17 14:39-15:20, in an image of the version 2.1 task built with the render bundle from
+  the Hub) end in A3's final states bit for bit, with A3's score, time, dose, frame counts, reports, holds, model hash,
+  attempts and row-4 scores; the same 40 admitted; the same practice triple (practice k 1 2 6; the practice ground's
+  index and packages byte-identical); only the status words of candidates whose place the doubled quotas change differ;
+  the route-health check on all 57 runs: no defect. The set: k 1 2 3 5 6 7 8 9 10 11 28 36 = h01..h12; version 2.0's six
+  are among them with the same packages and seeds (k 28 is h11 now, h06 before).
 * **The twelve** (aggregate): bund kerb 6 low / 6 high, B-step 6 at door sills / 6 in the room, B-low 6 at the chase / 6
   at a rack, the missing sheet 4 along / 4 across / 4 diagonal; listed instruments on the missing sheet: 2 on seven, 3
   on five (none with 4); C-sealed reached through the chase on four, through the room on eight. The reference: S 1.0 on
@@ -305,8 +323,8 @@ lowest median to the highest 95th percentile over the runs).
   slots hold six different instrument types each over the six sites. Row 3 leans the set to the lower-dose sites of
   the 24. No place on a site's required access where two floor elements, or an element and an obstacle, lie within
   0.6 m of each other needed more than one try of the reference.
-* **Baselines and the pilot** of version 1 (measured on version 1's set and documents; they say nothing about
-  version 2): recorded in version 1's notes (section 8), which this folder no longer holds.
+* **Baselines and the pilot** of version 1 were measured on version 1's set and documents; they say nothing about
+  version 2 and are not repeated here.
 * **Timings** (8-CPU containers of the task image on the loaded build host): the oracle's verify 2169 s (the engine's
   `ale validate` 2166 s); the selection's 144 missions on a 32-CPU pod with 12 workers 1284 s. `ale validate`:
   untouched 0.0, oracle 1.0.
@@ -450,13 +468,13 @@ measurement; it says nothing about version 2.1 except as a point of comparison.
   of a mission; the cost figures derived from the limit, from the same measured paces (the bench's cost
   record): a full mission about 10 minutes for the simulation alone (was 18), the whole practice allowance at
   full length 2.5 to 2.6 hours (was 4.5 to 4.6).
-* **Records.** a freeze amendment of the maintainers' sources (the five changed sources, source digest 6570a859...;
-  the cell's own freeze check now reports exactly the mission.yaml and the selection tool and its test, as
-  recorded); the pre-registration record (sha256
-  754eea5a..., written 2026-11-17 14:38:54 before any mission of A4); admission A4 (section 8; `hidden/selection.json`
-  with `amendments` A2, A3, A4 and A4's comparison with A3; `hidden/seeds.json`: twelve seeds, version 2.0's six
-  unchanged); the reference value through the real verify path on the grading machine (section 6); the verifier's
-  time limit (section 7).
+* **Records.** a freeze amendment of the maintainers' sources (the five changed sources, source digest 6570a859...; the
+  cell's own freeze check now reports exactly the mission.yaml and the selection tool and its test, as recorded); the
+  pre-registration of the rule's registered part (written 2026-11-17 14:38:54 before any mission of A4; the part's
+  digest d1071ea2... is that of the registered part in `hidden/selection.json`); admission A4 (section 8;
+  `hidden/selection.json` with `amendments` A2, A3, A4 and A4's comparison with A3; `hidden/seeds.json`: twelve seeds,
+  version 2.0's six unchanged); the reference value through the real verify path on the grading machine (section 6); the
+  verifier's time limit (section 7).
 
 ## 12. Amendment 2 (2026-11-18): the text for publication
 
@@ -464,10 +482,12 @@ Before the folder was published, its text lost every reference to material outsi
 maintainers' source tree and scratch folders, machine and host names, the names of the build's work lanes and waves,
 tool, test and record names that are not in this folder, commits of the maintainers' own repository, and the ids of
 design decisions, draft rules, work items and review findings, which cite documents that are not in this repository.
-Where an id stood for a reason, the reason stays in plain words; where it stood alone, it went. The history above keeps
-its facts and numbers. The amendment was made in four passes, each after the first following an independent check of the
-one before; the record below covers all four. What could not change without changing code, data that code reads, the
-agent's bytes or the registered rule is listed under "What stays".
+Where an id stood for a reason, the reason stays in plain words; where it stood alone, it went. Comments and notes that
+were no longer true were corrected in the same passes (pending notes whose condition had been met, a key the packages do
+not hold, the shared kit's copies in other tasks, a replay tool said to be in the folder, the practice label of version
+2). The history above keeps its facts and numbers. The amendment was made in four passes, each after the first following
+an independent check of the one before; the record below covers all four. What could not change without changing code,
+data that code reads, the agent's bytes or the registered rule is listed under "What stays".
 
 * **What changed.** Comments and docstrings of the Python files (the cell, the reference, the generator's copy, the
   baselines, the review tools, `verify.py`, the practice service `environment/practice_ground/practiced.py`), the
@@ -482,38 +502,37 @@ agent's bytes or the registered rule is listed under "What stays".
   among them `notes_a1_a2` and `route_health_a1.blocked_cause_flags`; each old name is recorded by its sha256 only, and
   no code reads them). The vendored copies (`plantcell/_lib/`, the practice ground's copy of the cell,
   `reference/_lib/`, `review/sitegen/`, `review/_lib/`) are byte copies of the amended sources, as before.
-* **What did not change.** No code, no data value that code reads and no configuration value; no byte the agent can
-  read (`instruction.md`, `environment/setup/payload/`, its mirror `setup_payload/`, `given_hashes.json`, the client
-  library): the measured episode read these bytes. The site packages, the seeds, the anchor's value and the selection
-  rule's registered wording are the same.
+* **What did not change.** No code, no data value that code reads and no configuration value (`anchor.json`'s `source`,
+  a note the grader does not read, is copied by the repository's registry export as the task's `anchor_source`, so the
+  registry shows its new words); no byte the agent can read (`instruction.md`, `environment/setup/payload/`, its mirror
+  `setup_payload/`, `given_hashes.json`, the client library): the measured episode read these bytes. The site packages,
+  the seeds, the anchor's value and the selection rule's registered wording are the same.
 * **The record.** `hidden/selection.json`, `amendments` entry `A5-text` (kind `text-only`): each of the 62 frozen files
   that changed with its sha256 before and after (the table `frozen` stays the one admission A4 froze), the notes of the
   record cleaned field by field (each old text and each renamed key by its sha256 only), and the proofs. No admission
   was run: no file's behaviour changed, and the stored packages are what the generator makes from their seeds apart
   from the three provenance labels and the mission limit recorded at generation (proof (c)).
-* **Proofs.** (a) and (b) were made on the planned copies of the files before any file was replaced, (c) and (d) on
-  the amended bytes afterwards. (a) Every changed Python file has the same syntax tree once its docstrings are left
-  out, the same string constants and the same number of comments. (b) Every changed JSON file other than
-  `hidden/selection.json` has the same keys and structure and differs in note strings only (the practice ground's
-  `sites.json` also in its `rule` text, which no code reads; `hidden/selection.json`:
-  the `A5-text` entry, and its notes and renamed keys as recorded there); every changed YAML file parses to the same
-  value, except the acceptance file (all three copies), which parses to the same value once its
-  `plate_readable.measured` block is set aside: that block holds eight prose strings on both sides (two of its keys,
-  named after the build's work waves, now have plain names, `board_study_first` and `in_site_first`; `A5-text` records
-  each old name by its sha256), no code reads,
-  iterates over, serialises or hashes it, and no number appears in a new string that the old one does not hold except
-  dates written out from run names and the numbers of the per-cell rule it now quotes; the shell scripts, the Dockerfile
-  (whose instructions are identical) and `task.toml` (which parses to the same value) are equal once comment and blank
-  lines are left out. (c) The twelve scored packages and the four practice packages were generated again from their
-  recorded seeds, twice: with the three labelled files below at their earlier bytes and the earlier mission limit of
-  2400 s, every package is byte-identical to the stored one; with the amended files and the 1350 s limit, every
-  package differs from the stored one only in the three labels, in `budgets.time_limit_s` of `site.json` and
-  `prior.json` (2400 s at generation, 1350 s now; the training hall's package keeps its 900 s) and in its manifest's
-  sha256 of those two members. The
-  cell and the reference do not read the packages' `budgets.time_limit_s`: a mission's limit comes from the cell's
-  configuration, and the program's mission document carries the enforced value. The stored packages are kept as they
-  are. (d) An `ale validate` of the published folder, compared with the sealing validate of version 2.1, is in the
-  pull request's description.
+* **Proofs.** (a) and (b) were made on the planned copies of the files before any file was replaced, (c) and (d) on the
+  amended bytes afterwards. (a) Every changed Python file has the same syntax tree once its docstrings are left out, the
+  same string constants and the same number of comments. (b) Every changed JSON file other than `hidden/selection.json`
+  has the same keys and structure and differs in note strings only (the practice ground's `sites.json` also in its
+  `rule` text, which no code reads; `hidden/selection.json`: the `A5-text` entry, and its notes and renamed keys as
+  recorded there); every changed YAML file parses to the same value, except the acceptance file (all three copies),
+  which parses to the same value once its `plate_readable.measured` block is set aside: that block holds eight prose
+  strings on both sides (two of its keys, named after the build's work waves, now have plain names, `board_study_first`
+  and `in_site_first`; `A5-text` records each old name by its sha256), no code reads, iterates over, serialises or
+  hashes it, and no number appears in a new string that the old one does not hold except dates written out from run
+  names and the numbers of the per-cell rule it now quotes; the shell scripts, the Dockerfile (whose instructions are
+  identical) and `task.toml` (which parses to the same value) are equal once comment and blank lines are left out. (c)
+  The twelve scored packages and the four practice packages were generated again from their recorded seeds, twice: with
+  the three labelled files below at their earlier bytes and the earlier mission limit of 2400 s, every package is
+  byte-identical to the stored one; with the amended files and the 1350 s limit, every package differs from the stored
+  one only in the three labels, in `budgets.time_limit_s` of `site.json` and `prior.json` (2400 s at generation, 1350 s
+  now; the training hall's package keeps its 900 s) and in its manifest's sha256 of those two members. The cell and the
+  reference do not read the packages' `budgets.time_limit_s`: a mission's limit comes from the cell's configuration, and
+  the program's mission document carries the enforced value. The stored packages are kept as they are. (d) An
+  `ale validate` of the published folder, compared with the sealing validate of version 2.1, is in the pull request's
+  description.
 * **Provenance labels.** Every stored package names in its `site.json` three source files by the first 16 hex digits
   of their sha256 (`capability_source`, `observability_source`, `evidence_source`). Their comments, notes or prose
   changed here, so the stored packages keep the labels of the three files' earlier bytes; the packages themselves are
@@ -544,3 +563,92 @@ agent's bytes or the registered rule is listed under "What stays".
   selection tool's string that writes it was not: a re-run of the tool would bring the ids back. The shared kits
   (`cellkit/`, `robotics_grader/`, `environment/fetch_assets.py`), byte-identical to copies already in this
   repository. No machine path, account name or host name stays anywhere in the folder.
+
+## 13. Amendment 3 (2026-11-18): a guard beside the BLAS kernel pin; text corrections
+
+The grader's cell and the reference program inside it run with numpy's OpenBLAS held to its Haswell kernels
+(`OPENBLAS_CORETYPE=Haswell` in `test.sh`; the practice service gets the same variables in
+`environment/setup/setup.sh`), so that their linear algebra does not depend on the CPU. The OpenBLAS that numpy 2.5.2 to
+2.5.5 bundle (this image has numpy 2.5.4) raises the inner-dimension block of its float64 matrix products from 256 to
+512 on AMD hosts with AVX-512, 1 MB of L2 cache per core and an L3 cache of a multiple of 32 MB (most Zen 4 and Zen 5
+desktop, workstation and server parts), for every kernel table, the forced Haswell one included. The Haswell kernel's
+stack buffer can then overflow for float64 products whose result has 24 or more rows and 2 or more columns (in numpy's
+row-major terms) and whose inner dimension is above about 300: the process crashes or, in a narrow band, returns wrong
+numbers. On AMD hosts up to Zen 3 the block stays 256 (measured on a Zen 3 host, below), and on Intel hosts by the
+library's start-up conditions (no Intel host was measured). The fault is known upstream (OpenMathLib/OpenBLAS issues
+6021 and 6026) and fixed in OpenBLAS's sources, but no numpy release up to 2.5.5 (2026-11-15, the latest on 2026-11-18)
+bundles a fixed library. `OPENBLAS_L2_SIZE=256` beside the pin switches the raise off, so the block is 256 on every
+host; with a fixed library the variable changes nothing. Neither the cell nor the reference makes a product in the crash
+range, and a submitted program cannot bring the cell to one (the evidence is below): the variable is a guard.
+
+* **Where.** `tests/test.sh`: the variable on the line that exports the pin, and three comment lines that say why. Their
+  "changes no result of this cell" speaks of outcomes: for a submitted program no product of the cell reaches the block
+  (below); with the reference inside the cell, the last bits of its long covariances can depend on the block on hosts
+  that raise it, and no score, final state or admission verdict changed in any run (below).
+  `environment/setup/setup.sh`: the same variable in the practice service's environment, and one comment line. The
+  program under test never carried the pin and does not now: it runs in its own minimal environment
+  (`cellkit.runner.child_env`), and the agent's shell has no kernel pin (of OpenBLAS's variables the image's ENV sets
+  only the thread count). `review/cell/determinism.py` records the variable beside `OPENBLAS_CORETYPE` in its output
+  (one entry added to a dictionary of a maintainers' tool that no module imports).
+* **The library** (an image with the task image's Python and packages, numpy 2.5.4): on an AMD Threadripper PRO 9965WX
+  (Zen 5) the active Haswell table holds the double-precision blocks P / Q (row block / inner-dimension block) 512 / 512
+  with the pin alone, and a float64 700 x 700 product crashes in 5 of 5 fresh processes, at one thread and at the
+  grader's two; with the variable the table holds 512 / 256 and the product runs in 5 of 5. On an AMD Threadripper PRO
+  5975WX (Zen 3) the table holds 512 / 256 either way and nothing crashes.
+* **What the cell asks of it.** A tracer of every double-precision level-3 BLAS call (products, syrk, trsm, trmm, syr2k,
+  symm) that numpy makes into its OpenBLAS, on practice building t1: in a mission of the measured episode's submission,
+  the cell's process made 1,690,073 calls, none with an inner dimension above 4; in a mission of the reference,
+  1,225,636 calls: covariances of two-column point sets (a 2 x 2 result; inner dimension up to 13,309, above 256 in 11
+  calls) and otherwise no call with an inner dimension above 4. A 2 x 2 result is outside the overflow's condition at
+  any inner dimension, so no product of these missions comes near the crash. By the code, a submitted program cannot
+  change this: in its missions every matrix-matrix product (level-3 BLAS call) and decomposition the cell computes (the
+  mission, its scoring, the debrief, the records) has an inner dimension of at most 4 and an order of at most 4, set by
+  the code, the cell's configuration and the stored building; a program sets only how often they run. The gait policy's
+  layers, up to 512 wide, are vector-matrix products (level 2), which do not use the block (the same bytes with and
+  without the variable). The reference has run on every candidate building on a host that raises the block, with the pin
+  alone, without a crash (admission A4). On the hosts that raise the block, its size can still change the last bits of
+  the reference's long covariances (it does for random point sets of these lengths); the selection's rule asks for the
+  admission again after any change to a frozen file that is not text-only, and it checks the outcome directly:
+* **The admission again** (`hidden/selection.json`, `amendments` entry `A6`): on these bytes, in an image built from
+  this `environment/` with the render bundle from the Hub, on the AMD Threadripper PRO 9965WX where admission A4 ran:
+  the same pre-registered rule records, the same 48 hidden and 12 practice candidates with their seeds, the reference
+  and the five row-4 programs on every candidate that builds. All 276 hidden and 66 practice runs (46 and 11 of them the
+  reference's) end as A4's, with the same score, final state, number of attempts and simulated time; the same 40
+  candidates admitted, the same twelve scored buildings and the same three practice buildings (the practice packages the
+  tool lays out are byte-identical to this folder's); the hidden set the tool writes (packages and seeds) equals
+  `hidden/`; the route-health check finds no defect in the 57 reference runs. So with the variable no score, final state
+  or admission verdict changed in any of these runs, and the reference value stays.
+* **The same on another CPU.** The reference with the variable on the four practice packages (training hall, t1, t2, t3)
+  and on two of the scored packages, on the Zen 3 host and on the Zen 5 host: the same final state, score, simulated
+  time, end and dose in each of the 6 missions. The grading machine of sections 6 and 10 is an AMD Zen 4 host and the
+  admission's machine a Zen 5 host, both of the class that raises the block: the reference values, the validates and the
+  bit-for-bit agreements between those two machines that these sections report were measured with the raised block on
+  both and without the variable; this check is the first in these notes between a host of that class and a host outside
+  it.
+* **A validate and a re-grade.** An `ale validate` of this amended folder, compared with the two earlier validates of
+  version 2.1, and a re-grade of the measured episode's kept submission on these bytes are in the pull request's
+  description.
+* **Text corrections.** The header of `task.toml` (the oracle's program is not two lines: it takes one frame of every
+  sensor, then makes one privileged call); a comment of the generator's `defaults.yaml` (walk was measured on cable
+  protectors and is not refused by them reliably); line breaks only, no word changed: the module docstring of
+  `plantcell/wire_guard.py` (and its practice-ground copy) and five lines over 120 columns in
+  `environment/stage_assets.py`, `verify.py` and the generator's `furnish.py`, `hall.py`, `ladder.py`; in these notes:
+  the header's pointers to sections 12 and 13 and how to validate (top), the files table's row of `test.sh`, three
+  sentences that pointed to records not in this folder (two of section 8: the pre-registration of version 2.1's rule and
+  version 1's baselines; one of section 11: its records), and in section 12 what its passes also corrected, that
+  `anchor.json`'s `source` is shown by the repository's registry, and its proofs item re-wrapped; in
+  `hidden/selection.json`, the same clause in A5-text's `what`.
+* **What did not change.** No byte the agent can read (`instruction.md`, `environment/setup/payload/`, its mirror
+  `setup_payload/`, `given_hashes.json`, the client library); no other code, data value or configuration value; the site
+  packages, the seeds, the selection and its registered rule, the reference value in `anchor.json`, the version (2.1).
+  Proofs as in section 12, made before any file was replaced: every changed Python file but `determinism.py` has the
+  same syntax tree once its docstrings are left out and the same string constants (for the generator's three files,
+  whose comments were re-wrapped, the comments' words are the same in the same order); `defaults.yaml` parses to the
+  same value; `task.toml` is equal once comment and blank lines are left out and parses to the same value; `test.sh` and
+  `setup.sh` are equal once comment and blank lines are left out except for the one line that gains the variable.
+* **The record.** `hidden/selection.json`, entry `A6` (kind `environment-variable`): the three frozen files that changed
+  (`test.sh`, `verify.py`, `plantcell/wire_guard.py`) with their sha256 before and after and the kind of each change,
+  the recorded environment's one added variable, the admission with its comparison with A4, the check on the other CPU,
+  and A5-text's clause by sha256. The table `frozen` and the record `environment` stay the ones admission A4 wrote (A6's
+  `environment_changed` gives the added variable and both digests); a file that A5-text and A6 both list is followed
+  through the two lists in order.

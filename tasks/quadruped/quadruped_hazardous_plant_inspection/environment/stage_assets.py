@@ -4,8 +4,8 @@
 
 assets.sha256 (fetch_assets.py's format: a header, then `<sha256>  <relative path>` lines) pins every file of the
 task's assets. `hub`: fetch_assets.py downloads each from the asset dataset at the pinned commit; `local`: each must be
-in the build dir at its relative path (copied there from the build context's local_assets/, for builds on the maintainers'
-machines without a download); `auto`: local when every file is there, else hub. Either way a file whose
+in the build dir at its relative path (copied there from the build context's local_assets/, for builds on the
+maintainers' machines without a download); `auto`: local when every file is there, else hub. Either way a file whose
 sha256 is not the pinned one fails the build. Then every listed .tar is unpacked under the dest dir as the folder
 <dest>/<the tar's name without .tar> (a tar whose members all sit in that one folder is unpacked as it is, any other
 into that folder), and every file the bundle's manifest.json lists ({"name" or "bundle", "files": {relative path:

@@ -65,6 +65,9 @@ if not f or bad:
     sys.exit("[verify] the render bundle at %s: %d file(s) missing or altered %s: the image is broken" % (r, len(bad), bad[:5]))
 print("[verify] render bundle %s: manifest as pinned, %d files verified" % (m.get("name") or m.get("bundle"), len(f)), file=sys.stderr)'
 # the cell's and the reference program's numerics the same on every x86-64 CPU: OpenBLAS otherwise picks its kernels
-# per CPU and numpy its SIMD paths; the program under test keeps its own minimal environment (cellkit.runner.child_env)
-export OPENBLAS_CORETYPE=Haswell NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
+# per CPU and numpy its SIMD paths; the program under test keeps its own minimal environment (cellkit.runner.child_env).
+# OPENBLAS_L2_SIZE=256 guards the pin: numpy 2.5.2 to 2.5.5 (2.5.4 here) bundle an OpenBLAS that raises its block size
+# on AMD Zen 4 / Zen 5 hosts even for a forced kernel, and the Haswell kernel can then crash or return wrong numbers
+# for float64 products with an inner dimension above about 300; it keeps the size 256 and changes no result of this cell
+export OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256 NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
 exec "${ALE_VERIFY_PYTHON:-python3}" -s verify.py

@@ -38,6 +38,7 @@ def versions():
     return {"python": platform.python_version(), "mujoco": mujoco.__version__, "numpy": numpy.__version__,
             "scipy": scipy.__version__, "cpu": cpu_model(), "machine": platform.node(),
             "OPENBLAS_CORETYPE": os.environ.get("OPENBLAS_CORETYPE"),
+            "OPENBLAS_L2_SIZE": os.environ.get("OPENBLAS_L2_SIZE"),
             "NPY_DISABLE_CPU_FEATURES": os.environ.get("NPY_DISABLE_CPU_FEATURES"),
             "MUJOCO_GL": os.environ.get("MUJOCO_GL")}
 

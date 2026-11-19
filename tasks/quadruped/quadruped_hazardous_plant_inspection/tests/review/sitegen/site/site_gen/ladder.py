@@ -1507,7 +1507,8 @@ def _place_slots(W, cfg, g, acc, m0, d0, grid, trav0, R0, cuts, roles, assign, l
 MIN_PLACE_GAP_M = 1.0    # the drawn places of C-moved / C-relocated and both true places keep this far
                          # from every placed instrument and drawn place, the survey mark too (the moved gauge hung at
                          # the relocated item's drawn place on 13 of 356 sites; on one its plate overlapped the blank
-                         # plate; in an earlier generator version, before this rule, the moved gauge stood 0.23 m from the mark on one candidate)
+                         # plate; in an earlier generator version, before this rule, the moved gauge stood 0.23 m from
+                         # the mark on one candidate)
 
 
 def _places(W, placed):
