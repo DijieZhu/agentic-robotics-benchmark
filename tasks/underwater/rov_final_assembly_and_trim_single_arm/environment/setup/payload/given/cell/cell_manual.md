@@ -13,7 +13,9 @@ ballast blocks on the free holes of its keel it can be trimmed into the acceptan
 
 * **Cell frame**: origin on the bench top at the robot arm's base axis, z up, x towards the turnover positioner, y to
   the left seen from the arm. The bench top (2.0 x 1.4 m, x -0.55 .. 1.45 m, y -0.70 .. 0.70 m, 0.994 m above the hall
-  floor) is the plane z = 0. The cell stands in a factory hall, lit by the hall's ceiling lamps.
+  floor; a butcher-block top) is the plane z = 0. The cell stands in a marine-vehicle workshop (a hall with a test
+  tank, a pressure vessel, pallet racks, a parts cage and a site office), lit by two linear pendant lights over the
+  bench and by the hall's ceiling lamps and high windows.
 * **Robot**: a 6-DoF UR10e-class arm (model in `~/given/robot/universal_robots_ur10e/`), bolted to a surveyed datum:
   its base at (0.00, 0.00, 0.00) m, the base frame being the cell frame turned 180 deg about z (q = 0 on the first
   joint points the arm along the cell's -x; exact). Joint names `ur/shoulder_pan_joint`, `ur/shoulder_lift_joint`,
@@ -195,11 +197,15 @@ mm + 3 mm per m^2 x z^2 for the wrist camera. On top of it each camera unit has 
 away: a smooth error field across the image of about 0.5 mm + 1.5 mm per m^2 x z^2 rms for the top camera and about
 0.1 mm + 1.5 mm per m^2 x z^2 for the wrist camera, a ripple that varies with the range (up to 1 mm for the top
 camera, 0.2 mm for the wrist camera) and fixed per-pixel offsets of about 0.4 mm and 0.1 mm rms. Closer than its 0.1 m
-minimum range a camera gives no depth. The hall's brightness varies by up to about 20 % between runs, and each camera
-unit has its own slight colour response (gain and tint within a few per cent), constant during a run; the image noise
-is new in every frame. The images come from a physically based renderer of the hall (soft shadows, reflections on
-metal and plastic); the given render layer (`~/given/lib/render`) draws scenes with a plain rasteriser instead (same
-geometry and camera model, plainer shading, no hall).
+minimum range a camera gives no depth. The workshop's brightness varies by up to about 20 % between runs, and each
+camera unit has its own slight colour response (gain and tint within a few per cent), constant during a run; the image
+noise is new in every frame. The images come from MuJoCo's Filament renderer (physically based: soft shadows,
+reflections on metal and plastic) in the workshop, whose light is baked into its textures (`~/render`). The given
+render layer (`~/given/lib/render`) renders the same way: the same renderer, workshop and look for your own scenes,
+depth from MuJoCo on the same geometry (`cell_api.md`, "Rendering your own frames"). MuJoCo's own renderer
+(`mujoco.Renderer`, or the render layer's `mujoco` backend) draws a different picture than the cameras (no workshop,
+MuJoCo's default lights, flat colours, no reflections): image processing tuned on its frames may behave differently on
+the cameras' frames.
 
 * **Transparent parts give no depth.** The acrylic tube and the acrylic dome of the electronics enclosure return no
   depth reading: where one of them is the first surface on a pixel's ray, the depth image holds `depth_invalid_value`.

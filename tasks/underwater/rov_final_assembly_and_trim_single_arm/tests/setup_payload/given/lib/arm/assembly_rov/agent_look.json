@@ -1,0 +1,394 @@
+{
+ "_doc": "Look of the cell's cameras (agent_render.make_look, render.filament.backend.Look): the light units of the workshop's room bundle (~/render/room: room_baked_emission, room_baked_light_scale, room_ibl_ktx_intensity, room_bulb_m), the exposure and the filmic display transform (exposure_scale, post_tonemap, post_tonemap_gain), the bench top's scanned maps (~/render/oak: surface_map_m, surface_albedo_gain), Filament's shadow settings (filament_numeric). kit_materials: the palette of the cell's material classes (rgba, specular, shininess), the physically based terms per class (pbr), the roughness clamp of the opaque classes (roughness), and the colour the transparent classes are drawn with in the cell's camera images (transparent_view; the palette's colour is what MuJoCo's own renderer draws).",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 0.5431,
+ "room_baked_light_scale": 1164.7,
+ "room_ibl_ktx_intensity": 6500.8,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 1.0,
+ "kit_materials": {
+  "palette": {
+   "acrylic_clear": {
+    "rgba": [
+     0.82,
+     0.88,
+     0.92,
+     0.28
+    ],
+    "specular": 0.8,
+    "shininess": 0.9
+   },
+   "al_anodized_black": {
+    "rgba": [
+     0.24,
+     0.24,
+     0.26,
+     1.0
+    ],
+    "specular": 0.5,
+    "shininess": 0.5
+   },
+   "al_anodized_blue": {
+    "rgba": [
+     0.1,
+     0.55,
+     0.85,
+     1.0
+    ],
+    "specular": 0.5,
+    "shininess": 0.6
+   },
+   "al_bare": {
+    "rgba": [
+     0.72,
+     0.73,
+     0.75,
+     1.0
+    ],
+    "specular": 0.6,
+    "shininess": 0.6
+   },
+   "ballast_steel": {
+    "rgba": [
+     0.75,
+     0.73,
+     0.7,
+     1.0
+    ],
+    "specular": 0.7,
+    "shininess": 0.6
+   },
+   "battery_wrap": {
+    "rgba": [
+     0.12,
+     0.12,
+     0.13,
+     1.0
+    ],
+    "specular": 0.2,
+    "shininess": 0.2
+   },
+   "bracket_al": {
+    "rgba": [
+     0.7,
+     0.72,
+     0.74,
+     1.0
+    ],
+    "specular": 0.6,
+    "shininess": 0.6
+   },
+   "cable_black": {
+    "rgba": [
+     0.03,
+     0.03,
+     0.03,
+     1.0
+    ],
+    "specular": 0.1,
+    "shininess": 0.1
+   },
+   "dome_clear": {
+    "rgba": [
+     0.85,
+     0.9,
+     0.95,
+     0.22
+    ],
+    "specular": 0.9,
+    "shininess": 0.95
+   },
+   "dvl_black": {
+    "rgba": [
+     0.14,
+     0.14,
+     0.14,
+     1.0
+    ],
+    "specular": 0.35,
+    "shininess": 0.35
+   },
+   "fairing_blue": {
+    "rgba": [
+     0.16,
+     0.45,
+     0.85,
+     1.0
+    ],
+    "specular": 0.3,
+    "shininess": 0.4
+   },
+   "foam_cream": {
+    "rgba": [
+     0.88,
+     0.85,
+     0.72,
+     1.0
+    ],
+    "specular": 0.05,
+    "shininess": 0.05
+   },
+   "hdpe_black": {
+    "rgba": [
+     0.15,
+     0.15,
+     0.16,
+     1.0
+    ],
+    "specular": 0.25,
+    "shininess": 0.25
+   },
+   "lens_glass": {
+    "rgba": [
+     0.8,
+     0.85,
+     0.9,
+     0.5
+    ],
+    "specular": 0.9,
+    "shininess": 0.9
+   },
+   "pcb_black": {
+    "rgba": [
+     0.05,
+     0.05,
+     0.05,
+     1.0
+    ],
+    "specular": 0.3,
+    "shininess": 0.3
+   },
+   "pcb_green": {
+    "rgba": [
+     0.08,
+     0.4,
+     0.18,
+     1.0
+    ],
+    "specular": 0.3,
+    "shininess": 0.3
+   },
+   "plastic_grey": {
+    "rgba": [
+     0.45,
+     0.45,
+     0.47,
+     1.0
+    ],
+    "specular": 0.2,
+    "shininess": 0.2
+   },
+   "plastic_white": {
+    "rgba": [
+     0.9,
+     0.9,
+     0.88,
+     1.0
+    ],
+    "specular": 0.2,
+    "shininess": 0.2
+   },
+   "prop_blue": {
+    "rgba": [
+     0.15,
+     0.4,
+     0.85,
+     1.0
+    ],
+    "specular": 0.3,
+    "shininess": 0.3
+   },
+   "rubber_black": {
+    "rgba": [
+     0.04,
+     0.04,
+     0.04,
+     1.0
+    ],
+    "specular": 0.05,
+    "shininess": 0.1
+   },
+   "sonar_band_blue": {
+    "rgba": [
+     0.15,
+     0.45,
+     0.85,
+     1.0
+    ],
+    "specular": 0.3,
+    "shininess": 0.3
+   },
+   "sonar_black": {
+    "rgba": [
+     0.17,
+     0.17,
+     0.18,
+     1.0
+    ],
+    "specular": 0.35,
+    "shininess": 0.35
+   },
+   "steel": {
+    "rgba": [
+     0.7,
+     0.7,
+     0.72,
+     1.0
+    ],
+    "specular": 0.8,
+    "shininess": 0.7
+   },
+   "thruster_black": {
+    "rgba": [
+     0.2,
+     0.2,
+     0.21,
+     1.0
+    ],
+    "specular": 0.35,
+    "shininess": 0.35
+   },
+   "wire_red": {
+    "rgba": [
+     0.75,
+     0.1,
+     0.08,
+     1.0
+    ],
+    "specular": 0.2,
+    "shininess": 0.2
+   }
+  },
+  "pbr": {
+   "acrylic_clear": {
+    "roughness": 0.05,
+    "metallic": 0.0
+   },
+   "al_anodized_black": {
+    "roughness": 0.35,
+    "metallic": 0.6
+   },
+   "al_anodized_blue": {
+    "roughness": 0.35,
+    "metallic": 0.6
+   },
+   "al_bare": {
+    "roughness": 0.35,
+    "metallic": 1.0
+   },
+   "ballast_steel": {
+    "roughness": 0.45,
+    "metallic": 1.0
+   },
+   "battery_wrap": {
+    "roughness": 0.6,
+    "metallic": 0.0
+   },
+   "bracket_al": {
+    "roughness": 0.35,
+    "metallic": 1.0
+   },
+   "cable_black": {
+    "roughness": 0.6,
+    "metallic": 0.0
+   },
+   "dome_clear": {
+    "roughness": 0.03,
+    "metallic": 0.0
+   },
+   "dvl_black": {
+    "roughness": 0.5,
+    "metallic": 0.0
+   },
+   "fairing_blue": {
+    "roughness": 0.45,
+    "metallic": 0.0
+   },
+   "foam_cream": {
+    "roughness": 0.9,
+    "metallic": 0.0
+   },
+   "hdpe_black": {
+    "roughness": 0.7,
+    "metallic": 0.0
+   },
+   "lens_glass": {
+    "roughness": 0.03,
+    "metallic": 0.0
+   },
+   "pcb_black": {
+    "roughness": 0.5,
+    "metallic": 0.0
+   },
+   "pcb_green": {
+    "roughness": 0.5,
+    "metallic": 0.0
+   },
+   "plastic_grey": {
+    "roughness": 0.55,
+    "metallic": 0.0
+   },
+   "plastic_white": {
+    "roughness": 0.55,
+    "metallic": 0.0
+   },
+   "prop_blue": {
+    "roughness": 0.45,
+    "metallic": 0.0
+   },
+   "rubber_black": {
+    "roughness": 0.9,
+    "metallic": 0.0
+   },
+   "sonar_band_blue": {
+    "roughness": 0.45,
+    "metallic": 0.0
+   },
+   "sonar_black": {
+    "roughness": 0.5,
+    "metallic": 0.0
+   },
+   "steel": {
+    "roughness": 0.3,
+    "metallic": 1.0
+   },
+   "thruster_black": {
+    "roughness": 0.45,
+    "metallic": 0.0
+   },
+   "wire_red": {
+    "roughness": 0.55,
+    "metallic": 0.0
+   }
+  },
+  "roughness": [
+   0.3,
+   0.95
+  ],
+  "transparent_view": {
+   "acrylic_clear": {
+    "rgba": [
+     0.55,
+     0.6,
+     0.64,
+     0.12
+    ]
+   },
+   "dome_clear": {
+    "rgba": [
+     0.58,
+     0.62,
+     0.66,
+     0.1
+    ]
+   }
+  }
+ },
+ "surface_map_m": 1.4,
+ "filament_numeric": {
+  "filament.shadows.type": 1.0,
+  "filament.shadows.map_size": 512.0
+ }
+}

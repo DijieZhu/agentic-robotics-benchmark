@@ -34,7 +34,9 @@ chmod -R u+rwX,go+rX,go-w "$ROOT_PAYLOAD"
 export MUJOCO_GL="${MUJOCO_GL:-osmesa}"
 # The same numerics on every x86-64 CPU (this task's addition): OpenBLAS otherwise picks its kernels per CPU
 # (SkylakeX on a host with 512-bit vector units, Haswell on others) and NumPy its SIMD paths, and the cell's
-# physics then differs in the last bits between hosts from the first checkpoint on. Exported before the
-# interpreter starts; the task image sets the same two (environment/Dockerfile).
-export OPENBLAS_CORETYPE=Haswell NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
+# physics then differs in the last bits between hosts from the first checkpoint on. OPENBLAS_L2_SIZE=256 keeps
+# the pinned kernels' own block sizes (NumPy's bundled OpenBLAS 0.3.34 enlarges them on AMD Zen 4 / 5 hosts, and
+# its Haswell float64 kernel then overruns a fixed buffer). Exported before the interpreter starts; the task image
+# sets the same three (environment/Dockerfile).
+export OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256 NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
 exec "${ALE_VERIFY_PYTHON:-python3}" verify.py

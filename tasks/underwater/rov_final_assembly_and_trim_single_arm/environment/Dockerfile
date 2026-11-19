@@ -116,6 +116,9 @@ RUN printf '%s\n' 'export BUN_CONFIG_HTTP_IDLE_TIMEOUT=1800' 'export CLAUDE_STRE
 
 # The same numerics on every x86-64 CPU: OpenBLAS otherwise picks its kernels per CPU (SkylakeX on a host with 512-bit
 # vector units, Haswell on others) and NumPy its SIMD paths, and the cell's physics then differs in the last bits between
-# hosts from its first checkpoint on. tests/test.sh exports the same two before the verifier's interpreter starts.
+# hosts from its first checkpoint on. OPENBLAS_L2_SIZE=256 keeps the pinned kernels' own block sizes: without it NumPy's
+# bundled OpenBLAS 0.3.34 enlarges them on AMD Zen 4 / 5 hosts and its Haswell float64 kernel overruns a fixed buffer,
+# so float64 matrix products and solves with an inner dimension above about 300 crash or return wrong numbers in every
+# process, an agent's own included. tests/test.sh exports the same three before the verifier's interpreter starts.
 # Appended last so the layers above stay cached.
-ENV OPENBLAS_CORETYPE=Haswell NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
+ENV OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256 NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"

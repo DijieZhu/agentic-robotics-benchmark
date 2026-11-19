@@ -63,8 +63,8 @@ the run account voids it too.
 | `~/given/cell/cell_manual.md` | the integrator's cell description: bench, robot base pose (exact), the gripper's fingers, the datum boards, the positioner with the vehicle's pose (exact), the turning procedure, the load cells with their noise and the conditions under which a reading is valid, the ballast box (exact), the nominal places of the thruster tray and the racks and how much they vary, cameras with resolution, nominal field of view and approximate mounts, depth-sensor and force-sensor noise figures, the fastening rules with every window and the entry behaviour measured in the cell, every difference between the cell's collision shapes and the drawn vehicle, safety rules, budgets |
 | `~/given/cell/cell_api.md`, `cell_config.json` | the cell's programming manual (the wire API); the cell's configuration as far as it is public |
 | `~/given/robot/` | the robot's MuJoCo models: the arm (`universal_robots_ur10e/`) and the wide gripper (`wide_gripper/`), each with its licence |
-| `~/given/lib/` | the cell's client and helper code: `arm.assembly_rov.cell_client_ext` (this station's proxy and the launcher), `arm.assembly_info.client` (the general camera-cell proxy that it extends, `decode_frame`), `arm.assembly_rov` (the cell's own arm model builder, its controller and the gripper module with its measured tables), `arm.assembly_cell` / `arm.assembly_six` (physics building blocks of an earlier cell), `render` (the camera rendering layer) |
-| `~/render/` | the scenery of the cell cameras' renderer (the factory hall as meshes and baked textures); nothing about the vehicle |
+| `~/given/lib/` | the cell's client and helper code: `arm.assembly_rov.cell_client_ext` (this station's proxy and the launcher), `arm.assembly_info.client` (the general camera-cell proxy that it extends, `decode_frame`), `arm.assembly_rov` (the cell's own arm model builder, its controller and the gripper module with its measured tables), `arm.assembly_cell` / `arm.assembly_six` (physics building blocks of an earlier cell), `render` (the camera rendering layer; it renders like the cell's cameras: `arm.assembly_rov.agent_render` is the cell cameras' own render session for your twin of the cell, `render.filament.view` renders any scene of yours the same way; MuJoCo's own renderer, `mujoco.Renderer` or the render layer's `mujoco` backend, draws a different picture than the cell's cameras (no workshop, MuJoCo's default lights, flat colours, no reflections), so image processing tuned on its frames may behave differently on the cell's frames; `cell_api.md`, "Rendering your own frames") |
+| `~/render/` | the scenery of the cell cameras' renderer, which the given render layer uses too (the workshop around the cell as meshes and baked textures, the bench top's maps); nothing about the vehicle |
 
 Tools: Python 3.12 (`/opt/venv`, on PATH) with numpy, scipy, OpenCV (`cv2`, headless), scikit-image, MuJoCo 3.14,
 trimesh, manifold3d, Pillow, matplotlib. No network in your session.
@@ -176,7 +176,7 @@ the given files, and the only run of your program on the cell is the graded one.
   tray, the racks and the units' poses must be measured in each episode.
 - Do not modify the given files in your home directory; the grader reads its own copies.
 - Machine: your session's sandbox has 8 CPUs and 24 GB of memory, no GPU and no network. The grading machine has the
-  same size, and there your program shares it with the cell and its camera renderer, which take about 7 GB between
+  same size, and there your program shares it with the cell and its camera renderer, which take about 8 GB between
   them.
 - Environment facts (harness limits): a single tool call whose input runs above roughly 25-30k tokens is dropped by
   the harness (it is never executed and no error comes back), and a response that reaches the 64k output-token limit
