@@ -1,0 +1,35 @@
+# Pantry jar refilling: two fixed Pandas at a kitchen counter refill screw-top jars from a refill list, from RGB
+# cameras and wrist force sensors: open each listed jar (one hand holds it, the other unscrews the lid in regrasp
+# cycles), drop in the listed pieces of the jar's kind from a tray, put the jar's own lid back and close it to a
+# torque window. Each unit's jars differ in thread turns, running torque, mass, friction and size (hidden); each
+# episode draws where the jars stand, the list and the tray. The grader drives the agent's controller over a stdio
+# wire on a fixed hidden set of 12 episodes.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/pantry_jar_refilling"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h; no trials on the hidden units (the full simulator with two practice units is in the agent's home).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (2 per hidden unit), each at most 12000 control steps; the grader's own budget is 9000 s
+# (grader_config.json), and starting the solver, the render self-test and the stops need a little more.
+[verifier]
+timeout_sec = 9600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
