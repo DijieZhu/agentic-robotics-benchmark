@@ -38,7 +38,7 @@ adds the sensor noise as before.
 
 | | how |
 |---|---|
-| physics, the wire, the units, the episodes | the renderer reads `model` and `data` only; amendment 4 of the episode selection repeats the reference on the fixed set |
+| physics, the wire, the units, the episodes | the renderer reads `model` and `data` only; amendment 4 of the episode selection repeats the reference on the fixed set: 12 of 12 episodes at credit 1.0 with the same number of steps as before the change (`validate-4d9f1355`) |
 | camera poses and intrinsics | Filament is given the camera MuJoCo itself computes for the episode's model (`mjv_updateCamera`: position, axes) and the frustum of the camera's vertical field of view at the image's aspect ratio; `K_<cam>` and `T_world_<cam>` are computed as before |
 | image sizes | 320 x 240, 256 x 192, 640 x 480; the three small ones are drawn at twice the size and averaged in linear light |
 | sensor noise | the same line in `lab_sim.render`, from the episode's generator: the same number of draws per image, so the wrench noise of an episode is what it was |
@@ -50,8 +50,9 @@ adds the sensor noise as before.
 service's; both run the same two episodes with the arm moving; A draws each camera once per step, B draws an extra
 image first, each camera ten times, then another order with repeats: 48 images compared, 0 differ; 0 repeated draws
 differ. R keeps two benches open and draws the left and right camera of each in turn twelve times, so that every
-turn loads the other bench's model into the renderer again: 0 of the 48 images differ from their first. Six runs in
-the task image, all passed. The images are also the same bytes with 2, 3 and 4 rasteriser threads (48 of 48).
+turn loads the other bench's model into the renderer again: 0 of the 48 images differ from their first. Four runs in
+the task image and one in the verifier image, all passed. The images are also the same bytes with 2, 3 and 4
+rasteriser threads (48 of 48).
 Three things were needed for it:
 
 - Filament's temporal dithering (a new noise per frame) is switched off (`lab_render._undither`);
@@ -84,11 +85,11 @@ Median colour per class of surface, Filament against the reference's display ima
 
 | bench top | bench cabinet, centrifuge housing | room furniture | floor | wall | robot, white | hand | caps | boxes |
 |---|---|---|---|---|---|---|---|---|
-| 0.97 (1.01) | 1.01 (0.99) | 0.94 (0.93) | 1.01 (1.03) | 0.98 (0.95) | 1.06 (1.04) | 1.04 (0.92) | 1.01 (0.97) | 0.98 (1.00) |
+| 0.97 (1.01) | 1.01 (0.99) | 0.94 (0.93) | 1.01 (1.03) | 0.98 (0.95) | 1.06 (1.04) | 1.03 (0.92) | 1.01 (0.97) | 0.98 (1.00) |
 
 | tubes | sleeves | rotor | shield | lid handle | scale | scale's holder | robot, black | fingers |
 |---|---|---|---|---|---|---|---|---|
-| 1.21 (1.16) | 0.83 (0.88) | 0.85 (0.87) | 0.88 (0.90) | 0.89 | 0.75 (0.61) | 0.67 (0.63) | 0.48 (0.33) | 0.50 |
+| 1.21 (1.16) | 0.83 (0.88) | 0.85 (0.87) | 0.88 (0.90) | 0.89 | 0.75 (0.61) | 0.67 (0.63) | 0.48 (0.33) | 0.53 |
 
 What the image light cannot do, and so differs from the reference: nothing casts a shadow (contact shading only);
 dark and metallic parts (the scale, its holder, the robot's black joints, the steel fingers) are a quarter to a half
@@ -108,7 +109,7 @@ distance, median over the views, smallest in brackets):
 
 | pair | views | before | after | by camera, before -> after |
 |---|---|---|---|---|
-| the green mark / the rotor beside it | 10 | 29 (9) | 20 (7) | left 23 -> 15, wrist 72 -> 64 |
+| the green mark / the rotor beside it | 10 | 29 (9) | 19 (7) | left 23 -> 15, wrist 72 -> 64 |
 | a hole's entrance / the rotor between holes | 33 | 60 (8) | 46 (6) | left 66 -> 60, right 22 -> 19, wrist 43 -> 40 |
 | the port's gap / the shield beside it | 42 | 56 (24) | 58 (23) | left 39 -> 41, right 59 -> 62, wrist 86 -> 79 |
 | the knob bar / the hub | 10 | 56 (54) | 53 (52) | right 55 -> 52, wrist 67 -> 62 |
