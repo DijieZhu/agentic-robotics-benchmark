@@ -1,0 +1,54 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+# A requirements engineer recovers a tenth-scale autonomous race car that can no longer be measured from 33 archived
+# photographs (encoded by the archive: horizontal crop, stretch and shear), the lab's build log and the documents of
+# an order for six replicas (a brief with an exact public acceptance, an image catalogue of datasheets, errata, lot
+# reports and a quote, and a public acceptance procedure), and submits a requirements sheet, a bill of materials and
+# a kinematic sketch of the car. The grader is static and deterministic (tests/README.md): it reads the three files
+# as data and scores them against the real car, one fixed hidden truth (tests/gt/). No judge, no played party, no
+# practice checker.
+[task]
+name = "grounded-intelligence-initiative/racecar_requirements_replica_from_photos"
+
+[metadata]
+platform = "ground"
+
+# The agent's sandbox: the values of the published requirements tasks (uav_requirements_replica_from_photos: 4 CPUs,
+# 8 GB, 14 400 s, no network). The reading load is 33 photographs, 27 page images and the narrative documents; the
+# public procedure evaluates one car in milliseconds and the whole catalogue in well under a minute on one CPU, so
+# 4 CPUs are ample. The instruction prints these three numbers from this file (CPUs, memory in GB, hours), so
+# memory_mb stays a multiple of 1024 and timeout_sec a multiple of 3600. No GPU is used.
+[environment]
+cpus = 4
+memory_mb = 8192
+gpus = 0
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine releases the agent's sandbox and scores in a fresh verifier
+# sandbox started from this task's image, into which it restores only the declared artifact /home/user/submission.
+# setup.sh does not run in the verifier and the grader reads nothing it stages: everything it needs is in tests/
+# (grade.py, the pinned procedure.py and schema_check.py, schemas.json, grader_config.json, anchor.json, the kit and
+# the hidden truth under gt/) and the image's /opt/venv. test.sh pins every numerical library to one thread, so the
+# verdict is a pure function of the submission and tests/.
+#
+# Its machine and limit: timeout_sec = max(600, 5 x the measured worst case). The grader is single-threaded; it
+# evaluates the public procedure over all 691 200 catalogue combinations on the real car (17 pass items), recomputes
+# the optimum and scores. Measured on a shared 48-core host (2026-11-17, one thread, a fresh process per run): on a
+# test world of the same size (691 200 cars) the whole grade of the oracle took 18.2-25.6 s and of the worst legal
+# submission 16.8 s, at most 94 MB RSS, and once, under memory pressure on the host, 63.9 s (45 s of it system
+# time in page faults); on the frozen world of this folder the enumeration and the optimum took 19.2-28.7 s.
+# 5 x 63.9 s = 320 s < 600 s, so the limit is 600 s. In the task image with this verifier's 2 CPUs and 4 GB, six
+# fresh verifications of the oracle each took 9.9-11.2 s and six of the worst legal submission 10.3-14.7 s.
+# 2 CPUs and 4 GB leave room for the base image's desktop session; no GPU.
+[verifier]
+timeout_sec = 600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

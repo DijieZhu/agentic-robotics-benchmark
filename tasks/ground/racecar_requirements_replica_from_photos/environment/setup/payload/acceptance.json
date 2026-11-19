@@ -1,0 +1,370 @@
+{
+ "schema": "rc-acceptance/1",
+ "pass_items": [
+  {
+   "id": "K3",
+   "quantity": "mass_kg",
+   "conditions": {
+    "config": {
+     "body_shell": false
+    }
+   },
+   "comparator": "<=",
+   "bound": 2.21,
+   "unit": "kg",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "K4",
+   "quantity": "battery_nominal_v",
+   "conditions": {},
+   "comparator": "<=",
+   "bound": 8.0,
+   "unit": "V",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "K5",
+   "quantity": "motor_torque_nm",
+   "conditions": {
+    "current_a": 30.0
+   },
+   "comparator": "<=",
+   "bound": 0.127,
+   "unit": "N.m",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "K7",
+   "quantity": "lidar_angular_step_deg",
+   "conditions": {},
+   "comparator": ">=",
+   "bound": 0.22,
+   "unit": "deg",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "K9",
+   "quantity": "overvoltage_headroom_v",
+   "conditions": {
+    "cell_v": 1.45
+   },
+   "comparator": ">=",
+   "bound": 0.0,
+   "unit": "V",
+   "brief_item": "B-10"
+  },
+  {
+   "id": "K11",
+   "quantity": "rail_load_ratio",
+   "conditions": {},
+   "comparator": "<=",
+   "bound": 1.0,
+   "unit": "1",
+   "brief_item": "B-10"
+  },
+  {
+   "id": "W1",
+   "quantity": "lap_time_s",
+   "conditions": {
+    "scenario": "SC-league"
+   },
+   "comparator": "<=",
+   "bound": 7.21,
+   "unit": "s",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "W2",
+   "quantity": "zone_stop_margin_m",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "comparator": ">=",
+   "bound": 0.0,
+   "unit": "m",
+   "brief_item": "B-06"
+  },
+  {
+   "id": "W3",
+   "quantity": "schedule_energy_reserve_frac",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "comparator": ">=",
+   "bound": 0.21,
+   "unit": "1",
+   "brief_item": "B-06"
+  },
+  {
+   "id": "W4",
+   "quantity": "schedule_bus_margin_v",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "comparator": ">=",
+   "bound": 0.0,
+   "unit": "V",
+   "brief_item": "B-06"
+  },
+  {
+   "id": "W5",
+   "quantity": "schedule_winding_headroom_c",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "comparator": ">=",
+   "bound": 0.0,
+   "unit": "K",
+   "brief_item": "B-06"
+  },
+  {
+   "id": "A1",
+   "quantity": "scan_plane_height_mm",
+   "conditions": {},
+   "comparator": ">=",
+   "bound": 116.1,
+   "unit": "mm",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "A2",
+   "quantity": "scan_plane_height_mm",
+   "conditions": {},
+   "comparator": "<=",
+   "bound": 122.1,
+   "unit": "mm",
+   "brief_item": "B-05"
+  },
+  {
+   "id": "A3",
+   "quantity": "ground_clearance_mm",
+   "conditions": {},
+   "comparator": ">=",
+   "bound": 11.4,
+   "unit": "mm",
+   "brief_item": "B-07"
+  },
+  {
+   "id": "A4",
+   "quantity": "steering_torque_ratio",
+   "conditions": {
+    "surface": "M"
+   },
+   "comparator": "<=",
+   "bound": 0.58,
+   "unit": "1",
+   "brief_item": "B-08"
+  },
+  {
+   "id": "A5",
+   "quantity": "lock_time_s",
+   "conditions": {
+    "surface": "M"
+   },
+   "comparator": "<=",
+   "bound": 0.4,
+   "unit": "s",
+   "brief_item": "B-08"
+  },
+  {
+   "id": "FIT",
+   "quantity": "fits",
+   "conditions": {},
+   "comparator": "==",
+   "bound": 1.0,
+   "unit": "1",
+   "brief_item": "B-10"
+  }
+ ],
+ "context": {
+  "lot_table": null,
+  "cycles": {
+   "CY-league": {
+    "segments": [
+     {
+      "kind": "straight",
+      "length_m": 9.937,
+      "sight_m": 9.0,
+      "surface": "S1",
+      "width_m": 2.0
+     },
+     {
+      "angle_deg": 180.0,
+      "kind": "arc",
+      "radius_m": 1.109,
+      "sight_m": 3.2,
+      "surface": "S1",
+      "width_m": 1.6
+     },
+     {
+      "kind": "straight",
+      "length_m": 4.5,
+      "sight_m": 4.5,
+      "surface": "S1",
+      "width_m": 2.0
+     },
+     {
+      "angle_deg": 25.0,
+      "kind": "arc",
+      "radius_m": 1.7,
+      "sight_m": 3.0,
+      "surface": "S1",
+      "width_m": 1.8
+     },
+     {
+      "angle_deg": 25.0,
+      "kind": "arc",
+      "radius_m": 1.7,
+      "sight_m": 3.0,
+      "surface": "S1",
+      "width_m": 1.8
+     },
+     {
+      "kind": "straight",
+      "length_m": 4.0,
+      "sight_m": 4.0,
+      "surface": "S1",
+      "width_m": 2.0
+     },
+     {
+      "angle_deg": 180.0,
+      "kind": "arc",
+      "radius_m": 0.95,
+      "sight_m": 2.6,
+      "surface": "S1",
+      "width_m": 1.6
+     }
+    ]
+   },
+   "CY-hall": {
+    "segments": [
+     {
+      "kind": "straight",
+      "length_m": 3.0,
+      "sight_m": 8.0,
+      "surface": "S2",
+      "width_m": 1.2
+     },
+     {
+      "kind": "straight",
+      "length_m": 2.4,
+      "sight_m": 7.5,
+      "surface": "P",
+      "width_m": 1.2
+     },
+     {
+      "kind": "straight",
+      "length_m": 5.1,
+      "sight_m": 5.1,
+      "surface": "S2",
+      "width_m": 1.2
+     },
+     {
+      "angle_deg": 180.0,
+      "kind": "arc",
+      "radius_m": 0.811,
+      "sight_m": 2.4,
+      "surface": "S2",
+      "width_m": 1.1
+     },
+     {
+      "kind": "straight",
+      "length_m": 5.0,
+      "sight_m": 5.0,
+      "surface": "S2",
+      "width_m": 1.2
+     },
+     {
+      "angle_deg": 30.0,
+      "kind": "arc",
+      "radius_m": 1.5,
+      "sight_m": 2.6,
+      "surface": "S2",
+      "width_m": 1.0
+     },
+     {
+      "angle_deg": 30.0,
+      "kind": "arc",
+      "radius_m": 1.5,
+      "sight_m": 2.6,
+      "surface": "S2",
+      "width_m": 1.0
+     },
+     {
+      "kind": "straight",
+      "length_m": 4.0,
+      "sight_m": 4.0,
+      "surface": "S2",
+      "width_m": 1.2
+     },
+     {
+      "angle_deg": 180.0,
+      "kind": "arc",
+      "radius_m": 0.61,
+      "sight_m": 1.8,
+      "surface": "S2",
+      "width_m": 0.8
+     }
+    ]
+   }
+  },
+  "scenarios": {
+   "SC-league": {
+    "cycle": "CY-league",
+    "environment": {
+     "ambient_c": 22.0,
+     "config": {
+      "body_shell": false
+     },
+     "zone": null
+    },
+    "schedule": {
+     "blocks": [
+      {
+       "drive_s": 300.0,
+       "pace": 1.0,
+       "rest_s": 0.0
+      }
+     ],
+     "packs": 1,
+     "repeat": 1,
+     "swap_after_blocks": null
+    }
+   },
+   "SC-openday": {
+    "cycle": "CY-hall",
+    "environment": {
+     "ambient_c": 33.0,
+     "config": {
+      "body_shell": true
+     },
+     "zone": {
+      "appear_m": 1.65,
+      "speed_cap_mps": 3.0,
+      "surface": "P",
+      "target": {
+       "class": "dark_fabric",
+       "width_m": 0.3
+      }
+     }
+    },
+    "schedule": {
+     "blocks": [
+      {
+       "drive_s": 750.0,
+       "pace": 0.6,
+       "rest_s": 240.0
+      }
+     ],
+     "packs": 1,
+     "repeat": 3,
+     "swap_after_blocks": null
+    }
+   }
+  }
+ },
+ "pod": {
+  "mass_g": null
+ }
+}

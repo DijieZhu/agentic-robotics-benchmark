@@ -1,0 +1,851 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "kinematic_sketch.json",
+ "description": "The kinematic sketch of the reference unit as it was photographed: exactly the 33 quantities of Appendix D of the brief, each with a nominal value, a tolerance and its sources.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "deck_top_height_mm",
+  "deck_thickness_mm",
+  "lowest_point_height_mm",
+  "highest_point_height_mm",
+  "lidar_top_height_mm",
+  "antenna_top_height_mm",
+  "post_lower_end_height_mm",
+  "rear_body_post_top_height_mm",
+  "deck_length_mm",
+  "deck_width_mm",
+  "deck_front_edge_x_mm",
+  "lidar_x_mm",
+  "compute_x_mm",
+  "motor_controller_x_mm",
+  "post_spacing_x_mm",
+  "post_spacing_y_mm",
+  "battery_bay_length_mm",
+  "kingpin_ground_offset_mm",
+  "caster_angle_deg",
+  "steering_arm_mm",
+  "bellcrank_output_arm_mm",
+  "bellcrank_input_arm_mm",
+  "servo_saver_arm_mm",
+  "toe_in_per_side_deg",
+  "wheelbase_mm",
+  "track_front_mm",
+  "track_rear_mm",
+  "overall_length_mm",
+  "overall_width_mm",
+  "pinion_teeth",
+  "spur_teeth",
+  "bevel_pinion_teeth",
+  "ring_gear_teeth"
+ ],
+ "properties": {
+  "deck_top_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the flat upper face of the deck plate.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "deck_thickness_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Thickness of the deck plate: the distance between its upper and its lower face.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "lowest_point_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the lowest point of the car, the four wheels and their tyres left out of account.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "highest_point_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the highest point of the car as photographed.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "lidar_top_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the top of the LiDAR's housing.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "antenna_top_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the tips of the two antennas (the higher tip if they differ).",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "post_lower_end_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the lower end faces of the four deck posts.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "rear_body_post_top_height_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Height of the top ends of the two rear body posts.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "deck_length_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Length of the deck plate along x: from its rearmost to its foremost edge.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "deck_width_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Width of the deck plate along y: across its two outermost side edges.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "deck_front_edge_x_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "x of the foremost edge of the deck plate.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "lidar_x_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "x of the centre of the LiDAR in plan view: midway between the foremost and the rearmost point of its housing, the connector at its rear included.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "compute_x_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "x of the centre of the compute module in plan view: midway between its foremost and its rearmost point.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "motor_controller_x_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "x of the centre of the motor controller board in plan view: midway between its front and its rear edge.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "post_spacing_x_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Distance along x between the axes of the front pair and of the rear pair of deck posts.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "post_spacing_y_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Distance along y between the axes of the left pair and of the right pair of deck posts.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "battery_bay_length_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Usable length of the battery bay: the distance along x between the surface of the chassis tub that bounds the bay behind the pack and the surface of the chassis tub that bounds it ahead of the pack, both taken on the centre line of the pack as fitted, at half the height of the pack.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "kingpin_ground_offset_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "King-pin offset at the ground of a front wheel. The king-pin axis is the line through the centres of the upper and the lower ball joint of the steering knuckle. The offset is the distance from the point where that axis meets the ground to the point of the ground under the wheel centre, measured along y.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "caster_angle_deg": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Caster angle: the angle between the king-pin axis and the vertical in side view (projected on the x-z plane), positive when the upper ball joint lies behind the lower one.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in degrees."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in degrees; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "steering_arm_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Steering arm of a front knuckle: the distance in plan view (projected on the x-y plane) from the king-pin axis, taken at the height of the wheel centre, to the centre of the joint that connects the knuckle to its tie rod.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "bellcrank_output_arm_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Output arm of a steering bellcrank: the distance in plan view from the pivot axis of the bellcrank to the centre of its joint with the tie rod.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "bellcrank_input_arm_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Input arm of a steering bellcrank: the distance in plan view from the pivot axis of the bellcrank to the centre of its joint with the drag link that ties the two bellcranks together.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "servo_saver_arm_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Arm of the servo saver: the distance, at right angles to the axis of the servo's output shaft, from that axis to the centre of the joint where the servo link attaches to the servo saver.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "toe_in_per_side_deg": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Toe-in of a front wheel with the steering straight ahead: the angle in plan view between the centre plane of the wheel and the x axis, positive when the front of the wheel points towards the centre line of the car.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in degrees."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in degrees; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "wheelbase_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Distance along x between the front and the rear wheel centres.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "track_front_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Front track: the distance along y between the two front wheel centres.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "track_rear_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Rear track: the distance along y between the two rear wheel centres.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "overall_length_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Overall length of the car as photographed, along x: from its rearmost to its foremost point.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "overall_width_mm": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Overall width of the car as photographed, along y: across its outermost points.",
+   "properties": {
+    "nominal": {
+     "type": "number",
+     "description": "Your value of the quantity, in millimetres."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true value may lie from your nominal, as you judge it, in millimetres; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "pinion_teeth": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Number of teeth of the motor pinion fitted to the reference unit.",
+   "properties": {
+    "nominal": {
+     "type": "integer",
+     "description": "Your value of the quantity: a whole number of teeth."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true count may lie from your nominal, as you judge it; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "spur_teeth": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Number of teeth of the spur gear that the motor pinion drives.",
+   "properties": {
+    "nominal": {
+     "type": "integer",
+     "description": "Your value of the quantity: a whole number of teeth."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true count may lie from your nominal, as you judge it; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "bevel_pinion_teeth": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Number of teeth of the bevel drive pinion of the front gearbox.",
+   "properties": {
+    "nominal": {
+     "type": "integer",
+     "description": "Your value of the quantity: a whole number of teeth."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true count may lie from your nominal, as you judge it; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  },
+  "ring_gear_teeth": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "nominal",
+    "tolerance",
+    "sources"
+   ],
+   "description": "Number of teeth of the ring gear of the front differential, the gear that this bevel pinion drives.",
+   "properties": {
+    "nominal": {
+     "type": "integer",
+     "description": "Your value of the quantity: a whole number of teeth."
+    },
+    "tolerance": {
+     "type": "number",
+     "minimum": 0,
+     "description": "How far the true count may lie from your nominal, as you judge it; not negative. It is not scored."
+    },
+    "sources": {
+     "$ref": "#/$defs/sources"
+    }
+   }
+  }
+ },
+ "$defs": {
+  "source_id": {
+   "type": "string",
+   "pattern": "^(?:B-(?:0[1-9]|1[0-6])|BL-(?:0[1-9]|10)|PH-(?:0[1-9]|[12][0-9]|3[0-3])|DS-(?:01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20)|ER-(?:1|2|3)|LR-(?:1|2|3|4))$",
+   "description": "A source id. It names one given document or picture: B-01 to B-16 (items of brief.md), BL-01 to BL-10 (entries of build_log.md), PH-01 to PH-33 (photographs), DS-.. (datasheet pages), ER-. (erratum notices), LR-. (lot reports). Only an id that exists is accepted."
+  },
+  "sources": {
+   "type": "array",
+   "maxItems": 16,
+   "items": {
+    "$ref": "#/$defs/source_id"
+   },
+   "description": "The source ids of the places where the value can be read: at most 16."
+  }
+ }
+}

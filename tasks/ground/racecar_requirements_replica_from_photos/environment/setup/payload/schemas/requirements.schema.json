@@ -1,0 +1,229 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "requirements.yaml",
+ "description": "The requirements sheet: the facets of the order, each with its value, unit and sources, and the derived values, your predictions for a replica built to your own BOM. submission_contract.md, section 2, gives the rules in words.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "facets",
+  "derived"
+ ],
+ "properties": {
+  "facets": {
+   "type": "array",
+   "minItems": 1,
+   "maxItems": 20,
+   "description": "1 to 20 facets. No facet id may appear twice: schema_check.py checks this rule, which the schema does not state.",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "value",
+     "unit",
+     "sources"
+    ],
+    "properties": {
+     "id": {
+      "enum": [
+       "pod_mass_g",
+       "as_found_mass_g",
+       "as_found_front_axle_g",
+       "steering_lock_deg",
+       "replica_count",
+       "eco_usd",
+       "scan_plane_min_mm",
+       "scan_plane_max_mm",
+       "ground_clearance_min_mm",
+       "steering_torque_ratio_max",
+       "lock_time_max_s",
+       "mass_max_kg",
+       "lap_time_max_s",
+       "cell_lot_capacity_factor",
+       "cell_lot_resistance_factor",
+       "tyre_lot_friction",
+       "lidar_lot_range_m",
+       "compute_power_w",
+       "power_board_fuse_a",
+       "schedule_duration_s"
+      ],
+      "description": "One of the facet ids of submission_contract.md, section 2.1."
+     },
+     "value": {
+      "type": "number",
+      "description": "The value of the facet: a finite number in the unit of the facet."
+     },
+     "unit": {
+      "$ref": "#/$defs/unit"
+     },
+     "sources": {
+      "$ref": "#/$defs/sources"
+     }
+    }
+   }
+  },
+  "derived": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "mass_kg",
+    "front_axle_load_n",
+    "scan_plane_height_mm",
+    "ground_clearance_mm",
+    "envelope_height_mm",
+    "steering_torque_nm",
+    "lock_time_s"
+   ],
+   "properties": {
+    "mass_kg": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Mass of a replica with your BOM and the pod.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "front_axle_load_n": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Static load on the front axle of that replica.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "scan_plane_height_mm": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Height of the LiDAR scan plane of that replica.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "ground_clearance_mm": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Ground clearance of that replica: the height of its lowest point, wheels and tyres left out of account.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "envelope_height_mm": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Height of the highest point of that replica.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "steering_torque_nm": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Torque the steering servo of that replica must give to turn the front wheels at standstill.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    },
+    "lock_time_s": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "value",
+      "unit"
+     ],
+     "description": "Time that replica takes from full lock to full lock.",
+     "properties": {
+      "value": {
+       "type": "number",
+       "description": "Your prediction: a finite number in the unit of the quantity."
+      },
+      "unit": {
+       "$ref": "#/$defs/unit"
+      }
+     }
+    }
+   },
+   "description": "Exactly the 7 derived ids. Each holds your prediction of one quantity of procedure.py for a replica built to your own BOM, under the conditions of submission_contract.md, section 2.2."
+  }
+ },
+ "$defs": {
+  "source_id": {
+   "type": "string",
+   "pattern": "^(?:B-(?:0[1-9]|1[0-6])|BL-(?:0[1-9]|10)|PH-(?:0[1-9]|[12][0-9]|3[0-3])|DS-(?:01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20)|ER-(?:1|2|3)|LR-(?:1|2|3|4))$",
+   "description": "A source id. It names one given document or picture: B-01 to B-16 (items of brief.md), BL-01 to BL-10 (entries of build_log.md), PH-01 to PH-33 (photographs), DS-.. (datasheet pages), ER-. (erratum notices), LR-. (lot reports). Only an id that exists is accepted."
+  },
+  "sources": {
+   "type": "array",
+   "maxItems": 16,
+   "items": {
+    "$ref": "#/$defs/source_id"
+   },
+   "description": "The source ids of the places where the value can be read: at most 16."
+  },
+  "unit": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 16,
+   "description": "The unit string, written exactly as submission_contract.md prints it for this id."
+  }
+ }
+}
