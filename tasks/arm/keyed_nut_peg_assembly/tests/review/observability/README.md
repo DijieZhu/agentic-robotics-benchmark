@@ -1,4 +1,4 @@
-# Observability: what a controller can see and feel (maintainer evidence, 2026-11-12; rounds 3 and 4 on 2026-11-17; the cameras' renderer on 2026-11-18)
+# Observability: what a controller can see and feel (maintainer evidence, 2026-11-12; rounds 3 and 4 on 2026-11-17; the cameras' renderer on 2026-11-18 and 2026-11-19)
 
 The task's observations carry no object state. This folder shows, on development kits only, that they are enough
 for the job: the camera images to find everything, and the hand's position with the wrist sensor to put a nut on its
@@ -26,7 +26,12 @@ calibration (data sheet, section 11), so an image position is off by millimetres
 | the same | two close-ups, the hand turned half a turn between them (about 60 steps) | 0.7 mm median, 1.2 mm p90, 1.6 mm max: the wrist camera's error is fixed in the hand's frame, so most of it cancels |
 | the same | one close-up, corrected by the offset measured on the kit's first peg | 1.0 mm median, 1.8 mm p90, 2.5 mm max |
 | rough nut positions | the fixed cameras | 90 of 90 found; 17 mm median (the blob's centre lies towards the handle), 24 mm max |
-| ring centre and handle direction | one wrist close-up over the rough position | centre 1.8 mm median, 3.2 mm p90 (11 of 90 over 3 mm; the worst, 12 mm, a yellow nut whose handle was also read 9 degrees off); handle 0.3 degrees median (one orange nut 30 degrees off), none read the wrong way round |
+| ring centre and handle direction | one wrist close-up over the rough position | centre 1.8 mm median, 3.2 mm p90 (11 of 90 over 3 mm; the worst, 12 mm, a yellow nut whose handle was also read 9 degrees off); handle 0.3 degrees median (one orange nut 29 degrees off), one yellow nut read the wrong way round |
+
+On amendment 5's image (2026-11-18, before the renderer's draw order was fixed: `../rendering.md`) the pegs' numbers
+were the same to the last digit; the ring centres differed by 0.03 mm in the median and 1.2 mm at most, and the
+yellow nut now read the wrong way round was read 6 degrees off. The fix changes about one pixel in a hundred of an
+image, on the nuts, by one level.
 
 With MuJoCo's own renderer (amendments 3 and 4, 2026-11-17) the same kits gave: peg positions 3.4 mm median, 90 of 90
 band counts, shaft tops 1.6 mm (one close-up) and 1.1 mm (two), ring centres 1.8 mm median with 17 of 90 over 3 mm and

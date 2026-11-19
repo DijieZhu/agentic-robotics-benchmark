@@ -3,10 +3,10 @@ Mesa's lavapipe on the CPU (no GPU). keyed_env.NutEnv.render draws every image t
 commissioning service and in the grader alike.
 
 What is drawn
-  * the episode's own robot, pegs and nuts: a copy of the episode's compiled model whose render-only fields are
-    edited (PBR terms, one material per nut and per peg part in the unit's own colours, the robot's visual meshes
-    only: its collision shapes are not drawn, except the fingers' rubber pads), in the simulator's state at the
-    moment of the image; the wrist camera does not see the shell of the hand it is mounted in;
+  * the episode's own robot, pegs and nuts, read from the episode's compiled model (which is not touched): the
+    robot's visual meshes (its collision shapes are not drawn, except the fingers' rubber pads), every peg part,
+    and every nut as one mesh of its blocks in the unit's own colour, with the look's PBR terms, in the simulator's
+    state at the moment of the image; the wrist camera does not see the shell of the hand it is mounted in;
   * the room around the cell (room.npz / room.json of the render bundle in KEYED_RENDER_DIR, default
     /opt/task-assets/payload/render): the laboratory, its shelving and benches, the cell's bench top and cabinet,
     the robot's pedestal, the camera gantry with its lamp. Drawn only: nothing of it is in the simulated model. The
@@ -24,18 +24,27 @@ drawn at twice that size and averaged over 2 x 2 blocks in linear light (the loo
 anti-aliasing that keeps a peg's bands apart in the fixed cameras.
 
 An image is a function of the model, the simulator's state and the camera alone: the same camera in the same state
-gives the same bytes however often it is drawn, whatever was drawn before it and in whichever process of the same
-image (Filament's temporal dithering, a new noise per frame, is off: _undither). The sensor noise stays the
+gives the same bytes however often it is drawn, whatever was drawn before it, however many other episodes the
+process has drawn and in whichever process of the same image. Two things make it so. Filament's temporal
+dithering, a new noise per frame, is off (_undither). And nothing that is drawn is made anew per episode. Where two
+surfaces compute the same depth at a sample (blocks of a nut, which overlap by design; shells of the arm, which
+pass through each other at the joints), the one Filament draws first wins, and the order in which it draws two
+renderables is not a function of the scene: it changed when MuJoCo's ModelRenderables made an episode's
+renderables again (a handful of pixels by one or two levels on the nuts, from a process's second episode on), when
+a renderable was given a material again, and, for a nut drawn as some four hundred renderables of its own, from
+process to process. So (PARTS below): every renderable, material, mesh and texture is made once per process, at
+its first episode and in a fixed order; an episode only writes data into them (poses, sizes, a nut's vertices and
+colour); and a nut is ONE mesh, whose triangles are drawn in the mesh's own order. The sensor noise stays the
 environment's.
 
 Filament runs in one dedicated thread per process (its engine is thread-bound; a forked child starts its own).
-Objects that live for the process: the context, the room (meshes, textures, materials, renderables), the image
-light, the lamps, the scene, one render target per image size. Per episode: the copy of the model and its
-ModelResources / ModelRenderables. MuJoCo 3.16's Filament module serves one model's resources at a time per
-context, so only the episode rendered last is live; rendering another one first frees the live one's model
-resources (the room stays). The first image of a process takes several seconds (lavapipe compiles the shaders).
+Objects that live for the process: the context, the room (meshes, textures, materials, renderables), the robot's,
+the pegs' and the nuts' renderables with their materials, meshes and textures, the image light, the lamps, the
+scene, one render target per image size. Per episode only data changes: the peg parts' sizes, the nuts' vertices
+and colours, the lamps' brightness. The first image of a process takes several seconds (lavapipe compiles the
+shaders).
 
-    view = open_view(env)          # after env.reset(): builds the episode's drawn model (no Filament work yet)
+    view = open_view(env)          # after env.reset(): reads the episode's parts (no Filament work yet)
     rgb = view.render("left")      # uint8 (240, 320, 3), rows top-down, no noise
     view.close()                   # or let it be garbage-collected
 
@@ -49,9 +58,10 @@ module for every account that renders, so the image proves its driver.
 Nothing here changes the simulation: the renderer reads the model and the data and writes neither.
 """
 import atexit
-import copy
 import ctypes
+import copy
 import gc
+import hashlib
 import json
 import math
 import os
@@ -117,10 +127,15 @@ LOOK_FILE = os.path.join(HERE, "keyed_look.json")
 BUNDLE_FILES = ("room.npz", "room.json", "ibl.ktx")
 CALL_TIMEOUT = float(os.environ.get("KEYED_RENDER_TIMEOUT", "300"))
 CAM_FAR = 40.0                 # the room's far corner; the near plane is the simulated camera's own
-GEOM_GROUP = 1                 # what the cameras show of the episode's model, after _drawn_model regroups it
-MOUNT_GROUP = 2                # the hand's own shell: the wrist camera sits in it and does not see it
-HIDDEN_GROUP = 4
-SCENERY = ("floor", "wall_back", "table", "pedestal")   # keyed_env.SCENE_XML's own scenery: the bundle draws the room
+# PARTS: what is drawn of the episode's model, by part_of_geom's names. The process makes the renderables of every
+# part once, at its first episode, in this order and in the model's geom order within a part; none is made again,
+# and none gets another material, mesh or texture object.
+ROBOT_PARTS = ("robot", "hand", "finger", "pad")   # MuJoCo's own renderables of a robot-only copy of the first episode's model
+PEG_PARTS = ("collar", "shaft", "pin", "band")     # one renderable per geom: MuJoCo's own box / cylinder shape, resized per episode
+NUT_BLOCKS_MAX = 24 * 9 * 2 + 1                    # a nut: one renderable; its mesh has room for this many boxes (blocks, handle)
+GEOM_GROUP = 1                 # in the robot-only copy: what the cameras show
+MOUNT_GROUP = 2                # ... the hand's own shell: the wrist camera sits in it and does not see it
+HIDDEN_GROUP = 4               # ... everything else (the pegs and the nuts have renderables of their own)
 
 
 class RenderError(RuntimeError):
@@ -207,12 +222,50 @@ def part_of_geom(m, g):
     return None
 
 
-def _drawn_model(m, look):
-    """A copy of the episode's model with the render-only fields set for Filament (the physics model is untouched):
-    the drawn geoms in group GEOM_GROUP (the hand's shell in MOUNT_GROUP) and everything else in HIDDEN_GROUP; the
-    nuts, the peg parts and the
-    gripper's parts on the materials keyed_env.build_model added for them (look_<part>), the nuts and the peg parts
-    in each geom's own colour (the unit's shade of the day); PBR terms from the look."""
+def _material(m, g, part, look):
+    """The material of a peg part or of a nut: (r, g, b, roughness, metallic, specular, glossiness), the
+    colour in sRGB: the geom's own colour (a nut's is the unit's shade of the day) times the look's gain, the
+    look's PBR terms. specular and glossiness are a MuJoCo material's `specular` and `shininess` (0.5 where the look
+    names none) as MuJoCo 3.16's Filament module scales them for its own renderables (x 0.2, x 0.1); every number
+    passes through a float32, as it did in the model's material that this stands for."""
+    r = look["model_materials"]["nut" if part.startswith("nut") else part]
+    rgb = np.asarray(_gain_srgb(r.get("srgb", m.geom_rgba[g, :3]), r.get("gain", 1.0)), np.float32)
+    return (float(rgb[0]), float(rgb[1]), float(rgb[2]), float(np.float32(r["roughness"])), float(np.float32(r["metallic"])),
+            float(np.float32(0.2) * np.float32(r.get("specular", 0.5))), float(np.float32(0.1) * np.float32(0.5)))
+
+
+def robot_geoms(m, look):
+    """The robot's drawn geoms (the visual meshes of the arm, the hand and the fingers; of the collision shapes only
+    the fingers' rubber pads): (their indices in the model, a signature). The signature is the same for two models
+    whose robot is the same and stands at the same geom indices, which every episode of a process must be: the
+    robot's renderables are made once (robot_model)."""
+    idx, sig = [], hashlib.sha256()
+    meshes = set()
+    for g in range(m.ngeom):
+        part = part_of_geom(m, g)
+        if part not in ROBOT_PARTS:
+            continue
+        idx.append(g)
+        mid, j = int(m.geom_matid[g]), int(m.geom_dataid[g])
+        sig.update(repr((g, part, m.body(m.geom_bodyid[g]).name, int(m.geom_type[g]), j, m.geom_size[g].tolist(),
+                         m.geom_rgba[g].tolist(), m.geom_pos[g].tolist(), m.geom_quat[g].tolist(),
+                         (m.mat_rgba[mid].tolist(), float(m.mat_shininess[mid])) if mid >= 0 else None)).encode())
+        if j >= 0 and j not in meshes:
+            meshes.add(j)
+            va, fa = int(m.mesh_vertadr[j]), int(m.mesh_faceadr[j])
+            sig.update(m.mesh_vert[va:va + int(m.mesh_vertnum[j])].tobytes())
+            sig.update(m.mesh_face[fa:fa + int(m.mesh_facenum[j])].tobytes())
+    sig.update(json.dumps(look["model_materials"], sort_keys=True).encode())
+    return np.asarray(idx, np.intp), sig.hexdigest()
+
+
+def robot_model(m, look):
+    """A copy of an episode's model in which only the robot is drawn, with the render-only fields set for Filament
+    (the episode's model is untouched): the robot's drawn geoms in group GEOM_GROUP (the hand's shell in
+    MOUNT_GROUP), everything else in HIDDEN_GROUP; the gripper's parts on the materials keyed_env.build_model added
+    for them (look_hand, look_finger, look_pad); the arm's shells on their own materials, with the look's PBR terms
+    by the material's colour (white covers, dark joints, the rest). The process keeps the copy of its first episode
+    and MuJoCo's renderables of it for good; every image moves them to the state's poses (_Filament.draw)."""
     d = copy.copy(m)
     rules = look["model_materials"]
     for t in range(d.ntex):
@@ -220,7 +273,7 @@ def _drawn_model(m, look):
     part_mat = {}
     for g in range(d.ngeom):
         part = part_of_geom(m, g)
-        if part is None:
+        if part not in ROBOT_PARTS:
             d.geom_group[g] = HIDDEN_GROUP
             continue
         d.geom_group[g] = MOUNT_GROUP if part == "hand" else GEOM_GROUP
@@ -231,7 +284,7 @@ def _drawn_model(m, look):
             mid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_MATERIAL, name)
             if mid < 0:
                 raise RenderError("renderer: the model has no material %r (keyed_env.build_model adds them)" % name)
-            r = rules["nut" if part.startswith("nut") else part]
+            r = rules[part]
             d.mat_rgba[mid, :3] = _gain_srgb(r.get("srgb", m.geom_rgba[g]), r.get("gain", 1.0))
             d.mat_rgba[mid, 3] = 1.0
             d.mat_roughness[mid] = r["roughness"]
@@ -260,13 +313,83 @@ def _drawn_model(m, look):
     return d
 
 
+def peg_parts(m, look):
+    """The pegs' parts (collars, shafts, pins, bands), in the model's order: the geom's index, kind, type, size of
+    the day (a real peg has its own shaft and pin) and material."""
+    parts = []
+    for g in range(m.ngeom):
+        part = part_of_geom(m, g)
+        if part not in PEG_PARTS:
+            continue
+        gt = int(m.geom_type[g])
+        if gt not in (int(mujoco.mjtGeom.mjGEOM_BOX), int(mujoco.mjtGeom.mjGEOM_CYLINDER)):
+            raise RenderError("renderer: a peg part that is neither a box nor a cylinder")
+        sz = m.geom_size[g]                             # as MuJoCo scales its own shapes: a cylinder by (r, r, half length)
+        size = (sz[0], sz[1], sz[2]) if gt == int(mujoco.mjtGeom.mjGEOM_BOX) else (sz[0], sz[0], sz[1])
+        parts.append({"geom": g, "part": part, "type": gt, "size": np.asarray(size, np.float32),
+                      "material": _material(m, g, part, look)})
+    return parts
+
+
+def _box_arrays():
+    """A box with half sizes 1: 24 vertices, their normals, 12 triangles (counter-clockwise from outside)."""
+    V, N, I = [], [], []
+    for ax in range(3):
+        for sgn in (1.0, -1.0):
+            n = np.zeros(3)
+            n[ax] = sgn
+            u = np.zeros(3)
+            u[(ax + 1) % 3] = 1.0
+            w = np.cross(n, u)
+            k = len(V)
+            for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
+                V.append(n + a * u + b * w)
+                N.append(n)
+            I += [k, k + 1, k + 2, k, k + 2, k + 3]
+    return np.asarray(V, np.float64), np.asarray(N, np.float64), np.asarray(I, np.uint32)
+
+
+def nut_parts(m, look):
+    """The nuts, in their order: the body's index, the nut's material (its colour of the day) and ONE mesh of all
+    its blocks and its handle in the body's frame (vertices, normals, indices; the blocks in the model's geom
+    order). A nut's blocks overlap by design, and where two of them compute the same depth the one drawn first
+    wins: within one mesh that is the mesh's own triangle order, the same in every image of the same state."""
+    by_nut = {}
+    for g in range(m.ngeom):
+        part = part_of_geom(m, g)
+        if part is not None and part.startswith("nut"):
+            if int(m.geom_type[g]) != int(mujoco.mjtGeom.mjGEOM_BOX):
+                raise RenderError("renderer: a nut geom that is not a box")
+            by_nut.setdefault(int(part[3:]), []).append(g)
+    v0, n0, i0 = _box_arrays()
+    nuts = []
+    for i in sorted(by_nut):
+        gs = by_nut[i]
+        if len(gs) > NUT_BLOCKS_MAX or len({int(m.geom_bodyid[g]) for g in gs}) != 1:
+            raise RenderError("renderer: nut %d is not one body of at most %d blocks" % (i, NUT_BLOCKS_MAX))
+        R = np.empty((len(gs), 3, 3))
+        for k, g in enumerate(gs):
+            mujoco.mju_quat2Mat(R[k].reshape(9), m.geom_quat[g])
+        V = np.einsum("kij,kvj->kvi", R, v0[None] * m.geom_size[gs][:, None, :]) + m.geom_pos[gs][:, None, :]
+        N = np.einsum("kij,vj->kvi", R, n0)
+        I = (i0[None, :] + 24 * np.arange(len(gs), dtype=np.uint32)[:, None]).ravel()
+        nuts.append({"body": int(m.geom_bodyid[gs[0]]), "material": _material(m, gs[0], "nut%d" % i, look),
+                     "V": np.ascontiguousarray(V.reshape(-1, 3), np.float32),
+                     "N": np.ascontiguousarray(N.reshape(-1, 3), np.float32), "I": np.ascontiguousarray(I, np.uint32)})
+    return nuts
+
+
 class Episode(object):
-    """Everything the renderer needs of one episode, built in the caller's thread."""
+    """Everything the renderer needs of one episode, read from its model in the caller's thread."""
 
     def __init__(self, env, look):
         t0 = time.perf_counter()
         m = env.model
-        self.model = _drawn_model(m, look)
+        self.model = m                                  # read only (copied for the robot at the process's first episode)
+        self.robot, self.robot_sig = robot_geoms(m, look)
+        self.pegs = peg_parts(m, look)
+        self.nuts = nut_parts(m, look)
+        self.quality = (int(m.vis.quality.numstacks), int(m.vis.quality.numslices), int(m.vis.quality.numquads))
         self.gain = float(getattr(env, "lamp_gain", 1.0)) * float(look["exposure_scale"])
         self.ibl_intensity = float(look["ibl"]["intensity"]) * self.gain
         self.lamps = []
@@ -309,7 +432,7 @@ class View(object):
         except RenderError:
             raise
         except Exception as exc:  # noqa: BLE001 - whatever breaks here is the renderer's, not the caller's
-            raise RenderError("renderer: building the episode's drawn model: %s: %s" % (type(exc).__name__, exc))
+            raise RenderError("renderer: reading the episode's parts: %s: %s" % (type(exc).__name__, exc))
         self.build_s = self.episode.seconds
         self._sid = self._fil.call(self._fil.new_session, self.episode)
         self._finalizer = weakref.finalize(self, self._fil.post, self._fil.free_session, self._sid)
@@ -371,7 +494,7 @@ class _Filament(object):
         self.jobs = queue.Queue()
         self.sessions = {}
         self.active = None
-        self.live = {}
+        self.parts = None                              # the robot's, the pegs' and the nuts' renderables (_parts)
         self.targets = {}
         self.next_sid = 0
         self.view = None                               # the filament::View, once its dithering is off (_undither)
@@ -485,21 +608,27 @@ class _Filament(object):
         t.upload(td)
         return t
 
-    def _mesh(self, V, N, U, I):
+    def _mesh_config(self, n_vertices, n_indices):
         F = self.F
         A, Us, Ty = F.VertexAttribute, F.VertexAttributeUsage, F.VertexAttributeType
         attrs = [A(usage=Us.VERTEX_ATTRIBUTE_USAGE_POSITION, type=Ty.VERTEX_ATTRIBUTE_TYPE_FLOAT3),
                  A(usage=Us.VERTEX_ATTRIBUTE_USAGE_NORMAL, type=Ty.VERTEX_ATTRIBUTE_TYPE_FLOAT3),
                  A(usage=Us.VERTEX_ATTRIBUTE_USAGE_UV, type=Ty.VERTEX_ATTRIBUTE_TYPE_FLOAT2)]
-        cfg = F.MeshConfig(max_vertices=len(V), max_indices=len(I), attributes=attrs, interleaved=False,
-                           index_type=F.IndexType.INDEX_TYPE_U32,
-                           primitive_type=F.MeshPrimitiveType.MESH_PRIMITIVE_TYPE_TRIANGLES)
-        mesh = self.ctx.create_mesh(cfg)
-        md = F.MeshData(compute_bounds=True)
+        return F.MeshConfig(max_vertices=n_vertices, max_indices=n_indices, attributes=attrs, interleaved=False,
+                            index_type=F.IndexType.INDEX_TYPE_U32,
+                            primitive_type=F.MeshPrimitiveType.MESH_PRIMITIVE_TYPE_TRIANGLES)
+
+    def _mesh_upload(self, mesh, cfg, V, N, U, I):
+        md = self.F.MeshData(compute_bounds=True)
         md.set_vertices(cfg, np.concatenate([np.asarray(V, np.float32).ravel(), np.asarray(N, np.float32).ravel(),
                                              np.asarray(U, np.float32).ravel()]).tobytes())
         md.set_indices(cfg, np.ascontiguousarray(I, np.uint32).tobytes())
         mesh.upload(md)
+
+    def _mesh(self, V, N, U, I):
+        cfg = self._mesh_config(len(V), len(I))
+        mesh = self.ctx.create_mesh(cfg)
+        self._mesh_upload(mesh, cfg, V, N, U, I)
         return mesh
 
     def _texture(self, img):
@@ -581,25 +710,34 @@ class _Filament(object):
     def free_session(self, sid):
         self.sessions.pop(sid, None)
         if self.active == sid:
-            self._evict()
+            self.active = None
 
-    def _evict(self):
-        L = self.live
-        for k in ("rends", "res"):                      # renderables before the resources they draw
-            L.pop(k, None)
-        L.clear()
-        gc.collect()
-        _trim_heap()
-        self.active = None
+    def _material_of(self, mat):
+        r, g, b, rough, metal, spec, gloss = mat
+        return self.F.Material(color=np.array([r, g, b, 1.0], np.float32), roughness=rough, metallic=metal, specular=spec,
+                               reflectance=0.0, glossiness=gloss, emissive=0.0)
 
-    def _activate(self, sid):
-        if self.active == sid:
+    def _renderable(self, mat):
+        r = self.ctx.create_renderable(self.F.RenderableParams(cast_shadow=True, receive_shadow=True))
+        r.set_material(self._material_of(mat))
+        return r
+
+    def _parts(self, ep):
+        """The renderables of everything an episode draws of its own, made once: at the process's first episode, in
+        the order robot (MuJoCo's own renderables of robot_model, in the model's geom order), peg parts (the
+        model's order), nuts (one each). Every later episode must have the same robot at the same geom indices and
+        peg parts and nuts of the same kinds and materials; what differs between episodes is data (_activate)."""
+        sig = (ep.robot_sig, tuple((p["part"], p["type"], p["material"]) for p in ep.pegs),
+               tuple(n["material"][3:] for n in ep.nuts), ep.quality)
+        if self.parts is not None:
+            if sig != self.parts["sig"]:
+                raise RenderError("renderer: this episode's robot, pegs or nuts are not of the kind the process draws")
             return
         F = self.F
-        t0 = time.perf_counter()
-        ep = self.sessions[sid]
-        self._evict()
-        res = F.ModelResources(self.ctx, ep.model)
+        model = robot_model(ep.model, self.look)
+        data = mujoco.MjData(model)
+        mujoco.mj_forward(model, data)
+        res = F.ModelResources(self.ctx, model)
         rends = F.ModelRenderables(self.scn, res)
         opts = []
         for mount in (False, True):                     # [without, with] the hand's shell
@@ -610,12 +748,64 @@ class _Filament(object):
             opt.sitegroup[:] = 0
             opts.append(opt)
         rends.set_options(opts[1])
+        robot = {"model": model, "data": data, "res": res, "rends": rends, "opts": opts, "mount": True}
+        zero = np.zeros(3, np.float32)
+        pegs, nuts = [], []
+        for p in ep.pegs:
+            r = self._renderable(p["material"])
+            r.set_geom_mesh(mujoco.mjtGeom(p["type"]), *ep.quality)
+            r.set_size(zero)
+            self.scn.add_renderable(r)
+            pegs.append(r)
+        for n in ep.nuts:
+            # the nut's colour of the day is a texture of one texel (8 bits per channel, sRGB), written anew per
+            # episode (_activate): the renderable keeps the material it was made with ...
+            tex = self._texture(np.full((1, 1, 3), 255, np.uint8))
+            _r, _g, _b, rough, metal, spec, gloss = n["material"]
+            r = self.ctx.create_renderable(F.RenderableParams(cast_shadow=True, receive_shadow=True))
+            r.set_material(F.Material(color=np.ones(4, np.float32), roughness=rough, metallic=metal, specular=spec,
+                                      reflectance=0.0, glossiness=gloss, emissive=0.0, color_texture=tex))
+            # ... and the mesh it was made with: room for NUT_BLOCKS_MAX boxes, written anew per episode (boxes a
+            # nut does not have are triangles of no area at the nut's origin)
+            cfg = self._mesh_config(24 * NUT_BLOCKS_MAX, 36 * NUT_BLOCKS_MAX)
+            mesh = self.ctx.create_mesh(cfg)
+            self._nut_upload(mesh, cfg, n)
+            r.set_mesh(mesh, 0, 36 * NUT_BLOCKS_MAX)
+            r.set_size(np.ones(3, np.float32))
+            self.scn.add_renderable(r)
+            nuts.append({"renderable": r, "texture": tex, "mesh": mesh, "config": cfg})
+        self.parts = {"sig": sig, "robot": robot, "pegs": pegs, "nuts": nuts}
+
+    def _nut_upload(self, mesh, cfg, n):
+        """A nut's blocks into its mesh of fixed size (the rest: zeros)."""
+        nv, ni = 24 * NUT_BLOCKS_MAX, 36 * NUT_BLOCKS_MAX
+        V, N, I = np.zeros((nv, 3), np.float32), np.zeros((nv, 3), np.float32), np.zeros(ni, np.uint32)
+        V[:len(n["V"])], N[:len(n["N"])], I[:len(n["I"])] = n["V"], n["N"], n["I"]
+        N[len(n["N"]):, 2] = 1.0
+        self._mesh_upload(mesh, cfg, V, N, np.zeros((nv, 2), np.float32), I)
+
+    def _activate(self, sid):
+        """Make `sid` the episode that is drawn: the sizes of its peg parts go into the process's renderables, each
+        nut's blocks into its mesh and its colour into its texture (no Filament object is made here)."""
+        if self.active == sid:
+            return
+        t0 = time.perf_counter()
+        ep = self.sessions[sid]
+        self._parts(ep)
+        for r, p in zip(self.parts["pegs"], ep.pegs):
+            r.set_size(p["size"])
+        for slot, n in zip(self.parts["nuts"], ep.nuts):
+            td = self.F.TextureData()
+            td.set_image(np.round(np.clip(np.asarray(n["material"][:3], float), 0.0, 1.0) * 255.0).astype(np.uint8).tobytes())
+            slot["texture"].upload(td)
+            self._nut_upload(slot["mesh"], slot["config"], n)
         self._lamps(ep)
         self.ibl.set_intensity(float(ep.ibl_intensity))
-        self.live = {"res": res, "rends": rends, "opts": opts, "mount": True}
         self.active = sid
         self.stats["activations"] += 1
         self.last_activation_s = time.perf_counter() - t0
+        gc.collect()
+        _trim_heap()
 
     def _lamps(self, ep):
         F = self.F
@@ -669,10 +859,19 @@ class _Filament(object):
         F = self.F
         self._activate(sid)
         ep = self.sessions[sid]
-        if self.live["mount"] != bool(mount):
-            self.live["rends"].set_options(self.live["opts"][int(bool(mount))])
-            self.live["mount"] = bool(mount)
-        self.live["rends"].update(data)
+        P = self.parts
+        R = P["robot"]
+        if R["mount"] != bool(mount):
+            R["rends"].set_options(R["opts"][int(bool(mount))])
+            R["mount"] = bool(mount)
+        R["data"].geom_xpos[ep.robot] = data.geom_xpos[ep.robot]      # the robot: MuJoCo's renderables of the copy,
+        R["data"].geom_xmat[ep.robot] = data.geom_xmat[ep.robot]      # at this state's poses
+        R["rends"].update(R["data"])
+        xpos, xmat = np.asarray(data.geom_xpos, np.float32), np.asarray(data.geom_xmat, np.float32)
+        for r, p in zip(P["pegs"], ep.pegs):            # every peg part and every nut where the state has it
+            r.set_pose(xpos[p["geom"]], xmat[p["geom"]])
+        for slot, n in zip(P["nuts"], ep.nuts):
+            slot["renderable"].set_pose(np.asarray(data.xpos[n["body"]], np.float32), np.asarray(data.xmat[n["body"]], np.float32))
         self.head.set_pose(np.asarray(pos, np.float32), np.asarray(forward, np.float32))
         self.head.set_intensity(float(ep.head_lux))
         tgt, read, buf = self._target(width, height)
@@ -721,19 +920,27 @@ class _Filament(object):
             k = libc.write(wfd, addr, n)
             return os.read(rfd, k) if k > 0 else None
 
-        def walk(addr, n, depth):                      # pointers within n bytes of addr, three levels deep
-            b = read(addr, n)
-            for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
-                if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
-                    continue
-                seen.add(p)
-                v = None if p % 16 else read(p + 0x268, 0x4e)
-                if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
-                    found.add(p)
-                if depth < 3:
-                    walk(p, 512, depth + 1)
+        # Every pointer within three steps of the Scene object, breadth first: the pointers in the object's first 64
+        # bytes, then the ones in the 512 bytes each of those points at, then once more. (Until amendment 7 this
+        # was a depth-first walk with one set of visited pointers for all depths. A block that the walk met first
+        # at its last level, through some other pointer, was then never read at the level where its own pointers
+        # still counted, and when that block was the one that holds the view, no view was found: seen once in
+        # about 250 process starts, as a RenderError at the process's first image.)
         try:
-            walk(id(self.scn), 64, 1)
+            level = [(id(self.scn), 64)]
+            for _depth in range(3):
+                nxt = []
+                for addr, n in level:
+                    b = read(addr, n)
+                    for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
+                        if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
+                            continue
+                        seen.add(p)
+                        v = None if p % 16 else read(p + 0x268, 0x4e)
+                        if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
+                            found.add(p)
+                        nxt.append((p, 512))
+                level = nxt
         finally:
             os.close(rfd)
             os.close(wfd)
@@ -746,25 +953,26 @@ class _Filament(object):
             raise RenderError("renderer: Filament's dithering did not switch off")
 
     def info(self):
+        P = self.parts or {"pegs": [], "nuts": []}
         return {"stats": dict(self.stats), "start_s": self.start_s, "room": self.room_stats,
                 "last_activation_s": getattr(self, "last_activation_s", None), "targets": len(self.targets),
-                "lamps": len(self.lamps)}
+                "lamps": len(self.lamps), "peg_parts": len(P["pegs"]), "nuts": len(P["nuts"])}
 
     def _shutdown(self):
         """Every Filament object before the context (destroying the context first panics); also after a start that
         failed half-way (whatever was made is freed here, in the renderer's thread)."""
         self.sessions.clear()
+        self.active = None
         if getattr(self, "scn", None) is not None:
-            try:
-                self._evict()
-            except Exception:  # noqa: BLE001
-                self.live = {}
             for name in list(getattr(self, "lamps", {})):
                 try:
                     self.scn.remove_light(self.lamps.pop(name)[0])
                 except Exception:  # noqa: BLE001
                     pass
-        self.live = {}
+        if self.parts is not None:                      # MuJoCo's renderables before the resources they draw
+            for k in ("rends", "res", "data", "model"):
+                self.parts["robot"].pop(k, None)
+        self.parts = None
         self.targets.clear()
         self.lamps = {}
         self.room = []
