@@ -66,6 +66,7 @@ from robotics_grader import (  # noqa: E402
     SolverAborted,
     SolverMissing,
     agent_user,
+    clear_agent_account,
     ratio_rewards,
     read_anchor,
     seed_rng,
@@ -476,6 +477,11 @@ def main():
     except KeyError:
         write_verdict(zero_verdict(reason="no agent account", anchored=anchor is not None))
         return
+    # The kit's clearing of the agent's account (once per verifier sandbox, a few seconds: every supervisord program
+    # off, every process of the account killed until none comes back) is done here, before any kit's clock exists.
+    # Solver.__init__ asks for it again inside the first kit's timed start and gets this report back at once, so
+    # none of its seconds is counted against that kit's controller budget.
+    clear_agent_account()
     if not stop_agent_processes(uid):
         write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
                                    anchored=anchor is not None))

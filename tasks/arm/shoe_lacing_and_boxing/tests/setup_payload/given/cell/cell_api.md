@@ -8,8 +8,8 @@ empty writable `$HOME` / `$TMPDIR`, a minimal environment (`PATH`, `HOME`, `TMPD
 the launcher `python3 -B -E -s -c <bootstrap> <lib> packer` (the bootstrap puts `<lib>` on `sys.path` and calls
 `shoecell.client.main`, which imports `packer` from the current directory), or `bash run.sh` when you ship one.
 `cell` is a proxy (`shoecell.client.Cell`): every method is one JSON-lines request on the process's original stdout,
-answered on stdin by the grader's physics server; `print()` goes to stderr. A reply carrying `error` raises
-`shoecell.client.CellError`.
+answered on stdin by the grader's physics server; `print()` goes to stderr, and so does anything else written to
+file descriptor 1 (native libraries' output included). A reply carrying `error` raises `shoecell.client.CellError`.
 
 Units on the API: metres, radians, seconds, quaternions `wxyz`; the cell frame = the bench-top centre, z up, x along
 the bench, y across it, the arms behind the +y edge (see `cell_manual.md`). `arm` is `"left"` (the gripper arm) or

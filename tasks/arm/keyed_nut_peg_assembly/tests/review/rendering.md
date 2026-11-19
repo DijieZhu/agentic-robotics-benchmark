@@ -12,9 +12,11 @@ on the commissioning service's development kits; no graded kit was rendered.
 which in the task image is Mesa's lavapipe on the CPU. `keyed_env.NutEnv.render` calls it and adds the sensor noise
 as before.
 
-- **The episode's own parts**: a copy of the episode's compiled model with render-only fields edited (the robot's
-  visual meshes and not its collision shapes, one material per nut and per peg part in the unit's own colours, PBR
-  terms), in the simulator's state at the moment of the image. The physics model is read and never written.
+- **The episode's own parts**, read from the episode's compiled model in the simulator's state at the moment of
+  the image (the physics model is read and never written): the robot's visual meshes and not its collision shapes,
+  the peg parts, every nut as one mesh of its blocks, with the look's PBR terms and the unit's own colours. The
+  process makes their renderables once and an episode only writes data into them ("An image must not depend on
+  the episodes before it", below).
 - **The room** (`render/room.npz`, `room.json` of the render bundle, 303,646 triangles, 34 colour maps): a
   laboratory in a loft, its shelving and desks, the cell's oak bench top and cabinet, the robot's pedestal, the camera
   gantry with its lamp. Drawn only; the model's floor plane, wall, table block and pedestal block are not drawn, the
@@ -38,10 +40,15 @@ as before.
 | the lamps' brightness of the day (+-15 %) | `NutEnv.lamp_gain` multiplies the image light and both lamps; at -15 % / +15 % the images' mean level (decoded to linear) is 0.90 / 1.09 of nominal after the display curve |
 | the service and the grader draw the same image | byte copies of `keyed_env.py`, `keyed_render.py`, `keyed_look.json` (a test); `test_draw_determinism.py` |
 
-`test_draw_determinism.py` (in the task image, as root): two processes, one importing the grader's copy and one the
-service's, the same two kits, the arm moving; one draws each camera once per step, the other draws an extra image
-first, each camera ten times, then another order with repeats. 36 images compared, 0 differ; 0 repeated draws
-differ. Filament's temporal dithering (a new noise per frame) is switched off for this (`keyed_render._undither`).
+`test_draw_determinism.py` (in the task image, as root): three processes. Two draw the same two kits with the arm
+moving, one importing the grader's copy and one the service's; one draws each camera once per step, the other draws
+an extra image first, each camera ten times, then another order with repeats. The third is the grader's way: a new
+`NutEnv` per kit in one process, the two kits in turn twelve times (24 loadings), the same state drawn each time.
+36 images compared between the first two, 0 differ; 0 repeated draws differ; 0 of the 72 images of the third
+differ from their kit's first, and its images are those of the first process, where each kit was drawn after a
+different number of episodes. Nine runs (three of them on the final file), nine passes. Filament's temporal
+dithering (a new noise per frame) is switched off for this (`keyed_render._undither`). The third process was
+added on 2026-11-19; the renderer of amendment 5 fails it (below).
 
 ## The look and how close it is
 
@@ -144,6 +151,90 @@ rule ran on the same candidates:
   byte what it was but for the wrist charge);
 - the reference's full verify: 10 of 10, steps 775, 738, 645, 654, 675, 644, 714, 707, 720, 802, each episode
   repeating its selection run and amendment 4's anchor to the step; measured 1.0; 243 s (223 s before).
+
+## An image must not depend on the episodes before it (2026-11-19, amendment 7)
+
+**What was wrong.** The renderer of amendment 5 loaded every episode's model into MuJoCo's `ModelResources` and
+`ModelRenderables` anew. From a process's second episode on, an image was not byte for byte the image of the same
+state in a process's first episode. Measured on that renderer in the task image, one process, maintainer kits in
+turn, a new `NutEnv` each time and the same state drawn after every loading:
+
+- 320 loadings in four processes: 201 of 960 images differ from the first image of their view, by 1 to 6 pixels
+  (median 1) of one or two levels. In each process it is the kit of the first episode whose later images differ;
+- the pixels are on the nuts. With the nuts not drawn, 0 of 180 images differ; with the robot or the pegs not
+  drawn, the differences stay;
+- 15 fresh processes drawing the same two kits give one picture per view: a process repeats itself, what counts
+  is how many episodes it drew before;
+- with the test's third process on that renderer, six runs: each fails, 12 of 72 reload images differ, and 3 of 6
+  views differ between a kit drawn first in its process and the same kit drawn after another one.
+
+The commissioning service draws every episode in a process of its own; the grader draws its ten kits in one. So
+for the same state the two could differ in those pixels, which the task says they do not. The differences are
+below the sensor noise (2 levels on every pixel); what was wrong is the statement, not what a controller could do
+with the images.
+
+**Why.** A nut is some four hundred blocks that overlap by design, each a renderable of its own. Where two
+surfaces compute the same depth at a sample, the one Filament draws first shows, and the order in which it draws
+two renderables is not a function of the scene. Three things changed it in the experiments: renderables made
+again for a later episode (the defect); a renderable given a material again; and, for a nut drawn as four hundred
+renderables made once, the process (one pixel in some views in 9 of 39 processes).
+
+**The fix** (`keyed_render.py`, "PARTS"). Nothing that is drawn is made per episode. The process makes every
+renderable, material, mesh and texture once, at its first episode and in a fixed order; an episode writes data
+into them. The robot: MuJoCo's own renderables of a robot-only copy of the process's first model, moved to each
+state's poses (every episode must have the same robot at the same geom indices; the renderer checks). The peg
+parts: MuJoCo's own box and cylinder shapes, resized per episode. A nut: one mesh of all its blocks, written anew
+per episode into a mesh of fixed size, so that two of its blocks at the same depth are drawn in the mesh's own
+order; its colour of the day is a texture of one texel, written anew per episode, because a renderable must keep
+the material it was made with.
+
+**Checked** on the fixed renderer, in the task image:
+
+- the same reproduction: 368 loadings in five processes (four of 80; one with eight kits in the other order), 0
+  of 1,104 images differ from the first of their view, and the 24 views drawn in two processes are the same in
+  both;
+- 24 fresh processes: one picture per view;
+- `test_draw_determinism.py` with its third process: nine runs, nine passes.
+
+**What changed in the images.** Against the renderer of amendment 5, 54 images of six kits at three states: 1.16 %
+of the pixels differ: 40,420 by one level, 1,246 by two, 408 by three or four, 343 (0.009 %) by five or more, at
+most 27; the mean difference is under a quarter of a level per channel. 93 % of them are on a nut and 98.6 % on a
+nut or within two pixels of one; the rest, by one level (at most 4), are on the bench around the nuts and along
+the seams between the fingers and their pads. Two causes: a nut's colour is held in 8 bits per channel now (the
+texel), where it was a float; and where two surfaces tie, the order is another one (for a nut's blocks the
+model's order). The robot, the pegs and the room are drawn by the same shapes, meshes and materials as before.
+The camera-only perception check repeated on the 30 kits: every
+peg number identical; the nuts' ring centres move by 0.03 mm in the median (0.07 mm at the 90th percentile, 1.2 mm
+at most), and one nut of 90 whose handle was read 6 degrees off is now read the wrong way round
+(`observability/README.md`).
+
+**Cost.** Three episodes in one process under the task's limits, the same hour, the same host load (about 10 of
+64 threads): `left` / `right` / `wrist` 0.37 / 0.33 / 0.27 s before and 0.30 / 0.26 / 0.21 s now (a nut is one
+draw instead of four hundred), later resets 1.26 s and 0.97 s, peak resident memory 808 MB and 735 MB. The stated
+charges (0.45 s, 0.35 s) are unchanged.
+
+**The kit's clearing.** The verify-stage kit clears the agent's account once per verifier sandbox (a few seconds).
+It ran inside the first kit's timed solver start, so that kit's controller time read about 4 s instead of 0.5 s of
+its 600 s. `verify.py` now calls `clear_agent_account()` once before the first kit; `Solver.__init__` gets that
+report back at once.
+
+**The view search.** `keyed_render._undither` finds Filament's view from the scene object by following pointers.
+It walked depth first with one set of visited pointers for all depths, so a block that it met first at its last
+level was never read at the level where its own pointers still counted; when that block was the one that holds
+the view, the process's first image ended as a `RenderError` (an error of the environment: the grader stops, the
+service answers `cell_fault` and counts no episode). Seen once, in about 250 process starts on 2026-11-19: in a
+development candidate's run of this amendment's first registration. The search is breadth first now: 200 of
+200 fresh processes found the view and drew the same first image.
+
+**Amendment 7** (`tests/hidden/selection.json`), pre-registered in the commit before its runs: `tests/keyed_render.py`
+and `tests/verify.py` changed. (It was registered twice. The first registration's runs were complete and repeated
+amendment 6 but for one development candidate, U23, whose grader stopped with the `RenderError` above. The view
+search was corrected, the amendment registered again before anything ran on the corrected file, and every
+candidate ran again; what follows is the second.) The kits are unchanged, so the rule ran on the same candidates: the same 12 of 16
+hidden candidates and the same 22 of 24 development candidates completed, each with the steps of its earlier run;
+the same hidden set and the same 16 development kits (`kits.json` and `tests/ref/episodes.json` byte for byte).
+The reference's full verify: 10 of 10, steps 775, 738, 645, 654, 675, 644, 714, 707, 720, 802, every episode
+repeating its selection run and the anchors of amendments 4 to 6; measured 1.0; 224 s.
 
 ## Running the checks again
 

@@ -66,6 +66,10 @@ QUARANTINE = os.path.join(RUNS_ROOT, "_quarantine")
 STICKY_DIRS = [d for d in ("/tmp", "/dev/shm", "/var/tmp", "/run/lock") if os.path.isdir(d)]
 WATCH_ROOTS = STICKY_DIRS + [HOME]
 LATE_GATE_MAX_GAP_S = 600.0
+# the episodes start once the agent account has had no new and no running process for this long (longer than
+# supervisord's longest start-retry backoff, 3 s at its default startretries), at most AGENT_QUIET_MAX_S after the lockdown
+AGENT_QUIET_S = 5.0
+AGENT_QUIET_MAX_S = 30.0
 
 from cellkit import lockdown, runner, verify_freeze  # noqa: E402  (stdlib only)
 
@@ -98,6 +102,26 @@ def _still_running(uid, bound_s=3.0):
         running = [pid for pid in lockdown.live_uid_processes(uid) if _proc_state(pid) not in ("T", "t", "X")]
         if not running or time.time() > deadline:
             return running
+
+
+def _await_quiet(uid, quiet_s=AGENT_QUIET_S, max_s=AGENT_QUIET_MAX_S):
+    """Wait until no process of `uid` has appeared and none has run unstopped for `quiet_s` (at most `max_s`); the
+    freezer stops each newcomer. Returns (seconds waited, processes that appeared meanwhile)."""
+    t0 = last = time.time()
+    seen = set(lockdown.live_uid_processes(uid))
+    born = 0
+    while True:
+        FREEZER[0].freeze_now()
+        time.sleep(0.05)
+        pids = set(lockdown.live_uid_processes(uid))
+        new = pids - seen
+        if new or any(_proc_state(pid) not in ("T", "t", "X") for pid in pids):
+            last = time.time()
+        born += len(new)
+        seen |= pids
+        now = time.time()
+        if now - last >= quiet_s or now - t0 >= max_s:
+            return now - t0, born
 
 
 def _early_lockdown():
@@ -171,6 +195,15 @@ def _early_lockdown():
                 q += lockdown.quarantine(root, late, QUARANTINE)
         out["late_writes_quarantined"] = float(q)
     out["stage_lock_latency_ms"] = lockdown.process_age_ms()
+    if uid is not None and uid != 0 and FREEZER[0] is not None:
+        # supervisord starts the killed desktop programs once more after its start-retry backoff, about 1 s after the
+        # kill. In the few ms before the freezer stops them, the respawned X clients (start-gnome.sh's `xdpyinfo -display
+        # :1`, pulseaudio's `dbus-launch --autolaunch`) find no X server listening on :1, and libxcb falls back to TCP on
+        # localhost:6001, which refuses: 2 or 6 TCP active opens in the namespace. It is a race (measured 2026-11-19 in
+        # ale validate): when the first episode had begun by then, its network audit counted them. The episodes start
+        # once the account has been quiet for AGENT_QUIET_S.
+        waited, born = _await_quiet(uid)
+        log("[grader] agent account quiet after %.1f s (%d process(es) of it appeared meanwhile, frozen)" % (waited, born))
     return out
 
 

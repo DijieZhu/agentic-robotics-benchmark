@@ -1,0 +1,475 @@
+{
+ "format": "rc-replica-grader-config/1",
+ "contract": "rc-replica-contract/1.0",
+ "ids_sha256": "1a61d4981d01f9b94dede2edd036ac6633afea46631234951d27cedb98e913c5",
+ "procedure_sha256": "bda5496ef69f39d28f943b55cb374991429636d7640c9699e1a13fe3a7043836",
+ "schema_check_sha256": "2f061b905364c5247c0c2dc61f2c40f058da030ec5497ffe613574a5f072bcd9",
+ "weights": {
+  "C1": 0.3,
+  "C2": 0.1,
+  "C3": 0.2,
+  "C4": 0.1,
+  "C5": 0.3
+ },
+ "c1": {
+  "group_weights": {
+   "heights": 0.3,
+   "layout": 0.25,
+   "steering": 0.35,
+   "chassis": 0.05,
+   "gears": 0.05
+  },
+  "bands": {
+   "length": {
+    "full_rel": 0.015,
+    "full_abs": 1.0,
+    "zero_rel": 0.06,
+    "zero_abs": 4.0
+   },
+   "angle": {
+    "full_abs": 0.5,
+    "zero_abs": 3.0
+   }
+  }
+ },
+ "c3": {
+  "full_rel": 0.03,
+  "zero_rel": 0.15
+ },
+ "eco_usd": 45.0,
+ "limits": {
+  "max_file_bytes": 262144,
+  "max_yaml_nodes": 20000,
+  "max_abs_int": 9007199254740992,
+  "diagnostic_chars": 2000,
+  "max_error_metric": 1000000.0
+ },
+ "tolerances": {
+  "j_usd_rel": 1e-12,
+  "j_usd_abs": 1e-09,
+  "facet_rel": 1e-09
+ },
+ "block_cars": 20000,
+ "cars": 691200,
+ "slot_order": [
+  "motor",
+  "pinion",
+  "motor_controller",
+  "battery",
+  "lidar",
+  "deck_post",
+  "compute",
+  "power_board",
+  "tyres",
+  "steering_servo"
+ ],
+ "sketch": [
+  {
+   "id": "deck_top_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "deck_thickness_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "lowest_point_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "highest_point_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "lidar_top_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "antenna_top_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "post_lower_end_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "rear_body_post_top_height_mm",
+   "group": "heights",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "deck_length_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "deck_width_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "deck_front_edge_x_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "lidar_x_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "compute_x_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "motor_controller_x_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "post_spacing_x_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "post_spacing_y_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "battery_bay_length_mm",
+   "group": "layout",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "kingpin_ground_offset_mm",
+   "group": "steering",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "caster_angle_deg",
+   "group": "steering",
+   "kind": "angle",
+   "unit": "deg"
+  },
+  {
+   "id": "steering_arm_mm",
+   "group": "steering",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "bellcrank_output_arm_mm",
+   "group": "steering",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "bellcrank_input_arm_mm",
+   "group": "steering",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "servo_saver_arm_mm",
+   "group": "steering",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "toe_in_per_side_deg",
+   "group": "steering",
+   "kind": "angle",
+   "unit": "deg"
+  },
+  {
+   "id": "wheelbase_mm",
+   "group": "chassis",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "track_front_mm",
+   "group": "chassis",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "track_rear_mm",
+   "group": "chassis",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "overall_length_mm",
+   "group": "chassis",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "overall_width_mm",
+   "group": "chassis",
+   "kind": "length",
+   "unit": "mm"
+  },
+  {
+   "id": "pinion_teeth",
+   "group": "gears",
+   "kind": "count",
+   "unit": "count"
+  },
+  {
+   "id": "spur_teeth",
+   "group": "gears",
+   "kind": "count",
+   "unit": "count"
+  },
+  {
+   "id": "bevel_pinion_teeth",
+   "group": "gears",
+   "kind": "count",
+   "unit": "count"
+  },
+  {
+   "id": "ring_gear_teeth",
+   "group": "gears",
+   "kind": "count",
+   "unit": "count"
+  }
+ ],
+ "facets": [
+  {
+   "id": "pod_mass_g",
+   "unit": "g"
+  },
+  {
+   "id": "as_found_mass_g",
+   "unit": "g"
+  },
+  {
+   "id": "as_found_front_axle_g",
+   "unit": "g"
+  },
+  {
+   "id": "steering_lock_deg",
+   "unit": "deg"
+  },
+  {
+   "id": "replica_count",
+   "unit": "count"
+  },
+  {
+   "id": "eco_usd",
+   "unit": "USD"
+  },
+  {
+   "id": "scan_plane_min_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "scan_plane_max_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "ground_clearance_min_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "steering_torque_ratio_max",
+   "unit": "1"
+  },
+  {
+   "id": "lock_time_max_s",
+   "unit": "s"
+  },
+  {
+   "id": "mass_max_kg",
+   "unit": "kg"
+  },
+  {
+   "id": "lap_time_max_s",
+   "unit": "s"
+  },
+  {
+   "id": "cell_lot_capacity_factor",
+   "unit": "1"
+  },
+  {
+   "id": "cell_lot_resistance_factor",
+   "unit": "1"
+  },
+  {
+   "id": "tyre_lot_friction",
+   "unit": "1"
+  },
+  {
+   "id": "lidar_lot_range_m",
+   "unit": "m"
+  },
+  {
+   "id": "compute_power_w",
+   "unit": "W"
+  },
+  {
+   "id": "power_board_fuse_a",
+   "unit": "A"
+  },
+  {
+   "id": "schedule_duration_s",
+   "unit": "s"
+  }
+ ],
+ "derived": [
+  {
+   "id": "mass_kg",
+   "unit": "kg"
+  },
+  {
+   "id": "front_axle_load_n",
+   "unit": "N"
+  },
+  {
+   "id": "scan_plane_height_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "ground_clearance_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "envelope_height_mm",
+   "unit": "mm"
+  },
+  {
+   "id": "steering_torque_nm",
+   "unit": "N.m"
+  },
+  {
+   "id": "lock_time_s",
+   "unit": "s"
+  }
+ ],
+ "pass_items": [
+  {
+   "id": "K3",
+   "quantity": "mass_kg",
+   "comparator": "<="
+  },
+  {
+   "id": "K4",
+   "quantity": "battery_nominal_v",
+   "comparator": "<="
+  },
+  {
+   "id": "K5",
+   "quantity": "motor_torque_nm",
+   "comparator": "<="
+  },
+  {
+   "id": "K7",
+   "quantity": "lidar_angular_step_deg",
+   "comparator": ">="
+  },
+  {
+   "id": "K9",
+   "quantity": "overvoltage_headroom_v",
+   "comparator": ">="
+  },
+  {
+   "id": "K11",
+   "quantity": "rail_load_ratio",
+   "comparator": "<="
+  },
+  {
+   "id": "W1",
+   "quantity": "lap_time_s",
+   "comparator": "<="
+  },
+  {
+   "id": "W2",
+   "quantity": "zone_stop_margin_m",
+   "comparator": ">="
+  },
+  {
+   "id": "W3",
+   "quantity": "schedule_energy_reserve_frac",
+   "comparator": ">="
+  },
+  {
+   "id": "W4",
+   "quantity": "schedule_bus_margin_v",
+   "comparator": ">="
+  },
+  {
+   "id": "W5",
+   "quantity": "schedule_winding_headroom_c",
+   "comparator": ">="
+  },
+  {
+   "id": "A1",
+   "quantity": "scan_plane_height_mm",
+   "comparator": ">="
+  },
+  {
+   "id": "A2",
+   "quantity": "scan_plane_height_mm",
+   "comparator": "<="
+  },
+  {
+   "id": "A3",
+   "quantity": "ground_clearance_mm",
+   "comparator": ">="
+  },
+  {
+   "id": "A4",
+   "quantity": "steering_torque_ratio",
+   "comparator": "<="
+  },
+  {
+   "id": "A5",
+   "quantity": "lock_time_s",
+   "comparator": "<="
+  },
+  {
+   "id": "FIT",
+   "quantity": "fits",
+   "comparator": "=="
+  }
+ ],
+ "world_dir": "gt",
+ "world_files": {
+  "catalogue": "catalogue.json",
+  "car": "car_truth.json",
+  "world": "world.json",
+  "key_quantities": "key_quantities.json",
+  "reference_sheet": "reference_sheet.json",
+  "optimum": "optimum.json"
+ },
+ "note": "Knobs of tests/grade.py, generated from the task's closed lists (contract rc-replica-contract/1.0; ids_sha256 is the sha256 of their machine-readable form): weights, the C1 group weights and bands, the C3 band (tests/README.md, Criteria); eco_usd = the brief's change fee and the C5 band; limits are schema_check.py's (checked equal); tolerances: j_usd_* compare the stored optimum price with its recomputation, facet_rel is the relative slack added to a facet's tolerance against binary rounding; the pins cover procedure.py and schema_check.py; cars is the exact number of catalogue cars, every one of which the grader enumerates."
+}

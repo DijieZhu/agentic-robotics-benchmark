@@ -1,0 +1,7 @@
+# The 33 photographs and the 27 page images are served from the benchmark's asset dataset at the commit that
+# ../assets.sha256 pins: the image fetches them while it builds and setup.sh stages them into the agent home. Local
+# copies here (the task's generators write them) stay out of git.
+payload/photos/*.jpg
+payload/catalogue/datasheets/*.png
+payload/catalogue/errata/*.png
+payload/catalogue/lot_reports/*.png

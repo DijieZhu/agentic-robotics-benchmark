@@ -5756,7 +5756,7 @@
     "OMP_NUM_THREADS": "2",
     "OPENBLAS_CORETYPE": null
    },
-   "results": "the per-run records (<draw>.json, .summary.json, .stderr): the maintainers' run folder on apollo, not shipped",
+   "results": "the per-run records (<draw>.json, .summary.json, .stderr): the maintainers' run folder on one of their hosts, not shipped",
    "note": "24 containers, one per candidate, 16 at a time (the last 8 as slots freed), each --network none, --cpuset-cpus 32-47 --cpus 1 --memory 8g (the verifier's OpenBLAS thread count: 2); from 04:37Z beside the camera-only localisation runs of the maintainers (perception2, 6 jobs on cores 40-47)"
   }
  ],
@@ -5930,6 +5930,147 @@
    "check": {
     "run": "survivor-shoe-verify-3",
     "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)"
+   }
+  },
+  {
+   "amended_utc": "2026-11-19T03:35:36Z",
+   "kind": "wire",
+   "base_commit": "84b81b9",
+   "what": "the program launcher's wire binding (the given client's connect_stdio; nothing an episode runs or scores for a program that does not write to file descriptor 1 itself): connect_stdio keeps its copy of file descriptor 1 for the wire and now also points descriptor 1 itself at stderr (os.dup2(2, 1)), where before it rebound only sys.stdout; cell_api.md's sentence on the program's stdout says so. tests/shoecell/client.py, its two byte-identical copies in the givens (environment/setup/payload/, tests/setup_payload/), cell_api.md in both copies of the givens and tests/given_hashes.json for them. The image's inputs, the cell, the reference, the set and the scoring are unchanged.",
+   "why": "output a native library wrote to file descriptor 1 reached the wire, and the grader's wire ends the episode at the first line that is not JSON (end reason protocol), while cell_api.md said only that print() goes to stderr. Measured in the task image with the given launcher as the run account (2026-11-19): a program that solves a linear program with SciPy's HiGHS with its log on (linprog(..., options={'disp': True})) had all six episodes of a full verify end at HiGHS's first log line ('Running HiGHS 1.12.0 ...'), before its first request, and contract_ok 0 (no step made); with this change the same program's six episodes end at finish and its log is in the program's stderr. MuJoCo's Filament renderer (a LocalCell frame) writes seven start-up lines there, once per process: 473 bytes on a 48-thread host, where the first of them (a thread-pool notice) appears only on hosts with many hardware threads. In the program's own process C stdio holds them in its buffer until the process exits, after finish; a worker process that renders (multiprocessing, spawn start method) flushes them when it exits, before finish, and under the old client that ended all six episodes of a verify protocol (contract_ok 0); with this change they end finish.",
+   "image": {
+    "tag": "wirefix-shoe-task:84b81b9",
+    "id": "sha256:24091f5c6aaf5e10ee80fc9a56de2f0186ef7580c65d6e7fbe2dc7d2cc491357",
+    "built_from": "environment/ at 84b81b9 (its frozen inputs are those of 26749c5: the same inputs rebuilt, hence a new id)"
+   },
+   "frozen": {
+    "environment/Dockerfile": "18435ab0cca992f23daf95a1e5c7d3560a0ae636f735e293bec59227d1fe1a2a",
+    "environment/obj2stl.py": "7f85012a35cbb2d22838b76fcae1ffc952413a13d2326eb1be51d220feb147cb",
+    "environment/panda_assets.sha256": "9ee816910981b5e3d4b6b01c6364ed06ddf32e883c74c8b6dec99a934b0002b6",
+    "environment/panda_converted.sha256": "561687a640e3f9032ca52775286403ea54cfac266192528dcfd3d5956f1b3a57",
+    "environment/requirements.txt": "dba20169dfe6fbb6944d9add5eb9fe50c7266e1196f9e41d3f89ae2d117436f1",
+    "solution/reference/oracle_token": "def4452377b8828b81c4903e22d08ae9ecc7cbd18c3656fd17fede327d16fb83",
+    "solution/reference/packer.py": "ce3989e272d4bc0ec8ee5982b7bc315c6847e26a8b7402c8ce5b854daee13669",
+    "solution/solve.sh": "2966bd65db07f9f7224a5ad6ab9f33a16906591f546ab3313d18149b27de0a93",
+    "tests/cellkit/__init__.py": "d4bfa1914b9b27b6ea92fc97ddf6ff742013df04fa375e783b02de48b42fb6ef",
+    "tests/cellkit/lockdown.py": "a713a867eaac37b9136cb2a4c6167720f6240ee92c780fc57fb0fe2f484c62e7",
+    "tests/cellkit/netaudit.py": "e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916",
+    "tests/cellkit/runner.py": "789d6b24d38f236fee9d729ce95842c82beb0ae4350058065de191363a668fe7",
+    "tests/cellkit/seeds.py": "2f10e1ffb773baf3a0d46018aefae33d94a7f8f43cc6c7e48da70182f129f2d9",
+    "tests/cellkit/verify_freeze.py": "9ff33af6c611623831c82766549cbd2b92409b224f0eb3dd4e7ec16c37de5ca5",
+    "tests/cellkit/wire.py": "92be82fbb16953a4d57429b046ef5711078340cc60ac5f029dc3954de9985a25",
+    "tests/given_hashes.json": "fd1be8d7081592208cb5a5e5765c5605086e72563ab0aa6c0e1645aee4b15771",
+    "tests/grader_config.json": "9f8e691d4e935ce8fa96d4cacc08efcf98da2a6d1ce7c285f2aed14b42fca5fd",
+    "tests/hidden/oracle_token.sha256": "d1f177ed547a767640c0922cdc00382cc4e47130d54d759cf7763c115652fad2",
+    "tests/reference/box_skills.py": "74796a01ba36107f93faf549b9a7b41dad17488727489fa80bb8d2d3272346d8",
+    "tests/reference/controller.py": "6b286ec8cd91cee36c7b0d3b2c1c68498b55c49aa9dac571d07aa3c019ce2147",
+    "tests/reference/lace_skills.py": "866bc22f7b58b70757dcfb5623f9321f57fa368a55b135ea8b6f033fa866e5aa",
+    "tests/reference/primitives.py": "f29ac9d93cb7773ca19e24334f04279808b2880eeec05059ed7edfa34098c573",
+    "tests/shoecell/__init__.py": "39de8cf0c2b0ec3575c52811a0a47de8048ece3a0578cadf78c53d4b6c26a799",
+    "tests/shoecell/cameras.py": "1304eca5a8da8c79838cce51fb3c4752f7a1c7e83c3e1037df538fd31deac56f",
+    "tests/shoecell/carton.py": "36164d689176f52a47a423c2beae7dc704f45debb900c70ae7246c8b435c2722",
+    "tests/shoecell/cell.py": "7f829e8bc9f1f5d1bbe5d5e4799663f428a178469c89893041e72c7f348b9b42",
+    "tests/shoecell/client.py": "2e2b61d8a2c136a5a36268022081718df456843a49dea0ca386f289338558f80",
+    "tests/shoecell/control.py": "c96421b4ea0e9b971ac80a94bb920037eabdce65965a5ae4e5e79593dab6836d",
+    "tests/shoecell/episode.py": "c0539806f341a4109d1956a7ae8a82aeb3f3a0781dd02e547062291f88c7794c",
+    "tests/shoecell/grasp.py": "fda1fcb04aa4fb2813981a96f9fd369c656eabb7cdf52405bee0b292157ee52f",
+    "tests/shoecell/lace.py": "e3ef6d87617e3e5b8134e39f297595a704c1aad5466c312207590c8f91f2c977",
+    "tests/shoecell/local.py": "a02f6132cb915cbbdb771280d2e657ed8da4b950c08f58efb3db3779b911e071",
+    "tests/shoecell/look.py": "9d53ca325d87e6e562090b12f8a04f7e4daf76586acc40501c5728132d496108",
+    "tests/shoecell/physics.py": "1df1916f61431dcb21cfb296c415ed83baaf5491147606771fc481e0175c09c7",
+    "tests/shoecell/practice.py": "a4599a623ff8cd92a4dd139dcf154ad44a7adb3f7534594a1f83bfeb37877adc",
+    "tests/shoecell/server.py": "1016553d5848915a187b24dd288ad143acea2d038c644188f785bad9a772f1b2",
+    "tests/shoecell/shoe.py": "d64d0e66b381e8d93124944a70f957854383e35e0d59b3148e281af6c33f894f",
+    "tests/test.sh": "917c4ddbae2ca665ddf638fe4e37a6281548246233c09cda149fb2de44a0f1dd",
+    "tests/verify.py": "0eddd485d5962aa42ad97fbb6b967b43e62b726bca795c48e83bf0c37a61489b"
+   },
+   "changed": [
+    "tests/given_hashes.json",
+    "tests/shoecell/client.py"
+   ],
+   "also_changed": [
+    "environment/setup/payload/given/cell/cell_api.md",
+    "environment/setup/payload/given/lib/shoecell/client.py",
+    "tests/setup_payload/given/cell/cell_api.md",
+    "tests/setup_payload/given/lib/shoecell/client.py"
+   ],
+   "given_pins": {
+    "given/cell/cell_api.md": {
+     "before": "113768b022ef2d2bef4366d7240c5e3204acc5db5dd7a805e9d64c5fe41fdeea",
+     "after": "47664cfbeaf31d9f2313f0d97612418453723713f33f7bd2379ffd4d260f59f8"
+    },
+    "given/lib/shoecell/client.py": {
+     "before": "a12ff8379f1459c811105205064a4dd83ca0808d2ecc14f130c65967105ecf5c",
+     "after": "2e2b61d8a2c136a5a36268022081718df456843a49dea0ca386f289338558f80"
+    }
+   },
+   "check": {
+    "run": "wirefix-shoe-verify-2",
+    "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)",
+    "numerics": "the verify ran with NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL OPENBLAS_CORETYPE=Zen in the container: the check host has AVX-512, where numpy's SIMD dispatch and OpenBLAS's SkylakeX kernels give the reference other last bits than the selection host's (no AVX-512: numpy's AVX2 paths, OpenBLAS's Zen kernels, which are its Haswell ones); the pins restore those paths. Without them the same verify (run wirefix-shoe-verify-1, recorded in tests/anchor.json) scored 1 in all six episodes, each equal to its selection run's score, on other trajectories (0 of 6 the same). One seed (3827466843397421061) through verify.run_episode on this image and host: unpinned, the old and the new tests/ both 46675 ticks, events and final qpos sha256 equal to each other (44195d3b398e / f559741d2e13); pinned, the new tests/ 47825 ticks and the selection run's events and final qpos sha256 (4b4dfa80558e / 0ae875536a31). A second seed (4368013278335071650), unpinned, through the same path in a container with a bridge network and the image's desktop running: the old and the new tests/ gave the same events and final qpos sha256 (7edf810f2625 / 29e3f8e8aa36), so on two seeds the old and the new tests/ gave the same trajectory to the bit.",
+    "tests": "the tests/ of the commit that adds this entry, but for the three files written after the run (hidden/selection.json, anchor.json, README.md), which verify.py does not read for the episodes, and tests/robotics_grader/, which main's kit change of #96 (clearing the agent's account before agent code runs; landed after the run) changed; work_score 1, verify wall 5302 s (episodes 780-971 s)"
+   }
+  },
+  {
+   "amended_utc": "2026-11-19T12:47:35Z",
+   "kind": "lockdown",
+   "base_commit": "09e5594",
+   "what": "the grader's verify-start lockdown alone (tests/verify.py: _early_lockdown and one new helper, _await_quiet; nothing an episode runs or scores): after the kill, the freezer's start, the stage lock and the late-write gate, the grader now waits until the agent account has had no new process and none running for 5 s (AGENT_QUIET_S), at most 30 s (AGENT_QUIET_MAX_S), and freezes the account every 50 ms meanwhile. It logs the wait ('agent account quiet after X s'). The first episode, and with it its network audit, starts after the wait. The image, the cell, the reference, the set and the scoring are unchanged.",
+   "why": "a race between the image's desktop and the first episode's runtime network audit set contract_ok 0 for the oracle in ale validate, with every episode at 1.0 before the gate. Without this change 5 of 6 oracle verifies of ale validate failed (all 4 on the remote validate host, 1 of 2 on the local one), with 2 or 6 TCP active opens counted. Measured with an instrumented ale validate (2026-11-19; a connect() logger and a 50 ms sampler of the namespace's counters and processes): the verify-start kill stops the agent account's desktop; supervisord starts it again at once, the next kill pass kills it before its startsecs, and supervisord starts it once more after its 1 s backoff, about 1 s after the kill. In the few ms before the freezer stops them, the respawned X clients (xdpyinfo -display :1 from the image's start-gnome.sh, and dbus-launch --autolaunch started by pulseaudio) find no X server listening on :1, and libxcb falls back to TCP on localhost:6001, which refuses. Each such attempt counts 2 active opens in the network namespace; in the instrumented runs every open came from these clients, none from the program. All 6 counted opens of the instrumented remote run came at about 1.1 s into the verify, inside episode 1 (its program started at 0.86 s). One instrumented local run passed because its first episode began after the burst (the burst at 1.12-1.21 s, the program at 1.28 s). After the burst the counter did not move again for the rest of the verify. With this change on the wire amendment's tree, ale validate on the remote host passed (validate-856cff0c: oracle 1.0, untouched 0.0, no open counted, the same simulated times; 'agent account quiet after 7.0 s (5 process(es) of it appeared meanwhile, frozen)'). A program that makes no connection scores the same: the wait only delays episode 1.",
+   "image": {
+    "tag": "wirefix-shoe-task:84b81b9",
+    "id": "sha256:24091f5c6aaf5e10ee80fc9a56de2f0186ef7580c65d6e7fbe2dc7d2cc491357",
+    "built_from": "environment/ at 84b81b9 (its frozen inputs are those of 26749c5: the same inputs rebuilt, hence a new id); environment/ is unchanged since: the wire amendment's image"
+   },
+   "frozen": {
+    "environment/Dockerfile": "18435ab0cca992f23daf95a1e5c7d3560a0ae636f735e293bec59227d1fe1a2a",
+    "environment/obj2stl.py": "7f85012a35cbb2d22838b76fcae1ffc952413a13d2326eb1be51d220feb147cb",
+    "environment/panda_assets.sha256": "9ee816910981b5e3d4b6b01c6364ed06ddf32e883c74c8b6dec99a934b0002b6",
+    "environment/panda_converted.sha256": "561687a640e3f9032ca52775286403ea54cfac266192528dcfd3d5956f1b3a57",
+    "environment/requirements.txt": "dba20169dfe6fbb6944d9add5eb9fe50c7266e1196f9e41d3f89ae2d117436f1",
+    "solution/reference/oracle_token": "def4452377b8828b81c4903e22d08ae9ecc7cbd18c3656fd17fede327d16fb83",
+    "solution/reference/packer.py": "ce3989e272d4bc0ec8ee5982b7bc315c6847e26a8b7402c8ce5b854daee13669",
+    "solution/solve.sh": "2966bd65db07f9f7224a5ad6ab9f33a16906591f546ab3313d18149b27de0a93",
+    "tests/cellkit/__init__.py": "d4bfa1914b9b27b6ea92fc97ddf6ff742013df04fa375e783b02de48b42fb6ef",
+    "tests/cellkit/lockdown.py": "a713a867eaac37b9136cb2a4c6167720f6240ee92c780fc57fb0fe2f484c62e7",
+    "tests/cellkit/netaudit.py": "e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916",
+    "tests/cellkit/runner.py": "789d6b24d38f236fee9d729ce95842c82beb0ae4350058065de191363a668fe7",
+    "tests/cellkit/seeds.py": "2f10e1ffb773baf3a0d46018aefae33d94a7f8f43cc6c7e48da70182f129f2d9",
+    "tests/cellkit/verify_freeze.py": "9ff33af6c611623831c82766549cbd2b92409b224f0eb3dd4e7ec16c37de5ca5",
+    "tests/cellkit/wire.py": "92be82fbb16953a4d57429b046ef5711078340cc60ac5f029dc3954de9985a25",
+    "tests/given_hashes.json": "fd1be8d7081592208cb5a5e5765c5605086e72563ab0aa6c0e1645aee4b15771",
+    "tests/grader_config.json": "9f8e691d4e935ce8fa96d4cacc08efcf98da2a6d1ce7c285f2aed14b42fca5fd",
+    "tests/hidden/oracle_token.sha256": "d1f177ed547a767640c0922cdc00382cc4e47130d54d759cf7763c115652fad2",
+    "tests/reference/box_skills.py": "74796a01ba36107f93faf549b9a7b41dad17488727489fa80bb8d2d3272346d8",
+    "tests/reference/controller.py": "6b286ec8cd91cee36c7b0d3b2c1c68498b55c49aa9dac571d07aa3c019ce2147",
+    "tests/reference/lace_skills.py": "866bc22f7b58b70757dcfb5623f9321f57fa368a55b135ea8b6f033fa866e5aa",
+    "tests/reference/primitives.py": "f29ac9d93cb7773ca19e24334f04279808b2880eeec05059ed7edfa34098c573",
+    "tests/shoecell/__init__.py": "39de8cf0c2b0ec3575c52811a0a47de8048ece3a0578cadf78c53d4b6c26a799",
+    "tests/shoecell/cameras.py": "1304eca5a8da8c79838cce51fb3c4752f7a1c7e83c3e1037df538fd31deac56f",
+    "tests/shoecell/carton.py": "36164d689176f52a47a423c2beae7dc704f45debb900c70ae7246c8b435c2722",
+    "tests/shoecell/cell.py": "7f829e8bc9f1f5d1bbe5d5e4799663f428a178469c89893041e72c7f348b9b42",
+    "tests/shoecell/client.py": "2e2b61d8a2c136a5a36268022081718df456843a49dea0ca386f289338558f80",
+    "tests/shoecell/control.py": "c96421b4ea0e9b971ac80a94bb920037eabdce65965a5ae4e5e79593dab6836d",
+    "tests/shoecell/episode.py": "c0539806f341a4109d1956a7ae8a82aeb3f3a0781dd02e547062291f88c7794c",
+    "tests/shoecell/grasp.py": "fda1fcb04aa4fb2813981a96f9fd369c656eabb7cdf52405bee0b292157ee52f",
+    "tests/shoecell/lace.py": "e3ef6d87617e3e5b8134e39f297595a704c1aad5466c312207590c8f91f2c977",
+    "tests/shoecell/local.py": "a02f6132cb915cbbdb771280d2e657ed8da4b950c08f58efb3db3779b911e071",
+    "tests/shoecell/look.py": "9d53ca325d87e6e562090b12f8a04f7e4daf76586acc40501c5728132d496108",
+    "tests/shoecell/physics.py": "1df1916f61431dcb21cfb296c415ed83baaf5491147606771fc481e0175c09c7",
+    "tests/shoecell/practice.py": "a4599a623ff8cd92a4dd139dcf154ad44a7adb3f7534594a1f83bfeb37877adc",
+    "tests/shoecell/server.py": "1016553d5848915a187b24dd288ad143acea2d038c644188f785bad9a772f1b2",
+    "tests/shoecell/shoe.py": "d64d0e66b381e8d93124944a70f957854383e35e0d59b3148e281af6c33f894f",
+    "tests/test.sh": "917c4ddbae2ca665ddf638fe4e37a6281548246233c09cda149fb2de44a0f1dd",
+    "tests/verify.py": "f672112c28ad0c8cc163f62ae38ec1bfa7c193328b39a4d12966b6db5413f1bf"
+   },
+   "changed": [
+    "tests/verify.py"
+   ],
+   "check": {
+    "run": "netgate-shoe-verify-1",
+    "rule": "the reference's full verify of the fixed set on the amended image (tests/review/regrade.sh) repeats every kept selection run: the same work_score, simulated time, ticks and per-pair detail (tests/anchor.json, verifies)",
+    "numerics": "the wire amendment's pins, for the same reason (its check's numerics): the verify ran with NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL OPENBLAS_CORETYPE=Zen in the container",
+    "tests": "the tests/ of the commit that adds this entry, but for the three files written after the run (hidden/selection.json, anchor.json, README.md), which verify.py does not read for the episodes; work_score 1, verify wall 4467 s (episodes 692-822 s). The regrade container runs no desktop, so the grader found the account quiet at once ('agent account quiet after 5.0 s (0 process(es) of it appeared meanwhile, frozen)'); the respawn path ran in ale validate (validate-856cff0c above)"
    }
   }
  ]

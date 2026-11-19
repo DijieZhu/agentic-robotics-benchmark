@@ -344,6 +344,30 @@ class Cameras(unittest.TestCase):
         self.assertIn("W, H = ep.size[cam]", self.RENDER)                 # the model's own camera resolutions
         self.assertIn("mujoco.mjv_updateCamera(m, d, cam, scn)", self.RENDER)   # the model's own cameras of the day
 
+    def test_nothing_is_made_anew_per_episode(self):
+        # an image must not depend on the episodes the process drew before: an episode writes data into the
+        # process's renderables, materials, meshes and textures and makes none (tests/review/rendering.md)
+        tree = ast.parse(self.RENDER)
+        cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == "_Filament")
+        body = {n.name: ast.get_source_segment(self.RENDER, n) for n in cls.body if isinstance(n, ast.FunctionDef)}
+        for name in ("_activate", "_nut_upload", "draw"):
+            for made in ("create_renderable", "create_mesh", "create_texture", "create_light", "ModelResources(",
+                         "ModelRenderables(", "Material(", "set_material(", "set_mesh(", "add_renderable("):
+                self.assertNotIn(made, body[name].replace("self._lamps(ep)", ""), "%s: %s" % (name, made))
+        self.assertIn("self._parts(ep)", body["_activate"])
+        self.assertIn("if self.parts is not None:", body["_parts"])
+        review = (TASK / "tests/review/test_draw_determinism.py").read_text()
+        self.assertIn('if args.child == "R":', review)
+        self.assertIn("reload_fail", review)
+
+    def test_the_account_is_cleared_before_the_first_kits_clock(self):
+        verify = (TASK / "tests/verify.py").read_text()
+        main = verify[verify.index("\ndef main():"):]
+        self.assertIn("clear_agent_account()", main)
+        self.assertLess(main.index("clear_agent_account()"), main.index("run_episodes("))
+        loop = verify[verify.index("\ndef run_episodes("):verify.index("\ndef main():")]
+        self.assertNotIn("clear_agent_account", loop)
+
     def test_data_sheet_says_what_the_images_show(self):
         self.assertIn("**What the images show.**", DATASHEET)
         self.assertIn("what the images show", INSTRUCTION)

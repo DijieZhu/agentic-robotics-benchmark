@@ -12,7 +12,9 @@
         cell.finish()
 
 Every method is one JSON-lines request on this process's original stdout, answered on stdin by the grader's
-physics server. The launcher rebinds `sys.stdout` to stderr first, so ordinary prints never corrupt the wire.
+physics server. The launcher keeps a copy of that stdout for the wire and then points both `sys.stdout` and
+file descriptor 1 at stderr, so neither ordinary prints nor native libraries' output (the Filament renderer's
+start-up lines, for one) can corrupt the wire.
 A reply carrying "error" raises CellError (a `forbidden` error is counted by the grader as an illegal call).
 """
 
@@ -124,8 +126,12 @@ def decode_frame(reply):
 
 
 def connect_stdio():
-    """Bind the wire to the original stdin/stdout and send prints to stderr."""
+    """Bind the wire to the original stdin/stdout; everything else written to stdout goes to stderr.
+
+    The wire writes to a duplicate of file descriptor 1. Descriptor 1 itself then points at stderr, so
+    native code writing to it (Filament prints its start-up lines there) cannot reach the wire."""
     out = os.fdopen(os.dup(1), "w", buffering=1)
+    os.dup2(2, 1)
     inp = os.fdopen(os.dup(0), "r", buffering=1)
     sys.stdout = sys.stderr
 

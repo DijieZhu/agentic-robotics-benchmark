@@ -1,7 +1,7 @@
 """Is a camera image a function of the state alone, and do the grader's and the commissioning service's copies of
 the cell draw the same bytes? (keyed_render; a review tool, run in the task image as root; the grader never runs it)
 
-    python3 -B test_draw_determinism.py [--tests DIR] [--service DIR] [--kits 1000,1001] [--steps 6]
+    python3 -B test_draw_determinism.py [--tests DIR] [--service DIR] [--kits 1000,1001] [--steps 6] [--reloads 12]
 
 DIR defaults: --tests the task's tests/ (this file's parent directory when it sits in tests/review/, else
 /task/tests); --service the commissioning service's folder (/opt/keyedcell-commission in the task image, the
@@ -11,9 +11,13 @@ layout seed k + 4000: neither graded kits nor the service's development kits), t
 moves. Child A imports keyed_env and keyed_render from --tests and draws left, right, wrist once per step (without
 the sensor noise). Child B imports them from --service, draws one extra image before the episode, each camera 10
 times at the first step, then per step another order with repeats (wrist, left, left, right, wrist, left, right).
-Fails (exit 1) when a repeated draw in B differs from the first, or an image of B differs from A's image of the same
-(kit, step, camera): what is drawn before an image, how often, in which process and from which of the two copies
-must not change it.
+Child R (from --tests) is the grader's way: one process, a new NutEnv per kit, the kits in turn (the last one first)
+--reloads times; each time the kit's first step is drawn.
+Fails (exit 1) when a repeated draw in B differs from the first, an image of B differs from A's image of the same
+(kit, step, camera), a kit's image in R differs from the same kit's first image in R, or R's images differ from
+A's: what is drawn before an image, how often, in which process, from which of the two copies and after how many
+other episodes must not change it. (The reloads are what shows the draw order of renderables that are made anew
+per episode: keyed_render's PARTS. The renderer before that change fails phase R.)
 """
 import argparse
 import hashlib
@@ -46,11 +50,29 @@ def child(args):
     import keyed_env as E
     import keyed_render as KR
     out = {"env": os.path.abspath(E.__file__), "renderer": os.path.abspath(KR.__file__), "img": {}, "repeat_fail": [],
-           "lamp_gain": {}}
+           "lamp_gain": {}, "reload_fail": [], "loadings": 0}
 
     def h(img):
         return hashlib.sha256(np.ascontiguousarray(img).tobytes()).hexdigest()[:16]
 
+    if args.child == "R":
+        for i in range(args.reloads):
+            for k in reversed([int(x) for x in args.kits.split(",")]):
+                kit = E.sample_kit(np.random.default_rng(k))
+                env = E.NutEnv(kit["nuts"], render=False)        # a new environment and a new model each time
+                env.reset(k + 4000, kit["order"])
+                env.step(ACTION)
+                v = KR.open_view(env)
+                out["loadings"] += 1
+                for cam in CAMS:
+                    key = "%d/%d/%s" % (k, 0, cam)
+                    d = h(v.render(cam))
+                    if out["img"].setdefault(key, d) != d:
+                        out["reload_fail"].append("%s after %d loadings" % (key, out["loadings"]))
+                v.close()
+                env.close()
+        print("RESULT " + json.dumps(out), flush=True)
+        return
     for k in [int(x) for x in args.kits.split(",")]:
         kit = E.sample_kit(np.random.default_rng(k))
         env = E.NutEnv(kit["nuts"], render=False)
@@ -84,6 +106,7 @@ def main():
     ap.add_argument("--service", default=None)
     ap.add_argument("--kits", default="1000,1001")
     ap.add_argument("--steps", type=int, default=6)
+    ap.add_argument("--reloads", type=int, default=12)
     ap.add_argument("--child", default=None)
     args = ap.parse_args()
     if args.service is None:
@@ -91,25 +114,32 @@ def main():
     if args.child:
         return child(args)
     res = {}
-    for name in ("A", "B"):
+    for name in ("A", "B", "R"):
         cmd = [sys.executable, "-B", os.path.abspath(__file__), "--child", name, "--tests", args.tests,
-               "--service", args.service, "--kits", args.kits, "--steps", str(args.steps)]
+               "--service", args.service, "--kits", args.kits, "--steps", str(args.steps), "--reloads", str(args.reloads)]
         p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         lines = [l for l in p.stdout.splitlines() if l.startswith("RESULT ")]
         if p.returncode != 0 or not lines:
             print("child %s failed (exit %d):\n%s" % (name, p.returncode, p.stderr[-3000:]))
             return 2
         res[name] = json.loads(lines[-1][7:])
-    a, b = res["A"], res["B"]
+    a, b, r = res["A"], res["B"], res["R"]
     differ = sorted(k for k in a["img"] if b["img"].get(k) != a["img"][k])
+    r_differ = sorted(k for k in r["img"] if a["img"].get(k) != r["img"][k])
     print("A: %s, %s" % (a["env"], a["renderer"]))
     print("B: %s, %s" % (b["env"], b["renderer"]))
     print("lamps' brightness of the day per kit:", a["lamp_gain"])
     print("images compared: %d (kit, step, camera); differing between the two copies / processes / draw orders: %d"
           % (len(a["img"]), len(differ)), differ[:8])
     print("repeated draws in B that differ from the first: %d" % len(b["repeat_fail"]), b["repeat_fail"][:8])
+    print("R: %d loadings in one process; images that differ from the same kit's first: %d" % (
+        r["loadings"], len(r["reload_fail"])), r["reload_fail"][:8])
+    print("R: images compared with A's (a kit drawn first in its process against the same kit after another): %d; "
+          "differing: %d" % (len(r["img"]), len(r_differ)), r_differ[:8])
     ok = (not differ and not b["repeat_fail"] and len(a["img"]) == len(b["img"])
-          and os.path.dirname(a["renderer"]) != os.path.dirname(b["renderer"]) and a["lamp_gain"] == b["lamp_gain"])
+          and os.path.dirname(a["renderer"]) != os.path.dirname(b["renderer"]) and a["lamp_gain"] == b["lamp_gain"]
+          and not r["reload_fail"] and not r_differ and len(r["img"]) == len(CAMS) * len(args.kits.split(","))
+          and r["loadings"] == args.reloads * len(args.kits.split(",")))
     print("PASS" if ok else "FAIL")
     return 0 if ok else 1
 

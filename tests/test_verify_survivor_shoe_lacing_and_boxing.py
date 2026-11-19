@@ -1,10 +1,13 @@
 """shoe_lacing_and_boxing: a process of the agent account that outlives the verify-start kill (the base image's supervisord respawns
 the desktop it runs as that account) is frozen, not held against the submission; one that is still running once
-frozen still zeroes contract_ok.
+frozen still zeroes contract_ok. The episodes start only once the account has been quiet (no new process, none
+running) for AGENT_QUIET_S, at most AGENT_QUIET_MAX_S after the lockdown: a desktop program that supervisord starts
+again during the wait is frozen before any episode's network audit begins.
 
 Runs the grader's own `_early_lockdown` (and its helpers), taken from tests/verify.py by name, against stand-ins for
-the root-only parts (the kill, the stage lock, the snapshot) and a real child process playing the survivor. Stdlib
-only: tests/verify.py imports the grading stack (numpy, ...) that the host venv does not have.
+the root-only parts (the kill, the stage lock, the snapshot) and real child processes playing the survivor and the
+respawn. The two quiet times are shortened here. Stdlib only: tests/verify.py imports the grading stack (numpy, ...)
+that the host venv does not have.
 """
 import ast
 import os
@@ -18,6 +21,7 @@ from pathlib import Path
 
 VERIFY = Path(__file__).resolve().parents[1] / "tasks/arm/shoe_lacing_and_boxing/tests/verify.py"
 FAMILY = "contract"   # "contract": the survivor reason zeroes contract_ok; "void": a survivor raises a task error
+QUIET = {"AGENT_QUIET_S": 0.8, "AGENT_QUIET_MAX_S": 3.0}   # verify.py: 5 s and 30 s
 
 
 class _Os(types.ModuleType):
@@ -39,21 +43,31 @@ class _Os(types.ModuleType):
 
 
 class _Survivor:
-    """A real process standing in for the respawned desktop process that outlived the kill."""
+    """A real process standing in for the respawned desktop process that outlived the kill; with `respawn_after_s`, a
+    second one appears that long after the first listing, standing in for supervisord's backoff respawn."""
 
-    def __init__(self):
-        self.proc = subprocess.Popen(["sleep", "60"])
+    def __init__(self, respawn_after_s=None):
+        self.procs = [subprocess.Popen(["sleep", "60"])]
+        self.proc = self.procs[0]
+        self.respawn_after_s = respawn_after_s
+        self.t0 = None
 
     def pids(self, uid=None):
-        return [self.proc.pid] if self.proc.poll() is None else []
+        now = time.time()
+        if self.t0 is None:
+            self.t0 = now
+        if self.respawn_after_s is not None and len(self.procs) == 1 and now - self.t0 >= self.respawn_after_s:
+            self.procs.append(subprocess.Popen(["sleep", "60"]))
+        return [p.pid for p in self.procs if p.poll() is None]
 
     def close(self):
-        try:
-            os.kill(self.proc.pid, signal.SIGCONT)
-        except OSError:
-            pass
-        self.proc.kill()
-        self.proc.wait()
+        for p in self.procs:
+            try:
+                os.kill(p.pid, signal.SIGCONT)
+            except OSError:
+                pass
+            p.kill()
+            p.wait()
 
 
 def _functions(names):
@@ -64,8 +78,10 @@ def _functions(names):
 
 
 class SurvivorAtVerifyStart(unittest.TestCase):
+    RESPAWN_AFTER_S = None
+
     def setUp(self):
-        self.survivor = _Survivor()
+        self.survivor = _Survivor(self.RESPAWN_AFTER_S)
         self.addCleanup(self.survivor.close)
         self.tmp = Path(self.enterContext(__import__("tempfile").TemporaryDirectory()))
         (self.tmp / "stage").mkdir()
@@ -105,10 +121,12 @@ class SurvivorAtVerifyStart(unittest.TestCase):
               "STAGE_DIR": str(self.tmp / "stage"), "HOME": str(self.tmp / "home"), "AGENT_USER": "user",
               "SUBMISSION": str(self.tmp / "home" / "submission"), "LATE_GATE_MAX_GAP_S": 600.0, "WATCH_ROOTS": [],
               "RUNS_ROOT": str(self.tmp / "runs"), "SNAPSHOT": str(self.tmp / "snap"), "SNAP_ROOT": str(self.tmp),
-              "QUARANTINE": str(self.tmp / "q")}
-        exec(_functions(["_proc_state", "_still_running", "_early_lockdown"]), ns)
+              "QUARANTINE": str(self.tmp / "q"), **QUIET}
+        exec(_functions(["_proc_state", "_still_running", "_await_quiet", "_early_lockdown"]), ns)
         fn = ns["_early_lockdown"]
+        t0 = time.time()
         out = fn(Freezer()) if fn.__code__.co_argcount else fn()
+        self.wall_s = time.time() - t0
         return out, logs
 
     def _voided(self, out):
@@ -142,6 +160,40 @@ class SurvivorAtVerifyStart(unittest.TestCase):
                  if isinstance(n, ast.If) and any(isinstance(b, ast.Raise) for b in n.body)]
         self.assertFalse([t for t in tests if "agent_processes_left" in t], tests)
         self.assertTrue([t for t in tests if "agent_processes_running" in t], tests)
+
+    def test_the_lockdown_ends_once_the_account_is_quiet(self):
+        out, logs = self._lockdown(left=1)
+        self.assertFalse(self._voided(out), out)
+        quiet = [m for m in logs if m.startswith("[grader] agent account quiet after")]
+        self.assertEqual(len(quiet), 1, logs)
+        self.assertIn("(0 process(es) of it appeared meanwhile, frozen)", quiet[0])
+        self.assertGreaterEqual(self.wall_s, QUIET["AGENT_QUIET_S"])
+        self.assertLess(self.wall_s, QUIET["AGENT_QUIET_MAX_S"])
+
+
+class RespawnDuringTheQuietWait(SurvivorAtVerifyStart):
+    """supervisord starts a desktop program again about 1 s after the kill (here 0.4 s after the first listing): the
+    wait freezes it and lasts AGENT_QUIET_S past its appearance, so no episode starts while it may still run."""
+    RESPAWN_AFTER_S = 0.4
+
+    def test_the_lockdown_ends_once_the_account_is_quiet(self):
+        out, logs = self._lockdown(left=1)
+        self.assertFalse(self._voided(out), out)
+        quiet = [m for m in logs if m.startswith("[grader] agent account quiet after")]
+        self.assertEqual(len(quiet), 1, logs)
+        self.assertIn("(1 process(es) of it appeared meanwhile, frozen)", quiet[0])
+        self.assertEqual(len(self.survivor.procs), 2)
+        for p in self.survivor.procs:
+            self.assertEqual(Path("/proc/%d/status" % p.pid).read_text().split("State:")[1].split()[0], "T")
+        self.assertGreaterEqual(self.wall_s, self.RESPAWN_AFTER_S + QUIET["AGENT_QUIET_S"])
+        self.assertLess(self.wall_s, QUIET["AGENT_QUIET_MAX_S"])
+
+    def test_survivor_that_cannot_be_stopped_still_voids(self):
+        """The wait is bounded: a process that never stops ends it at AGENT_QUIET_MAX_S (and voids, as before)."""
+        out, _ = self._lockdown(left=1, freeze=False)
+        self.assertTrue(self._voided(out), out)
+        self.assertGreaterEqual(self.wall_s, QUIET["AGENT_QUIET_MAX_S"])
+        self.assertLess(self.wall_s, QUIET["AGENT_QUIET_MAX_S"] + 3.0 + 2.0)   # + _still_running's 3 s bound
 
 
 if __name__ == "__main__":

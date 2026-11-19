@@ -1,0 +1,121 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "bom.json",
+ "description": "The bill of materials: exactly one SKU code for each of the 10 purchase lines. A code must be one that the quote lists for its line.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "motor",
+  "pinion",
+  "motor_controller",
+  "battery",
+  "lidar",
+  "deck_post",
+  "compute",
+  "power_board",
+  "tyres",
+  "steering_servo"
+ ],
+ "properties": {
+  "motor": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: 540-size brushed motor, 1 piece per car.",
+   "enum": [
+    "HCY-C1N5",
+    "HCY-YEUD",
+    "QDS-LZZ5",
+    "RSK-S38W"
+   ]
+  },
+  "pinion": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: motor pinion, 1 piece per car.",
+   "enum": [
+    "LQG-2TFB",
+    "LQG-CKJK",
+    "RSK-7M43",
+    "RSK-PK64"
+   ]
+  },
+  "motor_controller": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: motor controller, 1 piece per car.",
+   "enum": [
+    "CVN-PE8S",
+    "CVN-WANA",
+    "OSP-1Y09"
+   ]
+  },
+  "battery": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: NiMH stick pack, 1 piece per car.",
+   "enum": [
+    "PLM-334S",
+    "PLM-UUCS",
+    "PLM-W6XT",
+    "PLM-WVCF",
+    "VRW-KNL4",
+    "VRW-P1Z5"
+   ]
+  },
+  "lidar": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: 2D scanning LiDAR, 1 piece per car.",
+   "enum": [
+    "BVK-3PC2",
+    "STO-BGW9",
+    "STO-H9ZA",
+    "STO-KWH8",
+    "STO-PCF6"
+   ]
+  },
+  "deck_post": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: deck post, 4 pieces per car.",
+   "enum": [
+    "HFH-3N0J",
+    "HFH-QBWQ",
+    "HFH-UD8E"
+   ]
+  },
+  "compute": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: compute module, 1 piece per car.",
+   "enum": [
+    "ISE-2S38",
+    "ISE-9S08",
+    "NHC-56Q8",
+    "NHC-E1UA"
+   ]
+  },
+  "power_board": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: power distribution board, 1 piece per car.",
+   "enum": [
+    "MLW-2MAW",
+    "OSP-KMS3"
+   ]
+  },
+  "tyres": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: wheel and tyre, pre-mounted, 4 pieces per car.",
+   "enum": [
+    "CDT-898S",
+    "CDT-P7UA",
+    "TMD-2LF5",
+    "TMD-ZS0S"
+   ]
+  },
+  "steering_servo": {
+   "type": "string",
+   "description": "The code of the SKU you order for this purchase line: steering servo, 1 piece per car.",
+   "enum": [
+    "CVN-4J3Q",
+    "CVN-BNXZ",
+    "CVN-MP2T",
+    "CVN-NGY2",
+    "CVN-XC04"
+   ]
+  }
+ }
+}
