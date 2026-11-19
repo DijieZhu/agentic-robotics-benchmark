@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Setup — runs as trusted root, cwd = this staged folder (/opt/ale/setup, root-only), before the agent phase:
-# stage the agent-visible payload (the simulator, the practice units, the practice grader, the helpers) into the
-# agent home. Nothing hidden is in this folder.
+# stage the agent-visible payload (the equipment's documents, the commissioning client and runner, the wire
+# skeleton) into the agent home, and start the commissioning service. Nothing hidden is in this folder.
 set -euo pipefail
 umask 022
 export HOME=/root PYTHONNOUSERSITE=1
@@ -18,3 +18,19 @@ for entry in payload/* payload/.[!.]*; do
   chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/$(basename "$entry")"
 done
 mkdir -p "$HOME_DIR/submission" && chown "$AGENT_USER:$AGENT_USER" "$HOME_DIR/submission"
+
+
+# The commissioning service (environment/commission_service, installed by the image at /opt/labbench-commission,
+# readable by its own account only): started here, as that account, with a fixed environment and PATH (no
+# agent-writable directory on it), detached, restarted if it ever exits. It is not started in the grading sandbox:
+# this script does not run there.
+SERVICE=/opt/labbench-commission
+install -d -o labbench -g labbench -m 755 /run/labbench
+rm -f /run/labbench/commission.sock
+setsid runuser -u labbench -- /usr/bin/env -i HOME="$SERVICE/state" TMPDIR="$SERVICE/state" \
+  PATH=/opt/venv/bin:/usr/bin:/bin LANG=C.UTF-8 MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa OMP_NUM_THREADS=1 \
+  LP_NUM_THREADS=2 MESA_SHADER_CACHE_DISABLE=true PYTHONDONTWRITEBYTECODE=1 \
+  /bin/bash -c 'cd /opt/labbench-commission/state && while :; do /opt/venv/bin/python3 -B -s /opt/labbench-commission/commissiond.py; /usr/bin/sleep 2; done' \
+  < /dev/null > /dev/null 2>&1 &
+for _ in $(seq 1 60); do [ -S /run/labbench/commission.sock ] && break; sleep 0.5; done
+[ -S /run/labbench/commission.sock ] || { echo "[setup] the commissioning service did not come up" >&2; exit 1; }

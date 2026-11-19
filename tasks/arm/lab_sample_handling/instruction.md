@@ -2,8 +2,9 @@
 
 You are a lab-automation engineer. A Franka Panda at a lab bench has to work through a worklist of capped 15 mL
 sample tubes. It sees through cameras, feels with a wrist force sensor and can weigh on a bench scale. Write the
-controller that does the job. It runs closed loop against a simulator and is graded on centrifuge units and
-benches you have not seen. You have 2 hours of wall time.
+controller that does the job. It runs closed loop on the bench and is graded on centrifuge units and benches you
+have not seen. The bench is simulated, and the simulator is not in your sandbox: you have the equipment's sheets
+and a commissioning window on three other centrifuges of the same series. You have 2 hours of wall time.
 
 **The bench.** Nothing stands in exactly the same place twice:
 - the incoming rack (one row, positions A1-A10);
@@ -29,7 +30,7 @@ within 1 g. Positions k and k + 4 are opposite; the positions are numbered 1-8 c
 marked with a green dot. Such a pairing always exists, but the masses are known only by weighing. Which pair goes
 to which positions is up to you, except that the preloaded tubes stay where they are. A fixed shield covers the
 rotor's holes except at one loading port, so a tube goes in only at the hole the rotor has brought to the port.
-Then close the lid.
+Then close the lid: the job is the centrifuge run, and a rotor under an open lid cannot be started.
 
 Some positions are not yours to touch:
 - other people's tubes in the cold rack;
@@ -41,61 +42,100 @@ Leave all of these where they are. The lid may start open or shut.
 **What is hidden per unit.** The rotor turns on its hub one way only: a ratchet lets it turn counter-clockwise
 (seen from above) and holds it against the other way. You turn it by hand, by gripping the knob bar on its hub
 inside the shield and moving it along its arc. A hole carried past the port comes back only after a full turn.
-How the rotor answers a turn is a property of each centrifuge unit:
+How the rotor answers a turn is a property of each centrifuge unit, and no unit's values are told:
 
-- the hinge's friction;
-- the play between the knob and the rotor;
-- the rotor's inertia.
+| Property | Range over the series |
+|---|---|
+| Friction of the rotor's hinge | 0.10-0.45 N m |
+| Play between the knob and the rotor | 0-20 deg |
+| Rotor inertia | 0.010-0.040 kg m^2 |
 
-A grip commanded to turn 45 deg may turn the rotor by much less, and a short grip may not turn it at all.
+A grip commanded to turn 45 deg may turn the rotor by much less, and a short grip may not turn it at all. The six
+scored units and the three commissioning units were drawn separately over these ranges: a commissioning unit shows
+what the series is like, not what a scored unit's values are.
 
-**The practice units are not like the scored ones.** The three practice units in `units.json` sit at the low end
-of each range. The scored units span the whole range, and most of them lie beyond anything the practice units
-show:
+## Commissioning
 
-| Property | Practice units | Scored units |
-|---|---|---|
-| Hinge friction | 0.10-0.15 N m | 0.10-0.45 N m |
-| Knob play | 0-4 deg | 0-20 deg |
-| Rotor inertia | 0.010-0.015 kg m^2 | 0.010-0.040 kg m^2 |
+There is no simulator of the bench in your sandbox, and no model of it other than what `task_card.md` states. What
+you can do before you hand in is what an integrator can do before a method goes live: work on a spare bench for a
+limited time.
 
-A controller tuned only on the practice units will meet rotors that answer a turn differently.
+- **The benches.** A commissioning service holds three development benches, units `d0`, `d1` and `d2`: other
+  centrifuges of the same series (above), none of them a scored unit, with worklists of their own (none of them a
+  scored episode's). It runs under another account, and its files are closed to yours. You reach it through its
+  socket only, `/run/labbench/commission.sock`; `commission/client.py` is a client for it.
+- **What it gives.** The observation a controller gets when it is graded (below), and nothing else: no pose of
+  anything, no mass, no fill, no rotor angle, no unit property, no credit, and no word on how a worklist went. What
+  happened on the bench you judge as your controller must: from the cameras, the scale and the wrist.
+- **Its requests.**
+  - `reset(unit, episode)` stages a bench: development worklist `episode` (0 to 4999) of that unit. The same
+    unit and number stage the same bench again (the same places, tubes, fills and noise).
+  - `step(action)` runs one control step and returns the observation.
+  - `look(cams)` returns the cameras' images now, without a step.
+  - `probe()` returns a perturbed copy of the last observation, as the grader's repeated requests carry (below).
+  - `status()` returns the window's count.
+- **How an episode ends there.** As a graded one does: after 20000 steps, 20 steps after the lid is shut, or at an
+  unstable simulation. It does not end because a worklist is complete, and the service does not say whether it is.
+- **The window.** 144,000 control steps in all, which is 4 hours of bench time at 10 Hz (a spare bench for half a
+  working day; a graded episode is at most 20,000 steps). Staging a bench costs 300 steps (half a minute to set
+  it up). The count is kept by the service and survives reconnects; `/run/labbench/commission_status.json` shows
+  it. Once it is used up, every `reset` and `step` answers `commissioning_window_used`. Nothing gives steps back.
+- **Benches at a time.** Two connections, each with one bench; a third is answered `busy`. A connection silent for
+  120 s is closed. The benches run on your sandbox's CPUs; a control step takes about 30 ms of wall time
+  (more when images are drawn), on one bench as on two.
+- **At grading** the service is not there: your controller meets the scored benches with what is in its folder.
+
+`commission/run_bench.py` runs your submission folder on a development bench the way the grader runs it (a fresh
+copy, `bash run.sh`, the grading wire with its repeated requests and its deadlines). It reports how the episode
+ended, the steps, your controller's time against the grading budget and the repeated-request check; it cannot say
+how the worklist went. `--images DIR` saves what the cameras show at the start and at the end.
 
 ## What is in your home directory
 
 | Path | What it is |
 |---|---|
-| `lab_sim.py` | The simulator of the bench: the world, the robot and its controller, the centrifuge, the racks, the scale, the tubes, the cameras, and each episode's draw. The grader runs this exact file. |
-| `lab_env.py` | The environment your controller talks to: `LabEnv(unit).reset(seed)`, `step(action)`, the observation. The grader runs this exact file. |
-| `episode.py` | An episode and its credit. The grader runs this exact file. |
-| `box_transport_env.py` | The robot and table definitions `lab_sim.py` builds on. |
-| `units.json` | Three practice units (p0-p2): rotor properties to develop against (the low end of the ranges). |
-| `task_card.md` | The bench's numbers in one place: nominal places, ranges, sizes. |
-| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit. |
+| `task_card.md` | The equipment sheets: the robot and its control, the cameras, the tubes, the racks, the centrifuge, the scale; sizes, nominal places, and the range of everything that varies. |
+| `commission/client.py` | Client of the commissioning service (`Bench`: `status`, `reset`, `step`, `look`, `probe`, `close`). |
+| `commission/run_bench.py` | Runs your submission on a development bench over the grading wire. |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic). |
 
-Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow). There is no network. The sandbox has
-4 CPUs and 12 GB of memory, while grading too. Every `/opt/venv` Python runs NumPy's linear algebra on one fixed set
-of kernels (`OPENBLAS_CORETYPE=Haswell`, which the image also sets when the variable is missing), here and in the
-graded run, so the simulator computes the same on every machine.
+Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's model files, the
+Panda's among them). There is no network. The sandbox has 4 CPUs and 12 GB of memory, while grading too. Every
+`/opt/venv` Python runs NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell` with
+`OPENBLAS_L2_SIZE=256`, which the image also sets when the variables are missing), here and in the graded run.
 
 ## Credit
 
-Each episode's credit (0 to 1) is computed from the simulation when the episode ends:
+Each episode's credit (0 to 1) is computed from the simulation when the episode ends. The job is the centrifuge
+run, so the credit is the run's.
 
-- the cold tubes, each seated in its named position: 0.2 in all, split evenly;
-- the rotor's pairs (as many as half the spun and preloaded tubes): 0.6 in all, split evenly. A pair counts when
-  two opposite positions hold two of those tubes, both seated at the bottom of their holes, their masses within
-  1 g;
-- the lid shut over a complete rotor (every pair counted): 0.2.
+A tube is **seated** in a hole (of a rack or of the rotor) when its tip is inside the bore and within 6 mm of the
+hole's floor. The **run's tubes** are the worklist's `spin` tubes and the preloaded ones. A **balanced pair** is
+two of the run's tubes seated in opposite rotor positions, their masses within 1 g.
 
-If a tube that was not yours to move has moved, the episode scores 0. A tube anywhere else counts nothing. So
-does an unbalanced pair, a pair with an empty position or with a cold tube, and a lid shut over an incomplete
-rotor.
+1. **The run counts only if the centrifuge could be started on it.** All three must hold:
+   - the lid is shut (its angle under 0.02 rad);
+   - every tube seated in the rotor is half of a balanced pair;
+   - the rotor holds at least one balanced pair.
+
+   So a run does not count with the lid open, with a tube that has no partner opposite it (a preloaded tube whose
+   partner has not been loaded is one), with a pair more than 1 g apart, or with a tube in the rotor that is not
+   one of the run's (a cold tube, say).
+2. **A run that counts has a share:** the balanced pairs in the rotor divided by the pairs the worklist needs
+   (half the number of the run's tubes). A complete run has share 1.
+3. **The credit is the share times (0.8 + 0.2 x the fraction of the cold tubes seated in their named cold-rack
+   positions).** A complete run with every cold tube in place scores 1, a complete run with no cold tube in place
+   0.8, and two of three pairs under a shut lid with every cold tube in place 0.67.
+4. **A run that does not count scores 0**, whatever else was done. Cold tubes in their places are worth nothing
+   without a run.
+5. **If a tube that was not yours to move is no longer seated where it started, the episode scores 0.**
+
+A tube anywhere else counts nothing.
 
 An episode ends:
 - after 20000 control steps (33 simulated minutes);
-- 20 steps after the lid is shut, once it has been open (its angle under 0.02 rad);
+- 20 steps after the lid is shut, once it has been open (its angle under 0.02 rad, after having been over
+  0.5 rad);
 - at an unstable simulation (an arm joint faster than 8 rad/s), which scores 0.
 
 The score is the mean credit over the graded episodes.
@@ -136,9 +176,10 @@ large (the rack image alone is about 1.2 MB on the wire), so ask for one only wh
 
 Put your controller in `/home/user/submission/` with a `run.sh`. Everything it needs must be inside that folder (at
 most 5000 files and 200 MiB; a larger folder scores 0), and the controller may write there. It is graded in a fresh
-sandbox: nothing else of your home directory is there (no `lab_sim.py`, no `units.json`: copy what you use into the
-folder), there is no desktop session, and the only processes of your account are the ones `run.sh` starts. A
-process of your account that was started any other way ends the run: that episode and every later one score 0.
+sandbox: nothing else of your home directory is there (no `task_card.md`, no `commission/`: copy what you use into
+the folder), the commissioning service does not run, there is no desktop session, and the only processes of your
+account are the ones `run.sh` starts. A process of your account that was started any other way ends the run: that
+episode and every later one score 0.
 
 The grader starts the controller with `bash run.sh` in that folder, as your user, with only local (AF_UNIX) sockets,
 and speaks one JSON object per line on its stdin and stdout:
@@ -168,7 +209,7 @@ repeated `t` from a cache, fails. Which steps are probed depends only on the epi
 - Your controller's time budget is 9000 s in all: the time it takes to print `READY` and to answer each request,
   summed over the run, plus 0.2 s for every image you ask for (a fixed price, whatever the grader's machine takes to
   draw it; the four images of an episode's first observation are free). The simulation itself is not counted. Once
-  the budget is used up, the episode under way and the episodes not yet started score 0. The practice grader reports
-  the same sum (`controller_seconds`).
+  the budget is used up, the episode under way and the episodes not yet started score 0. `commission/run_bench.py`
+  reports the same sum for one episode (`controller_seconds`).
 - Your controller is one process for the whole run, so it may carry what it learns about a unit, or a rotor, from
   one episode to the next.

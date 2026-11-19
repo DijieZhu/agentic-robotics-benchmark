@@ -40,16 +40,19 @@ tag, the episode's index in the set and its hidden seed. An episode's probe sche
 episode alone, not of the controller's replies, of how many steps earlier episodes took, of the clock or of the
 process, and the grader adds no run-to-run randomness of its own: a deterministic controller that stays inside the
 time limits (the step deadline and the budget on its own time are wall-clock) gets one result. The lock's counts are run-wide
-and are the only thing about it that is logged or written. episode.py owns the credit (byte-identical to the agent's
-copy); lab_env.py and lab_sim.py are the environment (byte-identical too). The metric `mean_episode_credit` is the mean over episodes of
-the episode credit (0.2 for the cold tubes in their named positions, 0.6 for the rotor's balanced opposite pairs,
-0.2 for the lid shut over a complete rotor; 0 if a tube not to be moved has moved).
+and are the only thing about it that is logged or written. episode.py owns the credit; lab_env.py and lab_sim.py are
+the environment (the agent has neither: its commissioning service runs byte-identical copies under another account,
+environment/commission_service/, without episode.py). The metric `mean_episode_credit` is the mean over episodes of
+the episode credit: the centrifuge run's share (the balanced pairs in the rotor over the pairs needed; 0 unless the
+lid is shut and every tube in the rotor is half of a balanced pair) times (0.8 + 0.2 x the fraction of the cold tubes
+in their named positions); 0 if a tube not to be moved has moved.
 
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference; only
 then does every observation also carry `truth` (the unit, the seed, the full simulation state). An untokened
 submission never sees it. Every path agent behaviour can reach is charged as a score, never a crash.
 
-Images: lab_sim.render draws the cameras with MuJoCo's renderer on OSMesa, exactly as the agent's copy does. Before
+Images: lab_sim.render draws the cameras with MuJoCo's renderer on OSMesa, exactly as the commissioning service's
+copy does. Before
 the first episode a render self-test draws the four cameras of one episode (the set's first unit at a fixed seed, not
 a graded episode) and checks their shapes, that none is flat and that their brightness is sane; the metric
 `render_selftest` records that it passed. A renderer failure, in the self-test or at any later image
@@ -328,7 +331,7 @@ def agent_inet_sockets(uid):
 def stage_submission(uid, gid):
     """Make the restored submission the agent account's own folder, in place at ~user/submission: the
     folder the instruction names, where run.sh is started and where the controller may write, as it can in
-    the practice grader. Ownership changes never follow a symlink (lchown, a walk that does not
+    commission/run_bench.py. Ownership changes never follow a symlink (lchown, a walk that does not
     follow links); size and file count are capped. Returns the path, or None if there is no usable
     submission."""
     src = os.path.join(os.path.expanduser("~" + agent_user()), "submission")
@@ -503,7 +506,7 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
     outside = lock.outside = []
     watch = egress_mode == "seccomp"     # only the launcher sets the mark
     scores, aborted, faults, records = [], 0, 0, []
-    per_unit, per_part = {}, {"cold": [], "pairs": [], "lid": [], "kept": []}
+    per_unit, per_part = {}, {"cold": [], "pairs": [], "lid": [], "run": [], "kept": []}
     egress_hits = 0
     budget_exhausted = False
     GuardedSolver.guard = egress_mode == "seccomp"
@@ -558,6 +561,7 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
                 per_part["cold"].append(sum(sc["cold"].values()) / len(sc["cold"]))
                 per_part["pairs"].append(min(sum(sc["pairs"]), sc["need"]) / sc["need"])
                 per_part["lid"].append(float(sc["lid"]))
+                per_part["run"].append(float(sc["run"]))
                 per_part["kept"].append(0.0 if sc["moved"] else 1.0)
             except (SolverAborted, ValueError, TypeError, OverflowError, KeyError, AttributeError,
                     RecursionError) as exc:

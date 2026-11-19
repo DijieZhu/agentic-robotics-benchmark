@@ -20,10 +20,15 @@ RUN python3 -m venv /opt/venv \
 # variable too (the grader starts run.sh with PATH, HOME and LANG only), and takes NumPy's AVX-512 code paths out on a
 # CPU that has them, so that a development run here and the graded run compute the same on every machine. The grader
 # checks it (tests/numerics_check.py) and refuses to grade on a machine that computes differently.
-ENV OPENBLAS_CORETYPE=Haswell
+# OPENBLAS_L2_SIZE=256 guards the pin: the OpenBLAS bundled with numpy 2.5.2 to 2.5.5 (2.5.4 here) raises its block
+# size on AMD Zen 4 / Zen 5 hosts even for a forced kernel, and the Haswell kernel can then crash or differ in the
+# last bits for float64 products with an inner dimension above about 300 (none in the simulator; a controller's
+# own products may be that large). It keeps the block at 256 on every host.
+ENV OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256
 RUN printf '%s\n' \
       'import os' \
       'os.environ.setdefault("OPENBLAS_CORETYPE", "Haswell")' \
+      'os.environ.setdefault("OPENBLAS_L2_SIZE", "256")' \
       'try:' \
       '    with open("/proc/cpuinfo") as _f:' \
       '        _flags = set(_f.read().split())' \
@@ -35,7 +40,7 @@ RUN printf '%s\n' \
       > /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.py \
     && printf '%s\n' 'import lab_numerics_pin' > /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.pth \
     && chmod 0644 /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.py /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.pth \
-    && env -u OPENBLAS_CORETYPE /opt/venv/bin/python3 -I -c "import os; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell'; import numpy; print('[image] numerics pin OK')"
+    && env -u OPENBLAS_CORETYPE -u OPENBLAS_L2_SIZE /opt/venv/bin/python3 -I -c "import os; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell' and os.environ.get('OPENBLAS_L2_SIZE') == '256'; import numpy; print('[image] numerics pin OK')"
 
 # Software rendering for MuJoCo: Mesa OSMesa (llvmpipe, no display or device needed), checked below as the agent user.
 RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 \
