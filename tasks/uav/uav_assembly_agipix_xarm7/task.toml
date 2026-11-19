@@ -5,8 +5,11 @@
 # The agent receives the adapted AGiPix kit (CC0 source: every component's source meshes, the convex collision pieces the
 # cell simulates, quantities, masses, rest orientations and manufacturing notes, given/kit/kit.json), the stock xArm 7 +
 # gripper model (MuJoCo Menagerie), the 27-diagram picture manual, the cell's commissioning document (given/cell.md), the
-# connection client and the cameras' scenery; no practice cell. It delivers assemble.py (solve(cell): a camera-only
-# program that mounts the 23 components, 23 mates, onto the lower chassis clamped on a raised fixture), run as `nobody`
+# connection client, the cameras' scenery and their renderer for its own twin of the cell or any scene (given/lib:
+# cell_render, a port of tests/rendering.py taking the twin and its camera mounts as arguments, and the render layer with
+# render.filament.view; the runner puts given/lib on the program's import path); no practice cell. It delivers
+# assemble.py (solve(cell): a camera-only program that mounts the 23 components, 23 mates, onto the lower chassis
+# clamped on a raised fixture), run as `nobody`
 # on 3 OS-entropy episodes of the grader's MuJoCo cell (tests/cell.py: free-jointed components with convex collision
 # pieces, staged on the bench at drawn slots and yaws, the fixture and the cameras jittered; uncalibrated top and wrist
 # RGB-D, RGB rendered by MuJoCo's Filament on CPU Vulkan in a baked workshop, depth by OSMesa; joint encoders and a
@@ -64,13 +67,15 @@ network_mode = "no-network"
 # Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
 # touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
 # a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
-# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
-# gets the agent's resources (CPU rendering: no GPU).
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify (beside the cell and
+# the cell's own Filament camera session), so the verifier gets the agent's CPUs (CPU rendering: no GPU) and 24 GB: a
+# program that renders through the given layer and the cell's camera session share it (in a local graded rehearsal of
+# three workcells the grader's process held up to about 9.5 GB and the program up to about 7 GB, about 16 GB together).
 [verifier]
 timeout_sec = 25200
 environment_mode = "separate"
 
 [verifier.environment]
 cpus = 8
-memory_mb = 16384
+memory_mb = 24576
 gpus = 0
