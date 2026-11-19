@@ -2,7 +2,7 @@
  "format": "lab_sample_handling episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba",
+  "tests/verify.py": "7368e64e2c3c3d9cd39f95200d48f44f9a05a1df23e51f39e693cf19b0b3f34a",
   "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
   "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
   "tests/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
@@ -28,7 +28,7 @@
   "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
   "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
  },
- "frozen_commit": "37d05fcc40f269299d7d13e04eed6ebb7d467226",
+ "frozen_commit": "46b48f938f468cbd8533661958c6f5f688e39f56",
  "draws": [
   {
    "draw": 1,
@@ -1231,6 +1231,192 @@
      "probes_total": 1479.0,
      "probes_passed": 1242.0,
      "verify_stage_seconds": 5622.3,
+     "steps": [
+      15941,
+      9156,
+      11657,
+      19828,
+      12832,
+      10595,
+      10288,
+      9126,
+      11430,
+      15877,
+      6935,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 3,
+   "amended_utc": "2026-11-19T08:29:37Z",
+   "draw": 1,
+   "commit": "46b48f938f468cbd8533661958c6f5f688e39f56",
+   "reason": "The grading kit with clear_agent_account was vendored (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json byte-identical). tests/verify.py calls the kit's clearing of the agent's account itself, before the verify-start kill and the empty-account check and before the controller's clock exists, so that none of it is charged to the controller's time budget (the kit's own call inside the timed controller start then returns the first call's report); new metric agent_account_cleared. No episode changes in its bench, worklist, fills, unit, noise, probe schedule or credit; in the task's own grading image the clearing finds nothing to do.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba",
+     "now": "7368e64e2c3c3d9cd39f95200d48f44f9a05a1df23e51f39e693cf19b0b3f34a"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba",
+    "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "37d05fcc40f269299d7d13e04eed6ebb7d467226",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-cbeaf63e",
+    "commit": "46b48f93",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4494.6,
+     "controller_time_s": 472,
+     "budget_s": 9000,
+     "wall_s": 4494
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-de5885fa",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1479.0,
+     "probes_passed": 1242.0,
+     "verify_stage_seconds": 4615.5,
      "steps": [
       15941,
       9156,
