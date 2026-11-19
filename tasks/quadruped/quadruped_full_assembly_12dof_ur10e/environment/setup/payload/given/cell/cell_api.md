@@ -8,7 +8,9 @@ empty writable `$HOME` / `$TMPDIR`, a minimal environment (`PATH`, `HOME`, `TMPD
 launcher `python3 -B -E -s -c <bootstrap> <lib> assemble` (the bootstrap puts `<lib>` on `sys.path` and calls
 `arm.assembly_info.client.main`, which imports `assemble` from the current directory), or `bash run.sh` when you ship one.
 `cell` is a proxy (`arm.assembly_info.client.InfoCell`): every method is one JSON-lines request on the process's original
-stdout, answered on stdin by the grader's physics server; `print()` goes to stderr.
+stdout, answered on stdin by the grader's physics server; `print()` goes to stderr, and so does everything else written
+to file descriptor 1 (native libraries' output too, such as the Filament renderer's start-up lines): none of it reaches
+the wire.
 
 Units on the API: metres, radians, quaternions `wxyz`; the cell frame = on the bench top at the arm's base axis, z up
 (see `cell_manual.md`). The given unit files are in millimetres.
@@ -44,6 +46,10 @@ still run.
 
 ## Rendering your own frames
 
+MuJoCo's own renderer (`mujoco.Renderer`, or the render layer's `"mujoco"` backend) draws a different picture than the
+cell's cameras (no hall, MuJoCo's own lights, flat colours, no reflections), so image processing tuned on its frames
+may behave differently on the cell's frames; the given render layer is the way to see what the cell's cameras would see.
+
 The given render layer renders like the cell's cameras: MuJoCo's Filament renderer (physically based; on the CPU through
 Vulkan, Mesa's lavapipe) in the factory hall of `~/render` (its baked lightmaps, its lamps, its HDR image light, the
 scanned oak bench top), with the cell's look (`arm/assembly_quad/agent_look.json` and `agent_render.make_look()`: light
@@ -63,17 +69,20 @@ ways in (put `~/given/lib` on `sys.path`):
   render layer's interface: `sync_from(model, data)` copies your physics state by joint name,
   `render_raw_views([cam], ("rgb", "depth"))` gives the pinhole images, `render([cam], photo=..., seed=k,
   outputs=("rgb", "sensor_depth"))` runs the photo pipeline.
-* `render.filament.view.open_view(spec_or_mjcf_path, room=..., look=..., surface=..., bench_xy=(0.45, 0.0))`: any scene
-  of yours, rendered exactly as given: none of the cell's props are added (no robot table frame, control box or floor
-  tape), your scene's own floor and walls stay unless `drop_prefixes` names them, and only geoms in a group above 2 are
-  left out; with `room`, the hall is added and its lamps replace your scene's lights (unless `keep_lights`). A twin of
-  this cell goes through `agent_render.open_session` instead. `view.render(state, camera, width=None, height=None,
-  depth=False)` returns RGB uint8 H x W x 3 (with `depth=True` also depth float32 H x W); `state` is an `MjData` (joints
-  copied by name), a `(model, data)` pair, a dict `{joint name: value}` or None; `camera` is a camera name of the model
-  (with `width`, `height`), a `CameraSpec` or a dict `{"width", "height", "fx", "fy", "cx", "cy", "world_T_cam"}` (`"K"`
-  may stand for the four intrinsics). `look` is the cell's look (`agent_render.make_look()`), a look file of your own
-  (JSON: the fields of `render.filament.backend.Look`; `"materials"` a list of `[geom glob, material glob, {"roughness",
-  "metallic"}]` rules, the first match wins) or None. `view.session` is a render-layer session for the photo pipeline.
+* `render.filament.view.open_view(spec_or_mjcf_path, room=..., look=..., surface=..., bench_xy=(0.45, 0.0),
+  exposure_factor=1.0)`: any scene of yours, rendered exactly as given: none of the cell's props are added (no robot
+  table frame, control box or floor tape), your scene's own floor and walls stay unless `drop_prefixes` names them, and
+  only geoms in a group above 2 are left out; with `room`, the hall is added and its lamps replace your scene's lights
+  (unless `keep_lights`). A twin of this cell goes through `agent_render.open_session` instead. `view.render(state,
+  camera, width=None, height=None, depth=False)` returns RGB uint8 H x W x 3 (with `depth=True` also depth float32
+  H x W); `state` is an `MjData` (joints copied by name), a `(model, data)` pair, a dict `{joint name: value}` or None;
+  `camera` is a camera name of the model (with `width`, `height`), a `CameraSpec` or a dict `{"width", "height", "fx",
+  "fy", "cx", "cy", "world_T_cam"}` (`"K"` (a 3 x 3 matrix) may stand for the four intrinsics). `look` is the cell's
+  look (`agent_render.make_look()`), a look file of your own (JSON: the fields of `render.filament.backend.Look`;
+  `"materials"` a list of `[geom glob, material glob, {"roughness", "metallic"}]` rules, the first match wins) or None.
+  For the hall's brightness pass `exposure_factor=...` to `open_view` and leave `make_look()` at its default (a view
+  would render `make_look(f)` with a wrong display gain). `view.session` is a render-layer session for the photo
+  pipeline.
 
 ```python
 import os, sys
@@ -88,7 +97,9 @@ session.sync_from(model, data)                       # model, data: your physics
 raw = session.render_raw_views([cam], ("rgb", "depth"))[0]    # raw.rgb, raw.depth
 session.close()                                      # one session per process at a time
 
-view = open_view(part_spec, room=os.path.expanduser("~/render/room"), surface=os.path.expanduser("~/render/oak"),
+# the scenery: ~/render in your session; in the graded run `~` is an empty folder and it is next to $ARB_GIVEN_DIR
+scenery = os.path.join(os.path.dirname(os.environ.get("ARB_GIVEN_DIR", os.path.expanduser("~/given"))), "render")
+view = open_view(part_spec, room=os.path.join(scenery, "room"), surface=os.path.join(scenery, "oak"),
                  look=agent_render.make_look(), bench_xy=(0.45, 0.0))   # part_spec: a scene of yours, not the cell twin
 rgb, depth = view.render(part_data, cam, depth=True)                     # part_data: its MjData
 rgb_w = view.render({"my_hinge": 0.5}, "my_camera", 640, 480)            # a joint and a camera of part_spec
@@ -105,8 +116,13 @@ frame about 0.6-0.8 s (0.8-0.9 s); `open_view` takes about 5-20 s on the same sc
 a state (`sync_from`, `set_state`, or `state` in `view.render`), a session or view shows your twin's own pose (`qpos0`:
 the bodies where your spec puts them). One Filament session per process at a time: close it before opening the next (a
 second one is refused). Closing the last one also releases Filament's context and its memory once nothing refers to the
-closed session (about 0.3-1.4 GB stays with the process), so the next session's or view's first frame takes the 10-15 s
-again. Your program may use the layer during an episode too (it finds the hall next to `$ARB_GIVEN_DIR`); it then has 2
-render threads (about 1.5-1.9 s / 2.0-2.4 s and 0.7-0.9 s / 0.8-1.0 s per frame, its first frame about 10-14 s), and
-the time counts against the episode's wall clock. MuJoCo's classic renderer stays available: the render layer's MuJoCo
-backend (`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.
+closed session (about 0.3-1.4 GB stays with the process; each open/close cycle keeps about 0.2-0.7 GB more; keep one
+session open for the whole program), so the next session's or view's first frame takes the 10-15 s again. Your program
+may use the layer during an episode too (the session finds the hall next to `$ARB_GIVEN_DIR`; `~` is an empty folder
+there, so give `open_view` the folders next to `$ARB_GIVEN_DIR`, as the example does); it then has 2 render threads
+(about 1.5-1.9 s / 2.0-2.4 s and 0.7-0.9 s / 0.8-1.0 s per frame, its first frame about 10-14 s), and the time counts
+against the episode's wall clock. In the graded run your program shares the verifier's memory (24 GB) with the cell's
+own camera session, which opens at your first `get_camera` call: measured in this cell, a program holding a twin session
+took about 5 GB and the cell's own session about 4-7 GB (the cell's process reached about 14 GB by the third episode).
+MuJoCo's classic renderer stays available: the render layer's MuJoCo backend (`render.backends.get_backend("mujoco")`)
+and `mujoco.Renderer`.

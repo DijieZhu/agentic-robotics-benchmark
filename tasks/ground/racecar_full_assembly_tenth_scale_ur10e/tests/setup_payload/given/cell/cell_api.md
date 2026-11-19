@@ -9,7 +9,9 @@ off-screen rendering, `PYTHONPATH` = a read-only copy of `~/given/lib`, `ARB_GIV
 `<lib>` on `sys.path` and calls `arm.assembly_info.client.main`, which imports `assemble` from the current directory),
 or `bash run.sh` when you ship one. The process cannot open an Internet socket: creating one fails. `cell` is a proxy
 (`arm.assembly_info.client.InfoCell`): every method is one JSON-lines request on the process's original stdout,
-answered on stdin by the grader's physics server; `print()` goes to stderr.
+answered on stdin by the grader's physics server; `print()` goes to stderr, and so does everything else written to
+file descriptor 1 (native libraries' output too, such as the Filament renderer's start-up lines): none of it reaches
+the wire.
 
 Units on the API: metres, radians, quaternions `wxyz`; the cell frame = on the bench top at the arm's base axis, z up
 (see `cell_manual.md`). The given part files are in millimetres.
@@ -110,7 +112,10 @@ An example, with `~/given/lib` on `sys.path`, `spec` your `MjSpec` of the cell, 
 `session.sync_from(model, data)`; `raw = session.render_raw_views([cam], ("rgb", "depth"))[0]` (`raw.rgb`,
 `raw.depth`); `session.close()`; then, for a scene of yours that is not the cell twin (`part_spec`, its `part_data`),
 `from render.filament.view import open_view`;
-`view = open_view(part_spec, room=os.path.expanduser("~/render/room"), surface=os.path.expanduser("~/render/oak"), look=agent_render.make_look(), bench_xy=agent_render.DEFAULT_BENCH["centre_xy"])`;
+`scenery = os.path.join(os.path.dirname(os.environ.get("ARB_GIVEN_DIR", os.path.expanduser("~/given"))), "render")`
+(the scenery folder: `~/render` in your session; in the graded run `~` is an empty folder and the scenery is the
+folder `render` next to `$ARB_GIVEN_DIR`);
+`view = open_view(part_spec, room=os.path.join(scenery, "room"), surface=os.path.join(scenery, "oak"), look=agent_render.make_look(), bench_xy=agent_render.DEFAULT_BENCH["centre_xy"])`;
 `rgb, depth = view.render(part_data, cam, depth=True)`;
 `rgb_w = view.render({"my_hinge": angle}, "my_camera", width, height)` (a joint and a camera of `part_spec`);
 `view.close()`.
@@ -124,9 +129,13 @@ pipeline) and a 640 x 480 frame about 0.4 s (0.5 s); `open_view` takes about 4 s
 renders as fast. Until you give a state (`sync_from`, `set_state`, or `state` in `view.render`), a session or view
 shows your twin's own pose (its initial joint positions: the bodies where your spec puts them). One Filament session
 per process at a time: close it before opening the next (a second one is refused). Closing the last one also releases
-Filament's context and its memory once nothing refers to the closed session (about 0.7 GB stays with the process, up
-to about 1.7 GB after several opens), so the next session's or view's first frame takes that long again. Your
-program may use the layer during an episode too (it finds the hall next to `$ARB_GIVEN_DIR`); it then has two render
-threads (about 1.1 s / 2.1 s and 0.5 s / 0.7 s per frame, its first frame about 10 s), and the time counts
-against the episode's wall clock. MuJoCo's classic renderer stays available: the render layer's MuJoCo backend
-(`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.
+Filament's context and its memory once nothing refers to the closed session (about 0.7 GB stays with the process;
+each open/close cycle keeps about 0.2-0.7 GB more; keep one session open for the whole program), so the next
+session's or view's first frame takes that long again. Your program may use the layer during an episode too (the
+session finds the hall next to `$ARB_GIVEN_DIR`; `~` is an empty folder there, so give `open_view` the folders next to
+`$ARB_GIVEN_DIR`, as the example does); it then has two render threads (about 1.1 s / 2.1 s and 0.5 s / 0.7 s
+per frame, its first frame about 10 s), and the time counts against the episode's wall clock. In the graded run your
+program shares the verifier's memory (24 GB) with the cell's own camera session, which opens at your first
+`get_camera` call: measured in this cell, a program holding a twin session took about 4 GB and the cell's own
+session about 2-4 GB (the cell's process reached about 12 GB by the fourth episode). MuJoCo's classic renderer
+stays available: the render layer's MuJoCo backend (`render.backends.get_backend("mujoco")`) and `mujoco.Renderer`.
