@@ -1,0 +1,825 @@
+{
+ "band": {
+  "A1": 116.1,
+  "A2": 122.1,
+  "centre_mm": 119.1,
+  "half_width_mm": 3.0
+ },
+ "cycles": {
+  "CY-hall": {
+   "segments": [
+    {
+     "kind": "straight",
+     "length_m": 3.0,
+     "sight_m": 8.0,
+     "surface": "S2",
+     "width_m": 1.2
+    },
+    {
+     "kind": "straight",
+     "length_m": 2.4,
+     "sight_m": 7.5,
+     "surface": "P",
+     "width_m": 1.2
+    },
+    {
+     "kind": "straight",
+     "length_m": 5.1,
+     "sight_m": 5.1,
+     "surface": "S2",
+     "width_m": 1.2
+    },
+    {
+     "angle_deg": 180.0,
+     "kind": "arc",
+     "radius_m": 0.811,
+     "sight_m": 2.4,
+     "surface": "S2",
+     "width_m": 1.1
+    },
+    {
+     "kind": "straight",
+     "length_m": 5.0,
+     "sight_m": 5.0,
+     "surface": "S2",
+     "width_m": 1.2
+    },
+    {
+     "angle_deg": 30.0,
+     "kind": "arc",
+     "radius_m": 1.5,
+     "sight_m": 2.6,
+     "surface": "S2",
+     "width_m": 1.0
+    },
+    {
+     "angle_deg": 30.0,
+     "kind": "arc",
+     "radius_m": 1.5,
+     "sight_m": 2.6,
+     "surface": "S2",
+     "width_m": 1.0
+    },
+    {
+     "kind": "straight",
+     "length_m": 4.0,
+     "sight_m": 4.0,
+     "surface": "S2",
+     "width_m": 1.2
+    },
+    {
+     "angle_deg": 180.0,
+     "kind": "arc",
+     "radius_m": 0.61,
+     "sight_m": 1.8,
+     "surface": "S2",
+     "width_m": 0.8
+    }
+   ]
+  },
+  "CY-league": {
+   "segments": [
+    {
+     "kind": "straight",
+     "length_m": 9.937,
+     "sight_m": 9.0,
+     "surface": "S1",
+     "width_m": 2.0
+    },
+    {
+     "angle_deg": 180.0,
+     "kind": "arc",
+     "radius_m": 1.109,
+     "sight_m": 3.2,
+     "surface": "S1",
+     "width_m": 1.6
+    },
+    {
+     "kind": "straight",
+     "length_m": 4.5,
+     "sight_m": 4.5,
+     "surface": "S1",
+     "width_m": 2.0
+    },
+    {
+     "angle_deg": 25.0,
+     "kind": "arc",
+     "radius_m": 1.7,
+     "sight_m": 3.0,
+     "surface": "S1",
+     "width_m": 1.8
+    },
+    {
+     "angle_deg": 25.0,
+     "kind": "arc",
+     "radius_m": 1.7,
+     "sight_m": 3.0,
+     "surface": "S1",
+     "width_m": 1.8
+    },
+    {
+     "kind": "straight",
+     "length_m": 4.0,
+     "sight_m": 4.0,
+     "surface": "S1",
+     "width_m": 2.0
+    },
+    {
+     "angle_deg": 180.0,
+     "kind": "arc",
+     "radius_m": 0.95,
+     "sight_m": 2.6,
+     "surface": "S1",
+     "width_m": 1.6
+    }
+   ]
+  }
+ },
+ "derived": [
+  {
+   "conditions": {
+    "config": {
+     "body_shell": false
+    }
+   },
+   "id": "mass_kg",
+   "quantity": "mass_kg"
+  },
+  {
+   "conditions": {},
+   "id": "front_axle_load_n",
+   "quantity": "front_axle_load_n"
+  },
+  {
+   "conditions": {},
+   "id": "scan_plane_height_mm",
+   "quantity": "scan_plane_height_mm"
+  },
+  {
+   "conditions": {},
+   "id": "ground_clearance_mm",
+   "quantity": "ground_clearance_mm"
+  },
+  {
+   "conditions": {},
+   "id": "envelope_height_mm",
+   "quantity": "envelope_height_mm"
+  },
+  {
+   "conditions": {
+    "surface": "M"
+   },
+   "id": "steering_torque_nm",
+   "quantity": "steering_torque_nm"
+  },
+  {
+   "conditions": {
+    "surface": "M"
+   },
+   "id": "lock_time_s",
+   "quantity": "lock_time_s"
+  }
+ ],
+ "eco_usd": 45.0,
+ "lot_policy": {
+  "cell": {
+   "capacity_factor": 0.95,
+   "resistance_factor": 2.0
+  },
+  "lidar": {
+   "range_page_factor": 0.8
+  },
+  "tyre": {
+   "mu_page_factor": 0.85
+  }
+ },
+ "lot_reports": [
+  {
+   "id": "LR-1",
+   "kind": "cell",
+   "lot": "LOT-C5",
+   "samples": {
+    "capacity_ah": [
+     4.599,
+     4.627,
+     4.766,
+     4.651,
+     4.587,
+     4.671,
+     4.675,
+     4.742,
+     4.579,
+     4.743
+    ],
+    "cell_resistance_ohm": [
+     0.0064,
+     0.0064,
+     0.006900000000000001,
+     0.007200000000000001,
+     0.0067,
+     0.0063,
+     0.006900000000000001,
+     0.0066,
+     0.0070999999999999995,
+     0.0067
+    ],
+    "nominal_capacity_ah": 5.3,
+    "nominal_cell_resistance_ohm": 0.006
+   },
+   "superseded": false,
+   "tested_skus": [
+    "PLM-334S",
+    "PLM-UUCS",
+    "PLM-W6XT",
+    "PLM-WVCF"
+   ]
+  },
+  {
+   "id": "LR-2",
+   "kind": "cell",
+   "lot": "LOT-C4",
+   "samples": {
+    "capacity_ah": [
+     5.453,
+     5.46,
+     5.307,
+     5.4110000000000005,
+     5.347,
+     5.38,
+     5.45,
+     5.453,
+     5.421,
+     5.378
+    ],
+    "cell_resistance_ohm": [
+     0.0060999999999999995,
+     0.0055,
+     0.005900000000000001,
+     0.0054,
+     0.005900000000000001,
+     0.0056,
+     0.0057,
+     0.0056,
+     0.006,
+     0.005900000000000001
+    ],
+    "nominal_capacity_ah": 5.3,
+    "nominal_cell_resistance_ohm": 0.006
+   },
+   "superseded": true
+  },
+  {
+   "id": "LR-3",
+   "kind": "tyre",
+   "lot": "LOT-T5",
+   "samples": {
+    "normal_load_n": 20.0,
+    "pull_n": {
+     "M": [
+      21.2,
+      19.9,
+      20.0,
+      22.0,
+      21.8,
+      21.1
+     ],
+     "P": [
+      11.4,
+      11.2,
+      11.6,
+      11.1,
+      10.8,
+      11.1
+     ],
+     "S1": [
+      16.1,
+      15.4,
+      16.9,
+      16.4,
+      15.1,
+      16.1
+     ],
+     "S2": [
+      15.2,
+      14.5,
+      14.8,
+      14.7,
+      14.9,
+      14.7
+     ]
+    }
+   },
+   "superseded": false,
+   "tested_skus": [
+    "TMD-ZS0S"
+   ]
+  },
+  {
+   "id": "LR-3",
+   "kind": "tyre",
+   "lot": "LOT-T2",
+   "samples": {
+    "normal_load_n": 20.0,
+    "pull_n": {
+     "M": [
+      22.2,
+      22.4,
+      22.8,
+      21.6,
+      23.8,
+      21.6
+     ],
+     "P": [
+      11.9,
+      11.2,
+      11.6,
+      12.1,
+      11.9,
+      10.9
+     ],
+     "S1": [
+      12.9,
+      13.7,
+      13.3,
+      13.0,
+      13.3,
+      13.0
+     ],
+     "S2": [
+      15.0,
+      15.4,
+      15.3,
+      15.2,
+      14.8,
+      14.3
+     ]
+    }
+   },
+   "superseded": false,
+   "tested_skus": [
+    "CDT-P7UA"
+   ]
+  },
+  {
+   "id": "LR-4",
+   "kind": "lidar",
+   "lot": "LOT-L3",
+   "samples": {
+    "range_m": {
+     "black_duct": [
+      4.9,
+      4.6,
+      4.7,
+      4.7,
+      5.0,
+      4.85
+     ],
+     "dark_fabric": [
+      3.3,
+      3.4,
+      3.15,
+      3.1,
+      3.35,
+      3.3
+     ],
+     "grey": [
+      7.45,
+      7.4,
+      7.8,
+      7.8,
+      7.65,
+      7.75
+     ],
+     "white": [
+      11.6,
+      11.95,
+      11.75,
+      11.95,
+      11.9,
+      11.95
+     ]
+    }
+   },
+   "superseded": false,
+   "tested_skus": [
+    "STO-BGW9",
+    "STO-H9ZA",
+    "STO-KWH8",
+    "STO-PCF6"
+   ]
+  },
+  {
+   "id": "LR-4",
+   "kind": "lidar",
+   "lot": "LOT-L0",
+   "samples": {
+    "range_m": {
+     "black_duct": [
+      2.6,
+      2.5,
+      2.8,
+      2.4,
+      2.6,
+      2.65
+     ],
+     "dark_fabric": [
+      1.6,
+      1.6,
+      1.3,
+      1.7,
+      1.5,
+      1.65
+     ],
+     "grey": [
+      6.05,
+      6.1,
+      6.0,
+      5.9,
+      5.95,
+      6.15
+     ],
+     "white": [
+      11.9,
+      12.2,
+      11.95,
+      12.0,
+      11.9,
+      11.8
+     ]
+    }
+   },
+   "superseded": false,
+   "tested_skus": [
+    "BVK-3PC2"
+   ]
+  }
+ ],
+ "lot_table": {
+  "LOT-C5": {
+   "capacity_factor": 0.88,
+   "resistance_factor": 1.12
+  },
+  "LOT-C7": {
+   "capacity_factor": 0.95,
+   "resistance_factor": 2.0
+  },
+  "LOT-L0": {
+   "range_m": {
+    "black_duct": 2.4,
+    "dark_fabric": 1.3,
+    "grey": 5.9,
+    "white": 11.8
+   }
+  },
+  "LOT-L3": {
+   "range_m": {
+    "black_duct": 4.6,
+    "dark_fabric": 3.1,
+    "grey": 7.4,
+    "white": 11.6
+   }
+  },
+  "LOT-T2": {
+   "mu": {
+    "M": 1.12,
+    "P": 0.58,
+    "S1": 0.66,
+    "S2": 0.75
+   }
+  },
+  "LOT-T5": {
+   "mu": {
+    "M": 1.05,
+    "P": 0.56,
+    "S1": 0.8,
+    "S2": 0.74
+   }
+  }
+ },
+ "pod": {
+  "mass_g": 250.0,
+  "x_mm": 248.6
+ },
+ "replica_count": 6,
+ "report_lot_table": {
+  "LOT-C5": {
+   "capacity_factor": 0.88,
+   "resistance_factor": 1.12
+  },
+  "LOT-C7": {
+   "capacity_factor": 0.95,
+   "resistance_factor": 2.0
+  },
+  "LOT-L0": {
+   "range_m": {
+    "black_duct": 2.4,
+    "dark_fabric": 1.3,
+    "grey": 5.9,
+    "white": 11.8
+   }
+  },
+  "LOT-L3": {
+   "range_m": {
+    "black_duct": 4.6,
+    "dark_fabric": 3.1,
+    "grey": 7.4,
+    "white": 11.6
+   }
+  },
+  "LOT-T2": {
+   "mu": {
+    "M": 1.12,
+    "P": 0.58,
+    "S1": 0.66,
+    "S2": 0.75
+   }
+  },
+  "LOT-T5": {
+   "mu": {
+    "M": 1.05,
+    "P": 0.56,
+    "S1": 0.8,
+    "S2": 0.74
+   }
+  }
+ },
+ "rows": [
+  {
+   "bound": 2.21,
+   "comparator": "<=",
+   "conditions": {
+    "config": {
+     "body_shell": false
+    }
+   },
+   "id": "K3",
+   "printed_unit": "0.01",
+   "quantity": "mass_kg",
+   "scale": 2.21,
+   "source": "drawn",
+   "unit": "kg"
+  },
+  {
+   "bound": 8.0,
+   "comparator": "<=",
+   "conditions": {},
+   "id": "K4",
+   "printed_unit": "0.1",
+   "quantity": "battery_nominal_v",
+   "scale": 8.0,
+   "source": "story",
+   "unit": "V"
+  },
+  {
+   "bound": 0.127,
+   "comparator": "<=",
+   "conditions": {
+    "current_a": 30.0
+   },
+   "id": "K5",
+   "printed_unit": "0.001",
+   "quantity": "motor_torque_nm",
+   "scale": 0.127,
+   "source": "drawn",
+   "unit": "N.m"
+  },
+  {
+   "bound": 0.22,
+   "comparator": ">=",
+   "conditions": {},
+   "id": "K7",
+   "printed_unit": "0.01",
+   "quantity": "lidar_angular_step_deg",
+   "scale": 0.22,
+   "source": "drawn",
+   "unit": "deg"
+  },
+  {
+   "bound": 0.0,
+   "comparator": ">=",
+   "conditions": {
+    "cell_v": 1.45
+   },
+   "id": "K9",
+   "printed_unit": "0.1",
+   "quantity": "overvoltage_headroom_v",
+   "scale": 7.2,
+   "source": "story",
+   "unit": "V"
+  },
+  {
+   "bound": 1.0,
+   "comparator": "<=",
+   "conditions": {},
+   "id": "K11",
+   "printed_unit": "0.01",
+   "quantity": "rail_load_ratio",
+   "scale": 1.0,
+   "source": "story",
+   "unit": "1"
+  },
+  {
+   "bound": 7.21,
+   "comparator": "<=",
+   "conditions": {
+    "scenario": "SC-league"
+   },
+   "id": "W1",
+   "printed_unit": "0.01",
+   "quantity": "lap_time_s",
+   "scale": 7.21,
+   "source": "drawn",
+   "unit": "s"
+  },
+  {
+   "bound": 0.0,
+   "comparator": ">=",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "id": "W2",
+   "printed_unit": "0.01",
+   "quantity": "zone_stop_margin_m",
+   "scale": 1.65,
+   "source": "story",
+   "unit": "m"
+  },
+  {
+   "bound": 0.21,
+   "comparator": ">=",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "id": "W3",
+   "printed_unit": "0.01",
+   "quantity": "schedule_energy_reserve_frac",
+   "scale": 0.21,
+   "source": "drawn",
+   "unit": "1"
+  },
+  {
+   "bound": 0.0,
+   "comparator": ">=",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "id": "W4",
+   "printed_unit": "0.01",
+   "quantity": "schedule_bus_margin_v",
+   "scale": 7.2,
+   "source": "story",
+   "unit": "V"
+  },
+  {
+   "bound": 0.0,
+   "comparator": ">=",
+   "conditions": {
+    "scenario": "SC-openday"
+   },
+   "id": "W5",
+   "printed_unit": "0.1",
+   "quantity": "schedule_winding_headroom_c",
+   "scale": 100.0,
+   "source": "story",
+   "unit": "K"
+  },
+  {
+   "bound": 116.1,
+   "comparator": ">=",
+   "conditions": {},
+   "id": "A1",
+   "printed_unit": "0.1",
+   "quantity": "scan_plane_height_mm",
+   "scale": 116.1,
+   "source": "band",
+   "unit": "mm"
+  },
+  {
+   "bound": 122.1,
+   "comparator": "<=",
+   "conditions": {},
+   "id": "A2",
+   "printed_unit": "0.1",
+   "quantity": "scan_plane_height_mm",
+   "scale": 122.1,
+   "source": "band",
+   "unit": "mm"
+  },
+  {
+   "bound": 11.4,
+   "comparator": ">=",
+   "conditions": {},
+   "id": "A3",
+   "printed_unit": "0.1",
+   "quantity": "ground_clearance_mm",
+   "scale": 11.4,
+   "source": "drawn",
+   "unit": "mm"
+  },
+  {
+   "bound": 0.58,
+   "comparator": "<=",
+   "conditions": {
+    "surface": "M"
+   },
+   "id": "A4",
+   "printed_unit": "0.01",
+   "quantity": "steering_torque_ratio",
+   "scale": 0.58,
+   "source": "drawn",
+   "unit": "1"
+  },
+  {
+   "bound": 0.4,
+   "comparator": "<=",
+   "conditions": {
+    "surface": "M"
+   },
+   "id": "A5",
+   "printed_unit": "0.01",
+   "quantity": "lock_time_s",
+   "scale": 0.4,
+   "source": "drawn",
+   "unit": "s"
+  },
+  {
+   "bound": 1.0,
+   "comparator": "==",
+   "conditions": {},
+   "id": "FIT",
+   "printed_unit": null,
+   "quantity": "fits",
+   "scale": 1.0,
+   "source": "fit",
+   "unit": "1"
+  }
+ ],
+ "rule_inputs": {
+  "readings": {
+   "rear_lower_arm_mm": 13.38,
+   "tub_floor_mm": 14.69
+  },
+  "servo_kinds": {
+   "CVN-4J3Q": "ordinary",
+   "CVN-BNXZ": "fast",
+   "CVN-MP2T": "ordinary",
+   "CVN-NGY2": "ordinary",
+   "CVN-XC04": "ordinary"
+  }
+ },
+ "scenarios": {
+  "SC-league": {
+   "cycle": "CY-league",
+   "environment": {
+    "ambient_c": 22.0,
+    "config": {
+     "body_shell": false
+    },
+    "zone": null
+   },
+   "schedule": {
+    "blocks": [
+     {
+      "drive_s": 300.0,
+      "pace": 1.0,
+      "rest_s": 0.0
+     }
+    ],
+    "packs": 1,
+    "repeat": 1,
+    "swap_after_blocks": null
+   }
+  },
+  "SC-openday": {
+   "cycle": "CY-hall",
+   "environment": {
+    "ambient_c": 33.0,
+    "config": {
+     "body_shell": true
+    },
+    "zone": {
+     "appear_m": 1.65,
+     "speed_cap_mps": 3.0,
+     "surface": "P",
+     "target": {
+      "class": "dark_fabric",
+      "width_m": 0.3
+     }
+    }
+   },
+   "schedule": {
+    "blocks": [
+     {
+      "drive_s": 750.0,
+      "pace": 0.6,
+      "rest_s": 240.0
+     }
+    ],
+    "packs": 1,
+    "repeat": 3,
+    "swap_after_blocks": null
+   }
+  }
+ },
+ "schema": "rc-world/2"
+}

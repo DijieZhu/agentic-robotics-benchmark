@@ -3,7 +3,10 @@ tests/verify.py applies it.
 
 The program runs during verify, after the engine has opened the network. The static scan flags each forbidden form in
 the submission's own .py files, parsed as the interpreter parses them (a coding declaration included, every folder
-included); honest code and the shipped client, runner and oracle program scan clean; the namespace counters see a
+included); honest code and the shipped client, runner and oracle program scan clean, and a byte copy of the supplied
+render library (given/lib, the cell's own rendering code) is exempt as the client and runner are; the runner puts that
+library on the program's import path after the submission folder and keeps the connection apart from file descriptor
+1 (native libraries' log lines go to stderr); the namespace counters see a
 connection shorter than any sampling period; the per-account socket count reads the owner-uid column of /proc/net (in
 the engine's sandbox root has no CAP_SYS_PTRACE, so another account's /proc/<pid>/fd links are unreadable); verify.py
 turns a static hit into a zero verdict with a reason and a metric, and an episode's network record into a reason only
@@ -11,7 +14,9 @@ when the audit is enforced and something was seen.
 """
 import json
 import os
+import shutil
 import socket
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -92,12 +97,47 @@ def test_static_scan_passes_honest_code(tmp_path):
 
 
 def test_the_shipped_programs_scan_clean(tmp_path):
-    assert N.scan_imports(str(TASK / "environment/setup/payload")) == []
+    # the supplied render library (given/lib) is the cell's own rendering code, not the submission's: its scene builder
+    # imports by name, its GL probe starts a python, its context release calls malloc_trim (ctypes)
+    hits = N.scan_imports(str(TASK / "environment/setup/payload"))
+    assert [hit for hit in hits if not hit[0].startswith("given/lib/")] == []
     assert N.scan_imports(str(TASK / "solution")) == []      # the oracle's program
     for name in ("cell_client.py", "cell_runner.py"):
         (tmp_path / name).write_bytes((TASK / "tests/setup_payload" / name).read_bytes())
     (tmp_path / "assemble.py").write_bytes((TASK / "solution/assemble.py").read_bytes())
+    shutil.copytree(TASK / "tests/setup_payload/given/lib", tmp_path / "vendored_lib")   # byte copies: exempt
     assert V.static_network_audit(tmp_path) == []
+    (tmp_path / "vendored_lib/render/filament/view.py").write_text("import ctypes\n")   # a modified copy is not
+    assert V.static_network_audit(tmp_path) == [("vendored_lib/render/filament/view.py", "ctypes")]
+
+
+def test_the_runner_puts_the_given_library_after_the_submission(tmp_path):
+    """The cell's runner as the graded run uses it (its folder holds given/lib, as /opt/arb does): the submission's own
+    folder first, then the supplied library (nothing is imported from it here: find_spec only); a native write to file
+    descriptor 1 (as Filament's engine log does) reaches stderr, never the connection."""
+    root = tmp_path / "arb"
+    shutil.copytree(TASK / "tests/setup_payload", root)
+    (root / "render" / "room").mkdir(parents=True)          # the scenery folder beside the runner (a data folder)
+    program = tmp_path / "program"
+    program.mkdir()
+    (program / "assemble.py").write_text(
+        "import importlib.util, os, sys\n"
+        "def solve(cell):\n"
+        "    os.write(1, b'NATIVE log line\\n')\n"
+        "    for name in ('cell_render', 'render'):\n"
+        "        print('ORIGIN', name, importlib.util.find_spec(name).origin, file=sys.stderr)\n"
+        "    print('PATH', sys.path[0], sys.path[1], file=sys.stderr)\n")
+    env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "PYTHONDONTWRITEBYTECODE": "1", "HOME": str(tmp_path)}
+    run = subprocess.run([sys.executable, "-s", str(root / "cell_runner.py"), str(program)], input="", text=True,
+                         capture_output=True, env=env, cwd=tmp_path, timeout=60)
+    lines = {tuple(line.split()[:2]): line.split()[2:] for line in run.stderr.splitlines() if line.split()[:1] in (["ORIGIN"], ["PATH"])}
+    lib = (root / "given" / "lib").resolve()
+    assert lines[("ORIGIN", "cell_render")] == [str(lib / "cell_render.py")]
+    assert lines[("ORIGIN", "render")] == [str(lib / "render" / "__init__.py")]
+    assert lines[("PATH", str(program.resolve()))] == [str(lib)]
+    assert run.stdout == '{"op": "finish"}\n'                # the connection: the client's request only
+    assert "NATIVE log line" in run.stderr
+    assert not list(tmp_path.rglob("__pycache__"))
 
 
 @pytest.mark.skipif(not os.path.isfile("/proc/net/snmp"), reason="Linux /proc/net/snmp needed")

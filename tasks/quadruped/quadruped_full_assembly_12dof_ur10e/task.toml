@@ -62,12 +62,14 @@ network_mode = "no-network"
 # touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
 # a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
 # builds the grader's root-owned copy of the givens itself, and the grader downloads the cell's kit (verification has
-# network). The agent's program runs during verify, so the verifier gets the agent's resources (CPU rendering: no GPU).
+# network). The agent's program runs during verify, beside the cell and its own camera renderer, so the verifier
+# gets the agent's CPUs and more memory than the agent: 24 GB (at 16 GB a program that held a twin session of its
+# own got the grader killed in the third episode). CPU rendering: no GPU.
 [verifier]
 timeout_sec = 14400
 environment_mode = "separate"
 
 [verifier.environment]
 cpus = 8
-memory_mb = 16384
+memory_mb = 24576
 gpus = 0

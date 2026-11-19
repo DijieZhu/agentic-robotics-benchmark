@@ -1,0 +1,346 @@
+{
+ "format": "longtail_manipulation_recovery hidden set 1",
+ "step_budget": 1500,
+ "states": [
+  {
+   "id": "h04",
+   "task": "CoffeeSetupMug",
+   "seed": 211968027,
+   "split": "target",
+   "prefix": "h04_prefix.npz",
+   "qpos": "h04_state.npz",
+   "card": "h04_card.json",
+   "roles": {
+    "coffee_machine_left_group": "target",
+    "counter_1_left_left_group": "support"
+   }
+  },
+  {
+   "id": "h05",
+   "task": "CoffeeSetupMug",
+   "seed": 852531254,
+   "split": "target",
+   "prefix": "h05_prefix.npz",
+   "qpos": "h05_state.npz",
+   "card": "h05_card.json",
+   "roles": {
+    "coffee_machine_main_group": "target",
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h06",
+   "task": "CoffeeSetupMug",
+   "seed": 914010010,
+   "split": "target",
+   "prefix": "h06_prefix.npz",
+   "qpos": "h06_state.npz",
+   "card": "h06_card.json",
+   "roles": {
+    "coffee_machine_left_group": "target",
+    "counter_1_left_group": "support"
+   }
+  },
+  {
+   "id": "h07",
+   "task": "PickPlaceCounterToStove",
+   "seed": 1442576902,
+   "split": "target",
+   "prefix": "h07_prefix.npz",
+   "qpos": "h07_state.npz",
+   "card": "h07_card.json",
+   "roles": {
+    "counter_1_main_group": "support",
+    "stovetop_main_group": "target"
+   }
+  },
+  {
+   "id": "h08",
+   "task": "PickPlaceCounterToStove",
+   "seed": 2064473903,
+   "split": "target",
+   "prefix": "h08_prefix.npz",
+   "qpos": "h08_state.npz",
+   "card": "h08_card.json",
+   "roles": {
+    "counter_1_right_group": "support",
+    "stove_right_group": "target"
+   }
+  },
+  {
+   "id": "h09",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 1234899361,
+   "split": "target",
+   "prefix": "h09_prefix.npz",
+   "qpos": "h09_state.npz",
+   "card": "h09_card.json",
+   "roles": {
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h10",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 242540673,
+   "split": "target",
+   "prefix": "h10_prefix.npz",
+   "qpos": "h10_state.npz",
+   "card": "h10_card.json",
+   "roles": {
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h11",
+   "task": "CoffeeSetupMug",
+   "seed": 1277390136,
+   "split": "target",
+   "prefix": "h11_prefix.npz",
+   "qpos": "h11_state.npz",
+   "card": "h11_card.json",
+   "roles": {
+    "coffee_machine_main_group": "target",
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h13",
+   "task": "CoffeeSetupMug",
+   "seed": 218924925,
+   "split": "target",
+   "prefix": "h13_prefix.npz",
+   "qpos": "h13_state.npz",
+   "card": "h13_card.json",
+   "roles": {
+    "coffee_machine_left_group": "target",
+    "counter_1_left_group": "support"
+   }
+  },
+  {
+   "id": "h14",
+   "task": "CoffeeSetupMug",
+   "seed": 2115443594,
+   "split": "target",
+   "prefix": "h14_prefix.npz",
+   "qpos": "h14_state.npz",
+   "card": "h14_card.json",
+   "roles": {
+    "coffee_machine_left_group": "target",
+    "counter_1_left_left_group": "support"
+   }
+  },
+  {
+   "id": "h15",
+   "task": "PickPlaceCounterToStove",
+   "seed": 1006810740,
+   "split": "target",
+   "prefix": "h15_prefix.npz",
+   "qpos": "h15_state.npz",
+   "card": "h15_card.json",
+   "roles": {
+    "counter_1_right_group": "support",
+    "stove_right_group": "target"
+   }
+  },
+  {
+   "id": "h16",
+   "task": "PickPlaceCounterToStove",
+   "seed": 1040535785,
+   "split": "target",
+   "prefix": "h16_prefix.npz",
+   "qpos": "h16_state.npz",
+   "card": "h16_card.json",
+   "roles": {
+    "counter_2_left_group": "support",
+    "stove_left_group": "target"
+   }
+  },
+  {
+   "id": "h17",
+   "task": "PickPlaceCounterToStove",
+   "seed": 1268043166,
+   "split": "target",
+   "prefix": "h17_prefix.npz",
+   "qpos": "h17_state.npz",
+   "card": "h17_card.json",
+   "roles": {
+    "counter_main_main_group": "support",
+    "stovetop_main_group": "target"
+   }
+  },
+  {
+   "id": "h18",
+   "task": "PickPlaceCounterToStove",
+   "seed": 1514223542,
+   "split": "target",
+   "prefix": "h18_prefix.npz",
+   "qpos": "h18_state.npz",
+   "card": "h18_card.json",
+   "roles": {
+    "counter_2_left_group": "support",
+    "stove_left_group": "target"
+   }
+  },
+  {
+   "id": "h19",
+   "task": "PickPlaceCounterToStove",
+   "seed": 330710508,
+   "split": "target",
+   "prefix": "h19_prefix.npz",
+   "qpos": "h19_state.npz",
+   "card": "h19_card.json",
+   "roles": {
+    "counter_1_main_group": "support",
+    "stovetop_main_group": "target"
+   }
+  },
+  {
+   "id": "h20",
+   "task": "PickPlaceCounterToStove",
+   "seed": 474595237,
+   "split": "target",
+   "prefix": "h20_prefix.npz",
+   "qpos": "h20_state.npz",
+   "card": "h20_card.json",
+   "roles": {
+    "counter_right_main_group": "support",
+    "stove_main_group": "target"
+   }
+  },
+  {
+   "id": "h21",
+   "task": "PickPlaceCounterToStove",
+   "seed": 586531484,
+   "split": "target",
+   "prefix": "h21_prefix.npz",
+   "qpos": "h21_state.npz",
+   "card": "h21_card.json",
+   "roles": {
+    "counter_1_main_group": "support",
+    "stove_main_group": "target"
+   }
+  },
+  {
+   "id": "h22",
+   "task": "PickPlaceCounterToStove",
+   "seed": 750773350,
+   "split": "target",
+   "prefix": "h22_prefix.npz",
+   "qpos": "h22_state.npz",
+   "card": "h22_card.json",
+   "roles": {
+    "counter_2_left_group": "support",
+    "stove_left_group": "target"
+   }
+  },
+  {
+   "id": "h23",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 1351910515,
+   "split": "target",
+   "prefix": "h23_prefix.npz",
+   "qpos": "h23_state.npz",
+   "card": "h23_card.json",
+   "roles": {
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h24",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 1458536785,
+   "split": "target",
+   "prefix": "h24_prefix.npz",
+   "qpos": "h24_state.npz",
+   "card": "h24_card.json",
+   "roles": {
+    "counter_1_front_group": "support"
+   }
+  },
+  {
+   "id": "h25",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 1494781845,
+   "split": "target",
+   "prefix": "h25_prefix.npz",
+   "qpos": "h25_state.npz",
+   "card": "h25_card.json",
+   "roles": {
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h26",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 1686033017,
+   "split": "target",
+   "prefix": "h26_prefix.npz",
+   "qpos": "h26_state.npz",
+   "card": "h26_card.json",
+   "roles": {
+    "counter_1_front_group": "support"
+   }
+  },
+  {
+   "id": "h27",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 2025171806,
+   "split": "target",
+   "prefix": "h27_prefix.npz",
+   "qpos": "h27_state.npz",
+   "card": "h27_card.json",
+   "roles": {
+    "counter_1_right_group": "support"
+   }
+  },
+  {
+   "id": "h28",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 268952701,
+   "split": "target",
+   "prefix": "h28_prefix.npz",
+   "qpos": "h28_state.npz",
+   "card": "h28_card.json",
+   "roles": {
+    "counter_1_main_group": "support"
+   }
+  },
+  {
+   "id": "h29",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 760741304,
+   "split": "target",
+   "prefix": "h29_prefix.npz",
+   "qpos": "h29_state.npz",
+   "card": "h29_card.json",
+   "roles": {
+    "counter_main_main_group": "support"
+   }
+  },
+  {
+   "id": "h30",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 801907131,
+   "split": "target",
+   "prefix": "h30_prefix.npz",
+   "qpos": "h30_state.npz",
+   "card": "h30_card.json",
+   "roles": {
+    "counter_1_left_group": "support"
+   }
+  },
+  {
+   "id": "h31",
+   "task": "PickPlaceDrawerToCounter",
+   "seed": 818200878,
+   "split": "target",
+   "prefix": "h31_prefix.npz",
+   "qpos": "h31_state.npz",
+   "card": "h31_card.json",
+   "roles": {
+    "counter_1_left_left_group": "support"
+   }
+  }
+ ]
+}

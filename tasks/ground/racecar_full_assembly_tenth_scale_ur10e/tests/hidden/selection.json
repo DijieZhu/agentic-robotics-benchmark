@@ -7669,6 +7669,182 @@
     "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
    },
    "reselection": "none: no redraw, no new candidate, the kept episodes and episodes.json unchanged"
+  },
+  {
+   "id": "A6",
+   "date": "2026-11-19",
+   "written_utc": "2026-11-19T01:34:27Z",
+   "authority": "a maintenance fix by the benchmark's maintainers (2026-11-19) of the given render layer's port, which followed the owner's ruling of 2026-11-17 (every image the agent makes through the given library renders like the cell's cameras): the given client's launcher sent a program's native output on file descriptor 1 into the wire, so a program that renders its twin through the given layer could end its own episode with a protocol error; the fix is in the four assembly tasks that share the client, here in the given library and in its grader copy tests/arm/assembly_cell/client.py; the hidden episodes, the kit, the cell physics, the scoring and the reference program unchanged; no reselection",
+   "amends": "rule 1 (Freeze) of rule_text as amended by A1 (2026-11-15), A2 (2026-11-16), A3 (2026-11-17), A4 (2026-11-17) and A5 (2026-11-18)",
+   "rule": "Rule 1 as amended by A1 to A5 stays in force. In addition: a change of the program launcher's wiring in the client modules of tests/arm (the code a program's process runs to talk to the cell, not the cell, its layout, kit loading, scoring or the reference program) re-enters the frozen table under a new amendment instead of a redraw, when (a) every other entry of the table in force is unchanged (its files and values, its trees but tests/arm, the kit's member count); (b) inside tests/arm only the client module changes, by the listed counted edits, and its syntax tree without docstrings is the old one plus the listed statements; (c) no process of the grader calls the changed function (it runs in the program's process only); (d) the hidden set is unchanged: the four episodes' layout digests, recomputed from their seeds with the task's own layout code and kit, equal episodes.json and the candidates' records, and episodes.json has the set's sha256; (e) one ale validate of the tree that carries the amendment reproduces the validate before the change: the same per-episode grader lines of the oracle and the untouched sandbox (wall times aside). The table in force is this amendment's from its writing. A change of anything else in the table still means a new draw (select_set.py draw --supersedes).",
+   "why": "tests/arm is frozen as a tree and holds the grader's copy of the given client (tests/arm/assembly_cell/client.py, the same bytes as the given library's apart from one comment line). Its launcher took the wire as a duplicate of file descriptor 1 but left descriptor 1 itself on the wire; the Filament renderer prints its start-up lines and per-mesh notes there, so a program that rendered its own twin through the given layer sent them into the wire once their buffer was flushed, and the grader ended that episode with a protocol error (measured on the quadruped task of this family, which has the same client). The fix points descriptor 1 at stderr right after the wire's copy is taken. The grader's processes import the module but never call connect_stdio (only a program's launcher does), and the reference program renders no frame of its own, so no episode's layout, physics, outcome or score depends on these bytes",
+   "changes": {
+    "tests/arm": {
+     "file": "tests/arm/assembly_cell/client.py",
+     "sha256": [
+      "d92eb4a78b85eed355a367c7e8e91a757f5f9b53ea4f6962c30e3c5acf45f657",
+      "8d732e92dab13b8206c3e2ee844a74d3ae84d7779030f51ee21a09dc50db1271"
+     ],
+     "edits": 2,
+     "edits_reproduce_the_new_file": true,
+     "syntax_tree_without_docstrings": "the old one plus os.dup2(2, 1) in connect_stdio",
+     "edit_sha256": [
+      [
+       "fc37187bcdc9bca0ed104d81888f4e26cbe6b574683a068d0afe5bbaacd69b07",
+       "c703dd95d578c597d90c3b7c4b1819856bb106920174b486bb0d5bdf8db2dece"
+      ],
+      [
+       "52e075156ce19f61886ae86b10a8ea837f6b5e3c6aff4a03a23bfbe77dbfc2e3",
+       "ad4ee1b5dbe3b93e6f2a39564a35baedcb9c3298d845bef84eb48e5f16f4d3a0"
+      ]
+     ],
+     "ok": true
+    },
+    "connect_stdio_calls": {
+     "calls": [
+      {
+       "file": "tests/arm/assembly_cell/client.py",
+       "line": 109,
+       "in": "main"
+      },
+      {
+       "file": "tests/arm/assembly_info/client.py",
+       "line": 56,
+       "in": "connect_stdio"
+      },
+      {
+       "file": "tests/arm/assembly_info/client.py",
+       "line": 73,
+       "in": "main"
+      }
+     ],
+     "only_launchers": true
+    },
+    "not_changed": "every other file of tests/arm, the other frozen trees, the robot models, the kit archive and its members, grader_config.json's values, verify.py, test.sh, the reference program and the hidden set"
+   },
+   "checked_at_writing": {
+    "before_change": {
+     "table": "amendment A5 (2026-11-18)",
+     "frozen_ok": true,
+     "episodes_is_the_set": true,
+     "recorded_changed": [],
+     "recorded_changes_entered": 14,
+     "snapshot": {
+      "described_as": "the task folder as merged (vendor-mark fix), with its asset roots",
+      "entries_as_A5": true
+     }
+    },
+    "a_other_entries": {
+     "files_unchanged": 11,
+     "trees_unchanged": 5,
+     "changed_trees": {
+      "tests/arm": [
+       "045964d78ec01d700502aec6c1fe4e0e050a07464222a1c67a06c25ff23cdc4b",
+       "d0dafcdd82be861b20578e58a2b237847fe3929da62e3793c18d586b4a5d307f"
+      ]
+     },
+     "kit_members_as_A5": true
+    },
+    "b_client": {
+     "file": "tests/arm/assembly_cell/client.py",
+     "sha256": [
+      "d92eb4a78b85eed355a367c7e8e91a757f5f9b53ea4f6962c30e3c5acf45f657",
+      "8d732e92dab13b8206c3e2ee844a74d3ae84d7779030f51ee21a09dc50db1271"
+     ],
+     "edits": 2,
+     "edits_reproduce_the_new_file": true,
+     "syntax_tree_without_docstrings": "the old one plus os.dup2(2, 1) in connect_stdio",
+     "edit_sha256": [
+      [
+       "fc37187bcdc9bca0ed104d81888f4e26cbe6b574683a068d0afe5bbaacd69b07",
+       "c703dd95d578c597d90c3b7c4b1819856bb106920174b486bb0d5bdf8db2dece"
+      ],
+      [
+       "52e075156ce19f61886ae86b10a8ea837f6b5e3c6aff4a03a23bfbe77dbfc2e3",
+       "ad4ee1b5dbe3b93e6f2a39564a35baedcb9c3298d845bef84eb48e5f16f4d3a0"
+      ]
+     ],
+     "ok": true
+    },
+    "c_calls": {
+     "calls": [
+      {
+       "file": "tests/arm/assembly_cell/client.py",
+       "line": 109,
+       "in": "main"
+      },
+      {
+       "file": "tests/arm/assembly_info/client.py",
+       "line": 56,
+       "in": "connect_stdio"
+      },
+      {
+       "file": "tests/arm/assembly_info/client.py",
+       "line": 73,
+       "in": "main"
+      }
+     ],
+     "only_launchers": true
+    },
+    "d_layout_digests": {
+     "episodes": {
+      "c00": true,
+      "c01": true,
+      "c02": true,
+      "c03": true
+     },
+     "episodes_sha256_is_the_set": true
+    },
+    "e_validate": "checked by the validate of the tree that carries this amendment (after writing)",
+    "selection_json_sha256_before": "b9e9071a13ad1e7e03244f296954cb377a4e563cb9d25e36fa4fa19db9e5b61f"
+   },
+   "frozen": {
+    "tests/verify.py": "9c2263fc8c0d3659cd60b5df393a6bcfeb22daae5d41d4e131fe526c4912a559",
+    "tests/test.sh": "a3ae37dc3edaebb7da88837f221c31ac9878f7a7523ec395d7c074781aec851e",
+    "tests/netguard.py": "80747b83b161c1495a4d0ccfae439188e3c42c94c0e41bc518f2d530170a64d7",
+    "tests/episode_trace.py": "e55c7b8004c9d7819fb3f8e9daf1204338a689e027503943d00055d9a2554632",
+    "tests/hidden/bench_plan.json": "c9cbb3416fee393341baa33ecdf65b5ac53fc9f1b23cb55fd6cb973e989563d1",
+    "tests/hidden/oracle_token.sha256": "c815e5d3326fa8b94f4f004247d919d490ac7abdd0ad9ab830d5822597d76d74",
+    "solution/solve.sh": "c7a4ab9ce55396ecd0180fb72d027a2500a17a4005f7fd12cdceb09005a46681",
+    "solution/reference/assemble.py": "84c9cda5733fdc6100afe18c6ec334d1c0569461206fc7c929cbb6d21f8d2cf2",
+    "solution/reference/oracle_token": "c7c89fd14f9af6e7aa65136e212391e93c4eb3785bc99f390b303094f549dcdf",
+    "tests/grader_config.json#values": "34552e7facc8d4d27550209a4e50193970673a782c96f2631ece745bd71bf615",
+    "tests/assets/gt.tar.xz#members": "b1501fddbda3ddb48d99cc509cb52dbd44193e8a4169561eef302f6069e4a835"
+   },
+   "frozen_counts": {
+    "tests/assets/gt.tar.xz#members": 14620
+   },
+   "frozen_trees": {
+    "tests/arm": "d0dafcdd82be861b20578e58a2b237847fe3929da62e3793c18d586b4a5d307f",
+    "tests/common": "c72b609d5891112e376876f1881a64e8323bb680a8c492ce145663537b94b8ed",
+    "tests/render": "08473c0de3ee3a06a8788493c3b9eff78c25e4151a635cc20f77208031bc7161",
+    "tests/render_filament": "09c41d7777d46d87e462291f48186c6cde3eef26976242c128ec41c95c66a5da",
+    "tests/room": "026fbf2d79c4b5865684642e5da1ccbd3b7af962e59bb6e68f8ee5bb2b53605f",
+    "environment/assets/payload/given/robot": "7229d7c5317852782159032ffd373a7b266749bc106c35ae0cc6c0697f55fde4"
+   },
+   "recorded": {
+    "publication": {
+     "tests/assets/gt.tar.xz": "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916",
+     "tests/grader_config.json#hidden_gt.url": "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b",
+     "tests/grader_config.json#hidden_gt.sha256": "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf",
+     "tests/grader_config.json#hidden_gt.note": "c7af77de6e4efde92e9326e3133c3c7e6379a0b6b3271599335d20d8809790eb"
+    },
+    "documents": {
+     "instruction.md": "8c05d99a87354883b2f0e8ae3b83403361bd18b8b868e8d2140d740c50ea9159",
+     "environment/assets.sha256": "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f",
+     "tests/given_hashes.json": "3dd2a4fbbcc99b571e616fe8c6e526d0af0e1eabf9fdc8fc8432841820e6d781",
+     "environment/setup/payload/": "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55",
+     "environment/assets/payload/given/parts/": "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57",
+     "environment/assets/payload/given/drawings/": "dfece19a682cef21b9613a86c6cde01031573fe117cc4e13a087278a787d193c",
+     "environment/assets/payload/given/manual/": "963d5f2b2af8e26d01d9c1840adfaba50003b26cf83b90ac9212d659a113003e",
+     "environment/assets/payload/render/": "d25e9c225c66d9244a8b7a98bbb5056216e32bf16898b9f110fc8a9a3d6972ff",
+     "tests/setup_payload/": "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55"
+    }
+   },
+   "tool_at_writing": {
+    "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
+   },
+   "reselection": "none: no redraw, no new candidate, the kept episodes and episodes.json unchanged"
   }
  ],
  "recorded_changes": [
@@ -8373,6 +8549,88 @@
     "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
    },
    "frozen_checked": "amendment A5 (2026-11-18): unchanged"
+  },
+  {
+   "utc": "2026-11-19T01:34:32Z",
+   "why": "the given client's wire fix of 2026-11-19 (amendment A6): the given library's arm/assembly_cell/client.py (and its byte mirror in tests/setup_payload) keeps a copy of file descriptor 1 for the wire and points descriptor 1 at stderr, so a program's native output (Filament's start-up lines) cannot corrupt the wire; cell_api.md says so, gives open_view the scenery next to $ARB_GIVEN_DIR (in the graded run ~ is an empty folder) and says how much memory each open / close cycle of the given render layer keeps; the givens rebuilt by their generator (setup payload, tests/setup_payload, given_hashes.json). No grader value, hidden set, scoring or kit changed; the frozen table is A6's and holds (checked before this entry)",
+   "changed": {
+    "documents/environment/setup/payload/": [
+     "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483",
+     "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55"
+    ],
+    "documents/tests/given_hashes.json": [
+     "8ba24152dd3f3a837510d34c46d8a202accd49b90fe9a9b385cb8823a6a325d0",
+     "3dd2a4fbbcc99b571e616fe8c6e526d0af0e1eabf9fdc8fc8432841820e6d781"
+    ],
+    "documents/tests/setup_payload/": [
+     "459687e52d53e4aabfbdad9c76aba678ab58a94667d9dd97d389d2fdc3569483",
+     "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55"
+    ]
+   },
+   "recorded": {
+    "publication": {
+     "tests/assets/gt.tar.xz": "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916",
+     "tests/grader_config.json#hidden_gt.url": "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b",
+     "tests/grader_config.json#hidden_gt.sha256": "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf",
+     "tests/grader_config.json#hidden_gt.note": "c7af77de6e4efde92e9326e3133c3c7e6379a0b6b3271599335d20d8809790eb"
+    },
+    "documents": {
+     "instruction.md": "8c05d99a87354883b2f0e8ae3b83403361bd18b8b868e8d2140d740c50ea9159",
+     "environment/assets.sha256": "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f",
+     "tests/given_hashes.json": "3dd2a4fbbcc99b571e616fe8c6e526d0af0e1eabf9fdc8fc8432841820e6d781",
+     "environment/setup/payload/": "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55",
+     "environment/assets/payload/given/parts/": "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57",
+     "environment/assets/payload/given/drawings/": "dfece19a682cef21b9613a86c6cde01031573fe117cc4e13a087278a787d193c",
+     "environment/assets/payload/given/manual/": "963d5f2b2af8e26d01d9c1840adfaba50003b26cf83b90ac9212d659a113003e",
+     "environment/assets/payload/render/": "d25e9c225c66d9244a8b7a98bbb5056216e32bf16898b9f110fc8a9a3d6972ff",
+     "tests/setup_payload/": "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55"
+    }
+   },
+   "tools": {
+    "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
+   },
+   "frozen_checked": "amendment A6 (2026-11-19): unchanged"
+  },
+  {
+   "utc": "2026-11-19T05:12:34Z",
+   "why": "the graded-run memory note of 2026-11-19: cell_api.md says that each open/close cycle of the given render layer keeps about 0.2-0.7 GB more (the range the four 03 assembly cells share) and that in the graded run the program shares the verifier's memory (24 GB) with the cell's own camera session, with the sizes measured in this cell's graded run; the givens rebuilt by their generator (setup payload, tests/setup_payload, given_hashes.json). No grader file, grader value, hidden set, scoring or kit changed, and task.toml is unchanged (the verifier already had 24 GB); the frozen table is A6's and holds (checked before this entry)",
+   "changed": {
+    "documents/environment/setup/payload/": [
+     "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55",
+     "8c1e82bfb52308627aa5577fccb6a8b2c2090fe8b86baa066fa69a5e514c6a38"
+    ],
+    "documents/tests/given_hashes.json": [
+     "3dd2a4fbbcc99b571e616fe8c6e526d0af0e1eabf9fdc8fc8432841820e6d781",
+     "9947c55dc7edca24c70747b18f82b95fb9d100730c442c8668e69a7c59c51f75"
+    ],
+    "documents/tests/setup_payload/": [
+     "da472f94b7883bb235800bd7556888333b6f5b1df7e809ca65854fdb6b1b4d55",
+     "8c1e82bfb52308627aa5577fccb6a8b2c2090fe8b86baa066fa69a5e514c6a38"
+    ]
+   },
+   "recorded": {
+    "publication": {
+     "tests/assets/gt.tar.xz": "39eb8e353ff6edfacd483ffbfba9ab53ae84925d59b55a7fb429a6f806a40916",
+     "tests/grader_config.json#hidden_gt.url": "2c142041962812202bfeae4e0af1f4ff8cdffc556999339a710a41bbf779ce5b",
+     "tests/grader_config.json#hidden_gt.sha256": "46d87d0d67ab4978091ce941f5c09e93fc64cd9cca5de396d573f321332fedbf",
+     "tests/grader_config.json#hidden_gt.note": "c7af77de6e4efde92e9326e3133c3c7e6379a0b6b3271599335d20d8809790eb"
+    },
+    "documents": {
+     "instruction.md": "8c05d99a87354883b2f0e8ae3b83403361bd18b8b868e8d2140d740c50ea9159",
+     "environment/assets.sha256": "2e774c1e82baa6b2bb3d42ff8128699e4a0eb59a4715200a4b67f40d46edd57f",
+     "tests/given_hashes.json": "9947c55dc7edca24c70747b18f82b95fb9d100730c442c8668e69a7c59c51f75",
+     "environment/setup/payload/": "8c1e82bfb52308627aa5577fccb6a8b2c2090fe8b86baa066fa69a5e514c6a38",
+     "environment/assets/payload/given/parts/": "80fd6f776b5d4038ac7db321b625abdeabaa99eb04c679a9faebf56878621d57",
+     "environment/assets/payload/given/drawings/": "dfece19a682cef21b9613a86c6cde01031573fe117cc4e13a087278a787d193c",
+     "environment/assets/payload/given/manual/": "963d5f2b2af8e26d01d9c1840adfaba50003b26cf83b90ac9212d659a113003e",
+     "environment/assets/payload/render/": "d25e9c225c66d9244a8b7a98bbb5056216e32bf16898b9f110fc8a9a3d6972ff",
+     "tests/setup_payload/": "8c1e82bfb52308627aa5577fccb6a8b2c2090fe8b86baa066fa69a5e514c6a38"
+    }
+   },
+   "tools": {
+    "tests/review/select_set.py": "e40c86e557cf76556ca8641ebb817d00b42e7e35d07a66e4e25ff49654f2cea7"
+   },
+   "frozen_checked": "amendment A6 (2026-11-19): unchanged"
   }
  ]
 }

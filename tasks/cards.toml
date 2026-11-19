@@ -47,6 +47,12 @@ summary = "A fixed Franka Panda weighs opaque sample tubes, pairs them by mass a
 platforms = ["arm"]
 stages = ["behavior"]
 
+[longtail_manipulation_recovery]
+title = "Rescue failed kitchen jobs with a mobile Panda"
+summary = "Write the fallback controller of a mobile Panda: from the exact states where a learned policy failed its kitchen jobs, finish them from the robot's cameras, joint readings and wrist force."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [novel_object_6dof_grasp_detection]
 title = "Detect grasps on objects never seen before"
 summary = "Improve a 6-DoF parallel-jaw grasp detector that works from one RGB-D frame of a cluttered table, scored on objects it has never seen."
@@ -125,11 +131,23 @@ summary = "Watch an automated car's camera and planner, let the planner drive wh
 platforms = ["ground"]
 stages = ["behavior"]
 
+[racecar_cad_design_from_photos]
+title = "Model a tenth-scale race car in CAD"
+summary = "Rebuild the lost CAD of a tenth-scale autonomous race car's 23 made parts in FreeCAD from photos of its staged teardown, and assemble them with its given parts."
+platforms = ["ground"]
+stages = ["hardware-design"]
+
 [racecar_full_assembly_tenth_scale_ur10e]
 title = "Assemble a tenth-scale race car with a 6-DoF arm"
 summary = "Program a 6-DoF arm to build a tenth-scale autonomous race car from its rolling chassis and eight loose units, guided by its picture manual and the cell's cameras."
 platforms = ["ground"]
 stages = ["assembly"]
+
+[racecar_requirements_replica_from_photos]
+title = "Specify upgraded replicas of a tenth-scale car"
+summary = "Specify six upgraded replicas of a tenth-scale autonomous race car that is out on long-term loan, from its archived photos and build log, down to a bill of materials."
+platforms = ["ground"]
+stages = ["requirements"]
 
 [racecar_time_trial_on_unseen_track]
 title = "Time-trial a tenth-scale car on unseen tracks"
