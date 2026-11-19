@@ -4,7 +4,8 @@ You are a lab-automation engineer. A Franka Panda at a lab bench has to work thr
 sample tubes. It sees through cameras, feels with a wrist force sensor and can weigh on a bench scale. Write the
 controller that does the job. It runs closed loop on the bench and is graded on centrifuge units and benches you
 have not seen. The bench is simulated, and the simulator is not in your sandbox: you have the equipment's sheets
-and a commissioning window on three other centrifuges of the same series. You have 2 hours of wall time.
+and a commissioning window on three other centrifuges of the same series. You have 2 hours of wall-clock time (see
+"Session time" below).
 
 **The bench.** Nothing stands in exactly the same place twice:
 - the incoming rack (one row, positions A1-A10);
@@ -98,6 +99,7 @@ how the worklist went. `--images DIR` saves what the cameras show at the start a
 | `commission/client.py` | Client of the commissioning service (`Bench`: `status`, `reset`, `step`, `look`, `probe`, `close`). |
 | `commission/run_bench.py` | Runs your submission on a development bench over the grading wire. |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic). |
+| `session_time.sh` | Prints the minutes of your session used and left (see "Session time"). |
 
 Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's model files, the
 Panda's among them). There is no network. The sandbox has 4 CPUs and 12 GB of memory, while grading too. Every
@@ -172,6 +174,21 @@ The action is a JSON list in one of three shapes:
 
 `cams` is a bitmask of the images the next observation carries: 1 left, 2 right, 4 wrist, 8 rack. Images are
 large (the rack image alone is about 1.2 MB on the wire), so ask for one only when you need it.
+
+## Session time
+
+- This session is stopped 2 hours of wall-clock time after it started. What is in `/home/user/submission/` at
+  that moment is graded as it is: keep a complete, runnable submission there from early on and replace it as you
+  improve it.
+- The only clock for this limit is the wall clock. `bash /home/user/session_time.sh` prints the minutes used and
+  the minutes left, from a time stamp written when your sandbox was set up (moments before your session started,
+  so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
+  again before every decision that depends on the time left, and whenever you pick the work up from notes or from
+  a summary of what was done. Do not estimate the time used from how much you have done.
+- Three other counts in this task are not your session's time: the commissioning window (144,000 control steps;
+  its "4 hours of bench time" pass several times faster than real time, at about 30 ms a step), an episode's
+  length (20000 steps are 33 simulated minutes and about 10 minutes of wall time on a development bench) and
+  the controller's 9000 s budget at grading. None of them says how much of the 2 hours is left.
 
 ## Deliverable and grading
 

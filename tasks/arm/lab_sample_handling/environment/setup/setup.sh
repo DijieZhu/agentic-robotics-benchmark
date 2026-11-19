@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Setup — runs as trusted root, cwd = this staged folder (/opt/ale/setup, root-only), before the agent phase:
 # stage the agent-visible payload (the equipment's documents, the commissioning client and runner, the wire
-# skeleton) into the agent home, and start the commissioning service. Nothing hidden is in this folder.
+# skeleton, the session-time script) into the agent home, write the session's time stamp, and start the
+# commissioning service. Nothing hidden is in this folder.
 set -euo pipefail
 umask 022
 export HOME=/root PYTHONNOUSERSITE=1
@@ -18,6 +19,12 @@ for entry in payload/* payload/.[!.]*; do
   chown -R "$AGENT_USER:$AGENT_USER" "$HOME_DIR/$(basename "$entry")"
 done
 mkdir -p "$HOME_DIR/submission" && chown "$AGENT_USER:$AGENT_USER" "$HOME_DIR/submission"
+
+# The session's time stamp (session_time.sh in the agent's home reads it): written now, moments before the agent's
+# session starts, in a folder that is root's, so that the agent's account can read it and cannot change or replace it.
+install -d -o root -g root -m 755 /run/session
+date -u +%s > /run/session/start
+chown root:root /run/session/start && chmod 0444 /run/session/start
 
 
 # The commissioning service (environment/commission_service, installed by the image at /opt/labbench-commission,

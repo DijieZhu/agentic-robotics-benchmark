@@ -196,7 +196,8 @@ class AgentSide(unittest.TestCase):
         files = sorted(p.relative_to(PAYLOAD).as_posix() for p in PAYLOAD.rglob("*")
                        if p.is_file() and "__pycache__" not in p.parts)
         self.assertEqual(files, ["NOTICE.md", "commission/__init__.py", "commission/client.py",
-                                 "commission/run_bench.py", "helpers/wire_skeleton.py", "task_card.md"])
+                                 "commission/run_bench.py", "helpers/wire_skeleton.py", "session_time.sh",
+                                 "task_card.md"])
         for rel in files:
             text = (PAYLOAD / rel).read_text()
             for word in ("import mujoco", "MjSpec", "MjModel", "mj_step", "LabEnv", "lab_sim", "lab_env", "episode.py",
@@ -204,11 +205,35 @@ class AgentSide(unittest.TestCase):
                 self.assertNotIn(word, text, "%s holds %s" % (rel, word))
 
     def test_instruction_names_only_what_the_agent_has(self):
-        for name in ("task_card.md", "commission/client.py", "commission/run_bench.py", "helpers/wire_skeleton.py"):
+        for name in ("task_card.md", "commission/client.py", "commission/run_bench.py", "helpers/wire_skeleton.py",
+                     "session_time.sh"):
             self.assertIn(name, INSTRUCTION)
             self.assertTrue((PAYLOAD / name).is_file(), name)
         for gone in ("lab_sim.py", "lab_env.py", "episode.py", "units.json", "practice", "box_transport_env.py"):
             self.assertNotIn(gone, INSTRUCTION)
+
+    def test_session_time_is_the_engines_limit(self):
+        """The instruction's session limit, the script's and the engine's agent timeout are one number; the stamp the
+        script reads is written by setup.sh into a folder that is root's (the agent's account reads it and can
+        neither change nor replace it)."""
+        toml = (TASK / "task.toml").read_text()
+        agent = toml[toml.index("[agent]"):]
+        timeout = int(re.search(r"^timeout_sec\s*=\s*(\d+)", agent, re.M).group(1))
+        script = (PAYLOAD / "session_time.sh").read_text()
+        limit = int(re.search(r"^LIMIT_MIN=(\d+)$", script, re.M).group(1))
+        self.assertEqual(limit * 60, timeout)
+        self.assertEqual(timeout, 2 * 3600)
+        text = flat(INSTRUCTION)
+        for words in ("You have 2 hours of wall-clock time", "This session is stopped 2 hours of wall-clock time after it started",
+                      "bash /home/user/session_time.sh", "How much of the 2 hours is left".lower()):
+            self.assertIn(words.lower(), text.lower())
+        stamp = re.search(r"^STAMP=(\S+)$", script, re.M).group(1)
+        self.assertEqual(stamp, "/run/session/start")
+        setup = (TASK / "environment/setup/setup.sh").read_text()
+        for line in ("install -d -o root -g root -m 755 /run/session", "date -u +%s > /run/session/start",
+                     "chown root:root /run/session/start && chmod 0444 /run/session/start"):
+            self.assertIn(line, setup)
+        self.assertNotIn("HOME_DIR/.session", setup, "a stamp in the agent's home could be replaced by the agent")
 
     def test_sheets_state_the_series_ranges(self):
         ranges = constants(TASK / "tests/lab_sim.py", ("UNIT_RANGES",))["UNIT_RANGES"]

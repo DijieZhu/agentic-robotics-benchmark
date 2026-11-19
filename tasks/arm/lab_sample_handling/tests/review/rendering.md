@@ -171,8 +171,12 @@ which the new renderer took 0.149 / 0.142 / 0.103 / 0.132 s):
 Through the commissioning service's socket, as the agent's account (a step with one camera against a step with
 none), on the same loaded host: 0.182 / 0.171 / 0.116 / 0.172 s; a connection's first reset 6 to 8 s, a later one 2 s.
 
-The price of an image stays 0.2 s: every camera draws in less, so the verifier's timeout arithmetic in `task.toml`
-(45000 images within the 9000 s budget) holds. That is what decided against shadow maps: with one for each lamp an
+The price of an image stays 0.2 s: every camera's median is under it in every measurement, so the verifier's timeout
+arithmetic in `task.toml` (45000 images within the 9000 s budget) holds. How far under depends on what else the
+host runs (lavapipe is bound by memory bandwidth): a third measurement that evening, with other users' jobs on the
+host, gave medians of 0.195 / 0.191 / 0.143 / 0.167 s and a 90th percentile of 0.22 s (the old renderer 0.064 /
+0.072 / 0.044 / 0.051 s). The price is a fixed one whatever the machine takes; at 0.25 s an image the worst case
+of `task.toml`'s arithmetic grows by 2250 s and stays inside the timeout's margin. That is what decided against shadow maps: with one for each lamp an
 image took 0.42 / 0.36 / 0.29 / 0.85 s, and the price would have had to rise to 0.45 s or more, which changes what a
 controller can afford to look at. For the same reason the `rack` camera (four times the pixels) is drawn at its own
 size, the three small cameras at twice theirs.

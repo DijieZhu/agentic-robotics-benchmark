@@ -102,7 +102,8 @@ softly where they meet, and nothing casts a sharp shadow.
   direction (between two holes' planes). Its top is 8 mm above the rotor's top.
 - **Lid:** a plate 0.36 m x 0.36 m, 12 mm thick, 0.4 kg, hinged along the chamber's -y edge at the height of the
   walls' tops (it turns with the cabinet). A handle bar 15 mm across and 100 mm long runs parallel to the hinge,
-  45 mm beyond the plate's free edge, held by two flat arms 112 mm apart. The lid starts either open (1.75 rad, at its stop past vertical) or shut
+  45 mm beyond the plate's free edge, its axis in the plate's mid-plane (6 mm above the hinge's plane when the
+  lid is shut), held by two flat arms 112 mm apart. The lid starts either open (1.75 rad, at its stop past vertical) or shut
   (0 rad); the hinge's friction holds it where it is left. It counts as shut at an angle under 0.02 rad.
 - **What differs from unit to unit** (one centrifuge is one unit; a unit's values are its own and are not told):
 
