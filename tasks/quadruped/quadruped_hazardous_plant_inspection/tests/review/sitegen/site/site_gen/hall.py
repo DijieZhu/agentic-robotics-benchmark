@@ -764,7 +764,8 @@ def build_hall(out_dir, cfg=None, seed=0, maps=False):
     # the face centre of every wall instrument as the grader's evidence rules take it (mission/evidence.py face_frame
     # on the compiled hall): the sheet's face position (a rising-stem valve's is its indicator plate)
     face_c = {tag: [round(float(v), 3) for v in eg.c] for tag, eg in ctx.evgeoms().items()}
-    # no build time in site.json: two builds of the hall give the same files (two earlier builds differed by 'timing_s' only)
+    # no build time in site.json: two builds of the hall give the same files (two earlier builds differed by
+    # 'timing_s' only)
     dump_json(site, os.path.join(out_dir, "site.json"))
     dump_json(prior, os.path.join(out_dir, "prior.json"))
     docs = hall_documents(site, prior, cfg, os.path.join(out_dir, "hall_docs"), face_centres=face_c)

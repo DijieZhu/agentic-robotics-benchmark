@@ -18,12 +18,12 @@ layout digests, the bench plan, the oracle token) appears outside `hidden/`.
 | `anchor.json` | metric `assembly_score`, value 1.0, `full_at` 1.0 (the oracle's own score by construction) |
 | `arm/assembly_car/` | this task's cell: `coupling.py` (per-slot capture, pull home, lock, scrap, carrier voiding, the wheel stops), `cell.py`, `layout.py`, `bench_plan.py`, `fixtures.py`, `server.py` (public RPC, the token-only `reference_assemble`), `reference.py` + `reference_shop.py` + `car_grasps.py` (the privileged reference program), `render_twin.py`, `agent_render.py`, `agent_look.json` |
 | `arm/{assembly_cell, assembly_info, assembly_six, assembly_quad}/`, `robotics_grader/`, `common/`, `render/`, `render_filament/`, `room/`, `episode_trace.py`, `netguard.py` | vendored byte for byte from the benchmark's published assembly cells and kit (`netguard.py`: seccomp, no IP sockets for the agent's program) |
-| `hidden/` | `episodes.json` (the four graded episodes), `selection.json` (every candidate, run and decision of the selection, the dated amendments A1 to A4 of its freeze rule and the recorded changes), `bench_plan.json`, `oracle_token.sha256` |
+| `hidden/` | `episodes.json` (the four graded episodes), `selection.json` (every candidate, run and decision of the selection, the dated amendments A1 to A5 of its freeze rule and the recorded changes), `bench_plan.json`, `oracle_token.sha256` |
 | `review/select_set.py` | the pre-registered selection of the hidden set and its freeze check (a maintainer's tool; the grader never runs it) |
 | `review/observability.md` | the camera-only probe's summary, both rounds side by side (statistics only) |
 | `setup_payload/` | byte copy of `environment/setup/payload/` (the small givens: `kit.json`, the cell documents, the client library) |
 | `given_hashes.json` | sha256 of every file the grader's `/opt/arb` must hold |
-| `hidden_gt.url` of `grader_config.json` | where the hidden kit is: `verifier/gt.tar.xz` of the task's folder on the benchmark's asset dataset at commit `6cfa80d098df6a6def71f8304edbcd4245fa829f` (the commit `environment/assets.sha256` pins for the givens); `verify.py` downloads it at verify start and checks the pinned sha256 and file count; it is never in the repository or an image. A maintainer's local copy (`ARB_HIDDEN_GT_TARBALL`, or `assets/gt.tar.xz` here, an engine asset root that no checkout has) is used instead under the same checks |
+| `hidden_gt.url` of `grader_config.json` | where the hidden kit is: `verifier/gt.tar.xz` of the task's folder on the benchmark's asset dataset at commit `b58e095e47a2f7e7feaf666ee28f7b0c3bb9e931` (the commit `environment/assets.sha256` pins for the givens); `verify.py` downloads it at verify start and checks the pinned sha256 and file count; it is never in the repository or an image. A maintainer's local copy (`ARB_HIDDEN_GT_TARBALL`, or `assets/gt.tar.xz` here, an engine asset root that no checkout has) is used instead under the same checks |
 
 ## The score
 
@@ -89,7 +89,7 @@ and wall time, forces, illegal calls) goes to `metrics` only, all finite numbers
   12 / 12 candidates. Another CPU: not bit-identical (the first difference 9-16 s into an episode), outcomes identical
   for 11 / 12. Acceptance verifies of the set in the image: 1.0 / 1.0, the same fingerprints and traces. The layout
   digest of every episode is recomputed at every reset and compared with `episodes.json`; a mismatch is a task error.
-- **What invalidates the set: the frozen table as amended (A1, 2026-11-15; A2, 2026-11-16; A3, 2026-11-17; A4, 2026-11-17).** The rule
+- **What invalidates the set: the frozen table as amended (A1, 2026-11-15; A2, 2026-11-16; A3, 2026-11-17; A4, 2026-11-17; A5, 2026-11-18).** The rule
   as drawn froze two files whose bytes carry more than an episode's outcome (`grader_config.json` also holds the
   hidden kit's download location, then still to be filled in at publication; the kit was frozen by its archive's
   bytes). Amendment A1, written into `selection.json` (`amendments`) at 2026-11-15T14:50:36Z, before any file changed
@@ -142,8 +142,25 @@ and wall time, forces, illegal calls) goes to `metrics` only, all finite numbers
   provenance label `FROZEN_SOURCE["file"]` of `arm/assembly_car/car_grasps.py`, which no code reads (its uses are
   listed in the amendment); the grasp labels by which the reference program tells its grasp tiers apart are unchanged.
   A4 re-anchors the table on the new bytes of those three entries (12 files); every other entry is as A3 recorded it,
-  and nothing the agent sees changed. Any other change of a frozen entry still means `select_set.py draw
-  --supersedes`, then the full QC cases, the camera probe and the noise ladder again. Filling in the real revision of
+  and nothing the agent sees changed. Amendment A5 (the owner's approval of 2026-11-18 of a fix of the merged task,
+  written at 2026-11-18T22:01:58Z after checking the A4 table on the task as merged) lets a change of the hidden kit
+  that removes marks from what the cameras draw re-enter the frozen table without a redraw, under conditions checked
+  before the change was accepted: (a) every other entry is unchanged; (b) the archive has the same member names, the
+  changed members are visual meshes and textures (no collision file) and `kit.json` is equal once their sha256 are
+  taken out of its files table (no body, collision shape, mass, inertia, frame or material changed); (c) the meshes'
+  faces only lose a mark's faces, are raised flush onto their surface, take that surface's material or gain flush
+  covers over the opening a removal leaves; (d) a changed picture keeps its size, mode and every pixel outside the
+  painted boxes; (e) the four layout digests recomputed from their seeds on the old and on the new kit equal
+  `episodes.json`; (f) the validate of the tree that carries A5 reproduces the per-episode grader lines and the
+  reference program's per-mate lines of the validate before it. The change: a vendor mark modelled as eight thin
+  raised shells of the silkscreen material under the compute unit's carrier board (70 faces), the unit's date-code
+  label under the board (56 faces) and the open remains of an engraved mark on its fan cover's top plate (the cut
+  raised flush, its 13 inlay faces in the cover's material, two flush covers of two triangles each) are gone from the
+  compute unit's visual meshes, and two small inscriptions of the controller board picture are painted over: seven of
+  the 14 620 members changed (`kit.json`'s sha256 of six files, five meshes of the compute unit, the picture). The
+  agent's givens follow (recorded change of 2026-11-18T22:02:21Z): the part file without the same shells and with the
+  same flush covers, its `part_materials`, the picture `given/appearance/m22.png`. Any other change of a frozen entry
+  still means `select_set.py draw --supersedes`, then the full QC cases, the camera probe and the noise ladder again. Filling in the real revision of
   `hidden_gt.url` at publication did not.
 
 ## The cell manual's collision model
@@ -173,7 +190,7 @@ run from the repository ("How to redo").
 
 | check | result |
 |---|---|
-| hidden set's frozen table (amendment A4 since 2026-11-18; A3 since v1.8; A2 since v1.7; A1 before) | unchanged; `episodes.json` is the selection's set |
+| hidden set's frozen table (amendment A5 since 2026-11-18, after A4 the same day; A3 since v1.8; A2 since v1.7; A1 before) | unchanged; `episodes.json` is the selection's set |
 | `review/select_set.py selftest` | 10 / 10 (among them: the publication metadata and the documents may change, a grader value or a kit member may not, a table written by the rule as drawn is checked by that rule) |
 | givens rebuilt by their generator (build tooling) | 127 files and 3 evidence files, 0 differences; manual audit 499 numbers, all with an independent reading, 0 mismatches; generator selftest 32 / 32 |
 | the givens' text sources' own checks (build tooling, 38 tests) | ok |
@@ -300,7 +317,13 @@ episode; the oracle's verify takes about 1 250 s. The camera-only probe used 26-
   `ce8a3d2dd5b49cfe66c4b2ba17b660765a9a5899`). 169 of the 195 payload files (`given/robot/`, `render/`) are byte copies
   of `quadruped_full_assembly_12dof_ur10e`'s, uploaded again under this task's prefix, because each task's asset list
   names one prefix.
-- `environment/assets.sha256` pins `6cfa80d0…` and every file (the image build downloads and checks them with
+- On 2026-11-18 two of these files were replaced at their paths, in one dataset commit,
+  `b58e095e47a2f7e7feaf666ee28f7b0c3bb9e931` (nothing added, moved or removed; 6 573 files before and after):
+  `payload/given/parts/compute_module.stl` (a vendor mark modelled as thin shells under the carrier board removed)
+  and `verifier/gt.tar.xz` (36 588 936 bytes, sha256 `39eb8e35…`, the same 14 620 file members, seven of them changed:
+  amendment A5). The other 194 payload files are unchanged; both files downloaded at that commit equal the uploaded
+  bytes.
+- `environment/assets.sha256` pins `b58e095e…` and every file (the image build downloads and checks them with
   `fetch_assets.py`); `grader_config.json → hidden_gt.url` pins the kit at the same commit (`verify.py` downloads it at
   verify start and checks its sha256 and file count). Both downloads were run against the dataset after the upload
   and again after the move, anonymously, as the image build and the grader do: 195 / 195 files and 14 620 / 14 620
@@ -309,7 +332,9 @@ episode; the oracle's verify takes about 1 250 s. The camera-only probe used 26-
   (`recorded_changes`, 2026-11-15T22:33:35Z); the move changed the same two entries (the asset list's `# revision:` and
   `# prefix:` lines, `hidden_gt.url`), recorded under amendment A3 (`recorded_changes`, 2026-11-17T22:19:43Z). The
   frozen table is unchanged, and the four set episodes' layout digests, recomputed from their seeds, equal
-  `hidden/episodes.json`.
+  `hidden/episodes.json`. The replacement of 2026-11-18 is amendment A5 (the kit's members) and a recorded change
+  (the asset list's revision, `hidden_gt.url` and `hidden_gt.sha256`, the part file, the setup payload and
+  `given_hashes.json`).
 
 ## The calibration episode and open points (as of 2026-11-16)
 
@@ -332,7 +357,7 @@ probes) is not part of the repository. From the repository root, with the engine
 python3 $T/environment/fetch_assets.py $T/environment/assets.sha256 $T/environment/assets/payload
 python3 -c 'import json, sys; print(json.load(open(sys.argv[1]))["hidden_gt"]["url"])' $T/tests/grader_config.json \
     | xargs curl -fsSL --create-dirs -o $T/tests/assets/gt.tar.xz     # its sha256 must be grader_config.json hidden_gt.sha256
-python3 -I -B $T/tests/review/select_set.py check --selection $T/tests/hidden/selection.json   # the freeze in force (amendment A4)
+python3 -I -B $T/tests/review/select_set.py check --selection $T/tests/hidden/selection.json   # the freeze in force (amendment A5)
 python3 -I -B $T/tests/review/select_set.py selftest                     # the selection tool's own tests (10)
 python3 -I -B $T/tests/review/select_set.py accept --selection <copy of hidden/selection.json> --image <task image> \
     --episodes $T/tests/hidden/episodes.json --root <dir> --out <dir>/accept   # two verify runs of the set in the task image

@@ -336,7 +336,8 @@ BASE_STATION_S = 0.35            # the base station on the airlock's left wall a
 BASE_STATION_DEPTH = 0.22        # its wall box
 AERIAL_OUT = 0.08                # the aerial stands on an arm this far in front of the box's face (2026-11-14: behind the
                                  # face, 0.12 m inside it, the box itself cut the cell's link ray from the pad circle's
-                                 # edge below it: 31 of 1128 reachable cells within 1 m of the pad on every site of an earlier generator version)
+                                 # edge below it: 31 of 1128 reachable cells within 1 m of the pad on every site of an
+                                 # earlier generator version)
 
 
 def base_station_plan(room):

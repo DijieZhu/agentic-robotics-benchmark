@@ -15,8 +15,9 @@
 # to 0 at 2.5 x; a value-free report with a qualifying frame earns 0.25), the mark 0.06, the source 0.14; R = 1.0
 # upright on the pad at the end, else 0.85; no negative marks. inspection_score = the contract gate x the mean of S
 # over twelve hidden sites, stored as site packages in tests/hidden/sites/ and selected by the pre-registered rule of
-# tests/hidden/selection.json among sites the privileged reference completes. The oracle submits a two-line program
-# with a 256-bit token: the reference program inside the cell gets the true pose and the true layout, never a value.
+# tests/hidden/selection.json among sites the privileged reference completes. The oracle submits a short program (one
+# frame of every sensor, then one privileged call) with a 256-bit token: the reference program inside the cell gets
+# the true pose and the true layout, never a value.
 # Realism rule: the agent gets what the robotics engineer of an inspection team would have: the robot's manual and
 # API (datasheet level), the facility notes, the round procedure and site rules, the instrument catalogue, the client
 # library, and a practice ground (a black-box service under its own account: a training hall and three training

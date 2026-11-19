@@ -7966,7 +7966,7 @@
    "at": "2026-11-18T03:53:51-0500",
    "by": "the maintainers (the task's text for publication)",
    "kind": "text-only",
-   "what": "in four passes (each after the first following an independent check of the one before), comments, docstrings, JSON note strings, the comments of YAML files, shell scripts, the Dockerfile and task.toml, and the prose of the acceptance file's plate_readable.measured block lost their references to material outside this repository (paths into the maintainers' source tree and scratch folders, machine and host names, the names of the build's lanes and waves, tool, test and record names not in this folder, commits of the maintainers' own repository) and the ids of design decisions, draft rules, work items and review findings, which cite documents outside this repository; where an id stood for a reason, the reason stays in plain words. No code, no data value that code reads and no configuration value changed, and no byte the agent can read (instruction.md, environment/setup/payload/, tests/setup_payload/, tests/given_hashes.json, the client library). What stays is listed in tests/README.md section 12. Of this record's frozen files, the 62 below changed; the table `frozen` stays the one admission A4 froze (a reader checks a listed file against now_sha256)",
+   "what": "in four passes (each after the first following an independent check of the one before), comments, docstrings, JSON note strings, the comments of YAML files, shell scripts, the Dockerfile and task.toml, and the prose of the acceptance file's plate_readable.measured block lost their references to material outside this repository (paths into the maintainers' source tree and scratch folders, machine and host names, the names of the build's lanes and waves, tool, test and record names not in this folder, commits of the maintainers' own repository) and the ids of design decisions, draft rules, work items and review findings, which cite documents outside this repository; where an id stood for a reason, the reason stays in plain words; comments and notes that were no longer true were corrected in the same passes (pending notes whose condition had been met, a key the packages do not hold, the shared kit's copies in other tasks, a replay tool said to be in the folder, the practice label of version 2). No code, no data value that code reads and no configuration value changed, and no byte the agent can read (instruction.md, environment/setup/payload/, tests/setup_payload/, tests/given_hashes.json, the client library). What stays is listed in tests/README.md section 12. Of this record's frozen files, the 62 below changed; the table `frozen` stays the one admission A4 froze (a reader checks a listed file against now_sha256)",
    "why": "the task folder is published in a public repository, whose text refers to nothing outside it and carries no machine paths",
    "admission": "none: a text-only amendment changes no behaviour of a frozen file (proofs a and b), and the stored packages are what the generator makes from their seeds apart from the provenance labels and the recorded mission limit (proof c); the admission's runs and the selection stand",
    "freeze_amendment": {
@@ -8491,6 +8491,175 @@
     ]
    },
    "source_labels": "every stored site package names in its site.json three source files by sha256 prefix (capability_source, observability_source, evidence_source: tests/review/sitegen/capability.json, the acceptance file acceptance_v1.yaml, mission/evidence.py); this amendment changed notes, comments, docstrings or prose of the three, so the labels name their bytes before it; the packages are not changed; two members of every package but the training hall's also carry the mission limit of their generation date (budgets.time_limit_s 2400 s), which the cell does not read"
+  },
+  {
+   "id": "A6",
+   "at": "2026-11-18T19:05:18-0500",
+   "by": "the maintainers (amendment 3: a guard beside the BLAS kernel pin; text corrections)",
+   "kind": "environment-variable",
+   "what": "OPENBLAS_L2_SIZE=256 was added on the line of tests/test.sh that exports the BLAS kernel pin (OPENBLAS_CORETYPE=Haswell), with comment lines that say why; environment/setup/setup.sh, not frozen, starts the practice service with the same variable. Of this record's frozen files three changed (below): tests/test.sh in that one variable and its comments, tests/verify.py and tests/plantcell/wire_guard.py in a re-wrapped docstring. The recorded grader environment (the image's ENV and test.sh's exports) gains exactly that variable (environment_changed; the top-level `environment` stays the one admission A4 recorded). The table `frozen` stays the one admission A4 froze; a reader checks a listed file against now_sha256, following A5-text's list and this one in order. The admission was run again on these bytes (a6_admission) and ends as A4 on every run (comparison_with_a4); the selected twelve, the practice buildings and the reference value stay. A5-text's `what` gained one clause (notes_cleaned)",
+   "why": "the OpenBLAS that numpy 2.5.2 to 2.5.5 bundle (this image has numpy 2.5.4) raises the inner-dimension block of its float64 matrix products from 256 to 512 on AMD hosts with AVX-512, 1 MB of L2 cache per core and an L3 cache of a multiple of 32 MB (most Zen 4 and Zen 5 desktop, workstation and server parts), for every kernel table, the forced Haswell one included; the Haswell kernel's stack buffer can then overflow for float64 products whose result has 24 or more rows and 2 or more columns (in numpy's row-major terms) and whose inner dimension is above about 300 (a crash or, in a narrow band, wrong numbers). OPENBLAS_L2_SIZE=256 switches that raise off: the block stays 256 on every host, as on AMD hosts up to Zen 3. A change to a frozen file that is not text-only needs the admission run again",
+   "freeze_amendment": {
+    "file": "the maintainers' fifth freeze amendment of the sources",
+    "sha256": "0b816b6ba90daec9b766ca1cd7bae39c7f51807b0fdc6b27d9f4cc17787b6648",
+    "sources_digest": "dab0ebf2818b7169974c6cb8d9d91fbef9aacdf8d44a81c2f67e36c77fe0f9cb"
+   },
+   "frozen_files_changed": [
+    {
+     "path": "tests/test.sh",
+     "was_sha256": "f532b3326322e0485ed871b6e2edefaab9accb103e2071fbac00af2e10c95b4a",
+     "now_sha256": "eede63a312c858542f39b0c3964d1fdd0168d6e48f316613f6e8c1a71fd4ec8c",
+     "change": "one environment variable added: OPENBLAS_L2_SIZE=256 on the line that exports the BLAS kernel pin (the only difference outside comments), and comment lines that say why"
+    },
+    {
+     "path": "tests/verify.py",
+     "was_sha256": "5c765e51ef90bb36d4ec2fcf19b2a1217583c32294c161b888257c36221e6e54",
+     "now_sha256": "d4b03a57a0b9749ebfeaa040f638725a499b881d4b7e4c9e3ad7dec17869e664",
+     "change": "text-only: a line break of the module docstring moved, so that no line passes 120 columns (no word changed)"
+    },
+    {
+     "path": "tests/plantcell/wire_guard.py",
+     "was_sha256": "64491b6267b3572213d59116e924b0cabcba5ea9d0759e2a65142e7399853fd0",
+     "now_sha256": "afd2b040937aeb8d0d77d05dfe006b17f0b97c388f851d552930cfe7f44f5d34",
+     "change": "text-only: one paragraph of the module docstring re-wrapped (no word changed)"
+    }
+   ],
+   "environment_changed": {
+    "added": {
+     "OPENBLAS_L2_SIZE": "256"
+    },
+    "removed": [],
+    "changed": {},
+    "a4_digest": "97e6305bfd93383075ab68d243f5cb84a212a59324b00134ada3427db6c6af95",
+    "a6_digest": "227f7af4229664d9cbc0d47956c7a780f8493e39860c94fafe894d92e3b82fb7"
+   },
+   "a6_admission": {
+    "frozen_at": "2026-11-18T21:52:45+0000",
+    "frozen_digest": "eb047959963fd4af2d6f874dd30ac57158325e249a2eeb1d785c20e7e21807be",
+    "decided_at": "2026-11-18T22:39:52+0000",
+    "frozen_on": {
+     "cpu": "AMD Ryzen Threadripper PRO 9965WX 24-Cores",
+     "nproc": 48,
+     "python": "3.12.14",
+     "versions": {
+      "mujoco": "3.14.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "cv2": "5.0.0",
+      "PIL": "13.0.0",
+      "yaml": "6.0.3"
+     },
+     "in_container": true
+    },
+    "part_digest": "d1071ea2b03d71b5d402dbe08cc558c68a51b29b7001c3c5110b1a31462e2d27",
+    "practice_part_digest": "bf61b44da87900bc5d4fe6939ce6dba3fb33577271010ba55947c7f6546a2aeb",
+    "how": "as admission A4: the same pre-registered rule records (copied, not written again), the same 48 hidden and 12 practice candidates and packages, the same seeds, the oracle and the five row-4 programs on every built candidate, the route-health check; select_set.py freeze, run, decide, report, practice and write-hidden in an image of these bytes built with the render bundle from the Hub, on the machine and CPU of A4",
+    "records": "kept with the maintainers (admission A6's selection folders of both labels)"
+   },
+   "candidates_frozen_same": true,
+   "comparison_with_a4": {
+    "hidden": {
+     "candidates": 48,
+     "oracle_in_both": 46,
+     "same_final_state": 46,
+     "changed": [],
+     "admitted_same": true,
+     "status_changed": [],
+     "runs_compared": 276,
+     "runs_equal": 276,
+     "runs_equal_in": "score, the counted attempt's final state, the number of attempts, simulated time, seed and package of every program's run (the oracle and the five row-4 programs)",
+     "sim_time_limit_s": 1350.0,
+     "a4_set": [
+      "c01",
+      "c02",
+      "c03",
+      "c05",
+      "c06",
+      "c07",
+      "c08",
+      "c09",
+      "c10",
+      "c11",
+      "c28",
+      "c36"
+     ],
+     "a6_set": [
+      "c01",
+      "c02",
+      "c03",
+      "c05",
+      "c06",
+      "c07",
+      "c08",
+      "c09",
+      "c10",
+      "c11",
+      "c28",
+      "c36"
+     ]
+    },
+    "practice": {
+     "candidates": 12,
+     "oracle_in_both": 11,
+     "same_final_state": 11,
+     "changed": [],
+     "admitted_same": true,
+     "status_changed": [],
+     "runs_compared": 66,
+     "runs_equal": 66,
+     "runs_equal_in": "score, the counted attempt's final state, the number of attempts, simulated time, seed and package of every program's run (the oracle and the five row-4 programs)",
+     "sim_time_limit_s": 1350.0,
+     "a4_set": [],
+     "a6_set": []
+    },
+    "route_health": {
+     "hidden_runs": 46,
+     "hidden_defects": 0,
+     "practice_runs": 11,
+     "practice_defects": 0
+    },
+    "practice_rows_same": true,
+    "set_and_practice_ground": {
+     "hidden_set_same": true,
+     "admitted_same": true,
+     "admitted_count": 40,
+     "status_words_differ": [],
+     "quota_result_same": true,
+     "practice_set_a4": [
+      1,
+      2,
+      6
+     ],
+     "practice_set_a6": [
+      1,
+      2,
+      6
+     ],
+     "practice_json_same_but_decided_at": true,
+     "practice_ground_packages_equal_this_folder": true,
+     "practice_ground_index_equal_a4": true,
+     "write_hidden_packages_equal_this_folder": true,
+     "write_hidden_seeds_and_sites_equal": true,
+     "write_hidden_note": "the seeds.json that write-hidden writes differs from hidden/seeds.json in its `note` string only: the tool's own text, which A5-text cleaned in this folder's copy and not in the tool"
+    }
+   },
+   "cross_cpu": {
+    "what": "the reference on the four practice packages (training hall, t1, t2, t3, seed 1) and on two of the scored packages (their recorded seeds), with the maintainers' mission runner (one scored mission the way verify.py runs it), in an image with the task image's Python and packages (numpy 2.5.4, MuJoCo 3.14.0), the cell's environment from these bytes' test.sh (the pin with OPENBLAS_L2_SIZE=256)",
+    "hosts": "AMD Threadripper PRO 5975WX (Zen 3, no AVX-512) and AMD Threadripper PRO 9965WX (Zen 5, the admission's)",
+    "missions": 6,
+    "equal": 6,
+    "equal_in": "final_state_sha256, score, simulated time, end and dose of every mission"
+   },
+   "notes_cleaned": {
+    "note": "a recorded change of this file's own text: A5-text's `what` gained one clause (the statements that were no longer true and were corrected in its passes)",
+    "fields": [
+     {
+      "field": "amendments/A5-text/what",
+      "was_sha256": "7bf2d7319995db1befc42bb50d6212bb905d1c036eddf3eb754b32bf6e3f2b76",
+      "now_sha256": "8b9be0cb71147b8376a6c16d5f917798e918ec6afa892bc11925acf46489188a"
+     }
+    ]
+   }
   }
  ],
  "complete": true,

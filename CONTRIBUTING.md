@@ -23,8 +23,9 @@ This page covers what happens in this repository.
    `surgical`, `swarm`, `subsystems`. The most specific one wins: a legged robot is
    `quadruped` or `humanoid`; any wheeled or tracked ground vehicle or robot is `ground`
    (a car at any scale on a road or a track, as in autonomous driving or racing; an AMR, AGV
-   or UGV; a rover; a wheeled mobile manipulator). A task that fits none needs a maintainer
-   first. The other platforms a task involves go in its card (step 9).
+   or UGV; a rover). A task that fits none needs a maintainer first. A task is filed under
+   one platform: when it uses several kinds of robot, the one its scored work is about (a
+   mobile manipulator whose scored work is manipulation is `arm`).
 
 You need Docker and the ALE engine at the commit this repository pins: the `vendor/ale`
 submodule (upstream `main` moves on; a task is gated on the pinned commit). Clone with the

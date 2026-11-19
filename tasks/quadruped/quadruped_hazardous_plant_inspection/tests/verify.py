@@ -50,8 +50,8 @@ Untouched sandbox: no patrol.py -> contract_ok 0 -> 0. Oracle: the token + refer
 program inside the cell, with the true pose and the site's true layout; every value read from its own frames) -> the
 recorded reference value -> 1.
 Records: out/episodes.json (every mission's record), out/traj_<tag>.npz (the mission's state samples for the
-maintainers' replay tool) and logs/<tag>.log (the program's stderr) under the root-only /opt/arb-verify (outside /opt/ale,
-which the engine clears before it keeps a sandbox).
+maintainers' replay tool) and logs/<tag>.log (the program's stderr) under the root-only /opt/arb-verify (outside
+/opt/ale, which the engine clears before it keeps a sandbox).
 """
 
 import ast

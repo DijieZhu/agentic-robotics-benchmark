@@ -1,9 +1,8 @@
 """The grader's guard on the program's request lines.
 
-`tests/cellkit/` is a byte copy of the shared kit (the same bytes as the pump skid and ROV subsea manifold
-tasks' copies), so the guard
-lives here, in the cell's package; tests/verify.py and tests/review/cell/run_wire.py use `GuardedProcess` in place of
-`cellkit.wire.AgentProcess`, with the shared `wire.serve_episode` unchanged:
+`tests/cellkit/` is a byte copy of the shared kit (the same bytes as the pump skid and ROV subsea manifold tasks'
+copies), so the guard lives here, in the cell's package; tests/verify.py and tests/review/cell/run_wire.py use
+`GuardedProcess` in place of `cellkit.wire.AgentProcess`, with the shared `wire.serve_episode` unchanged:
 - a request line the JSON parser cannot read, for any reason, is a protocol end (the program's doing). The shared kit
   catches only ValueError: a line nested deeper than the parser's limit (about 10,000 levels: a 20 KB line, far below
   the 4 MiB line limit) raised RecursionError out of `serve_episode`, and verify.py stopped with "the wire failed",

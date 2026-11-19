@@ -268,7 +268,7 @@ ladder:
     sill_kind_weights: {fire_door: 0.7, hose: 0.3}
   high_step_kinds: [sill, hose, bund, floor_pipe]   # needs_high_step elements only of these kinds (others free;
                                # a bund kerb then a barrier). Ramped cable protectors are out: walk crosses them
-                               # (the gait is not rated on them)
+                               # (walk is not refused reliably by them: capability.json)
   high_step_draw: {}           # optional {kind: [lo, hi]} overriding the drawn needs_high_step range.
                                # Empty since capability.json version 2 (2026-11-14 10:20 EST): the sizes are
                                # drawn inside its bands with band_margin (sill / hose / kerb 0.0495-0.0565 m, round
