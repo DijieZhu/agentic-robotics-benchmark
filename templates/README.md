@@ -118,7 +118,13 @@ instead, for a run outside the engine (a host-side dry run, the kit's selftest);
 ## The closed_loop wire
 
 `Solver` speaks one JSON object per line to the agent's `run.sh`, launched as `bash run.sh`
-with cwd `/home/user/submission` at the agent's UID. `READY` must arrive within
+with cwd `/home/user/submission` at the agent's UID. Before the first launch the kit clears
+the agent's account (`clear_agent_account`): the sandbox's desktop session, which runs as
+that account under a supervisor that restarts it, is taken down for good, so that nothing
+of the account runs but what the grader starts (`docs/security-model.md`). A grader does not
+draw on the sandbox's desktop while agent code runs; one that starts agent code with a
+launcher of its own, without `Solver` or `deprivileged`, calls `clear_agent_account()`
+first. `READY` must arrive within
 `READY_TIMEOUT_FACTOR` (4) step deadlines of launch, 120 s with the template's
 `step_timeout_s: 30` (`tests/grader_config.json`), and every reply within one step deadline.
 That deadline is a **single per-request budget**, fixed the moment the request is written

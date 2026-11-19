@@ -38,6 +38,7 @@ stage protocol; the task only has to respect it.
 | **Timing** | `tests/` (grader, `env.py`, `anchor.json`, `grader_config.json`) is uploaded to `/opt/ale/tests` only when the verify stage runs (`protocol/episode_protocol.py:757-783`), and `solution/` to `~/.ale-solution` only in an oracle episode (`:500-501`, `:1290-1297`). During the agent phase neither exists anywhere in the sandbox. | engine (`episode-protocol.md`: "`tests/` is also absent throughout this phase") |
 | **Root-only staging root** | `/opt/ale` is `drwx------ root:root`: the layer the engine adds to every task image runs `chown -R 0:0 /opt/ale` and `chmod -R go-rwx /opt/ale` (`framework.py:122-123`), and stage uploads land below it owned by root. Even paths that do exist there are untraversable for the agent account. | engine |
 | **UID boundary** | `tests/test.sh` runs as root; the agent's solver is spawned **at the agent's UID** (`robotics_grader.Solver`, `deprivileged`, via `runuser`). The solver cannot read the grader's memory: the kernel refuses to let one UID trace another's process. It does start with a copy of the verify stage's environment (`runuser -u` keeps the caller's environment and sets only `HOME`, `SHELL`, `USER` and `LOGNAME`), which holds the `ALE_*` stage variables and, when a run configures a Judge, its Gateway session token; so a grader keeps no secret in `os.environ`, and today's tasks configure no Judge. Artifacts the agent produced (checkpoints, pickles) are deserialized deprivileged too. Before it runs any agent code, `deprivileged` resolves `runuser` to an absolute path against a fixed system PATH (`/usr/sbin:/usr/bin:/sbin:/bin`) and reclaims every directory on root's PATH that is not root-owned 0755 (`secure_exec_path`), so a program the agent plants on root's PATH cannot shadow `runuser` — or any other name root resolves — on a later exec. | kit |
+| **A cleared account** | A solver is confined by what the grader puts on the process it starts: the agent's UID, and in some tasks a seccomp filter without network, limits, or a pause between requests. None of that binds a process something else starts as the same account, and the base image starts some: its supervisord (PID 1) runs the desktop session as the agent's account and restarts it when it dies. Agent code could kill the session and have it started again; the new session ran the account's autostart entries, and a start script in a directory the account owns, outside the solver's filter (measured on `container-ubuntu22-base` 0.1.1: the restarted code opened an internet socket that the solver could not). A live session can also be asked to run things, over its D-Bus, X and terminal services. So before the kit starts agent code (`Solver`, `deprivileged`) it clears the account once per sandbox (`robotics_grader.clear_agent_account`, `shared/robotics_grader/account.py`): every supervisord program is switched off in supervisord's configuration, supervisord reloads and starts nothing, and every process of the account that the grader did not start is killed until none comes back. From then on the only processes of the account are the grader's. | kit |
 | **Result path** | The result goes to `/logs/verifier/reward.json` and `verification.json` through `ale_verify`'s atomic write. Before every verification attempt the engine removes whatever is at `/logs/verifier`, makes `/logs` root's and unwritable for others, and recreates `/logs/verifier` empty with mode 0700 (`protocol/episode_protocol.py:144-156`, run at `:777`). The agent can neither pre-create nor overwrite the result, and nothing it left running can write one. The engine rejects a `verification.json` whose `reward` differs from `reward.json`'s (`:886`). | engine + kit |
 | **Seeds in memory** | The grader draws hidden seeds from OS entropy inside its own process (`seed_rng`); they never touch disk. The practice grader the agent gets uses different, visible seeds and prints the raw metric only. | kit + `scripts/lint_domain.py` |
 | **No self-reported numbers** | The metric is computed from the grader's own simulator state. Nothing the solver prints is parsed as a score; the wire carries observations and actions only. | kit |
@@ -71,6 +72,11 @@ case where the agent's own `run.sh` runs (deprivileged) during a separate verify
 still plant for a later root exec: `deprivileged` resolves `runuser` absolutely and calls
 `secure_exec_path` to take every root-PATH directory back to `root:root 0755` before the
 solver starts. Two engine root execs sit outside the kit's reach and are noted in §4.
+A fresh verifier still starts the image's desktop session as the agent's account, which is
+why the kit clears that account before the solver starts (the "cleared account" row above).
+A verifier image of a task's own (`tests/Dockerfile`) can also simply start no session: it
+removes the supervisord programs and sets `DISPLAY` empty, which is how the engine tells
+that a sandbox has no desktop to wait for (`arm/longtail_manipulation_recovery` does this).
 
 **What "hidden" means, precisely.** The anchor and the oracle are hidden from the *tested
 agent during its run*, by stage isolation. They are **not** secrets from maintainers or from
@@ -106,6 +112,27 @@ result can be matched to the exact committed tree it ran against.
   network (`:443`). The hidden seeds never leave the grader's memory, but a solver that
   fetches the reference controller can play it. Until the engine keeps the verify stage
   offline for the solver, check formal runs' submissions and traces for network use.
+  The kit does not take the network from the solver: root in the sandbox cannot make a
+  network namespace (no `CAP_SYS_ADMIN`), and a seccomp filter cannot tell loopback from
+  the internet, so it would break a solver that talks to its own helper over TCP. A task
+  that promises its solver no network starts it through a filter of its own (several do,
+  with a small seccomp launcher that allows only local sockets). What the kit adds is that
+  agent code cannot get itself started outside such a launcher: see the next item.
+- **What the cleared account does not cover.** `clear_agent_account` knows supervisord, the
+  base image's init. Under another init it still kills the account's processes, and if they
+  keep coming back it leaves them stopped and reports `cleared: False`; `Solver` and
+  `deprivileged` log that and go on, so a grader whose rules lean on the confinement calls
+  `clear_agent_account()` itself and fails the run when the report is not `cleared`. A grader
+  that starts agent code with a launcher of its own and never through `Solver` or
+  `deprivileged` has to call it too, or to run that code as another account while it keeps
+  the agent's account stopped for the whole stage, as the assembly cells and the cell kits
+  do (probed with their own launchers on 2026-11-18: `nobody` could neither write a file the
+  session starts from nor signal it, and the stopped session's display never answered). The
+  other account alone is not enough: while the session runs, its X display takes any local
+  account, synthetic input included (the base image starts `Xvnc -SecurityTypes None`).
+  Programs that are not the agent's account but take its requests stay reachable where the
+  image runs them (in the base image, root's system D-Bus goes down with the session; the
+  engine's guest service is not reachable from the account).
 - **The probe lock is not a proof of honesty.** It catches a policy that ignores its input;
   a solver that notices a repeated `t` can vary its answer on purpose. Isolation, not the
   lock, keeps a score honest.

@@ -160,7 +160,7 @@ reward = clamp(ratio / full_at, 0, 1)         # the gated key
   invert the ordering.
 
 The canonical kit is `shared/robotics_grader/` (`Solver`, `ProbeLock`, `seed_rng`,
-`ratio_rewards`, `zero_verdict`, `write_verdict`, `deprivileged`); every task vendors a
+`ratio_rewards`, `zero_verdict`, `write_verdict`, `deprivileged`, `clear_agent_account`); every task vendors a
 byte-identical copy under `tests/robotics_grader/` because the engine stages exactly the
 `tests/` folder and nothing else.
 

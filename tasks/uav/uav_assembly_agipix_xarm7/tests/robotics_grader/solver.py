@@ -6,7 +6,11 @@ properties make that safe to score:
 1. **The solver runs as the agent, not as root.** `tests/test.sh` is root — the framework
    runs it on the task's behalf — so spawning the solver directly would give the agent's
    code the grader's own privileges. `stage.deprivileged` drops to the agent account, and
-   from there `/opt/ale` is untraversable and the grader's memory unreadable.
+   from there `/opt/ale` is untraversable and the grader's memory unreadable. And the solver
+   is the only thing that runs as the agent: before the first start the kit clears the
+   account (`account.clear_agent_account`), so the image's desktop session, which a supervisor
+   would otherwise restart on the agent's say-so, cannot run agent code outside what the
+   grader imposes on the solver it starts (a seccomp filter, limits, a pause).
 2. **Every request has a single deadline.** A solver that hangs must cost the episode,
    not the run. Reads happen on a queue fed by a reader thread, so a stall is a timeout
    rather than a wedged pipe — and the deadline is fixed once, when the request is written
@@ -63,6 +67,7 @@ except ImportError:  # pragma: no cover — py2 never runs here
     import Queue as queue  # type: ignore[no-redef]
 import threading
 
+from .account import clear_agent_account
 from .stage import agent_home, deprivileged
 
 __all__ = ["READY_TIMEOUT_FACTOR", "ProbeLock", "Solver", "SolverAborted", "SolverMissing"]
@@ -107,26 +112,36 @@ class Solver(object):
     (`<agent home>/submission` unless `submission=` says otherwise), in its own process
     group: stopping the solver stops everything `run.sh` started, unless a process left the
     group on purpose (`setsid`).
+
+    Before the first start the agent's account is cleared (`account.clear_agent_account`: the
+    image's desktop session is taken down for good, once per sandbox). That happens here and
+    not in `_spawn`, so a grader that overrides `_spawn` with its own launcher gets it too.
+    `clear_account=False` keeps the session.
     """
 
-    def __init__(self, step_timeout=30.0, submission=None, entry="run.sh", max_restarts=3):
+    def __init__(self, step_timeout=30.0, submission=None, entry="run.sh", max_restarts=3,
+                 clear_account=True):
         self.submission = submission or os.path.join(agent_home(), "submission")
         if not os.path.isfile(os.path.join(self.submission, entry)):
             raise SolverMissing("no submission at {}/{}".format(self.submission, entry))
         self.step_timeout = float(step_timeout)
         self.entry = entry
         self.max_restarts = int(max_restarts)
+        self.clear_account = bool(clear_account)
         self.restarts = 0
         self.proc = None
         self._broken = False   # the wire may be out of step: restart before the next episode
         self._dead = False     # no more restarts: every later episode aborts at once
         self._closed = False
+        if self.clear_account:
+            clear_agent_account()
         self._start()
 
     # -- process ------------------------------------------------------------- #
     def _spawn(self):
         return deprivileged(
             ["bash", self.entry],
+            clear_account=self.clear_account,
             cwd=self.submission,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,

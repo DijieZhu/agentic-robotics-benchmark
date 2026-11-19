@@ -29,6 +29,12 @@ summary = "Specify seven upgraded replicas of a two-arm robot that has left the 
 platforms = ["arm"]
 stages = ["requirements"]
 
+[keyed_nut_peg_assembly]
+title = "Assemble bayonet nut kits with a Panda"
+summary = "A Franka Panda must fit three bayonet nuts onto their pegs within the cell's takt time, working out each nut's hidden groove from camera images and a wrist force sensor on kits it has never seen."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [kitchen_appliance_tending]
 title = "Tend unfamiliar kitchen appliances with a Panda"
 summary = "A fixed Franka Panda must switch and set cooktop burners, ovens and microwaves it has never seen, from camera images and its wrist force sensor, after a single lab trial on one of them."

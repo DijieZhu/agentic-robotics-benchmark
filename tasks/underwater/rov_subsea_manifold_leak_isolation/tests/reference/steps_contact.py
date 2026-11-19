@@ -1092,7 +1092,7 @@ def run(server):
 
 
 # ====================================================================================================== maintainer
-# Not used by the cell.  PY="/data/xiatao/venvs/underwater-tools/bin/python -I -B"; . /data/xiatao/envs/osmesa-deb/env.sh
+# Not used by the cell.  PY = the maintainer tools interpreter (-I -B), with the software-rendering environment loaded
 #   $PY steps_contact.py one SITE.tar.xz OUT.json [--seed N] [--log-dir D]     one privileged run (cell + P10 scoring)
 #   $PY steps_contact.py batch OUT_DIR --cells ABCDEF --k 0 --repeat 2 --procs 8
 #   $PY steps_contact.py collect OUT_DIR BUILD_JSON                             -> build/reference_dev_runs.json

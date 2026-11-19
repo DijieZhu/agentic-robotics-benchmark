@@ -1,0 +1,298 @@
+{
+ "format": "keyed-look/1",
+ "note": "The numbers of the cameras' look (keyed_render.py beside this file). The render bundle (KEYED_RENDER_DIR) holds the room's meshes, textures and materials and the image light's panorama; the rest is here. Fitted against path-traced references of the same laboratory through the same three cameras at twelve states of one development kit's episode: the image light and the lamps each against the references with only that light on, then one gain per class of surface (and per channel where a class's colour needed it) against the references with all lights, in linear light; the display transform is Filament's filmic curve, which matched the references' display images without a further correction.",
+ "exposure_scale": 0.75,
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 17785,
+  "note": "ibl.ktx: a path-traced probe 25 cm over the bench with the robot, the pegs and the nuts taken out and the gantry's lamp off. Two things were changed in the panorama, because an image light has no shadows and no occlusion: a direct view of the sun through a window, which does not reach the bench, was taken out; below 24 degrees under the horizon the panorama is the shaded floor's colour instead of the bench top the probe hung over (the cabinet, the pedestal and everything beside the bench would otherwise be lit from below by the bench)."
+ },
+ "lamps": [
+  {
+   "type": "spot",
+   "dir": [
+    0.33,
+    0.0,
+    -0.98
+   ],
+   "cutoff": 65.0,
+   "bulb": 0.05,
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "name": "gantry_bar_l",
+   "pos": [
+    -0.33,
+    0.25,
+    1.78
+   ],
+   "candela": 92113,
+   "shadow": true,
+   "shadow_map": 2048,
+   "softness": 1.0
+  },
+  {
+   "type": "spot",
+   "dir": [
+    0.33,
+    0.0,
+    -0.98
+   ],
+   "cutoff": 65.0,
+   "bulb": 0.05,
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "name": "gantry_bar_r",
+   "pos": [
+    -0.33,
+    -0.25,
+    1.78
+   ],
+   "candela": 92113,
+   "shadow": true,
+   "shadow_map": 2048,
+   "softness": 1.0
+  }
+ ],
+ "lamps_note": "the gantry's LED bar (0.9 m long, over the robot's side of the bench, aimed at the bench's middle) as two spot lights along it, each with its own shadow map: the arm's shadow on the bench is two half shadows side by side (a long lamp's wide, faint shadow), and a recess a few millimetres wide (a groove's entrance in a nut's bottom face) is in the shade of both. Candela; every lamp and the image light are multiplied by the cell's lamp brightness of the day (keyed_env TOL light).",
+ "headlight": {
+  "lux": 0.0
+ },
+ "room": {
+  "albedo_gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "emissive": 0.0,
+  "cast_shadow": true,
+  "classes": {
+   "default": {},
+   "emitter": {
+    "unlit": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "bench_top": {
+    "gain": [
+     1.02,
+     1.052,
+     0.967
+    ],
+    "roughness": 0.7
+   },
+   "cabinet": {
+    "gain": [
+     0.251,
+     0.089,
+     0.038
+    ],
+    "specular": 0.0
+   },
+   "desk": {
+    "gain": [
+     0.189,
+     0.152,
+     0.109
+    ],
+    "specular": 0.0
+   },
+   "floor": {
+    "gain": [
+     1.076,
+     1.347,
+     1.482
+    ]
+   },
+   "gantry": {
+    "gain": [
+     0.009,
+     0.013,
+     0.018
+    ],
+    "metallic": 0.0,
+    "specular": 0.25
+   },
+   "office": {
+    "gain": [
+     0.246,
+     0.149,
+     0.072
+    ],
+    "specular": 0.0
+   },
+   "pedestal": {
+    "gain": [
+     0.096,
+     0.139,
+     0.15
+    ],
+    "metallic": 1.0,
+    "roughness": 1.0
+   },
+   "steel": {
+    "gain": [
+     1.439,
+     1.4,
+     1.149
+    ]
+   },
+   "tote": {
+    "gain": [
+     0.372,
+     0.59,
+     0.778
+    ],
+    "specular": 0.0
+   },
+   "trolley": {
+    "gain": [
+     0.253,
+     0.358,
+     0.457
+    ],
+    "specular": 0.0
+   },
+   "plinth": {
+    "gain": 0.3,
+    "specular": 0.0
+   },
+   "rack": {
+    "gain": 0.4,
+    "specular": 0.0
+   },
+   "bin": {
+    "gain": 0.5,
+    "specular": 0.0
+   },
+   "carton": {
+    "gain": 0.5,
+    "specular": 0.0
+   }
+  },
+  "note": "classes: the bundle's classes of surface (room.json: cls). gain: a linear gain on the class's colour or texture (one number, or one per channel). specular: passed to the material (MuJoCo 3.16's Filament keeps a non-metal's mirror reflection of about 4 % whatever it says); metallic 1 with a dark colour is how a part that must stay near black is drawn (pedestal). unlit: an emitter's own colour."
+ },
+ "model_materials": {
+  "nut": {
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "gain": 0.75,
+   "specular": 0.3
+  },
+  "collar": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "gain": 1.282,
+   "specular": 0.2
+  },
+  "shaft": {
+   "roughness": 0.45,
+   "metallic": 0.3,
+   "gain": 2.139
+  },
+  "pin": {
+   "roughness": 0.45,
+   "metallic": 0.3,
+   "gain": 1.2
+  },
+  "band": {
+   "roughness": 1.0,
+   "metallic": 1.0,
+   "gain": 1.0
+  },
+  "hand": {
+   "srgb": [
+    0.93,
+    0.93,
+    0.92
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "gain": 0.374,
+   "specular": 0.2
+  },
+  "finger": {
+   "srgb": [
+    0.7,
+    0.71,
+    0.73
+   ],
+   "roughness": 0.4,
+   "metallic": 1.0
+  },
+  "pad": {
+   "srgb": [
+    0.07,
+    0.07,
+    0.075
+   ],
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "specular": 0.1
+  },
+  "robot_default": {
+   "roughness": 0.4,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "robot_by_colour": [
+   {
+    "lum_min": 0.8,
+    "lum_max": 9.0,
+    "chroma_max": 0.1,
+    "srgb": [
+     0.93,
+     0.93,
+     0.92
+    ],
+    "roughness": 0.35,
+    "metallic": 0.0,
+    "gain": 0.408,
+    "specular": 0.2
+   },
+   {
+    "lum_min": 0.0,
+    "lum_max": 0.4,
+    "chroma_max": 0.1,
+    "srgb": [
+     0.06,
+     0.06,
+     0.065
+    ],
+    "roughness": 0.5,
+    "metallic": 0.0,
+    "gain": 0.665,
+    "specular": 0.1
+   }
+  ],
+  "note": "the episode's own parts: nut, collar, shaft, pin, band (a nut and a peg keep their geoms' colours: gain multiplies them in linear light, the same for every nut), hand, finger, pad (the gripper's parts that have no material of their own), and the arm's visual meshes by their material's colour (robot_by_colour: white covers, dark joints; robot_default for the rest). A near-black part is a black metal here (band): MuJoCo 3.16's Filament materials keep a non-metal's 4 % mirror reflection whatever `specular` says, and a black metal has none. The nuts are drawn a quarter darker and less glossy than the fit against the references gave (gain 1.07, roughness 0.5): a glossy nut mirrors the lamps and the room in white, which washes its colour out; the eight colours of the family must stay apart in every camera."
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "post_processing": true,
+  "shadows": true,
+  "reflections": false,
+  "clear_color": [
+   0.55,
+   0.65,
+   0.85
+  ],
+  "supersample": 2,
+  "lavapipe_threads": 2
+ },
+ "filament_note": "ambient occlusion on: the image light has no shadows of its own, and without it a recess (the cut cells of a groove seen down a nut's hole, the gap under a part) is as bright as the open surface around it.",
+ "exposure_note": "the cameras' exposure against the references' (1.0 = the references' display brightness): three quarters, so that no channel of a nut's colour clips under the lamps at their brightest (+15 %); a clipped channel moves a warm colour's hue (red towards orange)."
+}

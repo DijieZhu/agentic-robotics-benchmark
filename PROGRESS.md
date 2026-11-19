@@ -616,6 +616,88 @@ order of §13 (§5's platform list predates both).
 - `tasks/arm/object_finding_and_organizing_on_messy_desk/task.toml` still lists `driving` in a
   comment; it is left as it is, since editing it would change that task's identity.
 
+## 15. 2026-11-17 — the kit clears the agent's account before it starts agent code
+
+- **The finding** (review of the contributed `longtail_manipulation_recovery`, pull request
+  #80). A controller that the grader starts under a no-network seccomp filter got code run
+  outside the filter, as the same account, in two ways. Both go through the base image's
+  supervisord (PID 1), which runs the desktop session as the agent's account with
+  `autorestart`: (1) replace `/usr/local/bin/start-gnome.sh` (the directory is the agent's in
+  `container-ubuntu22-base` 0.1.1) and kill the session; (2) write an entry into
+  `~/.config/autostart` and kill the session. The restarted code had `NoNewPrivs: 0` and
+  opened an `AF_INET` socket that the controller could not. Route 2 needs nothing but the
+  account's own home, so it holds for every grader that runs agent code as the agent's
+  account, with or without `secure_exec_path`. A live session is a third way (its D-Bus, X
+  and terminal services take requests from the account). Stopping the session (SIGSTOP), as
+  several graders do, does not hold either: the agent's code may kill what was stopped.
+- **The fix** (`shared/robotics_grader/account.py`, `clear_agent_account`). Once per sandbox,
+  before the first agent process: every supervisord program gets `autostart=false` and
+  `autorestart=false` in supervisord's configuration files, supervisord reloads (SIGHUP) and
+  starts nothing, and every process of the account that the grader did not start is killed
+  until none comes back. `Solver.__init__` and `deprivileged` call it, so a grader that
+  subclasses `Solver` with a launcher of its own gets it too; `clear_account=False` opts out.
+  It acts only as root in the engine's verify stage (`ALE_VERIFY_PYTHON`), keeps its report
+  in a root-only marker file (`/run/robotics_grader/`), and reports `cleared: False` instead
+  of failing under an init it does not know.
+- **Measured** in containers of the first verifier image of pull request #80 (the base
+  image's desktop, 45 processes of the account), with the review's two probe controllers
+  started through that task's seccomp launcher. Before: both probes got their code run with
+  `NoNewPrivs: 0` and `AF_INET socket: allowed`. After `clear_agent_account`: 45 processes
+  killed, 7 programs disabled, reload confirmed by supervisord's new pid file, 3 to 5 s;
+  probe 1 could still replace the start script when root's PATH was left as it was, and
+  nothing ran it; probe 2's autostart entry never ran; no process of the account existed
+  outside the launcher. An honest controller through the kit's own `Solver` (a helper process,
+  a file in its folder, a local socket pair, one restart) ran as before. The same clearing
+  worked on the CAD tasks' desktop variant (12 processes, openbox).
+- **Which graders change behaviour**: the ones that start agent code through `Solver` or
+  `deprivileged`: `arm_hidden_mechanism_box`, `kitchen_appliance_tending`,
+  `novel_object_6dof_grasp_detection`, `object_finding_and_organizing_on_messy_desk`,
+  `driving_safety_supervisor`, `fault_adaptive_spacecraft_docking`, `hazard_bay_build`,
+  `aerial_search_geolocation`, `visual_low_level_flight_control`, `keyed_nut_peg_assembly`
+  (merged while this was open), and the template. Their
+  verifier sandbox loses its desktop session (and root's system D-Bus) when the solver first
+  starts. None draws on the sandbox's display by its code (the renderers drop `DISPLAY`, the
+  Unreal simulators render offscreen, as their own accounts).
+- **Re-validated with this kit** (2026-11-18 and 19, `ale validate` on engine `bfb7505`, the
+  branch at `f708f443`; later heads differ only outside the kit and these task folders):
+  untouched 0.0 and the oracle at its recorded score in `arm_hidden_mechanism_box`
+  (`validate-021564f8`), `kitchen_appliance_tending` (`validate-a34a9d1b`),
+  `fault_adaptive_spacecraft_docking` (`validate-6eb7d128`),
+  `visual_low_level_flight_control` (`validate-c36ffcc0`: 7 of 8 fresh scenes, inside the
+  spread its anchor records), `driving_safety_supervisor` (`validate-cdc35a8a`),
+  `aerial_search_geolocation` (`validate-b5cf1b37`),
+  `object_finding_and_organizing_on_messy_desk` (`validate-75ff606d`) and `hazard_bay_build`
+  (`validate-e4ec5969`: 131 of 131 metrics equal to the record). In each oracle episode the
+  only kind of line that the verifier's log has and the recorded run does not is the kit's
+  `agent account ... cleared` (2.0 to 6.5 s); the two Unreal simulators, which are up before
+  the solver starts, ran on under it. `keyed_nut_peg_assembly` too (`validate-e6a2ee01`: the
+  ten kits complete with the steps of its record); its selection record freezes the kit's
+  files, so the kit update is amendment 6 of `tests/hidden/selection.json`, pre-registered
+  and run by the task's own rule: every candidate repeats its earlier run, the hidden set and
+  the development kits are unchanged. There the clearing (3.7 s) falls inside the first
+  kit's solver start and is charged to that kit's controller time (600 s budget).
+  `novel_object_6dof_grasp_detection` is to be validated after the merge, when a machine has
+  the memory for it: its reference holds 52 to 54 GB for most of an hour, and two runs were
+  stopped before any score when the machines ran short.
+- **Not covered**: graders that start agent code with their own launcher and never through
+  the kit's two calls (the assembly cells, the cell kits, the twin and description tasks). By
+  their code they run it as `nobody` from a read-only copy while a thread keeps the agent's
+  account stopped; `nobody` can neither write the account's files nor signal its processes,
+  so the two routes are not open to them. Probed on 2026-11-18 with the launchers of an
+  assembly cell (`robotic_arm_full_assembly_so101_panda`) and a cell kit
+  (`pump_skid_startup_and_operation`), each in its own image with the session running: 48
+  writes on the files the session starts from and 18 on autostart and profile files refused,
+  every signal refused, nothing run even after root restarted the session, while the same
+  program run as the agent's account got both routes. The stopped session matters as much
+  as the other account: a running session's X display takes any local account
+  (`docs/security-model.md`). A call to
+  `clear_agent_account()` at their start would remove the session for good; that is a change
+  of each task. And the network: root in the sandbox cannot make a network namespace
+  (`unshare(CLONE_NEWNET)`: EPERM, no `CAP_SYS_ADMIN`), so a solver's network is still the
+  engine's to close (`docs/security-model.md` §4).
+- **Identities**: every task's vendored kit changed, so every task has a new
+  `content_digest`; `identity-history.json` records them.
+
 ## Open items
 
 - Website, display-only pull request: remove the backend (API, database service, sign-in,

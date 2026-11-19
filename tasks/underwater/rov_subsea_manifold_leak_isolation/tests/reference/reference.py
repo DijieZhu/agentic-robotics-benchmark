@@ -9,7 +9,7 @@ Needs the perception package (DEV/perception: next to this folder's parent, in t
 $SUBSEACELL_PERCEPTION_DIR) and the manual data (moves.manual_paths).
 
 MAINTAINER SIDE (not used by the cell; local paths):
-    PY="/data/xiatao/venvs/underwater-tools/bin/python -I -B"; . /data/xiatao/envs/osmesa-deb/env.sh
+    PY = the maintainer tools interpreter (-I -B), with the software-rendering environment loaded
     $PY reference.py one SITE.tar.xz OUT.json [--seed N]           # one privileged run, scored (P10's scoring)
     $PY reference.py batch OUT_DIR --cells ABCDEF --k 0 --repeat 2 [--procs 6] [--sites-dir D]
     $PY reference.py audit OUT.json                                # static audit (AST) of the in-cell code

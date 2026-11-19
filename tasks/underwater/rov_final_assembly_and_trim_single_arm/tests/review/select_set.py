@@ -11,7 +11,7 @@ selection.json and leaves it to the main session (the rule's 'no_discretion'). S
   S0      the sha256 of selection_rule.json and PREREGISTRATION.md are the two values of rule_version 3 that the main
           session wrote into shared/DECISIONS_P2_ASM.md, section 7.7 (and that this tool carries)
   S1      freeze. Precondition: CELL_FREEZE.json exists, lists at least the seven classes of the rule, every sha256 it
-          lists equals that file now, its two numerics variables are the task's (Dockerfile = test.sh) and take
+          lists equals that file now, its numerics variables are the task's (Dockerfile = test.sh) and take
           effect in the verification image (probes as root, as the agent account and through test.sh). Then every
           frozen file, tree, the hidden kit's members and the image id are hashed into selection.json (state frozen);
           every later command re-hashes first and refuses on any difference.
@@ -61,10 +61,11 @@ selection.json and leaves it to the main session (the rule's 'no_discretion'). S
     python3 -I -B select_set.py report                                  S10
     python3 -I -B select_set.py view --jobs JOBS.json --out OUT.json    (internal: condition (e) for (seed, dome) jobs)
 
-Environment: the two pinned numerics variables of the task (-dev/tools/pinned_env.py --sh; refused without them);
+Environment: the pinned numerics variables of the task (-dev/tools/pinned_env.py --sh; refused without them);
 MUJOCO_GL=osmesa with the OSMesa library path for (e); Docker (DOCKER_HOST) for the image runs; ARB_AGENT_RENDER_DIR,
 the render payload of the views. TASK = this file's ../.., DEV = TASK + '-dev' (ROV_ASM_DEV overrides), the scratch of
-stages and run outputs = ROV_ASM_P20_WORK (default DEV/evidence/hidden_set/work).
+stages and run outputs = ROV_ASM_P20_WORK (default DEV/evidence/hidden_set/work); the folder of the sealed seed files
+(gen<g>_W.hex / gen<g>_L.hex, kept outside the repository) = ROV_ASM_SEALED, required by `freeze` and `open` (no default).
 """
 import argparse
 import datetime
@@ -104,7 +105,7 @@ DECISIONS_ASM_PATH = os.path.join(UW, "shared", "DECISIONS_P2_ASM.md")
 DECISIONS_ASM_SECTION = "### 7.7 "     # the heading of the section that holds rule_version 3's two sha256
 CELL_FREEZE_PATH = os.path.join(DEV, "evidence", "cell", "CELL_FREEZE.json")
 SLOW_RELEASE_PATH = os.path.join(DEV, "evidence", "entry", "slow_release_probe.json")
-SEALED_DIR = os.environ.get("ROV_ASM_SEALED") or "/data/xiatao/tmp/underwater_20261114/work/p2/asm/P12/sealed"
+SEALED_DIR = os.environ.get("ROV_ASM_SEALED")      # the sealed seed files' folder (outside the repository); no default
 EVIDENCE = os.environ.get("ROV_ASM_EVIDENCE") or os.path.join(DEV, "evidence", "hidden_set")
 WORK = os.environ.get("ROV_ASM_P20_WORK") or os.path.join(EVIDENCE, "work")
 V12 = os.path.join(DEV, "trim", "v12")
@@ -365,6 +366,13 @@ def ensure_kit():
     return gt
 
 
+def sealed_dir():
+    """the folder of the sealed seed files, named by ROV_ASM_SEALED (the commands that read it stop without it)"""
+    if not SEALED_DIR:
+        raise Stop("ROV_ASM_SEALED is not set: name the folder of the sealed seed files (gen<g>_W.hex / gen<g>_L.hex, mode 0600)")
+    return SEALED_DIR
+
+
 def git_free_tree_check():
     """no sealed seed file anywhere in the development documents (they stay outside the repository until opened)"""
     found = []
@@ -596,8 +604,9 @@ exec python3 -I -B /opt/p20tools/pinned_env.py --probe > /out/probe_${PROBE_TAG:
 
 
 def image_probe(image, values):
-    """the two variables in the verification image: its own environment as root and as the agent account, and through
-    tests/test.sh (the verifier's interpreter replaced by the probe), once with the image's two ENV removed first"""
+    """the pinned numerics variables in the verification image: its own environment as root and as the agent account, and
+    through tests/test.sh (the verifier's interpreter replaced by the probe), once with the image's pinned ENV (all three
+    variables) removed first"""
     d = os.path.join(WORK, "image_probe")
     shutil.rmtree(d, ignore_errors=True)
     out = os.path.join(d, "out")
@@ -617,7 +626,7 @@ def image_probe(image, values):
         "test_sh": "mkdir -p /opt/ale/stage && cp -r /opt/ale/tests/. /opt/ale/stage/ && cd /opt/ale/stage && "
                    "PROBE_TAG=test_sh ALE_VERIFY_PYTHON=/opt/p20tools/probe_python.sh bash test.sh",
         "test_sh_without_image_env": "mkdir -p /opt/ale/stage && cp -r /opt/ale/tests/. /opt/ale/stage/ && cd /opt/ale/stage && "
-                                     "env -u OPENBLAS_CORETYPE -u NPY_DISABLE_CPU_FEATURES PROBE_TAG=test_sh_without_image_env "
+                                     "env -u OPENBLAS_CORETYPE -u OPENBLAS_L2_SIZE -u NPY_DISABLE_CPU_FEATURES PROBE_TAG=test_sh_without_image_env "
                                      "ALE_VERIFY_PYTHON=/opt/p20tools/probe_python.sh bash test.sh",
     }
     res = {}
@@ -752,7 +761,7 @@ def cmd_freeze(a):
     sealed = []
     for g in range(1, 5):
         for s in ("W", "L"):
-            p = os.path.join(SEALED_DIR, "gen%d_%s.hex" % (g, s))
+            p = os.path.join(sealed_dir(), "gen%d_%s.hex" % (g, s))
             st = os.stat(p) if os.path.exists(p) else None
             sealed.append({"file": os.path.basename(p), "exists": st is not None,
                            "mode": oct(st.st_mode & 0o777) if st else None, "size": st.st_size if st else None,
@@ -1978,8 +1987,8 @@ def cmd_open(a):
     g = min(x["generation"] for x in gens if x["generation"] not in spent)
     com = [x for x in gens if x["generation"] == g][0]
     u0 = utc_now()
-    W = bytes.fromhex(open(os.path.join(SEALED_DIR, "gen%d_W.hex" % g)).read().strip())
-    L = bytes.fromhex(open(os.path.join(SEALED_DIR, "gen%d_L.hex" % g)).read().strip())
+    W = bytes.fromhex(open(os.path.join(sealed_dir(), "gen%d_W.hex" % g)).read().strip())
+    L = bytes.fromhex(open(os.path.join(sealed_dir(), "gen%d_L.hex" % g)).read().strip())
     rv = {"generation": g, "utc": u0, "W_hex": W.hex(), "L_hex": L.hex(), "W_bytes": len(W), "L_bytes": len(L),
           "W_sha256": commitment(W), "L_sha256": commitment(L), "spent_before": sorted(spent)}
     rv["W_equals_commitment"] = rv["W_sha256"] == com["W_sha256"]

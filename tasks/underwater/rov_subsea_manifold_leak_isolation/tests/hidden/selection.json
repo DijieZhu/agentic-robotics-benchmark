@@ -13954,12 +13954,13 @@
      "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
      "OMP_NUM_THREADS": "1",
      "OPENBLAS_CORETYPE": "Haswell",
+     "OPENBLAS_L2_SIZE": "256",
      "OPENBLAS_NUM_THREADS": "1",
      "P19_WHATIF_SEABED_HALF": null,
      "PYOPENGL_PLATFORM": "osmesa",
      "SUBSEACELL_REFERENCE_VERBOSE": null
     },
-    "host": "xiatao-Lambda-Vector",
+    "host": "maintainer-workstation",
     "kernel": "6.8.0-147-generic",
     "nproc": 48,
     "packages": {
@@ -13980,6 +13981,7 @@
      "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
      "OMP_NUM_THREADS": "1",
      "OPENBLAS_CORETYPE": "Haswell",
+     "OPENBLAS_L2_SIZE": "256",
      "OPENBLAS_NUM_THREADS": "1",
      "P19_WHATIF_SEABED_HALF": null,
      "PYOPENGL_PLATFORM": "osmesa",
@@ -16772,6 +16774,34 @@
    "F": 4
   }
  },
+ "record_amendments": [
+  {
+   "id": "04",
+   "kind": "environment_record",
+   "name": "blas_pin_environment_record",
+   "previous_selection": {
+    "kept_at": "superseded/amendment04_previous/selection.json",
+    "sha256": "4c8793c7759fbf1d59c08921adebf99cc0c109efca9eaa8e56aa48917c8e477c"
+   },
+   "record": "hidden/amendments/04_blas_pin_environment_record.json",
+   "sha256": "16434cc00131a21db66a967deedf1b71b968cb99fadcb44466ec241650591306",
+   "what": "The run-environment records of the freeze (freeze.platform: the maintainer machine and the machine of stages G, O, R, B and the set checks) gain OPENBLAS_L2_SIZE=256, the variable that amendment 04 of the task adds next to OPENBLAS_CORETYPE=Haswell in tests/test.sh and in the practice service's launcher (environment/setup/setup.sh), so that the record names the environment in which the selection's numbers are reproduced from now on.",
+   "written_utc": "2026-11-18T21:44:37Z"
+  },
+  {
+   "id": "05",
+   "kind": "machine_name_record",
+   "name": "machine_name_in_freeze_record",
+   "previous_selection": {
+    "kept_at": "superseded/amendment05_previous/selection.json",
+    "sha256": "04261437a0e14a2bf66eb6fdb51deda4534d8198a74c6eb50a5b9561187e598d"
+   },
+   "record": "hidden/amendments/05_machine_name_in_freeze_record.json",
+   "sha256": "3fd76196b8fe2e39aa99740c3bcd259ee1b0eed09753430ae8b470f643d88c9a",
+   "what": "The maintainer machine's entry of the freeze's platform record (freeze.platform[0], role 'maintainer machine: freeze, decision, record') named the machine by its host name; amendment 05 of the task replaces that one value by the role name maintainer-workstation, so that the published task folder names no machine, account or local path. The other entry (the machine of stages G, O, R, B and the set checks) is named by a container id, which names no machine, and stays.",
+   "written_utc": "2026-11-18T23:01:26Z"
+  }
+ ],
  "rule": {
   "commit": "e7239137b6ba7c3575c908a40064ae2834a6c9f5",
   "commit_time": "2026-11-16T01:42:48-05:00",

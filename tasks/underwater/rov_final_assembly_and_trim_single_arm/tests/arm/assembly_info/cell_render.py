@@ -51,6 +51,7 @@ def attach_ref(spec, parent, ref, T_in_parent):
             h, w = part.texture.shape[:2]
             tex = spec.add_texture(name=pre + part.name + "_tex", type=mujoco.mjtTexture.mjTEXTURE_2D, width=w, height=h, nchannel=3)
             tex.data = np.ascontiguousarray(part.texture, np.uint8).tobytes()
+            tex.colorspace = mujoco.mjtColorSpace.mjCOLORSPACE_SRGB   # the print is sRGB
             mat.textures[mujoco.mjtTextureRole.mjTEXROLE_RGB] = tex.name
         kw = dict(name=pre + part.name, material=pre + part.name, contype=0, conaffinity=0, group=2, pos=list(part.pos), mass=0.0)
         if part.kind == "mesh":

@@ -19,6 +19,12 @@ Three authoring patterns, one verify stage:
   Use `deprivileged` to deserialize it: `torch.load` as root is grader compromise, and
   the structural absence of a wire is what makes this pattern lock-free.
 
+Whenever the kit starts agent code (`Solver`, `deprivileged`) it first clears the agent's
+account (`clear_agent_account`): the image's desktop session, which runs as that account and
+is restarted by a supervisor, is taken down for good, so that the only processes of the
+account are the ones the grader starts. A grader with a launcher of its own calls
+`clear_agent_account()` before it starts anything as the agent.
+
 Everything here is stdlib-only, and deliberately stays syntax-compatible with old
 interpreters even though the engine now demands more: at verify time ALE stages its own
 `ale_verify` package into the sandbox's `python3` and refuses anything below 3.12, so the
@@ -27,6 +33,7 @@ anyway — it costs nothing, and agent-side copies of the wire (a practice grade
 template) may still run on whatever interpreter a legacy stack carries.
 """
 
+from .account import clear_agent_account
 from .scoring import ratio_rewards, read_anchor, stage_config, zero_verdict
 from .seeds import seed_rng
 from .solver import READY_TIMEOUT_FACTOR, ProbeLock, Solver, SolverAborted, SolverMissing
@@ -39,6 +46,7 @@ __all__ = [
     "SolverAborted",
     "SolverMissing",
     "agent_user",
+    "clear_agent_account",
     "deprivileged",
     "fail",
     "ratio_rewards",

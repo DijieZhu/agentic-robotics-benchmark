@@ -21,18 +21,23 @@ byte-for-byte copies of the development files; their sha256 are pinned by the ma
 
 ## The pinned numerics
 
-The cell's physics is bit-for-bit the same on every x86-64 CPU only with two variables set before any interpreter
+The cell's physics is bit-for-bit the same on every x86-64 CPU only with three variables set before any interpreter
 starts:
 
-    export OPENBLAS_CORETYPE=Haswell NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
+    export OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256 NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"
 
 Without them NumPy's bundled OpenBLAS picks its kernels per CPU (SkylakeX on a host with 512-bit vector units, Haswell on
 others) and NumPy its SIMD paths, and the same episode's state differs in the last bits between two such hosts from the
-first checkpoint on (the outcome, the events and the scores agree; the state hashes do not). The task image sets both
-(`environment/Dockerfile`, its last `ENV`) and `test.sh` exports both again before it starts the verifier. Set the same
-two whenever the cell runs outside the image (a maintainer's direct run, a re-selection, a re-run of the hidden set on
-another machine). The development tree reads the values from these two files (`-dev/tools/pinned_env.py`), so they
-are changed in both places or not at all; a change is a change of the cell's physics.
+first checkpoint on (the outcome, the events and the scores agree; the state hashes do not). `OPENBLAS_L2_SIZE=256`
+keeps the pinned Haswell kernels' own block sizes: without it the OpenBLAS 0.3.34 that NumPy 2.5.3 bundles enlarges
+them on AMD Zen 4 / 5 hosts, and its Haswell float64 matrix kernel then overruns a fixed buffer, so a float64 product
+or solve with an inner dimension above about 300 crashes the process or returns wrong numbers (in any process under
+the pin, an agent's program included); a process whose matrix products all have inner dimensions of 256 or less
+computes the same bits with or without it. The task image sets all three (`environment/Dockerfile`, its last `ENV`)
+and `test.sh` exports them again before it starts the verifier. Set the same three whenever the cell runs outside the
+image (a maintainer's direct run, a re-selection, a re-run of the hidden set on another machine). The development tree
+reads the values from these two files (`-dev/tools/pinned_env.py`), so they are changed in both places or not at all;
+a change is a change of the cell's physics.
 
 ## The fixed hidden set (`hidden/episodes.json`, `hidden/selection.json`, `review/select_set.py`)
 
@@ -89,7 +94,7 @@ What a maintainer must know:
   of the cell's physics (class S). A later change of only the givens' prose, drawings or photos is classified like any
   other change (class N when it changes no number the public route or the layout reads); `select_set.py check` then
   reports it, which by itself does not void the set.
-- Run the cell outside the image with the two pinned numerics variables (above); the selection's host-side checks
+- Run the cell outside the image with the three pinned numerics variables (above); the selection's host-side checks
   (the trim stage, the layouts, the views) refuse to run without them.
 
 ## The maintainers' record and the amendments after the acceptance
