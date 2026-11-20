@@ -61,8 +61,9 @@ PAYLOAD_FILES = ("twin_gate.py", "twin_sim.py", "twin_camera.py", "twin_sim_conf
                  "class_names.json")
 PAYLOAD_DIRS = ("robot",)                       # the walk-probe instrument (C6), copied when present
 PROGRESS_MAX_BYTES = 64 * 1024 * 1024
-# the worker's floating-point code paths (see run_worker); the truth builders run under the same settings
-FP_PINNING = {"NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR", "OPENBLAS_CORETYPE": "Haswell"}
+# the worker's floating-point code paths (see run_worker); the truth was built under the first two
+FP_PINNING = {"NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR", "OPENBLAS_CORETYPE": "Haswell",
+              "OPENBLAS_L2_SIZE": "256"}
 # stats that depend on the clock or the machine: never in the verdict (byte-identical reruns), only in the log
 NONDETERMINISTIC = ("lockdown_s", "verify_s", "verify_budget_s", "worker_budget_s", "worker_s", "worker_peak_rss_mb",
                     "selftest_seconds")
@@ -342,7 +343,10 @@ def run_worker(cfg, sub_dir, budget_s, stats):
         # no MUJOCO_GL: the worker renders nothing, so no GL library is loaded. FP_PINNING: numpy's and OpenBLAS's
         # CPU-dependent code paths are pinned to x86-64-v3 (AVX2 + FMA, no AVX-512), so every verifier of that level
         # computes bit-identical numbers (measured: AVX-512 and AVX2 machines differ in the last bit of np.exp, log,
-        # arccos, arctan2 and LAPACK without it, and agree with it)
+        # arccos, arctan2 and LAPACK without it, and agree with it). OPENBLAS_L2_SIZE: on some AMD CPUs the OpenBLAS
+        # that numpy bundles enlarges its matrix-product blocks for every kernel, the forced one too; a product with a
+        # long inner dimension, which a twin whose units hold many collision geoms makes, then crashes the worker or
+        # comes out different between CPUs. An L2 size of 256 KB keeps the kernel's own blocks.
         env = {"HOME": os.path.join(work, "home"), "PATH": "/usr/bin:/bin", "LANG": "C.UTF-8",
                "PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1",
                "MKL_NUM_THREADS": "1", "TMPDIR": os.path.join(work, "home")}
@@ -553,7 +557,13 @@ def main():
         strict = [c for c in (cfg.get("runtime") or {}).get("timeout_is_task_error", []) if c in keys]
         unfinished = [c for c in strict if c not in sub_crit]
         if how != "finished" and unfinished and g0 == 1.0:
-            # no outcome may come from the wall clock in these stages (the walks)
+            # no outcome may come from the wall clock in these stages (the walks), nor from a worker that crashed (a
+            # signal: a negative exit code, or 128 + the signal's number when runuser started the worker)
+            code = int(stats["worker_exit"])
+            sig = -code if code < 0 else code - 128 if stats["worker_deprivileged"] and 128 < code < 160 else 0
+            if sig > 0 and not stats["worker_timed_out"]:
+                fail("the worker ended on signal %d before %s finished (a crash, not a timeout): the episode is void"
+                     % (sig, ", ".join(unfinished)))
             fail("the worker was %s before %s finished: the verifier ran out of time, the episode is void" % (
                 how, ", ".join(unfinished)))
         for c in keys:
