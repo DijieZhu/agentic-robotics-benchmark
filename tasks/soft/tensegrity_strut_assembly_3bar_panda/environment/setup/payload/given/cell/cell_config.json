@@ -1,0 +1,184 @@
+{
+ "camera_budget_frames": 600,
+ "cell_version": "strut-assembly-cell/1.0.0",
+ "collision": {
+  "bore_channel_radius_m": 0.0036,
+  "note": "cell_manual.md, 'Collision model': a motor module's and an end cap's collision pieces leave a clear channel of this radius around the bore axis"
+ },
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "exclude_fastened_pairs": true,
+  "note": "R2: a module pressed on another body (the bench, a tray, the cradle, a strut core or another module) above part_force_N, normal forces summed per pair, for `ticks` consecutive 10 ms ticks; the pads' grip does not count (pad_force_N null: no limit), nor do contacts between a strut core and the modules fastened on it or between two modules fastened on the same core",
+  "pad_force_N": null,
+  "part_force_N": 30.0,
+  "ticks": 20
+ },
+ "episodes": 3,
+ "fastening": {
+  "hold_ticks": 50,
+  "lid": {
+   "capture_angle_deg": 8.0,
+   "capture_lateral_m": 0.004,
+   "capture_short_of_home_m": 0.003,
+   "fastens_within_deg": 3.0,
+   "fastens_within_m": 0.0015,
+   "needs": "both motor modules of its strut fastened and counting"
+  },
+  "note": "the rules of cell_manual.md, 'Fastening'; the cell reports no fastening",
+  "on_the_rod": {
+   "axial_damping_N_s_m": 0.5,
+   "capture_axis_angle_deg": 5.0,
+   "capture_axis_distance_m": 0.002,
+   "capture_rod_end_in_bore_m": 0.003,
+   "end_cap": {
+    "colour": "the first cap fastened on a strut sets the strut's colour; a cap of another colour fastened on it afterwards does not count",
+    "counts_within_m": 0.0015,
+    "fastens_within_m": 0.0015,
+    "needs": "the motor module of its rod end fastened and counting",
+    "turn": "free"
+   },
+   "motor_module": {
+    "counts_within_deg": 5.0,
+    "counts_within_m": 0.0015,
+    "fastens_within_m": 0.003,
+    "needs": "nothing"
+   },
+   "release_factor": 2.0,
+   "roll_damping_N_m_s_rad": 0.0001
+  },
+  "pull_rate_deg_s": 10.0,
+  "pull_speed_m_s": 0.01,
+  "rel_speed_max_m_s": 0.005,
+  "rest_ang_speed_max_deg_s": 2.0
+ },
+ "held": {
+  "force_N": 1.0,
+  "note": "a module counts as held (statistics only) when both pads press on it with at least force_N for `ticks` ticks",
+  "ticks": 5
+ },
+ "layout": {
+  "cradle": {
+   "jitter_m": 0.01,
+   "nominal_middle_seat_xy_m": [
+    0.01,
+    0.0
+   ],
+   "plate_m": [
+    0.36,
+    0.18,
+    0.02
+   ],
+   "rod_height_m": 0.075,
+   "seat_spacing_m": 0.1,
+   "turned": false
+  },
+  "per_episode": {
+   "end_cap_turn_in_nest": "any",
+   "end_caps_shuffled_over_cap_nests": true,
+   "lid_turned_end_for_end_at_random": true,
+   "motor_module_turn_in_nest": "not the mounting turn; not documented",
+   "motor_modules_shuffled_over_motor_nests": true
+  },
+  "trays": {
+   "jitter_xy_m": 0.02,
+   "jitter_yaw_deg": 10.0,
+   "nests_from_robot_base_axis_m": [
+    0.3,
+    0.62
+   ],
+   "tray_l": {
+    "nominal_xy_m": [
+     -0.33,
+     0.36
+    ],
+    "nominal_yaw_deg": 0.0,
+    "plate_m": [
+     0.66,
+     0.18,
+     0.01
+    ]
+   },
+   "tray_r": {
+    "nominal_xy_m": [
+     -0.3,
+     -0.36
+    ],
+    "nominal_yaw_deg": 180.0,
+    "plate_m": [
+     0.46,
+     0.18,
+     0.01
+    ]
+   }
+  }
+ },
+ "max_ticks_per_step": 500,
+ "note": "the cell's configuration as far as it is public (the cameras' mounts and spreads, the motor modules' turns in their nests and the cell's internal settings are not); lengths in m unless a key says otherwise",
+ "pads": {
+  "condim": 4,
+  "friction": 1.0,
+  "friction_elsewhere": 0.8,
+  "note": "the stock flat fingertip pads of the given hand model, with a stiff contact (solref) and torsional friction (condim 4); `friction` is the pads' sliding friction coefficient, `friction_elsewhere` that between modules, trays, cradle and bench",
+  "profile": "flat",
+  "solref": [
+   0.002,
+   1.0
+  ]
+ },
+ "physics_steps_per_tick": 10,
+ "robot_home_q": [
+  0.0,
+  -1.0,
+  0.0,
+  -2.6,
+  0.0,
+  1.6,
+  0.785
+ ],
+ "rod": {
+  "lateral_force_N": 4.0,
+  "note": "R3: per rod and per side of its bay, the force across the rod (the contacts on the rod beyond the bay plus what the modules taken onto or fastened on that end pass to it, their weight included) above lateral_force_N for `ticks` consecutive ticks",
+  "per_overhang": true,
+  "ticks": 20
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "note": "R1: the robot other than its fingertip pads pressing on the cradle, a tray, the bench, a module or a strut core above panda_force_N (normal forces summed over the robot per body pressed on) in any tick; R4: a module's centre of mass faster than part_speed_m_s",
+  "panda_force_N": 15.0,
+  "part_speed_m_s": 3.0
+ },
+ "settle_s": 0.6,
+ "silence_s": 120.0,
+ "sim_cap_s": 1200.0,
+ "tick_s": 0.01,
+ "wall_cap_s": 2400.0,
+ "weights": {
+  "bay_lid": 1.0,
+  "end_cap": 1.0,
+  "mates": {
+   "bay_lid": 3,
+   "end_cap": 6,
+   "motor_module": 6
+  },
+  "motor_module": 1.5,
+  "total": 18.0
+ }
+}

@@ -1,0 +1,221 @@
+{
+ "schema": "strut-assembly/kit v1",
+ "note": "packing list of the robot's three struts as their modules reach the assembly cell: three strut cores, six motor modules, three bay lids, six end caps with covers (per strut: one core, two motor modules, one lid, two end caps)",
+ "units": "mm, g",
+ "frame_note": "each model file is in its own frame, fixed by the module's own geometry (frame_rule); it is not the mounting frame and says nothing about where on the rod or at which turn about it the module is mounted",
+ "mass_note": "nominal_mass_g is the module's nominal design value (the robot's model data, not a weighing); mass_is_estimate marks a value estimated by the stated rule",
+ "com_note": "com_mm is the module's centre of mass in the frame of its model file, computed from its parts' materials and volumes and scaled to the nominal mass; the model files are visual tessellations (not watertight): do not integrate them",
+ "envelope_note": "envelope_mm = the model file's extent along its x, y, z; box_mm = its two box corners",
+ "purchased_parts": "purchased/purchased_parts.md (the bought parts inside the modules: vendors and part numbers)",
+ "types": {
+  "M0": {
+   "role": "strut core: the electronics bay's base half with the main board and the boards on it, and the aluminium rod through it",
+   "count": 3,
+   "where": "pre-assembled; the three cores are clamped in the cell's cradle (not handled by the robot)",
+   "model_files": [
+    "parts/M0_strut_core.stl"
+   ],
+   "triangles": {
+    "parts/M0_strut_core.stl": 539935
+   },
+   "nominal_mass_g": 65.3,
+   "mass_is_estimate": false,
+   "com_mm": {
+    "parts/M0_strut_core.stl": [
+     -6.1309,
+     -0.0558,
+     3.3618
+    ]
+   },
+   "envelope_mm": {
+    "parts/M0_strut_core.stl": [
+     304.8,
+     34.1103,
+     25.0845
+    ]
+   },
+   "box_mm": {
+    "parts/M0_strut_core.stl": [
+     [
+      -152.4,
+      -16.8951,
+      -12.406
+     ],
+     [
+      152.4,
+      17.2152,
+      12.6784
+     ]
+    ]
+   },
+   "frame_rule": "x = the rod axis; y, z follow the cross-section's minimum-area rectangle up to a small fixed turn about x; origin near the box centre (box_mm gives the box)",
+   "material": "black PLA bay half, green main board with small coloured boards and connectors on it, brass heat-set inserts, black screws, white nylon spacers, aluminium rod",
+   "mass_basis": "the bay's nominal mass less the lid's estimated share, plus the rod"
+  },
+  "M1": {
+   "role": "motor module: slides onto the rod, one on each side of the electronics bay",
+   "count": 6,
+   "where": "loose, in the motor nests of the two parts trays",
+   "model_files": [
+    "parts/M1a_motor_module.stl",
+    "parts/M1b_motor_module.stl"
+   ],
+   "triangles": {
+    "parts/M1a_motor_module.stl": 248731,
+    "parts/M1b_motor_module.stl": 242335
+   },
+   "nominal_mass_g": 58.1,
+   "mass_is_estimate": false,
+   "com_mm": {
+    "parts/M1a_motor_module.stl": [
+     -16.3525,
+     -0.2865,
+     0.2309
+    ],
+    "parts/M1b_motor_module.stl": [
+     -16.3507,
+     -0.288,
+     0.231
+    ]
+   },
+   "envelope_mm": {
+    "parts/M1a_motor_module.stl": [
+     91.0,
+     39.9654,
+     39.9381
+    ],
+    "parts/M1b_motor_module.stl": [
+     91.0,
+     39.9654,
+     39.938
+    ]
+   },
+   "box_mm": {
+    "parts/M1a_motor_module.stl": [
+     [
+      -45.5,
+      -19.9827,
+      -19.969
+     ],
+     [
+      45.5,
+      19.9827,
+      19.969
+     ]
+    ],
+    "parts/M1b_motor_module.stl": [
+     [
+      -45.5,
+      -19.9827,
+      -19.969
+     ],
+     [
+      45.5,
+      19.9827,
+      19.969
+     ]
+    ]
+   },
+   "frame_rule": "x = the bore axis, + towards the end where the battery lead sticks out; y, z from the minimum-area rectangle of the cross-section; origin = box centre",
+   "material": "black PLA enclosures and winch, steel gearmotor, two LiPo pouch cells (the lead of one sticks out of the module's inner end), brass heat-set inserts, black screws, white nylon cable guide ring (M1a only)",
+   "builds_note": "the six motor modules are one design; three of them carry a small cable guide ring (model file parts/M1a_motor_module.stl), three do not (parts/M1b_motor_module.stl); the two model files share one frame, and any of the six fits either end of any rod",
+   "count_by_model_file": {
+    "parts/M1a_motor_module.stl": 3,
+    "parts/M1b_motor_module.stl": 3
+   }
+  },
+  "M2": {
+   "role": "bay lid: goes onto the electronics bay",
+   "count": 3,
+   "where": "loose, in the lid nests of the left parts tray",
+   "model_files": [
+    "parts/M2_bay_lid.stl"
+   ],
+   "triangles": {
+    "parts/M2_bay_lid.stl": 61514
+   },
+   "nominal_mass_g": 31.2,
+   "mass_is_estimate": true,
+   "com_mm": {
+    "parts/M2_bay_lid.stl": [
+     3.4349,
+     -3.3316,
+     -2.406
+    ]
+   },
+   "envelope_mm": {
+    "parts/M2_bay_lid.stl": [
+     143.1106,
+     34.7678,
+     24.5553
+    ]
+   },
+   "box_mm": {
+    "parts/M2_bay_lid.stl": [
+     [
+      -71.5553,
+      -17.1884,
+      -13.0916
+     ],
+     [
+      71.5553,
+      17.5793,
+      11.4637
+     ]
+    ]
+   },
+   "frame_rule": "x = the long axis; y, z follow the cross-section's minimum-area rectangle up to a small fixed turn about x; origin near the box centre (box_mm gives the box)",
+   "material": "black PLA lid with its two long black screws",
+   "mass_rule": "estimate: share of the printed bay halves by solid volume"
+  },
+  "M3": {
+   "role": "end cap with its silicone cover: goes onto a rod end",
+   "count": 6,
+   "where": "loose, in the cap nests of the two parts trays",
+   "model_files": [
+    "parts/M3_end_cap.stl"
+   ],
+   "triangles": {
+    "parts/M3_end_cap.stl": 12908
+   },
+   "nominal_mass_g": 15.1,
+   "mass_is_estimate": false,
+   "com_mm": {
+    "parts/M3_end_cap.stl": [
+     -3.5679,
+     0.0,
+     0.0063
+    ]
+   },
+   "envelope_mm": {
+    "parts/M3_end_cap.stl": [
+     31.5,
+     34.9937,
+     34.9875
+    ]
+   },
+   "box_mm": {
+    "parts/M3_end_cap.stl": [
+     [
+      -15.75,
+      -17.4969,
+      -17.4937
+     ],
+     [
+      15.75,
+      17.4969,
+      17.4937
+     ]
+    ]
+   },
+   "frame_rule": "x = the bore axis, + towards the bore's opening; y, z from the minimum-area rectangle of the cross-section; origin = box centre",
+   "material": "grey resin cap, silicone cover (red, green or blue)",
+   "covers": {
+    "red": 2,
+    "green": 2,
+    "blue": 2
+   },
+   "covers_note": "the six end caps are one design and differ only in the colour of their covers; on three of them the cover sits turned a little about the bore axis relative to the model file (the cover is a body of revolution: no visible difference)"
+  }
+ }
+}

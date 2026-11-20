@@ -1,0 +1,318 @@
+{
+ "budgets": {
+  "camera_frames": 600,
+  "max_ticks_per_step": 500,
+  "silence_abort_s": 120.0,
+  "sim_time_cap_s": 1200.0,
+  "wall_clock_cap_s": 2400.0
+ },
+ "camera_budget_frames": 600,
+ "cameras": {
+  "top": {
+   "depth": true,
+   "mount": "overhead, roughly 1.25 m above the bench near its middle, looking straight down; the image covers the whole working area (the parts trays, the cradle with the struts, the robot base, the bench board); image width roughly along the cell's x",
+   "nominal_hfov_deg": 70,
+   "resolution": [
+    1280,
+    960
+   ],
+   "rgb": true
+  },
+  "wrist": {
+   "depth": true,
+   "mount": "on the Panda hand's +x flank, a few centimetres off the flange axis, tilted towards the fingertips",
+   "nominal_hfov_deg": 80,
+   "resolution": [
+    640,
+    480
+   ],
+   "rgb": true
+  }
+ },
+ "cell_version": "strut-assembly-cell/1.0.0",
+ "control": {
+  "cartesian_angular_limit_rad_s": 1.5,
+  "cartesian_speed_limit_m_s": 0.5,
+  "joint_rate_limit_rad_s": 1.5,
+  "modes": [
+   "joint",
+   "cartesian"
+  ],
+  "stiffness_scale_range": [
+   0.2,
+   1.0
+  ],
+  "tick_s": 0.01
+ },
+ "datums": {
+  "bench_board": {
+   "black_corner_square": "at the board's -x, +y corner",
+   "inner_corner_cell_m": "x = 0.335 + (i - 4.5) x 0.020, y = 0.005 + (3 - j) x 0.020, z = 0.00305 (i = 1..8, j = 1..5)",
+   "lies_flat_on_bench": true,
+   "margin_mm": 20.0,
+   "square_mm": 20.0,
+   "squares": [
+    9,
+    6
+   ],
+   "thickness_mm": 3.0
+  },
+  "cradle": {
+   "nominal_middle_seat_m": [
+    0.01,
+    0.0
+   ],
+   "plate_m": [
+    0.36,
+    0.18,
+    0.02
+   ],
+   "rod_height_m": 0.075,
+   "seat_spacing_m": 0.1,
+   "tolerance_mm": 10.0
+  },
+  "cradle_board": {
+   "margin_mm": 4.0,
+   "mounting": "flat on the cradle plate's top, at its +x edge (away from the robot), centred 152 mm from the cradle's middle seat along x, columns along the cell's y",
+   "note": "moves with the cradle (+-10 mm)",
+   "square_mm": 10.0,
+   "squares": [
+    5,
+    3
+   ],
+   "thickness_mm": 2.0
+  },
+  "frame": "cell frame: origin at the bench-top centre, z up (the bench top is z = 0, 0.994 m above the floor); the robot base at (-0.45, 0, 0) with its axes aligned with the cell frame",
+  "hand_plate": {
+   "black_corner_square": "at the plate's -y, -z corner",
+   "inner_corner_hand_m": "x = -0.03505, y = 0.050 + (i - 2.5) x 0.007, z = 0.020 + (j - 2) x 0.007 (i = 1..4, j = 1..3)",
+   "margin_mm": 3.0,
+   "mounting": "flat on the Panda hand's -x face (hand frame: z = approach along the fingers, y = the closing direction), facing -x",
+   "mounting_tolerance": "about 1 mm / 0.5 deg",
+   "square_mm": 7.0,
+   "squares": [
+    5,
+    4
+   ],
+   "thickness_mm": 1.5
+  }
+ },
+ "fastening": {
+  "lid": "the lid is taken onto its seat within 4 mm across, at most 3 mm short of home and 8 deg; the cell pulls it home at <= 10 mm/s and fastens it when it rests there; it needs both motor modules of its strut fastened and counting first",
+  "rod": "a module with a bore is taken onto the rod once its leading bore mouth is within 2.0 mm of the rod's axis, its axis within 5 deg of the rod's and the rod end at least 3 mm into the bore; it then slides along the rod and turns about it with a little damping while it is held clear of the rod; let go before it is fastened, it tilts until its bore rests on the rod, whose friction holds it (its turn moves by up to about 30 deg as it settles), and it is fastened where it rests (moving slower than 5 mm/s and turning slower than 2 deg/s relative to the strut for 50 consecutive 10 ms ticks, it may still be held) once it is within the fastening window of its seat (cell_manual.md gives the windows); an end cap is taken on only when the motor module of its rod end is fastened and counts; nothing is reported; a fastened module cannot be moved again"
+ },
+ "items": [
+  "3 strut cores (each the electronics bay base with its board and the aluminium rod) clamped in the cradle's seats 100 mm apart, their rods along the cell's y about 75 mm above the bench, the lid's seat facing up; the cradle at about (0.01, 0.00) m (+-10 mm)",
+  "the loose modules (6 motor modules, 3 bay lids, 6 end caps with their covers) resting in the nests of the parts trays; the places of the trays and their turn about the vertical vary between episodes, and so do which nest holds which module, a motor module's turn about its own axis (the nests do not hold the mounting turn), an end cap's turn and a lid's direction (either end first)"
+ ],
+ "robot": {
+  "base_axes": "aligned with the cell frame",
+  "base_pos": [
+   -0.45,
+   0.0,
+   0.0
+  ],
+  "ft_sensor": "6-axis at the hand flange (hand frame); noise ~0.3 N / 0.02 N m rms, an unknown per-episode bias up to 1 N / 0.05 N m; it includes the hand's own weight",
+  "gravity_compensated": true,
+  "gripper": {
+   "force_model": "2500 N/m x (object width - target width) / 2 per finger, capped at 60 N",
+   "max_width_m": 0.08,
+   "pad_size_m": [
+    0.017,
+    0.0165
+   ],
+   "pads": "stock flat pads",
+   "rate_m_s": 0.05
+  },
+  "home_q": [
+   0.0,
+   -1.0,
+   0.0,
+   -2.6,
+   0.0,
+   1.6,
+   0.785
+  ],
+  "joint_range": [
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -1.7628,
+    1.7628
+   ],
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -3.0718,
+    -0.0698
+   ],
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -0.0175,
+    3.7525
+   ],
+   [
+    -2.8973,
+    2.8973
+   ]
+  ],
+  "joints": [
+   "panda/joint1",
+   "panda/joint2",
+   "panda/joint3",
+   "panda/joint4",
+   "panda/joint5",
+   "panda/joint6",
+   "panda/joint7"
+  ],
+  "model": "7-DoF Panda-class arm (given model: panda/)",
+  "tcp_offset_in_hand_m": [
+   0.0,
+   0.0,
+   0.1034
+  ],
+  "tcp_site": "tcp"
+ },
+ "safety": {
+  "panda_force_N": 15.0,
+  "part_force_N": 30.0,
+  "part_force_window_s": 0.2,
+  "part_speed_m_s": 3.0,
+  "rod_lateral_force_N": 4.0,
+  "rod_window_s": 0.2,
+  "rules": [
+   "R1: the robot (any link or finger surface other than the two fingertip pads) pressing on the cradle, a tray, the bench, a module or a strut core above panda_force_N (normal forces summed over the robot per body it presses on) in any tick",
+   "R2: a module pressed on the environment or another module above part_force_N for part_force_window_s (normal forces summed per module and body; the pads' grip does not count, nor do two modules fastened to each other)",
+   "R3: the rod loaded across its axis above rod_lateral_force_N for rod_window_s on either side of the bay (everything the rod carries there: contacts and the modules on it, their weight included)",
+   "R4: a module's centre of mass faster than part_speed_m_s"
+  ]
+ },
+ "task": "assemble the 3 struts on the cradle: on each, slide two motor modules onto the rod, one on each side of the electronics bay, at their design position and turn; put a bay lid on the bay; push an end cap onto each rod end (both caps of a strut of one colour; each strut may take any colour), as the picture manual shows",
+ "trays": {
+  "tray_frame": "origin on the plate's top face at its centre; x across the nests, y along the modules' axes (a module's bore axis lies along y, the battery leads' end of a motor module and the bore mouth of an end cap towards -y)",
+  "trays": {
+   "tray_l": {
+    "nests": [
+     {
+      "kind": "lid",
+      "nest": "l_lid1",
+      "x_in_tray_m": -0.285,
+      "y_in_tray_m": 0.0
+     },
+     {
+      "kind": "lid",
+      "nest": "l_lid2",
+      "x_in_tray_m": -0.225,
+      "y_in_tray_m": 0.0
+     },
+     {
+      "kind": "lid",
+      "nest": "l_lid3",
+      "x_in_tray_m": -0.165,
+      "y_in_tray_m": 0.0
+     },
+     {
+      "kind": "cap",
+      "nest": "l_cap1",
+      "x_in_tray_m": -0.09,
+      "y_in_tray_m": 0.055
+     },
+     {
+      "kind": "motor",
+      "nest": "l_motor1",
+      "x_in_tray_m": -0.015,
+      "y_in_tray_m": -0.025
+     },
+     {
+      "kind": "cap",
+      "nest": "l_cap2",
+      "x_in_tray_m": 0.06,
+      "y_in_tray_m": 0.055
+     },
+     {
+      "kind": "motor",
+      "nest": "l_motor2",
+      "x_in_tray_m": 0.135,
+      "y_in_tray_m": -0.025
+     },
+     {
+      "kind": "cap",
+      "nest": "l_cap3",
+      "x_in_tray_m": 0.21,
+      "y_in_tray_m": 0.055
+     },
+     {
+      "kind": "motor",
+      "nest": "l_motor3",
+      "x_in_tray_m": 0.285,
+      "y_in_tray_m": -0.025
+     }
+    ],
+    "nominal_place": "around (-0.33, 0.36) m, turned 0 deg about the vertical (its -y towards the cradle)",
+    "plate_m": [
+     0.66,
+     0.18,
+     0.01
+    ]
+   },
+   "tray_r": {
+    "nests": [
+     {
+      "kind": "motor",
+      "nest": "r_motor1",
+      "x_in_tray_m": -0.1875,
+      "y_in_tray_m": -0.025
+     },
+     {
+      "kind": "cap",
+      "nest": "r_cap1",
+      "x_in_tray_m": -0.1125,
+      "y_in_tray_m": 0.055
+     },
+     {
+      "kind": "motor",
+      "nest": "r_motor2",
+      "x_in_tray_m": -0.0375,
+      "y_in_tray_m": -0.025
+     },
+     {
+      "kind": "cap",
+      "nest": "r_cap2",
+      "x_in_tray_m": 0.0375,
+      "y_in_tray_m": 0.055
+     },
+     {
+      "kind": "motor",
+      "nest": "r_motor3",
+      "x_in_tray_m": 0.1125,
+      "y_in_tray_m": -0.025
+     },
+     {
+      "kind": "cap",
+      "nest": "r_cap3",
+      "x_in_tray_m": 0.1875,
+      "y_in_tray_m": 0.055
+     }
+    ],
+    "nominal_place": "around (-0.30, -0.36) m, turned 180 deg about the vertical (its -y towards the cradle)",
+    "plate_m": [
+     0.46,
+     0.18,
+     0.01
+    ]
+   }
+  }
+ },
+ "units": {
+  "angle": "rad",
+  "length": "m",
+  "quaternion": "wxyz"
+ }
+}
