@@ -152,9 +152,9 @@ class CommissioningService(unittest.TestCase):
         self.assertEqual((BENCH["episode_steps"], BENCH["lid_hold"], BENCH["lid_shut"], BENCH["lid_opened"]),
                          (ep["EPISODE_STEPS"], ep["LID_HOLD"], ep["LID_SHUT"], ep["LID_OPENED"]))
         self.assertEqual((BENCH["window_steps"], BENCH["reset_steps"], BENCH["max_benches"], BENCH["silence_s"]),
-                         (144000, 300, 2, 120))
+                         (48000, 300, 2, 120))
         text = flat(INSTRUCTION)
-        for words in ("144,000 control steps in all", "4 hours of bench time at 10 Hz", "Staging a bench costs 300 steps",
+        for words in ("48,000 control steps in all", "80 minutes of bench time at 10 Hz", "Staging a bench costs 300 steps",
                       "Two connections", "a third is answered `busy`", "silent for 120 s is closed",
                       "`commissioning_window_used`", "units `d0`, `d1` and `d2`", "none of them a scored unit",
                       "no credit, and no word on how a worklist went",
@@ -299,6 +299,36 @@ class Grader(unittest.TestCase):
         self.assertIn("clock.timed(GuardedSolver", run)
         self.assertNotIn("clear_agent_account", run)
         self.assertNotIn("clear_account=False", src)                  # the kit's own call stays on
+
+
+    def test_a_controllers_arithmetic_is_pinned_in_both_images_and_checked(self):
+        """The same submission must score the same on every grading host: both images carry one pin (NumPy's
+        dispatch groups by this numpy's names, BLAS on one thread, OpenCV's IPP), the instruction names it, and the
+        numerics check hashes a controller's math beside the simulation's."""
+        agent, grader = (TASK / "environment/Dockerfile").read_text(), (TASK / "tests/Dockerfile").read_text()
+        pin = agent[agent.index("ENV OPENBLAS_CORETYPE=Haswell"):agent.index("[image] numerics pin OK")]
+        self.assertIn(pin, grader)
+        for line in ('os.environ.setdefault("NPY_DISABLE_CPU_FEATURES", "X86_V4 AVX512_ICL AVX512_SPR")',
+                     'os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")', 'os.environ.setdefault("OMP_NUM_THREADS", "1")',
+                     'os.environ.setdefault("OPENCV_IPP", "avx2")', "-W error::ImportWarning",
+                     "set(e['NPY_DISABLE_CPU_FEATURES'].split()) == set(D) - {'X86_V3'}"):
+            self.assertIn(line, pin)
+        self.assertNotIn('"AVX512_SKX"', pin)                         # numpy 2.5 rejects the old names and disables nothing
+        text = flat(INSTRUCTION)
+        for words in ("`OPENBLAS_CORETYPE=Haswell`", "`OPENBLAS_NUM_THREADS=1`", "`NPY_DISABLE_CPU_FEATURES`",
+                      "`OPENCV_IPP=avx2`", "A variable that you set yourself is kept"):
+            self.assertIn(words, text)
+        ref = json.loads((TASK / "tests/numerics.json").read_text())
+        self.assertEqual(set(ref), {"fingerprint", "simulation", "math", "steps", "seed", "what"})
+        self.assertTrue({"cv2", "scipy", "big", "trig_float64", "exp_float32", "lin_781"} <= set(ref["math"]))
+        h = hashlib.sha256()
+        h.update(ref["simulation"].encode())
+        h.update(json.dumps(ref["math"], sort_keys=True).encode())
+        self.assertEqual(h.hexdigest(), ref["fingerprint"])
+        check = (TASK / "tests/numerics_check.py").read_text()
+        self.assertIn('CONTROLLER_ENV = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/tmp", "LANG": "C.UTF-8"}', check)
+        self.assertIn('"PATH=/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME=/home/user", "LANG=C.UTF-8"',
+                      (TASK / "tests/verify.py").read_text())
 
 
 if __name__ == "__main__":

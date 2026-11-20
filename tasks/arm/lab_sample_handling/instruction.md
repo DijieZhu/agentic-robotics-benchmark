@@ -77,9 +77,9 @@ limited time.
   - `status()` returns the window's count.
 - **How an episode ends there.** As a graded one does: after 20000 steps, 20 steps after the lid is shut, or at an
   unstable simulation. It does not end because a worklist is complete, and the service does not say whether it is.
-- **The window.** 144,000 control steps in all, which is 4 hours of bench time at 10 Hz (a spare bench for half a
-  working day; a graded episode is at most 20,000 steps). Staging a bench costs 300 steps (half a minute to set
-  it up). The count is kept by the service and survives reconnects; `/run/labbench/commission_status.json` shows
+- **The window.** 48,000 control steps in all, which is 80 minutes of bench time at 10 Hz (a spare bench for part
+  of a morning; a graded episode is at most 20,000 steps, so the window holds few whole worklists: test the parts of
+  the job, and plan what a whole run is spent on). Staging a bench costs 300 steps (half a minute to set it up). The count is kept by the service and survives reconnects; `/run/labbench/commission_status.json` shows
   it. Once it is used up, every `reset` and `step` answers `commissioning_window_used`. Nothing gives steps back.
 - **Benches at a time.** Two connections, each with one bench; a third is answered `busy`. A connection silent for
   120 s is closed. The benches run on your sandbox's CPUs; a control step takes about 30 ms of wall time
@@ -103,8 +103,11 @@ how the worklist went. `--images DIR` saves what the cameras show at the start a
 
 Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's model files, the
 Panda's among them). There is no network. The sandbox has 4 CPUs and 12 GB of memory, while grading too. Every
-`/opt/venv` Python runs NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell` with
-`OPENBLAS_L2_SIZE=256`, which the image also sets when the variables are missing), here and in the graded run.
+`/opt/venv` Python computes the same here and in the graded run, on whatever machine: the image sets, when the
+variables are missing, NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell` with
+`OPENBLAS_L2_SIZE=256`) and on one thread (`OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`), NumPy without its
+AVX-512 loops (`NPY_DISABLE_CPU_FEATURES`) and OpenCV's IPP at AVX2 (`OPENCV_IPP=avx2`). A variable that you set
+yourself is kept, and your results may then depend on the grading machine's CPU.
 
 ## Credit
 
@@ -185,8 +188,8 @@ large (the rack image alone is about 1.2 MB on the wire), so ask for one only wh
   so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
   again before every decision that depends on the time left, and whenever you pick the work up from notes or from
   a summary of what was done. Do not estimate the time used from how much you have done.
-- Three other counts in this task are not your session's time: the commissioning window (144,000 control steps;
-  its "4 hours of bench time" pass several times faster than real time, at about 30 ms a step), an episode's
+- Three other counts in this task are not your session's time: the commissioning window (48,000 control steps;
+  its "80 minutes of bench time" pass several times faster than real time, at about 30 ms a step), an episode's
   length (20000 steps are 33 simulated minutes and about 10 minutes of wall time on a development bench) and
   the controller's 9000 s budget at grading. None of them says how much of the 2 hours is left.
 

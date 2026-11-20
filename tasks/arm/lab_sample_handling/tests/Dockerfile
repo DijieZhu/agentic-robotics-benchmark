@@ -18,30 +18,45 @@ RUN python3 -m venv /opt/venv \
 # Numerics. The simulation's operational-space controller calls LAPACK every physics step, and NumPy's OpenBLAS picks
 # its kernels by CPU: on another kernel the simulation differs from the first step. OPENBLAS_CORETYPE=Haswell pins the
 # kernels in this image and in the grading image; the .pth sets it for a /opt/venv Python that is started without the
-# variable too (the grader starts run.sh with PATH, HOME and LANG only), and takes NumPy's AVX-512 code paths out on a
-# CPU that has them, so that a development run here and the graded run compute the same on every machine. The grader
-# checks it (tests/numerics_check.py) and refuses to grade on a machine that computes differently.
+# variable too (the grader starts run.sh with PATH, HOME and LANG only), so that a development run here and the graded
+# run compute the same on every machine. The grader checks it (tests/numerics_check.py) and refuses to grade on a
+# machine that computes differently.
 # OPENBLAS_L2_SIZE=256 guards the pin: the OpenBLAS bundled with numpy 2.5.2 to 2.5.5 (2.5.4 here) raises its block
 # size on AMD Zen 4 / Zen 5 hosts even for a forced kernel, and the Haswell kernel can then crash or differ in the
 # last bits for float64 products with an inner dimension above about 300 (none in the simulator; a controller's
 # own products may be that large). It keeps the block at 256 on every host.
+# The .pth pins a controller's own arithmetic as well, which the kernels alone do not (the same submission scored
+# 8 of 12 episodes on an AVX2 host and 7 of 12 on an AVX-512 host: np.arctan2 differed in the last bit):
+#   * NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR" takes NumPy's AVX-512 loops out (arctan2, exp, log,
+#     power, arcsin, cbrt and others run SVML there and round differently). These are the names of numpy 2.5's
+#     dispatch groups: the names of numpy 1.x / 2.0-2.2 (AVX512F, AVX512_SKX, ...) are rejected by this numpy, with an
+#     ImportWarning that nobody sees, and disable nothing. The build fails below if this numpy does not know a name;
+#   * OPENBLAS_NUM_THREADS=1 and OMP_NUM_THREADS=1: a threaded product is split by the host's core count and sums
+#     in another order;
+#   * OPENCV_IPP=avx2: OpenCV's IPP picks its code by CPU (a float cubic resize and matchTemplate differ between an
+#     AVX2 and an AVX-512 host), and OPENCV_CPU_DISABLE=AVX512-SKX on a CPU that has it (OpenCV prints a warning for
+#     a feature the CPU lacks, so it is set only there).
+# Each is a default: a variable that is already set is kept.
 ENV OPENBLAS_CORETYPE=Haswell OPENBLAS_L2_SIZE=256
 RUN printf '%s\n' \
       'import os' \
       'os.environ.setdefault("OPENBLAS_CORETYPE", "Haswell")' \
       'os.environ.setdefault("OPENBLAS_L2_SIZE", "256")' \
+      'os.environ.setdefault("NPY_DISABLE_CPU_FEATURES", "X86_V4 AVX512_ICL AVX512_SPR")' \
+      'os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")' \
+      'os.environ.setdefault("OMP_NUM_THREADS", "1")' \
+      'os.environ.setdefault("OPENCV_IPP", "avx2")' \
       'try:' \
       '    with open("/proc/cpuinfo") as _f:' \
       '        _flags = set(_f.read().split())' \
       'except OSError:' \
       '    _flags = set()' \
-      '_have = [n for n, f in (("AVX512F", "avx512f"), ("AVX512CD", "avx512cd"), ("AVX512_SKX", "avx512bw"), ("AVX512_CLX", "avx512_vnni"), ("AVX512_CNL", "avx512ifma"), ("AVX512_ICL", "avx512_vbmi2"), ("AVX512_SPR", "avx512_fp16")) if f in _flags]' \
-      'if _have:' \
-      '    os.environ.setdefault("NPY_DISABLE_CPU_FEATURES", " ".join(_have))' \
+      'if "avx512f" in _flags:' \
+      '    os.environ.setdefault("OPENCV_CPU_DISABLE", "AVX512-SKX")' \
       > /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.py \
     && printf '%s\n' 'import lab_numerics_pin' > /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.pth \
     && chmod 0644 /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.py /opt/venv/lib/python3.12/site-packages/lab_numerics_pin.pth \
-    && env -u OPENBLAS_CORETYPE -u OPENBLAS_L2_SIZE /opt/venv/bin/python3 -I -c "import os; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell' and os.environ.get('OPENBLAS_L2_SIZE') == '256'; import numpy; print('[image] numerics pin OK')"
+    && env -i PATH=/opt/venv/bin:/usr/bin:/bin HOME=/tmp /opt/venv/bin/python3 -I -W error::ImportWarning -c "import os; e = os.environ; assert (e.get('OPENBLAS_CORETYPE'), e.get('OPENBLAS_L2_SIZE'), e.get('OPENBLAS_NUM_THREADS'), e.get('OMP_NUM_THREADS'), e.get('OPENCV_IPP')) == ('Haswell', '256', '1', '1', 'avx2'), dict(e); import numpy; from numpy._core._multiarray_umath import __cpu_dispatch__ as D, __cpu_features__ as F; assert set(e['NPY_DISABLE_CPU_FEATURES'].split()) == set(D) - {'X86_V3'}, D; assert [k for k in D if F[k]] in ([], ['X86_V3']), [k for k in D if F[k]]; print('[image] numerics pin OK', D)"
 
 # Software rendering for MuJoCo: Mesa OSMesa (llvmpipe, no display or device needed), checked below as the agent user.
 RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 \
