@@ -1,0 +1,10 @@
+# freeflyer_uncrewed_station_caretaking: the ONE list of Python dependencies of the task image (/opt/venv, Python 3.12).
+# Pinned to the versions the cell, its firmware, the frame renderer, the site generator, the reference program and the
+# selection of the hidden set were developed and measured with (PyPI wheels; the sibling task
+# quadruped_hazardous_plant_inspection pins the same five). numpy, scipy and opencv-python-headless are the packages a
+# submitted program may import besides the standard library (instruction.md); Pillow is the frame encoder of the cell.
+mujoco==3.14.0
+numpy==2.5.4
+scipy==1.18.1
+pillow==13.0.0
+opencv-python-headless==5.0.0.93

@@ -1,0 +1,52 @@
+{
+ "schema": "telemetry_sample_record/1",
+ "about": "Station records that go with l3_72h.csv, a 72 h log of the rehearsal module L3 (one cabin air unit with two return inlets) from a crewed period: the configuration record and the advisory log as mission() returns them for a sortie, and the two events the crew logged during the sample. Times are on the sample's own axis (t_min counts the rows from 0, one row per minute; a row is the mean of the minute that starts at t_min).",
+ "log_file": "l3_72h.csv",
+ "rows": 4320,
+ "row_period_min": 1,
+ "columns": [
+  "t_min",
+  "cau.L3.return_dp_a",
+  "cau.L3.return_dp_b",
+  "cau.L3.fan_speed",
+  "cau.L3.fan_current",
+  "co2.L3",
+  "cabin.L3.temp",
+  "cabin.L3.dew_point"
+ ],
+ "config_record": {
+  "units": {
+   "CAU-L3": {
+    "build": "pad-type",
+    "clean_reference_pa": 40.9,
+    "advisory_limit_pa": 57.3,
+    "fan_stop": "allowed",
+    "inhibit_reason": null
+   }
+  },
+  "lights": {
+   "L3": "general"
+  }
+ },
+ "advisory_log": [
+  {
+   "unit": "CAU-L3",
+   "t_min": 3519,
+   "mean_pa": 57.52,
+   "limit_pa": 57.3
+  }
+ ],
+ "known_events": [
+  {
+   "kind": "filter medium change",
+   "cabin_air_unit": "CAU-L3",
+   "t_min": 589
+  },
+  {
+   "kind": "temporary occlusion of a return inlet by a crew item",
+   "inlet": "RI-L3-1",
+   "from_t_min": 3511,
+   "to_t_min": 3744
+  }
+ ]
+}

@@ -1,0 +1,868 @@
+{
+ "contract_sha256": "90808413bbeb85d75369edc27fc13a1ef8801c4f63769d9ce7abda5edc6c6a74",
+ "contract_version": "1.2.3",
+ "placeholders": {
+  "station.advisory.factor": "PH08"
+ },
+ "reference": {
+  "neutral_names": "0.3.1",
+  "neutral_names_sha256": "73efe0984aa82d5dd557825dafd9cf7d67a71c017c79de8aea0b36fba4dbdfdb",
+  "reference_build": "v1.2",
+  "robot_values": "0.3.3",
+  "robot_values_sha256": "9afc2295e7cd800b5b0480e28f2608facd4f937fc89346337d8d01b4b16f0047",
+  "simulation_package": "0.4.0"
+ },
+ "rule": "Runtime copy of the task's numbers (generated; do not edit by hand). Values of the reference robot are read by key from the vendored robot value table. Grader thresholds are not in this file.",
+ "schema": "caretaking.site_spec_runtime/1",
+ "task": "freeflyer_uncrewed_station_caretaking",
+ "units": {
+  "cell.budget.capture_calls": "calls",
+  "cell.budget.colour_frames": "frames",
+  "cell.budget.depth_frames": "frames",
+  "cell.budget.program_compute_s": "s",
+  "cell.budget.silence_s": "s",
+  "cell.budget.sim_time_s": "s",
+  "cell.contract.allowed_packages": "-",
+  "cell.contract.import_check": "s",
+  "cell.contract.max_submission_mb": "MB",
+  "cell.contract.min_steps_per_site": "calls",
+  "cell.contract.python_flags": "-",
+  "cell.fault_rerun": "runs",
+  "cell.forbidden_reply": "-",
+  "cell.recipe.cone": "-",
+  "cell.recipe.dt_s": "s",
+  "cell.recipe.env": "-",
+  "cell.recipe.impratio": "-",
+  "cell.recipe.integrator": "-",
+  "cell.recipe.suction_aero_hz": "Hz",
+  "cell.record_period_s": "s",
+  "cell.report_counted": "-",
+  "cell.settle_after_exit_s": "s",
+  "cell.step_max_dt_s": "s",
+  "datasheet.fan_stop.effects_s": "s",
+  "datasheet.inlet.air_speeds_m_s": "m/s",
+  "datasheet.inlet.dp_range_pa": "Pa",
+  "datasheet.station_rules": "-",
+  "datasheet.stowage_unit": "m/s, N, pouches",
+  "datasheet.telemetry_sample": "-",
+  "firmware.arm.current_lsb_a": "A",
+  "firmware.arm.torque_per_amp_nm": "N m/A",
+  "firmware.battery.low_flag_pct": "%",
+  "firmware.battery.other_w": "W",
+  "firmware.battery.pct_resolution": "%",
+  "firmware.capture.align_att_tol_deg": "deg",
+  "firmware.capture.align_out_m": "m",
+  "firmware.capture.align_speed_m_s": "m/s",
+  "firmware.capture.align_tol_m": "m",
+  "firmware.capture.approach": "-, m/s",
+  "firmware.capture.close_depth_mm": "mm",
+  "firmware.capture.close_settle_s": "s",
+  "firmware.capture.deployed_tol_deg": "deg",
+  "firmware.capture.detector_hz": "Hz",
+  "firmware.capture.detector_noise": "mm, deg",
+  "firmware.capture.gate": "cm, deg",
+  "firmware.capture.lock_mean_of": "measurements",
+  "firmware.capture.lost_bar_s": "s",
+  "firmware.capture.no_bar_s": "s",
+  "firmware.capture.progress_m": "m",
+  "firmware.capture.stalled_s": "s",
+  "firmware.capture.timeout_s": "s",
+  "firmware.dock.approach_zone": "m",
+  "firmware.dock.att_tolerance_deg": "deg",
+  "firmware.dock.cone_half_angle_deg": "deg",
+  "firmware.fiducial.check_hz": "Hz",
+  "firmware.fly_rel.loss_hold_s": "s",
+  "firmware.fly_rel.min_visible_markers": "markers",
+  "firmware.fly_rel.settle_s": "s",
+  "firmware.fly_rel.view_cone_deg": "deg",
+  "firmware.fly_to.timeout_extra_s": "s",
+  "firmware.lamp.power_w": "W",
+  "firmware.lighting.feature_factor": "-",
+  "firmware.zone.arm_deployed_tol_deg": "deg",
+  "firmware.zone.arm_envelope_margin_m": "m",
+  "firmware.zone.inflation_arm_m": "m",
+  "layout.candidates_per_cell": "candidates",
+  "layout.cell.H2xP": "-",
+  "layout.cell.H2xS": "-",
+  "layout.cell.L1xP": "-",
+  "layout.cell.L1xS": "-",
+  "layout.cell.L2xP": "-",
+  "layout.cell.L2xS": "-",
+  "layout.counts": "sites",
+  "layout.robustness_perturb_um": "um",
+  "layout.seed_rule": "-",
+  "layout.sites": "sites",
+  "layout.tiers": "-",
+  "reference.hint_range_m": "m",
+  "reference.place_flyby": "m, m/s",
+  "reference.place_press": "mm, m/s, s, m",
+  "reference.probe_backoff_min_m": "m",
+  "reference.retries": "attempts",
+  "reference.s_tier_backoff_m": "m",
+  "rehearsal.budget": "min, runs",
+  "rehearsal.cards": "-",
+  "rehearsal.l3": "-",
+  "render.depth_noise_frac": "of range",
+  "render.exposure_gain": "x",
+  "render.near_clip_m": "m",
+  "station.advisory.factor": "x clean reference",
+  "station.advisory.margin_sigma": "-, Pa",
+  "station.advisory.mean_window_min": "min",
+  "station.decoy.slow_drift": "Pa, h",
+  "station.fan.released_below_dp_pa": "Pa",
+  "station.fan.tau_s": "s",
+  "station.fan_stop.auto_restart_s": "s",
+  "station.fan_stop.max_per_unit": "stops",
+  "station.fan_stop.min_gap_s": "s",
+  "station.lights.requests_per_mission": "requests",
+  "station.telemetry.cabin_accuracy_c": "degC",
+  "station.telemetry.co2": "min, %",
+  "station.telemetry.dp_accuracy_pa": "Pa",
+  "station.telemetry.fan_accuracy_pct": "%",
+  "station.telemetry.imd_survey_age_days": "days",
+  "station.telemetry.live_hz": "Hz",
+  "station.telemetry.log": "min, h",
+  "station.ventilation.inlet_flow_cfm": "cfm",
+  "station.ventilation.inter_module_cfm": "cfm",
+  "world.airflow": "-, cfm",
+  "world.battery_start_pct": "%",
+  "world.berths": "-",
+  "world.blocker.family": "-",
+  "world.blocker.fixture": "s, N",
+  "world.blocker.fixture_repeat_record": "s, N",
+  "world.blocker.hold_N": "N",
+  "world.blocker.placement": "deg, m, m2",
+  "world.grasp_bar": "mm, m",
+  "world.inlet.frame_m": "m",
+  "world.inlet.k_face": "-",
+  "world.inlet.opening_area_m2": "m2",
+  "world.inlet.opening_m": "m",
+  "world.inlet.r_face": "Pa s/m",
+  "world.inlet.slats": "-",
+  "world.inlets.per_module": "inlets",
+  "world.modules": "-",
+  "world.moved_stowage_unit_max_m": "m",
+  "world.observability.bar_view_range_m": "m",
+  "world.onset_h_before": "h",
+  "world.pouch.count": "pouches",
+  "world.pouch.family": "m, kg, mm",
+  "world.pouch.placement": "-, m2, N",
+  "world.pouch.rules": "-",
+  "world.pregrasp": "m, -",
+  "world.register": "entries",
+  "world.register.catalogue_photos_per_class": "photos",
+  "world.register.classes": "-",
+  "world.scene.counts": "-",
+  "world.settle": "s, %, mm",
+  "world.stowage_unit.approach_zone": "m",
+  "world.stowage_unit.blower": "m/s, cfm, Pa",
+  "world.stowage_unit.fiducial_plate_m": "m",
+  "world.stowage_unit.moved": "m",
+  "world.stowage_unit.outline_m": "m",
+  "world.stowage_unit.pad_plate": "-, %, m",
+  "world.stowage_unit.pouch_pad": "m, m2",
+  "world.stowage_unit.prescreen_normal_flow": "m, cm/s",
+  "world.stowage_unit.registered": "m",
+  "world.stowage_unit.release_test": "m, -, s, -",
+  "world.stowage_unit.screen": "m, m2, mm",
+  "world.stowage_unit.siting": "mm, m, cm",
+  "world.units.max_element_type": "units"
+ },
+ "values": {
+  "cell.budget.capture_calls": 20,
+  "cell.budget.colour_frames": 400,
+  "cell.budget.depth_frames": 300,
+  "cell.budget.program_compute_s": 600,
+  "cell.budget.silence_s": 120,
+  "cell.budget.sim_time_s": 2400,
+  "cell.contract.allowed_packages": [
+   "numpy",
+   "opencv-python-headless",
+   "scipy"
+  ],
+  "cell.contract.import_check": {
+   "cpu_s": 120,
+   "wall_s": 120
+  },
+  "cell.contract.max_submission_mb": 60,
+  "cell.contract.min_steps_per_site": 1,
+  "cell.contract.python_flags": "-B -E -s",
+  "cell.fault_rerun": 1,
+  "cell.forbidden_reply": "forbidden",
+  "cell.recipe.cone": "elliptic",
+  "cell.recipe.dt_s": 0.002,
+  "cell.recipe.env": {
+   "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL",
+   "OPENBLAS_CORETYPE": "Haswell"
+  },
+  "cell.recipe.impratio": 10,
+  "cell.recipe.integrator": "implicitfast",
+  "cell.recipe.suction_aero_hz": 50,
+  "cell.record_period_s": 0.5,
+  "cell.report_counted": "first",
+  "cell.settle_after_exit_s": 60,
+  "cell.step_max_dt_s": 5,
+  "datasheet.fan_stop.effects_s": {
+   "overhang_tilt_from": 40,
+   "untouched_still_within": 20
+  },
+  "datasheet.inlet.air_speeds_m_s": {
+   "at_10cm": [
+    0.15,
+    0.25
+   ],
+   "background_at_20_30cm": 0.1,
+   "face_mean": 0.4
+  },
+  "datasheet.inlet.dp_range_pa": {
+   "element": [
+    140,
+    240
+   ],
+   "pad": [
+    20,
+    65
+   ]
+  },
+  "datasheet.station_rules": {
+   "no_item_on_the_dock": true,
+   "pad_takes": "pouch",
+   "screen_takes": "sheet"
+  },
+  "datasheet.stowage_unit": {
+   "face_speed_m_s": 0.015,
+   "pad_capacity": 1,
+   "pouch_hold_N": 1,
+   "sheet_hold_N": [
+    4,
+    5
+   ]
+  },
+  "datasheet.telemetry_sample": {
+   "format": "csv",
+   "hours": 72,
+   "module": "L3",
+   "row_period_min": 1
+  },
+  "firmware.arm.current_lsb_a": 0.00269,
+  "firmware.arm.torque_per_amp_nm": 1.47,
+  "firmware.battery.low_flag_pct": 25,
+  "firmware.battery.other_w": 42.8,
+  "firmware.battery.pct_resolution": 0.1,
+  "firmware.capture.align_att_tol_deg": 10.0,
+  "firmware.capture.align_out_m": 0.2,
+  "firmware.capture.align_speed_m_s": 0.03,
+  "firmware.capture.align_tol_m": 0.012,
+  "firmware.capture.approach": {
+   "mode": "FINE",
+   "speed_m_s": 0.02
+  },
+  "firmware.capture.close_depth_mm": {
+   "item_bar": 98,
+   "map_handrail": 82
+  },
+  "firmware.capture.close_settle_s": 1.5,
+  "firmware.capture.deployed_tol_deg": 3.0,
+  "firmware.capture.detector_hz": 5,
+  "firmware.capture.detector_noise": {
+   "axis_deg": 3,
+   "position_mm": 5
+  },
+  "firmware.capture.gate": {
+   "axis_deg": 8,
+   "position_cm": 4
+  },
+  "firmware.capture.lock_mean_of": 3,
+  "firmware.capture.lost_bar_s": 3.0,
+  "firmware.capture.no_bar_s": 5,
+  "firmware.capture.progress_m": 0.005,
+  "firmware.capture.stalled_s": 20,
+  "firmware.capture.timeout_s": 150,
+  "firmware.dock.approach_zone": {
+   "normal_m": 1.0,
+   "outline_margin_m": 0.2
+  },
+  "firmware.dock.att_tolerance_deg": 10,
+  "firmware.dock.cone_half_angle_deg": 6,
+  "firmware.fiducial.check_hz": 15,
+  "firmware.fly_rel.loss_hold_s": 20.0,
+  "firmware.fly_rel.min_visible_markers": 3,
+  "firmware.fly_rel.settle_s": 1.0,
+  "firmware.fly_rel.view_cone_deg": 40,
+  "firmware.fly_to.timeout_extra_s": 30,
+  "firmware.lamp.power_w": 3.3,
+  "firmware.lighting.feature_factor": {
+   "general": 1.0,
+   "night": 0.05,
+   "off": 0.0
+  },
+  "firmware.zone.arm_deployed_tol_deg": 5,
+  "firmware.zone.arm_envelope_margin_m": 0.5,
+  "firmware.zone.inflation_arm_m": 0.5,
+  "layout.candidates_per_cell": 6,
+  "layout.cell.H2xP": {
+   "advisory": "none",
+   "battery": "high",
+   "blocked_unit_limit": "either",
+   "light_circuit": "ok",
+   "module": "H2",
+   "stowage_unit": "moved",
+   "tier": "P"
+  },
+  "layout.cell.H2xS": {
+   "advisory": "none",
+   "battery": "low",
+   "blocked_unit_limit": "below",
+   "light_circuit": "ok",
+   "module": "H2",
+   "stowage_unit": "moved",
+   "tier": "S"
+  },
+  "layout.cell.L1xP": {
+   "advisory": "wrong_unit",
+   "battery": "low",
+   "blocked_unit_limit": "below",
+   "light_circuit": "ok",
+   "module": "L1",
+   "stowage_unit": "registered",
+   "tier": "P"
+  },
+  "layout.cell.L1xS": {
+   "advisory": "none",
+   "battery": "high",
+   "blocked_unit_limit": "below",
+   "light_circuit": "failed",
+   "module": "L1",
+   "stowage_unit": "registered",
+   "tier": "S"
+  },
+  "layout.cell.L2xP": {
+   "advisory": "none",
+   "battery": "high",
+   "blocked_unit_limit": "below",
+   "light_circuit": "failed",
+   "module": "L2",
+   "stowage_unit": "registered",
+   "tier": "P"
+  },
+  "layout.cell.L2xS": {
+   "advisory": "wrong_unit",
+   "battery": "low",
+   "blocked_unit_limit": "below",
+   "light_circuit": "ok",
+   "module": "L2",
+   "stowage_unit": "registered",
+   "tier": "S"
+  },
+  "layout.counts": {
+   "failed_light": 2,
+   "low_battery": 3,
+   "moved_stowage_unit": 2,
+   "wrong_advisory": 2
+  },
+  "layout.robustness_perturb_um": 1,
+  "layout.seed_rule": "sha256(label / cell / k)",
+  "layout.sites": 6,
+  "layout.tiers": {
+   "P": "pad-type + stops inhibited",
+   "S": "element-type + stops allowed"
+  },
+  "reference.hint_range_m": [
+   0.45,
+   0.6
+  ],
+  "reference.place_flyby": {
+   "release_gap_m": 0.1,
+   "speed_m_s": 0.06
+  },
+  "reference.place_press": {
+   "backoff_m": 0.3,
+   "backoff_speed_m_s": 0.05,
+   "dwell_s": 2,
+   "press_mm": 8,
+   "speed_m_s": 0.03
+  },
+  "reference.probe_backoff_min_m": 0.1,
+  "reference.retries": {
+   "capture": 3,
+   "move": 2,
+   "placement": 3,
+   "removal": 3
+  },
+  "reference.s_tier_backoff_m": 0.45,
+  "rehearsal.budget": {
+   "max_concurrent": 2,
+   "max_runs": 30,
+   "per_run_max_min": 15,
+   "sim_min": 150
+  },
+  "rehearsal.cards": [
+   "EX-A",
+   "EX-B1",
+   "EX-B2",
+   "EX-C",
+   "EX-D"
+  ],
+  "rehearsal.l3": {
+   "cabin_air_units": 1,
+   "inlets": 2,
+   "rack_positions": 4,
+   "stowage_units": 1
+  },
+  "render.depth_noise_frac": 0.01,
+  "render.exposure_gain": [
+   0.0625,
+   8.0
+  ],
+  "render.near_clip_m": 0.015,
+  "station.advisory.factor": {
+   "element": 1.35,
+   "pad": 1.4
+  },
+  "station.advisory.margin_sigma": {
+   "n_sigma": 3,
+   "sigma_pa": 0.32
+  },
+  "station.advisory.mean_window_min": 10,
+  "station.decoy.slow_drift": {
+   "over_h": 60,
+   "rise_pa": [
+    6,
+    12
+   ]
+  },
+  "station.fan.released_below_dp_pa": 1.5,
+  "station.fan.tau_s": 3,
+  "station.fan_stop.auto_restart_s": 60,
+  "station.fan_stop.max_per_unit": 2,
+  "station.fan_stop.min_gap_s": 120,
+  "station.lights.requests_per_mission": 6,
+  "station.telemetry.cabin_accuracy_c": 0.5,
+  "station.telemetry.co2": {
+   "accuracy_pct": 5,
+   "period_min": 20
+  },
+  "station.telemetry.dp_accuracy_pa": 1,
+  "station.telemetry.fan_accuracy_pct": 1,
+  "station.telemetry.imd_survey_age_days": [
+   60,
+   110
+  ],
+  "station.telemetry.live_hz": 1,
+  "station.telemetry.log": {
+   "hours": 72,
+   "period_min": 1
+  },
+  "station.ventilation.inlet_flow_cfm": 40,
+  "station.ventilation.inter_module_cfm": 130,
+  "world.airflow": {
+   "cau_flow_rel": 0.1,
+   "inter_module_cfm": [
+    120,
+    150
+   ]
+  },
+  "world.battery_start_pct": {
+   "high": [
+    60,
+    80
+   ],
+   "low": [
+    45,
+    52
+   ]
+  },
+  "world.berths": [
+   1,
+   2
+  ],
+  "world.blocker.family": {
+   "hinge_k_Nm_per_rad": 0.002,
+   "kinds": 3,
+   "loop": "edge_mid",
+   "mass_kg": [
+    0.08,
+    0.14
+   ],
+   "size_m": [
+    [
+     0.28,
+     0.3
+    ],
+    [
+     0.26,
+     0.3
+    ]
+   ],
+   "strips": 5
+  },
+  "world.blocker.fixture": {
+   "P_loop_normal_removed_N": 0.22,
+   "P_strap_normal_not_removed_N": 0.37,
+   "S_any_pull_not_removed_N": 0.61,
+   "duration_s": 40
+  },
+  "world.blocker.fixture_repeat_record": {
+   "pull_N": 0.37,
+   "pull_s": 20,
+   "release_s": 5
+  },
+  "world.blocker.hold_N": {
+   "P": [
+    1.15,
+    1.6
+   ],
+   "S": [
+    5.5,
+    8.5
+   ]
+  },
+  "world.blocker.placement": {
+   "covered_m2": [
+    0.026,
+    0.036
+   ],
+   "offset_long_m": 0.1,
+   "offset_short_m": 0.09,
+   "theta_deg": [
+    0,
+    360
+   ]
+  },
+  "world.grasp_bar": {
+   "clearance_mm": 44,
+   "length_mm": 44,
+   "section_mm": [
+    19,
+    35
+   ],
+   "strap_loop_spacing_m": 0.12
+  },
+  "world.inlet.frame_m": [
+   0.46,
+   0.18,
+   0.03
+  ],
+  "world.inlet.k_face": 8,
+  "world.inlet.opening_area_m2": 0.048,
+  "world.inlet.opening_m": [
+   0.4,
+   0.12
+  ],
+  "world.inlet.r_face": {
+   "element": [
+    380,
+    460
+   ],
+   "pad_three_inlet_unit": [
+    59,
+    127
+   ],
+   "pad_two_inlet_unit": [
+    49,
+    115
+   ]
+  },
+  "world.inlet.slats": {
+   "count": 7,
+   "open_ratio": 0.55,
+   "screen_mesh": 20
+  },
+  "world.inlets.per_module": {
+   "H2": 2,
+   "L1": 3,
+   "L2": 3
+  },
+  "world.modules": [
+   "L2",
+   "H2",
+   "L1"
+  ],
+  "world.moved_stowage_unit_max_m": 0.3,
+  "world.observability.bar_view_range_m": [
+   0.45,
+   0.6
+  ],
+  "world.onset_h_before": [
+   2,
+   30
+  ],
+  "world.pouch.count": [
+   2,
+   3
+  ],
+  "world.pouch.family": {
+   "handle_mm": 70,
+   "mass_kg": [
+    0.06,
+    0.15
+   ],
+   "size_m": [
+    [
+     0.18,
+     0.22
+    ],
+    [
+     0.11,
+     0.14
+    ],
+    [
+     0.02,
+     0.03
+    ]
+   ]
+  },
+  "world.pouch.placement": {
+   "columns": [
+    2,
+    3
+   ],
+   "covered_m2": [
+    0.004,
+    0.008
+   ],
+   "hold_N": [
+    0.1,
+    0.3
+   ],
+   "hold_N_by_unit": {
+    "pad_three_inlet_unit": [
+     0.1,
+     0.3
+    ],
+    "pad_two_inlet_unit": [
+     0.1,
+     0.29
+    ]
+   }
+  },
+  "world.pouch.rules": {
+   "max_per_inlet": 1,
+   "max_per_module": 2,
+   "min_outside_blocked_module": 1
+  },
+  "world.pregrasp": {
+   "distance_m": [
+    0.35,
+    0.55
+   ],
+   "palm_orientations": 2
+  },
+  "world.register": {
+   "entries": [
+    9,
+    12
+   ],
+   "items_in_station": [
+    3,
+    4
+   ],
+   "strap_sheet_entries_min": 3,
+   "unregistered_small": [
+    0,
+    1
+   ]
+  },
+  "world.register.catalogue_photos_per_class": [
+   3,
+   4
+  ],
+  "world.register.classes": {
+   "pouch": [
+    "tool pouch"
+   ],
+   "sheet": [
+    "soft stowage sack",
+    "equipment cover",
+    "crew towel"
+   ]
+  },
+  "world.scene.counts": {
+   "handrails": 101,
+   "keep_in": 12,
+   "keep_out": 4,
+   "wall_boxes": 773
+  },
+  "world.settle": {
+   "dry_run_s": 2400,
+   "pouch_disp_max_mm": 1,
+   "pre_s": 600,
+   "sheet_area_change_max_pct": 1,
+   "sheet_disp_max_mm": 3
+  },
+  "world.stowage_unit.approach_zone": {
+   "normal_m": 1.0,
+   "outline_margin_m": 0.2
+  },
+  "world.stowage_unit.blower": {
+   "face_speed_m_s": 0.0146,
+   "screen_cfm": 4.0,
+   "shutoff_pa": 67,
+   "total_cfm": 7.2
+  },
+  "world.stowage_unit.fiducial_plate_m": [
+   0.1,
+   0.06
+  ],
+  "world.stowage_unit.moved": {
+   "H2": [
+    {
+     "moved_by_ab_m": [
+      0.0,
+      0.3
+     ],
+     "shift_ab_m": [
+      0.8,
+      0.3
+     ],
+     "unit_site": "sb_h2_mv1"
+    },
+    {
+     "moved_by_ab_m": [
+      0.2,
+      0.0
+     ],
+     "shift_ab_m": [
+      1.0,
+      0.0
+     ],
+     "unit_site": "sb_h2_mv2"
+    }
+   ],
+   "L1": [
+    {
+     "moved_by_ab_m": [
+      0.0,
+      0.3
+     ],
+     "shift_ab_m": [
+      1.0,
+      0.6
+     ],
+     "unit_site": "sb_l1_mv2"
+    },
+    {
+     "moved_by_ab_m": [
+      0.0,
+      -0.15
+     ],
+     "shift_ab_m": [
+      1.0,
+      0.15
+     ],
+     "unit_site": "sb_l1_mv3"
+    }
+   ],
+   "L2": [
+    {
+     "moved_by_ab_m": [
+      0.0,
+      0.3
+     ],
+     "shift_ab_m": [
+      0.2,
+      0.6
+     ],
+     "unit_site": "sb_l2_mv1"
+    },
+    {
+     "moved_by_ab_m": [
+      0.3,
+      0.0
+     ],
+     "shift_ab_m": [
+      0.5,
+      0.3
+     ],
+     "unit_site": "sb_l2_mv2"
+    }
+   ]
+  },
+  "world.stowage_unit.outline_m": [
+   0.96,
+   0.564
+  ],
+  "world.stowage_unit.pad_plate": {
+   "candidates": [
+    "+b",
+    "-b"
+   ],
+   "last_m": 0.5,
+   "min_visible_pct": 90,
+   "selected": "+b"
+  },
+  "world.stowage_unit.pouch_pad": {
+   "centre_from_screen_m": 0.35,
+   "opening_area_m2": 0.052,
+   "opening_m": [
+    0.2,
+    0.26
+   ]
+  },
+  "world.stowage_unit.prescreen_normal_flow": {
+   "distance_m": [
+    0.15,
+    0.3
+   ],
+   "max_cm_s": 1
+  },
+  "world.stowage_unit.registered": {
+   "H2": {
+    "base_site": "sb_h2_c1",
+    "shift_ab_m": [
+     0.8,
+     0.0
+    ],
+    "unit_site": "sb_h2_reg"
+   },
+   "L1": {
+    "base_site": "sb_l1_c3",
+    "shift_ab_m": [
+     1.0,
+     0.3
+    ],
+    "unit_site": "sb_l1_mv1"
+   },
+   "L2": {
+    "base_site": "sb_l2_c3",
+    "shift_ab_m": [
+     0.2,
+     0.3
+    ],
+    "unit_site": "sb_l2_reg"
+   },
+   "L3": {
+    "base_site": "sb_l3_c1",
+    "shift_ab_m": [
+     -2.8,
+     0.5
+    ],
+    "unit_site": "sb_l3_reg"
+   }
+  },
+  "world.stowage_unit.release_test": {
+   "distance_m": 0.3,
+   "hold_s": 120,
+   "max_fixed": 1,
+   "poses": 10
+  },
+  "world.stowage_unit.screen": {
+   "frame_outer_m": 0.42,
+   "opening_area_m2": 0.1296,
+   "opening_m": [
+    0.36,
+    0.36
+   ],
+   "proud_mm": 30
+  },
+  "world.stowage_unit.siting": {
+   "clear_height_mm": 20,
+   "clear_radius_m": 0.2,
+   "corridor_half_m": 0.45,
+   "fit_mm": 15,
+   "min_inlet_distance_m": 0.6,
+   "ray_pitch_cm": 2
+  },
+  "world.units.max_element_type": 1
+ }
+}

@@ -1,0 +1,972 @@
+{
+ "about": "Pictures of the as-surveyed station map. plan.png and elevation.png are drawn from zones.json, fixtures.json and landmarks.json. Every wall_<module>_<wall>.png is an orthographic picture of one wall seen from the module axis, evenly lit, taken at the survey: the stowage units are at their registered positions, no loose item is in the station and the robot is away. A symbol covers each return inlet's opening (the pictures do not show an inlet's build). All coordinates are in the station frame of the map files (x forward, y starboard, z deck), in metres.",
+ "direction_words": {
+  "AFT": [
+   -1,
+   0,
+   0
+  ],
+  "DECK": [
+   0,
+   0,
+   1
+  ],
+  "FWD": [
+   1,
+   0,
+   0
+  ],
+  "OVHD": [
+   0,
+   0,
+   -1
+  ],
+  "PORT": [
+   0,
+   -1,
+   0
+  ],
+  "STBD": [
+   0,
+   1,
+   0
+  ]
+ },
+ "schema": "station_map_views/1",
+ "views": [
+  {
+   "down": "STBD",
+   "file": "plan.png",
+   "kind": "plan",
+   "mapping": {
+    "about": "station coordinates of pixel (u, v) of the picture, u to the right and v down from the picture's top-left corner: horizontal = h0 + u * h_per_pixel, vertical = v0 + v * v_per_pixel",
+    "h0_m": -10.4603,
+    "h_per_pixel_m": 0.016119,
+    "horizontal_axis": "x",
+    "panel_px": {
+     "height": 1334,
+     "left": 426,
+     "top": 148,
+     "width": 1030
+    },
+    "v0_m": -14.9889,
+    "v_per_pixel_m": 0.016119,
+    "vertical_axis": "y"
+   },
+   "right": "FWD",
+   "seen": "from the overhead side, looking toward the deck"
+  },
+  {
+   "file": "elevation.png",
+   "kind": "elevation",
+   "panels": [
+    {
+     "mapping": {
+      "about": "station coordinates of pixel (u, v) of the picture, u to the right and v down from the picture's top-left corner: horizontal = h0 + u * h_per_pixel, vertical = v0 + v * v_per_pixel",
+      "h0_m": -4.5817,
+      "h_per_pixel_m": 0.009916,
+      "horizontal_axis": "x",
+      "panel_px": {
+       "height": 383,
+       "left": 99,
+       "top": 127,
+       "width": 1674
+      },
+      "v0_m": 1.6906,
+      "v_per_pixel_m": 0.009916,
+      "vertical_axis": "z"
+     },
+     "modules": [
+      "L1",
+      "H2"
+     ],
+     "name": "A",
+     "right": "FWD",
+     "seen": "from starboard, looking to port",
+     "up": "OVHD"
+    },
+    {
+     "mapping": {
+      "about": "station coordinates of pixel (u, v) of the picture, u to the right and v down from the picture's top-left corner: horizontal = h0 + u * h_per_pixel, vertical = v0 + v * v_per_pixel",
+      "h0_m": -13.8817,
+      "h_per_pixel_m": 0.009916,
+      "horizontal_axis": "y",
+      "panel_px": {
+       "height": 383,
+       "left": 99,
+       "top": 693,
+       "width": 1674
+      },
+      "v0_m": -3.926,
+      "v_per_pixel_m": 0.009916,
+      "vertical_axis": "z"
+     },
+     "modules": [
+      "L2"
+     ],
+     "name": "B",
+     "right": "STBD",
+     "seen": "from aft, looking forward",
+     "up": "OVHD"
+    }
+   ]
+  },
+  {
+   "file": "wall_L2_forward.png",
+   "kind": "wall",
+   "looking": "FWD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     10.94,
+     -12.11,
+     3.6
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1992
+   },
+   "rehearsal_module": false,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L2-F1",
+     "L2-F2",
+     "L2-F3",
+     "L2-F4",
+     "L2-F5",
+     "L2-F6",
+     "L2-F7",
+     "L2-F8"
+    ],
+    "return_inlets": [
+     "RI-L2-1",
+     "RI-L2-3"
+    ],
+    "stowage_units": [
+     "SB-L2"
+    ]
+   },
+   "up": "OVHD",
+   "wall": "forward",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.08
+   }
+  },
+  {
+   "file": "wall_L2_aft.png",
+   "kind": "wall",
+   "looking": "AFT",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     10.94,
+     -2.15,
+     3.6
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     -0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1992
+   },
+   "rehearsal_module": false,
+   "right": "PORT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": true,
+    "rack_locations": [
+     "L2-A1",
+     "L2-A2",
+     "L2-A3",
+     "L2-A4",
+     "L2-A5",
+     "L2-A6",
+     "L2-A7",
+     "L2-A8"
+    ],
+    "return_inlets": [
+     "RI-L2-2"
+    ],
+    "stowage_units": []
+   },
+   "up": "OVHD",
+   "wall": "aft",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.1
+   }
+  },
+  {
+   "file": "wall_L2_deck.png",
+   "kind": "wall",
+   "looking": "DECK",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     12.19,
+     -12.11,
+     4.85
+    ],
+    "per_pixel_down_m": [
+     -0.005,
+     0.0,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1992
+   },
+   "rehearsal_module": false,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L2-D1",
+     "L2-D2",
+     "L2-D3",
+     "L2-D4",
+     "L2-D5",
+     "L2-D6",
+     "L2-D7",
+     "L2-D8"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "FWD",
+   "wall": "deck",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.07
+   }
+  },
+  {
+   "file": "wall_L2_overhead.png",
+   "kind": "wall",
+   "looking": "OVHD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     9.69,
+     -12.11,
+     4.85
+    ],
+    "per_pixel_down_m": [
+     0.005,
+     0.0,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1992
+   },
+   "rehearsal_module": false,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L2-O1",
+     "L2-O2",
+     "L2-O3",
+     "L2-O4",
+     "L2-O5",
+     "L2-O6",
+     "L2-O7",
+     "L2-O8"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "AFT",
+   "wall": "overhead",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.1
+   }
+  },
+  {
+   "file": "wall_H2_starboard.png",
+   "kind": "wall",
+   "looking": "STBD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     12.44,
+     -0.01,
+     3.59
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "H2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "H2-S1",
+     "H2-S2"
+    ],
+    "return_inlets": [
+     "RI-H2-1"
+    ],
+    "stowage_units": [
+     "SB-H2"
+    ]
+   },
+   "up": "OVHD",
+   "wall": "starboard",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 0.93
+   }
+  },
+  {
+   "file": "wall_H2_port.png",
+   "kind": "wall",
+   "looking": "PORT",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     6.69,
+     -0.01,
+     3.59
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "H2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": false,
+   "right": "FWD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "H2-P1",
+     "H2-P2"
+    ],
+    "return_inlets": [
+     "RI-H2-2"
+    ],
+    "stowage_units": []
+   },
+   "up": "OVHD",
+   "wall": "port",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 0.93
+   }
+  },
+  {
+   "file": "wall_H2_deck.png",
+   "kind": "wall",
+   "looking": "DECK",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     12.44,
+     1.24,
+     4.84
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     -0.005,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "H2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "H2-D1",
+     "H2-D2"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "STBD",
+   "wall": "deck",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 0.94
+   }
+  },
+  {
+   "file": "wall_H2_overhead.png",
+   "kind": "wall",
+   "looking": "OVHD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     12.44,
+     -1.26,
+     4.84
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.005,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "H2",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "H2-O1",
+     "H2-O2"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "PORT",
+   "wall": "overhead",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 0.96
+   }
+  },
+  {
+   "file": "wall_L1_starboard.png",
+   "kind": "wall",
+   "looking": "STBD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     6.3,
+     0.01,
+     3.58
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L1",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1676
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L1-S1",
+     "L1-S2",
+     "L1-S3",
+     "L1-S4",
+     "L1-S5",
+     "L1-S6"
+    ],
+    "return_inlets": [
+     "RI-L1-3"
+    ],
+    "stowage_units": [
+     "SB-L1"
+    ]
+   },
+   "up": "OVHD",
+   "wall": "starboard",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.11
+   }
+  },
+  {
+   "file": "wall_L1_port.png",
+   "kind": "wall",
+   "looking": "PORT",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     -2.08,
+     0.01,
+     3.58
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L1",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1676
+   },
+   "rehearsal_module": false,
+   "right": "FWD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L1-P1",
+     "L1-P2",
+     "L1-P3",
+     "L1-P4",
+     "L1-P5",
+     "L1-P6"
+    ],
+    "return_inlets": [
+     "RI-L1-1",
+     "RI-L1-2"
+    ],
+    "stowage_units": []
+   },
+   "up": "OVHD",
+   "wall": "port",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.08
+   }
+  },
+  {
+   "file": "wall_L1_deck.png",
+   "kind": "wall",
+   "looking": "DECK",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     6.3,
+     1.26,
+     4.83
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     -0.005,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L1",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1676
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L1-D1",
+     "L1-D2",
+     "L1-D4",
+     "L1-D5",
+     "L1-D6"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "STBD",
+   "wall": "deck",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.09
+   }
+  },
+  {
+   "file": "wall_L1_overhead.png",
+   "kind": "wall",
+   "looking": "OVHD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     6.3,
+     -1.24,
+     4.83
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.005,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     -0.005,
+     0.0,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L1",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1676
+   },
+   "rehearsal_module": false,
+   "right": "AFT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L1-O1",
+     "L1-O2",
+     "L1-O3",
+     "L1-O4",
+     "L1-O5",
+     "L1-O6"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "PORT",
+   "wall": "overhead",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.08
+   }
+  },
+  {
+   "file": "wall_L3_forward.png",
+   "kind": "wall",
+   "looking": "FWD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     10.93,
+     2.56,
+     3.59
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L3",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": true,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": true,
+    "rack_locations": [
+     "L3-F1",
+     "L3-F2",
+     "L3-F3",
+     "L3-F4"
+    ],
+    "return_inlets": [
+     "RI-L3-1"
+    ],
+    "stowage_units": [
+     "SB-L3"
+    ]
+   },
+   "up": "OVHD",
+   "wall": "forward",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.1
+   }
+  },
+  {
+   "file": "wall_L3_aft.png",
+   "kind": "wall",
+   "looking": "AFT",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     10.93,
+     8.31,
+     3.59
+    ],
+    "per_pixel_down_m": [
+     0.0,
+     0.0,
+     0.005
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     -0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L3",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": true,
+   "right": "PORT",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L3-A1",
+     "L3-A2",
+     "L3-A3",
+     "L3-A4"
+    ],
+    "return_inlets": [
+     "RI-L3-2"
+    ],
+    "stowage_units": []
+   },
+   "up": "OVHD",
+   "wall": "aft",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.1
+   }
+  },
+  {
+   "file": "wall_L3_deck.png",
+   "kind": "wall",
+   "looking": "DECK",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     12.18,
+     2.56,
+     4.84
+    ],
+    "per_pixel_down_m": [
+     -0.005,
+     0.0,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L3",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": true,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L3-D1",
+     "L3-D2",
+     "L3-D3",
+     "L3-D4"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "FWD",
+   "wall": "deck",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.1
+   }
+  },
+  {
+   "file": "wall_L3_overhead.png",
+   "kind": "wall",
+   "looking": "OVHD",
+   "mapping": {
+    "about": "station point of pixel (u, v) of the picture area, u to the right and v down from its top-left corner: origin + u * per_pixel_right + v * per_pixel_down, on the plane through the module axis; the wall itself lies wall_plane.offset_m further along 'looking'",
+    "origin_m": [
+     9.68,
+     2.56,
+     4.84
+    ],
+    "per_pixel_down_m": [
+     0.005,
+     0.0,
+     0.0
+    ],
+    "per_pixel_right_m": [
+     0.0,
+     0.005,
+     0.0
+    ]
+   },
+   "metres_per_pixel": 0.005,
+   "module": "L3",
+   "picture_area_px": {
+    "height": 500,
+    "left": 70,
+    "top": 46,
+    "width": 1150
+   },
+   "rehearsal_module": true,
+   "right": "STBD",
+   "seen": "from the module axis, looking at the wall",
+   "shows": {
+    "dock": false,
+    "rack_locations": [
+     "L3-O1",
+     "L3-O2",
+     "L3-O3",
+     "L3-O4"
+    ],
+    "return_inlets": [],
+    "stowage_units": []
+   },
+   "up": "AFT",
+   "wall": "overhead",
+   "wall_plane": {
+    "note": "distance of the rack faces from the module axis (median of the rack locations)",
+    "offset_m": 1.09
+   }
+  }
+ ]
+}

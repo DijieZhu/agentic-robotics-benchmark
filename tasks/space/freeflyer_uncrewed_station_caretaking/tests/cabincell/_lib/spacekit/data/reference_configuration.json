@@ -1,0 +1,41 @@
+{
+ "schema": "spacekit.reference_configuration/1",
+ "description": "Firmware configuration of the reference robot (reference configuration = platform + perching arm module, arm stowed, 4 batteries): the configured mass properties the flight controller and allocator use (the reference build's values), a copy of the reference robot's values.",
+ "source": {
+  "file": "shared values file of the reference robot",
+  "version": "0.2.1",
+  "keys_since": "0.2.0",
+  "keys": [
+   "mass.refcfg.total",
+   "mass.refcfg.com",
+   "mass.refcfg.inertia",
+   "pwr.battery.default_count"
+  ]
+ },
+ "mass_properties_configured": {
+  "mass_kg": 10.449993,
+  "com_m": [
+   -0.0016692,
+   -0.0004132,
+   -0.010187
+  ],
+  "inertia_kgm2": [
+   [
+    0.1616871,
+    -9.81e-05,
+    -0.0048954
+   ],
+   [
+    -9.81e-05,
+    0.1558562,
+    -6.17e-05
+   ],
+   [
+    -0.0048954,
+    -6.17e-05,
+    0.1689181
+   ]
+  ]
+ },
+ "battery_count": 4
+}
