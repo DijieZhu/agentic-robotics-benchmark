@@ -76,6 +76,12 @@ Every observation carries each camera's pose `T_world_<cam>` (OpenCV convention:
 intrinsics `K_<cam>` (f = (H / 2) / tan(fov / 2), principal point (W / 2, H / 2)). Images carry pixel noise
 (standard deviation 2 levels). There is no depth image.
 
+The images are drawn by `jar_render.py` (MuJoCo 3.16's Filament renderer on the CPU, the look's numbers in
+`jar_look.json`): the simulator's own jars, labels, lids, tray, pieces and robots, in a home kitchen whose island is
+the counter (scenery only). The jars are opaque, and a jar's label is a solid band: through an open mouth a camera
+sees the label's colour, not the pieces below it. No shadows are drawn; contact shading darkens where parts meet.
+The same state and camera give the same picture, before the noise, in every process.
+
 ## The episode
 
 - At most 12000 control steps (20 simulated minutes). It ends earlier after 20 steps in which every listed jar has been

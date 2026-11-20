@@ -208,8 +208,8 @@ def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, clock=
             env.close()
         rec.update(steps=int(env.t), wall=round(time.monotonic() - t0, 1))
         if log:
-            log("episode {} ({}, {}): credit={:.4f} steps={} {}".format(n, uid, seed, rec["credit"], rec["steps"],
-                                                                        rec["reason"]))
+            # the unit only: the log is published with a run's records, and a seed of the fixed set must not be in it
+            log("episode {} ({}): credit={:.4f} steps={} {}".format(n, uid, rec["credit"], rec["steps"], rec["reason"]))
         records.append(rec)
     return records, lock
 

@@ -46,7 +46,7 @@ The rule, fixed before any unit or candidate was drawn:
    a new amendment (or a new draw).
 
 `run` needs the task image's Python (3.12, MuJoCo 3.16.0, NumPy 2.5.4; environment/requirements.txt, and robosuite
-1.5.2's model files) and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
+1.5.2's model files; an image the grader asks for also needs Mesa's lavapipe and the render bundle). Outside the image the oracle submission's run.sh names
 this interpreter, and the controller is started directly rather than through nonet_exec.py (which needs root to change
 user); everything else is jar_grade.run_episodes as the grader runs it.
 """
@@ -72,9 +72,10 @@ sys.dont_write_bytecode = True
 FORMAT = "pantry_jar_refilling episode selection 1"
 SET_FORMAT = "pantry_jar_refilling fixed set 1"
 N_UNITS = 6
-ORACLE_MODULES = ("episode.py", "jar_env.py", "jar_sim.py", "oracle_main.py", "reference.py", "wire_world.py")
-FROZEN = (("tests/jar_grade.py", "tests/episode.py", "tests/jar_env.py", "tests/jar_sim.py",
-           "tests/units.json", "tests/grader_config.json")
+ORACLE_MODULES = ("episode.py", "jar_env.py", "jar_sim.py", "jar_render.py", "jar_look.json", "oracle_main.py",
+                  "reference.py", "wire_world.py")
+FROZEN = (("tests/jar_grade.py", "tests/episode.py", "tests/jar_env.py", "tests/jar_sim.py", "tests/jar_render.py",
+           "tests/jar_look.json", "tests/units.json", "tests/grader_config.json")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES) + ("solution/solve.sh",))
 PER_UNIT = 2
 WIRE_RUNS = 3

@@ -19,7 +19,9 @@ for entry in payload/* payload/.[!.]*; do
 done
 mkdir -p "$HOME_DIR/submission" && chown "$AGENT_USER:$AGENT_USER" "$HOME_DIR/submission"
 
-# The session's time stamp (session_time.sh reads it): written now, a few minutes before the agent's session starts,
-# root-owned so that it stays what it is.
-date -u +%s > "$HOME_DIR/.session_start"
-chmod 0644 "$HOME_DIR/.session_start"
+# The session's time stamp (session_time.sh in the agent's home reads it): written now, a few minutes before the
+# agent's session starts, in a folder that is root's, so that the agent's account can read it and cannot change or
+# replace it (a root-owned file in the agent's own home could be renamed away and written anew).
+install -d -o root -g root -m 755 /run/session
+date -u +%s > /run/session/start
+chown root:root /run/session/start && chmod 0444 /run/session/start

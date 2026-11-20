@@ -61,6 +61,7 @@ values are not given: your controller has to find out, for example from the wris
 | Path | What it is |
 |---|---|
 | `jar_sim.py` | The simulator of the counter: the robots and their controllers, the jars and threads, the tray and pieces, the cameras, each unit's and each episode's draw. The grader runs this exact file. |
+| `jar_render.py`, `jar_look.json` | The cameras' renderer and its look: `jar_sim.py` draws every image through them. The grader runs these exact files. |
 | `jar_env.py` | The environment your controller talks to: `JarEnv(unit).reset(seed)`, `step(action)`, the observation. The grader runs this exact file. |
 | `episode.py` | An episode, its end and its credit. The grader runs this exact file. |
 | `units.json` | The two practice units (p0, p1), each three jars' properties. |
@@ -73,8 +74,11 @@ Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; ro
 There is no network.
 
 **The sandbox** has 4 CPUs and 12 GB of memory, and so has the sandbox your controller is graded in. One simulation
-(a `JarEnv`, or one run of the practice grader) takes about 0.5 GB and one CPU, and a control step takes 10-25 ms of
-wall time, so a whole 12000-step episode takes 2-5 minutes: run a few at a time, not dozens.
+(a `JarEnv`, or one run of the practice grader) takes about 0.5 GB and one CPU, and 1.1-1.5 GB and up to three more
+CPUs while it draws images (the renderer's memory is the process's, not the episode's: it stays about the same over
+many episodes). A control step takes 10-25 ms of wall time, so a whole 12000-step episode takes 2-5 minutes without
+images; an image takes 0.05-0.15 s to draw, and the first image of a process about 5 s more. Run a few simulations
+at a time, not dozens.
 
 **Numerics.** Every `/opt/venv` Python runs NumPy's linear algebra on one fixed set of kernels
 (`OPENBLAS_CORETYPE=Haswell` with `OPENBLAS_L2_SIZE=256`; the image also sets them when the variables are missing),
@@ -148,6 +152,12 @@ The controller runs at 10 Hz. The observation is a JSON object:
   hands). An image is empty (`[0, 0, 3]`) unless the previous action asked for it; the first observation has all five.
   There is no depth image.
 
+  What an image shows: the counter as the island of a home kitchen (an oak top; the kitchen's units, walls and floor
+  around it), the two robots, the tray with its pieces, and the jars with their labels and lids, in the sizes,
+  places and colours the simulator has them. The jars are opaque: looking into an open jar from above you see the
+  label's colour, not the pieces under it. The kitchen is scenery: nothing of it can be touched. An image is a function of the simulator's state and
+  the camera (plus the pixel noise): the same state gives the same picture here and in the graded run.
+
 The action is a JSON object `{"l": [...], "r": [...], "cams": mask}`. Each arm's list has one of three shapes:
 
 - **7 numbers** `[dx, dy, dz, drx, dry, drz, grip]`. The operational-space controller moves the hand's target from the
@@ -185,7 +195,8 @@ failure; run it on a copy of your submission in another folder to check.
 - `{"type": "close"}` → `{"ok": true}`, then exit.
 
 Stdout carries only these messages; write logs to stderr. `run.sh` starts with only `PATH`, `HOME` and `LANG` set:
-export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`). The two numerics variables need no
+export anything else you need there (for MuJoCo's own `mujoco.Renderer`, `MUJOCO_GL=osmesa`; the simulator's camera
+images need nothing exported). The two numerics variables need no
 export: a `/opt/venv` Python sets them itself.
 
 **Probes.** About 1 % of steps are asked twice with the same `t`, in a hidden order:

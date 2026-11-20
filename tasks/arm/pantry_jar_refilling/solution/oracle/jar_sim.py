@@ -84,6 +84,7 @@ WRIST = {"fovy": 75.0, "width": 320, "height": 240}
 CAMERA_BITS = {"overhead": 1, "front": 2, "tray": 4, "wrist_l": 8, "wrist_r": 16}
 ALL_CAMS = 31
 HIDDEN_GROUP = 4                    # geom group no camera shows: the robots' collision shells (see build)
+LOOK_MATERIALS = ("look_hand", "look_finger")
 MJ_CAMERA = {"overhead": "overhead", "front": "front", "tray": "tray", "wrist_l": "l_eye_in_hand",
              "wrist_r": "r_eye_in_hand"}
 
@@ -313,6 +314,10 @@ def build(unit, episode):
         gg.mass = k["mass"]
         gg.priority = 1
 
+    # materials for the grippers' visual meshes (the Panda model gives them a colour only): the cameras' renderer
+    # (jar_render.py) sets their finish; nothing else reads them
+    for name in LOOK_MATERIALS:
+        w.add_material(name=name)
     m = w.compile()
     for j, jar in enumerate(unit["jars"]):
         b = m.body(f"jar{j}").id
@@ -328,7 +333,7 @@ def build(unit, episode):
             m.geom_friction[gid, 1] = TORSION
     # The robots' collision shells are not drawn. The Panda model keeps them in geom group 0 beside its visual
     # meshes (group 1), and the counter's own geoms are in group 0 too, so showing group 0 drew every arm twice,
-    # shell over mesh. The shells move to HIDDEN_GROUP, which scene_option() switches off; a geom's group is a
+    # shell over mesh. The shells move to HIDDEN_GROUP, which no camera shows; a geom's group is a
     # rendering label only (the contacts are unchanged).
     for g in range(m.ngeom):
         if m.geom_group[g] == 0 and m.body(m.geom_bodyid[g]).name.startswith(tuple(f"{side}_" for side in BASES)):
@@ -661,6 +666,9 @@ _SCENE_OPT = None
 
 
 def scene_option():
+    """The scene option for MuJoCo's own renderer (mujoco.Renderer.update_scene): no site markers, no collision
+    shells of the robots. The cameras' images are not drawn with it (render, below); it is here for whoever draws
+    the model with MuJoCo's renderer for a look of their own."""
     global _SCENE_OPT
     if _SCENE_OPT is None:
         _SCENE_OPT = mujoco.MjvOption()
@@ -678,23 +686,27 @@ def camera_size(cam):
 
 
 def render(m, d, cam, rng, cache=None):
-    """One camera's image of the state `d`, with the pixel noise drawn from `rng`. `cache` (a dict the caller keeps
-    for this model, {(width, height): renderer}) makes one renderer per image size and reuses it; without it a
-    renderer is made and closed for the image. The image is the same either way: a renderer keeps nothing of the
-    images it drew before (it reads the model and the state at every update_scene)."""
+    """One camera's image of the state `d`, with the pixel noise drawn from `rng`. The picture is drawn by
+    jar_render.py (MuJoCo 3.16's Filament renderer on the CPU: the model's jars, lids, tray, pieces and robots in
+    the task's kitchen); it is a function of the model, the state and the camera alone. `cache` (a dict the caller
+    keeps for this model) holds the model's view under "view" and reuses it; without it a view is opened and closed
+    for the image. The image is the same either way."""
     w, h, _fovy = camera_size(cam)
     try:
-        r = cache.get((w, h)) if cache is not None else None
-        if r is None:
-            r = mujoco.Renderer(m, h, w)
+        import jar_render as R
+    except Exception as exc:  # noqa: BLE001 - a renderer that cannot be loaded is the environment's error
+        raise RenderError("{} camera: the renderer cannot be loaded: {}: {}".format(cam, type(exc).__name__, str(exc)[:200])) from exc
+    try:
+        view = cache.get("view") if cache is not None else None
+        if view is None:
+            view = R.open_view(m)
             if cache is not None:
-                cache[(w, h)] = r
+                cache["view"] = view
         try:
-            r.update_scene(d, camera=MJ_CAMERA[cam], scene_option=scene_option())
-            img = r.render().astype(np.float32)
+            img = view.render(MJ_CAMERA[cam], d, w, h).astype(np.float32)
         finally:
             if cache is None:
-                r.close()
+                view.close()
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, RGB_NOISE, img.shape)
@@ -702,10 +714,10 @@ def render(m, d, cam, rng, cache=None):
 
 
 def close_renderers(cache):
-    """Close the renderers of a `render` cache and empty it."""
+    """Close the views of a `render` cache and empty it."""
     for r in list(cache.values()):
         try:
             r.close()
-        except Exception:  # noqa: BLE001 - a renderer that fails to close must not fail the episode
+        except Exception:  # noqa: BLE001 - a view that fails to close must not fail the episode
             pass
     cache.clear()

@@ -1,6 +1,8 @@
 # Task image. Nothing here depends on tests/, solution/, the anchor or the hidden units: an image layer is readable by
 # anyone who can run the image. The hidden units (the jars' hidden properties) are NOT in the image (tests/ only);
 # the simulator and the practice units reach the agent through environment/setup/payload.
+# The cameras' render bundle (the kitchen the counter stands in; a public asset) is fetched into /opt/task-assets and
+# is readable by every account: the agent's own copy of the simulator draws its images with it (jar_render.py).
 FROM ghcr.io/agentslastexam/container-ubuntu22-base:0.1.1
 
 ENV VIRTUAL_ENV=/opt/venv
@@ -44,10 +46,21 @@ RUN printf '%s\n' \
     && chmod 0644 /opt/venv/lib/python3.12/site-packages/jar_numerics_pin.py /opt/venv/lib/python3.12/site-packages/jar_numerics_pin.pth \
     && env -u OPENBLAS_CORETYPE -u OPENBLAS_L2_SIZE /opt/venv/bin/python3 -I -c "import os; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell' and os.environ.get('OPENBLAS_L2_SIZE') == '256'; import numpy; print('[image] numerics pin OK')"
 
-# Software rendering for MuJoCo: Mesa OSMesa (llvmpipe, no display or device needed), checked below as the agent user.
-RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 \
+# Software rendering. The cameras' renderer (jar_render.py beside jar_sim.py) is MuJoCo 3.16's Filament on Vulkan,
+# and Vulkan here is Mesa's lavapipe on the CPU (mesa-vulkan-drivers, libvulkan1); no display or device is needed.
+# Mesa's OSMesa (llvmpipe) stays for MuJoCo's own renderer (mujoco.Renderer), which the cameras no longer use. Both
+# are checked below as the agent user.
+RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 mesa-vulkan-drivers libvulkan1 \
     && rm -rf /var/lib/apt/lists/*
 ENV MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa MPLBACKEND=Agg OMP_NUM_THREADS=1 LP_NUM_THREADS=2
+
+# ---- task assets: fetched at the dataset commit pinned in assets.sha256, checked file by file (docs/task-assets.md):
+# render/ (the cameras' render bundle: room.npz, room.json, ibl.ktx; jar_render.py reads it in place, it is not
+# staged into the agent home).
+COPY fetch_assets.py assets.sha256 render_check.py /opt/task-assets/
+RUN python3 /opt/task-assets/fetch_assets.py /opt/task-assets/assets.sha256 /opt/task-assets/payload \
+    && chown -R root:root /opt/task-assets && chmod -R u=rwX,go=rX /opt/task-assets
+ENV JAR_RENDER_DIR=/opt/task-assets/payload/render
 
 RUN mkdir -p /home/user/submission && chown -R user:user /home/user/submission
 
@@ -61,6 +74,16 @@ RUN python3 -c "import numpy, scipy, cv2, mujoco; print('[image] mujoco', mujoco
     && python3 -c "import site, sys; assert sys.prefix != sys.base_prefix" \
     && runuser -u user -- /opt/venv/bin/python3 -c "import numpy, scipy, cv2, mujoco; print('[image] agent-UID import OK')" \
     && runuser -u user -- env HOME=/tmp /opt/venv/bin/python3 -c "import mujoco; m = mujoco.MjModel.from_xml_string('<mujoco><worldbody><light pos=\"0 0 1\"/><geom type=\"sphere\" size=\".1\"/></worldbody></mujoco>'); d = mujoco.MjData(m); mujoco.mj_forward(m, d); r = mujoco.Renderer(m, 48, 64); r.update_scene(d); im = r.render(); assert im.max() > 0; print('[image] agent-UID MuJoCo OSMesa render OK', im.shape)"
+
+# The cameras' renderer starts and draws on this image's Vulkan driver, as root and as the agent's account (with the
+# environment the grader gives a controller: PATH, HOME, LANG), and the render bundle is readable but not writable
+# for the agent.
+RUN env MESA_SHADER_CACHE_DISABLE=true python3 -I /opt/task-assets/render_check.py \
+    && runuser -u user -- env -i PATH=/opt/venv/bin:/usr/bin:/bin HOME=/tmp LANG=C.UTF-8 MESA_SHADER_CACHE_DISABLE=true \
+         /opt/venv/bin/python3 -I /opt/task-assets/render_check.py /opt/task-assets/payload/render \
+    && ! runuser -u user -- sh -c ': >> /opt/task-assets/payload/render/room.json' 2>/dev/null \
+    && ! runuser -u user -- sh -c ': > /opt/task-assets/payload/render/x' 2>/dev/null \
+    && rm -rf /tmp/.cache /tmp/.config
 
 # The image's working directory is not the agent's home: the engine starts the agent in its home whatever this says,
 # and a root process the engine starts in the working directory must not find agent-written files there.
