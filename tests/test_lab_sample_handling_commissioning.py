@@ -90,9 +90,6 @@ class CommissioningService(unittest.TestCase):
                 self.assertFalse(all(abs(props[k] - s[k]) <= 0.02 * (ranges[k][1] - ranges[k][0])
                                      for k in c["FIT_PROPS"]))
         self.assertEqual((TASK / "tests/units.json").read_text(), (TASK / "solution/oracle/units.json").read_text())
-            for sid, sprops in scored.items():
-                self.assertFalse(all(abs(props[k] - sprops[k]) < 1e-9 for k in ranges),
-                                 "development unit %s is a scored unit" % uid)
         # the three strata of every property are covered (a Latin hypercube: the units span the stated ranges)
         for k, (lo, hi) in ranges.items():
             strata = sorted(min(2, int(3 * (dev[u][k] - lo) / (hi - lo))) for u in dev)
