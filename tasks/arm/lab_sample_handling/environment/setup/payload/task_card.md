@@ -44,6 +44,21 @@ Every observation carries each camera's pose `T_world_<cam>` (4 x 4, OpenCV conv
 and intrinsics `K_<cam>` (a pixel's centre at its index + 0.5). Images carry pixel noise (sd 2 levels per channel).
 There is no depth image.
 
+**The poses are the calibration on file, not the cameras' true poses.** Each bench was calibrated once, and
+`T_world_<cam>` is that calibration: the camera's true pose with a fixed error that is the unit's own (the same in
+every episode on that unit, different from unit to unit and from every commissioning bench, not told):
+
+| Camera | Error of the pose on file, in the camera's own frame |
+|---|---|
+| `wrist` (the hand-eye calibration: the camera's place on the hand) | up to 2 mm along each axis and 0.5 deg about each axis |
+| `left`, `right`, `rack` (fixed) | up to 5 mm along each axis and 0.5 deg about each axis |
+
+The intrinsics are exact, and so are `ee_pos`, `ee_quat` and `q`. A point located through a pose on file is
+therefore off by a few millimetres: 2-4 mm from the wrist camera 0.2 m away, up to about 10 mm from a fixed camera.
+What can be seen and felt on site tells the error: the fingers and whatever the hand holds are in the wrist image
+at a place the kinematics give; the hand is in the fixed cameras' images where `ee_pos` says it is; a hole's rim
+and floor are felt in `wrench`.
+
 The pictures show the bench where it stands, in a bay of a laboratory: the room's wall benches, shelves, glassware,
 floor and ceiling lights are in them, and the `rack` camera looks past the incoming rack into the room. Nothing of
 the room is part of the task, and nothing of it stands on the bench: what you handle is described in sections 4 to
@@ -82,8 +97,11 @@ softly where they meet, and nothing casts a sharp shadow.
   cabinet is turned up to 20 deg about it. The chamber's walls end 30 mm above the rotor's top.
 - **Rotor:** fixed-angle, eight positions 45 deg apart on a vertical hinge. "The rotor's top" is the plane of the
   hole entrances.
-  - Each hole is a bore 19 mm across (the tube plus 1 mm all round), 100 mm deep, wall 10 mm, tilted 45 deg: its
-    entrance is the upper end, and the bore runs down and away from the axis.
+  - Each hole is a bore 100 mm deep, wall 10 mm, tilted 45 deg: its entrance is the upper end, and the bore runs
+    down and away from the axis. Its width is the unit's own: the tube plus 0.6-1.0 mm all round (18.2-19.0 mm
+    across; the table below). In a tight bore a tube that enters off its axis or is let go early stops
+    short of the floor: it stands proud at the port, it does not count as seated, and the rotor cannot be turned
+    past it.
   - The entrances lie on a circle of radius 65-75 mm around the axis, at z = 0.90-0.92. Both are drawn per episode.
   - Positions are numbered 1-8 counter-clockwise seen from above. Position 1 is marked by a green dot (12 mm across)
     on the rotor's bowl, 18 mm outside its entrance.
@@ -104,7 +122,9 @@ softly where they meet, and nothing casts a sharp shadow.
   walls' tops (it turns with the cabinet). A handle bar 15 mm across and 100 mm long runs parallel to the hinge,
   45 mm beyond the plate's free edge, its axis in the plate's mid-plane (6 mm above the hinge's plane when the
   lid is shut), held by two flat arms 112 mm apart. The lid starts either open (1.75 rad, at its stop past vertical) or shut
-  (0 rad); the hinge's friction holds it where it is left. It counts as shut at an angle under 0.02 rad.
+  (0 rad). It counts as shut at an angle under 0.02 rad. The hinge's friction is the unit's own (the table
+  below). The lid's weight makes 0.7 N m about the hinge when the lid lies flat: on a hinge with less friction a
+  lid let go near the horizontal falls shut, on a stiffer one it stays where it is let go, at any angle.
 - **What differs from unit to unit** (one centrifuge is one unit; a unit's values are its own and are not told):
 
   | Property | Range over the series |
@@ -112,6 +132,10 @@ softly where they meet, and nothing casts a sharp shadow.
   | Friction of the rotor's hinge | 0.10-0.45 N m |
   | Play between the knob and the rotor (the bar turns on its own hinge within +-play/2 before it drives the rotor) | 0-20 deg |
   | Rotor inertia | 0.010-0.040 kg m^2 |
+  | Radial clearance of the rotor's bores around a tube | 0.6-1.0 mm |
+  | Friction of the bores against a tube (coefficient) | 0.35-0.58 |
+  | Friction of the lid's hinge | 0.30-1.20 N m |
+  | Calibration error of each camera's pose on file | section 3's table |
 
 ## 8. The scale
 

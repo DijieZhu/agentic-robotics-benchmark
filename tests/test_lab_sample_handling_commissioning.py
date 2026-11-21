@@ -64,12 +64,32 @@ class CommissioningService(unittest.TestCase):
         scored = json.loads((TASK / "tests/units.json").read_text())["units"]
         self.assertEqual(sorted(dev), ["d0", "d1", "d2"])
         self.assertFalse(set(dev) & set(scored))
-        ranges = constants(TASK / "tests/lab_sim.py", ("UNIT_RANGES",))["UNIT_RANGES"]
-        self.assertEqual({k: list(v) for k, v in ranges.items()}, BENCH["draw"]["ranges"])
-        for uid, props in dev.items():
-            self.assertEqual(sorted(props), sorted(ranges))
+        c = constants(TASK / "tests/lab_sim.py", ("UNIT_RANGES", "TURN_PROPS", "FIT_PROPS", "CALIB", "CALIB_CAMS"))
+        ranges = c["UNIT_RANGES"]
+        self.assertEqual(sorted(ranges), sorted(c["TURN_PROPS"] + c["FIT_PROPS"]))
+        self.assertEqual({k: list(ranges[k]) for k in c["TURN_PROPS"]}, BENCH["draw"]["ranges"])
+        self.assertEqual({k: list(ranges[k]) for k in c["FIT_PROPS"]}, BENCH["fit_draw"]["ranges"])
+        for uid, props in list(dev.items()) + list(scored.items()):
+            self.assertEqual(sorted(props), sorted(list(ranges) + ["calib"]))
             for k, (lo, hi) in ranges.items():
                 self.assertTrue(lo <= props[k] <= hi, "%s.%s is outside the stated range" % (uid, k))
+            self.assertEqual(sorted(props["calib"]), sorted(c["CALIB_CAMS"]))
+            for cam, err in props["calib"].items():
+                mm, deg = c["CALIB"]["wrist" if cam == "wrist" else "fixed"]
+                self.assertEqual(len(err), 6)
+                self.assertTrue(all(abs(x) <= deg for x in err[:3]) and all(abs(x) <= mm for x in err[3:]),
+                                "%s.calib.%s is outside the stated bound" % (uid, cam))
+        # no bench has a scored unit's fit, and the scored units' values are the record's (tests/review/unit_fit.py)
+        fit = json.loads((TASK / "tests/hidden/selection_fit.json").read_text())
+        for uid, props in scored.items():
+            self.assertTrue(fit["recheck"][uid]["kept"])
+            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib"]}, fit["values"]["scored"][uid])
+        for uid, props in dev.items():
+            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib"]}, fit["values"]["bench"][uid])
+            for s in scored.values():
+                self.assertFalse(all(abs(props[k] - s[k]) <= 0.02 * (ranges[k][1] - ranges[k][0])
+                                     for k in c["FIT_PROPS"]))
+        self.assertEqual((TASK / "tests/units.json").read_text(), (TASK / "solution/oracle/units.json").read_text())
             for sid, sprops in scored.items():
                 self.assertFalse(all(abs(props[k] - sprops[k]) < 1e-9 for k in ranges),
                                  "development unit %s is a scored unit" % uid)
@@ -97,6 +117,7 @@ class CommissioningService(unittest.TestCase):
         selection = json.loads((hidden / "episode_selection.json").read_text())
         candidates = set(int(c["seed"]) for c in selection["candidates"])
         recheck = set(int(s) for s in json.loads((hidden / "selection.json").read_text())["recheck_seeds"])
+        recheck |= set(int(s) for s in json.loads((hidden / "selection_fit.json").read_text())["recheck_seeds"])
         numerics = {int(json.loads((TASK / "tests/numerics.json").read_text())["seed"])}
         self.assertEqual(len(graded), 12)
         self.assertFalse(dev & graded, "a development episode is a graded episode")
@@ -240,8 +261,17 @@ class AgentSide(unittest.TestCase):
         lo, hi = ranges["rotor_friction"]
         for text, name in ((flat(INSTRUCTION), "instruction.md"), (flat(SHEETS), "task_card.md")):
             for words in ("%.2f-%.2f N m" % (lo, hi), "%g-%g deg" % ranges["handle_play"],
-                          "%.3f-%.3f kg m^2" % ranges["rotor_inertia"]):
+                          "%.3f-%.3f kg m^2" % ranges["rotor_inertia"],
+                          "| %.1f-%.1f mm |" % ranges["bore_clearance"], "| %.2f-%.2f |" % ranges["bore_friction"],
+                          "| %.2f-%.2f N m |" % ranges["lid_friction"]):
                 self.assertIn(words, text, "%s does not state the range %s" % (name, words))
+        calib = constants(TASK / "tests/lab_sim.py", ("CALIB",))["CALIB"]
+        self.assertEqual(calib, {"wrist": (2.0, 0.5), "fixed": (5.0, 0.5)})
+        for text in (flat(INSTRUCTION), flat(SHEETS)):
+            self.assertIn("up to 2 mm", text)
+            self.assertIn("up to 5 mm", text)
+            self.assertIn("0.5 deg", text)
+            self.assertIn("calibration on file", text)
 
     def test_payload_states_equipment_not_a_method(self):
         """What the agent is given says what the equipment is and what its sensors read. It does not say how to do

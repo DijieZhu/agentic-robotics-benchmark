@@ -17,7 +17,8 @@ Control at 10 Hz. An action is one of three shapes (JSON numbers):
 
 The observation (`observation`, on the wire `to_wire`): t, q, dq (7), ee_pos, ee_quat (wxyz), gripper (the
 fingers' opening, m), wrench (the wrist's force and torque in the world frame, with noise), each camera's pose
-T_world_<cam> (4 x 4, OpenCV convention: x right, y down, z forward) and intrinsics K_<cam>, the requested images
+T_world_<cam> (4 x 4, OpenCV convention: x right, y down, z forward; the unit's calibration on file: the true pose
+with the unit's fixed error, lab_sim.CALIB) and intrinsics K_<cam>, the requested images
 (the others empty), and the worklist: {"cold": {incoming position: cold position}, "spin": [incoming positions]}.
 """
 
@@ -72,7 +73,10 @@ def to_wire(obs):
 
 class LabEnv:
     def __init__(self, props, unit_id="dev", render=True):
-        self.props = {k: float(props[k]) for k in S.UNIT_PROPS}
+        self.props = {k: float(props.get(k, S.UNIT_NOMINAL.get(k))) for k in S.UNIT_PROPS}
+        # the unit's calibration on file: per camera the error of the pose the observation reports (lab_sim.CALIB)
+        calib = props.get("calib") or {}
+        self.calib = {cam: S.calib_matrix(calib.get(cam)) for cam in CAMS}
         self.unit_id = unit_id
         self.render_images = render
         self.renderers = {}              # one per image size, for this episode's model (lab_sim.render)
@@ -135,7 +139,7 @@ class LabEnv:
         R, pc = cam_pose(d, self.p.model.camera(CAMS[cam][4]).id)
         T = np.eye(4)
         T[:3, :3], T[:3, 3] = R, pc
-        return T
+        return T @ self.calib[cam]              # the calibration on file, not the true pose
 
     def wrench(self):
         d, m = self.p.data, self.p.model

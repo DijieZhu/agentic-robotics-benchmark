@@ -50,10 +50,18 @@ How the rotor answers a turn is a property of each centrifuge unit, and no unit'
 | Friction of the rotor's hinge | 0.10-0.45 N m |
 | Play between the knob and the rotor | 0-20 deg |
 | Rotor inertia | 0.010-0.040 kg m^2 |
+| Radial clearance of the rotor's bores around a tube | 0.6-1.0 mm |
+| Friction of the bores against a tube (coefficient) | 0.35-0.58 |
+| Friction of the lid's hinge | 0.30-1.20 N m |
+| Error of each camera's pose on file (`T_world_<cam>`) | wrist: up to 2 mm and 0.5 deg per axis; fixed cameras: up to 5 mm and 0.5 deg per axis |
 
-A grip commanded to turn 45 deg may turn the rotor by much less, and a short grip may not turn it at all. The six
-scored units and the three commissioning units were drawn separately over these ranges: a commissioning unit shows
-what the series is like, not what a scored unit's values are.
+A grip commanded to turn 45 deg may turn the rotor by much less, and a short grip may not turn it at all. In a
+tight bore a tube that goes in a millimetre off its axis stops short of the floor. A stiff lid stays where it is
+let go. A point located through a camera's pose on file is a few millimetres off. The six scored units and the
+three commissioning units were drawn separately over these ranges: a commissioning unit shows what the series is
+like, not what a scored unit's values are. Nothing measured on a commissioning bench is a scored unit's value:
+your controller has to find out on site, in every episode, where things are, whether a tube is seated and
+whether the lid is shut (`task_card.md` says what each sensor shows of it).
 
 ## Commissioning
 
@@ -154,7 +162,8 @@ The controller runs at 10 Hz. The observation is a JSON object:
   in the world frame, with noise: 0.3 N, 0.03 N m).
 - **The scale:** `scale_g`, its display in grams (see `task_card.md`).
 - **Cameras:**
-  - `T_world_<cam>`: 4 x 4 pose in the OpenCV convention (x right, y down, z forward);
+  - `T_world_<cam>`: 4 x 4 pose in the OpenCV convention (x right, y down, z forward): the unit's calibration
+    on file, which is off the camera's true pose by the unit's fixed error (the table above);
   - `K_<cam>`: intrinsics, a pixel's centre at its index + 0.5;
   - `<cam>`: the image, `{"dtype": "uint8", "shape": [H, W, 3], "b64": ...}`.
 

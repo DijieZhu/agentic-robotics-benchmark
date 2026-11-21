@@ -1096,10 +1096,49 @@ def sim_args(seed):
     return a
 
 
-UNIT_PROPS = ("rotor_friction", "handle_play", "rotor_inertia")
+TURN_PROPS = ("rotor_friction", "handle_play", "rotor_inertia")
+# what else is a unit's own (since 2026-11-20): the rotor bores' fit and finish and the lid hinge's friction. With
+# the cameras' calibration error (CALIB, below) they make a scored unit differ from every commissioning bench in
+# things a controller has to cope with on site.
+FIT_PROPS = ("bore_clearance", "bore_friction", "lid_friction")
+UNIT_PROPS = TURN_PROPS + FIT_PROPS
 # the scored units span these; the practice units sit at the low end (PRACTICE_RANGES). Friction
 # is against a grip 18 mm from the axis (the shield's inner edge): 0.45 N m there loses about what 0.65 did at 26 mm
-UNIT_RANGES = {"rotor_friction": (0.1, 0.45), "handle_play": (0.0, 20.0), "rotor_inertia": (0.01, 0.04)}
+UNIT_RANGES = {"rotor_friction": (0.1, 0.45), "handle_play": (0.0, 20.0), "rotor_inertia": (0.01, 0.04),
+               # mm, radial, a rotor bore over the tube (the nominal bench: 1.0)
+               "bore_clearance": (0.6, 1.0),
+               # the bores' friction against a tube (the nominal bench: 0.6, the tubes' own). From about 0.63 a tube
+               # let go in the 45 deg bore no longer slides to the floor by its weight (36 benches, 2026-11-20), and
+               # the reference has no way to push it down through the port: the range ends below that
+               "bore_friction": (0.35, 0.58),
+               # N m, the lid hinge's friction (the nominal bench: 0.5; the lid's weight makes 0.7 N m at the
+               # horizontal: above that a lid let go stays where it is)
+               "lid_friction": (0.3, 1.2)}
+# a unit given without the fit properties (the numerics check's, an image's self-test) has the nominal ones
+UNIT_NOMINAL = {"bore_clearance": 1.0, "bore_friction": 0.6, "lid_friction": 0.5}
+# The cameras' calibration on file. Every observation's T_world_<cam> is the calibration on file for that unit's
+# bench, not the camera's true pose: the true pose times a fixed error, per unit and per camera, a rotation vector
+# (deg, each component within +-CALIB[...][1]) and a translation (mm, each component within +-CALIB[...][0]), both in
+# the camera's own frame. "wrist" is the hand-eye calibration (the camera on the hand); "fixed" the left, right and
+# rack cameras. The images are drawn from the true cameras.
+CALIB = {"wrist": (2.0, 0.5), "fixed": (5.0, 0.5)}
+CALIB_CAMS = ("left", "right", "wrist", "rack")
+
+
+def calib_matrix(err):
+    """The 4 x 4 error of a calibration on file: `err` = [rx, ry, rz (deg), tx, ty, tz (mm)], camera frame."""
+    T = np.eye(4)
+    if err is None:
+        return T
+    e = np.asarray(err, float)
+    rv = np.radians(e[:3])
+    th = float(np.linalg.norm(rv))
+    if th > 1e-12:
+        k = rv / th
+        K = np.array([[0, -k[2], k[1]], [k[2], 0, -k[0]], [-k[1], k[0], 0]])
+        T[:3, :3] = np.eye(3) + math.sin(th) * K + (1 - math.cos(th)) * (K @ K)
+    T[:3, 3] = e[3:] * 1e-3
+    return T
 PRACTICE_RANGES = {"rotor_friction": (0.1, 0.15), "handle_play": (0.0, 4.0), "rotor_inertia": (0.01, 0.015)}
 N_PAIRS = (2, 4)                # the rotor's opposite pairs to fill (with the tubes already in it)
 N_PRE = (0, 2)                  # tubes already seated in the rotor (another job's; spun too, left where they are)
@@ -1115,7 +1154,9 @@ def draw_unit(seed):
     (to which positions) and which are spun, the tubes already in the rotor (their holes and masses), the cold
     positions already taken, the lid's start, and the fills (`fills[slot]`, None for an empty slot)."""
     rng = np.random.default_rng([seed, 23])
-    unit = {k: float(rng.uniform(*UNIT_RANGES[k])) for k in UNIT_PROPS}
+    unit = {k: float(rng.uniform(*UNIT_RANGES[k])) for k in TURN_PROPS}
+    fit = np.random.default_rng([seed, 61])           # a stream of its own: the episode's other draws are as before
+    unit.update({k: float(fit.uniform(*UNIT_RANGES[k])) for k in FIT_PROPS})
     unit["rotor_start"] = float(rng.uniform(0, 360))
     n_pairs = int(rng.integers(N_PAIRS[0], N_PAIRS[1] + 1))
     n_pre = int(rng.integers(N_PRE[0], min(N_PRE[1], n_pairs) + 1))
@@ -1172,7 +1213,7 @@ def draw_episode(seed, props):
     """An episode of a unit (the unit's hidden properties fixed, the rest from the seed): `draw_unit(seed)` with
     the unit's properties in place of the drawn ones."""
     ep = draw_unit(seed)
-    ep.update({k: float(props[k]) for k in UNIT_PROPS})
+    ep.update({k: float(props.get(k, UNIT_NOMINAL.get(k))) for k in UNIT_PROPS})
     return ep
 
 
@@ -1182,6 +1223,10 @@ def world(a, unit, world_cls=World):
     rack (`p.foreign`: position -> body) are extra bodies, their masses in `p.extra_mass`."""
     for k in ("rotor_friction", "handle_play", "rotor_inertia", "rotor_start"):
         setattr(a, k, unit[k])
+    # the unit's fit: the rotor bores' radial clearance (the racks' holes keep theirs) and the lid hinge's friction
+    a.clearance = float(unit.get("bore_clearance", UNIT_NOMINAL["bore_clearance"])) * 1e-3
+    a.lid_friction = float(unit.get("lid_friction", UNIT_NOMINAL["lid_friction"]))
+    a.bore_friction = float(unit.get("bore_friction", UNIT_NOMINAL["bore_friction"]))
     a.tube_slots = [i for i, f in enumerate(unit["fills"]) if f is not None]
     a.lid_start = 0.0 if unit.get("lid_closed") else a.lid_open
     set_bench(a)
@@ -1199,6 +1244,13 @@ def world(a, unit, world_cls=World):
     extra_mass.update({f"fx_{n}": a.mass + f * 1e-3 for n, f in unit.get("foreign", {}).items()})
     for name, mass in extra_mass.items():
         set_tube_mass(m, name, a, mass=mass)
+    # the bores' finish: their walls and floors decide the friction of a tube in them (priority over the tube's own)
+    for g in range(m.ngeom):
+        name = m.geom(g).name
+        if len(name) > 2 and name[0] == "h" and name[1].isdigit() and (name[2:4] == "_w" or name[2:] == "_floor"):
+            m.geom_priority[g] = 2
+            m.geom_condim[g] = 4
+            m.geom_friction[g] = [a.bore_friction, B.STIFF_TORSION, 0.0001]
     mujoco.mj_setConst(m, mujoco.MjData(m))
     p = world_cls(m, a)
     p.pre = {int(h): f"pre{h}" for h in unit.get("preloaded", {})}
