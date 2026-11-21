@@ -1,0 +1,36 @@
+# Grocery shelf restocking: a Franka Panda on a vertical lift restocks one gondola bay (three shelves) from a tote of
+# delivered products, following a planogram and rotating the stock (the units already on a shelf end in front, the
+# delivered ones behind them), each lane's front unit faced and boxes face out. The products are known only by their
+# printed look against a catalog image; the bay's pose and the old units behind the front ones must be found with the
+# cameras. The grader drives the agent's controller over a stdio wire on a fixed hidden set of 12 episodes.
+# Structure after tasks/arm/lab_sample_handling.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/grocery_shelf_restocking"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h, as the appliance and lab tasks (the full simulator with three practice units is in the agent's home).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (2 per hidden unit), each at most 15000 control steps; the grader's own budget is 9000 s
+# (grader_config.json: the reference took 40-250 s an episode over the wire), and starting the solver, the egress
+# self-test and the stops need a little more.
+[verifier]
+timeout_sec = 9600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
