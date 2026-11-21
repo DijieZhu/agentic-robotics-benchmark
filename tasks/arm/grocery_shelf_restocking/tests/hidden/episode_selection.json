@@ -2,15 +2,18 @@
  "format": "grocery_shelf_restocking episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "a7d73ef018ae58b77d1a166a9a7ce7fe7d213ef32ba3851691f0904d428af3fb",
+  "tests/verify.py": "07da476a0328f704eef8e2d267b59a5dc166c98d69a151f8b4d4a553d1a1e62b",
   "tests/episode.py": "a739944ab7d28bf5e4b3574c7effb7f23d05dd76d1f28abce9cbe3cdfee56832",
   "tests/shelf_env.py": "6c8c288e841010984f49ded69269c9d6729c9c0bb0045b928b5c024a2d2ab2c1",
-  "tests/shelf_world.py": "2913046c2cad634b3bbb467d7440cf8b32bfcb8c5c5443b65bdc1f98c1d3fef8",
+  "tests/shelf_world.py": "c76a7b446a770b904bd24850fa41e504c10dda4716ff23e2fb7fc14879088ee2",
   "tests/shelf_ctl.py": "1de7c017cad885a85672dce5fac2c9ddb5a391cb5a3ec8cc0dc3987149164ba8",
   "tests/shelf_sim.py": "f71483aa4477c43014d0760dfaf3b7055fef06389007b7f7a276010c07406523",
   "tests/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
   "tests/units.json": "1a5955d9eb1445917104c7d2febf4a710d7087af56aca1757f5706822fac321d",
-  "tests/grader_config.json": "96bfdac65e7d2bafb9dc0fe1db1f9703c0ae0e2fbecf87c70c17d71d7fb7ad43",
+  "tests/grader_config.json": "c4ebb50dfbe4551ceee36c0971c5e94273142ba440f59e1529162ecce60609d9",
+  "tests/nonet_exec.py": "793a647065d7f27ee4469e4f0a7cdab9a983f2bd40e646aecfe1403fce3fd7a5",
+  "tests/numerics_check.py": "d6537622f079d96954599fd9f1280c46059b2e0339f21e0f22e06b12da6926eb",
+  "tests/numerics.json": "2abfe98c2e03f5a8d552bff4331e969fa6bcba07b2043a6fb5039eeacdae42eb",
   "solution/oracle/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
   "solution/oracle/episode.py": "a739944ab7d28bf5e4b3574c7effb7f23d05dd76d1f28abce9cbe3cdfee56832",
   "solution/oracle/oracle_main.py": "427f50f62218dc53d6870570252c57a77569f7d855f264c90e2ab9cb9684c198",
@@ -18,9 +21,9 @@
   "solution/oracle/shelf_ctl.py": "1de7c017cad885a85672dce5fac2c9ddb5a391cb5a3ec8cc0dc3987149164ba8",
   "solution/oracle/shelf_env.py": "6c8c288e841010984f49ded69269c9d6729c9c0bb0045b928b5c024a2d2ab2c1",
   "solution/oracle/shelf_sim.py": "f71483aa4477c43014d0760dfaf3b7055fef06389007b7f7a276010c07406523",
-  "solution/oracle/shelf_world.py": "2913046c2cad634b3bbb467d7440cf8b32bfcb8c5c5443b65bdc1f98c1d3fef8",
+  "solution/oracle/shelf_world.py": "c76a7b446a770b904bd24850fa41e504c10dda4716ff23e2fb7fc14879088ee2",
   "solution/oracle/staging.py": "9210a0db7fa88c2c6c0ef6a66a2f3a0eafe9e14d2b39d85f62a675e0bc11d468",
-  "solution/oracle/wire_world.py": "efb8c9d886aa6f2ebe0255c524126b8fd7a0431f641e2bd81a83740628d5bf5f",
+  "solution/oracle/wire_world.py": "85d902475d53ff247b7e23f0bf62a3997270a215da4d88f435abe4c8102ed22a",
   "solution/solve.sh": "9ccaeea25a472282ee1e3f44a80f8a9bf0dc933405bebaffc1a7b658238522f0"
  },
  "draws": [
@@ -29,7 +32,7 @@
    "drawn_utc": "2026-11-19T22:47:35Z",
    "key": "c6ea137ec540304f716e47fdc1bbb2e05caebb7ea1c1aa9801424a1368881893",
    "source": "os.urandom(32)",
-   "status": "made",
+   "status": "void",
    "made_utc": "2026-11-19T23:04:36Z",
    "shelves_restocked": [
     7,
@@ -51,7 +54,38 @@
     "u2#1",
     "u3#1",
     "u4#1"
-   ]
+   ],
+   "frozen": {
+    "tests/verify.py": "a7d73ef018ae58b77d1a166a9a7ce7fe7d213ef32ba3851691f0904d428af3fb",
+    "tests/episode.py": "a739944ab7d28bf5e4b3574c7effb7f23d05dd76d1f28abce9cbe3cdfee56832",
+    "tests/shelf_env.py": "6c8c288e841010984f49ded69269c9d6729c9c0bb0045b928b5c024a2d2ab2c1",
+    "tests/shelf_world.py": "2913046c2cad634b3bbb467d7440cf8b32bfcb8c5c5443b65bdc1f98c1d3fef8",
+    "tests/shelf_ctl.py": "1de7c017cad885a85672dce5fac2c9ddb5a391cb5a3ec8cc0dc3987149164ba8",
+    "tests/shelf_sim.py": "f71483aa4477c43014d0760dfaf3b7055fef06389007b7f7a276010c07406523",
+    "tests/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+    "tests/units.json": "1a5955d9eb1445917104c7d2febf4a710d7087af56aca1757f5706822fac321d",
+    "tests/grader_config.json": "96bfdac65e7d2bafb9dc0fe1db1f9703c0ae0e2fbecf87c70c17d71d7fb7ad43",
+    "solution/oracle/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+    "solution/oracle/episode.py": "a739944ab7d28bf5e4b3574c7effb7f23d05dd76d1f28abce9cbe3cdfee56832",
+    "solution/oracle/oracle_main.py": "427f50f62218dc53d6870570252c57a77569f7d855f264c90e2ab9cb9684c198",
+    "solution/oracle/reference.py": "44ba18731462e5366e77bff4dc249a519095ed93ccb6fc012b21f8787a8ae161",
+    "solution/oracle/shelf_ctl.py": "1de7c017cad885a85672dce5fac2c9ddb5a391cb5a3ec8cc0dc3987149164ba8",
+    "solution/oracle/shelf_env.py": "6c8c288e841010984f49ded69269c9d6729c9c0bb0045b928b5c024a2d2ab2c1",
+    "solution/oracle/shelf_sim.py": "f71483aa4477c43014d0760dfaf3b7055fef06389007b7f7a276010c07406523",
+    "solution/oracle/shelf_world.py": "2913046c2cad634b3bbb467d7440cf8b32bfcb8c5c5443b65bdc1f98c1d3fef8",
+    "solution/oracle/staging.py": "9210a0db7fa88c2c6c0ef6a66a2f3a0eafe9e14d2b39d85f62a675e0bc11d468",
+    "solution/oracle/wire_world.py": "efb8c9d886aa6f2ebe0255c524126b8fd7a0431f641e2bd81a83740628d5bf5f",
+    "solution/solve.sh": "9ccaeea25a472282ee1e3f44a80f8a9bf0dc933405bebaffc1a7b658238522f0"
+   },
+   "void_reason": "Frozen files changed in the maintainer fixes of 2026-11-21 (commit 6790ddf): tests/verify.py and tests/grader_config.json (the budget is the controller's own time, the numerics check), solution/oracle/wire_world.py (the reference has no wall-clock thinking limit), and the image now pins the numerics of the simulation and of a controller (environment/Dockerfile, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, added to the frozen list). Rule step 5: the draw is void and a new key is drawn.",
+   "voided_utc": "2026-11-21T23:05:02Z"
+  },
+  {
+   "draw": 2,
+   "drawn_utc": "2026-11-21T23:05:02Z",
+   "key": "97521243c1dd6545aa7e7218fb900fa7b3a4986570ce9fbd61059616e8eb3540",
+   "source": "os.urandom(32)",
+   "status": "open"
   }
  ],
  "candidates": [
