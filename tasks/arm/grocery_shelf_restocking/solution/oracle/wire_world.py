@@ -27,7 +27,6 @@ class EpisodeOver(BaseException):
 
 HOLD = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0]
 FINISH = [0]
-THINK_S = 10.0
 
 
 class WireWorld(W.World):
@@ -97,11 +96,10 @@ class Oracle:
         self.thread = None
         self.last_t, self.last_cmd = None, None
         self.finished = False
-        self.pending = False
 
     def reset(self):
         self.stop()
-        self.last_t, self.last_cmd, self.finished, self.pending = None, None, False, False
+        self.last_t, self.last_cmd, self.finished = None, None, False
 
     def stop(self):
         if self.thread is not None and self.thread.is_alive():
@@ -125,6 +123,8 @@ class Oracle:
                 R.Reference(p).run()
             except EpisodeOver:
                 return
+            except Exception:  # noqa: BLE001 - a failed reference ends its episode instead of leaving it waiting
+                pass
             self.out_q.put("finish")
 
         self.thread = threading.Thread(target=run, daemon=True)
@@ -137,18 +137,15 @@ class Oracle:
             return action_for(self.last_cmd, obs)
         if self.thread is None and not self.finished:
             self._start(obs)
-        elif not self.finished and not self.pending:
+        elif not self.finished:
             self.p.sync(obs, obs["truth"])
             self.in_q.put("go")
         cmd = None
         if not self.finished:
-            try:
-                got = self.out_q.get(timeout=THINK_S)
-            except queue.Empty:
-                self.pending = True
-                self.last_t, self.last_cmd = t, None
-                return list(HOLD)
-            self.pending = False
+            # wait for the reference's next command however long it takes (no wall-clock limit of its own: a
+            # reply is then a function of the observations alone, and two runs of an episode are the same run on
+            # a busy machine too; the grader's own deadline per reply still applies)
+            got = self.out_q.get()
             if got == "finish":
                 self.finished = True
             cmd = got

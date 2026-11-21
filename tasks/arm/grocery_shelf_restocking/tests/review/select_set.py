@@ -3,7 +3,9 @@
 The rule, fixed before any candidate ran:
 
 1. Freeze. The grader (tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py,
-   tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json)
+   tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json,
+   and since draw 2 the launcher and the numerics fingerprint: tests/nonet_exec.py, tests/numerics_check.py,
+   tests/numerics.json)
    and the reference (the solution/oracle/ modules, solution/solve.sh) are committed first: `draw` refuses to start while any of them differs
    from the checkout's HEAD and records their sha256; `run` and `make` refuse to go on when any of them
    differs from the recorded hashes.
@@ -15,9 +17,10 @@ The rule, fixed before any candidate ran:
 3. Run. Per unit, candidates in the order i = 0, 1, ...: the privileged reference three times over the real wire,
    stopping at the first run below credit 1.0: verify.run_episodes with that one episode and the oracle submission as
    solution/solve.sh lays it out (a subprocess speaking the grading wire, given the token truth), the probe lock at
-   the grader's rate, each run with a fresh OS-entropy stream (robotics_grader.seed_rng). The reference thinks under a
-   wall-clock limit per step (wire_world.THINK_S: it holds still while it has not answered), so its runs of one
-   episode can differ; it is run only as the grader runs it, as a separate process.
+   the grader's rate, each run with a fresh OS-entropy stream (robotics_grader.seed_rng). Until draw 1 the reference
+   thought under a wall-clock limit per step (it held still while it had not answered), so its runs of one episode
+   could differ; since draw 2 it has no clock of its own, and the three runs differ only in which steps are probed.
+   It is run only as the grader runs it, as a separate process.
 4. Keep. A candidate is kept when it scores credit 1.0 in each of the three wire runs; per unit the first two kept
    are the unit's episodes, at most MAX_CANDIDATES tried. Every candidate tried is recorded: kept, or rejected with
    its scores and the parts it lost.
@@ -35,8 +38,9 @@ The rule, fixed before any candidate ran:
     python3 -B tests/review/select_set.py run --record tests/hidden/episode_selection.json --work DIR [--workers 6]
     python3 -B tests/review/select_set.py make --record tests/hidden/episode_selection.json --out tests/hidden/episodes.json
 
-`run` needs the task image's Python (3.12, MuJoCo 3.16.0, NumPy 2.5.4, SciPy 1.18.1, OpenCV; environment/
-requirements.txt) and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
+`run` needs the task image (Python 3.12, MuJoCo 3.16.0, NumPy 2.5.4, SciPy 1.18.1, OpenCV; environment/
+requirements.txt; the numerics pin of environment/Dockerfile, which the image's .pth gives every /opt/venv Python)
+and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
 this interpreter, and the controller is started directly rather than through nonet_exec.py (which needs root to change
 user); everything else is verify.run_episodes as the grader runs it.
 """
@@ -63,7 +67,8 @@ SET_FORMAT = "grocery_shelf_restocking fixed set 1"
 ORACLE_MODULES = ("box_transport_env.py", "episode.py", "oracle_main.py", "reference.py", "shelf_ctl.py", "shelf_env.py",
                   "shelf_sim.py", "shelf_world.py", "staging.py", "wire_world.py")
 FROZEN = (("tests/verify.py", "tests/episode.py", "tests/shelf_env.py", "tests/shelf_world.py", "tests/shelf_ctl.py",
-           "tests/shelf_sim.py", "tests/box_transport_env.py", "tests/units.json", "tests/grader_config.json")
+           "tests/shelf_sim.py", "tests/box_transport_env.py", "tests/units.json", "tests/grader_config.json",
+           "tests/nonet_exec.py", "tests/numerics_check.py", "tests/numerics.json")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES)
           + ("solution/solve.sh",))
 PER_UNIT = 2

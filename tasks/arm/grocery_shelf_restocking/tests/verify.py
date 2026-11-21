@@ -20,6 +20,17 @@ shelf_world.py, shelf_ctl.py, shelf_sim.py and box_transport_env.py are the envi
 agent's copies. The metric `mean_episode_credit` is the mean over episodes of the episode credit (episode.py: 0.7
 placement, 0.2 facing, 0.1 lanes kept).
 
+Numerics: the operational-space controller inside the simulation calls LAPACK every physics step, and OpenBLAS picks
+its kernels by CPU; a controller's own NumPy, SciPy and OpenCV arithmetic differs by CPU as well. The image pins both
+(environment/Dockerfile: a .pth for every /opt/venv Python) and the launcher passes the same variables to run.sh
+(nonet_exec.controller_env). `check_numerics` runs numerics_check.py before anything is graded and ends the run as a
+task error on a machine that does not reproduce tests/numerics.json.
+
+Time: `grader_budget_s` is charged to the controller's own time: what the grader waits for READY and for each reply
+(`Clock`), plus `image_cost_s` for every image an applied action asks for, a fixed price whatever this machine takes
+to draw it. The simulation and the drawing are the grader's and are not counted, so the budget does not depend on
+how fast the grading machine simulates or renders.
+
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference; only
 then does every observation also carry `truth` (the unit, the seed, the full simulation state). An untokened
 submission never sees it. Every path agent behaviour can reach is charged as a score, never a crash.
@@ -71,6 +82,9 @@ STAGE = os.path.dirname(os.path.abspath(__file__))
 MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
 MAX_SUBMISSION_FILES = 5000
 NONET = os.path.join(STAGE, "nonet_exec.py")
+NUMERICS = os.path.join(STAGE, "numerics_check.py")
+NUMERICS_REF = os.path.join(STAGE, "numerics.json")
+NUMERICS_TIMEOUT_S = 300
 UNITS = os.path.join(STAGE, "units.json")
 TOKEN_SHA = os.path.join(STAGE, "hidden", "oracle_token.sha256")
 EPISODES = os.path.join(STAGE, "hidden", "episodes.json")
@@ -168,6 +182,50 @@ def stop_agent_processes(uid):
     return not running
 
 
+def check_numerics():
+    """Run numerics_check.py in a fresh interpreter (a short scripted run of the simulation and a set of NumPy, SciPy
+    and OpenCV results computed as a controller's process computes them; sha256) and compare with tests/numerics.json.
+    A machine that does not reproduce the recorded fingerprint would run every controller along another trajectory,
+    so it must not grade: a task error, never the submission's."""
+    with open(NUMERICS_REF) as fh:
+        want = json.load(fh)["fingerprint"]
+    try:
+        proc = subprocess.run([sys.executable, "-I", NUMERICS], cwd=STAGE, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, timeout=NUMERICS_TIMEOUT_S, env=dict(os.environ))
+        report = json.loads(proc.stdout.decode("utf-8", "replace").strip().splitlines()[-1])
+        got = str(report["fingerprint"])
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+        fail("the numerics check did not run: {}: {}".format(type(exc).__name__, str(exc)[:200]))
+    if got != want:
+        fail("this machine does not reproduce the recorded numerics (tests/numerics.json): got {}, recorded {}; "
+             "differs in {}. Grading here would run every controller along another trajectory".format(
+                 got[:16], want[:16], report.get("differs")))
+    return got
+
+
+class Clock(object):
+    """The controller's own time (s): what the grader waited for READY and for each reply, and what `run_episodes`
+    adds for the images an applied action asks for. The simulation and the drawing happen outside `timed`."""
+
+    def __init__(self):
+        self.s = 0.0
+
+    def timed(self, fn, *args, **kwargs):
+        t0 = time.monotonic()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            self.s += time.monotonic() - t0
+
+
+def images_asked(action):
+    """How many images the next observation carries for this (valid) action: the set bits of its camera mask."""
+    if len(action) == 1:
+        return 0
+    cams = int(action[9] if len(action) == 10 else action[8])
+    return bin(cams & E.ALL_CAMS).count("1")
+
+
 class GuardedSolver(Solver):
     """The kit Solver, spawned through the seccomp launcher, with a reply-line cap."""
 
@@ -179,9 +237,10 @@ class GuardedSolver(Solver):
         cmd = [sys.executable, "-I", NONET, "--uid", str(uid), "--gid", str(gid), "--rlimit-nproc", str(self.nproc),
                "--cwd", self.submission, "--", "bash", self.entry]
         if not self.guard:
-            cmd = ["/usr/sbin/runuser", "-u", agent_user(), "--", "/usr/bin/env", "-i",
-                   "PATH=/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME=/home/user", "LANG=C.UTF-8",
-                   "bash", self.entry]
+            import nonet_exec
+            cmd = (["/usr/sbin/runuser", "-u", agent_user(), "--", "/usr/bin/env", "-i"]
+                   + ["{}={}".format(k, v) for k, v in sorted(nonet_exec.controller_env().items())]
+                   + ["bash", self.entry])
         try:
             return subprocess.Popen(cmd, cwd=self.submission, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                     stderr=subprocess.DEVNULL, universal_newlines=True, bufsize=1,
@@ -343,17 +402,19 @@ def probe_stream(index, seed):
     return seed_rng(entropy=int.from_bytes(digest, "little"))
 
 
-def ask(lock, solver, ep, t, obs, unit, truth):
+def ask(lock, solver, ep, t, obs, unit, truth, clock=None):
     """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
     the stream (lock.due); a probed step draws twice more, both before either request is written: the seed of the
     perturbation, then the order of the pair (ProbeLock.probe). The draws a step consumes never depend on the
     replies, and a pair that is not counted (both replies command no motion) has consumed the same draws as a
     counted one."""
+    timed = clock.timed if clock is not None else (lambda fn, *a, **k: fn(*a, **k))
     w = wire_obs(ep, obs, unit, truth)
     if lock.due():
-        other = ep.env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
-        return lock.probe(solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
-    return solver.act(t, w)
+        other = wire_obs(ep, ep.env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64))),
+                         unit, truth)
+        return timed(lock.probe, solver, t, w, perturbed=other)
+    return timed(solver.act, t, w)
 
 
 def render_selftest(unit_props, unit, seed=SELFTEST_SEED):
@@ -433,13 +494,18 @@ def valid_action(action):
 
 
 def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episodes):
-    """Run `episodes` ([(unit, seed)], the fixed set in its order) over one controller. Returns (scores, aborted,
+    """Run `episodes` ([(unit, seed)], the fixed set in its order) over one controller. The budget
+    (`grader_budget_s`) is charged to the controller's own time, `lock.clock`: what the grader waited for READY (the
+    first start and every restart), for each reply and for the reset, plus `image_cost_s` for every image an applied
+    action asks for. `t_start` is kept for the record only. Returns (scores, aborted,
     skipped, faults, per_unit, per_part, egress_hits, budget_exhausted, lock, records) (skipped: not started within
     the budget, scored 0; a simulator error or a non-finite state aborts the episode and counts as a fault); a
     record per episode: its index in the set, unit, score, reason and steps. During episode n the probe lock draws from probe_stream(n, seed); its
     counts run over all episodes. A renderer failure (E.RenderError) is not caught here: it is the caller's task
     error."""
     budget = float(config.get("grader_budget_s", 9000))
+    image_cost = float(config.get("image_cost_s", 0.1))
+    clock = Clock()
     lock = IdleAwareProbeLock(None, rate=config.get("probe_rate", 0.01),
                               pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
     scores, aborted, faults, records = [], 0, 0, []
@@ -449,34 +515,36 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
     skipped = 0
     GuardedSolver.guard = egress_mode == "seccomp"
     GuardedSolver.nproc = int(config.get("solver_nproc_limit", 0))
-    solver = GuardedSolver(step_timeout=config.get("step_timeout_s", 30), submission=workdir)
+    lock.clock = clock
+    solver = clock.timed(GuardedSolver, step_timeout=config.get("step_timeout_s", 30), submission=workdir)
     try:
         for n, (unit, seed) in enumerate(episodes):
-            if time.monotonic() - t_start > budget:
+            if clock.s > budget:
                 budget_exhausted = True
                 skipped += 1
                 scores.append(0.0)
                 per_unit.setdefault(unit, []).append(0.0)
-                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "grader budget exhausted",
+                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "controller time budget exhausted",
                                 "steps": 0})
-                log("episode {} ({}): score=0.0000 not run (grader budget exhausted)".format(n, unit))
+                log("episode {} ({}): score=0.0000 not run (controller time budget exhausted)".format(n, unit))
                 continue
             lock.rng = probe_stream(n, seed)
             ep = Run(units[unit], unit, seed)
             score, reason = 0.0, "ok"
             try:
                 obs = ep.reset()
-                solver.reset()
+                clock.timed(solver.reset)
                 t, done = 0, False
                 while not done:
-                    if time.monotonic() - t_start > budget:
+                    if clock.s > budget:
                         budget_exhausted = True
-                        raise SolverAborted("grader budget exhausted")
+                        raise SolverAborted("controller time budget exhausted")
                     if egress_mode == "detect" and agent_inet_sockets(uid):
                         egress_hits += 1
-                    action = ask(lock, solver, ep, t, obs, unit, truth)
+                    action = ask(lock, solver, ep, t, obs, unit, truth, clock)
                     if not valid_action(action):
                         raise SolverAborted("malformed action")
+                    clock.s += image_cost * images_asked(action)
                     obs, done, _info = ep.step(action)
                     t += 1
                     if ep.env.unstable():
@@ -528,6 +596,8 @@ def main():
         write_verdict(zero_verdict(reason="agent processes could not be stopped (cleanup_failed)",
                                    anchored=anchor is not None, extra=secured))
         return
+    check_numerics()                     # a task error on a machine that computes differently
+    secured["numerics_ok"] = 1.0
     with open(UNITS) as fh:
         units = dict(sorted(json.load(fh)["units"].items()))
     episodes = load_episode_set(config, units)
@@ -584,9 +654,10 @@ def main():
                             metric_name="mean_episode_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))
     write_verdict(verdict)
-    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={}".format(
-        measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
-        egress_mode))
+    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={} "
+        "controller={:.0f}s of {:.0f}s wall={:.0f}s".format(
+            measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
+            egress_mode, lock.clock.s, float(config.get("grader_budget_s", 9000)), time.monotonic() - t_start))
 
 
 if __name__ == "__main__":

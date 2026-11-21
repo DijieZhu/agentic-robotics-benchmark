@@ -9,9 +9,16 @@ Runs your controller (bash run.sh in --submission) against /home/user/shelf_env.
 (/home/user/units.json: each unit's bay and SKUs), the episodes and credit of /home/user/episode.py. It speaks the same wire as the hidden grader: READY within 120 s, each reply within
 30 s, repeated step indices with perturbed observations (only the reply to the real observation is
 applied), an aborted episode scores 0 and the controller is restarted (at most 3 restarts), and the
-controller runs with only AF_UNIX sockets (the same seccomp filter as at grading time). It reports
-whether the run stayed inside the grading time budget. It never touches the hidden units, does not know
-the reference value and prints no score.
+controller runs with only AF_UNIX sockets (the same seccomp filter as at grading time) and with the same
+environment (PATH, HOME, LANG and the numerics variables). It counts the controller's own time the way the grader
+does (the time it waits for READY and for each reply, plus 0.1 s for every image an applied action asks for) and
+reports whether the run stayed inside the grading budget (9000 s over 12 episodes: 750 s an episode on average).
+It never touches the hidden units, does not know the reference value and prints no score.
+
+What it prints, per episode: the credit and its three parts, each restocked lane's result with the units that are
+missing from it or do not belong in it and the day numbers of the units standing in it, and the units that moved,
+fell or are not in the tote. All of it is the practice simulation's own state, which you can read yourself; none
+of it exists for the graded bays.
 """
 
 import argparse
@@ -37,7 +44,8 @@ READY_TIMEOUT = 120.0
 STEP_TIMEOUT = 30.0
 MAX_RESTARTS = 3
 MAX_LINE = 1 << 22
-BUDGET_PER_EPISODE = 9000.0 / 12
+BUDGET_PER_EPISODE = 9000.0 / 12     # of the controller's own time (the grader's budget is 9000 s for 12 episodes)
+IMAGE_COST = 0.1                     # s charged for every image an applied action asks for
 PROBE_RATE = 0.01
 
 _FILTER_SRC = r'''
@@ -55,7 +63,16 @@ class F(ctypes.Structure): _fields_ = [("len", ctypes.c_ushort), ("filter", ctyp
 f = F(len(prog) // 8, ctypes.cast(buf, ctypes.c_void_p)); libc = ctypes.CDLL(None, use_errno=True)
 if libc.prctl(38, 1, 0, 0, 0) != 0 or libc.prctl(22, 2, ctypes.byref(f), 0, 0) != 0:
     sys.stderr.write("[practice] could not install the network filter\n")
-env = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/home/user", "LANG": "C.UTF-8"}
+env = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/home/user", "LANG": "C.UTF-8",
+       "OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256",
+       "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
+       "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "OPENCV_IPP": "avx2"}
+try:
+    flags = set(open("/proc/cpuinfo").read().split())
+except OSError:
+    flags = set()
+if "avx512f" in flags:
+    env["OPENCV_CPU_DISABLE"] = "AVX512-SKX"
 os.execvpe("bash", ["bash", "run.sh"], env)
 '''
 
@@ -70,6 +87,7 @@ class Wire(object):
         self.restarts = 0
         self.dead = False
         self.broken = False
+        self.own_s = 0.0             # the controller's own time: waiting for READY and for each reply
         self._start()
 
     def _start(self):
@@ -78,9 +96,13 @@ class Wire(object):
                                      bufsize=1, start_new_session=True)
         self.lines = queue.Queue()
         threading.Thread(target=self._pump, args=(self.proc, self.lines), daemon=True).start()
-        for _ in range(200):
-            if self._read(READY_TIMEOUT, "READY").strip() == "READY":
-                return
+        t0 = time.monotonic()
+        try:
+            for _ in range(200):
+                if self._read(READY_TIMEOUT, "READY").strip() == "READY":
+                    return
+        finally:
+            self.own_s += time.monotonic() - t0
         raise WireError("solver never printed READY")
 
     @staticmethod
@@ -117,6 +139,7 @@ class Wire(object):
     def request(self, msg):
         if self.dead:
             raise WireError("solver could not be restarted after an earlier abort")
+        t0 = time.monotonic()
         try:
             self.proc.stdin.write(json.dumps(msg) + "\n")
             self.proc.stdin.flush()
@@ -137,6 +160,8 @@ class Wire(object):
         except WireError:
             self.broken = True
             raise
+        finally:
+            self.own_s += time.monotonic() - t0
 
     def reset(self):
         if self.broken:
@@ -252,6 +277,8 @@ def main():
                         if not valid_action(act):
                             raise WireError("malformed action: 9, 16 or 10 finite numbers (the camera bits an "
                                             "integer 0-15), or [0]")
+                        if len(act) > 1:
+                            wire.own_s += IMAGE_COST * bin(int(act[9] if len(act) == 10 else act[8]) & 15).count("1")
                         obs = env.step(act)
                         done = ep.step_done(env.finished)
                         t += 1
@@ -277,7 +304,8 @@ def main():
         "repeated_t_pairs_that_differed": differed,
         "repeated_t_pairs_not_counted_no_motion": idle,
         "wall_seconds": round(wall, 1),
-        "within_grading_time_budget": wall <= BUDGET_PER_EPISODE * max(1, len(results)),
+        "controller_seconds": round(wire.own_s, 1),
+        "within_grading_time_budget": wire.own_s <= BUDGET_PER_EPISODE * max(1, len(results)),
         "note": "dev sim with the practice units; this is not your score",
     }, indent=1))
     return 0

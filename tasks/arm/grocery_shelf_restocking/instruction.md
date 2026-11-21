@@ -3,8 +3,7 @@
 You are a retail-automation engineer. A Franka Panda on a vertical lift stands in a store aisle in front of one
 gondola bay of three shelves, with a tote of delivered products on a cart beside it. Write the controller that
 restocks the bay from the tote, following the store's planogram and rotating the stock by date. It runs closed loop
-against a simulator and is graded on bays you have not seen. You have 2 hours of wall time; read the clock (`date`) before you
-decide that time is short.
+against a simulator and is graded on bays you have not seen. You have 2 hours of wall time (see "Session time").
 
 **The bay.** Three shelves, five lanes each. Shelves are numbered 0-2 from the bottom; lanes 0-4 from the right as
 seen from the aisle. Each shelf holds products of one height, and its headroom (from the board to the shelf above) is
@@ -60,10 +59,16 @@ not disturb the lanes that are not being restocked.
 | `episode.py` | An episode and its credit. The grader runs this exact file. |
 | `units.json` | Three practice units (p0-p2): bays and SKUs to develop against, each with eight seeds of episodes like the graded ones (`seeds`). The scored bays and SKUs are different. |
 | `task_card.md` | The scene's numbers in one place: frames, nominal places, ranges, sizes, cameras. |
-| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit. |
+| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units. Per episode it prints the credit and its three parts, each restocked lane's result (the units missing from it or not belonging in it, the day numbers of the units standing in it), the units that moved, fell or are not in the tote, and the controller's own time. This is the practice simulation's own state; nothing like it is given for the graded bays. |
+| `session_time.sh` | Prints the minutes of your session used and left (see "Session time"). |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic); copy it into your submission to use it. |
 
-Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow). There is no network.
+Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow). There is no network. Your sandbox
+has 4 CPUs and 12 GB of memory; the grading sandbox has the same.
+
+You may practise as much as the session allows: the simulator is yours to run, and the practice units' truth is
+yours to read. The graded bays are other bays (their own board heights, depth and lane spacing, within the task
+card's ranges) with other SKUs (other looks), and nothing but the observation is given for them.
 
 ## Credit
 
@@ -88,6 +93,20 @@ An episode ends:
 - at an unstable simulation (an arm joint faster than 8 rad/s, or a product faster than 5 m/s), which scores 0.
 
 The score is the mean credit over the graded episodes.
+
+## Session time
+
+- This session is stopped 2 hours of wall-clock time after it started. What is in `/home/user/submission/` at
+  that moment is graded as it is: keep a complete, runnable submission there from early on and replace it as you
+  improve it.
+- The only clock for this limit is the wall clock. `bash /home/user/session_time.sh` prints the minutes used and
+  the minutes left, from a time stamp written when your sandbox was set up (moments before your session started,
+  so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
+  again before every decision that depends on the time left, and whenever you pick the work up from notes or from
+  a summary of what was done. Do not estimate the time used from how much you have done.
+- Two other counts in this task are not your session's time: an episode's length (15000 control steps are 25
+  simulated minutes and several minutes of wall time in your simulator) and the controller's 9000 s budget at
+  grading. Neither says how much of the 2 hours is left.
 
 ## Observation and action
 
@@ -136,8 +155,16 @@ show this. The grader starts the controller with `bash run.sh` in that folder, a
 - `{"type": "act", "t": t, "obs": {...}}` → `{"action": [...]}`, within 30 s;
 - `{"type": "close"}` → `{"ok": true}`, then exit.
 
-Stdout carries only these messages (a reply line longer than 4 MiB ends the episode); write logs to stderr. `run.sh` starts with only `PATH`, `HOME` and `LANG` set:
-export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`).
+Stdout carries only these messages (a reply line longer than 4 MiB ends the episode); write logs to stderr. `run.sh`
+starts with only `PATH`, `HOME`, `LANG` and the numerics variables below set: export anything else you need there
+(to render with MuJoCo, `MUJOCO_GL=osmesa`).
+
+**Numerics.** So that a controller computes the same on every machine, `run.sh` is started, at grading and by the
+practice grader, with `OPENBLAS_CORETYPE=Haswell`, `OPENBLAS_L2_SIZE=256`,
+`NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"`, `OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1` and
+`OPENCV_IPP=avx2` (and `OPENCV_CPU_DISABLE=AVX512-SKX` on a CPU with AVX-512); every `/opt/venv` Python sets the
+same defaults by itself when they are missing. Leave them as they are: with other values your controller may act
+differently on the grading machine than it did here.
 
 **Probes.** About 1 % of steps are asked twice with the same `t`: the real observation and a slightly perturbed copy
 (joints by up to 1 mrad with the poses recomputed, force by up to 0.2 N; images unchanged), in a hidden order. Only
@@ -156,7 +183,14 @@ your replies.
   seconds of its budget.
 - A crash, a late reply, a malformed action, an unstable simulation or a simulator error scores the episode 0. After 3 restarts the
   remaining episodes score 0.
-- The grader's time budget is 9000 s in all. An episode still running when it runs out is aborted (scores 0), and
-  episodes it cannot start in time score 0.
+- Your controller has a budget of 9000 s of its own time over the whole run: the time the grader waits for `READY`
+  (at the first start and after a restart) and for each of your replies, plus 0.1 s for every image an applied
+  action asks for (a fixed price, whatever the grading machine takes to draw it). The simulation's own time is not
+  counted. An episode still running when the budget runs out is aborted (scores 0), and the episodes after it
+  score 0. The practice grader counts the same way and prints `controller_seconds`.
+- The whole run scores 0 if the grader cannot stop every process your submission left running (when it starts
+  and when the last episode is over: do not start anything that respawns or detaches itself to survive a kill).
+- Your processes cannot open an internet socket (the call fails). On a grading machine where that guard cannot be
+  installed, an internet socket of yours scores the whole run 0.
 - Your controller is one process for the whole run, so it may carry what it learns about a unit from one episode
   to the next.

@@ -12,7 +12,9 @@ In this process, before exec, it:
      socketpair() succeed only for AF_UNIX and fail with EPERM for every other address
      family, io_uring_setup fails, and any non-native syscall ABI (i386, x32) fails;
   4. drops to the agent account (setgroups([]), setgid, setuid);
-  5. execs the command with a fixed whitelist environment (PATH, HOME, LANG only).
+  5. execs the command with a fixed whitelist environment: PATH, HOME, LANG and the numerics variables
+     (`controller_env`: the same defaults the image's .pth sets for every /opt/venv Python, environment/Dockerfile),
+     so that a controller computes the same on every machine whatever it runs.
 
 The filter is inherited by every descendant and cannot be removed. No capability is needed.
 """
@@ -40,6 +42,24 @@ ARCH = {
 LD_W_ABS, JEQ_K, JGE_K, RET_K = 0x20, 0x15, 0x35, 0x06
 OFF_NR, OFF_ARCH, OFF_ARG0 = 0, 4, 16
 WHITELIST_ENV = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/home/user", "LANG": "C.UTF-8"}
+# the numerics pin (environment/Dockerfile explains each); OPENCV_CPU_DISABLE is added on a CPU with AVX-512 only
+NUMERICS_ENV = {"OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256",
+                "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
+                "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "OPENCV_IPP": "avx2"}
+
+
+def controller_env():
+    """The environment run.sh starts with: PATH, HOME, LANG and the numerics pin."""
+    env = dict(WHITELIST_ENV)
+    env.update(NUMERICS_ENV)
+    try:
+        with open("/proc/cpuinfo") as f:
+            flags = set(f.read().split())
+    except OSError:
+        flags = set()
+    if "avx512f" in flags:
+        env["OPENCV_CPU_DISABLE"] = "AVX512-SKX"
+    return env
 
 
 def _ins(code, jt, jf, k):
@@ -117,7 +137,7 @@ def main():
         sys.exit("nonet_exec: cannot change user without root")
     if a.cwd:
         os.chdir(a.cwd)
-    os.execvpe(cmd[0], cmd, dict(WHITELIST_ENV))
+    os.execvpe(cmd[0], cmd, controller_env())
 
 
 if __name__ == "__main__":
