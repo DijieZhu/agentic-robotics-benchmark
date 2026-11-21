@@ -22,3 +22,16 @@
   (unit, episode, stock, codes, tote) is bit-identical. The code's geoms are visual (no contact, 1e-6 kg each, as
   many as before). So the frozen hashes in `hidden/episode_selection.json` name the v3 files the set was chosen
   under. On the v4 files the reference was measured again by the five `ale validate` runs that `anchor.json` cites.
+- **v5 (2026-11-21, maintainer fixes) drew the hidden episodes again; the units are kept.** v5 changed frozen
+  files: `tests/verify.py` and `tests/grader_config.json` (the budget is the controller's own time, with a fixed
+  price per image; the numerics check before grading) and `solution/oracle/wire_world.py` (the reference waits for
+  its next command without a wall-clock limit of its own). The image now pins the numerics of the simulation and of
+  a controller's process (`environment/Dockerfile`, `tests/nonet_exec.py`), with a fingerprint the grader checks
+  (`tests/numerics_check.py`, `tests/numerics.json`); these three files joined the frozen list. By rule step 5 of
+  `review/select_set.py` draw 1 is void (the record keeps it, its candidates and the hashes it was frozen under) and
+  draw 2 has a new key, written and committed before any candidate ran. The hidden units u0-u5 and the practice
+  units are unchanged: their rule (`hidden/selection.json`, `hidden/recheck.json`) reads the unit's design and the
+  reference's lane completion, and the world files did not change.
+- **The three candidates draw 1 rejected were run again under v5** (three wire runs each, the reference without its
+  wall-clock limit): none reached 1.0 in all three runs, so the rejections were the reference's own margin on
+  those episodes, not the machine's load. The record of these runs is with the maintainers' review notes, not here.

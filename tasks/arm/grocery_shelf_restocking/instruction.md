@@ -179,8 +179,8 @@ your replies.
 - There are 12 episodes: 2 for each of 6 hidden units (bays with their own SKUs), a fixed hidden set (each
   episode's seed is the same for every submission, so are its bay pose, planogram, delivery, old stock and noise),
   in a hidden order (the observation names the unit).
-- Before the first episode the grader draws one test image of each camera and the catalog, which takes a few
-  seconds of its budget.
+- Before the first episode the grader draws one test image of each camera and the catalog; that is its own time,
+  not your controller's.
 - A crash, a late reply, a malformed action, an unstable simulation or a simulator error scores the episode 0. After 3 restarts the
   remaining episodes score 0.
 - Your controller has a budget of 9000 s of its own time over the whole run: the time the grader waits for `READY`

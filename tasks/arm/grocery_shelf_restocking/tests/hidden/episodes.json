@@ -2,53 +2,53 @@
  "format": "grocery_shelf_restocking fixed set 1",
  "episodes": [
   {
-   "unit": "u5",
-   "seed": 10752514676119323499
-  },
-  {
    "unit": "u1",
-   "seed": 12565250073993849623
-  },
-  {
-   "unit": "u1",
-   "seed": 844485506181754347
-  },
-  {
-   "unit": "u0",
-   "seed": 5581370163036607792
+   "seed": 18257453239096945727
   },
   {
    "unit": "u3",
-   "seed": 12551365939748635663
-  },
-  {
-   "unit": "u0",
-   "seed": 3203061214689962026
-  },
-  {
-   "unit": "u2",
-   "seed": 3009542211630407055
-  },
-  {
-   "unit": "u5",
-   "seed": 14304866641424661642
-  },
-  {
-   "unit": "u4",
-   "seed": 14498045619914883935
-  },
-  {
-   "unit": "u2",
-   "seed": 475621841926461527
+   "seed": 859610178588597517
   },
   {
    "unit": "u3",
-   "seed": 11920371977225404882
+   "seed": 5993648162774156755
+  },
+  {
+   "unit": "u1",
+   "seed": 14113145843564932556
+  },
+  {
+   "unit": "u5",
+   "seed": 2040861741079528018
+  },
+  {
+   "unit": "u0",
+   "seed": 470860791099576905
   },
   {
    "unit": "u4",
-   "seed": 11474638896190431397
+   "seed": 15959181144502913841
+  },
+  {
+   "unit": "u5",
+   "seed": 12883989866761528779
+  },
+  {
+   "unit": "u4",
+   "seed": 9584024697617172318
+  },
+  {
+   "unit": "u0",
+   "seed": 17852830002057188321
+  },
+  {
+   "unit": "u2",
+   "seed": 9386783992228694411
+  },
+  {
+   "unit": "u2",
+   "seed": 18397142443270959424
   }
  ],
- "source": "Selected 2026-11-19 by tests/review/select_set.py (the rule in its docstring), draw 1 of 1 (0 voided); key os.urandom(32), drawn 2026-11-19T22:47:35Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 15, rejected 3: u2#0 (wire [0.6]); u3#0 (wire [0.3]); u3#2 (wire [0.7]). Episodes restocking shelf 0 / 1 / 2: 7/10/7; with an expired unit: 11, with a delivered unit dated before an old one: 11, of the 12. Graded order: a Fisher-Yates keyed by the same key."
+ "source": "Selected 2026-11-21 by tests/review/select_set.py (the rule in its docstring), draw 2 of 2 (1 voided); key os.urandom(32), drawn 2026-11-21T23:05:02Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 19, rejected 7: u1#0 (wire [0.3]); u1#2 (wire [1.0, 0.9]); u1#3 (wire [0.6]); u1#4 (wire [0.933]); u4#0 (wire [1.0, 1.0, 0.3]); u4#1 (wire [1.0, 1.0, 0.6]); u4#3 (wire [0.6]). Episodes restocking shelf 0 / 1 / 2: 8/12/4; with an expired unit: 10, with a delivered unit dated before an old one: 10, of the 12. Graded order: a Fisher-Yates keyed by the same key."
 }
