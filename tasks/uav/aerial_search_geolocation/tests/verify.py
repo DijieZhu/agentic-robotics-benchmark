@@ -53,6 +53,7 @@ from robotics_grader import (  # noqa: E402
     write_verdict,
     zero_verdict,
 )
+from robotics_grader.solver import _flatten  # noqa: E402
 from robotics_grader.stage import agent_home, agent_user  # noqa: E402
 from sar_protocol import (  # noqa: E402
     MissionOutcome,
@@ -68,6 +69,20 @@ from sim_client import SimClient, SimError  # noqa: E402
 
 def log(message):
     print("[grader] {}".format(message), file=sys.stderr, flush=True)
+
+
+def lock_form(raw, size):
+    """A reply as the probe lock compares it: the count of its numbers, then its numbers
+    padded with zeros (or cut) to `size`, the full report's length.
+
+    The instruction allows a bare move beside the full report, and a bare move and a full
+    report are two different replies. The kit's lock compares values only, so it gets this
+    fixed-length form: a different count of numbers differs in the first entry, an equal
+    count compares the numbers by value. A reply that is not a nest of numbers raises here,
+    so it aborts as the kit's "not numeric"; a wrong count does not raise here: the real
+    reply still goes through `parse_reply`, which aborts the mission for it."""
+    numbers = [float(x) for x in _flatten(raw)]
+    return [float(len(numbers))] + (numbers + [0.0] * size)[:size]
 
 
 def guarded_entry(python):
@@ -163,8 +178,10 @@ def main():
     folder = guarded_entry(config.get("guard_python", "/opt/venv/bin/python3"))
     log("controller runs as {} under netguard{}".format(
         agent_user(), "; privileged mode (oracle token)" if privileged else ""))
+    report_size = 1 + 4 * int(config.get("targets_per_mission", 3))
     lock = ProbeLock(rng, rate=config.get("probe_rate", 0.04),
-                     pass_fraction=config.get("probe_pass_fraction", 0.25))
+                     pass_fraction=config.get("probe_pass_fraction", 0.25),
+                     canonical=lambda raw: lock_form(raw, report_size))
 
     sim_user = config.get("sim_user") or None
     sim_log = os.path.join(tempfile.mkdtemp(prefix="aerial-simlog-"), "sim.log")
