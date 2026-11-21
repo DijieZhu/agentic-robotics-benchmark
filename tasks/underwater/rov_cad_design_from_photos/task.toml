@@ -1,0 +1,70 @@
+# rov_cad_design_from_photos: the hardware-design (CAD) stage of the underwater platform's inspection-class ROV (an
+# atomic task). A mechanical designer re-creates the lost CAD of the vehicle's structural parts and brackets (the
+# eight-thruster mission configuration: open plastic frame, fairings, buoyancy foam, tube clamps and cradles, accessory
+# brackets) in FreeCAD 1.1 from one fixed photo set (about 150 photos: the assembled vehicle, a stage-by-stage
+# disassembly, every made part on a cutting mat with close-ups) and the purchased modules' files (STEP, datasheet,
+# dimension drawing per module type; the modules are imported unchanged, only placed). No topology, no templates, no
+# practice part, no dimension of any made part. It delivers one FreeCAD document, /home/user/submission/rov.FCStd: one
+# PartDesign Body per part tag, the purchased modules placed, one Assembly with the bottom plate grounded and Fixed
+# joints, in the assembled configuration.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available,
+# and the grader records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs, no judge): headless FreeCAD reads the document as an unprivileged account; the vehicle is aligned
+# rigidly on the bottom plate; identical parts are matched to installed positions inside their family; shape 0.30,
+# functional features 0.25 (the parts' holes and bores), installation 0.20 (the purchased modules' poses and the
+# joints), mass properties 0.10, fit 0.10, thruster flow clearance 0.05, the last five scaled by a ramp on the mean
+# shape score; design_score = reward (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/rov_cad_design_from_photos"
+
+[metadata]
+platform = "underwater"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
+cpus = 8
+memory_mb = 16384
+gpus = 0
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set, the parts list and the purchased modules' files into the agent home (< 1 min). agent:
+# re-model the vehicle in FreeCAD (6 h). verify: the verifier sandbox's start, the lockdown, the FreeCAD document read
+# by headless FreeCAD and the grade.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root.
+# setup.sh does not run there; the purchased modules the grader reads are the image's own fetched assets
+# (/opt/task-assets/payload, pinned by sha256), and the made parts' reference is in tests/. The verifier runs the
+# image's own desktop as the agent account; verify stops it first. 3600 s is the starting limit (the target is at most
+# 1800 s for any quality-control document); it is re-derived from the measured verify times before the task is frozen.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

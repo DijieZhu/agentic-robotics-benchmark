@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "design_score",
+ "note": "design_score is the weighted sum of the six criteria (shape, features, installation, mass, fit, clearance; the last five times the shape floor) times public_model_reuse, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own measured design_score: the native FreeCAD document of the reference (built at oracle time by solution/solve.sh from the original solids and the vendor STEPs) scores exactly 1.0 through the real extraction and grading path; the grader is deterministic (fixed sampling seed), so full_at = 1.0",
+ "value": 1.0
+}
