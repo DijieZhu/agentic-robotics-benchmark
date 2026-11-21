@@ -1,0 +1,474 @@
+{
+ "checks": {
+  "axis_tolerance_deg": 1e-06,
+  "axis_tolerance_mm": 1e-06,
+  "move_tolerance_mm": 1e-06,
+  "move_tolerance_rad": 1e-09,
+  "where": [
+   "after recompute",
+   "after solve",
+   "as saved",
+   "after reopen",
+   "after a second solve"
+  ]
+ },
+ "document": "unit.FCStd",
+ "files": {
+  "arm_distal_link.dae": {
+   "closed_patches": 2,
+   "collapsed_by_weld": 0,
+   "faces_out": 4792,
+   "flat_list_sha256": "44f6e4297c1708a9edca3615c02ba1df070413a6ad004daded0525b2d5413611",
+   "patches": 2,
+   "skin_patches": 0,
+   "triangles": 4792,
+   "vertices": 2396,
+   "welded_triangles": 4792,
+   "welded_vertices": 2387
+  },
+  "arm_proximal_link.dae": {
+   "closed_patches": 3,
+   "collapsed_by_weld": 6,
+   "faces_out": 8976,
+   "flat_list_sha256": "1c55e87f6048dc7865f97768cc636d9cc844f3abdc70892a94a73b7342ff3f64",
+   "patches": 3,
+   "skin_patches": 0,
+   "triangles": 8982,
+   "vertices": 4521,
+   "welded_triangles": 8976,
+   "welded_vertices": 4494
+  },
+  "base_link.dae": {
+   "closed_patches": 3,
+   "collapsed_by_weld": 0,
+   "faces_out": 8190,
+   "flat_list_sha256": "33c352cc849ce3089fe48ea3946fd22ac70b3ab4a5c62bded2b3f4f673786d3f",
+   "patches": 3,
+   "skin_patches": 0,
+   "triangles": 8190,
+   "vertices": 4086,
+   "welded_triangles": 8190,
+   "welded_vertices": 4081
+  },
+  "body.dae": {
+   "closed_patches": 73,
+   "collapsed_by_weld": 0,
+   "faces_out": 64854,
+   "flat_list_sha256": "58bd4ed1af9a7ef0b8d943a0aec95e51c8410897860adf53b3b4490241dc7917",
+   "patches": 407,
+   "skin_patches": 334,
+   "triangles": 40629,
+   "vertices": 20606,
+   "welded_triangles": 40629,
+   "welded_vertices": 19536
+  },
+  "gripper_left_distal_link.dae": {
+   "closed_patches": 1,
+   "collapsed_by_weld": 0,
+   "faces_out": 1496,
+   "flat_list_sha256": "942fe37b07068ff20586241a96cac6bcb95a37b33b66e822132386290fbb1bce",
+   "patches": 1,
+   "skin_patches": 0,
+   "triangles": 1496,
+   "vertices": 744,
+   "welded_triangles": 1496,
+   "welded_vertices": 744
+  },
+  "gripper_left_proximal_link.dae": {
+   "closed_patches": 1,
+   "collapsed_by_weld": 22,
+   "faces_out": 2400,
+   "flat_list_sha256": "285fbdc4a6f6a13c6cebad153df8f2dede67b538a16a83dad2851237082c940f",
+   "patches": 1,
+   "skin_patches": 0,
+   "triangles": 2422,
+   "vertices": 1203,
+   "welded_triangles": 2400,
+   "welded_vertices": 1188
+  },
+  "gripper_right_distal_link.dae": {
+   "closed_patches": 1,
+   "collapsed_by_weld": 0,
+   "faces_out": 1430,
+   "flat_list_sha256": "e3b1f3f7f0186e089cb931323ab15e26abfdb4f773214bc8f13d871803abb8e0",
+   "patches": 1,
+   "skin_patches": 0,
+   "triangles": 1430,
+   "vertices": 711,
+   "welded_triangles": 1430,
+   "welded_vertices": 711
+  },
+  "gripper_right_proximal_link.dae": {
+   "closed_patches": 1,
+   "collapsed_by_weld": 22,
+   "faces_out": 2400,
+   "flat_list_sha256": "ac69fd4a2a2500429292295540044a5cd9d119dc91385d17fcc86910d9947a23",
+   "patches": 1,
+   "skin_patches": 0,
+   "triangles": 2422,
+   "vertices": 1203,
+   "welded_triangles": 2400,
+   "welded_vertices": 1188
+  },
+  "pmc.dae": {
+   "closed_patches": 19,
+   "collapsed_by_weld": 0,
+   "faces_out": 41224,
+   "flat_list_sha256": "2b9c0874c8cba7a7acc07b37213d75160ee08eae7b1f3ba2411ce2e0f3e4c79c",
+   "patches": 869,
+   "skin_patches": 850,
+   "triangles": 16825,
+   "vertices": 6837,
+   "welded_triangles": 16825,
+   "welded_vertices": 6837
+  },
+  "pmc_bumper.dae": {
+   "closed_patches": 0,
+   "collapsed_by_weld": 0,
+   "faces_out": 1112,
+   "flat_list_sha256": "3836b651972e06e214bb8cd028e0ca5cf3462e212fb2d61837cba27a0044f779",
+   "patches": 18,
+   "skin_patches": 18,
+   "triangles": 420,
+   "vertices": 281,
+   "welded_triangles": 420,
+   "welded_vertices": 281
+  }
+ },
+ "frame": "the description's body frame, millimetres (placement.json, translations times 1000)",
+ "joints": {
+  "counts": {
+   "Fixed": 5,
+   "Grounded": 1,
+   "Revolute": 6
+  },
+  "fixed": [
+   {
+    "part1": "P01",
+    "part2": "P02"
+   },
+   {
+    "part1": "P01",
+    "part2": "P03"
+   },
+   {
+    "part1": "P01",
+    "part2": "P04"
+   },
+   {
+    "part1": "P01",
+    "part2": "P05"
+   },
+   {
+    "part1": "P01",
+    "part2": "P06"
+   }
+  ],
+  "fixed_frames": "detached frames at the body origin; two subreference slots ['', '']",
+  "grounded": "P01",
+  "revolute": [
+   {
+    "child_link": "top_aft_arm_proximal_link",
+    "joint": "top_aft_arm_proximal_joint",
+    "parent_link": "top_aft",
+    "part1": "P06",
+    "part2": "P07"
+   },
+   {
+    "child_link": "top_aft_arm_distal_link",
+    "joint": "top_aft_arm_distal_joint",
+    "parent_link": "top_aft_arm_proximal_link",
+    "part1": "P07",
+    "part2": "P08"
+   },
+   {
+    "child_link": "top_aft_gripper_left_proximal_link",
+    "joint": "top_aft_gripper_left_proximal_joint",
+    "parent_link": "top_aft_arm_distal_link",
+    "part1": "P08",
+    "part2": "P09"
+   },
+   {
+    "child_link": "top_aft_gripper_left_distal_link",
+    "joint": "top_aft_gripper_left_distal_joint",
+    "parent_link": "top_aft_gripper_left_proximal_link",
+    "part1": "P09",
+    "part2": "P10"
+   },
+   {
+    "child_link": "top_aft_gripper_right_proximal_link",
+    "joint": "top_aft_gripper_right_proximal_joint",
+    "parent_link": "top_aft_arm_distal_link",
+    "part1": "P08",
+    "part2": "P11"
+   },
+   {
+    "child_link": "top_aft_gripper_right_distal_link",
+    "joint": "top_aft_gripper_right_distal_joint",
+    "parent_link": "top_aft_gripper_right_proximal_link",
+    "part1": "P11",
+    "part2": "P12"
+   }
+  ],
+  "revolute_frames": "detached; both frames at the joint's frame of the description in configuration Z (origin = the joint origin, z axis = the joint axis), the two subreference slots ['', '']; no limits"
+ },
+ "member_form": "A",
+ "member_forms": {
+  "A": "one Part::Feature per tag, labelled with the tag, holding the compound of the tag's solids",
+  "B": "one App::Part per tag, labelled with the tag, holding one Part::Feature per solid"
+ },
+ "patch_selection": "all",
+ "patch_selection_forms": {
+  "all": "every patch of every tag (the reference)",
+  "triangle_indices": "{'triangle_indices': {maker file: [triangle numbers of the file]}}: a patch is kept when one of its source triangles is listed (the plan's fallback one: only patches with graded samples; set by the lead)"
+ },
+ "pins": {
+  "files": {
+   "description/macro_perching_arm.urdf.xacro": {
+    "bytes": 11167,
+    "role": "standard: the arm's links, joints and start values",
+    "sha256": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f",
+    "storage": "raw",
+    "stored_as": "description/macro_perching_arm.urdf.xacro",
+    "stored_bytes": 11167,
+    "stored_sha256": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f"
+   },
+   "description/model.urdf.xacro": {
+    "bytes": 6641,
+    "role": "standard: the body link's visuals, the bay of the arm",
+    "sha256": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913",
+    "storage": "raw",
+    "stored_as": "description/model.urdf.xacro",
+    "stored_bytes": 6641,
+    "stored_sha256": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913"
+   },
+   "meshes/arm_distal_link.dae": {
+    "bytes": 538299,
+    "role": "standard: P08",
+    "sha256": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+    "storage": "raw",
+    "stored_as": "meshes/arm_distal_link.dae",
+    "stored_bytes": 538299,
+    "stored_sha256": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309"
+   },
+   "meshes/arm_proximal_link.dae": {
+    "bytes": 1087618,
+    "role": "standard: P07",
+    "sha256": "f05c0c7dd57938498d6f2a12e85dafc6878a6fea785be7ba80060c25bcd64a43",
+    "storage": "xz",
+    "stored_as": "meshes/arm_proximal_link.dae.xz",
+    "stored_bytes": 156160,
+    "stored_sha256": "13d4cd6d7eedd6b9605f4bea0fa6ca476221d60275946a333cb10ac0331e05d1"
+   },
+   "meshes/base_link.dae": {
+    "bytes": 848713,
+    "role": "standard: P06",
+    "sha256": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+    "storage": "raw",
+    "stored_as": "meshes/base_link.dae",
+    "stored_bytes": 848713,
+    "stored_sha256": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e"
+   },
+   "meshes/body.dae": {
+    "bytes": 5773045,
+    "role": "standard: P01",
+    "sha256": "8e51f7fefc807c3c5c272108f3b0d688860113339083121a9624496fcad6529d",
+    "storage": "xz",
+    "stored_as": "meshes/body.dae.xz",
+    "stored_bytes": 1119336,
+    "stored_sha256": "45b9a8e69dea5169af7d6dc622b4b88cb669fb10ce863fcb792a763070d8a2ba"
+   },
+   "meshes/gripper_left_distal_link.dae": {
+    "bytes": 135645,
+    "role": "standard: P10",
+    "sha256": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+    "storage": "raw",
+    "stored_as": "meshes/gripper_left_distal_link.dae",
+    "stored_bytes": 135645,
+    "stored_sha256": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875"
+   },
+   "meshes/gripper_left_proximal_link.dae": {
+    "bytes": 346464,
+    "role": "standard: P09",
+    "sha256": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+    "storage": "raw",
+    "stored_as": "meshes/gripper_left_proximal_link.dae",
+    "stored_bytes": 346464,
+    "stored_sha256": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899"
+   },
+   "meshes/gripper_right_distal_link.dae": {
+    "bytes": 129901,
+    "role": "standard: P12",
+    "sha256": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+    "storage": "raw",
+    "stored_as": "meshes/gripper_right_distal_link.dae",
+    "stored_bytes": 129901,
+    "stored_sha256": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0"
+   },
+   "meshes/gripper_right_proximal_link.dae": {
+    "bytes": 345566,
+    "role": "standard: P11",
+    "sha256": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c",
+    "storage": "raw",
+    "stored_as": "meshes/gripper_right_proximal_link.dae",
+    "stored_bytes": 345566,
+    "stored_sha256": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c"
+   },
+   "meshes/pmc.dae": {
+    "bytes": 2482070,
+    "role": "standard: P02 and P03",
+    "sha256": "bbff275a01915424962696f3b57b05f88ab4b215b05825fd1079aaa1d7b19c62",
+    "storage": "xz",
+    "stored_as": "meshes/pmc.dae.xz",
+    "stored_bytes": 411224,
+    "stored_sha256": "751766b28968dd3e9305dfed40bbe1d3e54257138a630d7f3304f9018c92a3c0"
+   },
+   "meshes/pmc_bumper.dae": {
+    "bytes": 66009,
+    "role": "standard: P04 and P05",
+    "sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+    "storage": "raw",
+    "stored_as": "meshes/pmc_bumper.dae",
+    "stored_bytes": 66009,
+    "stored_sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea"
+   }
+  },
+  "rule": "the 12 maker files the reference build reads, pinned as in the grader's pins (sha256 and byte count of the maker's own bytes; stored_* of the stored file, an xz stream for the three large meshes); the build stops when any pin differs",
+  "schema": "ffcad.maker_pins/1"
+ },
+ "placement": {
+  "path": "placement.json",
+  "schema": "ffcad.placement/1",
+  "sha256": "9d54423dd63298fd8ccb6685e8ff73c37b06c0e730f38c4f76b5f5f4d4c97f37"
+ },
+ "rule": "The reference submission, built at oracle time by build_oracle.py: the maker's triangles of each tag made into closed solids by refsolids.py (closed patches as they are; every other orientable patch a 0.3 mm skin, the one authored item of the reference), one Assembly member per tag at the description's placement in configuration Z, and the description's joints. It only shows that a document of real solids reaches the full score; the grader never reads it. Nothing is simplified, smoothed, re-meshed or added.",
+ "schema": "ffcad.oracle/1",
+ "skin": {
+  "added_geometry": "none",
+  "along": "the patch's area-weighted vertex normals; the first copy keeps the patch's winding, the second is reversed; two wall triangles per boundary edge",
+  "face_tolerance_mm": 0.001,
+  "offsets_mm": [
+   0.15,
+   -0.15
+  ],
+  "simplified": false,
+  "thickness_mm": 0.3,
+  "weld_mm": 0.001,
+  "weld_rule": "vertices merged on a 0.001 mm grid, the first vertex of each group kept unmoved; a triangle with two corners in one group collapses and makes no face"
+ },
+ "tags": {
+  "P01": {
+   "category": "core module",
+   "closed_solids": 73,
+   "faces": 64854,
+   "maker_file": "body.dae",
+   "maker_sha256": "8e51f7fefc807c3c5c272108f3b0d688860113339083121a9624496fcad6529d",
+   "skin_solids": 334,
+   "solids": 407
+  },
+  "P02": {
+   "category": "propulsion module",
+   "closed_solids": 19,
+   "faces": 41224,
+   "maker_file": "pmc.dae",
+   "maker_sha256": "bbff275a01915424962696f3b57b05f88ab4b215b05825fd1079aaa1d7b19c62",
+   "skin_solids": 850,
+   "solids": 869
+  },
+  "P03": {
+   "category": "propulsion module",
+   "closed_solids": 19,
+   "faces": 41224,
+   "maker_file": "pmc.dae",
+   "maker_sha256": "bbff275a01915424962696f3b57b05f88ab4b215b05825fd1079aaa1d7b19c62",
+   "skin_solids": 850,
+   "solids": 869
+  },
+  "P04": {
+   "category": "corner-bumper set",
+   "closed_solids": 0,
+   "faces": 1112,
+   "maker_file": "pmc_bumper.dae",
+   "maker_sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+   "skin_solids": 18,
+   "solids": 18
+  },
+  "P05": {
+   "category": "corner-bumper set",
+   "closed_solids": 0,
+   "faces": 1112,
+   "maker_file": "pmc_bumper.dae",
+   "maker_sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+   "skin_solids": 18,
+   "solids": 18
+  },
+  "P06": {
+   "category": "arm piece",
+   "closed_solids": 3,
+   "faces": 8190,
+   "maker_file": "base_link.dae",
+   "maker_sha256": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+   "skin_solids": 0,
+   "solids": 3
+  },
+  "P07": {
+   "category": "arm piece",
+   "closed_solids": 3,
+   "faces": 8976,
+   "maker_file": "arm_proximal_link.dae",
+   "maker_sha256": "f05c0c7dd57938498d6f2a12e85dafc6878a6fea785be7ba80060c25bcd64a43",
+   "skin_solids": 0,
+   "solids": 3
+  },
+  "P08": {
+   "category": "arm piece",
+   "closed_solids": 2,
+   "faces": 4792,
+   "maker_file": "arm_distal_link.dae",
+   "maker_sha256": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+   "skin_solids": 0,
+   "solids": 2
+  },
+  "P09": {
+   "category": "finger piece",
+   "closed_solids": 1,
+   "faces": 2400,
+   "maker_file": "gripper_left_proximal_link.dae",
+   "maker_sha256": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+   "skin_solids": 0,
+   "solids": 1
+  },
+  "P10": {
+   "category": "finger piece",
+   "closed_solids": 1,
+   "faces": 1496,
+   "maker_file": "gripper_left_distal_link.dae",
+   "maker_sha256": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+   "skin_solids": 0,
+   "solids": 1
+  },
+  "P11": {
+   "category": "finger piece",
+   "closed_solids": 1,
+   "faces": 2400,
+   "maker_file": "gripper_right_proximal_link.dae",
+   "maker_sha256": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c",
+   "skin_solids": 0,
+   "solids": 1
+  },
+  "P12": {
+   "category": "finger piece",
+   "closed_solids": 1,
+   "faces": 1430,
+   "maker_file": "gripper_right_distal_link.dae",
+   "maker_sha256": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+   "skin_solids": 0,
+   "solids": 1
+  }
+ },
+ "totals": {
+  "faces": 179210,
+  "members": 12,
+  "solids": 2193
+ }
+}

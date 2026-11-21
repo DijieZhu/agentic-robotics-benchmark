@@ -1,0 +1,152 @@
+{
+ "schema": "racecar-others-params/1",
+ "contract": "sketch-contract/1.1",
+ "comment": "Boxes, slow cars, their placement rule and the avoidance session's schedule. The four frozen keys of the contract come first; every other key is the obstacle model's own. Every number is a starting value of the obstacle model unless 'provenance' says it was measured.",
+ "box_floor_friction": 0.45,
+ "slow_car_mode": "dynamic",
+ "tail_box_centre_m": [
+  -0.034,
+  0.0,
+  0.1702
+ ],
+ "entry_min_gap_m": 6.0,
+ "putback_err_m": 0.03,
+ "box": {
+  "count": 3,
+  "size_range_m": [
+   [
+    0.25,
+    0.35
+   ],
+   [
+    0.2,
+    0.32
+   ],
+   [
+    0.2,
+    0.3
+   ]
+  ],
+  "size_step_m": 0.01,
+  "mass_range_kg": [
+   0.3,
+   0.6
+  ],
+  "mass_step_kg": 0.05,
+  "priority": 2,
+  "condim": 3,
+  "solref": [
+   0.01,
+   1.0
+  ],
+  "wall_gap_min_m": 0.02,
+  "passage_margin_m": 0.05,
+  "station_gap_frac": 0.15,
+  "start_clear_ahead_m": 4.0,
+  "start_clear_behind_m": 1.0,
+  "line_clear_m": 1.0,
+  "max_tries": 400,
+  "putback_pos_frac": 0.6,
+  "rgba": [
+   0.92,
+   0.92,
+   0.9,
+   1.0
+  ]
+ },
+ "tail_box": {
+  "mass_kg": 0.05,
+  "col_bottom_z_m": 0.08
+ },
+ "slow_cars": {
+  "count_choices": [
+   1,
+   2
+  ],
+  "speed_factor_range": [
+   0.35,
+   0.5
+  ],
+  "speed_factor_step": 0.01,
+  "gap_keep_m": 0.8,
+  "staging_offset_m": 2.0,
+  "staging_spacing_m": 1.0,
+  "entry_frac_range": [
+   0.35,
+   0.65
+  ]
+ },
+ "path": {
+  "sample_m": 0.2,
+  "solve_spacing_m": 0.1,
+  "wall_clear_m": 0.12,
+  "box_clear_m": 0.2,
+  "box_ramp_m": 0.6,
+  "smooth_weight_log10_range": [
+   -6.0,
+   -3.0
+  ],
+  "min_radius_m": 0.7,
+  "footprint_check_step": 1
+ },
+ "speed": {
+  "ref_speed_factor": 0.93,
+  "lateral_frac_of_grip_g": 0.975,
+  "traction_frac_of_grip_g": 0.95,
+  "brake_frac_of_grip_g": 1.0,
+  "top_speed_frac": 0.95,
+  "accel_max_mps2": 4.0,
+  "grip_window_m": 0.3,
+  "curvature_window_samples": 2
+ },
+ "follower": {
+  "lookahead_m": [
+   0.45,
+   0.25,
+   0.45,
+   1.2
+  ],
+  "band_margin_m": 0.05,
+  "stop_gap_m": 0.25,
+  "plan_decel_frac": 0.5,
+  "accel_cmd_frac": 0.35,
+  "decel_cmd_frac": 0.7,
+  "anticipation_m": 0.3,
+  "look_extra_m": 0.3,
+  "point_spacing_m": 0.05,
+  "duct_near_m": 1.0,
+  "mocap_tau_s": 0.15,
+  "response_lag_s": 0.2
+ },
+ "staff": {
+  "reset_offpath_m": 0.5,
+  "reset_tilt_rad": 0.6,
+  "stuck_s": 4.0,
+  "stuck_speed_mps": 0.05,
+  "stuck_cmd_mps": 0.3,
+  "hold_s": 5.0,
+  "place_clear_m": 0.3,
+  "place_step_m": 0.5
+ },
+ "provenance": {
+  "box_floor_friction": "estimate: cardboard on dry concrete or carpet, sliding friction 0.4-0.5; no measurement",
+  "slow_car_mode": "chosen by gate G3 by the pre-registered rule: no veto for either mode; dynamic costs 0.025-0.028 s CPU per simulated second more than mocap for two cars (a second machine), both bit-identical on two CPUs, dynamic passes momentum on in contacts (ratio 0.82-0.99), mocap acts as a moving wall",
+  "tail_box_centre_m": "measured on the owner's model (per-part OBJ, faces subdivided to 2 mm): an open-bottom 0.12 x 0.12 x 0.20 m box with its front face at x 0.026 (2 mm behind the motor controller board at 0.0281) rests on the platform deck at z 0.07016 and holds the rear wing, rear body posts, WiFi antennas, antenna mount and rear damper stay inside; rear face at x -0.094 (0.041 m behind the rearmost point). The contract's starting value (0.020, 0, 0.170) would stand on the rear wing at z 0.1525 and cut the motor controller and power boards",
+  "entry_min_gap_m": "estimate: 1.2 s at the reference car's 5 m/s, so a car that enters is never closer than that to the ego car along the track",
+  "putback_err_m": "the grader configuration's staff.putback_err_m (starting value 0.03); a test keeps them equal",
+  "box.size_range_m": "the rules' upper bound 35 x 32 x 30 cm; lower bounds 25 x 20 x 20 cm are an estimate of the boxes in the event photos, and keep every box above 8 beams at 3 m (gate G1) and its top above the scan plane at 2 deg of pitch at 3 m",
+  "box.mass_range_kg": "The design (0.3-0.6 kg)",
+  "box.inertia": "a thin-walled box of uniform areal density (an empty cardboard box), scaled to mass_kg",
+  "tail_box.mass_kg": "estimate: 0.1248 m^2 of single-wall corrugated board at about 0.4 kg/m^2",
+  "slow_cars.speed_factor_range": "The design (35-50 % of the reference speed profile)",
+  "slow_cars.gap_keep_m": "The design (slows when anything is within 0.8 m ahead)",
+  "speed.ref_speed_factor": "a factor on SPEED, as the reference program's heat 2 (the reference program's implementation: every grip-dependent capability x f^2), f = 0.93 final; 1.0 named it ref_grip_factor and used sqrt(f mu g / kappa), which gave about 5 % more corner speed (sqrt(1 / (0.93 x 0.975)) = 1.050)",
+  "speed.lateral_frac_of_grip_g": "0.975: the lateral capacity the reference program's planner uses (the drive model's steady lateral limit 0.974-0.977 mu g)",
+  "speed.traction_frac_of_grip_g": "0.95: the reference program's traction fraction; the forward limit is min(accel_max_mps2, 0.95 f^2 mu g)",
+  "speed.brake_frac_of_grip_g": "1.0: the reference program's braking fraction (full braking decelerates at mu g)",
+  "path": "The obstacle model's own starting values: clearances from the car's side to a wall face and to a box, the weight that blends a curvature-minimising line with the centreline (drawn per car, log-uniform)",
+  "follower": "The obstacle model's own starting values of the privileged follower (pure pursuit, speed law, detection band)",
+  "staff": "The obstacle model's own starting values: when the staff pick up a slow car that is stuck, rolled or off its path, and where they put it",
+  "tail_box.col_bottom_z_m": "the collision box of the tail box starts 6 mm above the highest part of a car's nose (the drive model's chassis/col1, front gear case, top at 0.074 m); the LiDAR box keeps the full 0.12 x 0.12 x 0.20 m from 0.0702. With the full box as collision shape the 3.8 mm overlap of the overhanging box's lower edge with the nose of a car behind it turned the contact normal vertical and wedged the nose under the box (first rear-end run)"
+ }
+}

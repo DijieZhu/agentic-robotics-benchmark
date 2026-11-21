@@ -1,0 +1,1139 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "racecar-records-h2h/1",
+ "title": "Grader configuration and venue result of racecar_head_to_head_race_on_unseen_track",
+ "description": "The heat cell's grader configuration (racecar-grader-config-h2h/1) and venue result (racecar-venue-result-h2h/1). The scoring records are the scoring module's.",
+ "$defs": {
+  "sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "unit": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1
+  },
+  "session_name": {
+   "enum": [
+    "practice",
+    "heat1",
+    "heat2"
+   ]
+  },
+  "config": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema",
+    "sim",
+    "sessions",
+    "budgets",
+    "command",
+    "staff",
+    "heat",
+    "scoring",
+    "route_gate"
+   ],
+   "properties": {
+    "schema": {
+     "const": "racecar-grader-config-h2h/1"
+    },
+    "sim": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "tick_s",
+      "physics_dt_s",
+      "physics_steps_per_tick",
+      "subscans_per_tick",
+      "imu_samples_per_tick",
+      "cmd_delay_ticks"
+     ],
+     "properties": {
+      "tick_s": {
+       "const": 0.025
+      },
+      "physics_dt_s": {
+       "enum": [
+        0.0025,
+        0.00125
+       ]
+      },
+      "physics_steps_per_tick": {
+       "enum": [
+        10,
+        20
+       ]
+      },
+      "subscans_per_tick": {
+       "const": 5
+      },
+      "imu_samples_per_tick": {
+       "const": 5
+      },
+      "cmd_delay_ticks": {
+       "type": "integer",
+       "minimum": 0,
+       "maximum": 4
+      }
+     }
+    },
+    "sessions": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 3,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "name",
+       "duration_s",
+       "desk_before_s",
+       "scored",
+       "phases"
+      ],
+      "properties": {
+       "name": {
+        "$ref": "#/$defs/session_name"
+       },
+       "duration_s": {
+        "type": "number",
+        "exclusiveMinimum": 0
+       },
+       "desk_before_s": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Program time allowed between the end of the previous session (or the start of the run) and open_session."
+       },
+       "scored": {
+        "type": "boolean"
+       },
+       "phases": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": [
+          "name",
+          "t0_s",
+          "speed_limit_mps"
+         ],
+         "properties": {
+          "name": {
+           "enum": [
+            "mapping",
+            "free",
+            "race"
+           ]
+          },
+          "t0_s": {
+           "type": "number",
+           "minimum": 0
+          },
+          "speed_limit_mps": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "exclusiveMinimum": 0
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "budgets": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "program_ms_per_tick",
+      "cpu_factor",
+      "silence_s",
+      "import_check_s"
+     ],
+     "properties": {
+      "program_ms_per_tick": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "On-track program time, averaged over a session: the cap of a session is this x its number of ticks."
+      },
+      "cpu_factor": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      },
+      "silence_s": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      },
+      "import_check_s": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      }
+     }
+    },
+    "command": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "steer_max_rad",
+      "speed_min_mps",
+      "speed_max_mps"
+     ],
+     "properties": {
+      "steer_max_rad": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      },
+      "speed_min_mps": {
+       "type": "number",
+       "maximum": 0
+      },
+      "speed_max_mps": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      }
+     }
+    },
+    "staff": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "crash_displacement_m",
+      "open_wall_wheels_over",
+      "rollover_tilt_rad",
+      "hold_s",
+      "relocate_at_s",
+      "relocate_pos_err_m",
+      "relocate_yaw_err_rad",
+      "roadside_clearance_m",
+      "putback_err_m",
+      "speeding_hold_s",
+      "warnings_end_session",
+      "out_of_bounds_void_at"
+     ],
+     "properties": {
+      "crash_displacement_m": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "A track object displaced this far from where it was last set is a crash; less is a touch."
+      },
+      "open_wall_wheels_over": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 4,
+       "description": "This many wheels beyond a tape line is a crash; fewer is a touch."
+      },
+      "rollover_tilt_rad": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "The car counts as rolled over when its up axis leans this far from the vertical."
+      },
+      "hold_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "From `stopped` to `released`."
+      },
+      "relocate_at_s": {
+       "type": "number",
+       "minimum": 0,
+       "description": "Time after `stopped` at which the car stands at the track edge and the displaced objects are back."
+      },
+      "relocate_pos_err_m": {
+       "type": "number",
+       "minimum": 0
+      },
+      "relocate_yaw_err_rad": {
+       "type": "number",
+       "minimum": 0
+      },
+      "roadside_clearance_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "Free distance between the relocated car's side and the wall it is put next to."
+      },
+      "putback_err_m": {
+       "type": "number",
+       "minimum": 0
+      },
+      "speeding_hold_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Ground speed above a phase's speed limit for this long is one warning."
+      },
+      "warnings_end_session": {
+       "type": "integer",
+       "minimum": 1
+      },
+      "out_of_bounds_void_at": {
+       "type": "integer",
+       "minimum": 1,
+       "description": "The n-th time the whole car leaves the track at one venue voids the venue's remaining sessions."
+      }
+     }
+    },
+    "heat": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "cars",
+      "grid_spacing_m",
+      "grid_car_lateral_m",
+      "classified_laps_short",
+      "half_car_length_m",
+      "clean_before_s",
+      "clean_after_s",
+      "contact_merge_s",
+      "car_crash_push_m",
+      "car_crash_window_s",
+      "car_crash_sample_s",
+      "fault_clear_ahead_s",
+      "place_behind_m",
+      "lane_half_width_m",
+      "lane_clearance_m",
+      "standing_s",
+      "standing_speed_mps",
+      "standing_left_grid_m",
+      "standing_car_ahead_m"
+     ],
+     "properties": {
+      "cars": {
+       "const": 4,
+       "description": "Cars in a heat: the car and three field cars."
+      },
+      "grid_spacing_m": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Distance along the track between consecutive grid slots."
+      },
+      "grid_car_lateral_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "The car's slot lies this far to one side of the centreline."
+      },
+      "classified_laps_short": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "A heat is classified when the car completed at least N minus this many laps."
+      },
+      "half_car_length_m": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Hysteresis of an overtake: the lead must pass this far beyond each threshold."
+      },
+      "clean_before_s": {
+       "type": "number",
+       "minimum": 0,
+       "description": "An overtake is clean only without contact with that car from this long before it..."
+      },
+      "clean_after_s": {
+       "type": "number",
+       "minimum": 0,
+       "description": "...to this long after it."
+      },
+      "contact_merge_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Contacts with one field car less than this far apart form one contact bout."
+      },
+      "car_crash_push_m": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "A bout is a car crash when its push reaches this: how far the field car is to the side of where it drove in the copy of the heat without the car, at the same place on its own line."
+      },
+      "car_crash_window_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Length of the copy without the car and of the push window from the first contact; a staff reset of the field car within the bout and this long after it also makes a car crash."
+      },
+      "car_crash_sample_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Sample period of the push, in the heat and in the copy (a whole number of physics steps; the window is a whole number of samples)."
+      },
+      "fault_clear_ahead_s": {
+       "type": "number",
+       "minimum": 0,
+       "description": "The field car is at fault only when the car had been ahead of it this long."
+      },
+      "place_behind_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "After a car crash at its fault the car is set down at least this far behind that field car."
+      },
+      "lane_half_width_m": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "Half width of the band around a field car's line that a set-down car must keep clear of."
+      },
+      "lane_clearance_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "Free distance between a set-down car's footprint and every such band."
+      },
+      "standing_s": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "The car is picked up after standing still for more than this long..."
+      },
+      "standing_speed_mps": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "description": "...below this ground speed..."
+      },
+      "standing_left_grid_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "...once its reference point has been this far from its grid slot..."
+      },
+      "standing_car_ahead_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "...unless a standing car is within this distance ahead along the track."
+      }
+     }
+    },
+    "scoring": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "heat",
+      "full_at"
+     ],
+     "properties": {
+      "heat": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "place_weight",
+        "pass_weight",
+        "pass_margin",
+        "warnings_zero_at"
+       ],
+       "properties": {
+        "place_weight": {
+         "$ref": "#/$defs/unit"
+        },
+        "pass_weight": {
+         "$ref": "#/$defs/unit"
+        },
+        "pass_margin": {
+         "type": "integer",
+         "minimum": 0
+        },
+        "warnings_zero_at": {
+         "type": "integer",
+         "minimum": 1
+        }
+       }
+      },
+      "full_at": {
+       "type": "number",
+       "exclusiveMinimum": 0,
+       "maximum": 1
+      }
+     }
+    },
+    "route_gate": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "forbidden_calls",
+      "forbidden_extensions",
+      "max_submission_mb"
+     ],
+     "properties": {
+      "forbidden_calls": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "forbidden_extensions": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "pattern": "^\\.[a-z0-9]+$"
+       }
+      },
+      "max_submission_mb": {
+       "type": "number",
+       "exclusiveMinimum": 0
+      }
+     }
+    }
+   }
+  },
+  "lap": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "n",
+    "lap_s",
+    "t_end_s",
+    "interrupted",
+    "touches",
+    "clean",
+    "standstill",
+    "overtakes",
+    "chain_break"
+   ],
+   "properties": {
+    "n": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "lap_s": {
+     "type": "number",
+     "exclusiveMinimum": 0,
+     "description": "Lap time, interpolated between physics steps."
+    },
+    "t_end_s": {
+     "type": "number",
+     "minimum": 0,
+     "description": "Session time of the crossing that completed the lap."
+    },
+    "interrupted": {
+     "type": "boolean",
+     "description": "A crash or a relocation happened inside the lap (the lap counts for neither table)."
+    },
+    "touches": {
+     "type": "integer",
+     "minimum": 0,
+     "description": "Contacts with any track object or car inside the lap, plus wheels over a tape line."
+    },
+    "clean": {
+     "type": "boolean",
+     "description": "Not interrupted and touches == 0."
+    },
+    "standstill": {
+     "type": "boolean",
+     "description": "The car stood still for longer than heat.standing_s inside the lap."
+    },
+    "overtakes": {
+     "type": "integer",
+     "minimum": 0,
+     "description": "Overtakes of field cars minus times re-overtaken inside the lap, not below 0."
+    },
+    "chain_break": {
+     "type": "boolean",
+     "description": "The lap clock threw a lap away (backward crossing of the timing line, or a forward crossing without every checkpoint) after the previous lap of the list; this lap does not start where that one ended, so a run of consecutive laps ends before it. False for lap 1."
+    }
+   }
+  },
+  "heat": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "laps_target",
+    "end_reason",
+    "end_t_s",
+    "ended_by",
+    "car",
+    "field",
+    "overtakes",
+    "contacts",
+    "stops",
+    "C",
+    "beaten",
+    "K"
+   ],
+   "properties": {
+    "laps_target": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 1,
+     "description": "N: venue_sheet.heat_laps (null on a world without it)."
+    },
+    "end_reason": {
+     "enum": [
+      "laps",
+      "time",
+      "warnings",
+      "void",
+      "closed",
+      "aborted"
+     ]
+    },
+    "end_t_s": {
+     "type": "number",
+     "minimum": 0
+    },
+    "ended_by": {
+     "oneOf": [
+      {
+       "type": "string",
+       "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "description": "Who completed the N-th lap first ('car' or a field car's id); null for every other end."
+    },
+    "car": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "laps",
+      "progress",
+      "classified",
+      "warnings",
+      "crashes_track",
+      "crashes_car",
+      "pickups_requested",
+      "pickups_standing",
+      "placement_fallbacks"
+     ],
+     "properties": {
+      "laps": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Laps the car completed in the heat."
+      },
+      "progress": {
+       "type": "number",
+       "description": "Laps completed plus the fraction of the lap in progress (negative before the first crossing of the timing line)."
+      },
+      "classified": {
+       "type": [
+        "boolean",
+        "null"
+       ],
+       "description": "At least N minus heat.classified_laps_short laps and fewer warnings than staff.warnings_end_session; null when the venue sheet has no heat_laps."
+      },
+      "warnings": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "K: warnings given in the heat."
+      },
+      "crashes_track": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Stops for a crash of the four kinds of the track (displacement, open wall, rollover, out of bounds), a pick-up's stop that became the stop of such a crash included."
+      },
+      "crashes_car": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Stops for a car crash at the car's fault, a pick-up's stop that became the stop of such a car crash included."
+      },
+      "pickups_requested": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Stops for a pick-up on request that stayed pick-ups."
+      },
+      "pickups_standing": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Stops for standing still that stayed pick-ups."
+      },
+      "placement_fallbacks": {
+       "type": "integer",
+       "minimum": 0,
+       "description": "Stops at which no place clear of every field line's band was found."
+      }
+     }
+    },
+    "field": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 3,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "id",
+       "slot",
+       "laps",
+       "progress",
+       "resets",
+       "clean_overtakes",
+       "contact_overtakes",
+       "losses",
+       "balance",
+       "beaten",
+       "wall_touches",
+       "field_touches"
+      ],
+      "properties": {
+       "id": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"
+       },
+       "slot": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3
+       },
+       "laps": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "progress": {
+        "type": "number"
+       },
+       "resets": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Times this car's own staff put it back on its line."
+       },
+       "clean_overtakes": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "contact_overtakes": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "losses": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Times this car re-overtook the car."
+       },
+       "balance": {
+        "type": "integer",
+        "description": "clean_overtakes - losses."
+       },
+       "beaten": {
+        "type": "boolean",
+        "description": "balance >= 1 and progress below the car's at the end of the heat."
+       },
+       "wall_touches": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Contact episodes of this car with a track object."
+       },
+       "field_touches": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Contact episodes of this car with another field car."
+       }
+      }
+     }
+    },
+    "overtakes": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "t_s",
+       "car",
+       "kind",
+       "clean",
+       "why_not"
+      ],
+      "properties": {
+       "t_s": {
+        "type": "number",
+        "minimum": 0
+       },
+       "car": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"
+       },
+       "kind": {
+        "enum": [
+         "overtake",
+         "loss"
+        ]
+       },
+       "clean": {
+        "type": [
+         "boolean",
+         "null"
+        ]
+       },
+       "why_not": {
+        "enum": [
+         "contact",
+         "staff",
+         "off_track",
+         "placement",
+         null
+        ]
+       }
+      }
+     }
+    },
+    "contacts": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "car",
+       "t0_s",
+       "t1_s",
+       "push_m",
+       "reset",
+       "class",
+       "fault",
+       "warned",
+       "replay"
+      ],
+      "properties": {
+       "car": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"
+       },
+       "t0_s": {
+        "type": "number",
+        "minimum": 0
+       },
+       "t1_s": {
+        "type": "number",
+        "minimum": 0
+       },
+       "push_m": {
+        "type": "number",
+        "minimum": 0,
+        "description": "The push recomputed from the replay block."
+       },
+       "reset": {
+        "type": "boolean"
+       },
+       "class": {
+        "enum": [
+         "touch",
+         "crash"
+        ]
+       },
+       "fault": {
+        "enum": [
+         "car",
+         "opponent"
+        ]
+       },
+       "warned": {
+        "type": "boolean"
+       },
+       "replay": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "sample_s",
+         "window_s",
+         "actual",
+         "alone",
+         "cut",
+         "alone_cut"
+        ],
+        "description": "The samples the push is computed from: the heat's own and those of the copy of the heat without the car, both from the first contact on.",
+        "properties": {
+         "sample_s": {
+          "type": "number",
+          "exclusiveMinimum": 0
+         },
+         "window_s": {
+          "type": "number",
+          "exclusiveMinimum": 0
+         },
+         "actual": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+           "type": "array",
+           "minItems": 2,
+           "maxItems": 2,
+           "items": {
+            "type": "number"
+           },
+           "description": "[sigma, e]: the station on the field car's own line against the station at the first contact, and the signed lateral offset from that line (left positive), metres rounded to 1e-6."
+          },
+          "description": "Samples of the field car in the heat."
+         },
+         "alone": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+           "type": "array",
+           "minItems": 2,
+           "maxItems": 2,
+           "items": {
+            "type": "number"
+           },
+           "description": "[sigma, e]: the station on the field car's own line against the station at the first contact, and the signed lateral offset from that line (left positive), metres rounded to 1e-6."
+          },
+          "description": "Samples of the field car in the copy without the car."
+         },
+         "cut": {
+          "enum": [
+           null,
+           "heat_end",
+           "put_back"
+          ],
+          "description": "Why the heat's samples end before the window does: the heat ended, or the field car was put back on its line by its own staff."
+         },
+         "alone_cut": {
+          "enum": [
+           null,
+           "put_back",
+           "fault"
+          ],
+          "description": "Why the copy's samples end before the window does."
+         }
+        }
+       }
+      }
+     }
+    },
+    "stops": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "t_s",
+       "kind",
+       "warned",
+       "car",
+       "placement"
+      ],
+      "properties": {
+       "t_s": {
+        "type": "number",
+        "minimum": 0,
+        "description": "The start of the stop: the car is set down staff.relocate_at_s and released staff.hold_s after it."
+       },
+       "kind": {
+        "enum": [
+         "displacement",
+         "open_wall",
+         "rollover",
+         "out_of_bounds",
+         "car_crash",
+         "pickup",
+         "standing"
+        ]
+       },
+       "warned": {
+        "type": "boolean"
+       },
+       "car": {
+        "oneOf": [
+         {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,23}$"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "placement": {
+        "enum": [
+         "clear",
+         "fallback",
+         null
+        ]
+       }
+      }
+     },
+     "description": "The staff's stops of the car in time order. A pick-up takes no warning away: a stop that began as a pick-up and in which, before the staff set the car down, the car crashed or made a contact judged a car crash at its fault carries the kind of that crash, its warning and, for a car crash, the field car; its start stays the pick-up's."
+    },
+    "C": {
+     "type": "integer",
+     "description": "Sum of the field cars' balances."
+    },
+    "beaten": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 3
+    },
+    "K": {
+     "type": "integer",
+     "minimum": 0,
+     "description": "Warnings of the heat (the car block's warnings)."
+    }
+   }
+  },
+  "session": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "ticks",
+    "end",
+    "laps",
+    "touches",
+    "crashes",
+    "pickups",
+    "warnings",
+    "out_of_bounds",
+    "max_displacement_m",
+    "program_s",
+    "desk_s"
+   ],
+   "properties": {
+    "name": {
+     "$ref": "#/$defs/session_name"
+    },
+    "ticks": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "end": {
+     "enum": [
+      "time",
+      "laps",
+      "closed",
+      "warnings",
+      "void",
+      "aborted"
+     ]
+    },
+    "laps": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/lap"
+     }
+    },
+    "touches": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "crashes": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "pickups": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "warnings": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "out_of_bounds": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "max_displacement_m": {
+     "type": "number",
+     "minimum": 0
+    },
+    "program_s": {
+     "type": "number",
+     "minimum": 0
+    },
+    "desk_s": {
+     "type": "number",
+     "minimum": 0
+    },
+    "heat": {
+     "$ref": "#/$defs/heat"
+    }
+   }
+  },
+  "result": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema",
+    "world_id",
+    "layout_digest",
+    "config_sha256",
+    "end_reason",
+    "step_called",
+    "sessions",
+    "stats"
+   ],
+   "properties": {
+    "schema": {
+     "const": "racecar-venue-result-h2h/1"
+    },
+    "world_id": {
+     "type": "string"
+    },
+    "layout_digest": {
+     "$ref": "#/$defs/sha256"
+    },
+    "config_sha256": {
+     "$ref": "#/$defs/sha256"
+    },
+    "end_reason": {
+     "enum": [
+      "finish",
+      "eof",
+      "silence",
+      "import_timeout",
+      "stalled",
+      "protocol",
+      "program_time_cap",
+      "desk_time_cap",
+      "cpu_cap",
+      "void",
+      "physics_fault",
+      "internal_error"
+     ]
+    },
+    "step_called": {
+     "type": "boolean"
+    },
+    "sessions": {
+     "type": "array",
+     "maxItems": 3,
+     "items": {
+      "$ref": "#/$defs/session"
+     }
+    },
+    "stats": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "touches",
+      "crashes",
+      "wall_displacement_m",
+      "laps_by_session",
+      "program_s",
+      "warnings",
+      "forbidden_calls",
+      "bad_calls"
+     ],
+     "properties": {
+      "touches": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "crashes": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "wall_displacement_m": {
+       "type": "number",
+       "minimum": 0,
+       "description": "Sum over all duct pieces of their displacement from the world file's pose at the end of the venue."
+      },
+      "laps_by_session": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+       }
+      },
+      "program_s": {
+       "type": "number",
+       "minimum": 0
+      },
+      "warnings": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "forbidden_calls": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "bad_calls": {
+       "type": "integer",
+       "minimum": 0
+      }
+     }
+    }
+   }
+  }
+ }
+}

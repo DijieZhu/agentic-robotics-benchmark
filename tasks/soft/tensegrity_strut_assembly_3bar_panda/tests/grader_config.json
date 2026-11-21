@@ -1,0 +1,187 @@
+{
+ "agent_cameras": [
+  "top",
+  "wrist"
+ ],
+ "agent_render": {
+  "live_lamps": 6,
+  "note": "the Filament agent renderer's scene settings (arm/assembly_strut/agent_render.py): omit_hidden_pieces leaves the fully hidden pieces of render_omit.json (no ray escapes them when their module stands alone; 591 561 of the cell's 3 354 993 triangles; whole pieces, none changed) out of the RGB and the depth twin, pinned by omit_list_sha256; the live_lamps room lamps nearest the bench light the live objects, the shadow_lamps nearest of them cast shadows; the given STL files and every hero / demo render keep all triangles",
+  "omit_hidden_pieces": true,
+  "omit_list": "arm/assembly_strut/render_omit.json",
+  "omit_list_sha256": "0e63b1b03e828e92d8f5e5429fd2e00724980e326f9007f0cf295a87cc7d85fa",
+  "shadow_lamps": 2
+ },
+ "agent_renderer": "filament",
+ "camera_budget_frames": 600,
+ "cell": {
+  "note": "the cell's settings over arm/assembly_strut/cell.py CELL_CONFIG; robot_home_q = the Panda's posture at reset, the agent's home (describe()['robot']['home_q']) and the reference's via posture: the hand folded back over the robot base, 0.43 m above the bench at x -0.20 m, so the top camera sees the three cores in the cradle at the start (seen share of the cores' hull vertices 0.55-0.78 instead of 0.00-0.83 with the precedent's [0, -0.4, 0, -2.3, 0, 1.9, 0.785], which hid the first and the second strut); the reference re-run on it: 15 / 15, 0 violations, the frozen force numbers unchanged",
+  "robot_home_q": [
+   0.0,
+   -1.0,
+   0.0,
+   -2.6,
+   0.0,
+   1.6,
+   0.785
+  ]
+ },
+ "cpu_cap_factor": 4.0,
+ "damage": {
+  "exclude_locked_pairs": true,
+  "note": "R2: a module pressed on another body above part_force_N, the normal forces summed per (module, other body) pair, for `ticks` consecutive 10 ms ticks (0.2 s) is a safety violation; the pads' grip and the contacts inside a fastened cluster do not count. 30 N frozen: max(proposal 30 N, min(credible cap 60 N, ceil(1.5 x the reference's largest 0.2 s-sustained reading))), the larger of the one-strut fixing (2.48 N) and the three-strut fixing (2.84 N)",
+  "pad_force_N": null,
+  "part_force_N": 30.0,
+  "ticks": 20
+ },
+ "episode_trace": {
+  "agent": true,
+  "anchor": false,
+  "every_ticks": 4,
+  "note": "maintainers' replay record of every agent episode under /opt/arb-verify/out/trace (root-only, outside /opt/ale, which the engine clears before it keeps a sandbox; tests/episode_trace.py); never a scoring input"
+ },
+ "episodes": 3,
+ "held": {
+  "force_N": 1.0,
+  "ticks": 5
+ },
+ "hidden_gt": {
+  "files": 43,
+  "note": "the cell's kit (gt/: kit.json, mating_graph.json, meshes/visual/, meshes/collision/), not in the repository and never in the image: verify.py fetch_hidden_gt downloads this tarball of the benchmark's asset dataset at verify start, checks its sha256 and file count and unpacks it into the root-only stage folder; until it is uploaded the url is a placeholder and tests/test.sh points ARB_HIDDEN_GT_TARBALL at the local copy tests/assets/gt.tar.xz (the maintainers' build tool rebuilds it byte for byte)",
+  "sha256": "63c5b207b3e992e00126aa39c791791c934b875a4bafcc2a0639641bfb390169",
+  "url": "https://huggingface.co/datasets/grounded-intelligence-initiative/ale-robotics-assets/resolve/38a722fff3b2042d9587f0848ab2fc8c723fe13c/tasks/soft/tensegrity_strut_assembly_3bar_panda/verifier/gt.tar.xz"
+ },
+ "info_layout": {
+  "camera_draw": {
+   "c_rel": 0.02,
+   "f_rel": 0.03,
+   "k1": [
+    -0.08,
+    0.02
+   ],
+   "k2": [
+    -0.02,
+    0.02
+   ],
+   "mount_ang_deg": 3.0,
+   "mount_pos_m": 0.03,
+   "p": 0.001,
+   "wrist_ang_deg": 1.0,
+   "wrist_pos_m": 0.002
+  },
+  "cameras": {
+   "top": {
+    "depth": true,
+    "eye": [
+     -0.025,
+     0.0,
+     1.25
+    ],
+    "hfov_deg": 70.0,
+    "size": [
+     1280,
+     960
+    ],
+    "target": [
+     -0.025,
+     0.0,
+     0.0
+    ],
+    "up": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   },
+   "wrist": {
+    "depth": true,
+    "hfov_deg": 80.0,
+    "offset_m": 0.05720137772977594,
+    "size": [
+     640,
+     480
+    ],
+    "tilt_deg": 16.921104305540013,
+    "z_m": 0.041169104589646295
+   }
+  },
+  "note": "the precedent's (SO-101) camera mounts and spreads; the top camera's mount over the three-strut cell by this rule: the lowest of 1.25 / 1.10 / 1.00 m whose drawn frames hold the working area: 1.00 m cut a tray or a module in 63 of 300 episode draws, 1.10 m in 3 of 300, 1.25 m in none (>= 38.7 px to spare), 0.48 m above the reference's swept volume (rule >= 0.15 m): eye and target unchanged"
+ },
+ "layout": {
+  "layouts": 50,
+  "nest": {
+   "lid_flip": true,
+   "permute_caps": true,
+   "permute_motor_builds": true,
+   "roll_jitter_deg": 5.0,
+   "roll_offset_deg": 11.0
+  },
+  "note": "the episode's draws (arm/assembly_strut/layout.py; the values are its defaults for scope default, written here so the config states them): the cradle +-10 mm (fixture), each tray +-20 mm / +-10 deg about the vertical (both trays redrawn together when one draw fails, the amplitudes halved every `layouts` failures), the motor modules permuted over the six motor nests and the end caps over the six cap nests of both trays, a motor module's roll 11 deg +- 5 deg off its straight transfer (the sign alternating over the nests), the end caps' rolls, each lid turned end for end half the time; tray_l (+y: three motor modules, three lids, three end caps) feeds the p ends and the lids, tray_r (-y, turned 180 deg) the n ends; the hidden bench plan (tests/hidden/bench_plan.json) sets the nominal assignment the oracle runs on",
+  "tray": {
+   "jitter_yaw_deg": 10.0,
+   "xy_m": 0.02
+  },
+  "trays": {
+   "tray_l": {
+    "nominal_xy": [
+     -0.33,
+     0.36
+    ],
+    "yaw_deg": 0.0
+   },
+   "tray_r": {
+    "nominal_xy": [
+     -0.3,
+     -0.36
+    ],
+    "yaw_deg": 180.0
+   }
+  }
+ },
+ "max_ticks_per_step": 500,
+ "oracle_nominal_layout": true,
+ "privileged_wall_cap_s": 7200.0,
+ "reach_check": {
+  "enabled": true,
+  "max_draws": 8,
+  "max_grasps": 60,
+  "note": "every non-nominal layout is checked in the built cell (server._reach_check, after the quadruped cell): every loose unit keeps a grasp that passes the reference's pick checks where it rests, every other unit in its nest (the bench plan's grasp of its nest first, then its own candidates in the planner's tilt order, at most max_grasps); a failed draw redraws the WHOLE layout on a sub-seed, at most max_draws draws, the nominal layout last with the episode's cradle"
+ },
+ "rod": {
+  "include_coupling_forces": true,
+  "lateral_force_N": 4.0,
+  "note": "R3: per rod overhang (either side of a strut's bay) the force across the rod (its contacts beyond the bay + the rail / lock welds of the modules on it, gravity included) above lateral_force_N for `ticks` consecutive ticks is a safety violation. 4.0 N frozen: the larger of the one-strut fixing (reference 0.2 s-sustained max 0.74 N) and the three-strut fixing (0.90 N); credible cap 5.5 N",
+  "per_overhang": true,
+  "ticks": 20
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "runner_account": "nobody",
+ "safety": {
+  "note": "R1: the Panda's non-pad collision geoms pressing on the cradle, a tray, the bench, a module or a rod above panda_force_N (summed per body pressed on) in any tick; R4: a module's centre of mass faster than part_speed_m_s. Frozen: the larger of the first fixing on one strut (15 N, reference max 0 N; 3 m/s, 0.49 m/s) and the second on three struts with the same rule (15 N, reference max 0 N; 3 m/s, 0.48 m/s)",
+  "panda_force_N": 15.0,
+  "part_speed_m_s": 3.0
+ },
+ "scope": "default",
+ "settle_s": 0.6,
+ "silence_s": 120.0,
+ "sim_cap_s": 1200.0,
+ "socket_sample_s": 0.5,
+ "wall_cap_s": 2400.0
+}

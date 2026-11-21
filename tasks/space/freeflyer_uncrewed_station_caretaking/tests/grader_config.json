@@ -1,0 +1,132 @@
+{
+ "contract_sha256": "90808413bbeb85d75369edc27fc13a1ef8801c4f63769d9ce7abda5edc6c6a74",
+ "contract_version": "1.2.3",
+ "placeholders": {
+  "grader.R.hard_force_N": "PH07",
+  "grader.R.hard_speed_m_s": "PH07"
+ },
+ "rule": "Grader thresholds of the task, generated value by value (do not edit by hand). The L criterion is switched by the key 'grader.L.criterion': 'own_footprint_fraction' (default: min_own_fraction of the pouch's own footprint) or 'abs_seal_area' (min_seal_m2_alt). Read by tests/cabincell/grade.py; the cell reads the measurement keys (grader.seal, grader.covered, grader.in_gripper_cage_mm, grader.loss_of_control) through predicates.measure_params.",
+ "schema": "caretaking.grader_config/1",
+ "task": "freeflyer_uncrewed_station_caretaking",
+ "units": {
+  "grader.D.evidence": "m, deg, px, -",
+  "grader.D.onset_tol_min": "min",
+  "grader.D.parts": "score",
+  "grader.E": "-, s",
+  "grader.H.min_battery_pct": "%",
+  "grader.K.min_seal_m2": "m2",
+  "grader.L.criterion": "-",
+  "grader.L.formula": "-",
+  "grader.L.min_own_fraction": "of the pouch's own footprint",
+  "grader.L.min_seal_m2_alt": "m2",
+  "grader.R.factor": "-",
+  "grader.R.hard_force_N": "N",
+  "grader.R.hard_speed_m_s": "m/s",
+  "grader.R.keepout_s": "s",
+  "grader.R.max_hard_collisions": "collisions",
+  "grader.U1": "-, s",
+  "grader.U2.max_cover": "-",
+  "grader.V.max_unit_inlet_cover": "-",
+  "grader.aggregate": "-",
+  "grader.covered": "m, m2",
+  "grader.in_gripper_cage_mm": "mm",
+  "grader.loss_of_control": "m, s",
+  "grader.seal.max_gap_mm": "mm",
+  "grader.selection": "-",
+  "grader.weights": "score",
+  "grader.window_s": "s"
+ },
+ "values": {
+  "grader.D.evidence": {
+   "cameras": [
+    "FIC",
+    "FWC"
+   ],
+   "max_dist_m": 2.0,
+   "max_incidence_deg": 60,
+   "max_occluded": 0.2,
+   "min_blocker_cover": 0.1,
+   "min_long_px": 80,
+   "ray_samples": 20,
+   "samples_per_side": 5
+  },
+  "grader.D.onset_tol_min": 10,
+  "grader.D.parts": {
+   "inlet": 0.04,
+   "item": 0.06,
+   "onset": 0.04
+  },
+  "grader.E": {
+   "elec_full_ratio": 1.25,
+   "elec_zero_ratio": 2.0,
+   "w_elec": 0.04,
+   "w_wind": 0.04,
+   "wind_full_s": 35,
+   "wind_zero_s": 120
+  },
+  "grader.H.min_battery_pct": 15,
+  "grader.K.min_seal_m2": 0.0364,
+  "grader.L.criterion": "own_footprint_fraction",
+  "grader.L.formula": {
+   "g_without_U1": 0.25,
+   "lost_unstowed_penalty": 0.5
+  },
+  "grader.L.min_own_fraction": 0.8,
+  "grader.L.min_seal_m2_alt": 0.0099,
+  "grader.R.factor": 0.85,
+  "grader.R.hard_force_N": 5,
+  "grader.R.hard_speed_m_s": 0.15,
+  "grader.R.keepout_s": 5,
+  "grader.R.max_hard_collisions": 2,
+  "grader.U1": {
+   "max_cover": 0.1,
+   "min_s": 30
+  },
+  "grader.U2.max_cover": 0.1,
+  "grader.V.max_unit_inlet_cover": 0.25,
+  "grader.aggregate": {
+   "direction": "higher",
+   "full_at": 0.95,
+   "metric": "caretaking_score"
+  },
+  "grader.covered": {
+   "max_gap_m": 0.01,
+   "opening_area_m2": 0.048
+  },
+  "grader.in_gripper_cage_mm": {
+   "plane_max": 30,
+   "x": [
+    -135,
+    -30
+   ],
+   "y_abs_max": 30
+  },
+  "grader.loss_of_control": {
+   "disp_m": 0.05,
+   "min_s": 2
+  },
+  "grader.seal.max_gap_mm": 10,
+  "grader.selection": {
+   "captures_max": 15,
+   "dock_battery_pct": 20,
+   "fan_stop_s_max": 30,
+   "frames_frac": 0.5,
+   "hard_collisions_max": 0,
+   "keepout_s_max": 0,
+   "raw_score": 1.0,
+   "time_frac": 0.85,
+   "time_s": 2040
+  },
+  "grader.weights": {
+   "D": 0.14,
+   "E": 0.08,
+   "H": 0.1,
+   "K": 0.18,
+   "L": 0.18,
+   "U1": 0.1,
+   "U2": 0.14,
+   "V": 0.08
+  },
+  "grader.window_s": 60
+ }
+}

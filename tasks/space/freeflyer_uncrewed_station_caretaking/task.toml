@@ -1,0 +1,85 @@
+# freeflyer_uncrewed_station_caretaking (lights-out caretaking of an uncrewed three-module station by a cabin
+# free-flyer; behavior stage; tests/README.md).
+#
+# A cube-shaped, fan-propelled free-flyer of about 10 kg with a perching arm and a tendon gripper, five cameras (forward imaging,
+# forward and aft wide, forward and aft depth), two lamps and an on-board firmware (flight modes, mapped and
+# fiducial-relative localisation, a gated bar capture, zone checks; MuJoCo, CPU, the classic renderer on OSMesa)
+# works alone in a station at orbital night: laboratory modules L1 and L2 and hub H2, each with its cabin air unit and
+# two or three return inlets, a stowage unit (a holding screen for sheet-like items, two pouch pads) and a dock. One
+# return inlet is blocked by a soft sheet; loose pouches cling to other inlets. The agent writes the robot's
+# AUTONOMOUS program (caretake.py, solve(robot)): it works out from the station's telemetry, its configuration record
+# and the lost-item register which inlet is blocked and by what, flies there under the flight rules (stopping a
+# unit's fan only where the record allows it), takes the sheet off, carries it to a holding screen and presses it on,
+# puts the pouches on pouch pads, reports the diagnosis with an evidence frame and docks with charge left.
+# Score per site = R x (D 0.14 diagnosis + U1 0.10 inlet cleared + H 0.10 docked with charge + U2 0.14 cleared and
+# held to the end + V 0.08 ventilation restored + K 0.18 sheet fixed on a holding screen + L 0.18 pouches on pads +
+# E 0.08 economy), R = 1.0, else 0.85 after hard collisions or keep-out time; no negative marks. caretaking_score =
+# the contract gate x the mean over six hidden sites, stored as site packages in tests/hidden/sites/ and chosen by
+# the pre-registered rule (tests/review/select_set.py; tests/hidden/selection.json pins its sha256) among sites the
+# privileged reference completes twice. The
+# oracle submits a two-line program with a 256-bit token: the reference program inside the cell gets the true world,
+# every move goes through the public calls.
+# Realism rule: the agent gets what the operator of the station's robot would have: the robot's manual and API, the
+# station's handbook, telemetry dictionary and 72 h sample log, the as-surveyed map, the lost-item register with its
+# catalogue, the client library, an example program that scores 0, and a rehearsal facility (a black-box service under
+# its own account: training module L3, five cards, 150 simulated minutes in at most 30 runs, an observation sheet of
+# categories after each); the simulator's code, the site generator and every ground truth of a scored site stay out of
+# its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (caretake.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/freeflyer_uncrewed_station_caretaking"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/space/<name>/. The metric
+# (caretaking_score, higher) lives in tests/anchor.json.
+platform = "space"
+tags = ["space-station", "free-flyer", "cabin-ventilation", "telemetry-diagnosis", "soft-item-manipulation", "suction",
+        "grasping", "docking", "battery", "flight-rules", "outdated-map", "lost-item-register", "rgbd", "mujoco",
+        "code-as-policy", "hidden-site", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the rehearsal facility
+# (measured: under 10 s).
+# [agent] timeout_sec: 4 h, the agent's working time (tests/README.md, "Time limits").
+# [verifier] timeout_sec: the verifier's limit by the formula of tests/README.md ("Time limits"), from
+# the worst values measured in containers of the task image (station look v05, the task assets from the build context's
+# local_assets; runs on 2026-11-17, 2026-11-18 and 2026-11-19; a value measured later only ever raises the limit) on
+# the measuring host (AMD Threadripper 7960X, 48 threads), each container with the verifier's 8 CPUs and 16 GB and no
+# network: per site the cell's build (30 s), 2400 simulated s at 1.077 wall s per
+# simulated s (the oracle's slowest site in the verify of 2026-11-19, while other work held the host's load at about
+# 115-186; the same day the privileged reference's two runs gave 0.918-1.022 and the empty program's two 2400 s runs
+# 0.800-0.811, an idle AMD EPYC 7713 cloud machine's 2400 s null run of the cell 0.943; the look leaves the cell's cost per
+# simulated second unchanged), 400 colour frames x 0.760 s and 300 depth frames x 0.226 s (the p95 of a whole camera()
+# call, render + PNG encoding + evidence inputs, of benches of 120 colour and 80 depth calls; frame time grows with the
+# host's load: on 2026-11-19 0.270-0.304 / 0.145-0.158 s at load about 20-27 and 0.760 / 0.214 s at load 115-163; the
+# depth value is 0.220 s measured at load 181-225 with an earlier station look, times look v05's measured factor
+# 1.027 against it at equal load), the
+# program's 600 s, the 60 s settle and 30 s of clean-up: 3677 s a site; seven runs (six sites and the one rerun after a
+# cell failure) and the fixed steps (import check 120 s, desktop settle 60 s, no-network self-test 60 s, lockdown 10 s):
+# 25 991 s; 29 900 s leaves 15.0 % (the runs of 2026-11-19 alone give the same 29 900 s). The oracle's verify of the
+# six took 7755 s in such a container on 2026-11-19 (745-1851 s of wall clock a site for 1263-1878 simulated s, every
+# site 1.000, peak memory 2.0 GB); the example program's verify 756 s, the untouched submission's under 1 s.
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 29900
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

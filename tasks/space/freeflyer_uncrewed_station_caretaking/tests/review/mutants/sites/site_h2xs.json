@@ -1,0 +1,478 @@
+{
+ "blocker": {
+  "colour": "teal",
+  "family": "equipment_cover",
+  "hinge_k": 0.002,
+  "inlet": "ri_h2_2",
+  "loop": "edge_mid",
+  "mass": 0.13,
+  "n_strips": 5,
+  "offset_m": [
+   0.04,
+   -0.03
+  ],
+  "register_ref": "LI-03",
+  "size": [
+   0.29,
+   0.3,
+   0.004
+  ],
+  "strap": true,
+  "theta_deg": 60.0
+ },
+ "cabin_air_units": {
+  "cau_h2": {
+   "advisory_limit_pa": 202.8,
+   "build": "element",
+   "clean_reference_pa": 150.2,
+   "fan_stop": "allowed",
+   "flow_scale": 1.0,
+   "inhibit_reason": null,
+   "r_face": 380.0
+  },
+  "cau_l1": {
+   "advisory_limit_pa": 47.5,
+   "build": "pad",
+   "clean_reference_pa": 33.9,
+   "fan_stop": "allowed",
+   "flow_scale": 1.0,
+   "inhibit_reason": null,
+   "r_face": 71.0
+  },
+  "cau_l2": {
+   "advisory_limit_pa": 43.7,
+   "build": "pad",
+   "clean_reference_pa": 31.2,
+   "fan_stop": "allowed",
+   "flow_scale": 1.0,
+   "inhibit_reason": null,
+   "r_face": 64.0
+  }
+ },
+ "cell": {
+  "k": 0,
+  "label": "example",
+  "module": "h2",
+  "tier": "S"
+ },
+ "clutter": [
+  {
+   "site": "tb_l2_c3"
+  }
+ ],
+ "fixture_records": {
+  "blocker": {
+   "conditions": [
+    {
+     "duration_s": 40.0,
+     "force_N": 0.61,
+     "pull": "strap_normal",
+     "removed": false,
+     "t_removed_s": null,
+     "want": "not_removed"
+    },
+    {
+     "duration_s": 40.0,
+     "force_N": 0.61,
+     "pull": "strap_oblique",
+     "removed": false,
+     "t_removed_s": null,
+     "want": "not_removed"
+    },
+    {
+     "duration_s": 40.0,
+     "force_N": 0.61,
+     "pull": "drag_along_chain",
+     "removed": false,
+     "t_removed_s": null,
+     "want": "not_removed"
+    },
+    {
+     "duration_s": 40.0,
+     "force_N": 0.61,
+     "pull": "loop_normal",
+     "removed": false,
+     "t_removed_s": null,
+     "want": "not_removed"
+    },
+    {
+     "duration_s": 40.0,
+     "force_N": 0.61,
+     "pull": "loop_outward",
+     "removed": false,
+     "t_removed_s": null,
+     "want": "not_removed"
+    }
+   ],
+   "passed": true,
+   "repeat_pull": null,
+   "tier": "S"
+  }
+ },
+ "inter_module": {
+  "link_h2_l1": {
+   "direction": 1,
+   "flow_cfm": 131.0
+  },
+  "link_h2_l2": {
+   "direction": -1,
+   "flow_cfm": 142.0
+  }
+ },
+ "kind": "example",
+ "lighting": {
+  "h2": "night",
+  "l1": "general",
+  "l2": "night"
+ },
+ "pregrasp_records": {
+  "blocker:loop": [
+   {
+    "dist_m": 0.448,
+    "palm_dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "pos": [
+     1.1,
+     2.0,
+     3.0
+    ],
+    "quat": [
+     0.7071067811865476,
+     0.0,
+     0.0,
+     0.7071067811865476
+    ],
+    "zone_ok": true
+   }
+  ],
+  "blocker:strap": [
+   {
+    "dist_m": 0.448,
+    "palm_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "quat": [
+     0.7071067811865476,
+     0.0,
+     0.0,
+     0.7071067811865476
+    ],
+    "zone_ok": true
+   }
+  ],
+  "pouch_1:handle": [
+   {
+    "dist_m": 0.45,
+    "palm_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos": [
+     2.0,
+     2.0,
+     3.0
+    ],
+    "quat": [
+     0.7071067811865476,
+     0.0,
+     0.0,
+     0.7071067811865476
+    ],
+    "zone_ok": true
+   }
+  ],
+  "pouch_2:handle": [
+   {
+    "dist_m": 0.5,
+    "palm_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos": [
+     5.0,
+     0.0,
+     3.0
+    ],
+    "quat": [
+     0.7071067811865476,
+     0.0,
+     0.0,
+     0.7071067811865476
+    ],
+    "zone_ok": true
+   }
+  ]
+ },
+ "provenance": {
+  "generator_sha256": null,
+  "reference_build": "v1.2",
+  "site_spec_sha256": "4e84e6586a2637ab1dae10428cea1a3bf9fb97929da5e05d694931e108220913",
+  "spacekit": "0.4.0"
+ },
+ "register": {
+  "entries": [
+   {
+    "class": "crew towel",
+    "colour": "purple",
+    "features": "carry strap + handle loop",
+    "item": null,
+    "location": "L2, galley side",
+    "mass_kg": 0.1,
+    "present": false,
+    "ref": "LI-01",
+    "size_m": [
+     0.3,
+     0.26,
+     0.004
+    ]
+   },
+   {
+    "class": "tool pouch",
+    "colour": "green",
+    "features": "handle",
+    "item": "pouch_2",
+    "location": "L1, deck",
+    "mass_kg": 0.08,
+    "present": true,
+    "ref": "LI-02",
+    "size_m": [
+     0.18,
+     0.11,
+     0.02
+    ]
+   },
+   {
+    "class": "equipment cover",
+    "colour": "teal",
+    "features": "carry strap + handle loop",
+    "item": "blocker",
+    "location": "L1, overhead",
+    "mass_kg": 0.13,
+    "present": true,
+    "ref": "LI-03",
+    "size_m": [
+     0.29,
+     0.3,
+     0.004
+    ]
+   },
+   {
+    "class": "soft stowage sack",
+    "colour": "orange",
+    "features": "carry strap + handle loop",
+    "item": null,
+    "location": "L1, rack face",
+    "mass_kg": 0.12,
+    "present": false,
+    "ref": "LI-04",
+    "size_m": [
+     0.3,
+     0.28,
+     0.004
+    ]
+   },
+   {
+    "class": "other",
+    "colour": "grey",
+    "features": "handle",
+    "item": null,
+    "location": "L2",
+    "mass_kg": 0.1,
+    "present": false,
+    "ref": "LI-05",
+    "size_m": [
+     0.15,
+     0.1,
+     0.03
+    ]
+   },
+   {
+    "class": "soft stowage sack",
+    "colour": "beige",
+    "features": "carry strap + handle loop",
+    "item": null,
+    "location": "H2",
+    "mass_kg": 0.09,
+    "present": false,
+    "ref": "LI-06",
+    "size_m": [
+     0.28,
+     0.27,
+     0.004
+    ]
+   },
+   {
+    "class": "tool pouch",
+    "colour": "blue",
+    "features": "handle",
+    "item": "pouch_1",
+    "location": "L1, deck",
+    "mass_kg": 0.1,
+    "present": true,
+    "ref": "LI-07",
+    "size_m": [
+     0.2,
+     0.12,
+     0.025
+    ]
+   },
+   {
+    "class": "other",
+    "colour": "white",
+    "features": "handle",
+    "item": null,
+    "location": "L2, endcone",
+    "mass_kg": 0.1,
+    "present": false,
+    "ref": "LI-08",
+    "size_m": [
+     0.15,
+     0.1,
+     0.03
+    ]
+   },
+   {
+    "class": "tool pouch",
+    "colour": "red",
+    "features": "handle",
+    "item": null,
+    "location": "H2, overhead",
+    "mass_kg": 0.09,
+    "present": false,
+    "ref": "LI-09",
+    "size_m": [
+     0.19,
+     0.12,
+     0.02
+    ]
+   }
+  ],
+  "unregistered": []
+ },
+ "robot": {
+  "battery_pct": 50.0,
+  "berth": 2,
+  "present": true
+ },
+ "scene": "mission",
+ "schema": "station_site/2",
+ "seed": 0,
+ "settle": {
+  "dry_run_s": 2400.0,
+  "passed": true,
+  "pouch_disp_mm": {
+   "pouch_1": 0.3,
+   "pouch_2": 0.2
+  },
+  "pre_s": 600.0,
+  "sheet_area_change_pct": 0.4,
+  "sheet_disp_mm": 1.6,
+  "state0_sha256": null
+ },
+ "site_id": "example_h2xs",
+ "small_items": [
+  {
+   "colour": "blue",
+   "columns": 3,
+   "end": 1,
+   "family": "tool_pouch",
+   "id": "pouch_1",
+   "inlet": "ri_l2_1",
+   "mass": 0.1,
+   "offset_m": [
+    0.25,
+    0.0
+   ],
+   "register_ref": "LI-07",
+   "size": [
+    0.2,
+    0.12,
+    0.025
+   ],
+   "theta_deg": 0.0
+  },
+  {
+   "colour": "green",
+   "columns": 2,
+   "end": -1,
+   "family": "tool_pouch",
+   "id": "pouch_2",
+   "inlet": "ri_l1_1",
+   "mass": 0.08,
+   "offset_m": [
+    -0.2667,
+    0.0
+   ],
+   "register_ref": "LI-02",
+   "size": [
+    0.18,
+    0.11,
+    0.02
+   ],
+   "theta_deg": 0.0
+  }
+ ],
+ "stowage_units": {
+  "h2": {
+   "pad_plate": "+b",
+   "unit_site": "sb_h2_mv2"
+  },
+  "l1": {
+   "pad_plate": "+b",
+   "unit_site": "sb_l1_mv1"
+  },
+  "l2": {
+   "pad_plate": "+b",
+   "unit_site": "sb_l2_reg"
+  }
+ },
+ "telemetry": {
+  "advisory_expected": {
+   "blocked_unit_over_limit": false,
+   "points_elsewhere": false
+  },
+  "drift": {
+   "kind": "sensor_drift",
+   "rise_pa": 7.0,
+   "sensor": "a",
+   "t0_min": 700.0,
+   "unit": "cau_l1"
+  },
+  "log_minutes": 4320,
+  "noise_seed": 777,
+  "onset_min": 3600.0,
+  "pouch_onsets_min": {
+   "pouch_1": 900.0,
+   "pouch_2": 2100.0
+  }
+ },
+ "truth": {
+  "advisory_points_elsewhere": false,
+  "blocked_inlet": "ri_h2_2",
+  "blocked_unit": "cau_h2",
+  "blocked_unit_over_limit": false,
+  "blocker_ref": "LI-03",
+  "cover_m2": 0.03,
+  "failed_light_module": null,
+  "hold_N": 5.79,
+  "moved_stowage_unit": "h2",
+  "onset_min": 3600.0,
+  "pouches": [
+   "pouch_1",
+   "pouch_2"
+  ],
+  "tier": "S"
+ }
+}

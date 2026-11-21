@@ -1,0 +1,2381 @@
+{
+ "schema": "station_map_landmarks/1",
+ "about": "Landmarks of the as-surveyed map in the station frame: the direction words on the module walls, the survey (age and lighting), the modules (axis, end walls, the wall each direction faces), the open passages between them, the rack location codes (<module>-<wall letter><bay>: wall letters F forward, A aft, S starboard, P port, O overhead, D deck; bays numbered along the module axis from its start) and the signs printed on the walls: every place where a sign's text is printed, so a sign on a wall pattern that repeats appears once per repeat (the rack_locations table gives the code of each bay).",
+ "frame": {
+  "name": "station frame",
+  "unit": "m",
+  "x": "forward",
+  "y": "starboard",
+  "z": "deck",
+  "quaternion": "(w, x, y, z), from the body to the station frame",
+  "note": "the frame of pose(), fly_to goals and every position in station_map/"
+ },
+ "direction_words": {
+  "FWD": [
+   1,
+   0,
+   0
+  ],
+  "AFT": [
+   -1,
+   0,
+   0
+  ],
+  "STBD": [
+   0,
+   1,
+   0
+  ],
+  "PORT": [
+   0,
+   -1,
+   0
+  ],
+  "DECK": [
+   0,
+   0,
+   1
+  ],
+  "OVHD": [
+   0,
+   0,
+   -1
+  ]
+ },
+ "survey": {
+  "age_days_at_sortie": 41,
+  "lighting": {
+   "L2": "general",
+   "H2": "general",
+   "L1": "general"
+  },
+  "note": "the map was surveyed with every module's lights in general mode; the stowage units are at the positions registered then and may have been moved since; the lighting now is in the sortie's configuration record"
+ },
+ "modules": [
+  {
+   "id": "L2",
+   "name": "laboratory module L2",
+   "axis_point": [
+    10.94,
+    -2.4,
+    4.85
+   ],
+   "axis_direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "end_wall_points": [
+    [
+     10.94,
+     -2.25,
+     4.85
+    ],
+    [
+     10.94,
+     -12.01,
+     4.85
+    ]
+   ],
+   "walls": {
+    "forward": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "aft": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "deck": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "overhead": [
+     0.0,
+     0.0,
+     -1.0
+    ]
+   },
+   "rack_bays": 8
+  },
+  {
+   "id": "H2",
+   "name": "hub H2",
+   "axis_point": [
+    12.8,
+    -0.01,
+    4.84
+   ],
+   "axis_direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "end_wall_points": [
+    [
+     12.34,
+     -0.01,
+     4.84
+    ],
+    [
+     6.79,
+     -0.01,
+     4.84
+    ]
+   ],
+   "walls": {
+    "starboard": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "port": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "deck": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "overhead": [
+     0.0,
+     0.0,
+     -1.0
+    ]
+   },
+   "rack_bays": 2
+  },
+  {
+   "id": "L1",
+   "name": "laboratory module L1",
+   "axis_point": [
+    6.3,
+    0.01,
+    4.83
+   ],
+   "axis_direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "end_wall_points": [
+    [
+     6.2,
+     0.01,
+     4.83
+    ],
+    [
+     -1.98,
+     0.01,
+     4.83
+    ]
+   ],
+   "walls": {
+    "starboard": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "port": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "deck": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "overhead": [
+     0.0,
+     0.0,
+     -1.0
+    ]
+   },
+   "rack_bays": 6
+  }
+ ],
+ "connections": [
+  {
+   "between": [
+    "L2",
+    "H2"
+   ],
+   "passage": "open hatch"
+  },
+  {
+   "between": [
+    "H2",
+    "L1"
+   ],
+   "passage": "open hatch"
+  }
+ ],
+ "rack_locations": [
+  {
+   "code": "L2-O1",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 1,
+   "centre": [
+    10.94,
+    -3.66,
+    3.74
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D1",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 1,
+   "centre": [
+    10.94,
+    -3.66,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F1",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 1,
+   "centre": [
+    12.02,
+    -3.66,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A1",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 1,
+   "centre": [
+    9.84,
+    -3.66,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O2",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 2,
+   "centre": [
+    10.94,
+    -4.72,
+    3.74
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D2",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 2,
+   "centre": [
+    10.94,
+    -4.72,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F2",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 2,
+   "centre": [
+    12.02,
+    -4.72,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A2",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 2,
+   "centre": [
+    9.84,
+    -4.72,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O3",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 3,
+   "centre": [
+    10.94,
+    -5.79,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D3",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 3,
+   "centre": [
+    10.94,
+    -5.79,
+    5.89
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F3",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 3,
+   "centre": [
+    12.02,
+    -5.79,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A3",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 3,
+   "centre": [
+    9.84,
+    -5.79,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O4",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 4,
+   "centre": [
+    10.94,
+    -6.86,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D4",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 4,
+   "centre": [
+    10.94,
+    -6.86,
+    5.96
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F4",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 4,
+   "centre": [
+    12.02,
+    -6.86,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A4",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 4,
+   "centre": [
+    9.84,
+    -6.86,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O5",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 5,
+   "centre": [
+    10.94,
+    -7.94,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D5",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 5,
+   "centre": [
+    10.94,
+    -7.94,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F5",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 5,
+   "centre": [
+    12.02,
+    -7.94,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A5",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 5,
+   "centre": [
+    9.83,
+    -7.94,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O6",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 6,
+   "centre": [
+    10.94,
+    -9.01,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D6",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 6,
+   "centre": [
+    10.94,
+    -9.01,
+    5.93
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F6",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 6,
+   "centre": [
+    12.03,
+    -9.01,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A6",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 6,
+   "centre": [
+    9.84,
+    -9.01,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O7",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 7,
+   "centre": [
+    10.94,
+    -10.09,
+    3.16
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D7",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 7,
+   "centre": [
+    10.94,
+    -10.09,
+    6.0
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F7",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 7,
+   "centre": [
+    12.36,
+    -10.09,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A7",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 7,
+   "centre": [
+    9.5,
+    -10.09,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-O8",
+   "module": "L2",
+   "wall": "overhead",
+   "bay": 8,
+   "centre": [
+    10.94,
+    -11.16,
+    4.6
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-D8",
+   "module": "L2",
+   "wall": "deck",
+   "bay": 8,
+   "centre": [
+    10.94,
+    -11.16,
+    5.91
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-F8",
+   "module": "L2",
+   "wall": "forward",
+   "bay": 8,
+   "centre": [
+    11.45,
+    -11.16,
+    4.85
+   ],
+   "normal": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L2-A8",
+   "module": "L2",
+   "wall": "aft",
+   "bay": 8,
+   "centre": [
+    10.43,
+    -11.16,
+    4.85
+   ],
+   "normal": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "along": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-O1",
+   "module": "H2",
+   "wall": "overhead",
+   "bay": 1,
+   "centre": [
+    9.26,
+    -0.01,
+    3.73
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-D1",
+   "module": "H2",
+   "wall": "deck",
+   "bay": 1,
+   "centre": [
+    9.26,
+    -0.01,
+    5.93
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-S1",
+   "module": "H2",
+   "wall": "starboard",
+   "bay": 1,
+   "centre": [
+    9.26,
+    1.05,
+    4.84
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-P1",
+   "module": "H2",
+   "wall": "port",
+   "bay": 1,
+   "centre": [
+    9.26,
+    -1.08,
+    4.84
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-O2",
+   "module": "H2",
+   "wall": "overhead",
+   "bay": 2,
+   "centre": [
+    8.2,
+    -0.01,
+    4.04
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-D2",
+   "module": "H2",
+   "wall": "deck",
+   "bay": 2,
+   "centre": [
+    8.2,
+    -0.01,
+    5.63
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-S2",
+   "module": "H2",
+   "wall": "starboard",
+   "bay": 2,
+   "centre": [
+    8.2,
+    0.78,
+    4.84
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "H2-P2",
+   "module": "H2",
+   "wall": "port",
+   "bay": 2,
+   "centre": [
+    8.2,
+    -0.8,
+    4.84
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.03,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O1",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 1,
+   "centre": [
+    4.61,
+    0.01,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-D1",
+   "module": "L1",
+   "wall": "deck",
+   "bay": 1,
+   "centre": [
+    4.61,
+    0.01,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S1",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 1,
+   "centre": [
+    4.61,
+    1.11,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P1",
+   "module": "L1",
+   "wall": "port",
+   "bay": 1,
+   "centre": [
+    4.61,
+    -1.06,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O2",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 2,
+   "centre": [
+    3.54,
+    0.01,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-D2",
+   "module": "L1",
+   "wall": "deck",
+   "bay": 2,
+   "centre": [
+    3.54,
+    0.01,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S2",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 2,
+   "centre": [
+    3.54,
+    1.16,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P2",
+   "module": "L1",
+   "wall": "port",
+   "bay": 2,
+   "centre": [
+    3.54,
+    -1.08,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O3",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 3,
+   "centre": [
+    2.48,
+    0.01,
+    3.73
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S3",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 3,
+   "centre": [
+    2.48,
+    1.13,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P3",
+   "module": "L1",
+   "wall": "port",
+   "bay": 3,
+   "centre": [
+    2.48,
+    -1.07,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O4",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 4,
+   "centre": [
+    1.41,
+    0.01,
+    3.74
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-D4",
+   "module": "L1",
+   "wall": "deck",
+   "bay": 4,
+   "centre": [
+    1.41,
+    0.01,
+    5.96
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S4",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 4,
+   "centre": [
+    1.41,
+    1.13,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P4",
+   "module": "L1",
+   "wall": "port",
+   "bay": 4,
+   "centre": [
+    1.41,
+    -1.09,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O5",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 5,
+   "centre": [
+    0.34,
+    0.01,
+    3.75
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-D5",
+   "module": "L1",
+   "wall": "deck",
+   "bay": 5,
+   "centre": [
+    0.34,
+    0.01,
+    5.92
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S5",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 5,
+   "centre": [
+    0.34,
+    0.67,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P5",
+   "module": "L1",
+   "wall": "port",
+   "bay": 5,
+   "centre": [
+    0.34,
+    -0.6,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-O6",
+   "module": "L1",
+   "wall": "overhead",
+   "bay": 6,
+   "centre": [
+    -0.72,
+    0.01,
+    3.74
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-D6",
+   "module": "L1",
+   "wall": "deck",
+   "bay": 6,
+   "centre": [
+    -0.72,
+    0.01,
+    5.93
+   ],
+   "normal": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-S6",
+   "module": "L1",
+   "wall": "starboard",
+   "bay": 6,
+   "centre": [
+    -0.72,
+    1.1,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  },
+  {
+   "code": "L1-P6",
+   "module": "L1",
+   "wall": "port",
+   "bay": 6,
+   "centre": [
+    -0.72,
+    -1.07,
+    4.83
+   ],
+   "normal": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "along": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_m": [
+    1.04,
+    1.9
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "text": "To H2",
+   "kind": "hatch sign",
+   "module": "L2",
+   "centre": [
+    10.93,
+    -3.31,
+    5.67
+   ]
+  },
+  {
+   "text": "To FWD",
+   "kind": "hatch sign",
+   "module": "H2",
+   "centre": [
+    12.34,
+    0.0,
+    5.69
+   ]
+  },
+  {
+   "text": "To L1",
+   "kind": "hatch sign",
+   "module": "H2",
+   "centre": [
+    7.22,
+    -0.07,
+    5.74
+   ]
+  },
+  {
+   "text": "DUCT VALVE",
+   "kind": "valve label",
+   "module": "H2",
+   "centre": [
+    11.94,
+    1.05,
+    4.93
+   ]
+  },
+  {
+   "text": "TO H1",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    -1.37,
+    0.73,
+    4.45
+   ]
+  },
+  {
+   "text": "TO H1",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    -1.35,
+    -0.71,
+    4.4
+   ]
+  },
+  {
+   "text": "TO H1",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    -1.06,
+    -0.02,
+    5.82
+   ]
+  },
+  {
+   "text": "TO H2",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    5.36,
+    0.04,
+    5.82
+   ]
+  },
+  {
+   "text": "TO H2",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    5.66,
+    0.73,
+    4.4
+   ]
+  },
+  {
+   "text": "TO H2",
+   "kind": "hatch sign",
+   "module": "L1",
+   "centre": [
+    5.67,
+    -0.71,
+    4.45
+   ]
+  },
+  {
+   "text": "DUCT VALVE",
+   "kind": "valve label",
+   "module": "L1",
+   "centre": [
+    -1.72,
+    -0.71,
+    5.08
+   ]
+  },
+  {
+   "text": "DUCT VALVE",
+   "kind": "valve label",
+   "module": "L1",
+   "centre": [
+    6.04,
+    -0.71,
+    5.1
+   ]
+  }
+ ],
+ "rehearsal_module": {
+  "module": "L3",
+  "about": "the rehearsal facility's module (not part of the sortie)",
+  "survey": {
+   "lighting": {
+    "L3": "general"
+   }
+  },
+  "modules": [
+   {
+    "id": "L3",
+    "name": "laboratory module L3",
+    "axis_point": [
+     10.93,
+     2.3,
+     4.84
+    ],
+    "axis_direction": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "end_wall_points": [
+     [
+      10.93,
+      2.66,
+      4.84
+     ],
+     [
+      10.93,
+      8.21,
+      4.84
+     ]
+    ],
+    "walls": {
+     "forward": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "aft": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "deck": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "overhead": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "rack_bays": 4
+   }
+  ],
+  "rack_locations": [
+   {
+    "code": "L3-O1",
+    "module": "L3",
+    "wall": "overhead",
+    "bay": 1,
+    "centre": [
+     10.93,
+     3.99,
+     3.75
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-D1",
+    "module": "L3",
+    "wall": "deck",
+    "bay": 1,
+    "centre": [
+     10.93,
+     3.99,
+     5.94
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-F1",
+    "module": "L3",
+    "wall": "forward",
+    "bay": 1,
+    "centre": [
+     12.03,
+     3.99,
+     4.84
+    ],
+    "normal": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-A1",
+    "module": "L3",
+    "wall": "aft",
+    "bay": 1,
+    "centre": [
+     9.83,
+     3.99,
+     4.84
+    ],
+    "normal": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-O2",
+    "module": "L3",
+    "wall": "overhead",
+    "bay": 2,
+    "centre": [
+     10.93,
+     5.06,
+     3.74
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-D2",
+    "module": "L3",
+    "wall": "deck",
+    "bay": 2,
+    "centre": [
+     10.93,
+     5.06,
+     5.94
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-F2",
+    "module": "L3",
+    "wall": "forward",
+    "bay": 2,
+    "centre": [
+     12.09,
+     5.06,
+     4.84
+    ],
+    "normal": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-A2",
+    "module": "L3",
+    "wall": "aft",
+    "bay": 2,
+    "centre": [
+     9.31,
+     5.06,
+     4.84
+    ],
+    "normal": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-O3",
+    "module": "L3",
+    "wall": "overhead",
+    "bay": 3,
+    "centre": [
+     10.93,
+     6.17,
+     3.74
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-D3",
+    "module": "L3",
+    "wall": "deck",
+    "bay": 3,
+    "centre": [
+     10.93,
+     6.17,
+     5.94
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-F3",
+    "module": "L3",
+    "wall": "forward",
+    "bay": 3,
+    "centre": [
+     12.03,
+     6.17,
+     4.84
+    ],
+    "normal": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-A3",
+    "module": "L3",
+    "wall": "aft",
+    "bay": 3,
+    "centre": [
+     9.83,
+     6.17,
+     4.84
+    ],
+    "normal": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-O4",
+    "module": "L3",
+    "wall": "overhead",
+    "bay": 4,
+    "centre": [
+     10.93,
+     7.26,
+     4.0
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-D4",
+    "module": "L3",
+    "wall": "deck",
+    "bay": 4,
+    "centre": [
+     10.93,
+     7.26,
+     5.94
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-F4",
+    "module": "L3",
+    "wall": "forward",
+    "bay": 4,
+    "centre": [
+     12.03,
+     7.26,
+     4.84
+    ],
+    "normal": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   },
+   {
+    "code": "L3-A4",
+    "module": "L3",
+    "wall": "aft",
+    "bay": 4,
+    "centre": [
+     9.84,
+     7.26,
+     4.84
+    ],
+    "normal": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "along": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size_m": [
+     1.06,
+     1.9
+    ]
+   }
+  ],
+  "signs": []
+ }
+}

@@ -1,0 +1,2580 @@
+{
+ "format": "pantry_jar_refilling episode selection 1",
+ "rule": "tests/review/select_set.py (module docstring)",
+ "frozen": {
+  "tests/jar_grade.py": "1d08f8d2b9b5e2290af90bba055a546b9d5a871bc05255b3059abc76f09b5ffd",
+  "tests/episode.py": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26",
+  "tests/jar_env.py": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79",
+  "tests/jar_sim.py": "7fcf66aeabf41503dfc9bc417feb9a7030fae7e8ab0b22e2b0c772c9f52c1235",
+  "tests/jar_render.py": "5c3570fed94eb12b6d6075e794d47a49936ea34f3955c42c7f4e7651a5b854cc",
+  "tests/jar_look.json": "0bce8584de3d9552520d66c3b8d9a67747c08bc7dad34a267dcf4be348d7fd96",
+  "tests/units.json": "4bde3c3b05d8ce4127a6064a9818f372b9a8564f49fe22c3df976b6df447d3e8",
+  "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+  "solution/oracle/episode.py": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26",
+  "solution/oracle/jar_env.py": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79",
+  "solution/oracle/jar_sim.py": "7fcf66aeabf41503dfc9bc417feb9a7030fae7e8ab0b22e2b0c772c9f52c1235",
+  "solution/oracle/jar_render.py": "5c3570fed94eb12b6d6075e794d47a49936ea34f3955c42c7f4e7651a5b854cc",
+  "solution/oracle/jar_look.json": "0bce8584de3d9552520d66c3b8d9a67747c08bc7dad34a267dcf4be348d7fd96",
+  "solution/oracle/oracle_main.py": "dc571b4452a3d27ab0c235e3606e4d14c4ff1f9203ec604afd0ded46065fd259",
+  "solution/oracle/reference.py": "de1162341c286d463502955cb5d502ea1b6efc2fe74502f75ce59d787459cc7a",
+  "solution/oracle/wire_world.py": "f2359272827682f36f1b2ef76403f6fad65a5037d43816b606d3ff0d483449e5",
+  "solution/solve.sh": "31540bf0f96ceb9aa3322ac1f48a6b8f6c7f44754f7d46d40bac565e3ee16db0"
+ },
+ "frozen_commit": "e79b762e5c477190fa1f93c69627f9ddf6b1a98c",
+ "draws": [
+  {
+   "draw": 1,
+   "drawn_utc": "2026-11-18T22:49:12Z",
+   "key": "7f1f874d1f27a811d01ec4d759129372ac83584ef5deef2bf6a77d1be4aec5bd",
+   "source": "os.urandom(32)",
+   "frozen_commit": "ee49054ed981fa44883d8aa545e2a30376c4696e",
+   "status": "made",
+   "made_utc": "2026-11-18T23:14:12Z",
+   "listed_by_place": [
+    10,
+    7,
+    7
+   ],
+   "graded_order": [
+    "u3#1",
+    "u1#1",
+    "u0#0",
+    "u4#1",
+    "u3#0",
+    "u0#1",
+    "u1#0",
+    "u2#1",
+    "u5#1",
+    "u5#0",
+    "u4#0",
+    "u2#0"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 3243417132216235471,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "berry": 4,
+     "mint": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5035,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 385.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5035,
+     "sim_fault": false,
+     "probes": 55,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 330.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5035,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 525.1
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 352148639573503089,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "berry": 2,
+     "sugar": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4832,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 349.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4832,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 328.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4832,
+     "sim_fault": false,
+     "probes": 35,
+     "probes_passed": 35,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 507.7
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 2,
+   "seed": 14413893200235977762,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "berry": 3,
+     "sugar": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5249,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 447.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5249,
+     "sim_fault": false,
+     "probes": 40,
+     "probes_passed": 40,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 429.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5249,
+     "sim_fault": false,
+     "probes": 65,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 533.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 3,
+   "seed": 10540485115197105806,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 2,
+     "sugar": 2
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4504,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 261.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4504,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 304.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4504,
+     "sim_fault": false,
+     "probes": 42,
+     "probes_passed": 42,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 310.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 13554570225224615895,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "mint": 3,
+     "sugar": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6552,
+     "sim_fault": false,
+     "probes": 83,
+     "probes_passed": 83,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 466.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6552,
+     "sim_fault": false,
+     "probes": 63,
+     "probes_passed": 63,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 486.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6552,
+     "sim_fault": false,
+     "probes": 59,
+     "probes_passed": 59,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 516.2
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 14955437395371952789,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 2,
+     "sugar": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5267,
+     "sim_fault": false,
+     "probes": 45,
+     "probes_passed": 45,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 332.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5267,
+     "sim_fault": false,
+     "probes": 61,
+     "probes_passed": 61,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 321.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5267,
+     "sim_fault": false,
+     "probes": 53,
+     "probes_passed": 53,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 433.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 2,
+   "seed": 16548142005622463938,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 3,
+     "sugar": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5773,
+     "sim_fault": false,
+     "probes": 66,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 420.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5773,
+     "sim_fault": false,
+     "probes": 61,
+     "probes_passed": 61,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 404.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5773,
+     "sim_fault": false,
+     "probes": 66,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 552.3
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 3,
+   "seed": 10710642907518780214,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "mint": 2,
+     "sugar": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5105,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 336.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5105,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 333.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5105,
+     "sim_fault": false,
+     "probes": 41,
+     "probes_passed": 41,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 463.7
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 5111116540412979292,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "sugar": 2,
+     "berry": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4605,
+     "sim_fault": false,
+     "probes": 46,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 321.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4605,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 321.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4605,
+     "sim_fault": false,
+     "probes": 38,
+     "probes_passed": 38,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 419.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 10157863618175622242,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "berry": 4,
+     "mint": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4906,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 404.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4906,
+     "sim_fault": false,
+     "probes": 46,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 381.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4906,
+     "sim_fault": false,
+     "probes": 40,
+     "probes_passed": 40,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 546.0
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 2,
+   "seed": 13597241847946768162,
+   "drawn": {
+    "listed_places": [
+     0,
+     2
+    ],
+    "refill": {
+     "berry": 4,
+     "mint": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4793,
+     "sim_fault": false,
+     "probes": 55,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 295.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4793,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 312.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4793,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 358.2
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 3,
+   "seed": 13251705916376657529,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "sugar": 4,
+     "berry": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4522,
+     "sim_fault": false,
+     "probes": 45,
+     "probes_passed": 45,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 341.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4522,
+     "sim_fault": false,
+     "probes": 49,
+     "probes_passed": 49,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 331.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4522,
+     "sim_fault": false,
+     "probes": 33,
+     "probes_passed": 33,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 468.4
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 12132828444585380795,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 2,
+     "sugar": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5069,
+     "sim_fault": false,
+     "probes": 53,
+     "probes_passed": 53,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 304.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5069,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 314.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5069,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 381.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 976384906877398115,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "mint": 2,
+     "berry": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5336,
+     "sim_fault": false,
+     "probes": 57,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 470.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5336,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 477.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5336,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 516.7
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 2,
+   "seed": 1263626088355422202,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "mint": 4,
+     "sugar": 2
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5208,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 358.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5208,
+     "sim_fault": false,
+     "probes": 55,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 339.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5208,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 502.8
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 3,
+   "seed": 5439749189269119953,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "mint": 4,
+     "sugar": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4919,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 338.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4919,
+     "sim_fault": false,
+     "probes": 46,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 323.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4919,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 445.8
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 9819474560939445067,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "mint": 4,
+     "sugar": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5218,
+     "sim_fault": false,
+     "probes": 41,
+     "probes_passed": 41,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 427.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5218,
+     "sim_fault": false,
+     "probes": 69,
+     "probes_passed": 69,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 381.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5218,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 555.0
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 42036251795929680,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 4,
+     "mint": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5467,
+     "sim_fault": false,
+     "probes": 61,
+     "probes_passed": 61,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 456.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5467,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 457.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5467,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 526.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 2,
+   "seed": 13229989217010157630,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 2,
+     "mint": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4960,
+     "sim_fault": false,
+     "probes": 53,
+     "probes_passed": 53,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 347.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4960,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 333.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4960,
+     "sim_fault": false,
+     "probes": 34,
+     "probes_passed": 34,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 480.8
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 3,
+   "seed": 15912010728133715380,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "berry": 3,
+     "mint": 4
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5088,
+     "sim_fault": false,
+     "probes": 42,
+     "probes_passed": 42,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 439.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5088,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 419.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5088,
+     "sim_fault": false,
+     "probes": 49,
+     "probes_passed": 49,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 536.4
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 8144947008121109340,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "sugar": 4,
+     "mint": 2
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5131,
+     "sim_fault": false,
+     "probes": 64,
+     "probes_passed": 64,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 363.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5131,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 342.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5131,
+     "sim_fault": false,
+     "probes": 43,
+     "probes_passed": 43,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 515.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 9602101358001081681,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "sugar": 2,
+     "mint": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4071,
+     "sim_fault": false,
+     "probes": 34,
+     "probes_passed": 34,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 219.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4071,
+     "sim_fault": false,
+     "probes": 39,
+     "probes_passed": 39,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 295.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4071,
+     "sim_fault": false,
+     "probes": 40,
+     "probes_passed": 40,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 226.0
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 2,
+   "seed": 8452469402889627345,
+   "drawn": {
+    "listed_places": [
+     1,
+     2
+    ],
+    "refill": {
+     "sugar": 3,
+     "mint": 2
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4597,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 303.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4597,
+     "sim_fault": false,
+     "probes": 59,
+     "probes_passed": 59,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 313.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4597,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "sugar": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 2,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 378.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 3,
+   "seed": 10262731397107669656,
+   "drawn": {
+    "listed_places": [
+     0,
+     1
+    ],
+    "refill": {
+     "berry": 4,
+     "mint": 3
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4612,
+     "sim_fault": false,
+     "probes": 55,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 323.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4612,
+     "sim_fault": false,
+     "probes": 50,
+     "probes_passed": 50,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 328.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4612,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "jars": {
+      "berry": {
+       "pieces_in": 4,
+       "wrong_in": 0,
+       "sealed": true
+      },
+      "mint": {
+       "pieces_in": 3,
+       "wrong_in": 0,
+       "sealed": true
+      }
+     },
+     "halved": false,
+     "wall_s": 440.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  }
+ ],
+ "amendments": [
+  {
+   "amendment": 1,
+   "amended_utc": "2026-11-19T20:34:49Z",
+   "draw": 1,
+   "commit": "46f463a768d554aac5234be15dc2e6fec6dd8356",
+   "reason": "Maintainer fixes after the first review (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json and tests/units.json byte-identical, so the 12 episodes, their units, seeds, counters, refill lists and trays stay what they were). Frozen files that changed, and what each change does to an episode: (1) tests/episode.py and solution/oracle/episode.py (byte-identical): the credit follows the job: a listed jar is done when it holds exactly the listed pieces of its kind and nothing else and is closed again (opened in the episode, its own lid seated, closing torque 0.5-2.5 N m); the episode's credit is the done jars over the listed jars; the unlisted jar is judged by how it ends (halved if something was put into it or it was opened and not closed again properly); the other halvings and the end of an episode are unchanged. The reference does the whole job, so its credit stays 1.0 on every episode. (2) tests/jar_sim.py and solution/oracle/jar_sim.py (byte-identical): one renderer per image size, kept for the episode's model, instead of one per image (20 images compared with the old path: byte-identical, the noise drawn exactly as before); the robots' collision geoms move to a geom group no camera shows (a rendering label: contacts unchanged); joint angles in an action are clipped to the joints' limits and a non-finite control ends the episode as unstable (the reference sends 7-number Cartesian steps only). (3) tests/jar_env.py and solution/oracle/jar_env.py (byte-identical): the renderer cache; the probe's perturbed copy keeps the observed hand and wrist-camera poses' relation to the joints (the same offsets, drawn in the same order); the real observation is unchanged. (4) tests/jar_grade.py: the 9000 s budget is charged to the controller's own time (READY and every reply, plus image_cost_s per image asked for) instead of the wall clock with the grader's simulation and rendering in it; the wire, the probe lock and its schedule are unchanged. (5) tests/grader_config.json: image_cost_s 0.2 added. (6) solution/oracle/wire_world.py: the oracle waits for the reference's action instead of answering a hold after 20 s of wall time. Not in the frozen list and changed in the same commit: tests/verify.py (the kit's clear_agent_account called first and its report read; the numerics fingerprint checked before grading; the controller clock), tests/numerics_check.py and tests/numerics.json (new), environment/Dockerfile (OPENBLAS_CORETYPE=Haswell and OPENBLAS_L2_SIZE=256, WORKDIR /). The pinned kernel changes the simulation's last bits on hosts that used another kernel (the selection's host was one): with it the reference takes other numbers of steps on the 12 episodes than in the selection's runs, the same numbers on every host, and completes every one of them (the evidence). None of the code changes moves the reference by a bit: on a host whose own kernel is the pinned one, the 12 episodes take exactly the steps they took before the changes.",
+   "changed": {
+    "tests/jar_grade.py": {
+     "recorded": "6dadb94d46596cce606a6f5076fd420bff929306a1ac9492964cf2833b12603c",
+     "now": "2165d1758f7ad75f60c813fde69acde1b524bd2c5e90c76343632385e8538f92"
+    },
+    "tests/episode.py": {
+     "recorded": "fea8bf0611f963322217b34e239b5059aefb27238cf520159f2172497c4290aa",
+     "now": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26"
+    },
+    "tests/jar_env.py": {
+     "recorded": "94c09c954209db68443ebf2da5f1368b2102b0c02a2f182fda97bc66d960c04f",
+     "now": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79"
+    },
+    "tests/jar_sim.py": {
+     "recorded": "cebc0e3537265ebdf192df4204dd948c2a8b1b4cbd6da69079f0806025a0dc94",
+     "now": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36"
+    },
+    "tests/grader_config.json": {
+     "recorded": "45b0b61bf7460e420664d44f6e22cc25d9365450591307f1f56d9a5d0b8b0289",
+     "now": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba"
+    },
+    "solution/oracle/episode.py": {
+     "recorded": "fea8bf0611f963322217b34e239b5059aefb27238cf520159f2172497c4290aa",
+     "now": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26"
+    },
+    "solution/oracle/jar_env.py": {
+     "recorded": "94c09c954209db68443ebf2da5f1368b2102b0c02a2f182fda97bc66d960c04f",
+     "now": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79"
+    },
+    "solution/oracle/jar_sim.py": {
+     "recorded": "cebc0e3537265ebdf192df4204dd948c2a8b1b4cbd6da69079f0806025a0dc94",
+     "now": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36"
+    },
+    "solution/oracle/wire_world.py": {
+     "recorded": "d44febb7e87c924cb8265829fd14ee37d06ef466a1c8e3c4562d205fb795f24c",
+     "now": "f2359272827682f36f1b2ef76403f6fad65a5037d43816b606d3ff0d483449e5"
+    }
+   },
+   "frozen_before": {
+    "tests/jar_grade.py": "6dadb94d46596cce606a6f5076fd420bff929306a1ac9492964cf2833b12603c",
+    "tests/episode.py": "fea8bf0611f963322217b34e239b5059aefb27238cf520159f2172497c4290aa",
+    "tests/jar_env.py": "94c09c954209db68443ebf2da5f1368b2102b0c02a2f182fda97bc66d960c04f",
+    "tests/jar_sim.py": "cebc0e3537265ebdf192df4204dd948c2a8b1b4cbd6da69079f0806025a0dc94",
+    "tests/units.json": "4bde3c3b05d8ce4127a6064a9818f372b9a8564f49fe22c3df976b6df447d3e8",
+    "tests/grader_config.json": "45b0b61bf7460e420664d44f6e22cc25d9365450591307f1f56d9a5d0b8b0289",
+    "solution/oracle/episode.py": "fea8bf0611f963322217b34e239b5059aefb27238cf520159f2172497c4290aa",
+    "solution/oracle/jar_env.py": "94c09c954209db68443ebf2da5f1368b2102b0c02a2f182fda97bc66d960c04f",
+    "solution/oracle/jar_sim.py": "cebc0e3537265ebdf192df4204dd948c2a8b1b4cbd6da69079f0806025a0dc94",
+    "solution/oracle/oracle_main.py": "dc571b4452a3d27ab0c235e3606e4d14c4ff1f9203ec604afd0ded46065fd259",
+    "solution/oracle/reference.py": "de1162341c286d463502955cb5d502ea1b6efc2fe74502f75ce59d787459cc7a",
+    "solution/oracle/wire_world.py": "d44febb7e87c924cb8265829fd14ee37d06ef466a1c8e3c4562d205fb795f24c",
+    "solution/solve.sh": "31540bf0f96ceb9aa3322ac1f48a6b8f6c7f44754f7d46d40bac565e3ee16db0"
+   },
+   "frozen_commit_before": "ee49054ed981fa44883d8aa545e2a30376c4696e",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, a clean checkout, the separate verifier, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-3e4b0709",
+    "commit": "46f463a7",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 601.0,
+    "probes_passed": 601.0,
+    "numerics_ok": 1.0,
+    "agent_account_cleared": 1.0,
+    "controller_seconds": 233.1,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4004.0,
+     "controller_time_s": 233,
+     "budget_s": 9000,
+     "wall_s": 4003,
+     "account_cleared_s": 4.1,
+     "account_processes_killed": 49
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 5191,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 5830,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 5656,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 5759,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 5249,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 4870,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 5692,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 5328,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 4228,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 4685,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 5098,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 4745,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-055a4739",
+     "note": "the same set and probe schedule with the files as they were recorded, on the same host (its own OpenBLAS kernel is the Haswell one the image now pins)",
+     "probes_total": 601.0,
+     "probes_passed": 601.0,
+     "verify_stage_seconds": 3871.5,
+     "steps": [
+      5191,
+      5830,
+      5656,
+      5759,
+      5249,
+      4870,
+      5692,
+      5328,
+      4228,
+      4685,
+      5098,
+      4745
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 2,
+   "amended_utc": "2026-11-20T04:33:44Z",
+   "draw": 1,
+   "commit": "e79b762e5c477190fa1f93c69627f9ddf6b1a98c",
+   "reason": "The cameras' pictures are drawn by another renderer (jar_render.py and jar_look.json, new frozen files beside jar_sim.py in tests/ and solution/oracle/: MuJoCo 3.16's Filament on the CPU in a kitchen, in place of MuJoCo's own renderer on OSMesa; jar_sim.py: render() draws through it, two render-only materials for the grippers' meshes; the simulation, the cameras' poses and sizes, the noise and its stream are unchanged: the numerics fingerprint is the same). jar_grade.py: an episode's log line names its index and unit and no longer its seed. No episode changes: not its unit, its counter, its refill list or its tray; tests/hidden/episodes.json and tests/units.json are byte-identical.",
+   "changed": {
+    "tests/jar_grade.py": {
+     "recorded": "2165d1758f7ad75f60c813fde69acde1b524bd2c5e90c76343632385e8538f92",
+     "now": "1d08f8d2b9b5e2290af90bba055a546b9d5a871bc05255b3059abc76f09b5ffd"
+    },
+    "tests/jar_sim.py": {
+     "recorded": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36",
+     "now": "7fcf66aeabf41503dfc9bc417feb9a7030fae7e8ab0b22e2b0c772c9f52c1235"
+    },
+    "tests/jar_render.py": {
+     "recorded": null,
+     "now": "5c3570fed94eb12b6d6075e794d47a49936ea34f3955c42c7f4e7651a5b854cc"
+    },
+    "tests/jar_look.json": {
+     "recorded": null,
+     "now": "0bce8584de3d9552520d66c3b8d9a67747c08bc7dad34a267dcf4be348d7fd96"
+    },
+    "solution/oracle/jar_sim.py": {
+     "recorded": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36",
+     "now": "7fcf66aeabf41503dfc9bc417feb9a7030fae7e8ab0b22e2b0c772c9f52c1235"
+    },
+    "solution/oracle/jar_render.py": {
+     "recorded": null,
+     "now": "5c3570fed94eb12b6d6075e794d47a49936ea34f3955c42c7f4e7651a5b854cc"
+    },
+    "solution/oracle/jar_look.json": {
+     "recorded": null,
+     "now": "0bce8584de3d9552520d66c3b8d9a67747c08bc7dad34a267dcf4be348d7fd96"
+    }
+   },
+   "frozen_before": {
+    "tests/jar_grade.py": "2165d1758f7ad75f60c813fde69acde1b524bd2c5e90c76343632385e8538f92",
+    "tests/episode.py": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26",
+    "tests/jar_env.py": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79",
+    "tests/jar_sim.py": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36",
+    "tests/units.json": "4bde3c3b05d8ce4127a6064a9818f372b9a8564f49fe22c3df976b6df447d3e8",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/episode.py": "1f4ce6557d11d42b29d3b9402fbfba575056ec41c1c740dc6e68353094cdda26",
+    "solution/oracle/jar_env.py": "413d9a35a180bb6e713dd0017788511253f92e868323abdbfe61052ad83fbd79",
+    "solution/oracle/jar_sim.py": "5db8148734b24062336bab535278093ee8ef19ee81305bee85c3bc5d4f4f7c36",
+    "solution/oracle/oracle_main.py": "dc571b4452a3d27ab0c235e3606e4d14c4ff1f9203ec604afd0ded46065fd259",
+    "solution/oracle/reference.py": "de1162341c286d463502955cb5d502ea1b6efc2fe74502f75ce59d787459cc7a",
+    "solution/oracle/wire_world.py": "f2359272827682f36f1b2ef76403f6fad65a5037d43816b606d3ff0d483449e5",
+    "solution/solve.sh": "31540bf0f96ceb9aa3322ac1f48a6b8f6c7f44754f7d46d40bac565e3ee16db0"
+   },
+   "frozen_commit_before": "46f463a768d554aac5234be15dc2e6fec6dd8356",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, a clean checkout, the separate verifier, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-d09be24d",
+    "commit": "e79b762e5c477190fa1f93c69627f9ddf6b1a98c",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 601.0,
+    "probes_passed": 601.0,
+    "numerics_ok": 1.0,
+    "agent_account_cleared": 1.0,
+    "controller_seconds": 172.4,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 3942.7,
+     "controller_time_s": 172,
+     "budget_s": 9000,
+     "wall_s": 3942,
+     "account_cleared_s": 3.1,
+     "account_processes_killed": 47
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 5191,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 5830,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 5656,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 5759,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 5249,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 4870,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 5692,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 5328,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 4228,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 4685,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 5098,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 4745,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-e774c977",
+     "note": "the same set and probe schedule with the files as they were recorded, on the same host (its own OpenBLAS kernel is the Haswell one the image now pins)",
+     "probes_total": 601.0,
+     "probes_passed": 601.0,
+     "verify_stage_seconds": 3961.1,
+     "steps": [
+      5191,
+      5830,
+      5656,
+      5759,
+      5249,
+      4870,
+      5692,
+      5328,
+      4228,
+      4685,
+      5098,
+      4745
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,414 @@
+{
+ "cameras_sha256": "f676fff23d4541171e4dd1db91a7bce029831105942529d2392c71dcdf6753ae",
+ "cos_min": 0.35,
+ "density_per_mm2": 0.25,
+ "depth_tolerance": "first surface: on the ray through the centre of the sample's pixel, the depth of the sample's own triangle plane minus the depth of the nearest surface there (z-buffer at the photograph's own resolution) is at most 0.25 mm; depths are camera depths (mm)",
+ "files": {
+  "arm_distal_link.dae": {
+   "area_mm2": 32045.2054,
+   "bin": "seen/arm_distal_link.bin",
+   "bytes": 43784,
+   "flat_list_sha256": "44f6e4297c1708a9edca3615c02ba1df070413a6ad004daded0525b2d5413611",
+   "graded_area_mm2": 21890.091,
+   "graded_share": 0.6831,
+   "records": 5473,
+   "sampler": {
+    "k": 5,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "9d3ce59c7a3e8b31b1393f797765ee9f1d924528b7ab2d546ded552124756a7e"
+   },
+   "samples_drawn": 8012,
+   "sha256": "ae3f3780779afe869d79a32f34f52ed75103b06ee263d748dfc212a5935baeb7",
+   "tags": [
+    "P08"
+   ],
+   "triangles": 4792
+  },
+  "arm_proximal_link.dae": {
+   "area_mm2": 29099.4117,
+   "bin": "seen/arm_proximal_link.bin",
+   "bytes": 42296,
+   "flat_list_sha256": "1c55e87f6048dc7865f97768cc636d9cc844f3abdc70892a94a73b7342ff3f64",
+   "graded_area_mm2": 21147.5725,
+   "graded_share": 0.726735,
+   "records": 5287,
+   "sampler": {
+    "k": 4,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "b07a5bb27d167489b2d24c3a8a75ee698e4c9a04b65017e276190f26d180b47f"
+   },
+   "samples_drawn": 7275,
+   "sha256": "51ddc50675be64d1fe57b3002e8ad90cb1f94a863b8e232e5829ed6f622e5729",
+   "tags": [
+    "P07"
+   ],
+   "triangles": 8982
+  },
+  "base_link.dae": {
+   "area_mm2": 70937.027,
+   "bin": "seen/base_link.bin",
+   "bytes": 67040,
+   "flat_list_sha256": "33c352cc849ce3089fe48ea3946fd22ac70b3ab4a5c62bded2b3f4f673786d3f",
+   "graded_area_mm2": 33518.5952,
+   "graded_share": 0.472512,
+   "records": 8380,
+   "sampler": {
+    "k": 3,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "2435c8f02c7f5aeafbedd1af33ea9ab3076e301b2c398ee6def78f86cde2c43c"
+   },
+   "samples_drawn": 17735,
+   "sha256": "4156397bd70b7202a6b0f86f67d0b5b26f4531225c1e45ef7dc3ddcd0c56fb66",
+   "tags": [
+    "P06"
+   ],
+   "triangles": 8190
+  },
+  "body.dae": {
+   "area_mm2": 683656.4856,
+   "bin": "seen/body.bin",
+   "bytes": 718776,
+   "flat_list_sha256": "58bd4ed1af9a7ef0b8d943a0aec95e51c8410897860adf53b3b4490241dc7917",
+   "graded_area_mm2": 359386.1526,
+   "graded_share": 0.525682,
+   "records": 89847,
+   "sampler": {
+    "k": 0,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "bc41a9cdd10766022be784dc911a699b91b032eec34b7f8ad0fd98338b98f251"
+   },
+   "samples_drawn": 170915,
+   "sha256": "7954177032ad4b05c9fb7b91a12001f1795b4bfb955054338c5873d76aed9e41",
+   "tags": [
+    "P01"
+   ],
+   "triangles": 40629
+  },
+  "gripper_left_distal_link.dae": {
+   "area_mm2": 4889.6804,
+   "bin": "seen/gripper_left_distal_link.bin",
+   "bytes": 7904,
+   "flat_list_sha256": "942fe37b07068ff20586241a96cac6bcb95a37b33b66e822132386290fbb1bce",
+   "graded_area_mm2": 3950.1261,
+   "graded_share": 0.80785,
+   "records": 988,
+   "sampler": {
+    "k": 7,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "70b5d307a98a639175aed0f747fc815af377d0bdf0fcb9e889d7a817bb83b138"
+   },
+   "samples_drawn": 1223,
+   "sha256": "d1a685ab0e9ac86706c942f02a4b745ecb372ce79738e3a34e207d1b105f93e4",
+   "tags": [
+    "P10"
+   ],
+   "triangles": 1496
+  },
+  "gripper_left_proximal_link.dae": {
+   "area_mm2": 7291.3989,
+   "bin": "seen/gripper_left_proximal_link.bin",
+   "bytes": 11280,
+   "flat_list_sha256": "285fbdc4a6f6a13c6cebad153df8f2dede67b538a16a83dad2851237082c940f",
+   "graded_area_mm2": 5639.5351,
+   "graded_share": 0.77345,
+   "records": 1410,
+   "sampler": {
+    "k": 6,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "40fa80c9150351879a9d4ff0aef7a9ebc867145f1f5b877252b33e1f5f41d95e"
+   },
+   "samples_drawn": 1823,
+   "sha256": "8d95a250c5882820d3d8f2d4c2a37d7e1a1c1ea62658dd375b1e3f8d4d3c946e",
+   "tags": [
+    "P09"
+   ],
+   "triangles": 2422
+  },
+  "gripper_right_distal_link.dae": {
+   "area_mm2": 6033.6338,
+   "bin": "seen/gripper_right_distal_link.bin",
+   "bytes": 9872,
+   "flat_list_sha256": "e3b1f3f7f0186e089cb931323ab15e26abfdb4f773214bc8f13d871803abb8e0",
+   "graded_area_mm2": 4934.065,
+   "graded_share": 0.81776,
+   "records": 1234,
+   "sampler": {
+    "k": 9,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "38a89a1d7395dc806164ffbcdebda9a80f99ca9231d2e8bd5a9ff80cc16abc12"
+   },
+   "samples_drawn": 1509,
+   "sha256": "41d2cf00caa1fbba3267210d82e913a18eabde24d353184f1c35b335b15d7327",
+   "tags": [
+    "P12"
+   ],
+   "triangles": 1430
+  },
+  "gripper_right_proximal_link.dae": {
+   "area_mm2": 7291.3989,
+   "bin": "seen/gripper_right_proximal_link.bin",
+   "bytes": 11552,
+   "flat_list_sha256": "ac69fd4a2a2500429292295540044a5cd9d119dc91385d17fcc86910d9947a23",
+   "graded_area_mm2": 5775.5239,
+   "graded_share": 0.792101,
+   "records": 1444,
+   "sampler": {
+    "k": 8,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "5a66328724df305d4a6578acccd2692baad0a3509a1d073f75720ed5f3158654"
+   },
+   "samples_drawn": 1823,
+   "sha256": "1a6aeb43f38131cdd92fd6ba218761a2b567de943cf732d14545ceb42864d853",
+   "tags": [
+    "P11"
+   ],
+   "triangles": 2422
+  },
+  "pmc.dae": {
+   "area_mm2": 782474.2415,
+   "bin": "seen/pmc.bin",
+   "bytes": 563928,
+   "flat_list_sha256": "2b9c0874c8cba7a7acc07b37213d75160ee08eae7b1f3ba2411ce2e0f3e4c79c",
+   "graded_area_mm2": 281963.3663,
+   "graded_share": 0.360348,
+   "records": 70491,
+   "sampler": {
+    "k": 1,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "af58ac0a544a7e156bbc5cfa5bcfac75cba0c79d08577d19d7295c9e9fd0aa27"
+   },
+   "samples_drawn": 195619,
+   "sha256": "d026c725e0843f7abc4fbb0cb73748fa1b391bbb8afbf6edce24060fbbc8e511",
+   "tags": [
+    "P02",
+    "P03"
+   ],
+   "triangles": 16825
+  },
+  "pmc_bumper.dae": {
+   "area_mm2": 41579.2341,
+   "bin": "seen/pmc_bumper.bin",
+   "bytes": 73632,
+   "flat_list_sha256": "3836b651972e06e214bb8cd028e0ca5cf3462e212fb2d61837cba27a0044f779",
+   "graded_area_mm2": 36815.3218,
+   "graded_share": 0.885426,
+   "records": 9204,
+   "sampler": {
+    "k": 2,
+    "rng": "numpy.random.default_rng([seed, k])",
+    "samples_drawn_sha256": "1bf519c17b92e0be5e38bc8461dc10d55f7a1561f0e51c56e2f6b41d545c04d1"
+   },
+   "samples_drawn": 10395,
+   "sha256": "a97b15a72a4712ffdcc32545d96894efff5ba80d1c3b6fbc85b7d05ee9aef776",
+   "tags": [
+    "P04",
+    "P05"
+   ],
+   "triangles": 420
+  }
+ },
+ "files_order": [
+  "body.dae",
+  "pmc.dae",
+  "pmc_bumper.dae",
+  "base_link.dae",
+  "arm_proximal_link.dae",
+  "arm_distal_link.dae",
+  "gripper_left_proximal_link.dae",
+  "gripper_left_distal_link.dae",
+  "gripper_right_proximal_link.dae",
+  "gripper_right_distal_link.dae"
+ ],
+ "min_photos": 3,
+ "occluders": "every maker instance of the scene (with its triangle subset), the maker's default side skin where the scene has it (pmc_skin_.dae sha256 10e40463a07647589674e9c39e40519abb4f5d011d01dae9e8739bf46179849f, not graded), and the props as boxes (bench top, mats, checker card, steel rule, paper tags)",
+ "pairs": "a pair's two instances (two tags of one maker file) pool their sightings in one table per maker file: a sample is seen in a photograph when any instance of its file there shows it; a photograph counts once",
+ "payload_manifest_sha256": "6419562974f9d65f3a67e3b3d2a8c3ae872d73b5270a6ed0819316613646748e",
+ "photos_counted": 119,
+ "photos_counted_ids": [
+  "photo_001",
+  "photo_002",
+  "photo_003",
+  "photo_004",
+  "photo_005",
+  "photo_006",
+  "photo_007",
+  "photo_008",
+  "photo_009",
+  "photo_010",
+  "photo_011",
+  "photo_012",
+  "photo_013",
+  "photo_014",
+  "photo_015",
+  "photo_016",
+  "photo_017",
+  "photo_018",
+  "photo_019",
+  "photo_020",
+  "photo_021",
+  "photo_022",
+  "photo_023",
+  "photo_024",
+  "photo_025",
+  "photo_026",
+  "photo_027",
+  "photo_028",
+  "photo_029",
+  "photo_030",
+  "photo_031",
+  "photo_032",
+  "photo_033",
+  "photo_034",
+  "photo_035",
+  "photo_036",
+  "photo_037",
+  "photo_038",
+  "photo_039",
+  "photo_040",
+  "photo_041",
+  "photo_042",
+  "photo_043",
+  "photo_044",
+  "photo_045",
+  "photo_046",
+  "photo_047",
+  "photo_048",
+  "photo_049",
+  "photo_050",
+  "photo_051",
+  "photo_052",
+  "photo_053",
+  "photo_054",
+  "photo_055",
+  "photo_056",
+  "photo_057",
+  "photo_058",
+  "photo_059",
+  "photo_060",
+  "photo_061",
+  "photo_062",
+  "photo_063",
+  "photo_064",
+  "photo_065",
+  "photo_066",
+  "photo_067",
+  "photo_068",
+  "photo_069",
+  "photo_070",
+  "photo_071",
+  "photo_072",
+  "photo_073",
+  "photo_074",
+  "photo_075",
+  "photo_076",
+  "photo_077",
+  "photo_078",
+  "photo_079",
+  "photo_080",
+  "photo_081",
+  "photo_082",
+  "photo_083",
+  "photo_084",
+  "photo_085",
+  "photo_086",
+  "photo_087",
+  "photo_088",
+  "photo_089",
+  "photo_090",
+  "photo_091",
+  "photo_092",
+  "photo_093",
+  "photo_094",
+  "photo_095",
+  "photo_096",
+  "photo_097",
+  "photo_098",
+  "photo_099",
+  "photo_100",
+  "photo_101",
+  "photo_102",
+  "photo_103",
+  "photo_104",
+  "photo_105",
+  "photo_106",
+  "photo_107",
+  "photo_108",
+  "photo_109",
+  "photo_110",
+  "photo_111",
+  "photo_112",
+  "photo_113",
+  "photo_114",
+  "photo_115",
+  "photo_116",
+  "photo_117",
+  "photo_118",
+  "photo_119"
+ ],
+ "photos_not_counted": [
+  "photo_120",
+  "photo_121",
+  "photo_122",
+  "photo_123",
+  "photo_124",
+  "photo_125",
+  "photo_126"
+ ],
+ "proxy": false,
+ "raster": "one perspective z-buffer per photograph at the photograph's resolution (one raster pixel = one photo pixel), triangles clipped at camera depth 1.0 mm",
+ "record": "little-endian '<IHH': uint32 triangle index, uint16 U, uint16 V; p = V0 + U/65535 (V1 - V0) + V/65535 (V2 - V0); records in drawn order",
+ "rule": "a sample is seen in a photograph when it lies inside the frame, is the first surface at its pixel (both face sides count; every maker instance in the scene, the side skins and the props occlude), and the view is at least 20 deg off its tangent plane (cos >= 0.35 against the normal); graded = seen in >= 3 delivered photographs (the photographs delivered with the task only)",
+ "sampler": "per maker file ceil(density x area) points uniform by area on the flat triangle list of the standard's reader (triangle by the area cumulative sum, barycentrics u, v uniform with the reflection u + v > 1 -> 1 - u, 1 - v), numpy default_rng([seed, k]) with k the file's position in 'files_order'; quantised by the codec; visibility tested at the decoded points",
+ "schema": "ffcad.seen_index/1",
+ "seed": 20261117,
+ "tags": {
+  "P01": {
+   "graded_area_share": 0.525682,
+   "maker_file": "body.dae"
+  },
+  "P02": {
+   "graded_area_share": 0.360348,
+   "maker_file": "pmc.dae"
+  },
+  "P03": {
+   "graded_area_share": 0.360348,
+   "maker_file": "pmc.dae"
+  },
+  "P04": {
+   "graded_area_share": 0.885426,
+   "maker_file": "pmc_bumper.dae"
+  },
+  "P05": {
+   "graded_area_share": 0.885426,
+   "maker_file": "pmc_bumper.dae"
+  },
+  "P06": {
+   "graded_area_share": 0.472512,
+   "maker_file": "base_link.dae"
+  },
+  "P07": {
+   "graded_area_share": 0.726735,
+   "maker_file": "arm_proximal_link.dae"
+  },
+  "P08": {
+   "graded_area_share": 0.6831,
+   "maker_file": "arm_distal_link.dae"
+  },
+  "P09": {
+   "graded_area_share": 0.77345,
+   "maker_file": "gripper_left_proximal_link.dae"
+  },
+  "P10": {
+   "graded_area_share": 0.80785,
+   "maker_file": "gripper_left_distal_link.dae"
+  },
+  "P11": {
+   "graded_area_share": 0.792101,
+   "maker_file": "gripper_right_proximal_link.dae"
+  },
+  "P12": {
+   "graded_area_share": 0.81776,
+   "maker_file": "gripper_right_distal_link.dae"
+  }
+ }
+}

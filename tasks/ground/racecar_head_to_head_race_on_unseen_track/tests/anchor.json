@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "head_to_head_score",
+ "note": "head_to_head_score is the gate x the mean over the fixed hidden venues of the mean of each venue's two heats, a heat scored classified x conduct x (0.5 place + 0.5 pass) against the privileged reference program's own clean overtake balance in that heat, already on [0, 1]; reward = clip(score / value / full_at). full_at 0.98 is the scoring definition's",
+ "source": "the privileged reference program's head_to_head_score in one full verify on the hidden venues (tests/review/anchor_verify.json): 1.0, as by construction (place 1, its own balance, no warning, classified)",
+ "value": 1.0
+}

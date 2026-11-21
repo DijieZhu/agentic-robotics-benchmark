@@ -1,0 +1,76 @@
+# tensegrity_strut_assembly_3bar_panda (assembly stage: three struts, 15 mates, grader scope "default").
+# A Franka Panda puts the modules of a small three-strut, cable-driven tensegrity rolling robot onto its three strut
+# cores: each strut core (the electronics bay base with its board and the aluminium rod, pre-assembled) is clamped in a
+# three-seat cradle; two motor modules slide onto each rod, the bay lid goes on the bay, an end cap goes on each rod end
+# (two caps of one cover colour per strut). Every module the cameras see is the robot's own published whole-strut mesh,
+# triangle for triangle (nothing is modelled); the collision pieces are derived from it. The cables, sensors and wires
+# are not part of the task (the end state is three mechanically complete struts).
+#
+# The agent receives the modules as delivered (STL files, kit.json, the purchased parts list), the picture manual (25
+# photographs rendered from the same triangles), the cell's commissioning document and API, the Panda model and the
+# cell library; no practice. It delivers assemble.py (solve(cell): a camera-only program), run as an unprivileged
+# account on 3 OS-entropy episodes of the grader's MuJoCo cell (tests/arm/assembly_strut: the modules in the nests of
+# two parts trays, the trays placed and turned, the nests permuted and the motor modules turned about their axes at
+# random per episode; the cradle +-10 mm; two uncalibrated RGB-D cameras, top and wrist, rendered by MuJoCo's Filament
+# on CPU Vulkan in a baked university lab; noisy F/T, no part poses, no fastening events). Score = the episode mean of
+# the fastened mates' weight / the scope's total weight (18.0 for three struts). The oracle submits the privileged
+# reference program (tests/arm/assembly_strut/reference.py) with a 256-bit token: it runs inside the cell on the bench
+# plan's nominal layout. Grader knobs live in tests/grader_config.json; the cell's kit (gt/: the modules' meshes,
+# collision pieces and frames) is never in the image: the grader fetches it at verify start (pinned by sha256 and file
+# count).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/tensegrity_strut_assembly_3bar_panda"
+
+[metadata]
+platform = "soft"
+direction = "assembly"
+metric = {name = "assembly_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+hidden_instance = "none"
+practice_instances = []
+render_backend = "filament"
+photo_set_version = "1"
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "assembly-cell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "panda", fastening = "coupling (rod rail capture, lock at rest; lid seat)", joints = "none (rigid modules on a clamped strut core)", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["tray place and yaw per episode", "nest permutation", "motor module roll", "end cap roll", "lid direction", "cradle +-10 mm", "cameras (mount, intrinsics, distortion)", "lighting", "F/T bias"]
+siblings = ["robotic_arm_full_assembly_so101_panda", "quadruped_full_assembly_12dof_ur10e"]
+tags = ["assembly", "mujoco", "panda", "code-as-policy", "camera-only", "rgbd", "calibration", "picture-manual", "tensegrity", "soft-robot", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# [agent] timeout_sec: 6 h. [verifier] timeout_sec: an agent's program 3 x (cell build ~10 s + program <= 2400 s wall);
+# the oracle's verify 3 x the reference program on three struts (~320 s simulated, ~4-6 min wall each, plus the
+# Filament session). The verifier sandbox's start, tests/test.sh's copy of the givens and the kit's fetch count against it too.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself, and the grader fetches the cell's kit. The agent's program
+# runs during verify, beside the cell and its own camera renderer, so the verifier gets the agent's CPUs and more
+# memory than the agent: 24 GB (at 16 GB a program that held a twin session of its own filled the verifier's memory
+# in every episode). CPU rendering: no GPU.
+[verifier]
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0

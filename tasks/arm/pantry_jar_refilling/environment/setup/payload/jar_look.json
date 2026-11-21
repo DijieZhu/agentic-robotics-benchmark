@@ -1,0 +1,144 @@
+{
+ "format": "jar-look/1",
+ "note": "The numbers of the cameras' look (jar_render.py beside this file). The render bundle (JAR_RENDER_DIR) holds the kitchen's meshes, textures and materials and the image light's panorama; the rest is here. Fitted against path-traced pictures of the same counter in the same kitchen through the same five cameras (tests/review/rendering.md). The task's own parts (jars, labels, lids, tray, pieces) keep the model's colours: no gain on them.",
+ "exposure_scale": 1.0,
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 18732.0,
+  "note": "ibl.ktx of the render bundle; intensity fitted so that the counter's top has the reference's level"
+ },
+ "lamps": [],
+ "headlight": {
+  "lux": 0.0
+ },
+ "room": {
+  "albedo_gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "emissive": 0.0,
+  "cast_shadow": false,
+  "specular": 0.3,
+  "classes": {
+   "default": {},
+   "kitchen": {
+    "gain": 0.6
+   },
+   "floor": {
+    "gain": 1.22
+   },
+   "steel": {
+    "gain": 0.73
+   }
+  }
+ },
+ "model_materials": {
+  "jar": {
+   "roughness": 0.3,
+   "metallic": 0.0,
+   "specular": 0.5
+  },
+  "label": {
+   "roughness": 0.7,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "lid": {
+   "roughness": 0.3,
+   "metallic": 0.0,
+   "specular": 0.5,
+   "bevel": 0.0012
+  },
+  "tray": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "piece_box": {
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "piece_capsule": {
+   "roughness": 0.3,
+   "metallic": 0.0,
+   "specular": 0.5
+  },
+  "hand": {
+   "srgb": [
+    0.93,
+    0.93,
+    0.92
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "specular": 0.2,
+   "gain": 0.98
+  },
+  "finger": {
+   "srgb": [
+    0.72,
+    0.73,
+    0.75
+   ],
+   "roughness": 0.4,
+   "metallic": 0.0,
+   "specular": 0.5
+  },
+  "robot_default": {
+   "roughness": 0.4,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "robot_by_colour": [
+   {
+    "lum_min": 0.8,
+    "lum_max": 9.0,
+    "chroma_max": 0.1,
+    "srgb": [
+     0.93,
+     0.93,
+     0.92
+    ],
+    "roughness": 0.35,
+    "metallic": 0.0,
+    "specular": 0.2,
+    "gain": 0.89
+   },
+   {
+    "lum_min": 0.0,
+    "lum_max": 0.4,
+    "chroma_max": 0.1,
+    "roughness": 0.5,
+    "metallic": 0.0,
+    "specular": 0.2
+   }
+  ]
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "post_processing": true,
+  "shadows": false,
+  "reflections": false,
+  "clear_color": [
+   0.024,
+   0.024,
+   0.021
+  ],
+  "supersample": 2,
+  "lavapipe_threads": 3,
+  "supersample_by_camera": {
+   "overhead": 1,
+   "front": 1,
+   "tray": 1
+  },
+  "note": "supersample: an image is drawn at this multiple of its size and averaged in linear light; the three 640 x 480 cameras are drawn at their own size (supersample_by_camera), so that every image is drawn in less than its fixed price"
+ }
+}

@@ -1,0 +1,40 @@
+# Pantry jar refilling: two fixed Pandas at a kitchen counter refill screw-top jars from a refill list, from RGB
+# cameras and wrist force sensors: open each listed jar (one hand holds it, the other unscrews the lid in regrasp
+# cycles), drop in the listed pieces of the jar's kind from a tray, put the jar's own lid back and close it to a
+# torque window. Each unit's jars differ in thread turns, running torque, mass, friction and size (hidden); each
+# episode draws where the jars stand, the list and the tray. The grader drives the agent's controller over a stdio
+# wire on a fixed hidden set of 12 episodes.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/pantry_jar_refilling"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h; no trials on the hidden units (the full simulator with two practice units is in the agent's home).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (2 per hidden unit), each at most 12000 control steps. The grader's budget (grader_config.json:
+# 9000 s) is the controller's own time: its replies, plus 0.2 s for every image it asks for; the simulation is not
+# in it, so the timeout covers both. Worst case: 144000 control steps at 45 ms (10-25 ms measured on idle hosts, the
+# higher figure for a busy 4-CPU sandbox) = 6480 s of simulation; 9000 s of controller time (if the whole budget
+# went into images, 45000 of them, drawing them takes less than their price); the numerics check, the clearing of
+# the account and the render self-test 60 s. 15540 s; with 35 % margin 21000 s. The reference's whole verify takes
+# about 35-65 minutes.
+[verifier]
+timeout_sec = 21600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0

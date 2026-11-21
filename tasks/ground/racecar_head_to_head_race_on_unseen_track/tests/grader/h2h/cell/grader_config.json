@@ -1,0 +1,87 @@
+{
+ "schema": "racecar-grader-config-h2h/1",
+ "sim": {
+  "tick_s": 0.025,
+  "physics_dt_s": 0.0025,
+  "physics_steps_per_tick": 10,
+  "subscans_per_tick": 5,
+  "imu_samples_per_tick": 5,
+  "cmd_delay_ticks": 1
+ },
+ "sessions": [
+  {
+   "name": "practice",
+   "duration_s": 480.0,
+   "desk_before_s": 60.0,
+   "scored": false,
+   "phases": [
+    {"name": "mapping", "t0_s": 0.0, "speed_limit_mps": 2.0},
+    {"name": "free", "t0_s": 120.0, "speed_limit_mps": null}
+   ]
+  },
+  {
+   "name": "heat1",
+   "duration_s": 300.0,
+   "desk_before_s": 300.0,
+   "scored": true,
+   "phases": [
+    {"name": "race", "t0_s": 0.0, "speed_limit_mps": null}
+   ]
+  },
+  {
+   "name": "heat2",
+   "duration_s": 300.0,
+   "desk_before_s": 120.0,
+   "scored": true,
+   "phases": [
+    {"name": "race", "t0_s": 0.0, "speed_limit_mps": null}
+   ]
+  }
+ ],
+ "budgets": {"program_ms_per_tick": 15.0, "cpu_factor": 4.0, "silence_s": 180.0, "import_check_s": 120.0},
+ "command": {"steer_max_rad": 0.4189, "speed_min_mps": -2.0, "speed_max_mps": 8.0},
+ "staff": {
+  "crash_displacement_m": 0.05,
+  "open_wall_wheels_over": 3,
+  "rollover_tilt_rad": 1.0,
+  "hold_s": 20.0,
+  "relocate_at_s": 5.0,
+  "relocate_pos_err_m": 0.15,
+  "relocate_yaw_err_rad": 0.261799,
+  "roadside_clearance_m": 0.3,
+  "putback_err_m": 0.03,
+  "speeding_hold_s": 0.5,
+  "warnings_end_session": 3,
+  "out_of_bounds_void_at": 3
+ },
+ "heat": {
+  "cars": 4,
+  "grid_spacing_m": 1.5,
+  "grid_car_lateral_m": 0.15,
+  "classified_laps_short": 1,
+  "half_car_length_m": 0.194,
+  "clean_before_s": 3.0,
+  "clean_after_s": 2.0,
+  "contact_merge_s": 1.0,
+  "car_crash_push_m": 0.3,
+  "car_crash_window_s": 1.5,
+  "car_crash_sample_s": 0.025,
+  "fault_clear_ahead_s": 1.0,
+  "place_behind_m": 1.5,
+  "lane_half_width_m": 0.1425,
+  "lane_clearance_m": 0.05,
+  "standing_s": 3.0,
+  "standing_speed_mps": 0.05,
+  "standing_left_grid_m": 0.5,
+  "standing_car_ahead_m": 2.0
+ },
+ "scoring": {
+  "heat": {"place_weight": 0.5, "pass_weight": 0.5, "pass_margin": 1, "warnings_zero_at": 3},
+  "full_at": 0.98
+ },
+ "route_gate": {
+  "forbidden_calls": ["torch.optim", ".backward(", "jax.grad"],
+  "forbidden_extensions": [".pt", ".pth", ".onnx", ".safetensors", ".ckpt", ".h5", ".pb", ".pkl", ".npz"],
+  "max_submission_mb": 60
+ }
+}

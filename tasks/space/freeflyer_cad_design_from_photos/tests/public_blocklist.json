@@ -1,0 +1,57 @@
+{
+ "note": "sha256 of the maker's public files an agent could copy into its submission: every appearance mesh of the robot's media package and its textures, and every file of the robot description folder, at the commits below. A file of the submission with one of these digests zeroes the design score (public_model_reuse).",
+ "upstream_commits": {
+  "software": {
+   "url": "https://github.com/nasa/astrobee",
+   "commit": "bf43a42d5f89bf0679e51ab25e7a9b7800313e9c"
+  },
+  "media": {
+   "url": "https://github.com/nasa/astrobee_media",
+   "commit": "1cb0620121099cc848f5a3db480464188dc91ea3"
+  }
+ },
+ "counts": {
+  "meshes": 15,
+  "textures": 5,
+  "description": 17
+ },
+ "files": {
+  "astrobee_media/astrobee_freeflyer/meshes/arm_distal_link.dae": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+  "astrobee_media/astrobee_freeflyer/meshes/arm_proximal_link.dae": "f05c0c7dd57938498d6f2a12e85dafc6878a6fea785be7ba80060c25bcd64a43",
+  "astrobee_media/astrobee_freeflyer/meshes/base_link.dae": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+  "astrobee_media/astrobee_freeflyer/meshes/body.dae": "8e51f7fefc807c3c5c272108f3b0d688860113339083121a9624496fcad6529d",
+  "astrobee_media/astrobee_freeflyer/meshes/carriage.dae": "d1a2c135b6222c909c565fc090baac4bc8e181260f1f162e8f70efb56a33602f",
+  "astrobee_media/astrobee_freeflyer/meshes/gripper_left_distal_link.dae": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+  "astrobee_media/astrobee_freeflyer/meshes/gripper_left_proximal_link.dae": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+  "astrobee_media/astrobee_freeflyer/meshes/gripper_right_distal_link.dae": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+  "astrobee_media/astrobee_freeflyer/meshes/gripper_right_proximal_link.dae": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc.dae": "bbff275a01915424962696f3b57b05f88ab4b215b05825fd1079aaa1d7b19c62",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc_bumper.dae": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc_skin_.dae": "10e40463a07647589674e9c39e40519abb4f5d011d01dae9e8739bf46179849f",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc_skin_bumble.dae": "371897ecd34a1afc9e3eb0a42d23581739bc47fb0f9e73546780a50e7da59674",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc_skin_honey.dae": "d4174d60466e2f3b48cfdbf7b9d9835e2102c3bb240bd7e6bf72f47c45205697",
+  "astrobee_media/astrobee_freeflyer/meshes/pmc_skin_queen.dae": "ad1934daa78641e2c50b0c819daa83b8baf712d13ba9076d352d271d0bc5a75d",
+  "astrobee_media/astrobee_freeflyer/media/materials/textures/black.png": "0f3886d33709895d78a8d15b92df08a0bd3978fff988eb780abcdbf5eb818d81",
+  "astrobee_media/astrobee_freeflyer/media/materials/textures/skin_bumble.png": "f7dac6f0bc924edc0e272248eb971bb5218257d36f8a5de88760c0e4053a40a0",
+  "astrobee_media/astrobee_freeflyer/media/materials/textures/skin_default.png": "83c7a6dfa6cba66ec20f5540befb95418a5b1f5eb622b29e397b1431f1a6ccd3",
+  "astrobee_media/astrobee_freeflyer/media/materials/textures/skin_honey.png": "67c86f2274c71ec03a24f278cfcbdc2651cfbae3554f8bc5c3e697790478ea18",
+  "astrobee_media/astrobee_freeflyer/media/materials/textures/skin_queen.png": "b8b15079efee1aa28068f9597f9e3d046fe821ee82198e532f68e2c8c426391b",
+  "astrobee/description/description/urdf/macro_perching_arm.urdf.xacro": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f",
+  "astrobee/description/description/urdf/model.urdf.xacro": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913",
+  "astrobee/description/description/urdf/model_carriage.urdf.xacro": "8bb0ab34ccf572a7bbc004fb94d56b27fd517e7556da1c434ae2a44f7640df0f",
+  "astrobee/description/description/urdf/model_drag.urdf.xacro": "2817f538cfdd8564c17d2bedb183f0d0fccd89bfdc8b2f5425ef217c7576b3ba",
+  "astrobee/description/description/urdf/model_eps.urdf.xacro": "bfcbbb7c3c7f6cc1f8626b85b2d490fd72b72ed9c42987b26862e51d15ab088c",
+  "astrobee/description/description/urdf/model_flashlights.urdf.xacro": "be4c00aa622f5533cb76eee98ac2e3458d9fffd24cb640c7e85a3228f71a7a62",
+  "astrobee/description/description/urdf/model_laser.urdf.xacro": "21a618781e4510cb7a44f21b9036a2276efb12d1965c03c0cf9c7ed897fc5340",
+  "astrobee/description/description/urdf/model_monitors.urdf.xacro": "63847ca0aa761bce691e9e2ff49a6d07ca23d08d2e02399506769dc5b091e63e",
+  "astrobee/description/description/urdf/model_pmc.urdf.xacro": "c502b69cc51907e0f7d2aaebab61c5ad771813381366b0f561aa0ae55e3180ae",
+  "astrobee/description/description/urdf/model_signal_lights.urdf.xacro": "f6b0369a02f5b25bb34c2d9164d6525fd8febe9d7b70d5a99a77aa745f3fd439",
+  "astrobee/description/description/urdf/model_speed_cam.urdf.xacro": "cc81f5995cfb21c0e9c57db5a62cb26ec6416e06e34db8fc8e4f188e4d256e8d",
+  "astrobee/description/description/urdf/model_truth.urdf.xacro": "8d106abdcc3e558e45d14a0ca5054820f9663b13315f5a603af6d61d6fc11b2e",
+  "astrobee/description/description/urdf/sensor_dock_cam.urdf.xacro": "6bb774a24fa8b2e4b90162fdc1808610a25063c40af777096dda954c9e815775",
+  "astrobee/description/description/urdf/sensor_haz_cam.urdf.xacro": "be76184b1bbcda3dede381a4a2a0cdda1b3befd0ffa466223714226b16b07578",
+  "astrobee/description/description/urdf/sensor_imu.urdf.xacro": "dd7ebd612eab079115d9ce9416614798d9846229ec6fec84d7b4daae3b0f8ffa",
+  "astrobee/description/description/urdf/sensor_nav_cam.urdf.xacro": "6909a7f7eedd2c715f4a176b5d959ecd9b6940bee847000cc369517ce432ca43",
+  "astrobee/description/description/urdf/sensor_perch_cam.urdf.xacro": "2ed31ee2cd3d641566aaca56fa5a899332bc7aab1ac6798df387e85de0cc7a3f"
+ }
+}

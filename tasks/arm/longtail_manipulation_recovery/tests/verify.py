@@ -21,8 +21,8 @@ Isolation while grading (all stated in the instruction):
 - The controller's processes run only while a request is outstanding: every process of the agent's account is stopped
   (SIGSTOP) from the moment a reply has been read (or READY seen) until the grader starts writing the next request,
   so kitchen builds, simulation and rendering never share the CPUs with it and it cannot compute ahead of a request.
-  A pause holds only once /proc shows every process of the account stopped; one that does not stop within
-  FREEZE_TIMEOUT_S ends the episode.
+  A pause holds only once /proc shows every thread of every process of the account stopped; one that does not stop
+  within FREEZE_TIMEOUT_S ends the episode.
 - A request's deadline and its controller time start before the grader writes it: the write itself (an observation
   with images is larger than the pipe's buffer) is bounded by the same deadline, so a controller that reads slowly is
   charged for it and one that stops reading misses the deadline. Controller time is summed per episode and capped.
@@ -82,8 +82,10 @@ SIM_PYTHON = "/opt/venv/bin/python3"
 PREFIX_TOL = 1e-9                            # max |qpos - recorded| after the prefix replay (every run so far: 0.0)
 QUIET_S = 5.0                                # nothing of the agent's account may appear by itself for this long at the
 #                                              start (longer than supervisord's longest pause before it retries a start)
-FREEZE_TIMEOUT_S = 5.0                       # every process of the account must show as stopped within this
-STOPPED_STATES = ("T", "t", "Z", "X", None)  # stopped, traced-stopped, zombie, dead, gone
+FREEZE_TIMEOUT_S = 5.0                       # every thread of the account must show as stopped within this
+STOPPED_STATES = ("T", "t")                  # a thread that is stopped (or traced and stopped)
+GONE_STATES = ("Z", "X")                     # a thread that has exited: it runs nothing, but its process may live on
+CLOSE_WRITE_S = 1.0                          # the close message is written under this deadline, never blocking
 METRIC = "job_balanced_recovered_fraction"
 
 
@@ -114,15 +116,37 @@ def _agent_pids(uid):
     return pids
 
 
-def _proc_state(pid):
-    """The one-letter state of `pid` from /proc/<pid>/stat (the field after the command name), None if it is gone."""
+def _stat_state(path):
+    """The one-letter state in a /proc stat file (the field after the command name), None if it cannot be read."""
     try:
-        with open("/proc/{}/stat".format(pid), "rb") as f:
+        with open(path, "rb") as f:
             stat = f.read()
     except OSError:
         return None
     rest = stat[stat.rfind(b")") + 1:].split()
     return rest[0].decode("ascii", "replace") if rest else None
+
+
+def _thread_states(pid):
+    """The state of every thread of `pid` (/proc/<pid>/task/*/stat); empty when the process is gone.
+    /proc/<pid>/stat alone is the thread-group leader's: a process whose main thread has exited shows there as a
+    zombie (Z) while its other threads run on, so the leader's state says nothing about the process."""
+    try:
+        tids = os.listdir("/proc/{}/task".format(pid))
+    except OSError:
+        return []
+    states = [_stat_state("/proc/{}/task/{}/stat".format(pid, tid)) for tid in tids]
+    return [state for state in states if state is not None]
+
+
+def _runs(pid):
+    """True while a thread of `pid` is neither stopped nor gone."""
+    return any(state not in STOPPED_STATES and state not in GONE_STATES for state in _thread_states(pid))
+
+
+def _alive(pid):
+    """True while `pid` has a thread that has not exited."""
+    return any(state not in GONE_STATES for state in _thread_states(pid))
 
 
 def kill_agent_processes(uid, rounds=20, pause=0.25):
@@ -282,16 +306,19 @@ class GuardedSolver(Solver):
 
     # -- pausing the agent's account
     def freeze(self):
-        """SIGSTOP every process of the account and confirm it: a process counts as paused only once /proc shows it
-        stopped (T, t) or gone (Z, X). A scan that finds one still running signals it again and scans anew, so a fork
+        """SIGSTOP every process of the account and confirm it thread by thread: a process counts as paused only once
+        /proc shows each of its threads stopped (T, t) or exited (Z, X). Every process with a thread still running is
+        signalled, whatever its leader's state: a process whose main thread has exited shows as a zombie and still
+        computes in its other threads. A scan that finds one running signals it again and scans anew, so a fork
         chain is caught process by process; the pause holds when two consecutive scans find the same processes, all
-        stopped (a stopped process cannot start another). Not reached within FREEZE_TIMEOUT_S: self.unstoppable."""
+        stopped (a stopped process cannot start another). Not reached within FREEZE_TIMEOUT_S: self.unstoppable.
+        Returns the number of processes alive at the last scan (the process cap counts those)."""
         stopped, previous = set(), None
         deadline = time.monotonic() + FREEZE_TIMEOUT_S
         self.unstoppable = []
         while True:
             pids = _agent_pids(self.uid)
-            running = [p for p in pids if _proc_state(p) not in STOPPED_STATES]
+            running = [p for p in pids if _runs(p)]
             for pid in running:
                 try:
                     os.kill(pid, signal.SIGSTOP)
@@ -307,6 +334,7 @@ class GuardedSolver(Solver):
                 break
             if running:
                 time.sleep(0.001)
+        alive = sum(1 for p in pids if _alive(p))
         self._stopped = sorted(stopped)
         for pid in self._stopped:
             if outside_launcher(pid):
@@ -315,7 +343,7 @@ class GuardedSolver(Solver):
                     os.kill(pid, signal.SIGKILL)
                 except OSError:
                     pass
-        return len(stopped)
+        return alive
 
     def thaw(self):
         for pid in self._stopped:
@@ -366,6 +394,13 @@ class GuardedSolver(Solver):
         self.thaw()
         super()._stop(grace)
         kill_agent_processes(self.uid)      # also what left the process group (setsid)
+
+    def _restart(self):
+        if self.restarts >= self.max_restarts:
+            # The kit raises here before it stops the old process. Stop it first: with no restart left, a controller
+            # that stopped reading would otherwise stay, with a full pipe, through every remaining state.
+            self._stop(grace=0)
+        super()._restart()
 
     @staticmethod
     def _pump(proc, lines):
@@ -456,8 +491,24 @@ class GuardedSolver(Solver):
             self._pause_or_abort()
 
     def close(self):
+        """The kit's close without its blocking write. The close message is written under CLOSE_WRITE_S like a
+        request, and not at all once an exchange has failed (the wire is out of step, and a request that timed out
+        in the write has left the pipe full: a blocking write would then never return). The process group is
+        stopped either way."""
+        if self._closed:
+            return
+        self._closed = True
         self.thaw()
-        super().close()
+        if self.proc is None:
+            return
+        told = False
+        if self.proc.poll() is None and not self._broken and not self._dead:
+            try:
+                self._write_within(json.dumps({"type": "close"}) + "\n", time.monotonic() + CLOSE_WRITE_S)
+                told = True
+            except SolverAborted:
+                pass
+        self._stop(grace=10 if told else 0)
 
 
 # ---------------------------------------------------------------- oracle token
@@ -615,8 +666,11 @@ def run_state(spec, state, solver, cfg, privileged, stats):
             solver.reset()   # an abort here ends this episode like any other (counted, scores 0)
             t, consecutive = 0, 0
             while t < budget:
-                action = solver.act(t, obs)
-                controller_s += solver.last_reply_s
+                solver.last_reply_s = 0.0
+                try:
+                    action = solver.act(t, obs)
+                finally:
+                    controller_s += solver.last_reply_s      # an aborted request's time is the controller's too
                 if controller_s > W.CONTROLLER_CAP_S:
                     raise SolverAborted("controller time cap exceeded")
                 try:

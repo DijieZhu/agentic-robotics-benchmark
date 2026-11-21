@@ -1,0 +1,84 @@
+# freeflyer_cad_design_from_photos: the hardware-design (CAD) stage of the space platform (an atomic task). The
+# editable CAD of a lab's engineering unit of the cabin free-flyer (a cube-shaped free-flying robot for the cabin of a
+# crewed station: a core module between two propulsion modules, each with a corner-bumper set, and a perching arm with
+# a two-finger gripper) was lost. A mechanical designer re-creates its mechanical design in FreeCAD 1.1 from one fixed
+# set of 119 photographs only (rendered with Blender Cycles from the robot's published appearance meshes on a lab
+# bench: the assembled unit, three teardown stages, every part on a cutting mat on both sides with a checker card and a
+# steel rule, close-ups, two unrecorded arm poses and the gripper open). No drawings, datasheets, component files,
+# topology or template. It delivers one FreeCAD document, /home/user/submission/unit.FCStd: one Assembly whose members
+# carry the twelve part tags P01 to P12, the core module grounded, five Fixed joints, six Revolute joints at the arm's
+# and the fingers' hinges, saved assembled in the stowed configuration.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the harness's own tools stay available.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs): headless FreeCAD reads the document as an unprivileged account. The standard is the robot's
+# published appearance meshes and robot description exactly as their makers give them (tests/reference/). The unit is
+# aligned rigidly as a whole onto the standard, and the two tags of each interchangeable pair are matched to the pair's
+# installed places. surface 0.65: per tag, the 90th percentile of the pooled distances from the tag's valid closed
+# solids to the original part's surface and from the original's surface points seen in at least three of the
+# photographs (tests/reference/seen.json) to the tag's solids, full credit to 0.6 mm and none from 6 mm, weighted by
+# part (17.5 in all). joint_axes 0.25: for each of the six hinges, the best unsuppressed Revolute joint between the two
+# tagged parts on either side of it, 0.6 x band(offset; 0.3 to 3 mm) + 0.4 x band(angle; 0.5 to 5 deg). structure
+# 0.10: the share of P02 to P06 joined to the grounded P01 through Fixed joints, times the share of tags present. A
+# floor rising with surface from 0.15 to 0.55 multiplies joint_axes and structure. No document, an unreadable
+# document, no valid closed solid, a file equal to a published mesh, texture or description file of the robot, or a
+# late write score 0. design_score = reward (tests/anchor.json: the reference build scores 1.0, full_at 1.0).
+#
+# The timeout values are derived in the comments of [agent] and [verifier] below.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/freeflyer_cad_design_from_photos"
+
+[metadata]
+platform = "space"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set into the agent home (seconds; nothing is started). agent: read the photographs and re-model
+# the unit in FreeCAD. The timeout: the same 8 CPUs / 16 GB / 21600 s as the published CAD tasks
+# (uav_cad_design_from_photos, whose episodes took 61-213 min), 6 h. solution/solve.sh (the reference build) takes
+# 1.5-3.5 min on the development host, far inside it. No network.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root.
+# setup.sh does not run there and the grader reads no task asset: the standard and the graded samples are in tests/.
+# The verifier runs the image's own desktop as the agent account; verify stops and freezes it first.
+#
+# The timeout: max(3600 s, 2 x the slowest measured verify). Measured in fresh containers of this image with no network
+# and the desktop up (2026-11-18): the reference build 131 s on 8 CPUs (document read 54 s, grade 76 s, peak memory of
+# the container 3.1 GB), and the slowest of the 14 submissions verified through `bash test.sh` 182 s on 1 CPU (a part
+# scaled by 1 %: read 78 s, grade 103 s). 2 x 182 s is below 3600 s, so 3600 s, the UAV CAD task's value (also
+# grader_config.json verifier_timeout_s). Inside it, verify.py gives the document reader 600 s and the grade child
+# 1080 s. No GPU.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

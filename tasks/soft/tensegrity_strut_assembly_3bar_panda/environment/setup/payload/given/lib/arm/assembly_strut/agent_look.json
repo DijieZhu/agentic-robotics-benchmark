@@ -1,0 +1,12 @@
+{
+ "_doc": "Look of the agent's cameras (agent_render.py) in the baked lab room (render/room: the cell's steel-frame bench where the lab's central island stood; Cycles DIFFUSE lightmaps at 1024 samples, 20 mm texels, denoised h 6; the HDR KTX of the Cycles panorama at (0.15, 0, 0.45)) with the light grey laminate bench top (render/bench). Calibrated against Cycles stills of the unbaked lab with its lamps (70 W ceiling / 12 W shelf panels, world HDRI 1.0, 512 spp, AgX Punchy, exposure -1.2; seed 3; shots top / wrist / human three-quarter): region luminance Cycles / Filament bench top 0.96-1.02, floor 1.09-1.10, room 0.89, arm 0.91-1.03, kit 0.86-1.21 (with at most two shadow-casting room lamps; with all six nearest lamps casting shadows: bench top 1.06-1.09, floor 1.09-1.10, room 0.92).",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 1.02,
+ "room_baked_light_scale": 2200,
+ "room_ibl_ktx_intensity": 3500,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 1.0,
+ "surface_map_m": 1.83
+}

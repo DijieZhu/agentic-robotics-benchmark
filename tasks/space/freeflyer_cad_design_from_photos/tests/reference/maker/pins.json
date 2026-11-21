@@ -1,0 +1,172 @@
+{
+ "schema": "ffcad.maker_pins/1",
+ "rule": "The hidden standard is these maker files exactly as published. Each entry pins the maker's own bytes (bytes, sha256); body.dae, pmc.dae and arm_proximal_link.dae are stored as one xz stream each and pinned on their uncompressed bytes (stored_bytes, stored_sha256 describe the stored file). makerstd/pinned.py checks every pin before a file is read; a mismatch is a task error.",
+ "repositories": {
+  "software": {
+   "url": "https://github.com/nasa/astrobee",
+   "commit": "bf43a42d5f89bf0679e51ab25e7a9b7800313e9c",
+   "licence": "Apache-2.0: the repository's LICENSE (Apache License, Version 2.0); the description and plugin files' headers: 'The Astrobee platform is licensed under the Apache License, Version 2.0'"
+  },
+  "media": {
+   "url": "https://github.com/nasa/astrobee_media",
+   "commit": "1cb0620121099cc848f5a3db480464188dc91ea3",
+   "licence": "two statements, both recorded as written: readme.md, 'Usage Guidelines': 'All multimedia is covered by NASAs Media Usage Guidelines'; astrobee_freeflyer/package.xml: <license>Apache License, Version 2.0</license>"
+  }
+ },
+ "files": {
+  "context/astrobee.launch": {
+   "stored_as": "context/astrobee.launch",
+   "storage": "raw",
+   "bytes": 9329,
+   "sha256": "cf92da6a9d104e7ed84be528bda699621334ea158cce43e1b99a227e15ddbdb6",
+   "stored_bytes": 9329,
+   "stored_sha256": "cf92da6a9d104e7ed84be528bda699621334ea158cce43e1b99a227e15ddbdb6",
+   "repository": "software",
+   "repository_path": "astrobee/launch/astrobee.launch",
+   "role": "context, read as text only: the default bay arguments and the description's namespace argument"
+  },
+  "context/gazebo_model_plugin_perching_arm.cc": {
+   "stored_as": "context/gazebo_model_plugin_perching_arm.cc",
+   "storage": "raw",
+   "bytes": 18055,
+   "sha256": "a4f67bab00fd187f0e943aee0b1630db074c6c87b27d2107e98d68de24f15b7b",
+   "stored_bytes": 18055,
+   "stored_sha256": "a4f67bab00fd187f0e943aee0b1630db074c6c87b27d2107e98d68de24f15b7b",
+   "repository": "software",
+   "repository_path": "simulation/src/gazebo_model_plugin_perching_arm/gazebo_model_plugin_perching_arm.cc",
+   "role": "context, read as text only: how the gripper start value maps to the four finger joints"
+  },
+  "description/macro_perching_arm.urdf.xacro": {
+   "stored_as": "description/macro_perching_arm.urdf.xacro",
+   "storage": "raw",
+   "bytes": 11167,
+   "sha256": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f",
+   "stored_bytes": 11167,
+   "stored_sha256": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f",
+   "repository": "software",
+   "repository_path": "description/description/urdf/macro_perching_arm.urdf.xacro",
+   "role": "standard: the arm's links, joints and start values"
+  },
+  "description/model.urdf.xacro": {
+   "stored_as": "description/model.urdf.xacro",
+   "storage": "raw",
+   "bytes": 6641,
+   "sha256": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913",
+   "stored_bytes": 6641,
+   "stored_sha256": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913",
+   "repository": "software",
+   "repository_path": "description/description/urdf/model.urdf.xacro",
+   "role": "standard: the body link's visuals, the bay of the arm"
+  },
+  "meshes/arm_distal_link.dae": {
+   "stored_as": "meshes/arm_distal_link.dae",
+   "storage": "raw",
+   "bytes": 538299,
+   "sha256": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+   "stored_bytes": 538299,
+   "stored_sha256": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/arm_distal_link.dae",
+   "role": "standard: P08"
+  },
+  "meshes/arm_proximal_link.dae": {
+   "stored_as": "meshes/arm_proximal_link.dae.xz",
+   "storage": "xz",
+   "bytes": 1087618,
+   "sha256": "f05c0c7dd57938498d6f2a12e85dafc6878a6fea785be7ba80060c25bcd64a43",
+   "stored_bytes": 156160,
+   "stored_sha256": "13d4cd6d7eedd6b9605f4bea0fa6ca476221d60275946a333cb10ac0331e05d1",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/arm_proximal_link.dae",
+   "role": "standard: P07"
+  },
+  "meshes/base_link.dae": {
+   "stored_as": "meshes/base_link.dae",
+   "storage": "raw",
+   "bytes": 848713,
+   "sha256": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+   "stored_bytes": 848713,
+   "stored_sha256": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/base_link.dae",
+   "role": "standard: P06"
+  },
+  "meshes/body.dae": {
+   "stored_as": "meshes/body.dae.xz",
+   "storage": "xz",
+   "bytes": 5773045,
+   "sha256": "8e51f7fefc807c3c5c272108f3b0d688860113339083121a9624496fcad6529d",
+   "stored_bytes": 1119336,
+   "stored_sha256": "45b9a8e69dea5169af7d6dc622b4b88cb669fb10ce863fcb792a763070d8a2ba",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/body.dae",
+   "role": "standard: P01"
+  },
+  "meshes/gripper_left_distal_link.dae": {
+   "stored_as": "meshes/gripper_left_distal_link.dae",
+   "storage": "raw",
+   "bytes": 135645,
+   "sha256": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+   "stored_bytes": 135645,
+   "stored_sha256": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/gripper_left_distal_link.dae",
+   "role": "standard: P10"
+  },
+  "meshes/gripper_left_proximal_link.dae": {
+   "stored_as": "meshes/gripper_left_proximal_link.dae",
+   "storage": "raw",
+   "bytes": 346464,
+   "sha256": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+   "stored_bytes": 346464,
+   "stored_sha256": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/gripper_left_proximal_link.dae",
+   "role": "standard: P09"
+  },
+  "meshes/gripper_right_distal_link.dae": {
+   "stored_as": "meshes/gripper_right_distal_link.dae",
+   "storage": "raw",
+   "bytes": 129901,
+   "sha256": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+   "stored_bytes": 129901,
+   "stored_sha256": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/gripper_right_distal_link.dae",
+   "role": "standard: P12"
+  },
+  "meshes/gripper_right_proximal_link.dae": {
+   "stored_as": "meshes/gripper_right_proximal_link.dae",
+   "storage": "raw",
+   "bytes": 345566,
+   "sha256": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c",
+   "stored_bytes": 345566,
+   "stored_sha256": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/gripper_right_proximal_link.dae",
+   "role": "standard: P11"
+  },
+  "meshes/pmc.dae": {
+   "stored_as": "meshes/pmc.dae.xz",
+   "storage": "xz",
+   "bytes": 2482070,
+   "sha256": "bbff275a01915424962696f3b57b05f88ab4b215b05825fd1079aaa1d7b19c62",
+   "stored_bytes": 411224,
+   "stored_sha256": "751766b28968dd3e9305dfed40bbe1d3e54257138a630d7f3304f9018c92a3c0",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/pmc.dae",
+   "role": "standard: P02 and P03"
+  },
+  "meshes/pmc_bumper.dae": {
+   "stored_as": "meshes/pmc_bumper.dae",
+   "storage": "raw",
+   "bytes": 66009,
+   "sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+   "stored_bytes": 66009,
+   "stored_sha256": "798ce4e431f80e07dc816fdc0057c9327a48f4db5372573ce4dbce9f630c36ea",
+   "repository": "media",
+   "repository_path": "astrobee_freeflyer/meshes/pmc_bumper.dae",
+   "role": "standard: P04 and P05"
+  }
+ }
+}

@@ -10,17 +10,34 @@ the root-only parts (the kill, the account freezer, the stage lock, the snapshot
 survivor; the late-write gate also runs with the vendored lockdown's own `stage_upload_time` and `late_entries`
 (tests/arm/assembly_six/lockdown.py) on real files. Stdlib only: tests/verify.py imports the vendored lockdown at
 module level and the grading stack (numpy, mujoco, ...) in its worker, neither of which the host venv has.
+
+Also: the grading worker runs on OpenBLAS's Haswell kernels with numpy's AVX-512 code paths off on every CPU
+(FP_PINNING in its environment, whatever the verify stage's own environment says), so verifiers on different CPUs
+compute the same bits. Beside them the worker gets OPENBLAS_L2_SIZE=256: on some AMD CPUs (L2 of 1024 KB per core)
+the OpenBLAS that numpy bundles otherwise enlarges its matrix-product blocks, for the forced kernel too, beyond what
+the Haswell kernel's fixed stack buffer holds; a twin whose units hold many collision geoms makes a product with a long
+inner dimension, and the worker then crashes. Runs the grader's own `run_worker`, taken from tests/verify.py by name,
+with the worker's start stubbed.
+
+And: a worker that ends on a signal before the walks finished is reported as a crash in the task error's text, whether
+it was started directly (a negative exit code) or, as root, through runuser (exit code 128 + the signal's number); a
+worker that ran out of time keeps the timeout wording. Runs main()'s own branch for it, taken from tests/verify.py by
+its condition.
 """
 import ast
+import json
 import os
+import shutil
 import signal
 import stat
 import subprocess
+import sys
 import tempfile
 import time
 import types
 import unittest
 from pathlib import Path
+from unittest import mock
 
 TESTS = Path(__file__).resolve().parents[1] / "tasks/quadruped/quadruped_environment_twin_from_real_photos/tests"
 VERIFY = TESTS / "verify.py"
@@ -255,6 +272,145 @@ class SurvivorAtVerifyStart(unittest.TestCase):
         finals = [ast.unparse(s) for n in ast.walk(main) if isinstance(n, ast.Try) for s in n.finalbody]
         self.assertIn("_restore(early)", finals)
         self.assertIn("FREEZER.stop()", finals)
+
+
+def _fp_pinning():
+    """FP_PINNING as tests/verify.py defines it (a literal)."""
+    node = next(n for n in ast.parse(VERIFY.read_text()).body
+                if isinstance(n, ast.Assign) and [ast.unparse(t) for t in n.targets] == ["FP_PINNING"])
+    return ast.literal_eval(node.value)
+
+
+class WorkerKernels(unittest.TestCase):
+    """The environment run_worker hands the grading worker: OpenBLAS pinned to its Haswell kernels with the L2 size
+    beside the kernel, numpy's AVX-512 code paths off, one thread each, built from FP_PINNING."""
+
+    PINNED = {"NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR", "OPENBLAS_CORETYPE": "Haswell",
+              "OPENBLAS_L2_SIZE": "256"}
+
+    def setUp(self):
+        self.tmp = Path(self.enterContext(tempfile.TemporaryDirectory()))
+
+    def _run_worker(self, parent_env, pinning=None):
+        """Run run_worker with `parent_env` as the verify stage's environment and `pinning` as FP_PINNING (default:
+        the one tests/verify.py defines): the environment the worker would have been started with."""
+        started = []
+        work = self.tmp / "work"
+
+        def prepare_work(cfg, sub_dir):
+            for d in ("out", "home"):
+                (work / d).mkdir(parents=True)
+            return str(work), {"progress": str(work / "out" / "progress.json"), "code": str(work / "code")}
+
+        class Proc:
+            pid, returncode = 0, None
+
+            def __init__(self, argv, **kwargs):
+                started.append((argv, kwargs))
+
+            def wait(self, timeout=None):
+                self.returncode = 0
+                return 0
+
+        ns = {"os": os, "sys": sys, "json": json, "time": time, "shutil": shutil,
+              "subprocess": types.SimpleNamespace(Popen=Proc, STDOUT=subprocess.STDOUT,
+                                                  TimeoutExpired=subprocess.TimeoutExpired),
+              "runner": types.SimpleNamespace(runner_account=lambda name, default: None),
+              "_prepare_work": prepare_work, "_read_progress": lambda path: {"selftest": {"ok": True}},
+              "log": lambda msg: None, "FP_PINNING": _fp_pinning() if pinning is None else pinning}
+        exec(_functions(VERIFY, ["run_worker"]), ns)
+        cfg = {"runtime": {"worker_margin_s": 30, "stage_caps_s": {}, "worker_address_space_mb": 6144}}
+        stats = {}
+        with mock.patch.dict(os.environ, {k: v for k, v in parent_env.items() if v is not None}):
+            for key in [k for k, v in parent_env.items() if v is None]:
+                os.environ.pop(key, None)
+            doc, how, _ = ns["run_worker"](cfg, None, 600.0, stats)
+        self.assertEqual((doc, how, stats["worker_exit"]), ({"selftest": {"ok": True}}, "finished", 0.0))
+        self.assertEqual(len(started), 1)
+        argv, kwargs = started[0]
+        self.assertIn("part2.worker_main(", argv[-1])
+        return kwargs["env"]
+
+    def test_fp_pinning_holds_the_three_variables(self):
+        self.assertEqual(_fp_pinning(), self.PINNED)
+
+    def test_the_worker_runs_on_the_haswell_kernels_with_their_block_sizes(self):
+        # the verify stage's own values: unset, the AVX-512 kernel / the L2 size that lets the blocks grow, an empty
+        # value; whatever they are, the worker gets Haswell and 256
+        for core in (None, "SkylakeX", ""):
+            for l2 in (None, "1024", ""):
+                with self.subTest(parent_core=core, parent_l2=l2):
+                    env = self._run_worker({"OPENBLAS_CORETYPE": core, "OPENBLAS_L2_SIZE": l2, "STAGE_ONLY": "x"})
+                    self.assertEqual({k: env.get(k) for k in self.PINNED}, self.PINNED)
+                    self.assertEqual({k: env[k] for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
+                                                          "MKL_NUM_THREADS")},
+                                     {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"})
+                    self.assertNotIn("STAGE_ONLY", env)  # the worker's environment is built from nothing
+
+    def test_the_worker_environment_comes_from_fp_pinning(self):
+        """Whatever FP_PINNING holds reaches the worker, and nothing else sets these variables: an entry dropped from
+        FP_PINNING is dropped from the worker (and the test above fails)."""
+        env = self._run_worker({}, pinning={"ARB_PINNING_PROBE": "1"})
+        self.assertEqual(env.get("ARB_PINNING_PROBE"), "1")
+        self.assertEqual({k: env.get(k) for k in self.PINNED}, {k: None for k in self.PINNED})
+
+    def test_the_worker_is_started_in_one_place(self):
+        """The worker's program is started in one place, run_worker, and main() calls it once."""
+        main = _main()
+        calls = [ast.unparse(n.func) for n in ast.walk(main) if isinstance(n, ast.Call)]
+        self.assertEqual(calls.count("run_worker"), 1, calls)
+        tree = ast.parse(VERIFY.read_text())
+        holders = {f.name for f in ast.walk(tree) if isinstance(f, ast.FunctionDef) for c in ast.walk(f)
+                   if isinstance(c, ast.Constant) and isinstance(c.value, str) and "worker_main(" in c.value}
+        self.assertEqual(holders, {"run_worker"})
+        popen = {f.name for f in ast.walk(tree) if isinstance(f, ast.FunctionDef) for c in ast.walk(f)
+                 if isinstance(c, ast.Call) and ast.unparse(c.func) == "subprocess.Popen"}
+        self.assertEqual(popen, {"run_worker"})
+
+
+def _worker_ended_early():
+    """The body of main()'s branch for a worker that ended before a stage that may not end on the clock (the walks)
+    finished, taken from tests/verify.py by its condition."""
+    node = next(n for n in ast.walk(_main()) if isinstance(n, ast.If)
+                and ast.unparse(n.test) == "how != 'finished' and unfinished and (g0 == 1.0)")
+    return compile(ast.Module(body=node.body, type_ignores=[]), str(VERIFY), "exec")
+
+
+class WorkerEndText(unittest.TestCase):
+    """The task error's text for a worker that ended before the walks finished: a signal is read from a negative exit
+    code, or from 128 + its number when runuser started the worker; everything else keeps the timeout wording. Both
+    arms end in fail(), and the statistics are left as they were."""
+
+    def _text(self, exit_code, deprivileged, timed_out):
+        # how run_worker words the end
+        how = ("killed at the hard timeout" if timed_out else "exit code %d" % exit_code if exit_code else "finished")
+        stats = {"worker_exit": float(exit_code), "worker_deprivileged": float(deprivileged),
+                 "worker_timed_out": float(timed_out)}
+        before = dict(stats)
+        reasons = []
+
+        def fail(reason):
+            reasons.append(reason)
+            raise SystemExit(1)
+
+        with self.assertRaises(SystemExit):
+            exec(_worker_ended_early(), {"stats": stats, "how": how, "unfinished": ["C6"], "fail": fail})
+        self.assertEqual(stats, before)
+        self.assertEqual(len(reasons), 1, reasons)
+        return reasons[0], how
+
+    def test_a_crash_is_named_and_a_timeout_keeps_its_wording(self):
+        crash = "the worker ended on signal %d before C6 finished (a crash, not a timeout): the episode is void"
+        timeout = "the worker was %s before C6 finished: the verifier ran out of time, the episode is void"
+        # (exit code, started through runuser, killed at the hard timeout, the signal read)
+        for exit_code, deprivileged, timed_out, sig in (
+                (-11, False, False, 11), (-11, True, False, 11), (139, True, False, 11), (134, True, False, 6),
+                (129, True, False, 1), (159, True, False, 31), (139, False, False, None), (128, True, False, None),
+                (160, True, False, None), (3, True, False, None), (3, False, False, None), (0, False, False, None),
+                (-9, False, True, None), (137, True, True, None)):
+            with self.subTest(exit_code=exit_code, deprivileged=deprivileged, timed_out=timed_out):
+                text, how = self._text(exit_code, deprivileged, timed_out)
+                self.assertEqual(text, timeout % how if sig is None else crash % sig)
 
 
 if __name__ == "__main__":

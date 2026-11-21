@@ -1,0 +1,1244 @@
+<mujoco model="freeflyer_v1">
+ <compiler angle="radian" meshdir="." texturedir="." autolimits="true" inertiafromgeom="false" boundmass="1e-7" boundinertia="1e-12" />
+ <option timestep="0.002" gravity="0 0 0" integrator="implicitfast" density="0" viscosity="0" />
+ <size memory="64M" />
+ <visual>
+  <global offwidth="1920" offheight="1440" />
+  <quality shadowsize="4096" />
+  <headlight ambient="0.35 0.35 0.35" diffuse="0.6 0.6 0.6" specular="0.1 0.1 0.1" />
+  <map znear="0.005" zfar="40" />
+ </visual>
+ <default>
+  <default class="visual">
+   <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mass="0" />
+  </default>
+  <default class="collision">
+   <geom contype="1" conaffinity="1" group="3" density="0" mass="0" rgba="0.9 0.3 0.3 0.35" margin="0" friction="0.6 0.01 0.001" solref="0.004 1" solimp="0.95 0.99 0.001" />
+  </default>
+  <default class="pad">
+   <geom contype="1" conaffinity="1" group="3" density="0" mass="0" rgba="0.9 0.6 0.2 0.5" margin="0" friction="1.2 0.02 0.002" condim="4" priority="1" />
+  </default>
+  <default class="finger_pad">
+   <geom contype="1" conaffinity="1" group="3" density="0" mass="0" rgba="0.9 0.6 0.2 0.5" margin="0" friction="1.2 0.02 0.002" condim="4" priority="2" />
+  </default>
+  <default class="finger">
+   <geom contype="1" conaffinity="1" group="3" density="0" mass="0" rgba="0.9 0.3 0.3 0.35" margin="0" friction="0.4 0.02 0.002" solref="0.004 1" solimp="0.95 0.99 0.001" condim="4" priority="2" />
+  </default>
+  <default class="marker">
+   <site group="5" size="0.003" rgba="1 0.8 0 1" />
+  </default>
+  <default class="visual_joint">
+   <joint armature="1e-5" damping="4e-4" limited="false" />
+  </default>
+ </default>
+ <asset>
+  <mesh name="arm_arm_alignment_pin_main_hull" file="meshes/coll/arm/arm_alignment_pin_main_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_alignment_pin_second_hull" file="meshes/coll/arm/arm_alignment_pin_second_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_connector_31s_hull" file="meshes/coll/arm/arm_connector_31s_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_controller_board_hull" file="meshes/coll/arm/arm_controller_board_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_distal_link_hull" file="meshes/coll/arm/arm_distal_link_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_lever_pivot_port_hull" file="meshes/coll/arm/arm_lever_pivot_port_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_lever_pivot_stbd_hull" file="meshes/coll/arm/arm_lever_pivot_stbd_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_lever_port_hull" file="meshes/coll/arm/arm_lever_port_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_lever_stbd_hull" file="meshes/coll/arm/arm_lever_stbd_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_magnet_port_closed_hull" file="meshes/coll/arm/arm_magnet_port_closed_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_magnet_port_open_hull" file="meshes/coll/arm/arm_magnet_port_open_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_magnet_stbd_closed_hull" file="meshes/coll/arm/arm_magnet_stbd_closed_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_magnet_stbd_open_hull" file="meshes/coll/arm/arm_magnet_stbd_open_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_pan_actuator_hull" file="meshes/coll/arm/arm_pan_actuator_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_pan_horn_hull" file="meshes/coll/arm/arm_pan_horn_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_pan_idler_hull" file="meshes/coll/arm/arm_pan_idler_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_pan_thermostat_hull" file="meshes/coll/arm/arm_pan_thermostat_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_proximal_link_hull" file="meshes/coll/arm/arm_proximal_link_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_stow_magnet_base_hull" file="meshes/coll/arm/arm_stow_magnet_base_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_stow_magnet_distal_hull" file="meshes/coll/arm/arm_stow_magnet_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_strike_port_closed_hull" file="meshes/coll/arm/arm_strike_port_closed_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_strike_port_open_hull" file="meshes/coll/arm/arm_strike_port_open_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_strike_stbd_closed_hull" file="meshes/coll/arm/arm_strike_stbd_closed_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_strike_stbd_open_hull" file="meshes/coll/arm/arm_strike_stbd_open_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_tilt_actuator_hull" file="meshes/coll/arm/arm_tilt_actuator_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_tilt_horn_hull" file="meshes/coll/arm/arm_tilt_horn_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_tilt_idler_hull" file="meshes/coll/arm/arm_tilt_idler_hull.obj" inertia="shell" />
+  <mesh name="arm_arm_tilt_thermostat_hull" file="meshes/coll/arm/arm_tilt_thermostat_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_captive_screw_a_hull" file="meshes/coll/arm/grip_captive_screw_a_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_captive_screw_b_hull" file="meshes/coll/arm/grip_captive_screw_b_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_connector_pads_hull" file="meshes/coll/arm/grip_connector_pads_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_connector_springpins_hull" file="meshes/coll/arm/grip_connector_springpins_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_cover_hull" file="meshes/coll/arm/grip_cover_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_guide_pin_hull" file="meshes/coll/arm/grip_guide_pin_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_distal_hull" file="meshes/coll/arm/grip_left_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_distal_pad_hull" file="meshes/coll/arm/grip_left_distal_pad_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_post_distal_hull" file="meshes/coll/arm/grip_left_post_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_post_proximal_hull" file="meshes/coll/arm/grip_left_post_proximal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_proximal_hull" file="meshes/coll/arm/grip_left_proximal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_proximal_pad_hull" file="meshes/coll/arm/grip_left_proximal_pad_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_spring_distal_hull" file="meshes/coll/arm/grip_left_spring_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_spring_proximal_a_hull" file="meshes/coll/arm/grip_left_spring_proximal_a_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_left_spring_proximal_b_hull" file="meshes/coll/arm/grip_left_spring_proximal_b_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_motor_hull" file="meshes/coll/arm/grip_motor_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_output_shaft_hull" file="meshes/coll/arm/grip_output_shaft_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_distal_hull" file="meshes/coll/arm/grip_right_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_distal_pad_hull" file="meshes/coll/arm/grip_right_distal_pad_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_post_distal_hull" file="meshes/coll/arm/grip_right_post_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_post_proximal_hull" file="meshes/coll/arm/grip_right_post_proximal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_proximal_hull" file="meshes/coll/arm/grip_right_proximal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_proximal_pad_hull" file="meshes/coll/arm/grip_right_proximal_pad_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_spring_distal_hull" file="meshes/coll/arm/grip_right_spring_distal_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_spring_proximal_a_hull" file="meshes/coll/arm/grip_right_spring_proximal_a_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_right_spring_proximal_b_hull" file="meshes/coll/arm/grip_right_spring_proximal_b_hull.obj" inertia="shell" />
+  <mesh name="arm_grip_spool_hull" file="meshes/coll/arm/grip_spool_hull.obj" inertia="shell" />
+  <mesh name="light_arm_base__0" file="meshes/light/light/arm_base__0.obj" inertia="shell" />
+  <mesh name="light_arm_base__1" file="meshes/light/light/arm_base__1.obj" inertia="shell" />
+  <mesh name="light_arm_base__2" file="meshes/light/light/arm_base__2.obj" inertia="shell" />
+  <mesh name="light_arm_base__3" file="meshes/light/light/arm_base__3.obj" inertia="shell" />
+  <mesh name="light_arm_base__4" file="meshes/light/light/arm_base__4.obj" inertia="shell" />
+  <mesh name="light_arm_distal__0" file="meshes/light/light/arm_distal__0.obj" inertia="shell" />
+  <mesh name="light_arm_distal__1" file="meshes/light/light/arm_distal__1.obj" inertia="shell" />
+  <mesh name="light_arm_distal__2" file="meshes/light/light/arm_distal__2.obj" inertia="shell" />
+  <mesh name="light_arm_distal__3" file="meshes/light/light/arm_distal__3.obj" inertia="shell" />
+  <mesh name="light_arm_distal__4" file="meshes/light/light/arm_distal__4.obj" inertia="shell" />
+  <mesh name="light_arm_lever_port__0" file="meshes/light/light/arm_lever_port__0.obj" inertia="shell" />
+  <mesh name="light_arm_lever_stbd__0" file="meshes/light/light/arm_lever_stbd__0.obj" inertia="shell" />
+  <mesh name="light_arm_proximal__0" file="meshes/light/light/arm_proximal__0.obj" inertia="shell" />
+  <mesh name="light_arm_proximal__1" file="meshes/light/light/arm_proximal__1.obj" inertia="shell" />
+  <mesh name="light_arm_proximal__2" file="meshes/light/light/arm_proximal__2.obj" inertia="shell" />
+  <mesh name="light_arm_proximal__3" file="meshes/light/light/arm_proximal__3.obj" inertia="shell" />
+  <mesh name="light_battery_bottom_port__0" file="meshes/light/light/battery_bottom_port__0.obj" inertia="shell" />
+  <mesh name="light_battery_bottom_port__1" file="meshes/light/light/battery_bottom_port__1.obj" inertia="shell" />
+  <mesh name="light_battery_bottom_starboard__0" file="meshes/light/light/battery_bottom_starboard__0.obj" inertia="shell" />
+  <mesh name="light_battery_bottom_starboard__1" file="meshes/light/light/battery_bottom_starboard__1.obj" inertia="shell" />
+  <mesh name="light_battery_top_port__0" file="meshes/light/light/battery_top_port__0.obj" inertia="shell" />
+  <mesh name="light_battery_top_port__1" file="meshes/light/light/battery_top_port__1.obj" inertia="shell" />
+  <mesh name="light_battery_top_starboard__0" file="meshes/light/light/battery_top_starboard__0.obj" inertia="shell" />
+  <mesh name="light_battery_top_starboard__1" file="meshes/light/light/battery_top_starboard__1.obj" inertia="shell" />
+  <mesh name="light_core__0" file="meshes/light/light/core__0.obj" inertia="shell" />
+  <mesh name="light_core__1" file="meshes/light/light/core__1.obj" inertia="shell" />
+  <mesh name="light_core__10" file="meshes/light/light/core__10.obj" inertia="shell" />
+  <mesh name="light_core__11" file="meshes/light/light/core__11.obj" inertia="shell" />
+  <mesh name="light_core__12" file="meshes/light/light/core__12.obj" inertia="shell" />
+  <mesh name="light_core__13" file="meshes/light/light/core__13.obj" inertia="shell" />
+  <mesh name="light_core__14" file="meshes/light/light/core__14.obj" inertia="shell" />
+  <mesh name="light_core__15" file="meshes/light/light/core__15.obj" inertia="shell" />
+  <mesh name="light_core__16" file="meshes/light/light/core__16.obj" inertia="shell" />
+  <mesh name="light_core__17" file="meshes/light/light/core__17.obj" inertia="shell" />
+  <mesh name="light_core__18" file="meshes/light/light/core__18.obj" inertia="shell" />
+  <mesh name="light_core__19" file="meshes/light/light/core__19.obj" inertia="shell" />
+  <mesh name="light_core__2" file="meshes/light/light/core__2.obj" inertia="shell" />
+  <mesh name="light_core__20" file="meshes/light/light/core__20.obj" inertia="shell" />
+  <mesh name="light_core__21" file="meshes/light/light/core__21.obj" inertia="shell" />
+  <mesh name="light_core__22" file="meshes/light/light/core__22.obj" inertia="shell" />
+  <mesh name="light_core__23" file="meshes/light/light/core__23.obj" inertia="shell" />
+  <mesh name="light_core__24" file="meshes/light/light/core__24.obj" inertia="shell" />
+  <mesh name="light_core__25" file="meshes/light/light/core__25.obj" inertia="shell" />
+  <mesh name="light_core__26" file="meshes/light/light/core__26.obj" inertia="shell" />
+  <mesh name="light_core__27" file="meshes/light/light/core__27.obj" inertia="shell" />
+  <mesh name="light_core__28" file="meshes/light/light/core__28.obj" inertia="shell" />
+  <mesh name="light_core__3" file="meshes/light/light/core__3.obj" inertia="shell" />
+  <mesh name="light_core__4" file="meshes/light/light/core__4.obj" inertia="shell" />
+  <mesh name="light_core__5" file="meshes/light/light/core__5.obj" inertia="shell" />
+  <mesh name="light_core__6" file="meshes/light/light/core__6.obj" inertia="shell" />
+  <mesh name="light_core__7" file="meshes/light/light/core__7.obj" inertia="shell" />
+  <mesh name="light_core__8" file="meshes/light/light/core__8.obj" inertia="shell" />
+  <mesh name="light_core__9" file="meshes/light/light/core__9.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__0" file="meshes/light/light/forward_sensor_module__0.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__1" file="meshes/light/light/forward_sensor_module__1.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__10" file="meshes/light/light/forward_sensor_module__10.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__11" file="meshes/light/light/forward_sensor_module__11.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__12" file="meshes/light/light/forward_sensor_module__12.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__13" file="meshes/light/light/forward_sensor_module__13.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__14" file="meshes/light/light/forward_sensor_module__14.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__15" file="meshes/light/light/forward_sensor_module__15.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__16" file="meshes/light/light/forward_sensor_module__16.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__17" file="meshes/light/light/forward_sensor_module__17.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__18" file="meshes/light/light/forward_sensor_module__18.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__19" file="meshes/light/light/forward_sensor_module__19.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__2" file="meshes/light/light/forward_sensor_module__2.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__20" file="meshes/light/light/forward_sensor_module__20.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__21" file="meshes/light/light/forward_sensor_module__21.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__22" file="meshes/light/light/forward_sensor_module__22.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__3" file="meshes/light/light/forward_sensor_module__3.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__4" file="meshes/light/light/forward_sensor_module__4.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__5" file="meshes/light/light/forward_sensor_module__5.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__6" file="meshes/light/light/forward_sensor_module__6.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__7" file="meshes/light/light/forward_sensor_module__7.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__8" file="meshes/light/light/forward_sensor_module__8.obj" inertia="shell" />
+  <mesh name="light_forward_sensor_module__9" file="meshes/light/light/forward_sensor_module__9.obj" inertia="shell" />
+  <mesh name="light_grip_spool__0" file="meshes/light/light/grip_spool__0.obj" inertia="shell" />
+  <mesh name="light_gripper_left_distal__0" file="meshes/light/light/gripper_left_distal__0.obj" inertia="shell" />
+  <mesh name="light_gripper_left_distal__1" file="meshes/light/light/gripper_left_distal__1.obj" inertia="shell" />
+  <mesh name="light_gripper_left_distal__2" file="meshes/light/light/gripper_left_distal__2.obj" inertia="shell" />
+  <mesh name="light_gripper_left_proximal__0" file="meshes/light/light/gripper_left_proximal__0.obj" inertia="shell" />
+  <mesh name="light_gripper_left_proximal__1" file="meshes/light/light/gripper_left_proximal__1.obj" inertia="shell" />
+  <mesh name="light_gripper_left_proximal__2" file="meshes/light/light/gripper_left_proximal__2.obj" inertia="shell" />
+  <mesh name="light_gripper_left_proximal__3" file="meshes/light/light/gripper_left_proximal__3.obj" inertia="shell" />
+  <mesh name="light_gripper_right_distal__0" file="meshes/light/light/gripper_right_distal__0.obj" inertia="shell" />
+  <mesh name="light_gripper_right_distal__1" file="meshes/light/light/gripper_right_distal__1.obj" inertia="shell" />
+  <mesh name="light_gripper_right_distal__2" file="meshes/light/light/gripper_right_distal__2.obj" inertia="shell" />
+  <mesh name="light_gripper_right_proximal__0" file="meshes/light/light/gripper_right_proximal__0.obj" inertia="shell" />
+  <mesh name="light_gripper_right_proximal__1" file="meshes/light/light/gripper_right_proximal__1.obj" inertia="shell" />
+  <mesh name="light_gripper_right_proximal__2" file="meshes/light/light/gripper_right_proximal__2.obj" inertia="shell" />
+  <mesh name="light_gripper_right_proximal__3" file="meshes/light/light/gripper_right_proximal__3.obj" inertia="shell" />
+  <mesh name="light_pm_p_n1_flap_a__0" file="meshes/light/light/pm_p_n1_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n1_flap_b__0" file="meshes/light/light/pm_p_n1_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n2_flap_a__0" file="meshes/light/light/pm_p_n2_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n2_flap_b__0" file="meshes/light/light/pm_p_n2_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n3_flap_a__0" file="meshes/light/light/pm_p_n3_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n3_flap_b__0" file="meshes/light/light/pm_p_n3_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n4_drive__0" file="meshes/light/light/pm_p_n4_drive__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n4_flap_a__0" file="meshes/light/light/pm_p_n4_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n4_flap_b__0" file="meshes/light/light/pm_p_n4_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n5_flap_a__0" file="meshes/light/light/pm_p_n5_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n5_flap_b__0" file="meshes/light/light/pm_p_n5_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n6_flap_a__0" file="meshes/light/light/pm_p_n6_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_p_n6_flap_b__0" file="meshes/light/light/pm_p_n6_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n1_flap_a__0" file="meshes/light/light/pm_s_n1_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n1_flap_b__0" file="meshes/light/light/pm_s_n1_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n2_flap_a__0" file="meshes/light/light/pm_s_n2_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n2_flap_b__0" file="meshes/light/light/pm_s_n2_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n3_drive__0" file="meshes/light/light/pm_s_n3_drive__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n3_flap_a__0" file="meshes/light/light/pm_s_n3_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n3_flap_b__0" file="meshes/light/light/pm_s_n3_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n4_drive__0" file="meshes/light/light/pm_s_n4_drive__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n4_flap_a__0" file="meshes/light/light/pm_s_n4_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n4_flap_b__0" file="meshes/light/light/pm_s_n4_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n5_flap_a__0" file="meshes/light/light/pm_s_n5_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n5_flap_b__0" file="meshes/light/light/pm_s_n5_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n6_flap_a__0" file="meshes/light/light/pm_s_n6_flap_a__0.obj" inertia="shell" />
+  <mesh name="light_pm_s_n6_flap_b__0" file="meshes/light/light/pm_s_n6_flap_b__0.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__0" file="meshes/light/light/propulsion_module_port__0.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__1" file="meshes/light/light/propulsion_module_port__1.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__10" file="meshes/light/light/propulsion_module_port__10.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__11" file="meshes/light/light/propulsion_module_port__11.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__12" file="meshes/light/light/propulsion_module_port__12.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__13" file="meshes/light/light/propulsion_module_port__13.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__14" file="meshes/light/light/propulsion_module_port__14.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__15" file="meshes/light/light/propulsion_module_port__15.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__16" file="meshes/light/light/propulsion_module_port__16.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__2" file="meshes/light/light/propulsion_module_port__2.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__3" file="meshes/light/light/propulsion_module_port__3.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__4" file="meshes/light/light/propulsion_module_port__4.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__5" file="meshes/light/light/propulsion_module_port__5.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__6" file="meshes/light/light/propulsion_module_port__6.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__7" file="meshes/light/light/propulsion_module_port__7.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__8" file="meshes/light/light/propulsion_module_port__8.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_port__9" file="meshes/light/light/propulsion_module_port__9.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__0" file="meshes/light/light/propulsion_module_starboard__0.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__1" file="meshes/light/light/propulsion_module_starboard__1.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__10" file="meshes/light/light/propulsion_module_starboard__10.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__11" file="meshes/light/light/propulsion_module_starboard__11.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__12" file="meshes/light/light/propulsion_module_starboard__12.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__13" file="meshes/light/light/propulsion_module_starboard__13.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__14" file="meshes/light/light/propulsion_module_starboard__14.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__15" file="meshes/light/light/propulsion_module_starboard__15.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__16" file="meshes/light/light/propulsion_module_starboard__16.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__2" file="meshes/light/light/propulsion_module_starboard__2.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__3" file="meshes/light/light/propulsion_module_starboard__3.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__4" file="meshes/light/light/propulsion_module_starboard__4.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__5" file="meshes/light/light/propulsion_module_starboard__5.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__6" file="meshes/light/light/propulsion_module_starboard__6.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__7" file="meshes/light/light/propulsion_module_starboard__7.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__8" file="meshes/light/light/propulsion_module_starboard__8.obj" inertia="shell" />
+  <mesh name="light_propulsion_module_starboard__9" file="meshes/light/light/propulsion_module_starboard__9.obj" inertia="shell" />
+  <mesh name="pm_pm_bumper_aft_bottom_hull" file="meshes/coll/pm/pm_bumper_aft_bottom_hull.obj" inertia="shell" />
+  <mesh name="pm_pm_bumper_aft_top_hull" file="meshes/coll/pm/pm_bumper_aft_top_hull.obj" inertia="shell" />
+  <mesh name="pm_pm_bumper_fwd_bottom_hull" file="meshes/coll/pm/pm_bumper_fwd_bottom_hull.obj" inertia="shell" />
+  <mesh name="pm_pm_bumper_fwd_top_hull" file="meshes/coll/pm/pm_bumper_fwd_top_hull.obj" inertia="shell" />
+ </asset>
+ <worldbody>
+  <body name="core" pos="0 0 0" quat="1 0 0 0">
+   <freejoint name="freeflyer_root" />
+   <inertial pos="-0.00226480436 -0.00132953062 0.00238023087" mass="2.883156668" fullinertia="0.0142509001 0.034736651 0.038150803 -0.000904093531 -0.00391177079 -9.64229141e-05" />
+   <geom name="core_lv0" class="visual" mesh="light_core__0" rgba="0.0399999991 0.0599999987 0.119999997 1" />
+   <geom name="core_lv1" class="visual" mesh="light_core__1" rgba="0.0799999982 0.0799999982 0.0900000036 1" />
+   <geom name="core_lv2" class="visual" mesh="light_core__2" rgba="0.100000001 0.100000001 0.100000001 1" />
+   <geom name="core_lv3" class="visual" mesh="light_core__3" rgba="0.100000001 0.419999987 0.200000003 1" />
+   <geom name="core_lv4" class="visual" mesh="light_core__4" rgba="0.100000001 0.75 0.25 1" />
+   <geom name="core_lv5" class="visual" mesh="light_core__5" rgba="0.119999997 0.119999997 0.140000001 1" />
+   <geom name="core_lv6" class="visual" mesh="light_core__6" rgba="0.200000003 0.200000003 0.219999999 1" />
+   <geom name="core_lv7" class="visual" mesh="light_core__7" rgba="0.25 0.0500000007 0.0799999982 1" />
+   <geom name="core_lv8" class="visual" mesh="light_core__8" rgba="0.300000012 0.899999976 0.400000006 1" />
+   <geom name="core_lv9" class="visual" mesh="light_core__9" rgba="0.349999994 0.550000012 0.850000024 1" />
+   <geom name="core_lv10" class="visual" mesh="light_core__10" rgba="0.379999995 0.400000006 0.449999988 1" />
+   <geom name="core_lv11" class="visual" mesh="light_core__11" rgba="0.5 0.5 0.519999981 1" />
+   <geom name="core_lv12" class="visual" mesh="light_core__12" rgba="0.550000012 0.560000002 0.600000024 1" />
+   <geom name="core_lv13" class="visual" mesh="light_core__13" rgba="0.550000012 0.75 0.899999976 1" />
+   <geom name="core_lv14" class="visual" mesh="light_core__14" rgba="0.600000024 0.850000024 0.949999988 0.800000012" />
+   <geom name="core_lv15" class="visual" mesh="light_core__15" rgba="0.620000005 0.629999995 0.660000026 1" />
+   <geom name="core_lv16" class="visual" mesh="light_core__16" rgba="0.720000029 0.730000019 0.75999999 1" />
+   <geom name="core_lv17" class="visual" mesh="light_core__17" rgba="0.75 0.699999988 0.449999988 1" />
+   <geom name="core_lv18" class="visual" mesh="light_core__18" rgba="0.75 0.75 0.769999981 1" />
+   <geom name="core_lv19" class="visual" mesh="light_core__19" rgba="0.800000012 0.800000012 0.819999993 1" />
+   <geom name="core_lv20" class="visual" mesh="light_core__20" rgba="0.850000024 0.699999988 0.200000003 1" />
+   <geom name="core_lv21" class="visual" mesh="light_core__21" rgba="0.850000024 0.800000012 0.300000012 1" />
+   <geom name="core_lv22" class="visual" mesh="light_core__22" rgba="0.850000024 0.850000024 0.819999993 1" />
+   <geom name="core_lv23" class="visual" mesh="light_core__23" rgba="0.860000014 0.819999993 0.720000029 1" />
+   <geom name="core_lv24" class="visual" mesh="light_core__24" rgba="0.899999976 0.899999976 0.949999988 0.600000024" />
+   <geom name="core_lv25" class="visual" mesh="light_core__25" rgba="0.920000017 0.920000017 0.899999976 1" />
+   <geom name="core_lv26" class="visual" mesh="light_core__26" rgba="0.930000007 0.910000026 0.850000024 1" />
+   <geom name="core_lv27" class="visual" mesh="light_core__27" rgba="0.949999988 0.550000012 0.150000006 1" />
+   <geom name="core_lv28" class="visual" mesh="light_core__28" rgba="0.949999988 0.949999988 0.949999988 1" />
+   <geom name="c_core_floor_top_fwd" class="collision" type="box" pos="0.08199 0 -0.04965" size="0.04051 0.0762 0.00115" />
+   <geom name="c_core_floor_top_aft" class="collision" type="box" pos="-0.08199 0 -0.04965" size="0.04051 0.0762 0.00115" />
+   <geom name="c_core_floor_top_mid" class="collision" type="box" pos="0 0 -0.04965" size="0.04148 0.04862 0.00115" />
+   <geom name="c_core_floor_bot_fwd" class="collision" type="box" pos="0.08199 0 0.04965" size="0.04051 0.0762 0.00115" />
+   <geom name="c_core_floor_bot_aft" class="collision" type="box" pos="-0.08199 0 0.04965" size="0.04051 0.0762 0.00115" />
+   <geom name="c_core_floor_bot_mid" class="collision" type="box" pos="0 0 0.04965" size="0.04148 0.04862 0.00115" />
+   <geom name="c_well_ts_outer" class="collision" type="box" pos="0 0.07463 -0.092195" size="0.04148 0.0011 0.043655" />
+   <geom name="c_well_ts_inner" class="collision" type="box" pos="0 0.0493428 -0.07827" size="0.04148 0.0007272 0.02973" />
+   <geom name="c_well_ts_end_fwd" class="collision" type="box" pos="0.04033 0.0618 -0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_ts_end_aft" class="collision" type="box" pos="-0.04033 0.0618 -0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_bs_outer" class="collision" type="box" pos="0 0.07463 0.092195" size="0.04148 0.0011 0.043655" />
+   <geom name="c_well_bs_inner" class="collision" type="box" pos="0 0.0493428 0.07827" size="0.04148 0.0007272 0.02973" />
+   <geom name="c_well_bs_end_fwd" class="collision" type="box" pos="0.04033 0.0618 0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_bs_end_aft" class="collision" type="box" pos="-0.04033 0.0618 0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_tp_outer" class="collision" type="box" pos="0 -0.07463 -0.092195" size="0.04148 0.0011 0.043655" />
+   <geom name="c_well_tp_inner" class="collision" type="box" pos="0 -0.0493428 -0.07827" size="0.04148 0.0007272 0.02973" />
+   <geom name="c_well_tp_end_fwd" class="collision" type="box" pos="0.04033 -0.0618 -0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_tp_end_aft" class="collision" type="box" pos="-0.04033 -0.0618 -0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_bp_outer" class="collision" type="box" pos="0 -0.07463 0.092195" size="0.04148 0.0011 0.043655" />
+   <geom name="c_well_bp_inner" class="collision" type="box" pos="0 -0.0493428 0.07827" size="0.04148 0.0007272 0.02973" />
+   <geom name="c_well_bp_end_fwd" class="collision" type="box" pos="0.04033 -0.0618 0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_well_bp_end_aft" class="collision" type="box" pos="-0.04033 -0.0618 0.07827" size="0.00115 0.01173 0.02973" />
+   <geom name="c_bay_ta_rail_posy" class="collision" type="box" pos="-0.0497205 0.073025 -0.08255" size="0.0015875 0.003175 0.03175" quat="0 0 1 0" />
+   <geom name="c_bay_ta_clevis_posy" class="collision" type="box" pos="-0.0829691 0.070612 -0.060325" size="0.0127635 0.0047625 0.009525" quat="0 0 1 0" />
+   <geom name="c_bay_ta_rail_negy" class="collision" type="box" pos="-0.0497205 -0.073025 -0.08255" size="0.0015875 0.003175 0.03175" quat="0 0 1 0" />
+   <geom name="c_bay_ta_clevis_negy" class="collision" type="box" pos="-0.0829691 -0.070612 -0.060325" size="0.0127635 0.0047625 0.009525" quat="0 0 1 0" />
+   <geom name="c_bay_ta_plug" class="collision" type="box" pos="-0.083185 -0.05715 -0.0524891" size="0.0112141 0.0023368 0.0016891" quat="0 0 1 0" />
+   <geom name="c_bay_ba_rail_posy" class="collision" type="box" pos="-0.0497205 -0.073025 0.08255" size="0.0015875 0.003175 0.03175" quat="0 0 0 1" />
+   <geom name="c_bay_ba_clevis_posy" class="collision" type="box" pos="-0.0829691 -0.070612 0.060325" size="0.0127635 0.0047625 0.009525" quat="0 0 0 1" />
+   <geom name="c_bay_ba_rail_negy" class="collision" type="box" pos="-0.0497205 0.073025 0.08255" size="0.0015875 0.003175 0.03175" quat="0 0 0 1" />
+   <geom name="c_bay_ba_clevis_negy" class="collision" type="box" pos="-0.0829691 0.070612 0.060325" size="0.0127635 0.0047625 0.009525" quat="0 0 0 1" />
+   <geom name="c_bay_ba_plug" class="collision" type="box" pos="-0.083185 0.05715 0.0524891" size="0.0112141 0.0023368 0.0016891" quat="0 0 0 1" />
+   <geom name="c_bay_bf_rail_posy" class="collision" type="box" pos="0.0497205 0.073025 0.08255" size="0.0015875 0.003175 0.03175" quat="1 0 0 0" />
+   <geom name="c_bay_bf_clevis_posy" class="collision" type="box" pos="0.0829691 0.070612 0.060325" size="0.0127635 0.0047625 0.009525" quat="1 0 0 0" />
+   <geom name="c_bay_bf_rail_negy" class="collision" type="box" pos="0.0497205 -0.073025 0.08255" size="0.0015875 0.003175 0.03175" quat="1 0 0 0" />
+   <geom name="c_bay_bf_clevis_negy" class="collision" type="box" pos="0.0829691 -0.070612 0.060325" size="0.0127635 0.0047625 0.009525" quat="1 0 0 0" />
+   <geom name="c_bay_bf_plug" class="collision" type="box" pos="0.083185 -0.05715 0.0524891" size="0.0112141 0.0023368 0.0016891" quat="1 0 0 0" />
+   <geom name="c_bay_tf_rail_posy" class="collision" type="box" pos="0.0497205 -0.073025 -0.08255" size="0.0015875 0.003175 0.03175" quat="0 1 0 0" />
+   <geom name="c_bay_tf_clevis_posy" class="collision" type="box" pos="0.0829691 -0.070612 -0.060325" size="0.0127635 0.0047625 0.009525" quat="0 1 0 0" />
+   <geom name="c_bay_tf_rail_negy" class="collision" type="box" pos="0.0497205 0.073025 -0.08255" size="0.0015875 0.003175 0.03175" quat="0 1 0 0" />
+   <geom name="c_bay_tf_clevis_negy" class="collision" type="box" pos="0.0829691 0.070612 -0.060325" size="0.0127635 0.0047625 0.009525" quat="0 1 0 0" />
+   <geom name="c_bay_tf_plug" class="collision" type="box" pos="0.083185 0.05715 -0.0524891" size="0.0112141 0.0023368 0.0016891" quat="0 1 0 0" />
+   <geom name="c_core_midband_fwd" class="collision" type="box" pos="0.018149999999999993 0.0 0.0" size="0.12635 0.0762 0.0485" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_dockface_aft0" class="collision" type="box" pos="-0.12715 -0.04485 0.0" size="0.01895 0.03135 0.0485" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_dockface_aft1" class="collision" type="box" pos="-0.12715 0.04485 0.0" size="0.01895 0.03135 0.0485" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_dockface_aft2" class="collision" type="box" pos="-0.12715 0.0 0.0" size="0.01895 0.0135 0.018250000000000002" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_dockface_aft3" class="collision" type="box" pos="-0.12715 0.0 0.046875" size="0.01895 0.0135 0.0016250000000000014" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_dockface_aft4" class="collision" type="box" pos="-0.12715 0.0 -0.046875" size="0.01895 0.0135 0.0016250000000000014" quat="1.0 0.0 0.0 0.0" />
+   <geom name="c_core_cup0_funnel0" class="collision" type="box" pos="-0.13437057552464635 0.010173679436915033 0.033773670661758515" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.7641161075882744 -0.6270938832282477 0.11692619523532237 -0.09595884852192023" />
+   <geom name="c_core_cup0_hole0" class="collision" type="box" pos="-0.116 0.007061654018903259 0.033154650318516124" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.7730104533627369 -0.6343932841636456 0.0 0.0" />
+   <geom name="c_core_cup0_funnel1" class="collision" type="box" pos="-0.13437057552464635 0.00862482896727847 0.03751292647164304" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.8717737784549339 -0.46597279261406055 0.13340013383879679 -0.07130385707416292" />
+   <geom name="c_core_cup0_hole1" class="collision" type="box" pos="-0.116 0.005986581208578325 0.03575010567774114" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.881921264348355 -0.47139673682599764 0.0 0.0" />
+   <geom name="c_core_cup0_funnel2" class="collision" type="box" pos="-0.13437057552464635 0.005762926471643042 0.04037482896727847" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9459296719119377 -0.28694462890026784 0.14474758011050323 -0.04390869838670927" />
+   <geom name="c_core_cup0_hole2" class="collision" type="box" pos="-0.116 0.004000105677741136 0.037736581208578326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9569403357322089 -0.2902846772544624 0.0 0.0" />
+   <geom name="c_core_cup0_funnel3" class="collision" type="box" pos="-0.13437057552464635 0.002023670661758516 0.04192367943691504" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9837340185608373 -0.09688934401823956 0.15053245805394116 -0.014826153044536135" />
+   <geom name="c_core_cup0_hole3" class="collision" type="box" pos="-0.116 0.001404650318516124 0.03881165401890326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9951847266721969 -0.09801714032956063 0.0 0.0" />
+   <geom name="c_core_cup0_funnel4" class="collision" type="box" pos="-0.13437057552464635 -0.0020236706617585147 0.04192367943691504" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9837340185608373 0.09688934401823951 0.15053245805394116 0.014826153044536125" />
+   <geom name="c_core_cup0_hole4" class="collision" type="box" pos="-0.116 -0.0014046503185161229 0.03881165401890326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9951847266721969 0.09801714032956056 0.0 0.0" />
+   <geom name="c_core_cup0_funnel5" class="collision" type="box" pos="-0.13437057552464635 -0.0057629264716430395 0.040374828967278474" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9459296719119378 0.28694462890026756 0.14474758011050323 0.04390869838670926" />
+   <geom name="c_core_cup0_hole5" class="collision" type="box" pos="-0.116 -0.004000105677741134 0.037736581208578326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9569403357322089 0.2902846772544622 0.0 0.0" />
+   <geom name="c_core_cup0_funnel6" class="collision" type="box" pos="-0.13437057552464635 -0.008624828967278472 0.03751292647164304" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.8717737784549339 0.46597279261406055 0.1334001338387968 0.07130385707416294" />
+   <geom name="c_core_cup0_hole6" class="collision" type="box" pos="-0.116 -0.005986581208578326 0.03575010567774114" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.881921264348355 0.4713967368259977 0.0 0.0" />
+   <geom name="c_core_cup0_funnel7" class="collision" type="box" pos="-0.13437057552464635 -0.010173679436915033 0.033773670661758515" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.7641161075882745 0.6270938832282474 0.11692619523532237 0.09595884852192021" />
+   <geom name="c_core_cup0_hole7" class="collision" type="box" pos="-0.116 -0.007061654018903259 0.033154650318516124" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.7730104533627371 0.6343932841636454 0.0 0.0" />
+   <geom name="c_core_cup0_funnel8" class="collision" type="box" pos="-0.13437057552464635 -0.010173679436915033 0.029726329338241486" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.6270938832282476 0.7641161075882745 0.09595884852192023 0.11692619523532238" />
+   <geom name="c_core_cup0_hole8" class="collision" type="box" pos="-0.116 -0.007061654018903259 0.030345349681483877" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.6343932841636455 0.773010453362737 0.0 0.0" />
+   <geom name="c_core_cup0_funnel9" class="collision" type="box" pos="-0.13437057552464635 -0.008624828967278472 0.025987073528356962" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.46597279261406066 0.8717737784549339 0.07130385707416295 0.13340013383879679" />
+   <geom name="c_core_cup0_hole9" class="collision" type="box" pos="-0.116 -0.005986581208578327 0.027749894322258866" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.47139673682599775 0.881921264348355 0.0 0.0" />
+   <geom name="c_core_cup0_funnel10" class="collision" type="box" pos="-0.13437057552464635 -0.005762926471643041 0.02312517103272153" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.2869446289002678 0.9459296719119377 0.04390869838670926 0.14474758011050323" />
+   <geom name="c_core_cup0_hole10" class="collision" type="box" pos="-0.116 -0.004000105677741135 0.025763418791421674" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.29028467725446233 0.9569403357322089 0.0 0.0" />
+   <geom name="c_core_cup0_funnel11" class="collision" type="box" pos="-0.13437057552464635 -0.0020236706617585195 0.02157632056308497" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.09688934401823972 0.9837340185608372 0.01482615304453616 0.15053245805394114" />
+   <geom name="c_core_cup0_hole11" class="collision" type="box" pos="-0.116 -0.0014046503185161264 0.024688345981096742" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.0980171403295608 0.9951847266721969 0.0 0.0" />
+   <geom name="c_core_cup0_funnel12" class="collision" type="box" pos="-0.13437057552464635 0.0020236706617585156 0.021576320563084967" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.09688934401823955 -0.9837340185608372 0.01482615304453613 -0.15053245805394114" />
+   <geom name="c_core_cup0_hole12" class="collision" type="box" pos="-0.116 0.0014046503185161238 0.024688345981096742" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.09801714032956062 -0.9951847266721969 -0.0 -0.0" />
+   <geom name="c_core_cup0_funnel13" class="collision" type="box" pos="-0.13437057552464635 0.005762926471643038 0.023125171032721527" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.2869446289002675 -0.9459296719119378 0.04390869838670925 -0.14474758011050323" />
+   <geom name="c_core_cup0_hole13" class="collision" type="box" pos="-0.116 0.0040001056777411335 0.025763418791421674" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.29028467725446216 -0.9569403357322089 -0.0 -0.0" />
+   <geom name="c_core_cup0_funnel14" class="collision" type="box" pos="-0.13437057552464635 0.00862482896727847 0.02598707352835696" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.46597279261406055 -0.8717737784549339 0.07130385707416292 -0.13340013383879679" />
+   <geom name="c_core_cup0_hole14" class="collision" type="box" pos="-0.116 0.005986581208578325 0.027749894322258866" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.47139673682599764 -0.881921264348355 -0.0 -0.0" />
+   <geom name="c_core_cup0_funnel15" class="collision" type="box" pos="-0.13437057552464635 0.010173679436915032 0.029726329338241483" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.6270938832282474 -0.7641161075882745 0.09595884852192019 -0.1169261952353224" />
+   <geom name="c_core_cup0_hole15" class="collision" type="box" pos="-0.116 0.007061654018903258 0.030345349681483873" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.6343932841636454 -0.7730104533627372 0.0 0.0" />
+   <geom name="c_core_cup0_face0" class="collision" type="box" pos="-0.1441 0.017022451995873728 0.03513597622510583" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.7730104533627369 -0.6343932841636456 0.0 0.0" />
+   <geom name="c_core_cup0_face1" class="collision" type="box" pos="-0.1441 0.014430937988413552 0.04139244448899603" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.881921264348355 -0.47139673682599764 0.0 0.0" />
+   <geom name="c_core_cup0_face2" class="collision" type="box" pos="-0.1441 0.009642444488996035 0.04618093798841355" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9569403357322089 -0.2902846772544624 0.0 0.0" />
+   <geom name="c_core_cup0_face3" class="collision" type="box" pos="-0.1441 0.0033859762251058287 0.048772451995873725" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9951847266721969 -0.09801714032956063 0.0 0.0" />
+   <geom name="c_core_cup0_face4" class="collision" type="box" pos="-0.1441 -0.003385976225105826 0.048772451995873725" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9951847266721969 0.09801714032956056 0.0 0.0" />
+   <geom name="c_core_cup0_face5" class="collision" type="box" pos="-0.1441 -0.00964244448899603 0.04618093798841356" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9569403357322089 0.2902846772544622 0.0 0.0" />
+   <geom name="c_core_cup0_face6" class="collision" type="box" pos="-0.1441 -0.014430937988413554 0.04139244448899603" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.881921264348355 0.4713967368259977 0.0 0.0" />
+   <geom name="c_core_cup0_face7" class="collision" type="box" pos="-0.1441 -0.017022451995873728 0.035135976225105836" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.7730104533627371 0.6343932841636454 0.0 0.0" />
+   <geom name="c_core_cup0_face8" class="collision" type="box" pos="-0.1441 -0.017022451995873728 0.028364023774894172" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.6343932841636455 0.773010453362737 0.0 0.0" />
+   <geom name="c_core_cup0_face9" class="collision" type="box" pos="-0.1441 -0.014430937988413555 0.02210755551100397" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.47139673682599775 0.881921264348355 0.0 0.0" />
+   <geom name="c_core_cup0_face10" class="collision" type="box" pos="-0.1441 -0.009642444488996033 0.01731906201158645" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.29028467725446233 0.9569403357322089 0.0 0.0" />
+   <geom name="c_core_cup0_face11" class="collision" type="box" pos="-0.1441 -0.0033859762251058343 0.014727548004126276" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.0980171403295608 0.9951847266721969 0.0 0.0" />
+   <geom name="c_core_cup0_face12" class="collision" type="box" pos="-0.1441 0.0033859762251058283 0.014727548004126272" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.09801714032956062 -0.9951847266721969 -0.0 -0.0" />
+   <geom name="c_core_cup0_face13" class="collision" type="box" pos="-0.1441 0.009642444488996028 0.017319062011586443" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.29028467725446216 -0.9569403357322089 -0.0 -0.0" />
+   <geom name="c_core_cup0_face14" class="collision" type="box" pos="-0.1441 0.014430937988413552 0.02210755551100397" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.47139673682599764 -0.881921264348355 -0.0 -0.0" />
+   <geom name="c_core_cup0_face15" class="collision" type="box" pos="-0.1441 0.017022451995873725 0.028364023774894165" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.6343932841636454 -0.7730104533627372 0.0 0.0" />
+   <geom name="c_core_cup1_funnel0" class="collision" type="box" pos="-0.13437057552464635 0.010173679436915033 -0.029726329338241486" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.7641161075882744 -0.6270938832282477 0.11692619523532237 -0.09595884852192023" />
+   <geom name="c_core_cup1_hole0" class="collision" type="box" pos="-0.116 0.007061654018903259 -0.030345349681483877" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.7730104533627369 -0.6343932841636456 0.0 0.0" />
+   <geom name="c_core_cup1_funnel1" class="collision" type="box" pos="-0.13437057552464635 0.00862482896727847 -0.02598707352835696" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.8717737784549339 -0.46597279261406055 0.13340013383879679 -0.07130385707416292" />
+   <geom name="c_core_cup1_hole1" class="collision" type="box" pos="-0.116 0.005986581208578325 -0.027749894322258866" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.881921264348355 -0.47139673682599764 0.0 0.0" />
+   <geom name="c_core_cup1_funnel2" class="collision" type="box" pos="-0.13437057552464635 0.005762926471643042 -0.02312517103272153" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9459296719119377 -0.28694462890026784 0.14474758011050323 -0.04390869838670927" />
+   <geom name="c_core_cup1_hole2" class="collision" type="box" pos="-0.116 0.004000105677741136 -0.025763418791421674" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9569403357322089 -0.2902846772544624 0.0 0.0" />
+   <geom name="c_core_cup1_funnel3" class="collision" type="box" pos="-0.13437057552464635 0.002023670661758516 -0.021576320563084967" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9837340185608373 -0.09688934401823956 0.15053245805394116 -0.014826153044536135" />
+   <geom name="c_core_cup1_hole3" class="collision" type="box" pos="-0.116 0.001404650318516124 -0.024688345981096742" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9951847266721969 -0.09801714032956063 0.0 0.0" />
+   <geom name="c_core_cup1_funnel4" class="collision" type="box" pos="-0.13437057552464635 -0.0020236706617585147 -0.021576320563084967" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9837340185608373 0.09688934401823951 0.15053245805394116 0.014826153044536125" />
+   <geom name="c_core_cup1_hole4" class="collision" type="box" pos="-0.116 -0.0014046503185161229 -0.024688345981096742" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9951847266721969 0.09801714032956056 0.0 0.0" />
+   <geom name="c_core_cup1_funnel5" class="collision" type="box" pos="-0.13437057552464635 -0.0057629264716430395 -0.023125171032721527" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.9459296719119378 0.28694462890026756 0.14474758011050323 0.04390869838670926" />
+   <geom name="c_core_cup1_hole5" class="collision" type="box" pos="-0.116 -0.004000105677741134 -0.025763418791421674" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.9569403357322089 0.2902846772544622 0.0 0.0" />
+   <geom name="c_core_cup1_funnel6" class="collision" type="box" pos="-0.13437057552464635 -0.008624828967278472 -0.02598707352835696" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.8717737784549339 0.46597279261406055 0.1334001338387968 0.07130385707416294" />
+   <geom name="c_core_cup1_hole6" class="collision" type="box" pos="-0.116 -0.005986581208578326 -0.027749894322258866" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.881921264348355 0.4713967368259977 0.0 0.0" />
+   <geom name="c_core_cup1_funnel7" class="collision" type="box" pos="-0.13437057552464635 -0.010173679436915033 -0.029726329338241483" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.7641161075882745 0.6270938832282474 0.11692619523532237 0.09595884852192021" />
+   <geom name="c_core_cup1_hole7" class="collision" type="box" pos="-0.116 -0.007061654018903259 -0.030345349681483873" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.7730104533627371 0.6343932841636454 0.0 0.0" />
+   <geom name="c_core_cup1_funnel8" class="collision" type="box" pos="-0.13437057552464635 -0.010173679436915033 -0.033773670661758515" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.6270938832282476 0.7641161075882745 0.09595884852192023 0.11692619523532238" />
+   <geom name="c_core_cup1_hole8" class="collision" type="box" pos="-0.116 -0.007061654018903259 -0.033154650318516124" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.6343932841636455 0.773010453362737 0.0 0.0" />
+   <geom name="c_core_cup1_funnel9" class="collision" type="box" pos="-0.13437057552464635 -0.008624828967278472 -0.03751292647164304" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.46597279261406066 0.8717737784549339 0.07130385707416295 0.13340013383879679" />
+   <geom name="c_core_cup1_hole9" class="collision" type="box" pos="-0.116 -0.005986581208578327 -0.03575010567774113" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.47139673682599775 0.881921264348355 0.0 0.0" />
+   <geom name="c_core_cup1_funnel10" class="collision" type="box" pos="-0.13437057552464635 -0.005762926471643041 -0.04037482896727847" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.2869446289002678 0.9459296719119377 0.04390869838670926 0.14474758011050323" />
+   <geom name="c_core_cup1_hole10" class="collision" type="box" pos="-0.116 -0.004000105677741135 -0.037736581208578326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.29028467725446233 0.9569403357322089 0.0 0.0" />
+   <geom name="c_core_cup1_funnel11" class="collision" type="box" pos="-0.13437057552464635 -0.0020236706617585195 -0.04192367943691503" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.09688934401823972 0.9837340185608372 0.01482615304453616 0.15053245805394114" />
+   <geom name="c_core_cup1_hole11" class="collision" type="box" pos="-0.116 -0.0014046503185161264 -0.038811654018903255" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.0980171403295608 0.9951847266721969 0.0 0.0" />
+   <geom name="c_core_cup1_funnel12" class="collision" type="box" pos="-0.13437057552464635 0.0020236706617585156 -0.04192367943691504" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.09688934401823955 -0.9837340185608372 0.01482615304453613 -0.15053245805394114" />
+   <geom name="c_core_cup1_hole12" class="collision" type="box" pos="-0.116 0.0014046503185161238 -0.03881165401890326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.09801714032956062 -0.9951847266721969 -0.0 -0.0" />
+   <geom name="c_core_cup1_funnel13" class="collision" type="box" pos="-0.13437057552464635 0.005762926471643038 -0.040374828967278474" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.2869446289002675 -0.9459296719119378 0.04390869838670925 -0.14474758011050323" />
+   <geom name="c_core_cup1_hole13" class="collision" type="box" pos="-0.116 0.0040001056777411335 -0.037736581208578326" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.29028467725446216 -0.9569403357322089 -0.0 -0.0" />
+   <geom name="c_core_cup1_funnel14" class="collision" type="box" pos="-0.13437057552464635 0.00862482896727847 -0.03751292647164304" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.46597279261406055 -0.8717737784549339 0.07130385707416292 -0.13340013383879679" />
+   <geom name="c_core_cup1_hole14" class="collision" type="box" pos="-0.116 0.005986581208578325 -0.03575010567774114" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.47139673682599764 -0.881921264348355 -0.0 -0.0" />
+   <geom name="c_core_cup1_funnel15" class="collision" type="box" pos="-0.13437057552464635 0.010173679436915032 -0.03377367066175852" size="0.010884687459538458 0.003157693315939441 0.0006" quat="0.6270938832282474 -0.7641161075882745 0.09595884852192019 -0.1169261952353224" />
+   <geom name="c_core_cup1_hole15" class="collision" type="box" pos="-0.116 0.007061654018903258 -0.033154650318516124" size="0.007800000000000001 0.0016846790604875266 0.0006" quat="0.6343932841636454 -0.7730104533627372 0.0 0.0" />
+   <geom name="c_core_cup1_face0" class="collision" type="box" pos="-0.1441 0.017022451995873728 -0.028364023774894172" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.7730104533627369 -0.6343932841636456 0.0 0.0" />
+   <geom name="c_core_cup1_face1" class="collision" type="box" pos="-0.1441 0.014430937988413552 -0.02210755551100397" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.881921264348355 -0.47139673682599764 0.0 0.0" />
+   <geom name="c_core_cup1_face2" class="collision" type="box" pos="-0.1441 0.009642444488996035 -0.01731906201158645" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9569403357322089 -0.2902846772544624 0.0 0.0" />
+   <geom name="c_core_cup1_face3" class="collision" type="box" pos="-0.1441 0.0033859762251058287 -0.014727548004126272" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9951847266721969 -0.09801714032956063 0.0 0.0" />
+   <geom name="c_core_cup1_face4" class="collision" type="box" pos="-0.1441 -0.003385976225105826 -0.014727548004126272" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9951847266721969 0.09801714032956056 0.0 0.0" />
+   <geom name="c_core_cup1_face5" class="collision" type="box" pos="-0.1441 -0.00964244448899603 -0.017319062011586443" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.9569403357322089 0.2902846772544622 0.0 0.0" />
+   <geom name="c_core_cup1_face6" class="collision" type="box" pos="-0.1441 -0.014430937988413554 -0.02210755551100397" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.881921264348355 0.4713967368259977 0.0 0.0" />
+   <geom name="c_core_cup1_face7" class="collision" type="box" pos="-0.1441 -0.017022451995873728 -0.02836402377489417" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.7730104533627371 0.6343932841636454 0.0 0.0" />
+   <geom name="c_core_cup1_face8" class="collision" type="box" pos="-0.1441 -0.017022451995873728 -0.03513597622510583" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.6343932841636455 0.773010453362737 0.0 0.0" />
+   <geom name="c_core_cup1_face9" class="collision" type="box" pos="-0.1441 -0.014430937988413555 -0.04139244448899603" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.47139673682599775 0.881921264348355 0.0 0.0" />
+   <geom name="c_core_cup1_face10" class="collision" type="box" pos="-0.1441 -0.009642444488996033 -0.04618093798841355" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.29028467725446233 0.9569403357322089 0.0 0.0" />
+   <geom name="c_core_cup1_face11" class="collision" type="box" pos="-0.1441 -0.0033859762251058343 -0.048772451995873725" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.0980171403295608 0.9951847266721969 0.0 0.0" />
+   <geom name="c_core_cup1_face12" class="collision" type="box" pos="-0.1441 0.0033859762251058283 -0.048772451995873725" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.09801714032956062 -0.9951847266721969 -0.0 -0.0" />
+   <geom name="c_core_cup1_face13" class="collision" type="box" pos="-0.1441 0.009642444488996028 -0.04618093798841356" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.29028467725446216 -0.9569403357322089 -0.0 -0.0" />
+   <geom name="c_core_cup1_face14" class="collision" type="box" pos="-0.1441 0.014430937988413552 -0.04139244448899603" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.47139673682599764 -0.881921264348355 -0.0 -0.0" />
+   <geom name="c_core_cup1_face15" class="collision" type="box" pos="-0.1441 0.017022451995873725 -0.035135976225105836" size="0.0015 0.004339535221912533 0.0027359415460183932" quat="0.6343932841636454 -0.7730104533627372 0.0 0.0" />
+   <camera name="cam_aft_wide" pos="-0.1253 -0.054 -0.0064" quat="0.5 -0.5 0.5 -0.5" fovy="90" resolution="1280 960" />
+   <camera name="cam_aft_depth" pos="-0.1331 0.0509 -0.0166" quat="0 0.707106781 0 0.707106781" fovy="47" resolution="224 171" />
+   <site class="marker" name="cam_aft_wide_fsw_extrinsic" pos="-0.1061 -0.054 -0.0064" quat="0.5 0.5 -0.5 -0.5" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="cam_aft_depth_fsw_extrinsic" pos="-0.1331 0.0509 -0.0166" quat="0.707106781 0 -0.707106781 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="imu_fsw" pos="0.0386 0.0247 -0.01016" quat="0.707106781 0 0 0.707106781" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="lamp_fwd_emitter" pos="0.1345 0 0.0369" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="lamp_aft_emitter" pos="-0.1345 -0.054 0.0303" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="dock_contacts" pos="-0.1443 0 0" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="dock_cup_top" pos="-0.146 0 -0.03175" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="dock_cup_bottom" pos="-0.146 0 0.03175" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_dowel_s1" pos="0.108 0.0762 0" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_dowel_s2" pos="-0.109 0.0762 -0.016" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_conn_s" pos="0.08 0.0762 0.02" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_dowel_p1" pos="-0.108 -0.0762 0" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_dowel_p2" pos="0.109 -0.0762 -0.016" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="pm_conn_p" pos="-0.08 -0.0762 0.02" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ta_bay_origin" pos="0 0 -0.0508" quat="0 0 1 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ta_align_hole" pos="-0.108585 -0.05715 -0.0508" quat="0 0 1 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ta_connector" pos="-0.083185 -0.05715 -0.0508" quat="0 0 1 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ba_bay_origin" pos="0 0 0.0508" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ba_align_hole" pos="-0.108585 0.05715 0.0508" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="ba_connector" pos="-0.083185 0.05715 0.0508" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bf_bay_origin" pos="0 0 0.0508" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bf_align_hole" pos="0.108585 -0.05715 0.0508" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bf_connector" pos="0.083185 -0.05715 0.0508" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="tf_bay_origin" pos="0 0 -0.0508" quat="0 1 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="tf_align_hole" pos="0.108585 0.05715 -0.0508" quat="0 1 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="tf_connector" pos="0.083185 0.05715 -0.0508" quat="0 1 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bat_ts_connector" pos="-5.21209678e-18 0.0618 -0.04854" quat="0 0 1 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bat_tp_connector" pos="0 -0.0618 -0.04854" quat="0 1 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bat_bs_connector" pos="0 0.0618 0.04854" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site class="marker" name="bat_bp_connector" pos="0 -0.0618 0.04854" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_imu" class="marker" pos="0.0386 0.0247 -0.01016" quat="0.707106781 0 0 0.707106781" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_dock_connector" class="marker" pos="-0.1443 0 0" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_dock_receptacle_top" class="marker" pos="-0.146 0 -0.03175" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_dock_receptacle_bottom" class="marker" pos="-0.146 0 0.03175" quat="0 0 0 1" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_cam_aft_wide" class="marker" pos="-0.1061 -0.054 -0.0064" quat="0.5 0.5 -0.5 -0.5" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_cam_aft_depth" class="marker" pos="-0.1331 0.0509 -0.0166" quat="0.707106781 0 -0.707106781 0" size="0.002" group="5" rgba="1 0 1 1" />
+   <site name="site_laser" class="marker" pos="0.1302 0.0572 -0.1111" quat="1 0 0 0" />
+   <site name="site_flashlight_fwd" class="marker" pos="0.1345 0 0.0369" quat="1 0 0 0" />
+   <site name="site_flashlight_aft" class="marker" pos="-0.1345 -0.054 0.0303" quat="0 0 0 1" />
+   <site name="site_cam_fwd_wide" class="marker" pos="0.1177 -0.0422 -0.0826" quat="0.5 0.5 0.5 0.5" />
+   <site name="site_cam_fwd_img" class="marker" pos="0.118 0 -0.096" quat="0.5 0.5 0.5 0.5" />
+   <site name="site_cam_fwd_depth" class="marker" pos="0.1328 0.0362 -0.0826" quat="0.5 -0.5 0.5 -0.5" />
+   <site name="bay_top_aft_bay_origin" class="marker" pos="0 0 -0.0508" quat="0 0 1 0" rgba="1 0.2 1 1" />
+   <site name="bay_top_aft_align_hole" class="marker" pos="-0.108585 -0.05715 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_connector" class="marker" pos="-0.083185 -0.05715 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_align_slot_1" class="marker" pos="-0.108585 0.05715 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_align_slot_2" class="marker" pos="-0.057785 0.05715 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_align_slot_3" class="marker" pos="-0.057785 -0.05715 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_insert_1" class="marker" pos="-0.108585 0.0706501 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_insert_2" class="marker" pos="-0.108585 -0.0706501 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_insert_3" class="marker" pos="-0.057785 0.0706501 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_insert_4" class="marker" pos="-0.057785 -0.0706501 -0.0508" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_clevis_pin_posy" class="marker" pos="-0.0829691 0.070612 -0.0635" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_rail_posy" class="marker" pos="-0.0497205 0.073025 -0.098425" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_clevis_pin_negy" class="marker" pos="-0.0829691 -0.070612 -0.0635" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_aft_rail_negy" class="marker" pos="-0.0497205 -0.073025 -0.098425" quat="0 0 1 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_bay_origin" class="marker" pos="0 0 0.0508" quat="0 0 0 1" rgba="1 0.2 1 1" />
+   <site name="bay_bottom_aft_align_hole" class="marker" pos="-0.108585 0.05715 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_connector" class="marker" pos="-0.083185 0.05715 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_align_slot_1" class="marker" pos="-0.108585 -0.05715 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_align_slot_2" class="marker" pos="-0.057785 -0.05715 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_align_slot_3" class="marker" pos="-0.057785 0.05715 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_insert_1" class="marker" pos="-0.108585 -0.0706501 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_insert_2" class="marker" pos="-0.108585 0.0706501 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_insert_3" class="marker" pos="-0.057785 -0.0706501 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_insert_4" class="marker" pos="-0.057785 0.0706501 0.0508" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_clevis_pin_posy" class="marker" pos="-0.0829691 -0.070612 0.0635" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_rail_posy" class="marker" pos="-0.0497205 -0.073025 0.098425" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_clevis_pin_negy" class="marker" pos="-0.0829691 0.070612 0.0635" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_aft_rail_negy" class="marker" pos="-0.0497205 0.073025 0.098425" quat="0 0 0 1" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_bay_origin" class="marker" pos="0 0 0.0508" quat="1 0 0 0" rgba="1 0.2 1 1" />
+   <site name="bay_bottom_fwd_align_hole" class="marker" pos="0.108585 -0.05715 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_connector" class="marker" pos="0.083185 -0.05715 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_align_slot_1" class="marker" pos="0.108585 0.05715 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_align_slot_2" class="marker" pos="0.057785 0.05715 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_align_slot_3" class="marker" pos="0.057785 -0.05715 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_insert_1" class="marker" pos="0.108585 0.0706501 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_insert_2" class="marker" pos="0.108585 -0.0706501 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_insert_3" class="marker" pos="0.057785 0.0706501 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_insert_4" class="marker" pos="0.057785 -0.0706501 0.0508" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_clevis_pin_posy" class="marker" pos="0.0829691 0.070612 0.0635" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_rail_posy" class="marker" pos="0.0497205 0.073025 0.098425" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_clevis_pin_negy" class="marker" pos="0.0829691 -0.070612 0.0635" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_bottom_fwd_rail_negy" class="marker" pos="0.0497205 -0.073025 0.098425" quat="1 0 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_bay_origin" class="marker" pos="0 0 -0.0508" quat="0 1 0 0" rgba="1 0.2 1 1" />
+   <site name="bay_top_fwd_align_hole" class="marker" pos="0.108585 0.05715 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_connector" class="marker" pos="0.083185 0.05715 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_align_slot_1" class="marker" pos="0.108585 -0.05715 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_align_slot_2" class="marker" pos="0.057785 -0.05715 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_align_slot_3" class="marker" pos="0.057785 0.05715 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_insert_1" class="marker" pos="0.108585 -0.0706501 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_insert_2" class="marker" pos="0.108585 0.0706501 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_insert_3" class="marker" pos="0.057785 -0.0706501 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_insert_4" class="marker" pos="0.057785 0.0706501 -0.0508" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_clevis_pin_posy" class="marker" pos="0.0829691 -0.070612 -0.0635" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_rail_posy" class="marker" pos="0.0497205 -0.073025 -0.098425" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_clevis_pin_negy" class="marker" pos="0.0829691 0.070612 -0.0635" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <site name="bay_top_fwd_rail_negy" class="marker" pos="0.0497205 0.073025 -0.098425" quat="0 1 0 0" rgba="0.2 1 0.2 1" />
+   <body name="forward_sensor_module" pos="0 0 -0.0508" quat="0 1 0 0">
+    <inertial pos="0.109513074 -0.00183449213 0.041692906" mass="0.384632" fullinertia="0.0012619828 0.00059761366 0.00110584494 -1.86353891e-05 -9.03475912e-05 1.41157197e-05" />
+    <geom name="forward_sensor_module_lv0" class="visual" mesh="light_forward_sensor_module__0" rgba="0.0799999982 0.0799999982 0.0900000036 1" />
+    <geom name="forward_sensor_module_lv1" class="visual" mesh="light_forward_sensor_module__1" rgba="0.100000001 0.100000001 0.100000001 1" />
+    <geom name="forward_sensor_module_lv2" class="visual" mesh="light_forward_sensor_module__2" rgba="0.100000001 0.419999987 0.200000003 1" />
+    <geom name="forward_sensor_module_lv3" class="visual" mesh="light_forward_sensor_module__3" rgba="0.119999997 0.119999997 0.140000001 1" />
+    <geom name="forward_sensor_module_lv4" class="visual" mesh="light_forward_sensor_module__4" rgba="0.150000006 0.150000006 0.159999996 1" />
+    <geom name="forward_sensor_module_lv5" class="visual" mesh="light_forward_sensor_module__5" rgba="0.150000006 0.300000012 0.550000012 1" />
+    <geom name="forward_sensor_module_lv6" class="visual" mesh="light_forward_sensor_module__6" rgba="0.159999996 0.159999996 0.180000007 1" />
+    <geom name="forward_sensor_module_lv7" class="visual" mesh="light_forward_sensor_module__7" rgba="0.200000003 0.200000003 0.219999999 1" />
+    <geom name="forward_sensor_module_lv8" class="visual" mesh="light_forward_sensor_module__8" rgba="0.200000003 0.550000012 0.649999976 1" />
+    <geom name="forward_sensor_module_lv9" class="visual" mesh="light_forward_sensor_module__9" rgba="0.25 0.0500000007 0.0799999982 1" />
+    <geom name="forward_sensor_module_lv10" class="visual" mesh="light_forward_sensor_module__10" rgba="0.349999994 0.550000012 0.699999988 0.550000012" />
+    <geom name="forward_sensor_module_lv11" class="visual" mesh="light_forward_sensor_module__11" rgba="0.449999988 0.100000001 0.100000001 1" />
+    <geom name="forward_sensor_module_lv12" class="visual" mesh="light_forward_sensor_module__12" rgba="0.620000005 0.629999995 0.660000026 1" />
+    <geom name="forward_sensor_module_lv13" class="visual" mesh="light_forward_sensor_module__13" rgba="0.699999988 0.100000001 0.150000006 1" />
+    <geom name="forward_sensor_module_lv14" class="visual" mesh="light_forward_sensor_module__14" rgba="0.800000012 0.550000012 0.150000006 1" />
+    <geom name="forward_sensor_module_lv15" class="visual" mesh="light_forward_sensor_module__15" rgba="0.800000012 0.800000012 0.819999993 1" />
+    <geom name="forward_sensor_module_lv16" class="visual" mesh="light_forward_sensor_module__16" rgba="0.819999993 0.819999993 0.839999974 1" />
+    <geom name="forward_sensor_module_lv17" class="visual" mesh="light_forward_sensor_module__17" rgba="0.850000024 0.0799999982 0.0599999987 1" />
+    <geom name="forward_sensor_module_lv18" class="visual" mesh="light_forward_sensor_module__18" rgba="0.850000024 0.699999988 0.200000003 1" />
+    <geom name="forward_sensor_module_lv19" class="visual" mesh="light_forward_sensor_module__19" rgba="0.860000014 0.819999993 0.720000029 1" />
+    <geom name="forward_sensor_module_lv20" class="visual" mesh="light_forward_sensor_module__20" rgba="0.899999976 0.899999976 0.949999988 0.699999988" />
+    <geom name="forward_sensor_module_lv21" class="visual" mesh="light_forward_sensor_module__21" rgba="0.920000017 0.920000017 0.899999976 1" />
+    <geom name="forward_sensor_module_lv22" class="visual" mesh="light_forward_sensor_module__22" rgba="0.949999988 0.550000012 0.150000006 1" />
+    <camera name="cam_fwd_wide" pos="0.1369 0.0422 0.0318" quat="0.5 0.5 -0.5 -0.5" fovy="98" resolution="1280 960" />
+    <camera name="cam_fwd_img" pos="0.1399 -5.53540353e-18 0.0452" quat="0.5 0.5 -0.5 -0.5" fovy="41" resolution="5360 4032" />
+    <camera name="cam_fwd_depth" pos="0.1328 -0.0362 0.0318" quat="0.5 -0.5 -0.5 0.5" fovy="47" resolution="224 171" />
+    <camera name="cam_vsu_flow" pos="0.1199 0.0032 0.0847" quat="0 -1 0 0" fovy="19" resolution="752 480" />
+    <site class="marker" name="cam_fwd_wide_fsw_extrinsic" pos="0.1177 0.0422 0.0318" quat="0.5 -0.5 0.5 -0.5" size="0.002" group="5" rgba="1 0 1 1" />
+    <site class="marker" name="cam_fwd_img_fsw_extrinsic" pos="0.118 -5.53540353e-18 0.0452" quat="0.5 -0.5 0.5 -0.5" size="0.002" group="5" rgba="1 0 1 1" />
+    <site class="marker" name="cam_fwd_depth_fsw_extrinsic" pos="0.1328 -0.0362 0.0318" quat="0.5 0.5 0.5 0.5" size="0.002" group="5" rgba="1 0 1 1" />
+    <site class="marker" name="laser_aperture" pos="0.1302 -0.0572 0.0603" quat="0 -1 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+    <site class="marker" name="vsu_rangefinder" pos="0.11995 0.05595 0.0831" quat="1 0 0 0" size="0.002" group="5" rgba="1 0 1 1" />
+    <geom name="c_fsm_base" class="collision" type="box" pos="0.0873 0 0.0025" size="0.0353 0.0729 0.0025" margin="0" />
+    <geom name="c_fsm_bulkhead_bottom" class="collision" type="box" pos="0.095 0 0.014152" size="0.002 0.0729 0.009152" margin="0" />
+    <geom name="c_fsm_bulkhead_stbd" class="collision" type="box" pos="0.095 -0.0488045 0.057252" size="0.002 0.0240955 0.033948" margin="0" />
+    <geom name="c_fsm_bulkhead_port" class="collision" type="box" pos="0.095 0.0488045 0.057252" size="0.002 0.0240955 0.033948" margin="0" />
+    <geom name="c_fsm_side_s" class="collision" type="box" pos="0.09825 -0.0739 0.04785" size="0.04625 0.001 0.04285" margin="0" />
+    <geom name="c_fsm_side_p" class="collision" type="box" pos="0.09825 0.0739 0.04785" size="0.04625 0.001 0.04285" margin="0" />
+    <geom name="c_fsm_deck_fwd" class="collision" type="box" pos="0.12305 0 0.0922" size="0.02145 0.0749 0.0015" margin="0" />
+    <geom name="c_fsm_deck_flat_s" class="collision" type="box" pos="0.10095 -0.04845 0.0922" size="0.00065 0.02645 0.0015" margin="0" />
+    <geom name="c_fsm_deck_flat_p" class="collision" type="box" pos="0.10095 0.04845 0.0922" size="0.00065 0.02645 0.0015" margin="0" />
+    <geom name="c_fsm_deck_mid_s" class="collision" type="box" pos="0.0962 -0.051075 0.0922" size="0.0041 0.023825 0.0015" margin="0" />
+    <geom name="c_fsm_deck_mid_p" class="collision" type="box" pos="0.0962 0.051075 0.0922" size="0.0041 0.023825 0.0015" margin="0" />
+    <geom name="c_fsm_deck_aft_s" class="collision" type="box" pos="0.088 -0.055175 0.0922" size="0.0041 0.019725 0.0015" margin="0" />
+    <geom name="c_fsm_deck_aft_p" class="collision" type="box" pos="0.088 0.055175 0.0922" size="0.0041 0.019725 0.0015" margin="0" />
+    <geom name="c_fsm_front" class="collision" type="box" pos="0.14275 0 0.0652936524" size="0.00175 0.0729 0.0254063476" margin="0" />
+    <geom name="c_fsm_front_inner" class="collision" type="box" pos="0.14275 0 0.0143563476" size="0.00175 0.0729 0.00935634761" margin="0" />
+    <geom name="c_fsm_front_win_s" class="collision" type="box" pos="0.14275 -0.0593820359 0.0318" size="0.00175 0.0135179641 0.00808730479" margin="0" />
+    <geom name="c_fsm_front_win_p" class="collision" type="box" pos="0.14275 0.0231820359 0.0318" size="0.00175 0.0497179641 0.00808730479" margin="0" />
+   </body>
+   <body name="battery_top_starboard" pos="0 0.0618 -0.0911" quat="0 0 1 0">
+    <inertial pos="-0.000263407303 -0.000181928135 -0.0035320122" mass="0.248" fullinertia="0.000109864079 0.000211482559 0.000116070342 1.499982e-07 -6.9622784e-07 -5.03378712e-07" />
+    <geom name="battery_top_starboard_lv0" class="visual" mesh="light_battery_top_starboard__0" rgba="0.100000001 0.100000001 0.100000001 1" />
+    <geom name="battery_top_starboard_lv1" class="visual" mesh="light_battery_top_starboard__1" rgba="0.119999997 0.119999997 0.129999995 1" />
+    <geom name="c_battery_top_starboard" class="collision" type="box" pos="0 0 0" size="0.03868 0.01123 0.04256" />
+   </body>
+   <body name="battery_top_port" pos="0 -0.0618 -0.0911" quat="0 1 0 0">
+    <inertial pos="-0.000263407303 -0.000181928135 -0.0035320122" mass="0.248" fullinertia="0.000109864079 0.000211482559 0.000116070342 1.499982e-07 -6.9622784e-07 -5.03378712e-07" />
+    <geom name="battery_top_port_lv0" class="visual" mesh="light_battery_top_port__0" rgba="0.100000001 0.100000001 0.100000001 1" />
+    <geom name="battery_top_port_lv1" class="visual" mesh="light_battery_top_port__1" rgba="0.119999997 0.119999997 0.129999995 1" />
+    <geom name="c_battery_top_port" class="collision" type="box" pos="0 0 0" size="0.03868 0.01123 0.04256" />
+   </body>
+   <body name="battery_bottom_starboard" pos="0 0.0618 0.0911" quat="1 0 0 0">
+    <inertial pos="-0.000263407303 -0.000181928135 -0.0035320122" mass="0.248" fullinertia="0.000109864079 0.000211482559 0.000116070342 1.499982e-07 -6.9622784e-07 -5.03378712e-07" />
+    <geom name="battery_bottom_starboard_lv0" class="visual" mesh="light_battery_bottom_starboard__0" rgba="0.100000001 0.100000001 0.100000001 1" />
+    <geom name="battery_bottom_starboard_lv1" class="visual" mesh="light_battery_bottom_starboard__1" rgba="0.119999997 0.119999997 0.129999995 1" />
+    <geom name="c_battery_bottom_starboard" class="collision" type="box" pos="0 0 0" size="0.03868 0.01123 0.04256" />
+   </body>
+   <body name="battery_bottom_port" pos="0 -0.0618 0.0911" quat="0 0 0 1">
+    <inertial pos="-0.000263407303 -0.000181928135 -0.0035320122" mass="0.248" fullinertia="0.000109864079 0.000211482559 0.000116070342 1.499982e-07 -6.9622784e-07 -5.03378712e-07" />
+    <geom name="battery_bottom_port_lv0" class="visual" mesh="light_battery_bottom_port__0" rgba="0.100000001 0.100000001 0.100000001 1" />
+    <geom name="battery_bottom_port_lv1" class="visual" mesh="light_battery_bottom_port__1" rgba="0.119999997 0.119999997 0.129999995 1" />
+    <geom name="c_battery_bottom_port" class="collision" type="box" pos="0 0 0" size="0.03868 0.01123 0.04256" />
+   </body>
+   <body name="propulsion_module_starboard" pos="0 0.0762 0" quat="1 0 0 0">
+    <inertial pos="-0.00136761224 0.0381533307 0.000834936451" mass="2.661975" fullinertia="0.0266137082 0.0455858304 0.0223419404 7.52050718e-05 0.00421161947 -6.90640304e-05" />
+    <geom name="propulsion_module_starboard_lv0" class="visual" mesh="light_propulsion_module_starboard__0" rgba="0.0799999982 0.0799999982 0.0799999982 1" />
+    <geom name="propulsion_module_starboard_lv1" class="visual" mesh="light_propulsion_module_starboard__1" rgba="0.100000001 0.100000001 0.109999999 1" />
+    <geom name="propulsion_module_starboard_lv2" class="visual" mesh="light_propulsion_module_starboard__2" rgba="0.100000001 0.100000001 0.119999997 1" />
+    <geom name="propulsion_module_starboard_lv3" class="visual" mesh="light_propulsion_module_starboard__3" rgba="0.159999996 0.159999996 0.180000007 1" />
+    <geom name="propulsion_module_starboard_lv4" class="visual" mesh="light_propulsion_module_starboard__4" rgba="0.200000003 0.200000003 0.219999999 1" />
+    <geom name="propulsion_module_starboard_lv5" class="visual" mesh="light_propulsion_module_starboard__5" rgba="0.25 0.25 0.280000001 1" />
+    <geom name="propulsion_module_starboard_lv6" class="visual" mesh="light_propulsion_module_starboard__6" rgba="0.550000012 0.0500000007 0.0500000007 1" />
+    <geom name="propulsion_module_starboard_lv7" class="visual" mesh="light_propulsion_module_starboard__7" rgba="0.550000012 0.560000002 0.579999983 1" />
+    <geom name="propulsion_module_starboard_lv8" class="visual" mesh="light_propulsion_module_starboard__8" rgba="0.699999988 0.74000001 0.800000012 1" />
+    <geom name="propulsion_module_starboard_lv9" class="visual" mesh="light_propulsion_module_starboard__9" rgba="0.720000029 0.720000029 0.74000001 1" />
+    <geom name="propulsion_module_starboard_lv10" class="visual" mesh="light_propulsion_module_starboard__10" rgba="0.800000012 0.680000007 0.300000012 1" />
+    <geom name="propulsion_module_starboard_lv11" class="visual" mesh="light_propulsion_module_starboard__11" rgba="0.829999983 0.620000005 0.25 1" />
+    <geom name="propulsion_module_starboard_lv12" class="visual" mesh="light_propulsion_module_starboard__12" rgba="0.850000024 0.550000012 0.150000006 1" />
+    <geom name="propulsion_module_starboard_lv13" class="visual" mesh="light_propulsion_module_starboard__13" rgba="0.860000014 0.850000024 0.800000012 1" />
+    <geom name="propulsion_module_starboard_lv14" class="visual" mesh="light_propulsion_module_starboard__14" rgba="0.899999976 0.920000017 0.949999988 0.5" />
+    <geom name="propulsion_module_starboard_lv15" class="visual" mesh="light_propulsion_module_starboard__15" rgba="0.949999988 0.800000012 0.100000001 1" />
+    <geom name="propulsion_module_starboard_lv16" class="visual" mesh="light_propulsion_module_starboard__16" rgba="0.949999988 0.949999988 0.930000007 1" />
+    <geom name="c_pm_s_block" class="collision" type="box" pos="0 0.034925 0" size="0.14605 0.034925 0.14605" />
+    <geom name="c_pm_s_bumper_fwd_bottom" class="collision" type="mesh" mesh="pm_pm_bumper_fwd_bottom_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_s_bumper_fwd_top" class="collision" type="mesh" mesh="pm_pm_bumper_fwd_top_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_s_bumper_aft_bottom" class="collision" type="mesh" mesh="pm_pm_bumper_aft_bottom_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_s_bumper_aft_top" class="collision" type="mesh" mesh="pm_pm_bumper_aft_top_hull" pos="0 0 0" quat="1 0 0 0" />
+    <site name="nozzle_1_1" class="marker" type="box" pos="0.152400 0.025654 -0.039624" zaxis="1 0 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_1" class="marker" pos="0.146050 0.025654 -0.039624" zaxis="1 0 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_1_2" class="marker" type="box" pos="-0.152400 0.025654 0.039624" zaxis="-1 0 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_2" class="marker" pos="-0.146050 0.025654 0.039624" zaxis="-1 0 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_1_3" class="marker" type="box" pos="0.071882 0.076200 0.071882" zaxis="0 1 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_3" class="marker" pos="0.071882 0.069850 0.071882" zaxis="0 1 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_1_4" class="marker" type="box" pos="-0.071882 0.076200 -0.071882" zaxis="0 1 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_4" class="marker" pos="-0.071882 0.069850 -0.071882" zaxis="0 1 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_1_5" class="marker" type="box" pos="-0.067564 0.025654 0.152400" zaxis="0 0 1" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_5" class="marker" pos="-0.067564 0.025654 0.146050" zaxis="0 0 1" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_1_6" class="marker" type="box" pos="0.067564 0.025654 -0.152400" zaxis="0 0 -1" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_1_6" class="marker" pos="0.067564 0.025654 -0.146050" zaxis="0 0 -1" size="0.002" rgba="1 1 0 1" />
+    <site name="pm_s_dowel_hole_round" class="marker" pos="0.10800 0 0.00000" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_s_dowel_slot" class="marker" pos="-0.10900 0 -0.01600" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_s_connector" class="marker" pos="0.08000 0 0.02000" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_s_captive_screw_0" class="marker" pos="0.10900 0 -0.02200" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_s_captive_screw_1" class="marker" pos="-0.10900 0 0.02200" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_s_captive_screw_2" class="marker" pos="0.10000 0 -0.04100" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_s_captive_screw_3" class="marker" pos="-0.10000 0 0.04100" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_s_handle_grasp" class="marker" pos="0 0.09735 0" size="0.003" />
+    <site name="pm_s_intake" class="marker" pos="0 0.06985 0" zaxis="0 1 0" size="0.003" />
+    <site name="pm_s_mating_face" class="marker" pos="0 0 0" zaxis="0 -1 0" size="0.005" />
+    <body name="pm_s_impeller" pos="0 0 0" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_impeller" type="hinge" class="visual_joint" armature="1e-4" damping="0" axis="0.000000 1.000000 0.000000" />
+    </body>
+    <body name="pm_s_n1_drive" pos="0.117724 0.030849 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n1_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.000000 -0.000000 -1.000000" />
+    </body>
+    <body name="pm_s_n1_flap_a" pos="0.12305 0.038745 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n1_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.000000 0.000000 1.000000" />
+     <geom name="pm_s_n1_flap_a_lv0" class="visual" mesh="light_pm_s_n1_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n1_flap_b" pos="0.12305 0.012563 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n1_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.000000 -0.000000 -1.000000" />
+     <geom name="pm_s_n1_flap_b_lv0" class="visual" mesh="light_pm_s_n1_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n1_idler" pos="0.117802 0.019207 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n1_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="0.000000 0.000000 1.000000" />
+    </body>
+    <body name="pm_s_n2_drive" pos="-0.117724 0.030849 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n2_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.000000 -0.000000 1.000000" />
+    </body>
+    <body name="pm_s_n2_flap_a" pos="-0.12305 0.038745 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n2_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.000000 0.000000 -1.000000" />
+     <geom name="pm_s_n2_flap_a_lv0" class="visual" mesh="light_pm_s_n2_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n2_flap_b" pos="-0.12305 0.012563 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n2_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.000000 -0.000000 1.000000" />
+     <geom name="pm_s_n2_flap_b_lv0" class="visual" mesh="light_pm_s_n2_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n2_idler" pos="-0.117802 0.019207 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n2_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="0.000000 0.000000 -1.000000" />
+    </body>
+    <body name="pm_s_n3_drive" pos="0.064482 0.056006 0.064482" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n3_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="0.707107 -0.000000 -0.707107" />
+     <geom name="pm_s_n3_drive_lv0" class="visual" mesh="light_pm_s_n3_drive__0" rgba="0.720000029 0.720000029 0.74000001 1" />
+    </body>
+    <body name="pm_s_n3_flap_a" pos="0.062625 0.04685 0.062625" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n3_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.707107 0.000000 0.707107" />
+     <geom name="pm_s_n3_flap_a_lv0" class="visual" mesh="light_pm_s_n3_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n3_flap_b" pos="0.081139 0.04685 0.081139" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n3_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.707107 -0.000000 -0.707107" />
+     <geom name="pm_s_n3_flap_b_lv0" class="visual" mesh="light_pm_s_n3_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n3_idler" pos="0.07354 0.04968 0.07354" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n3_idler" type="hinge" class="visual_joint" range="-0.01 0.46841" limited="true" axis="-0.707107 0.000000 0.707107" />
+    </body>
+    <body name="pm_s_n4_drive" pos="-0.064482 0.056006 -0.064482" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n4_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.707107 -0.000000 0.707107" />
+     <geom name="pm_s_n4_drive_lv0" class="visual" mesh="light_pm_s_n4_drive__0" rgba="0.720000029 0.720000029 0.74000001 1" />
+    </body>
+    <body name="pm_s_n4_flap_a" pos="-0.062625 0.04685 -0.062625" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n4_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.707107 0.000000 -0.707107" />
+     <geom name="pm_s_n4_flap_a_lv0" class="visual" mesh="light_pm_s_n4_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n4_flap_b" pos="-0.081139 0.04685 -0.081139" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n4_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.707107 -0.000000 0.707107" />
+     <geom name="pm_s_n4_flap_b_lv0" class="visual" mesh="light_pm_s_n4_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n4_idler" pos="-0.07354 0.04968 -0.07354" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n4_idler" type="hinge" class="visual_joint" range="-0.01 0.46841" limited="true" axis="0.707107 0.000000 -0.707107" />
+    </body>
+    <body name="pm_s_n5_drive" pos="-0.067564 0.020459 0.117724" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n5_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-1.000000 -0.000000 -0.000000" />
+    </body>
+    <body name="pm_s_n5_flap_a" pos="-0.067564 0.012563 0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n5_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="1.000000 0.000000 0.000000" />
+     <geom name="pm_s_n5_flap_a_lv0" class="visual" mesh="light_pm_s_n5_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n5_flap_b" pos="-0.067564 0.038745 0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n5_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-1.000000 -0.000000 -0.000000" />
+     <geom name="pm_s_n5_flap_b_lv0" class="visual" mesh="light_pm_s_n5_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n5_idler" pos="-0.067564 0.032101 0.117802" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n5_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="1.000000 0.000000 0.000000" />
+    </body>
+    <body name="pm_s_n6_drive" pos="0.067564 0.020459 -0.117724" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n6_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="1.000000 -0.000000 -0.000000" />
+    </body>
+    <body name="pm_s_n6_flap_a" pos="0.067564 0.012563 -0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n6_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-1.000000 0.000000 0.000000" />
+     <geom name="pm_s_n6_flap_a_lv0" class="visual" mesh="light_pm_s_n6_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n6_flap_b" pos="0.067564 0.038745 -0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n6_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="1.000000 -0.000000 -0.000000" />
+     <geom name="pm_s_n6_flap_b_lv0" class="visual" mesh="light_pm_s_n6_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_s_n6_idler" pos="0.067564 0.032101 -0.117802" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_s_n6_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="-1.000000 0.000000 0.000000" />
+    </body>
+   </body>
+   <body name="propulsion_module_port" pos="0 -0.0762 0" quat="0 0 0 1">
+    <inertial pos="-0.00136761224 0.0381533307 0.000834936451" mass="2.661975" fullinertia="0.0266137082 0.0455858304 0.0223419404 7.52050718e-05 0.00421161947 -6.90640304e-05" />
+    <geom name="propulsion_module_port_lv0" class="visual" mesh="light_propulsion_module_port__0" rgba="0.0799999982 0.0799999982 0.0799999982 1" />
+    <geom name="propulsion_module_port_lv1" class="visual" mesh="light_propulsion_module_port__1" rgba="0.100000001 0.100000001 0.109999999 1" />
+    <geom name="propulsion_module_port_lv2" class="visual" mesh="light_propulsion_module_port__2" rgba="0.100000001 0.100000001 0.119999997 1" />
+    <geom name="propulsion_module_port_lv3" class="visual" mesh="light_propulsion_module_port__3" rgba="0.159999996 0.159999996 0.180000007 1" />
+    <geom name="propulsion_module_port_lv4" class="visual" mesh="light_propulsion_module_port__4" rgba="0.200000003 0.200000003 0.219999999 1" />
+    <geom name="propulsion_module_port_lv5" class="visual" mesh="light_propulsion_module_port__5" rgba="0.25 0.25 0.280000001 1" />
+    <geom name="propulsion_module_port_lv6" class="visual" mesh="light_propulsion_module_port__6" rgba="0.550000012 0.0500000007 0.0500000007 1" />
+    <geom name="propulsion_module_port_lv7" class="visual" mesh="light_propulsion_module_port__7" rgba="0.550000012 0.560000002 0.579999983 1" />
+    <geom name="propulsion_module_port_lv8" class="visual" mesh="light_propulsion_module_port__8" rgba="0.699999988 0.74000001 0.800000012 1" />
+    <geom name="propulsion_module_port_lv9" class="visual" mesh="light_propulsion_module_port__9" rgba="0.720000029 0.720000029 0.74000001 1" />
+    <geom name="propulsion_module_port_lv10" class="visual" mesh="light_propulsion_module_port__10" rgba="0.800000012 0.680000007 0.300000012 1" />
+    <geom name="propulsion_module_port_lv11" class="visual" mesh="light_propulsion_module_port__11" rgba="0.829999983 0.620000005 0.25 1" />
+    <geom name="propulsion_module_port_lv12" class="visual" mesh="light_propulsion_module_port__12" rgba="0.850000024 0.550000012 0.150000006 1" />
+    <geom name="propulsion_module_port_lv13" class="visual" mesh="light_propulsion_module_port__13" rgba="0.860000014 0.850000024 0.800000012 1" />
+    <geom name="propulsion_module_port_lv14" class="visual" mesh="light_propulsion_module_port__14" rgba="0.899999976 0.920000017 0.949999988 0.5" />
+    <geom name="propulsion_module_port_lv15" class="visual" mesh="light_propulsion_module_port__15" rgba="0.949999988 0.800000012 0.100000001 1" />
+    <geom name="propulsion_module_port_lv16" class="visual" mesh="light_propulsion_module_port__16" rgba="0.949999988 0.949999988 0.930000007 1" />
+    <geom name="c_pm_p_block" class="collision" type="box" pos="0 0.034925 0" size="0.14605 0.034925 0.14605" />
+    <geom name="c_pm_p_bumper_fwd_bottom" class="collision" type="mesh" mesh="pm_pm_bumper_fwd_bottom_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_p_bumper_fwd_top" class="collision" type="mesh" mesh="pm_pm_bumper_fwd_top_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_p_bumper_aft_bottom" class="collision" type="mesh" mesh="pm_pm_bumper_aft_bottom_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_pm_p_bumper_aft_top" class="collision" type="mesh" mesh="pm_pm_bumper_aft_top_hull" pos="0 0 0" quat="1 0 0 0" />
+    <site name="nozzle_2_1" class="marker" type="box" pos="0.152400 0.025654 -0.039624" zaxis="1 0 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_1" class="marker" pos="0.146050 0.025654 -0.039624" zaxis="1 0 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_2_2" class="marker" type="box" pos="-0.152400 0.025654 0.039624" zaxis="-1 0 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_2" class="marker" pos="-0.146050 0.025654 0.039624" zaxis="-1 0 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_2_3" class="marker" type="box" pos="0.071882 0.076200 0.071882" zaxis="0 1 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_3" class="marker" pos="0.071882 0.069850 0.071882" zaxis="0 1 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_2_4" class="marker" type="box" pos="-0.071882 0.076200 -0.071882" zaxis="0 1 0" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_4" class="marker" pos="-0.071882 0.069850 -0.071882" zaxis="0 1 0" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_2_5" class="marker" type="box" pos="-0.067564 0.025654 0.152400" zaxis="0 0 1" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_5" class="marker" pos="-0.067564 0.025654 0.146050" zaxis="0 0 1" size="0.002" rgba="1 1 0 1" />
+    <site name="nozzle_2_6" class="marker" type="box" pos="0.067564 0.025654 -0.152400" zaxis="0 0 -1" size="0.004 0.004 0.002" rgba="1 0.4 0 1" />
+    <site name="nozzle_face_2_6" class="marker" pos="0.067564 0.025654 -0.146050" zaxis="0 0 -1" size="0.002" rgba="1 1 0 1" />
+    <site name="pm_p_dowel_hole_round" class="marker" pos="0.10800 0 0.00000" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_p_dowel_slot" class="marker" pos="-0.10900 0 -0.01600" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_p_connector" class="marker" pos="0.08000 0 0.02000" zaxis="0 -1 0" size="0.003" />
+    <site name="pm_p_captive_screw_0" class="marker" pos="0.10900 0 -0.02200" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_p_captive_screw_1" class="marker" pos="-0.10900 0 0.02200" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_p_captive_screw_2" class="marker" pos="0.10000 0 -0.04100" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_p_captive_screw_3" class="marker" pos="-0.10000 0 0.04100" zaxis="0 -1 0" size="0.002" />
+    <site name="pm_p_handle_grasp" class="marker" pos="0 0.09735 0" size="0.003" />
+    <site name="pm_p_intake" class="marker" pos="0 0.06985 0" zaxis="0 1 0" size="0.003" />
+    <site name="pm_p_mating_face" class="marker" pos="0 0 0" zaxis="0 -1 0" size="0.005" />
+    <body name="pm_p_impeller" pos="0 0 0" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_impeller" type="hinge" class="visual_joint" armature="1e-4" damping="0" axis="0.000000 1.000000 0.000000" />
+    </body>
+    <body name="pm_p_n1_drive" pos="0.117724 0.030849 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n1_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.000000 -0.000000 -1.000000" />
+    </body>
+    <body name="pm_p_n1_flap_a" pos="0.12305 0.038745 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n1_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.000000 0.000000 1.000000" />
+     <geom name="pm_p_n1_flap_a_lv0" class="visual" mesh="light_pm_p_n1_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n1_flap_b" pos="0.12305 0.012563 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n1_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.000000 -0.000000 -1.000000" />
+     <geom name="pm_p_n1_flap_b_lv0" class="visual" mesh="light_pm_p_n1_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n1_idler" pos="0.117802 0.019207 -0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n1_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="0.000000 0.000000 1.000000" />
+    </body>
+    <body name="pm_p_n2_drive" pos="-0.117724 0.030849 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n2_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.000000 -0.000000 1.000000" />
+    </body>
+    <body name="pm_p_n2_flap_a" pos="-0.12305 0.038745 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n2_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.000000 0.000000 -1.000000" />
+     <geom name="pm_p_n2_flap_a_lv0" class="visual" mesh="light_pm_p_n2_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n2_flap_b" pos="-0.12305 0.012563 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n2_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.000000 -0.000000 1.000000" />
+     <geom name="pm_p_n2_flap_b_lv0" class="visual" mesh="light_pm_p_n2_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n2_idler" pos="-0.117802 0.019207 0.039624" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n2_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="0.000000 0.000000 -1.000000" />
+    </body>
+    <body name="pm_p_n3_drive" pos="0.064482 0.056006 0.064482" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n3_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="0.707107 -0.000000 -0.707107" />
+    </body>
+    <body name="pm_p_n3_flap_a" pos="0.062625 0.04685 0.062625" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n3_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.707107 0.000000 0.707107" />
+     <geom name="pm_p_n3_flap_a_lv0" class="visual" mesh="light_pm_p_n3_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n3_flap_b" pos="0.081139 0.04685 0.081139" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n3_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.707107 -0.000000 -0.707107" />
+     <geom name="pm_p_n3_flap_b_lv0" class="visual" mesh="light_pm_p_n3_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n3_idler" pos="0.07354 0.04968 0.07354" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n3_idler" type="hinge" class="visual_joint" range="-0.01 0.46841" limited="true" axis="-0.707107 0.000000 0.707107" />
+    </body>
+    <body name="pm_p_n4_drive" pos="-0.064482 0.056006 -0.064482" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n4_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-0.707107 -0.000000 0.707107" />
+     <geom name="pm_p_n4_drive_lv0" class="visual" mesh="light_pm_p_n4_drive__0" rgba="0.720000029 0.720000029 0.74000001 1" />
+    </body>
+    <body name="pm_p_n4_flap_a" pos="-0.062625 0.04685 -0.062625" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n4_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="0.707107 0.000000 -0.707107" />
+     <geom name="pm_p_n4_flap_a_lv0" class="visual" mesh="light_pm_p_n4_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n4_flap_b" pos="-0.081139 0.04685 -0.081139" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n4_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-0.707107 -0.000000 0.707107" />
+     <geom name="pm_p_n4_flap_b_lv0" class="visual" mesh="light_pm_p_n4_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n4_idler" pos="-0.07354 0.04968 -0.07354" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n4_idler" type="hinge" class="visual_joint" range="-0.01 0.46841" limited="true" axis="0.707107 0.000000 -0.707107" />
+    </body>
+    <body name="pm_p_n5_drive" pos="-0.067564 0.020459 0.117724" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n5_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="-1.000000 -0.000000 -0.000000" />
+    </body>
+    <body name="pm_p_n5_flap_a" pos="-0.067564 0.012563 0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n5_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="1.000000 0.000000 0.000000" />
+     <geom name="pm_p_n5_flap_a_lv0" class="visual" mesh="light_pm_p_n5_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n5_flap_b" pos="-0.067564 0.038745 0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n5_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-1.000000 -0.000000 -0.000000" />
+     <geom name="pm_p_n5_flap_b_lv0" class="visual" mesh="light_pm_p_n5_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n5_idler" pos="-0.067564 0.032101 0.117802" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n5_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="1.000000 0.000000 0.000000" />
+    </body>
+    <body name="pm_p_n6_drive" pos="0.067564 0.020459 -0.117724" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n6_drive" type="hinge" class="visual_joint" range="-0.01 0.58051" limited="true" axis="1.000000 -0.000000 -0.000000" />
+    </body>
+    <body name="pm_p_n6_flap_a" pos="0.067564 0.012563 -0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n6_flap_a" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="-1.000000 0.000000 0.000000" />
+     <geom name="pm_p_n6_flap_a_lv0" class="visual" mesh="light_pm_p_n6_flap_a__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n6_flap_b" pos="0.067564 0.038745 -0.12305" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n6_flap_b" type="hinge" class="visual_joint" range="-0.01 1.13102" limited="true" axis="1.000000 -0.000000 -0.000000" />
+     <geom name="pm_p_n6_flap_b_lv0" class="visual" mesh="light_pm_p_n6_flap_b__0" rgba="0.800000012 0.810000002 0.829999983 1" />
+    </body>
+    <body name="pm_p_n6_idler" pos="0.067564 0.032101 -0.117802" quat="1 0 0 0">
+     <inertial pos="0 0 0" mass="1e-06" diaginertia="1e-12 1e-12 1e-12" />
+     <joint name="pm_p_n6_idler" type="hinge" class="visual_joint" range="-0.01 0.69261" limited="true" axis="-1.000000 0.000000 0.000000" />
+    </body>
+   </body>
+   <body name="arm_base" pos="0 0 -0.0508" quat="0 0 1 0">
+    <inertial pos="0.0946308 -0.00254716 0.0319223" mass="0.429964" fullinertia="0.000745019 0.000479123 0.000831785 -4.37635e-06 -0.0001344 -9.19494e-06" />
+    <geom name="arm_base_lv0" class="visual" mesh="light_arm_base__0" rgba="0.100000001 0.449999988 0.200000003 1" />
+    <geom name="arm_base_lv1" class="visual" mesh="light_arm_base__1" rgba="0.159999996 0.159999996 0.170000002 1" />
+    <geom name="arm_base_lv2" class="visual" mesh="light_arm_base__2" rgba="0.550000012 0.560000002 0.579999983 1" />
+    <geom name="arm_base_lv3" class="visual" mesh="light_arm_base__3" rgba="0.699999988 0.709999979 0.730000019 1" />
+    <geom name="arm_base_lv4" class="visual" mesh="light_arm_base__4" rgba="0.75 0.75 0.779999971 1" />
+    <geom name="c_arm_arm_mount_base_0" class="collision" type="box" pos="0.083439 0 0.0071" quat="1 0 0 0" size="0.037596 0.0646 0.0071" />
+    <geom name="c_arm_arm_mount_base_1" class="collision" type="box" pos="0.0466642 0.06834 0.029695" quat="1 0 0 0" size="0.00082115 0.00634 0.029695" />
+    <geom name="c_arm_arm_mount_base_2" class="collision" type="box" pos="0.0497078 0.0649725 0.029695" quat="1 0 0 0" size="0.0022225 0.0029725 0.029695" />
+    <geom name="c_arm_arm_mount_base_3" class="collision" type="box" pos="0.0549651 0.06834 0.029695" quat="1 0 0 0" size="0.00303485 0.00634 0.029695" />
+    <geom name="c_arm_arm_mount_base_4" class="collision" type="box" pos="0.114517 0.06964 0.0071" quat="1 0 0 0" size="0.0065175 0.00504 0.0071" />
+    <geom name="c_arm_arm_mount_base_5" class="collision" type="box" pos="0.074 0.0661 0.0364" quat="1 0 0 0" size="0.018 0.0015 0.0156" />
+    <geom name="c_arm_arm_mount_base_6" class="collision" type="box" pos="0.06235 0.0661 0.0104" quat="1 0 0 0" size="0.00635 0.0015 0.0104" />
+    <geom name="c_arm_arm_mount_base_7" class="collision" type="box" pos="0.0645 0.071 0.0274" quat="1 0 0 0" size="0.006 0.0034 0.0035" />
+    <geom name="c_arm_arm_mount_base_8" class="collision" type="box" pos="0.0746 0.071 0.0452" quat="1 0 0 0" size="0.004 0.0034 0.006" />
+    <geom name="c_arm_arm_mount_base_9" class="collision" type="box" pos="0.0466642 -0.06834 0.029695" quat="1 0 0 0" size="0.00082115 0.00634 0.029695" />
+    <geom name="c_arm_arm_mount_base_10" class="collision" type="box" pos="0.0497078 -0.0649725 0.029695" quat="1 0 0 0" size="0.0022225 0.0029725 0.029695" />
+    <geom name="c_arm_arm_mount_base_11" class="collision" type="box" pos="0.0549651 -0.06834 0.029695" quat="1 0 0 0" size="0.00303485 0.00634 0.029695" />
+    <geom name="c_arm_arm_mount_base_12" class="collision" type="box" pos="0.114517 -0.06964 0.0071" quat="1 0 0 0" size="0.0065175 0.00504 0.0071" />
+    <geom name="c_arm_arm_mount_base_13" class="collision" type="box" pos="0.074 -0.0661 0.0364" quat="1 0 0 0" size="0.018 0.0015 0.0156" />
+    <geom name="c_arm_arm_mount_base_14" class="collision" type="box" pos="0.06235 -0.0661 0.0104" quat="1 0 0 0" size="0.00635 0.0015 0.0104" />
+    <geom name="c_arm_arm_mount_base_15" class="collision" type="box" pos="0.0645 -0.071 0.0274" quat="1 0 0 0" size="0.006 0.0034 0.0035" />
+    <geom name="c_arm_arm_mount_base_16" class="collision" type="box" pos="0.0746 -0.071 0.0452" quat="1 0 0 0" size="0.004 0.0034 0.006" />
+    <geom name="c_arm_arm_lever_pivot_stbd" class="collision" type="mesh" mesh="arm_arm_lever_pivot_stbd_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_magnet_stbd_open" class="collision" type="mesh" mesh="arm_arm_magnet_stbd_open_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_magnet_stbd_closed" class="collision" type="mesh" mesh="arm_arm_magnet_stbd_closed_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_lever_pivot_port" class="collision" type="mesh" mesh="arm_arm_lever_pivot_port_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_magnet_port_open" class="collision" type="mesh" mesh="arm_arm_magnet_port_open_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_magnet_port_closed" class="collision" type="mesh" mesh="arm_arm_magnet_port_closed_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_alignment_pin_main" class="collision" type="mesh" mesh="arm_arm_alignment_pin_main_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_alignment_pin_second" class="collision" type="mesh" mesh="arm_arm_alignment_pin_second_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_connector_31s" class="collision" type="mesh" mesh="arm_arm_connector_31s_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_base_housing_0" class="collision" type="box" pos="0.08953 0 0.04013" quat="1 0 0 0" size="0.03127 0.0646 0.0015" />
+    <geom name="c_arm_arm_base_housing_1" class="collision" type="box" pos="0.05951 0 0.027915" quat="1 0 0 0" size="0.00125 0.0646 0.013715" />
+    <geom name="c_arm_arm_base_housing_2" class="collision" type="box" pos="0.11955 0 0.027915" quat="1 0 0 0" size="0.00125 0.0646 0.013715" />
+    <geom name="c_arm_arm_base_housing_3" class="collision" type="box" pos="0.08953 0.06335 0.027915" quat="1 0 0 0" size="0.03127 0.00125 0.013715" />
+    <geom name="c_arm_arm_base_housing_4" class="collision" type="box" pos="0.08953 -0.06335 0.027915" quat="1 0 0 0" size="0.03127 0.00125 0.013715" />
+    <geom name="c_arm_arm_base_housing_5" class="collision" type="box" pos="0.128 0 0.034625" quat="1 0 0 0" size="0.0178 0.022 0.008975" />
+    <geom name="c_arm_arm_base_housing_6" class="collision" type="box" pos="0.11255 0 0.051025" quat="1 0 0 0" size="0.00235 0.022 0.007425" />
+    <geom name="c_arm_arm_base_housing_7" class="collision" type="box" pos="0.1449 0 0.0468" quat="1 0 0 0" size="0.0009 0.022 0.0032" />
+    <geom name="c_arm_arm_controller_board" class="collision" type="mesh" mesh="arm_arm_controller_board_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_tilt_actuator" class="collision" type="mesh" mesh="arm_arm_tilt_actuator_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_tilt_thermostat" class="collision" type="mesh" mesh="arm_arm_tilt_thermostat_hull" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="c_arm_arm_stow_magnet_base" class="collision" type="mesh" mesh="arm_arm_stow_magnet_base_hull" pos="0 0 0" quat="1 0 0 0" />
+    <site class="marker" name="arm_bay_frame" pos="0 0 0" />
+    <body name="arm_lever_stbd" pos="0.0829691 0.070612 0.0287" quat="1 0 0 0">
+     <inertial pos="0.000280207 5.55595e-17 0.0238723" mass="0.0194025" fullinertia="1.81961e-05 1.92162e-05 1.10087e-06 2.03637e-20 -8.04801e-08 1.04279e-19" />
+     <geom name="arm_lever_stbd_lv0" class="visual" mesh="light_arm_lever_stbd__0" rgba="0.620000005 0.629999995 0.660000026 1" />
+     <geom name="c_arm_arm_lever_stbd" class="collision" type="mesh" mesh="arm_arm_lever_stbd_hull" pos="-0.0829691 -0.070612 -0.0287" quat="1 0 0 0" />
+     <geom name="c_arm_arm_strike_stbd_open" class="collision" type="mesh" mesh="arm_arm_strike_stbd_open_hull" pos="-0.0829691 -0.070612 -0.0287" quat="1 0 0 0" />
+     <geom name="c_arm_arm_strike_stbd_closed" class="collision" type="mesh" mesh="arm_arm_strike_stbd_closed_hull" pos="-0.0829691 -0.070612 -0.0287" quat="1 0 0 0" />
+    </body>
+    <body name="arm_lever_port" pos="0.0829691 -0.070612 0.0287" quat="1 0 0 0">
+     <inertial pos="0.000280207 0 0.0238723" mass="0.0194025" fullinertia="1.81961e-05 1.92162e-05 1.10087e-06 8.38573e-20 -8.04801e-08 -2.10489e-20" />
+     <geom name="arm_lever_port_lv0" class="visual" mesh="light_arm_lever_port__0" rgba="0.620000005 0.629999995 0.660000026 1" />
+     <geom name="c_arm_arm_lever_port" class="collision" type="mesh" mesh="arm_arm_lever_port_hull" pos="-0.0829691 0.070612 -0.0287" quat="1 0 0 0" />
+     <geom name="c_arm_arm_strike_port_open" class="collision" type="mesh" mesh="arm_arm_strike_port_open_hull" pos="-0.0829691 0.070612 -0.0287" quat="1 0 0 0" />
+     <geom name="c_arm_arm_strike_port_closed" class="collision" type="mesh" mesh="arm_arm_strike_port_closed_hull" pos="-0.0829691 0.070612 -0.0287" quat="1 0 0 0" />
+    </body>
+    <body name="arm_proximal" pos="0.12945 0 0.0792" quat="0.707107 0 0.707107 0">
+     <inertial pos="-0.0637815 -0.00100538 -4.96061e-05" mass="0.173106" fullinertia="5.04975e-05 0.000166091 0.000190892 8.06439e-06 2.25649e-08 8.63334e-09" />
+     <joint name="arm_tilt" type="hinge" axis="0 -1 0" range="-2.0944 1.57079" armature="0.005" damping="0.05" frictionloss="0.01" />
+     <geom name="arm_proximal_lv0" class="visual" mesh="light_arm_proximal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+     <geom name="arm_proximal_lv1" class="visual" mesh="light_arm_proximal__1" rgba="0.550000012 0.560000002 0.579999983 1" />
+     <geom name="arm_proximal_lv2" class="visual" mesh="light_arm_proximal__2" rgba="0.699999988 0.709999979 0.730000019 1" />
+     <geom name="arm_proximal_lv3" class="visual" mesh="light_arm_proximal__3" rgba="0.850000024 0.550000012 0.349999994 1" />
+     <geom name="c_arm_arm_proximal_link" class="collision" type="mesh" mesh="arm_arm_proximal_link_hull" pos="0 0 0" quat="1 0 0 0" />
+     <geom name="c_arm_arm_tilt_horn" class="collision" type="mesh" mesh="arm_arm_tilt_horn_hull" pos="0 0 0" quat="1 0 0 0" />
+     <geom name="c_arm_arm_tilt_idler" class="collision" type="mesh" mesh="arm_arm_tilt_idler_hull" pos="0 0 0" quat="1 0 0 0" />
+     <geom name="c_arm_arm_pan_actuator" class="collision" type="mesh" mesh="arm_arm_pan_actuator_hull" pos="0 0 0" quat="1 0 0 0" />
+     <geom name="c_arm_arm_pan_thermostat" class="collision" type="mesh" mesh="arm_arm_pan_thermostat_hull" pos="0 0 0" quat="1 0 0 0" />
+     <body name="arm_distal" pos="-0.1 0 0" quat="1 0 0 0">
+      <inertial pos="-0.0105079 0.000831219 -0.0322823" mass="0.120308" fullinertia="8.53385e-05 0.000110561 6.41066e-05 -4.67643e-07 7.00297e-06 1.82072e-06" />
+      <joint name="arm_pan" type="hinge" axis="0 0 1" range="-1.57079 1.57079" armature="0.005" damping="0.05" frictionloss="0.01" />
+      <geom name="arm_distal_lv0" class="visual" mesh="light_arm_distal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+      <geom name="arm_distal_lv1" class="visual" mesh="light_arm_distal__1" rgba="0.550000012 0.560000002 0.579999983 1" />
+      <geom name="arm_distal_lv2" class="visual" mesh="light_arm_distal__2" rgba="0.699999988 0.709999979 0.730000019 1" />
+      <geom name="arm_distal_lv3" class="visual" mesh="light_arm_distal__3" rgba="0.800000012 0.800000012 0.819999993 1" />
+      <geom name="arm_distal_lv4" class="visual" mesh="light_arm_distal__4" rgba="0.850000024 0.150000006 0.100000001 1" />
+      <geom name="c_arm_arm_pan_horn" class="collision" type="mesh" mesh="arm_arm_pan_horn_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_arm_pan_idler" class="collision" type="mesh" mesh="arm_arm_pan_idler_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_arm_distal_link" class="collision" type="mesh" mesh="arm_arm_distal_link_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_arm_stow_magnet_distal" class="collision" type="mesh" mesh="arm_arm_stow_magnet_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_palm_housing_0" class="collision" type="box" pos="-0.0125 0 -0.04845" quat="1 0 0 0" size="0.0215 0.032 0.01345" />
+      <geom name="c_arm_grip_palm_housing_1" class="collision" type="box" pos="0.0178 0 -0.04845" quat="1 0 0 0" size="0.0088 0.012 0.01345" />
+      <geom name="c_arm_grip_palm_housing_2" class="collision" type="box" pos="-0.041 0 -0.04845" quat="1 0 0 0" size="0.007 0.0018 0.01345" />
+      <geom name="c_arm_grip_palm_housing_3" class="collision" type="box" pos="-0.0301 0 -0.0055" quat="1 0 0 0" size="0.0029 0.016 0.0295" />
+      <geom name="c_arm_grip_cover" class="collision" type="mesh" mesh="arm_grip_cover_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_motor" class="collision" type="mesh" mesh="arm_grip_motor_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_connector_pads" class="pad" type="mesh" mesh="arm_grip_connector_pads_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_connector_springpins" class="collision" type="mesh" mesh="arm_grip_connector_springpins_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_guide_pin" class="collision" type="mesh" mesh="arm_grip_guide_pin_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_captive_screw_a" class="collision" type="mesh" mesh="arm_grip_captive_screw_a_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_captive_screw_b" class="collision" type="mesh" mesh="arm_grip_captive_screw_b_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_left_post_proximal" class="collision" type="mesh" mesh="arm_grip_left_post_proximal_hull" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="c_arm_grip_right_post_proximal" class="collision" type="mesh" mesh="arm_grip_right_post_proximal_hull" pos="0 0 0" quat="1 0 0 0" />
+      <site class="marker" name="gripper_center" pos="-0.075 0 -0.0497" />
+      <body name="grip_spool" pos="0 0 0" quat="1 0 0 0">
+       <inertial pos="-0.00604121 -0.0122394 -0.0505" mass="0.00169763" fullinertia="1.92019e-08 1.60602e-08 1.91291e-08 -3.5718e-11 -3.9604e-23 -1.66648e-22" />
+       <geom name="grip_spool_lv0" class="visual" mesh="light_grip_spool__0" rgba="0.699999988 0.709999979 0.730000019 1" />
+       <geom name="c_arm_grip_output_shaft" class="collision" type="mesh" mesh="arm_grip_output_shaft_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_spool" class="collision" type="mesh" mesh="arm_grip_spool_hull" pos="0 0 0" quat="1 0 0 0" />
+      </body>
+      <body name="gripper_left_proximal" pos="-0.039 -0.010002 -0.0497" quat="1 0 0 0">
+       <inertial pos="-0.0263095 -0.000461143 2.17897e-12" mass="0.0341293" fullinertia="2.8538e-06 1.14443e-05 1.059e-05 -1.33262e-07 -1.66329e-12 1.66149e-12" />
+       <joint name="grip_left_proximal" type="hinge" axis="0 0 1" range="0.349066 0.698132" damping="0.0005" armature="1e-5" />
+       <geom name="gripper_left_proximal_lv0" class="visual" mesh="light_gripper_left_proximal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+       <geom name="gripper_left_proximal_lv1" class="visual" mesh="light_gripper_left_proximal__1" rgba="0.550000012 0.560000002 0.579999983 1" />
+       <geom name="gripper_left_proximal_lv2" class="visual" mesh="light_gripper_left_proximal__2" rgba="0.800000012 0.680000007 0.479999989 1" />
+       <geom name="gripper_left_proximal_lv3" class="visual" mesh="light_gripper_left_proximal__3" rgba="0.850000024 0.150000006 0.100000001 1" />
+       <geom name="c_arm_grip_left_proximal" class="finger" type="mesh" mesh="arm_grip_left_proximal_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_left_proximal_pad" class="finger_pad" type="mesh" mesh="arm_grip_left_proximal_pad_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_left_post_distal" class="finger" type="mesh" mesh="arm_grip_left_post_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_left_spring_proximal_a" class="finger" type="mesh" mesh="arm_grip_left_spring_proximal_a_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_left_spring_proximal_b" class="finger" type="mesh" mesh="arm_grip_left_spring_proximal_b_hull" pos="0 0 0" quat="1 0 0 0" />
+       <body name="gripper_left_distal" pos="-0.05 0 0" quat="1 0 0 0">
+        <inertial pos="-0.0174438 1.15786e-05 0.000121162" mass="0.0170332" fullinertia="9.16129e-07 3.37724e-06 3.40846e-06 1.96838e-07 -3.60042e-08 2.96775e-11" />
+        <joint name="grip_left_distal" type="hinge" axis="0 0 1" range="-1.22173 -0.69813" damping="0.0003" armature="1e-5" />
+        <geom name="gripper_left_distal_lv0" class="visual" mesh="light_gripper_left_distal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+        <geom name="gripper_left_distal_lv1" class="visual" mesh="light_gripper_left_distal__1" rgba="0.800000012 0.680000007 0.479999989 1" />
+        <geom name="gripper_left_distal_lv2" class="visual" mesh="light_gripper_left_distal__2" rgba="0.850000024 0.150000006 0.100000001 1" />
+        <geom name="c_arm_grip_left_distal" class="finger" type="mesh" mesh="arm_grip_left_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="c_arm_grip_left_distal_pad" class="finger_pad" type="mesh" mesh="arm_grip_left_distal_pad_hull" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="c_arm_grip_left_spring_distal" class="finger" type="mesh" mesh="arm_grip_left_spring_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+        <site class="marker" name="fingertip_left" pos="-0.048 0.009 0" />
+       </body>
+      </body>
+      <body name="gripper_right_proximal" pos="-0.039 0.010002 -0.0497" quat="1 0 0 0">
+       <inertial pos="-0.0263095 0.000461143 9.60785e-13" mass="0.0341293" fullinertia="2.8538e-06 1.14443e-05 1.059e-05 1.33262e-07 -1.66219e-12 -1.66136e-12" />
+       <joint name="grip_right_proximal" type="hinge" axis="0 0 1" range="-0.698132 -0.349066" damping="0.0005" armature="1e-5" />
+       <geom name="gripper_right_proximal_lv0" class="visual" mesh="light_gripper_right_proximal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+       <geom name="gripper_right_proximal_lv1" class="visual" mesh="light_gripper_right_proximal__1" rgba="0.550000012 0.560000002 0.579999983 1" />
+       <geom name="gripper_right_proximal_lv2" class="visual" mesh="light_gripper_right_proximal__2" rgba="0.800000012 0.680000007 0.479999989 1" />
+       <geom name="gripper_right_proximal_lv3" class="visual" mesh="light_gripper_right_proximal__3" rgba="0.850000024 0.150000006 0.100000001 1" />
+       <geom name="c_arm_grip_right_proximal" class="finger" type="mesh" mesh="arm_grip_right_proximal_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_right_proximal_pad" class="finger_pad" type="mesh" mesh="arm_grip_right_proximal_pad_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_right_post_distal" class="finger" type="mesh" mesh="arm_grip_right_post_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_right_spring_proximal_a" class="finger" type="mesh" mesh="arm_grip_right_spring_proximal_a_hull" pos="0 0 0" quat="1 0 0 0" />
+       <geom name="c_arm_grip_right_spring_proximal_b" class="finger" type="mesh" mesh="arm_grip_right_spring_proximal_b_hull" pos="0 0 0" quat="1 0 0 0" />
+       <body name="gripper_right_distal" pos="-0.05 0 0" quat="1 0 0 0">
+        <inertial pos="-0.0174438 -1.15786e-05 0.000121162" mass="0.0170332" fullinertia="9.16129e-07 3.37724e-06 3.40846e-06 -1.96838e-07 -3.60042e-08 -2.96765e-11" />
+        <joint name="grip_right_distal" type="hinge" axis="0 0 1" range="0.69813 1.22173" damping="0.0003" armature="1e-5" />
+        <geom name="gripper_right_distal_lv0" class="visual" mesh="light_gripper_right_distal__0" rgba="0.159999996 0.159999996 0.170000002 1" />
+        <geom name="gripper_right_distal_lv1" class="visual" mesh="light_gripper_right_distal__1" rgba="0.800000012 0.680000007 0.479999989 1" />
+        <geom name="gripper_right_distal_lv2" class="visual" mesh="light_gripper_right_distal__2" rgba="0.850000024 0.150000006 0.100000001 1" />
+        <geom name="c_arm_grip_right_distal" class="finger" type="mesh" mesh="arm_grip_right_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="c_arm_grip_right_distal_pad" class="finger_pad" type="mesh" mesh="arm_grip_right_distal_pad_hull" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="c_arm_grip_right_spring_distal" class="finger" type="mesh" mesh="arm_grip_right_spring_distal_hull" pos="0 0 0" quat="1 0 0 0" />
+        <site class="marker" name="fingertip_right" pos="-0.048 -0.009 0" />
+       </body>
+      </body>
+     </body>
+    </body>
+   </body>
+  </body>
+ </worldbody>
+ <custom>
+  <text name="refbuild" data="reference build v1.2; corrections: gripper_pads dock_face_cups fwd_depth_window" />
+ </custom>
+ <contact>
+  <exclude body1="arm_base" body2="arm_lever_port" />
+  <exclude body1="arm_base" body2="arm_lever_stbd" />
+  <exclude body1="arm_base" body2="arm_proximal" />
+  <exclude body1="arm_base" body2="battery_bottom_port" />
+  <exclude body1="arm_base" body2="battery_bottom_starboard" />
+  <exclude body1="arm_base" body2="battery_top_port" />
+  <exclude body1="arm_base" body2="battery_top_starboard" />
+  <exclude body1="arm_base" body2="core" />
+  <exclude body1="arm_base" body2="forward_sensor_module" />
+  <exclude body1="arm_base" body2="propulsion_module_port" />
+  <exclude body1="arm_base" body2="propulsion_module_starboard" />
+  <exclude body1="arm_distal" body2="gripper_left_distal" />
+  <exclude body1="arm_distal" body2="gripper_right_distal" />
+  <exclude body1="arm_lever_port" body2="arm_lever_stbd" />
+  <exclude body1="arm_lever_port" body2="battery_bottom_port" />
+  <exclude body1="arm_lever_port" body2="battery_bottom_starboard" />
+  <exclude body1="arm_lever_port" body2="battery_top_port" />
+  <exclude body1="arm_lever_port" body2="battery_top_starboard" />
+  <exclude body1="arm_lever_port" body2="core" />
+  <exclude body1="arm_lever_port" body2="forward_sensor_module" />
+  <exclude body1="arm_lever_port" body2="propulsion_module_port" />
+  <exclude body1="arm_lever_port" body2="propulsion_module_starboard" />
+  <exclude body1="arm_lever_stbd" body2="battery_bottom_port" />
+  <exclude body1="arm_lever_stbd" body2="battery_bottom_starboard" />
+  <exclude body1="arm_lever_stbd" body2="battery_top_port" />
+  <exclude body1="arm_lever_stbd" body2="battery_top_starboard" />
+  <exclude body1="arm_lever_stbd" body2="core" />
+  <exclude body1="arm_lever_stbd" body2="forward_sensor_module" />
+  <exclude body1="arm_lever_stbd" body2="propulsion_module_port" />
+  <exclude body1="arm_lever_stbd" body2="propulsion_module_starboard" />
+  <exclude body1="battery_bottom_port" body2="battery_bottom_starboard" />
+  <exclude body1="battery_bottom_port" body2="battery_top_port" />
+  <exclude body1="battery_bottom_port" body2="battery_top_starboard" />
+  <exclude body1="battery_bottom_port" body2="core" />
+  <exclude body1="battery_bottom_port" body2="forward_sensor_module" />
+  <exclude body1="battery_bottom_port" body2="propulsion_module_port" />
+  <exclude body1="battery_bottom_port" body2="propulsion_module_starboard" />
+  <exclude body1="battery_bottom_starboard" body2="battery_top_port" />
+  <exclude body1="battery_bottom_starboard" body2="battery_top_starboard" />
+  <exclude body1="battery_bottom_starboard" body2="core" />
+  <exclude body1="battery_bottom_starboard" body2="forward_sensor_module" />
+  <exclude body1="battery_bottom_starboard" body2="propulsion_module_port" />
+  <exclude body1="battery_bottom_starboard" body2="propulsion_module_starboard" />
+  <exclude body1="battery_top_port" body2="battery_top_starboard" />
+  <exclude body1="battery_top_port" body2="core" />
+  <exclude body1="battery_top_port" body2="forward_sensor_module" />
+  <exclude body1="battery_top_port" body2="propulsion_module_port" />
+  <exclude body1="battery_top_port" body2="propulsion_module_starboard" />
+  <exclude body1="battery_top_starboard" body2="core" />
+  <exclude body1="battery_top_starboard" body2="forward_sensor_module" />
+  <exclude body1="battery_top_starboard" body2="propulsion_module_port" />
+  <exclude body1="battery_top_starboard" body2="propulsion_module_starboard" />
+  <exclude body1="core" body2="forward_sensor_module" />
+  <exclude body1="core" body2="propulsion_module_port" />
+  <exclude body1="core" body2="propulsion_module_starboard" />
+  <exclude body1="forward_sensor_module" body2="propulsion_module_port" />
+  <exclude body1="forward_sensor_module" body2="propulsion_module_starboard" />
+  <exclude body1="propulsion_module_port" body2="propulsion_module_starboard" />
+ </contact>
+ <tendon>
+  <fixed name="nozzle_1_1_flaps">
+   <joint joint="pm_s_n1_flap_a" coef="1" />
+   <joint joint="pm_s_n1_flap_b" coef="1" />
+   <joint joint="pm_s_n1_drive" coef="0.5" />
+   <joint joint="pm_s_n1_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_1_2_flaps">
+   <joint joint="pm_s_n2_flap_a" coef="1" />
+   <joint joint="pm_s_n2_flap_b" coef="1" />
+   <joint joint="pm_s_n2_drive" coef="0.5" />
+   <joint joint="pm_s_n2_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_1_3_flaps">
+   <joint joint="pm_s_n3_flap_a" coef="1" />
+   <joint joint="pm_s_n3_flap_b" coef="1" />
+   <joint joint="pm_s_n3_drive" coef="0.5" />
+   <joint joint="pm_s_n3_idler" coef="0.4" />
+  </fixed>
+  <fixed name="nozzle_1_4_flaps">
+   <joint joint="pm_s_n4_flap_a" coef="1" />
+   <joint joint="pm_s_n4_flap_b" coef="1" />
+   <joint joint="pm_s_n4_drive" coef="0.5" />
+   <joint joint="pm_s_n4_idler" coef="0.4" />
+  </fixed>
+  <fixed name="nozzle_1_5_flaps">
+   <joint joint="pm_s_n5_flap_a" coef="1" />
+   <joint joint="pm_s_n5_flap_b" coef="1" />
+   <joint joint="pm_s_n5_drive" coef="0.5" />
+   <joint joint="pm_s_n5_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_1_6_flaps">
+   <joint joint="pm_s_n6_flap_a" coef="1" />
+   <joint joint="pm_s_n6_flap_b" coef="1" />
+   <joint joint="pm_s_n6_drive" coef="0.5" />
+   <joint joint="pm_s_n6_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_2_1_flaps">
+   <joint joint="pm_p_n1_flap_a" coef="1" />
+   <joint joint="pm_p_n1_flap_b" coef="1" />
+   <joint joint="pm_p_n1_drive" coef="0.5" />
+   <joint joint="pm_p_n1_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_2_2_flaps">
+   <joint joint="pm_p_n2_flap_a" coef="1" />
+   <joint joint="pm_p_n2_flap_b" coef="1" />
+   <joint joint="pm_p_n2_drive" coef="0.5" />
+   <joint joint="pm_p_n2_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_2_3_flaps">
+   <joint joint="pm_p_n3_flap_a" coef="1" />
+   <joint joint="pm_p_n3_flap_b" coef="1" />
+   <joint joint="pm_p_n3_drive" coef="0.5" />
+   <joint joint="pm_p_n3_idler" coef="0.4" />
+  </fixed>
+  <fixed name="nozzle_2_4_flaps">
+   <joint joint="pm_p_n4_flap_a" coef="1" />
+   <joint joint="pm_p_n4_flap_b" coef="1" />
+   <joint joint="pm_p_n4_drive" coef="0.5" />
+   <joint joint="pm_p_n4_idler" coef="0.4" />
+  </fixed>
+  <fixed name="nozzle_2_5_flaps">
+   <joint joint="pm_p_n5_flap_a" coef="1" />
+   <joint joint="pm_p_n5_flap_b" coef="1" />
+   <joint joint="pm_p_n5_drive" coef="0.5" />
+   <joint joint="pm_p_n5_idler" coef="0.6" />
+  </fixed>
+  <fixed name="nozzle_2_6_flaps">
+   <joint joint="pm_p_n6_flap_a" coef="1" />
+   <joint joint="pm_p_n6_flap_b" coef="1" />
+   <joint joint="pm_p_n6_drive" coef="0.5" />
+   <joint joint="pm_p_n6_idler" coef="0.6" />
+  </fixed>
+ </tendon>
+ <actuator>
+  <position name="act_arm_tilt" joint="arm_tilt" kp="20" kv="0.6" forcerange="-1 1" ctrlrange="-2.0944 1.57079" />
+  <position name="act_arm_pan" joint="arm_pan" kp="20" kv="0.6" forcerange="-1 1" ctrlrange="-1.57079 1.57079" />
+  <position name="act_gripper" joint="grip_left_proximal" kp="0.5" kv="0.01" forcerange="-0.1 0.1" ctrlrange="0.349066 0.698132" />
+  <velocity name="act_impeller_1" joint="pm_s_impeller" kv="0.002" ctrlrange="0 300" />
+  <position name="act_nozzle_1_1" tendon="nozzle_1_1_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_1_2" tendon="nozzle_1_2_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_1_3" tendon="nozzle_1_3_flaps" gear="0.414937759" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_1_4" tendon="nozzle_1_4_flaps" gear="0.414937759" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_1_5" tendon="nozzle_1_5_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_1_6" tendon="nozzle_1_6_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <velocity name="act_impeller_2" joint="pm_p_impeller" kv="0.002" ctrlrange="0 300" />
+  <position name="act_nozzle_2_1" tendon="nozzle_2_1_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_2_2" tendon="nozzle_2_2_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_2_3" tendon="nozzle_2_3_flaps" gear="0.414937759" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_2_4" tendon="nozzle_2_4_flaps" gear="0.414937759" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_2_5" tendon="nozzle_2_5_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+  <position name="act_nozzle_2_6" tendon="nozzle_2_6_flaps" gear="0.383141762" kp="0.01" kv="0" ctrlrange="0 1.12102" forcerange="-0.05 0.05" />
+ </actuator>
+ <equality>
+  <joint name="eq_grip_left_distal" joint1="grip_left_distal" joint2="grip_left_proximal" polycoef="-1.74533 1.50000286 0 0 0" />
+  <joint name="eq_grip_right_proximal" joint1="grip_right_proximal" joint2="grip_left_proximal" polycoef="0 -1 0 0 0" />
+  <joint name="eq_grip_right_distal" joint1="grip_right_distal" joint2="grip_left_proximal" polycoef="1.74533 -1.50000286 0 0 0" />
+ </equality>
+ <keyframe>
+  <key name="stowed" qpos="0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.5708 0 0.485550806 -1.0170024 -0.485550806 1.0170024" ctrl="1.5708 0 0.485550806 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+  <key name="deployed" qpos="0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5708 0 0.698132 -0.69813 -0.698132 0.69813" ctrl="-1.5708 0 0.698132 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+  <key name="grip_tilt160" qpos="0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.221730476 0 0.485550806 -1.0170024 -0.485550806 1.0170024" ctrl="1.221730476 0 0.485550806 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+ </keyframe>
+</mujoco>

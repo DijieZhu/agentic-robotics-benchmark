@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.95,
+ "metric": "caretaking_score",
+ "note": "caretaking_score is the contract gate times the mean over the six hidden sites of the site score R x (D + U1 + H + U2 + V + K + L + E) (diagnosis 0.14, removal 0.10, docking 0.10, hold 0.14, ventilation 0.08, the sheet fixed on a holding screen 0.18, the pouches on pouch pads 0.18, economy 0.08; R = 1.0, else 0.85), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1). full_at 0.95: the house value for a task that runs programs.",
+ "source": "design target (the task's scoring rules; the hidden set is selected so that the privileged reference scores 1.000 on every site), written on 2026-11-17 before any verify on the hidden set and measured with one full verify of the oracle submission (solution/) in a fresh container of the task image; a different measured value reopens it",
+ "value": 1.0
+}

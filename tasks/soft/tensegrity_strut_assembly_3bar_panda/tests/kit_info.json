@@ -1,0 +1,466 @@
+{
+ "schema": "strut-assembly/kit-info v1",
+ "note": "colours of the parts for the cell's renderer: base colours of the photo material table of the robot's parts; the visual meshes' material keys index this table; the covers' key 'silicone' takes the unit's colour",
+ "primary": {
+  "printed_pla": "pla_black",
+  "end_cap_resin": "resin_grey",
+  "covers": [
+   "silicone_red",
+   "silicone_green",
+   "silicone_blue"
+  ],
+  "rod": "al_brushed",
+  "main_board": "fr4_green"
+ },
+ "cover_colour_of_unit": {
+  "M3_1": "silicone_red",
+  "M3_2": "silicone_red",
+  "M3_3": "silicone_green",
+  "M3_4": "silicone_green",
+  "M3_5": "silicone_blue",
+  "M3_6": "silicone_blue"
+ },
+ "colours": {
+  "pla_black": {
+   "srgb": [
+    0.1897,
+    0.1897,
+    0.1964
+   ],
+   "linear": [
+    0.02999,
+    0.02999,
+    0.03199
+   ],
+   "rgba": [
+    0.1897,
+    0.1897,
+    0.1964,
+    1.0
+   ],
+   "what": "black PLA (FFF print), the enclosures and the winch",
+   "metallic": 0.0,
+   "roughness": 0.4
+  },
+  "resin_grey": {
+   "srgb": [
+    0.47,
+    0.475,
+    0.48
+   ],
+   "linear": [
+    0.18732,
+    0.19163,
+    0.19599
+   ],
+   "rgba": [
+    0.47,
+    0.475,
+    0.48,
+    1.0
+   ],
+   "what": "grey SLA resin (Tough 2000), the end caps",
+   "metallic": 0.0,
+   "roughness": 0.48
+  },
+  "silicone_red": {
+   "srgb": [
+    0.72,
+    0.07,
+    0.06
+   ],
+   "linear": [
+    0.477,
+    0.00598,
+    0.0049
+   ],
+   "rgba": [
+    0.72,
+    0.07,
+    0.06,
+    1.0
+   ],
+   "what": "red cast silicone (Dragon Skin 20), the end-cap covers",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "al_brushed": {
+   "srgb": [
+    0.91,
+    0.91,
+    0.92
+   ],
+   "linear": [
+    0.80735,
+    0.80735,
+    0.82757
+   ],
+   "rgba": [
+    0.91,
+    0.91,
+    0.92,
+    1.0
+   ],
+   "what": "brushed aluminium rod",
+   "metallic": 1.0,
+   "roughness": 0.28
+  },
+  "fr4_green": {
+   "srgb": [
+    0.1,
+    0.36,
+    0.17
+   ],
+   "linear": [
+    0.01002,
+    0.10654,
+    0.02452
+   ],
+   "rgba": [
+    0.1,
+    0.36,
+    0.17,
+    1.0
+   ],
+   "what": "green solder mask, the bare main board (the authors' mesh has no copper and no silk: none added)",
+   "metallic": 0.0,
+   "roughness": 0.3
+  },
+  "pcb_teal": {
+   "srgb": [
+    0.05,
+    0.42,
+    0.47
+   ],
+   "linear": [
+    0.00394,
+    0.14732,
+    0.18732
+   ],
+   "rgba": [
+    0.05,
+    0.42,
+    0.47,
+    1.0
+   ],
+   "what": "breakout board laminate (controller board)",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "pcb_red": {
+   "srgb": [
+    0.62,
+    0.06,
+    0.05
+   ],
+   "linear": [
+    0.34239,
+    0.0049,
+    0.00394
+   ],
+   "rgba": [
+    0.62,
+    0.06,
+    0.05,
+    1.0
+   ],
+   "what": "breakout board laminate (motor driver)",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "pcb_blue": {
+   "srgb": [
+    0.07,
+    0.17,
+    0.48
+   ],
+   "linear": [
+    0.00598,
+    0.02452,
+    0.19599
+   ],
+   "rgba": [
+    0.07,
+    0.17,
+    0.48,
+    1.0
+   ],
+   "what": "breakout board laminate (sensor and power-meter boards)",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "pcb_black": {
+   "srgb": [
+    0.06,
+    0.06,
+    0.065
+   ],
+   "linear": [
+    0.0049,
+    0.0049,
+    0.00542
+   ],
+   "rgba": [
+    0.06,
+    0.06,
+    0.065,
+    1.0
+   ],
+   "what": "breakout board laminate (IMU board)",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "ic_black": {
+   "srgb": [
+    0.07,
+    0.07,
+    0.075
+   ],
+   "linear": [
+    0.00598,
+    0.00598,
+    0.00657
+   ],
+   "rgba": [
+    0.07,
+    0.07,
+    0.075,
+    1.0
+   ],
+   "what": "IC packages, passives, shielded modules' bodies",
+   "metallic": 0.0,
+   "roughness": 0.45
+  },
+  "plastic_black": {
+   "srgb": [
+    0.05,
+    0.05,
+    0.055
+   ],
+   "linear": [
+    0.00394,
+    0.00394,
+    0.0044
+   ],
+   "rgba": [
+    0.05,
+    0.05,
+    0.055,
+    1.0
+   ],
+   "what": "header bodies, black plastic housings and blocks",
+   "metallic": 0.0,
+   "roughness": 0.42
+  },
+  "nylon_cream": {
+   "srgb": [
+    0.86,
+    0.83,
+    0.74
+   ],
+   "linear": [
+    0.71057,
+    0.65593,
+    0.50708
+   ],
+   "rgba": [
+    0.86,
+    0.83,
+    0.74,
+    1.0
+   ],
+   "what": "JST housings (XH, PH, SH), nylon",
+   "metallic": 0.0,
+   "roughness": 0.5
+  },
+  "pin_gold": {
+   "srgb": [
+    0.94,
+    0.78,
+    0.45
+   ],
+   "linear": [
+    0.8689,
+    0.57048,
+    0.17064
+   ],
+   "rgba": [
+    0.94,
+    0.78,
+    0.45,
+    1.0
+   ],
+   "what": "header pins, contacts, leads",
+   "metallic": 1.0,
+   "roughness": 0.24
+  },
+  "tin_silver": {
+   "srgb": [
+    0.8,
+    0.8,
+    0.81
+   ],
+   "linear": [
+    0.60383,
+    0.60383,
+    0.62092
+   ],
+   "rgba": [
+    0.8,
+    0.8,
+    0.81,
+    1.0
+   ],
+   "what": "shield cans, USB receptacle",
+   "metallic": 1.0,
+   "roughness": 0.3
+  },
+  "steel_black_oxide": {
+   "srgb": [
+    0.13,
+    0.13,
+    0.14
+   ],
+   "linear": [
+    0.01533,
+    0.01533,
+    0.01739
+   ],
+   "rgba": [
+    0.13,
+    0.13,
+    0.14,
+    1.0
+   ],
+   "what": "socket head screws and set screws",
+   "metallic": 1.0,
+   "roughness": 0.36
+  },
+  "brass": {
+   "srgb": [
+    0.86,
+    0.66,
+    0.36
+   ],
+   "linear": [
+    0.71057,
+    0.39312,
+    0.10654
+   ],
+   "rgba": [
+    0.86,
+    0.66,
+    0.36,
+    1.0
+   ],
+   "what": "knurled heat-set inserts",
+   "metallic": 1.0,
+   "roughness": 0.32
+  },
+  "motor_steel": {
+   "srgb": [
+    0.72,
+    0.72,
+    0.74
+   ],
+   "linear": [
+    0.477,
+    0.477,
+    0.50708
+   ],
+   "rgba": [
+    0.72,
+    0.72,
+    0.74,
+    1.0
+   ],
+   "what": "gearmotor (one piece in the authors' mesh: one satin-steel finish)",
+   "metallic": 1.0,
+   "roughness": 0.3
+  },
+  "battery_pouch": {
+   "srgb": [
+    0.7,
+    0.71,
+    0.73
+   ],
+   "linear": [
+    0.44799,
+    0.46236,
+    0.49191
+   ],
+   "rgba": [
+    0.7,
+    0.71,
+    0.73,
+    1.0
+   ],
+   "what": "LiPo pouch (open surfaces in the authors' mesh: double-sided shading, no thickness added)",
+   "metallic": 0.85,
+   "roughness": 0.36
+  },
+  "nylon_white": {
+   "srgb": [
+    0.88,
+    0.88,
+    0.86
+   ],
+   "linear": [
+    0.74841,
+    0.74841,
+    0.71057
+   ],
+   "rgba": [
+    0.88,
+    0.88,
+    0.86,
+    1.0
+   ],
+   "what": "spacer tubes, cable guide ring",
+   "metallic": 0.0,
+   "roughness": 0.55
+  },
+  "silicone_green": {
+   "srgb": [
+    0.08,
+    0.5,
+    0.16
+   ],
+   "linear": [
+    0.00719,
+    0.21404,
+    0.02198
+   ],
+   "rgba": [
+    0.08,
+    0.5,
+    0.16,
+    1.0
+   ],
+   "what": "green cast silicone, the end-cap covers (same recipe as the red one, base colour changed [G])",
+   "metallic": 0.0,
+   "roughness": 0.32
+  },
+  "silicone_blue": {
+   "srgb": [
+    0.07,
+    0.2,
+    0.66
+   ],
+   "linear": [
+    0.00598,
+    0.0331,
+    0.39312
+   ],
+   "rgba": [
+    0.07,
+    0.2,
+    0.66,
+    1.0
+   ],
+   "what": "blue cast silicone, the end-cap covers (same recipe as the red one, base colour changed [G])",
+   "metallic": 0.0,
+   "roughness": 0.32
+  }
+ }
+}

@@ -65,6 +65,12 @@ summary = "Keep a desk sorted with a Franka Panda in Isaac Sim, putting each new
 platforms = ["arm"]
 stages = ["behavior"]
 
+[pantry_jar_refilling]
+title = "Refill screw-top jars with two Pandas"
+summary = "Two Pandas open free-standing screw-top jars, put the listed refill pieces in from a tray and screw each jar's own lid back to a torque band, from RGB cameras and wrist force sensors."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [pump_skid_startup_and_operation]
 title = "Run a pump skid with a rail-mounted arm"
 summary = "Start up, operate and shut down a water plant's pump skid with a Franka Panda on a rail, reading gauges and turning valves through its cameras."
@@ -142,6 +148,12 @@ title = "Assemble a tenth-scale race car with a 6-DoF arm"
 summary = "Program a 6-DoF arm to build a tenth-scale autonomous race car from its rolling chassis and eight loose units, guided by its picture manual and the cell's cameras."
 platforms = ["ground"]
 stages = ["assembly"]
+
+[racecar_head_to_head_race_on_unseen_track]
+title = "Race a tenth-scale car head to head"
+summary = "Write the driving program of a LiDAR-only tenth-scale race car for a head-to-head day at venues it has never seen: map the track in practice, then race two heats from the back of a four-car grid."
+platforms = ["ground"]
+stages = ["behavior"]
 
 [racecar_requirements_replica_from_photos]
 title = "Specify upgraded replicas of a tenth-scale car"
@@ -221,11 +233,29 @@ summary = "Specify eight replicas of a three-strut, cable-driven tensegrity robo
 platforms = ["soft"]
 stages = ["requirements"]
 
+[tensegrity_strut_assembly_3bar_panda]
+title = "Assemble three tensegrity struts with a Panda"
+summary = "Program a Franka Panda to finish the three struts of a small tensegrity rolling robot from their loose modules, guided by its picture manual and the cell's cameras."
+platforms = ["soft"]
+stages = ["assembly"]
+
 [fault_adaptive_spacecraft_docking]
 title = "Dock a spacecraft with faulty thrusters"
 summary = "Dock a planar spacecraft whose six thrusters are wired in an unknown order and degrade in flight, identifying them as it goes."
 platforms = ["space"]
 stages = ["control"]
+
+[freeflyer_cad_design_from_photos]
+title = "Model a cabin free-flyer in CAD"
+summary = "Rebuild the lost CAD of a cube-shaped cabin free-flyer with a stowed perching arm in FreeCAD from photos of its teardown, as 12 tagged parts and a hinged assembly."
+platforms = ["space"]
+stages = ["hardware-design"]
+
+[freeflyer_uncrewed_station_caretaking]
+title = "Tend an uncrewed space station with a free-flyer"
+summary = "Write the autonomous program of a cabin free-flyer that finds a blocked air inlet from station telemetry, clears and stows the item, collects loose pouches and docks with charge left."
+platforms = ["space"]
+stages = ["behavior"]
 
 [hazard_bay_build]
 title = "Rebuild a hazard bay, design and run its fleet"

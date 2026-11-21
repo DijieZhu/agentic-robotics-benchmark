@@ -1,0 +1,64 @@
+{
+ "about": "The vendored simulation package (tests/cabincell/_lib/spacekit) and robot value table (tests/cabincell/data/robot), with the sha256 of each file as it stands in this folder.",
+ "archive": {
+  "manifest": "ASSETS.json",
+  "name": "robot_model_v1_2.tar.xz",
+  "sha256": "85fab4177a23e325b6c912eabb7fc55ec9fb6d5fd0d550712ba9cab721d26e38"
+ },
+ "dock_cone_note": "the dock approach cone 6 / 10 deg of this task is not the package default (20 deg): the task firmware sets spacekit.primitives.DOCK_DEFAULTS['att_tolerance_deg'] = 10.0 at initialisation",
+ "reference_build": {
+  "files": {
+   "freeflyer_v1.xml": {
+    "bytes": 143236,
+    "sha256": "648d374a91500692913f2dd649131b5764f032fb041aeecbdb8ab048cf99f797"
+   },
+   "scene_dock_v1.xml": {
+    "bytes": 408216,
+    "sha256": "ba5333eef8c04f8b0c498f64ad8e6e93c2d74c47b6d87f31daa954af80a32e85"
+   }
+  },
+  "freeze_date": "2026-11-15",
+  "version": "v1.2"
+ },
+ "schema": "cabincell-vendored/1",
+ "spacekit": {
+  "files": {
+   "API.md": "5d837e900508e8012bde9223e4f06134cf4326dea472e1f2b23e5e6c362ce082",
+   "__init__.py": "fad6a5d30f4963e2d33e092d817b54f008afd1b5f18577ebb4dca373946e1b11",
+   "_fast.py": "a17892514e042d99271843b8887510c0d4bdfc928d046711ceabbf2f0f775ff9",
+   "aero.py": "6335f81dda4136de19285e3165c8a96ca1af9d796f857d0cb8c3cd646a762cf3",
+   "allocation.py": "69810c50f8600df9be996a55ee2d76ca5356b4981d1e8e7991594c4f5b51fcc1",
+   "cabin.py": "c4ce7fbf3189c18241e4b9861793aec0bbe997d04966c4c983f12e52fecdf9af",
+   "cameras.py": "5b4db4f0a637c7cc3d604f2835afe143dcdcc553f0c5de7cfefea3ba80c01c37",
+   "control.py": "c157c02cdec75e505241c57a429315826898b751225bf99ded75ff43b052d200",
+   "data/firmware_reference.json": "4fdf3d842aa40562040ac5cc9c12622eadb260c756d668aae73072916979512d",
+   "data/reference_configuration.json": "508ab228f1dd1bbada589308283c29deae8f9e08eb554c4e5077c6356b40c96b",
+   "dock.py": "c2f22f62e32020eed121b2c0ea68875847236ef3402b904fbec366ef5a5e89d2",
+   "fixtures.py": "a074bdcc0e9f9d082afa62f0ec52a2e963d0d68bda86ccc3305cb5e26ec9796e",
+   "frames.py": "7cd22687d44e66b4c97b4e503675a35039afb4e34729afefcc3d55667a4f81fe",
+   "grasp_rule.py": "968b601850ab6ea556d006f696cad1e875c1152125cdd2e511661b6441f557f9",
+   "gripper.py": "c7196d22a173e74023fcd7d13cdd5b4449bc44198dfe97127a545251fac616f7",
+   "primitives.py": "85ebb5cba9f9dd47e3093ed3ff20ad3486ac4547540526e997bc83c5ab362f0c",
+   "propulsion.py": "50f01c56dc7b7648f2374167c13bce3fb2af24cce234b651666c7f884f4cee39",
+   "refbuild.py": "68687b8de74cd7d7da64a4a7e0097bc71eab7c4ed3e45eacc9a86441f810077a",
+   "render.py": "d18b679459ec12744b77204c238825d6a05810aaf4e8832cbcbbad1b7ddf2cbc",
+   "robot.py": "ee34181145fcc5a16f6d54d2dfb2f82115107af1d9285185ad3ee21c07037480",
+   "rotations.py": "a6600a91be7d2409018871f6d8f50a9737c17029135bb8c6eab9775307363f5b",
+   "scenes.py": "d6ca20dbdc69fe1d505ea8260232113533a46cb9e4a7bcb595f022f35bd9f412",
+   "sensors.py": "2656f21a00db424fa024d2061bf85ba6279829762d2ca6010ee31713b3f8734b",
+   "station.py": "f8b28bb356261d6625f93febea91d25d524c123bf5da9d2807da270fda9a26be",
+   "stepping.py": "dc2f3bcd78b4aa9b887b9db22ac7e3342e996f96d3e119a08e1b2f3398b3e303",
+   "suction.py": "99d5261a332abea8d20f53af8af5a88224e72048e083410ebe48e8bc7045a23b",
+   "visual_twin.py": "3e629d8ff80df2497f9c34282afa58dc0bb9bc4b7005fdb1dc43227000a5543f",
+   "zones.py": "b189edd6391bf2f1e09227d23a992f999c3cf37dd3d1b6b309db9260735ad8de"
+  },
+  "source": "the simulation package (spacekit)",
+  "version": "0.4.0"
+ },
+ "spec_values": {
+  "published_sha256": "6933a1f9455162df1648e8bd111054ac282e8e7306a0d60cb32f5efafa155503",
+  "source": "the robot value table (published_sha256 = this copy)",
+  "version": "0.3.3"
+ },
+ "swap": "the vendored sources: the simulation package 0.4.0 and the reference build v1.2 (2026-11-15)"
+}

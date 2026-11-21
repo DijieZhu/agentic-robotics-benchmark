@@ -1,0 +1,3354 @@
+{
+ "format": "arb-photo-set-gt/1",
+ "set": "picture_manual",
+ "rule": "GRADER-ONLY: exact cameras, seeds, poses of the scale references and of the parts; never copy into environment/, the payload or the image",
+ "version": "1",
+ "lenses": {
+  "wide": {
+   "lens_id": "wide",
+   "fx": 1582.2430617344303,
+   "fy": 1582.2430617344303,
+   "cx": 1007.5,
+   "cy": 755.5,
+   "k1": 0.0,
+   "k2": 0.0,
+   "k3": 0.0,
+   "p1": 0.0,
+   "p2": 0.0,
+   "width": 2016,
+   "height": 1512,
+   "lens_mm": 28.254340388114827,
+   "hfov_deg": 65.0
+  },
+  "2x": {
+   "lens_id": "2x",
+   "fx": 3164.4861234688606,
+   "fy": 3164.4861234688606,
+   "cx": 1007.5,
+   "cy": 755.5,
+   "k1": 0.0,
+   "k2": 0.0,
+   "k3": 0.0,
+   "p1": 0.0,
+   "p2": 0.0,
+   "width": 2016,
+   "height": 1512,
+   "lens_mm": 56.50868077622965,
+   "hfov_deg": 35.33700925179748
+  },
+  "5x": {
+   "lens_id": "5x",
+   "fx": 7911.215308672151,
+   "fy": 7911.215308672151,
+   "cx": 1007.5,
+   "cy": 755.5,
+   "k1": 0.0,
+   "k2": 0.0,
+   "k3": 0.0,
+   "p1": 0.0,
+   "p2": 0.0,
+   "width": 2016,
+   "height": 1512,
+   "lens_mm": 141.27170194057413,
+   "hfov_deg": 14.522325437740003
+  }
+ },
+ "scale_refs": [
+  {
+   "scene": "L",
+   "name": "rule150",
+   "pos": [
+    -0.005,
+    -0.112,
+    0.0
+   ],
+   "quat": [
+    0.9996573249755574,
+    0.0,
+    0.0,
+    0.026176948307873156
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "L",
+   "name": "card2",
+   "pos": [
+    -0.11,
+    -0.095,
+    0.0
+   ],
+   "quat": [
+    0.992546151641322,
+    0.0,
+    0.0,
+    0.12186934340514749
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "L",
+   "name": "card12",
+   "pos": [
+    -0.005,
+    0.23,
+    -0.002
+   ],
+   "quat": [
+    0.9986295347545739,
+    0.0,
+    0.0,
+    -0.052335956242943835
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "X",
+   "name": "rule150",
+   "pos": [
+    0.0,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    -0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "X",
+   "name": "card2",
+   "pos": [
+    0.12,
+    -0.1,
+    0.0
+   ],
+   "quat": [
+    0.996917333733128,
+    0.0,
+    0.0,
+    0.07845909572784494
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "X",
+   "name": "card12",
+   "pos": [
+    -0.15,
+    -0.07200000000000001,
+    0.0
+   ],
+   "quat": [
+    0.6946583704589974,
+    0.0,
+    0.0,
+    0.7193398003386512
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST1b",
+   "name": "rule150",
+   "pos": [
+    -0.03,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST1b",
+   "name": "card2",
+   "pos": [
+    -0.17,
+    -0.115,
+    0.0
+   ],
+   "quat": [
+    0.9953961983671787,
+    0.0,
+    0.0,
+    -0.09584575252022398
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST1a",
+   "name": "rule150",
+   "pos": [
+    -0.03,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST1a",
+   "name": "card2",
+   "pos": [
+    -0.17,
+    -0.115,
+    0.0
+   ],
+   "quat": [
+    0.9953961983671787,
+    0.0,
+    0.0,
+    -0.09584575252022398
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST1a",
+   "name": "card12",
+   "pos": [
+    0.11,
+    -0.031,
+    0.0
+   ],
+   "quat": [
+    0.9990482215818577,
+    0.0,
+    0.0,
+    0.04361938736533599
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST2b",
+   "name": "rule150",
+   "pos": [
+    -0.03,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST2b",
+   "name": "card2",
+   "pos": [
+    0.115,
+    -0.108,
+    0.0
+   ],
+   "quat": [
+    0.9953961983671787,
+    0.0,
+    0.0,
+    -0.09584575252022398
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST2a",
+   "name": "rule150",
+   "pos": [
+    -0.03,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST2a",
+   "name": "card2",
+   "pos": [
+    0.15,
+    -0.112,
+    0.0
+   ],
+   "quat": [
+    0.9953961983671787,
+    0.0,
+    0.0,
+    -0.09584575252022398
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST2a",
+   "name": "card12",
+   "pos": [
+    -0.11,
+    -0.031,
+    0.0
+   ],
+   "quat": [
+    0.9990482215818577,
+    0.0,
+    0.0,
+    -0.04361938736533599
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST3b",
+   "name": "rule150",
+   "pos": [
+    -0.12,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST3b",
+   "name": "card2",
+   "pos": [
+    0.14,
+    -0.1,
+    0.0
+   ],
+   "quat": [
+    0.9975640502598242,
+    0.0,
+    0.0,
+    0.06975647374412529
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST3a",
+   "name": "rule150",
+   "pos": [
+    -0.12,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST3a",
+   "name": "card2",
+   "pos": [
+    0.15,
+    -0.112,
+    0.0
+   ],
+   "quat": [
+    0.9953961983671787,
+    0.0,
+    0.0,
+    -0.09584575252022398
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST3a",
+   "name": "card12",
+   "pos": [
+    0.01,
+    -0.034,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST4b",
+   "name": "rule150",
+   "pos": [
+    -0.03,
+    -0.122,
+    0.0
+   ],
+   "quat": [
+    0.9998476951563913,
+    0.0,
+    0.0,
+    0.01745240643728351
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "ST4b",
+   "name": "card2",
+   "pos": [
+    0.07,
+    -0.105,
+    0.0
+   ],
+   "quat": [
+    0.996917333733128,
+    0.0,
+    0.0,
+    -0.07845909572784494
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-1",
+   "name": "card12",
+   "pos": [
+    0.01,
+    0.08650000000000001,
+    0.0
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-1",
+   "name": "card2",
+   "pos": [
+    -0.11,
+    -0.0585,
+    0.0
+   ],
+   "quat": [
+    0.992015133392171,
+    0.0,
+    0.0,
+    0.12611889279926874
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-1",
+   "name": "rule150",
+   "pos": [
+    0.06,
+    -0.0735,
+    0.0
+   ],
+   "quat": [
+    0.9999879616308575,
+    0.0,
+    0.0,
+    0.0049067905358710995
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-2",
+   "name": "card12",
+   "pos": [
+    0.005,
+    0.08650000000000001,
+    0.0
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-2",
+   "name": "card2",
+   "pos": [
+    -0.11,
+    -0.0585,
+    0.0
+   ],
+   "quat": [
+    0.9988748794947636,
+    0.0,
+    0.0,
+    0.04742336042839499
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "A-2",
+   "name": "rule150",
+   "pos": [
+    0.06,
+    -0.0685,
+    0.0
+   ],
+   "quat": [
+    0.9997447816665147,
+    0.0,
+    0.0,
+    0.022591403908856115
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E-+z",
+   "name": "card12",
+   "pos": [
+    0.01,
+    0.08650000000000001,
+    0.0
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E-+z",
+   "name": "card2",
+   "pos": [
+    -0.11,
+    -0.0585,
+    0.0
+   ],
+   "quat": [
+    0.992015133392171,
+    0.0,
+    0.0,
+    0.12611889279926874
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E-+z",
+   "name": "rule150",
+   "pos": [
+    0.06,
+    -0.0735,
+    0.0
+   ],
+   "quat": [
+    0.9999879616308575,
+    0.0,
+    0.0,
+    0.0049067905358710995
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E-+z",
+   "name": "stand",
+   "pos": [
+    0.165,
+    0.0165,
+    0.0
+   ],
+   "quat": [
+    -0.5445423864213773,
+    0.0,
+    0.0,
+    0.8387333243591264
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E--z",
+   "name": "card12",
+   "pos": [
+    0.01,
+    0.08650000000000001,
+    0.0
+   ],
+   "quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E--z",
+   "name": "card2",
+   "pos": [
+    -0.11,
+    -0.0585,
+    0.0
+   ],
+   "quat": [
+    0.992015133392171,
+    0.0,
+    0.0,
+    0.12611889279926874
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E--z",
+   "name": "rule150",
+   "pos": [
+    0.06,
+    -0.0735,
+    0.0
+   ],
+   "quat": [
+    0.9999879616308575,
+    0.0,
+    0.0,
+    0.0049067905358710995
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "E--z",
+   "name": "stand",
+   "pos": [
+    -0.17,
+    0.0765,
+    0.0
+   ],
+   "quat": [
+    0.7144815399829828,
+    0.0,
+    0.0,
+    0.6996542925070532
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "CR",
+   "name": "rule150",
+   "pos": [
+    -0.005,
+    -0.128,
+    0.0
+   ],
+   "quat": [
+    0.9999143275740071,
+    0.0,
+    0.0,
+    0.013089595571344441
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "CR",
+   "name": "card12",
+   "pos": [
+    -0.3,
+    -0.04,
+    -0.002
+   ],
+   "quat": [
+    0.9975640502598242,
+    0.0,
+    0.0,
+    0.06975647374412529
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "BK",
+   "name": "rule150",
+   "pos": [
+    0.0,
+    -0.095,
+    0.0
+   ],
+   "quat": [
+    0.9997620270799091,
+    0.0,
+    0.0,
+    0.02181488503456112
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  },
+  {
+   "scene": "BK",
+   "name": "card2",
+   "pos": [
+    0.085,
+    0.07,
+    0.0
+   ],
+   "quat": [
+    0.9945218953682733,
+    0.0,
+    0.0,
+    -0.10452846326765347
+   ],
+   "frame": "mat frame (m); quat w, x, y, z"
+  }
+ ],
+ "seeds": {
+  "L/a": 15402400896277375391,
+  "L/b": 1994151131352965975,
+  "X/a": 6136805959930014587,
+  "X/b": 14380347619324137804,
+  "ST1b": 4917323514518037829,
+  "ST1a": 17930285435013628611,
+  "ST2b": 15545820522184100918,
+  "ST2a": 17871837892897451988,
+  "ST3b": 18154049466469227838,
+  "ST3a": 2258771440640151073,
+  "ST4b": 14493126783194077580,
+  "ST4a": 9968006361318222458,
+  "V/1": 6671706304130111719,
+  "V/2": 11053819691887787893,
+  "V/3": 2564411605085347787,
+  "V/4": 7266647960377450217,
+  "V/5": 2867942684288954728,
+  "V/6": 5732207559033901972,
+  "C/1": 10882349393775176842,
+  "C/2": 5269153766044640621,
+  "C/3": 5541379095062370571,
+  "CR/a": 11123272768935748253,
+  "CR/b": 5866098363132245118,
+  "BK/a": 13628249735287846946,
+  "BK/b": 10185267923814313598
+ },
+ "views": [
+  {
+   "file": "photo_01.jpg",
+   "sha256": "c885dc0cdd05fa45c01f6c6236f6c92570b3907ccbc2a2911dabec7fadf8811c",
+   "camera_id": "L/a",
+   "scene": "L",
+   "set": "layout",
+   "caption": "All modules of one strut laid out on the cutting mat: the strut core (rod with the electronics bay base and its board), two motor modules, the bay lid and two end caps with covers.",
+   "purpose": "all modules of one strut laid out",
+   "camera": {
+    "name": "L/a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3372619408568815,
+    "white_balance": [
+     6662.951389143847,
+     0.43273427102608597
+    ],
+    "world_T_cam": [
+     [
+      0.9899837679600137,
+      0.13982590049459587,
+      0.019515550890739263,
+      -0.011349014802798941
+     ],
+     [
+      0.10516390795008493,
+      -0.8225720065132239,
+      0.558852258262839,
+      -0.23433453789822625
+     ],
+     [
+      0.09419496610944625,
+      -0.5512023327705392,
+      -0.8290375725550417,
+      0.4875358413947573
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 14.86,
+    "focus_mm": 504.59673509444724
+   },
+   "target_mat_mm": [
+    -0.32832486801075333,
+    81.25673042684711,
+    19.367349376724334
+   ],
+   "mm_per_px_at_target": 0.3569067557655325,
+   "lights": {
+    "key_az": 47.17557748482893,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 141.1122952430945,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 15402400896277375391,
+   "refs_px": {
+    "mat": 834223,
+    "card12": 53491,
+    "card2": 5867,
+    "rule150": 33561
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 459.8,
+    "mask_s": 2.4,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/L_a.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_02.jpg",
+   "sha256": "406909b2d0df9a90e676e8682caff0513b29929081553543f4885b9be53b3077",
+   "camera_id": "L/b",
+   "scene": "L",
+   "set": "layout",
+   "caption": "The same modules seen from the other side of the mat.",
+   "purpose": "the layout from the other side",
+   "camera": {
+    "name": "L/b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.277383189976909,
+    "white_balance": [
+     6493.077573154568,
+     0.9911798085123102
+    ],
+    "world_T_cam": [
+     [
+      -0.8099923254113403,
+      -0.4794420425760297,
+      0.33770958023907727,
+      -0.16796703119775108
+     ],
+     [
+      -0.5720238620885238,
+      0.5190247715045329,
+      -0.6351393451566332,
+      0.3965392820376114
+     ],
+     [
+      0.1292328672438193,
+      -0.7076359334963084,
+      -0.6946583704589973,
+      0.3641950871105231
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 21.71,
+    "focus_mm": 539.8185829971018
+   },
+   "target_mat_mm": [
+    -0.32832486801075333,
+    81.25673042684711,
+    19.367349376724334
+   ],
+   "mm_per_px_at_target": 0.31373120660417997,
+   "lights": {
+    "key_az": 49.88850020671547,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 139.75507988797395,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 1994151131352965975,
+   "refs_px": {
+    "mat": 559384,
+    "card12": 166651,
+    "card2": 2547,
+    "rule150": 10922
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 488.0,
+    "mask_s": 2.3,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/L_b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_03.jpg",
+   "sha256": "ecd31ee2a0e36eafcf158b3b28cbe22def341fa77ea11ce979adf1872d23bc92",
+   "camera_id": "X/a",
+   "scene": "X",
+   "set": "exploded",
+   "caption": "The strut taken apart along its rod, in the order the parts go on: end cap, motor module, strut core with the bay lid beside it, motor module, end cap.",
+   "purpose": "exploded along the rod, front",
+   "camera": {
+    "name": "X/a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.346610366977154,
+    "white_balance": [
+     6569.219690736165,
+     1.1446532243213952
+    ],
+    "world_T_cam": [
+     [
+      0.9591471021449478,
+      0.2737787851702811,
+      -0.07128824052839278,
+      0.04675867912566164
+     ],
+     [
+      0.24786558578241563,
+      -0.6917534976380219,
+      0.6782623016874102,
+      -0.4836029762609143
+     ],
+     [
+      0.13637993925680156,
+      -0.6682232226556096,
+      -0.7313537016191706,
+      0.4927417457815093
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 8.06,
+    "focus_mm": 667.6900531432943
+   },
+   "target_mat_mm": [
+    0.481593570368716,
+    -43.30591840861786,
+    17.980164205783197
+   ],
+   "mm_per_px_at_target": 0.4102748583087469,
+   "lights": {
+    "key_az": 53.8833637949252,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 135.76237123540034,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 6136805959930014587,
+   "refs_px": {
+    "mat": 355822,
+    "card12": 57142,
+    "card2": 2883,
+    "rule150": 16068
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 459.5,
+    "mask_s": 2.2,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/X_a.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_04.jpg",
+   "sha256": "9802ead1f7f675445965b7b7bcc03ea0615ddd7e1c27f1b8470cd74e8be05df1",
+   "camera_id": "X/b",
+   "scene": "X",
+   "set": "exploded",
+   "caption": "The same exploded layout seen from the other side.",
+   "purpose": "exploded along the rod, back",
+   "camera": {
+    "name": "X/b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3335302415274297,
+    "white_balance": [
+     6550.985395077946,
+     -2.254283638957373
+    ],
+    "world_T_cam": [
+     [
+      -0.9657286292625497,
+      -0.21302428567046383,
+      0.14828644016654363,
+      -0.1085365816280498
+     ],
+     [
+      -0.2487768924442344,
+      0.5967772454728616,
+      -0.7628676012727331,
+      0.5175439726221609
+     ],
+     [
+      0.07401535251869798,
+      -0.7736133226621764,
+      -0.6293203910498374,
+      0.480647961546889
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 10.2,
+    "focus_mm": 681.0692193169451
+   },
+   "target_mat_mm": [
+    0.481593570368716,
+    -43.30591840861786,
+    17.980164205783197
+   ],
+   "mm_per_px_at_target": 0.4646482105608489,
+   "lights": {
+    "key_az": 62.91787758939458,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 142.68377212836134,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 14380347619324137804,
+   "refs_px": {
+    "mat": 348900,
+    "card12": 37461,
+    "card2": 1283,
+    "rule150": 6539
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 433.6,
+    "mask_s": 2.3,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/X_b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_05.jpg",
+   "sha256": "247b8117d73f0c25291206f4fdf7dde9c1320b19130bf6b40cdb7370c9d0d265",
+   "camera_id": "ST1b",
+   "scene": "ST1b",
+   "set": "steps",
+   "caption": "First step, before: the strut core, and a motor module that slides onto one end of the rod.",
+   "purpose": "step 1 before",
+   "camera": {
+    "name": "ST1b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.274313599763445,
+    "white_balance": [
+     6702.9032386883055,
+     -1.0922499769697889
+    ],
+    "world_T_cam": [
+     [
+      0.9825124510107808,
+      0.1736514932840948,
+      0.06718960104802225,
+      -0.04874246699241403
+     ],
+     [
+      0.0912357148077702,
+      -0.763553911433877,
+      0.6392663519046989,
+      -0.44772600975443505
+     ],
+     [
+      0.16231243930242573,
+      -0.6219570589793408,
+      -0.766044443118978,
+      0.5157145602350974
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 27.14,
+    "focus_mm": 661.3361081024002
+   },
+   "target_mat_mm": [
+    -5.176525993466541,
+    -33.223769299291035,
+    19.009021119899163
+   ],
+   "mm_per_px_at_target": 0.2048999446083618,
+   "lights": {
+    "key_az": 52.498448363864455,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 149.60980387791494,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 4917323514518037829,
+   "refs_px": {
+    "mat": 1802055,
+    "card2": 13015,
+    "rule150": 68594
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 387.4,
+    "mask_s": 1.9,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST1b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_06.jpg",
+   "sha256": "0ca7d432f5a9ca3d5906fb0a8142f3ea1ae4775a231920442bdc9455bcd03e2c",
+   "camera_id": "ST1a",
+   "scene": "ST1a",
+   "set": "steps",
+   "caption": "First step, after: the motor module slid onto the rod and seated at its place, next to the bay.",
+   "purpose": "step 1 after: the +z module at its place (axial position, roll)",
+   "camera": {
+    "name": "ST1a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3739830498955832,
+    "white_balance": [
+     6602.327273452675,
+     0.2554074074766275
+    ],
+    "world_T_cam": [
+     [
+      0.9713155329027049,
+      -0.22065396074800578,
+      -0.0886451642682904,
+      0.10178317836136794
+     ],
+     [
+      -0.044660735168278856,
+      -0.5354230201325324,
+      0.8434023999529444,
+      -0.18186356500887127
+     ],
+     [
+      -0.23356274162666338,
+      -0.8152508933563797,
+      -0.5299192642332048,
+      0.16295228101410844
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 81.69,
+    "focus_mm": 264.0907673141023
+   },
+   "target_mat_mm": [
+    77.939285021,
+    44.995926239,
+    20.413897565
+   ],
+   "mm_per_px_at_target": 0.085,
+   "lights": {
+    "key_az": 49.08246693966904,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 147.03449613486484,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 17930285435013628611,
+   "refs_px": {
+    "mat": 949377,
+    "card12": 582098
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 365.4,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST1a.npz",
+   "readability_planned": {
+    "axial": true,
+    "roll": true,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": true,
+    "axial-z": false,
+    "roll+z": true,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_07.jpg",
+   "sha256": "a213a2685b58aa5950cb351f954b45d8591759010b1cb7b67f9b4dc34e911b16",
+   "camera_id": "ST2b",
+   "scene": "ST2b",
+   "set": "steps",
+   "caption": "Second step, before: the second motor module beside the other end of the rod.",
+   "purpose": "step 2 before",
+   "camera": {
+    "name": "ST2b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.496212091480272,
+    "white_balance": [
+     6579.599480248787,
+     -0.23846744884035864
+    ],
+    "world_T_cam": [
+     [
+      0.9923156221050842,
+      -0.10567994025888083,
+      -0.06435414790888741,
+      0.022710228741363813
+     ],
+     [
+      -0.044360109748903837,
+      -0.7893887412523554,
+      0.6122888173461011,
+      -0.37272180338749805
+     ],
+     [
+      -0.11550708545048127,
+      -0.6047290016287471,
+      -0.788010753606722,
+      0.47137861391058633
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 35.42,
+    "focus_mm": 577.5452732393481
+   },
+   "target_mat_mm": [
+    -14.072787425813388,
+    -22.75478184741258,
+    20.97388893678837
+   ],
+   "mm_per_px_at_target": 0.18062073203846338,
+   "lights": {
+    "key_az": 54.150300835978555,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 130.62272570234546,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 15545820522184100918,
+   "refs_px": {
+    "mat": 2112546,
+    "card2": 17281,
+    "rule150": 93672
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 362.7,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST2b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_08.jpg",
+   "sha256": "bf70ffd992da5315d9fd9885d2613af96c929fc97ce53d65bc8bddd7ec2f5cad",
+   "camera_id": "ST2a",
+   "scene": "ST2a",
+   "set": "steps",
+   "caption": "Second step, after: both motor modules on the rod; the bay is still open.",
+   "purpose": "step 2 after: the -z module at its place (axial position, roll)",
+   "camera": {
+    "name": "ST2a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3390911693200573,
+    "white_balance": [
+     6409.258899084644,
+     0.8688445770133351
+    ],
+    "world_T_cam": [
+     [
+      -0.08462642678077638,
+      0.6567960741958269,
+      -0.7493045340922926,
+      0.11354892426792555
+     ],
+     [
+      0.9857188419701864,
+      -0.054695160322984715,
+      -0.15926959541041555,
+      0.08846917427417458
+     ],
+     [
+      -0.14559097662723594,
+      -0.7520820143828681,
+      -0.6427876096865393,
+      0.19286920950121558
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 227.31,
+    "focus_mm": 238.68328040185364
+   },
+   "target_mat_mm": [
+    -87.999998765,
+    45.628628186,
+    19.97134945
+   ],
+   "mm_per_px_at_target": 0.085,
+   "lights": {
+    "key_az": 59.91923516863683,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 146.74157524949476,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 17871837892897451988,
+   "refs_px": {
+    "mat": 1426932,
+    "card12": 674179
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 357.5,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST2a.npz",
+   "readability_planned": {
+    "axial": true,
+    "roll": true,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": true,
+    "roll+z": false,
+    "roll-z": true,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_09.jpg",
+   "sha256": "9f6a645c69b08c2b96128898054b1af2f13ddd489947c5debb4b651c6217c812",
+   "camera_id": "ST3b",
+   "scene": "ST3b",
+   "set": "steps",
+   "caption": "Third step, before: the open bay, and the bay lid beside it.",
+   "purpose": "step 3 before",
+   "camera": {
+    "name": "ST3b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4065519279176775,
+    "white_balance": [
+     6353.30857829485,
+     2.0768026003368245
+    ],
+    "world_T_cam": [
+     [
+      0.9895396607630329,
+      -0.14293496091024316,
+      0.019515550890739263,
+      -0.010181198059338533
+     ],
+     [
+      -0.12933993899944818,
+      -0.8191186321981353,
+      0.558852258262839,
+      -0.3228506683320041
+     ],
+     [
+      -0.06389397433718456,
+      -0.5555306142198134,
+      -0.8290375725550417,
+      0.4524493289325424
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 34.21,
+    "focus_mm": 533.6686716414911
+   },
+   "target_mat_mm": [
+    1.8059840058981536e-05,
+    -31.298784815102763,
+    19.942414607750553
+   ],
+   "mm_per_px_at_target": 0.16486013291116222,
+   "lights": {
+    "key_az": 51.746194707494254,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 143.29049185268815,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 18154049466469227838,
+   "refs_px": {
+    "mat": 2180390,
+    "card2": 17932,
+    "rule150": 91033
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 365.7,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST3b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_10.jpg",
+   "sha256": "7eb127ae11cfd0bb0a5d8ed42228e7d8ca201aa21ca702e1e50cd938633a9b2a",
+   "camera_id": "ST3a",
+   "scene": "ST3a",
+   "set": "steps",
+   "caption": "Third step, after: the bay lid seated on the bay.",
+   "purpose": "step 3 after: the lid seated (lid orientation)",
+   "camera": {
+    "name": "ST3a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.2880101796515548,
+    "white_balance": [
+     6659.6808244741505,
+     0.47819172584505676
+    ],
+    "world_T_cam": [
+     [
+      -0.8150466465200908,
+      -0.47303807659089225,
+      0.33456530317942895,
+      -0.08681563526104734
+     ],
+     [
+      -0.5737784784123097,
+      0.578771484643313,
+      -0.5794841035564565,
+      0.19601458687596632
+     ],
+     [
+      0.0804811885300454,
+      -0.6642729459032368,
+      -0.7431448254773942,
+      0.21282856328697397
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 193.22,
+    "focus_mm": 245.0499495143672
+   },
+   "target_mat_mm": [
+    2e-09,
+    45.645495709,
+    19.991501275
+   ],
+   "mm_per_px_at_target": 0.082,
+   "lights": {
+    "key_az": 60.20800508344863,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 137.6131662678066,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 2258771440640151073,
+   "refs_px": {
+    "mat": 1320316,
+    "card12": 718070
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 351.1,
+    "mask_s": 1.9,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST3a.npz",
+   "readability_planned": {
+    "axial": true,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": true,
+    "axial-z": true,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_11.jpg",
+   "sha256": "a9edd3f760ad8967875c6a5796c5155674de493ecab4f53093637ba1a0a273f5",
+   "camera_id": "ST4b",
+   "scene": "ST4b",
+   "set": "steps",
+   "caption": "Fourth step, before: two end caps whose covers have the same colour, beside the two rod ends.",
+   "purpose": "step 4 before",
+   "camera": {
+    "name": "ST4b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4789022249301937,
+    "white_balance": [
+     6400.229695440749,
+     0.07577344654659157
+    ],
+    "world_T_cam": [
+     [
+      0.9874189743127574,
+      0.13452032219583213,
+      0.08311469234420396,
+      -0.05017781086617504
+     ],
+     [
+      0.04312611194682377,
+      -0.7347968613323578,
+      0.6769148477057256,
+      -0.44313231388418306
+     ],
+     [
+      0.15213121847764244,
+      -0.664814151092202,
+      -0.7313537016191705,
+      0.4619559783849715
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 34.92,
+    "focus_mm": 613.2714142481577
+   },
+   "target_mat_mm": [
+    0.048351389141899404,
+    -34.07304872921975,
+    19.999344154432755
+   ],
+   "mm_per_px_at_target": 0.19096289856240525,
+   "lights": {
+    "key_az": 62.053118665246615,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 143.57913078867028,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 14493126783194077580,
+   "refs_px": {
+    "mat": 1770240,
+    "card2": 13100,
+    "rule150": 78752
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 374.2,
+    "mask_s": 2.1,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST4b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_12.jpg",
+   "sha256": "1dc1b0d5aa988aae02d66d223035846e8bc9c5bfd153e723f225b148a66dd2b7",
+   "camera_id": "ST4a",
+   "scene": "A-1",
+   "set": "steps",
+   "caption": "Fourth step, after: both end caps pushed onto the rod ends; the strut is complete.",
+   "purpose": "step 4 after: the finished strut",
+   "camera": {
+    "name": "ST4a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4013790892666265,
+    "white_balance": [
+     6714.563297294238,
+     2.1818869909498346
+    ],
+    "world_T_cam": [
+     [
+      0.9361421977476503,
+      0.28579535490533303,
+      -0.20483847468367425,
+      0.06029625502408302
+     ],
+     [
+      0.342592761057373,
+      -0.6101842091925958,
+      0.714356655266186,
+      -0.2284843167754777
+     ],
+     [
+      0.07917061113371097,
+      -0.7389155878492086,
+      -0.6691306063588582,
+      0.2203818498283965
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 38.67,
+    "focus_mm": 290.34388242148066
+   },
+   "target_mat_mm": [
+    -1.0508039687383643,
+    -14.5416971567521,
+    19.983976110628255
+   ],
+   "mm_per_px_at_target": 0.18928186835317046,
+   "lights": {
+    "key_az": 55.23251438677066,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 141.580415839629,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 9968006361318222458,
+   "refs_px": {
+    "mat": 1459851,
+    "card12": 107766,
+    "card2": 10963,
+    "rule150": 95088
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 420.2,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/ST4a.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_13.jpg",
+   "sha256": "110dd907a7d137342dc2b41501cc8d6d0d4ae6291c0f2a8296d92e368af50f59",
+   "camera_id": "V/1",
+   "scene": "A-1",
+   "set": "assembled",
+   "caption": "The assembled strut, seen from the side opposite the lid.",
+   "purpose": "assembled, from behind",
+   "camera": {
+    "name": "V/1",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4183196084220195,
+    "white_balance": [
+     6579.325119526343,
+     2.002154200847765
+    ],
+    "world_T_cam": [
+     [
+      -0.9559464740987027,
+      -0.21433871792195533,
+      0.2005623410758628,
+      -0.11153376711577395
+     ],
+     [
+      -0.2855711778423067,
+      0.5209328731570243,
+      -0.8044116135723832,
+      0.4285812649139215
+     ],
+     [
+      0.06793703735088769,
+      -0.8262492696904125,
+      -0.5591929034707469,
+      0.3280243021999291
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 52.29,
+    "focus_mm": 522.9451813651532
+   },
+   "target_mat_mm": [
+    -1.0508039687383643,
+    -14.5416971567521,
+    19.983976110628255
+   ],
+   "mm_per_px_at_target": 0.17407753471079007,
+   "lights": {
+    "key_az": 48.91844096584681,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 141.8314882953826,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 6671706304130111719,
+   "refs_px": {
+    "mat": 1212955,
+    "card12": 379036,
+    "card2": 9731,
+    "rule150": 29365
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 402.6,
+    "mask_s": 2.2,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_1.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_14.jpg",
+   "sha256": "eea4db381f43e7705757e9eeca4eec2e14e4617dcc71110dc51e414d5661c32a",
+   "camera_id": "V/2",
+   "scene": "A-2",
+   "set": "assembled",
+   "caption": "The assembled strut resting on its other side.",
+   "purpose": "assembled, resting on its other side",
+   "camera": {
+    "name": "V/2",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.2423495323765648,
+    "white_balance": [
+     6555.322263706946,
+     1.8715026339504472
+    ],
+    "world_T_cam": [
+     [
+      0.8114900724196755,
+      0.4429181730115771,
+      -0.3811920177291185,
+      0.18484695087515793
+     ],
+     [
+      0.5807713753624492,
+      -0.5390382320288194,
+      0.6100347481667368,
+      -0.3108601664363199
+     ],
+     [
+      0.06471840483138619,
+      -0.716422554382071,
+      -0.6946583704589973,
+      0.35884283436414727
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 88.04,
+    "focus_mm": 472.22637435239926
+   },
+   "target_mat_mm": [
+    -1.440216895108918,
+    -12.738379536298737,
+    19.36578767353835
+   ],
+   "mm_per_px_at_target": 0.15443152017383244,
+   "lights": {
+    "key_az": 50.71055904550802,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 141.08571653001016,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 11053819691887787893,
+   "refs_px": {
+    "mat": 1600742,
+    "card12": 249180,
+    "card2": 14563,
+    "rule150": 111942
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 396.2,
+    "mask_s": 2.1,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_2.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": true,
+    "lid": true
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": true,
+    "roll-z": false,
+    "lid": true,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_15.jpg",
+   "sha256": "52232009d0aa8ecd88b7160f12ff5dd014ef308b628321011421aa52a0df1274",
+   "camera_id": "V/3",
+   "scene": "A-2",
+   "set": "assembled",
+   "caption": "The assembled strut, other side, from above.",
+   "purpose": "assembled, other side from above",
+   "camera": {
+    "name": "V/3",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4932746309962535,
+    "white_balance": [
+     6351.373226261013,
+     -2.5737807703387543
+    ],
+    "world_T_cam": [
+     [
+      -0.6795810070381303,
+      -0.6570616567479595,
+      0.32625087602130226,
+      -0.21972717322291005
+     ],
+     [
+      -0.7272073187722939,
+      0.5447886957557185,
+      -0.41758207875912745,
+      0.2666561836323664
+     ],
+     [
+      0.09663938326092322,
+      -0.521032874402767,
+      -0.848048096156426,
+      0.5867752609816974
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 38.89,
+    "focus_mm": 647.5653006898601
+   },
+   "target_mat_mm": [
+    -1.440216895108918,
+    -12.738379536298737,
+    19.36578767353835
+   ],
+   "mm_per_px_at_target": 0.21143306391074054,
+   "lights": {
+    "key_az": 58.667983652281336,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 133.65218071718752,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 2564411605085347787,
+   "refs_px": {
+    "mat": 1459021,
+    "card12": 279107,
+    "card2": 10544,
+    "rule150": 44241
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 373.0,
+    "mask_s": 1.9,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_3.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_16.jpg",
+   "sha256": "43168e8c8e2aaa243a995ae0d90fad994b7d2d5d65b2bb86cfa0e50dfb239b6e",
+   "camera_id": "V/4",
+   "scene": "E-+z",
+   "set": "assembled",
+   "caption": "Looking along the rod at one end of the assembled strut.",
+   "purpose": "end view of one end, about along the rod",
+   "camera": {
+    "name": "V/4",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.238968551456844,
+    "white_balance": [
+     6445.442525606852,
+     0.007638257214128252
+    ],
+    "world_T_cam": [
+     [
+      0.4265712112244887,
+      0.09005913235336552,
+      -0.8999590848667686,
+      0.2838974331665387
+     ],
+     [
+      0.8964798225879188,
+      -0.17393861028599583,
+      0.40751599667314903,
+      -0.09754946290795329
+     ],
+     [
+      -0.11983709545548153,
+      -0.9806297530319664,
+      -0.1549333986629686,
+      0.05039755757911165
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": null,
+    "focus_mm": 213.07179466398054
+   },
+   "target_mat_mm": [
+    107.32713495,
+    -17.595582481,
+    19.999912991
+   ],
+   "mm_per_px_at_target": 0.062,
+   "lights": {
+    "key_az": 51.71979049715851,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 138.7993045413662,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 7266647960377450217,
+   "refs_px": {
+    "mat": 1029889,
+    "card12": 87509,
+    "card2": 1374,
+    "block": 90425,
+    "rule150": 134317
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 487.7,
+    "mask_s": 2.0,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_4.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_17.jpg",
+   "sha256": "b23c50600eed3f6929450c54e1574d33ba2a4346c3809a14c33f57717e69aa0c",
+   "camera_id": "V/5",
+   "scene": "E--z",
+   "set": "assembled",
+   "caption": "Looking along the rod at the other end of the assembled strut.",
+   "purpose": "end view of the other end",
+   "camera": {
+    "name": "V/5",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.401567404318212,
+    "white_balance": [
+     6426.04190926194,
+     1.2646798758067366
+    ],
+    "world_T_cam": [
+     [
+      0.18290821866126433,
+      -0.22050155408110722,
+      0.9580833200687608,
+      -0.29741941140204325
+     ],
+     [
+      -0.9690200149605432,
+      -0.20494819299493028,
+      0.13782760534080762,
+      -0.007090668481979552
+     ],
+     [
+      0.16596624401375037,
+      -0.9536117149217124,
+      -0.25115712813304525,
+      0.06927647429181336
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": null,
+    "focus_mm": 214.16670720967815
+   },
+   "target_mat_mm": [
+    -109.44524636999999,
+    19.950851279,
+    19.999912991
+   ],
+   "mm_per_px_at_target": 0.062,
+   "lights": {
+    "key_az": 55.07403698509687,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 138.71726316569018,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 2867942684288954728,
+   "refs_px": {
+    "mat": 1379880,
+    "card12": 153650,
+    "card2": 1100,
+    "rule150": 7727
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 463.3,
+    "mask_s": 2.2,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_5.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_18.jpg",
+   "sha256": "3c348c48a15371d4a74ce3b128187577151f6128560169c90f0ca1921b3f589a",
+   "camera_id": "V/6",
+   "scene": "A-1",
+   "set": "assembled",
+   "caption": "Close view: a motor module next to the bay on the assembled strut.",
+   "purpose": "the gap between a motor module and the bay",
+   "camera": {
+    "name": "V/6",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.2084862081435879,
+    "white_balance": [
+     6657.09183799266,
+     -0.31426537430339163
+    ],
+    "world_T_cam": [
+     [
+      0.9809030488710393,
+      0.1731220481837805,
+      -0.08864516426829042,
+      0.10134472825077359
+     ],
+     [
+      0.16638393610381197,
+      -0.5108706074538014,
+      0.8434023999529445,
+      -0.19998374005359987
+     ],
+     [
+      0.10072534200538624,
+      -0.8420451168865222,
+      -0.5299192642332049,
+      0.13738446406673638
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 162.91,
+    "focus_mm": 210.98651063563514
+   },
+   "target_mat_mm": [
+    81.708580794,
+    -13.158276673,
+    19.999912991
+   ],
+   "mm_per_px_at_target": 0.07,
+   "lights": {
+    "key_az": 59.03289379947394,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 148.33072670162105,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 5732207559033901972,
+   "refs_px": {
+    "mat": 1230068,
+    "card12": 285527,
+    "rule150": 106303
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 381.1,
+    "mask_s": 2.2,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/V_6.npz",
+   "readability_planned": {
+    "axial": true,
+    "roll": true,
+    "lid": true
+   },
+   "readability_per_end_planned": {
+    "axial+z": true,
+    "axial-z": false,
+    "roll+z": true,
+    "roll-z": false,
+    "lid": true,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_19.jpg",
+   "sha256": "7a7b5ef5b1e644fed1a24f9088bbc1e58bd1a8cc56803ddfdc9ade169c2445f3",
+   "camera_id": "C/1",
+   "scene": "ST2a",
+   "set": "closeups",
+   "caption": "Close-up before the lid goes on: the battery lead of a motor module runs into the open bay, towards its socket under the controller board.",
+   "purpose": "the battery lead of a motor module running into the open bay towards its socket (the plug itself sits under the controller board: not visible from any side)",
+   "camera": {
+    "name": "C/1",
+    "width": 2016,
+    "height": 1512,
+    "fx": 7911.215308672151,
+    "fy": 7911.215308672151,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.4528528802105014,
+    "white_balance": [
+     6359.959881452563,
+     2.8642585468207056
+    ],
+    "world_T_cam": [
+     [
+      -0.6106121310073582,
+      -0.6532116863561193,
+      0.44773576836617335,
+      -0.07568482889154234
+     ],
+     [
+      -0.7771771026394826,
+      0.38565178729155863,
+      -0.49726094768413664,
+      0.20953893472894253
+     ],
+     [
+      0.15214656289102282,
+      -0.6516035541390343,
+      -0.7431448254773942,
+      0.2519925139980902
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "5x",
+    "lens_mm": 141.27170194057413,
+    "hfov_deg": 14.5223,
+    "fstop": null,
+    "focus_mm": 309.96479386003796
+   },
+   "target_mat_mm": [
+    66.000533706,
+    52.181397860000004,
+    16.825365203
+   ],
+   "mm_per_px_at_target": 0.04,
+   "lights": {
+    "key_az": 56.82277762070707,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 146.65700449521205,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": true,
+    "cam_fill_w": 3.0
+   },
+   "seed": 10882349393775176842,
+   "refs_px": {
+    "mat": 1443382
+   },
+   "render": {
+    "samples": 320,
+    "beauty_s": 490.6,
+    "mask_s": 2.3,
+    "lens_fill_w": 3.0
+   },
+   "mask_file": "<render dir>/mask/C_1.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_20.jpg",
+   "sha256": "54963031f0deeea6c31c4b5d5b1f965bb5df19b7ab11e0ae02a81e0367ce373d",
+   "camera_id": "C/2",
+   "scene": "A-1",
+   "set": "closeups",
+   "caption": "Close-up: an end cap pushed on until it meets the motor module.",
+   "purpose": "an end cap against the motor enclosure (-z)",
+   "camera": {
+    "name": "C/2",
+    "width": 2016,
+    "height": 1512,
+    "fx": 7911.215308672151,
+    "fy": 7911.215308672151,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3551159617018131,
+    "white_balance": [
+     6719.7900240704,
+     0.2557038388616002
+    ],
+    "world_T_cam": [
+     [
+      0.9891078370134019,
+      -0.11201365831573931,
+      -0.09549150281252627,
+      -0.07075305375666588
+     ],
+     [
+      0.04062332963308328,
+      -0.4158161480985166,
+      0.9085409600397961,
+      -0.3113643161276363
+     ],
+     [
+      -0.14147590553939482,
+      -0.9025241666189541,
+      -0.4067366430758002,
+      0.1680178462267628
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "5x",
+    "lens_mm": 141.27170194057413,
+    "hfov_deg": 14.5223,
+    "fstop": 395.42,
+    "focus_mm": 356.2407087885104
+   },
+   "target_mat_mm": [
+    -105.50393034599999,
+    19.268188846999998,
+    19.999912991
+   ],
+   "mm_per_px_at_target": 0.046,
+   "lights": {
+    "key_az": 60.81877355795507,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 143.05387768663556,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": true,
+    "cam_fill_w": 3.0
+   },
+   "seed": 5269153766044640621,
+   "refs_px": {
+    "mat": 1016780,
+    "card12": 8444
+   },
+   "render": {
+    "samples": 320,
+    "beauty_s": 495.4,
+    "mask_s": 2.1,
+    "lens_fill_w": 3.0
+   },
+   "mask_file": "<render dir>/mask/C_2.npz",
+   "readability_planned": {
+    "axial": true,
+    "roll": true,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": true,
+    "roll+z": false,
+    "roll-z": true,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_21.jpg",
+   "sha256": "82833a887e26f6949c37eb73de3bc9cfd0d588cf8ad941098913bad4bb18b6d6",
+   "camera_id": "C/3",
+   "scene": "A-1",
+   "set": "closeups",
+   "caption": "Close-up: one end of the seated bay lid, next to a motor module.",
+   "purpose": "the lid's end notch straddling the rod",
+   "camera": {
+    "name": "C/3",
+    "width": 2016,
+    "height": 1512,
+    "fx": 7911.215308672151,
+    "fy": 7911.215308672151,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.3409680225947131,
+    "white_balance": [
+     6280.604706639277,
+     0.5370085601093413
+    ],
+    "world_T_cam": [
+     [
+      0.6621891491258132,
+      0.30131787523919107,
+      -0.6860853218378682,
+      0.29531194014912443
+     ],
+     [
+      0.7295442592876228,
+      -0.4682869517585413,
+      0.49847016415545636,
+      -0.17674766452810234
+     ],
+     [
+      -0.1710868332762802,
+      -0.8306111417950238,
+      -0.529919264233205,
+      0.1959327580067997
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "5x",
+    "lens_mm": 141.27170194057413,
+    "hfov_deg": 14.5223,
+    "fstop": null,
+    "focus_mm": 310.5298713094823
+   },
+   "target_mat_mm": [
+    67.34565469960631,
+    -11.120463197617743,
+    19.855931393195092
+   ],
+   "mm_per_px_at_target": 0.04200000000000001,
+   "lights": {
+    "key_az": 54.80613914929668,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 143.48675390034296,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": true,
+    "cam_fill_w": 3.0
+   },
+   "seed": 5541379095062370571,
+   "refs_px": {
+    "mat": 584302,
+    "card12": 532616
+   },
+   "render": {
+    "samples": 320,
+    "beauty_s": 450.8,
+    "mask_s": 1.8,
+    "lens_fill_w": 3.0
+   },
+   "mask_file": "<render dir>/mask/C_3.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": true,
+    "lid": true
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": true,
+    "roll-z": false,
+    "lid": true,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_22.jpg",
+   "sha256": "f09b96b6f14386ded9f917b3f31d424cb66c28d22085d432fc6eed45941cce0d",
+   "camera_id": "CR/a",
+   "scene": "CR",
+   "set": "cradle",
+   "caption": "Three assembled struts in the cell's cradle; each strut has one pair of cover colours: red, green, blue.",
+   "purpose": "three struts in the cradle",
+   "camera": {
+    "name": "CR/a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.2739785509341266,
+    "white_balance": [
+     6700.649454876682,
+     -2.441418273313801
+    ],
+    "world_T_cam": [
+     [
+      0.8171101028457413,
+      0.43367624407840755,
+      -0.37981047266955087,
+      0.12002175692446877
+     ],
+     [
+      0.556936919044971,
+      -0.4237555500128457,
+      0.7143196077653238,
+      -0.3394580727698304
+     ],
+     [
+      0.1488366488205025,
+      -0.7952082426354471,
+      -0.5877852522924731,
+      0.3258087561747867
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 57.03,
+    "focus_mm": 371.81756420946294
+   },
+   "target_mat_mm": [
+    -60.471308154569755,
+    1.1535795039208097e-05,
+    46.48217244778225
+   ],
+   "mm_per_px_at_target": 0.30034498489900324,
+   "lights": {
+    "key_az": 58.281541435586725,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 138.3901421456505,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 11123272768935748253,
+   "refs_px": {
+    "mat": 259750,
+    "card12": 59073,
+    "rule150": 40838
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 398.8,
+    "mask_s": 1.8,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/CR_a.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_23.jpg",
+   "sha256": "1aae83f5c28f46f15d3b992750e059bc26bd599ede70b4bc941921f7bd3e0435",
+   "camera_id": "CR/b",
+   "scene": "CR",
+   "set": "cradle",
+   "caption": "The three struts in the cradle from the other side.",
+   "purpose": "three struts in the cradle, other side",
+   "camera": {
+    "name": "CR/b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 1582.2430617344303,
+    "fy": 1582.2430617344303,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.1548532551708282,
+    "white_balance": [
+     6623.132835099415,
+     -0.7318158673499067
+    ],
+    "world_T_cam": [
+     [
+      -0.7457268973393487,
+      -0.5412943023174346,
+      0.38844803109722426,
+      -0.23281785022947496
+     ],
+     [
+      -0.6550383844407331,
+      0.489148582870108,
+      -0.575897889200368,
+      0.2555142678741883
+     ],
+     [
+      0.12172144221090558,
+      -0.6839109168267798,
+      -0.7193398003386511,
+      0.3656387062446789
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "wide",
+    "lens_mm": 28.254340388114827,
+    "hfov_deg": 65.0,
+    "fstop": 45.09,
+    "focus_mm": 396.92583668063793
+   },
+   "target_mat_mm": [
+    -60.471308154569755,
+    1.1535795039208097e-05,
+    46.48217244778225
+   ],
+   "mm_per_px_at_target": 0.28041190626753326,
+   "lights": {
+    "key_az": 58.079175442298876,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 144.55102531670008,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 5866098363132245118,
+   "refs_px": {
+    "mat": 335925,
+    "card12": 152267,
+    "rule150": 5392
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 381.5,
+    "mask_s": 1.9,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/CR_b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_24.jpg",
+   "sha256": "5ded092e64ac5eb9fc461870cb1740b17048132c267fc01d1af0062a6bab8c3e",
+   "camera_id": "BK/a",
+   "scene": "BK",
+   "set": "backs",
+   "caption": "A motor module standing on its outer end: its inner end and the side that faced down before.",
+   "purpose": "a motor module standing on its outer end",
+   "camera": {
+    "name": "BK/a",
+    "width": 2016,
+    "height": 1512,
+    "fx": 3164.4861234688606,
+    "fy": 3164.4861234688606,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.453781586495971,
+    "white_balance": [
+     6525.432622912826,
+     -2.035007858407254
+    ],
+    "world_T_cam": [
+     [
+      0.8742750421090549,
+      0.31644285190243415,
+      -0.3681128525670689,
+      0.009893280829550363
+     ],
+     [
+      0.4826208270175673,
+      -0.6481002684038903,
+      0.589103708546878,
+      -0.10185263065890035
+     ],
+     [
+      -0.052156380952764606,
+      -0.6926975989381369,
+      -0.7193398003386512,
+      0.18208046041786063
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "2x",
+    "lens_mm": 56.50868077622965,
+    "hfov_deg": 35.337,
+    "fstop": 229.85,
+    "focus_mm": 186.00682192289847
+   },
+   "target_mat_mm": [
+    -59.99999999959131,
+    9.999999999937991,
+    45.5000114440293
+   ],
+   "mm_per_px_at_target": 0.06,
+   "lights": {
+    "key_az": 58.33925264081099,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 130.6613304764552,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": false,
+    "cam_fill_w": 0.0
+   },
+   "seed": 13628249735287846946,
+   "refs_px": {
+    "mat": 2317938
+   },
+   "render": {
+    "samples": 256,
+    "beauty_s": 339.0,
+    "mask_s": 2.3,
+    "lens_fill_w": 0.0
+   },
+   "mask_file": "<render dir>/mask/BK_a.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  },
+  {
+   "file": "photo_25.jpg",
+   "sha256": "c71d2c41cbcd059ee6e064a61ad41ca5b8dae98ff0d5ed785505f3e5818d14f9",
+   "camera_id": "BK/b",
+   "scene": "BK",
+   "set": "backs",
+   "caption": "An end cap with its cover, resting on the cover: the open end that goes onto the rod.",
+   "purpose": "an end cap resting on its cover, mouth up",
+   "camera": {
+    "name": "BK/b",
+    "width": 2016,
+    "height": 1512,
+    "fx": 7911.215308672151,
+    "fy": 7911.215308672151,
+    "cx": 1007.5,
+    "cy": 755.5,
+    "k1": 0.0,
+    "k2": 0.0,
+    "k3": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "exposure_ev": -1.5064606179319724,
+    "white_balance": [
+     6251.383497830513,
+     -1.5464670549041701
+    ],
+    "world_T_cam": [
+     [
+      -0.6799568889973802,
+      0.6240426101310252,
+      -0.385005778977227,
+      0.1885593627776006
+     ],
+     [
+      0.7267290365312382,
+      0.6434182026135692,
+      -0.24057831159084567,
+      0.07971107196958635
+     ],
+     [
+      0.09758860879929804,
+      -0.4433777591246328,
+      -0.8910065241883678,
+      0.25547788689659406
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "world": "mat frame of the album's scenes (m); camera axes OpenCV",
+    "lens": "5x",
+    "lens_mm": 141.27170194057413,
+    "hfov_deg": 14.5223,
+    "fstop": 466.23,
+    "focus_mm": 263.70610531579126
+   },
+   "target_mat_mm": [
+    84.99999995015651,
+    15.000000035458436,
+    15.813775450877586
+   ],
+   "mm_per_px_at_target": 0.034,
+   "lights": {
+    "key_az": 55.826388055393515,
+    "key_el": 45.0,
+    "key_dist": 0.85,
+    "key_w": 144.4059028139335,
+    "rim_az": 165.0,
+    "rim_el": 14.0,
+    "rim_dist": 0.7,
+    "rim_w": 60.0,
+    "reflector": true,
+    "cam_fill_w": 3.0
+   },
+   "seed": 10185267923814313598,
+   "refs_px": {
+    "mat": 2259063
+   },
+   "render": {
+    "samples": 320,
+    "beauty_s": 486.4,
+    "mask_s": 2.1,
+    "lens_fill_w": 3.0
+   },
+   "mask_file": "<render dir>/mask/BK_b.npz",
+   "readability_planned": {
+    "axial": false,
+    "roll": false,
+    "lid": false
+   },
+   "readability_per_end_planned": {
+    "axial+z": false,
+    "axial-z": false,
+    "roll+z": false,
+    "roll-z": false,
+    "lid": false,
+    "plug": false
+   }
+  }
+ ],
+ "provenance": {
+  "pipeline": "the photo pipeline of the platform's CAD-from-photos task (render model, materials, references, bench scene; its photo rendering functions), driven by the maintainers' album renderer",
+  "scenes": "the maintainers' album scenes (not in the repository)",
+  "camera_plan": "the maintainers' album camera plan (not in the repository)",
+  "render_record": [
+   "CPU"
+  ],
+  "blender": "5.2.2 LTS"
+ },
+ "interim": false,
+ "removed_from_payload": []
+}
