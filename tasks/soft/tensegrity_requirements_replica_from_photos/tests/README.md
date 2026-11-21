@@ -172,8 +172,8 @@ C3 8, C4 35).
 | `tests/robotics_grader/__init__.py` | `d75f3c6293445af3277b05fe00df38ef7378645651ff3cfbad7f8bcfe1f56604` | the benchmark's shared verify kit (byte-identical to `shared/robotics_grader/`) |
 | `tests/robotics_grader/scoring.py` | `9353682eb3536df264b3cb5ec3bf2be24a410f88af5b20cf86cb31796930a83b` | kit |
 | `tests/robotics_grader/seeds.py` | `b795f63404d14f0c90ca0098582e80afabd251396b1f4d6ababf4e7f6037b5e1` | kit |
-| `tests/robotics_grader/selftest.py` | `7a4be7513643147c2f91f866a24b6a5253a3203180b4724ca54a188fd0c2027f` | kit |
-| `tests/robotics_grader/solver.py` | `288a8c1f3a1dfd61d3b2c9240c40f095411c6129af867b00fc6a0d8a77ab2d84` | kit |
+| `tests/robotics_grader/selftest.py` | `8ef71b5bd6d924cae1ffca04c3eec51fe781f880b5a9bc818366ee803350dd35` | kit |
+| `tests/robotics_grader/solver.py` | `ed83ebef07e678019cb9c468b4d66976bc40949a63c0ca67e0d8d769754900e6` | kit |
 | `tests/robotics_grader/stage.py` | `a97eefbc9ee2f4c67b26eecdfc76d1ac84cf4615a2f8ab2fc63e75c581eb0c2f` | kit |
 | `solution/solve.sh` | `eb99373f072aa6a57ca73213cc7090888a7cd5fa6171e0af1d1e945e2fcdc9c5` | the privileged reference's script: copies `answer/` into the submission folder |
 | `solution/answer/requirements.yaml` | `0828915153f920b1add3c0ed1e1951efa2246c40fbb9ceeb7cc5a420daaa7802` | reference: 8 requirement items and 8 derived quantities, transcribed from the ledger |

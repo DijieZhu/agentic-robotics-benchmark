@@ -131,7 +131,10 @@ That deadline is a **single per-request budget**, fixed the moment the request i
 (and the `READY` wait likewise): blank lines, a partial line or a trickle of output are all
 charged against the same `step_timeout` and cannot extend it — and a flood of blank lines is
 capped — so a solver can never stall verification by dribbling output. Missing the deadline
-aborts the episode exactly as a slow reply does.
+aborts the episode exactly as a slow reply does. The deadline starts before the request is
+written and the write does not block, so a solver that stops reading (a request longer than
+the pipe holds waits for its reader) costs the same one deadline; `close` never waits on
+such a solver either: it stops it.
 
 ```
 {"type": "reset"}                        -> {"ok": true}
@@ -142,7 +145,10 @@ aborts the episode exactly as a slow reply does.
 `t` is the step index inside the episode, owned by the grader's loop and restarting at 0
 after each `reset`. Nothing on the wire marks a probe. `ProbeLock.probe(solver, t, obs)`
 asks a probed step twice with the same `t`, the real observation and a perturbed copy in a
-hidden order, applies only the real reply and compares the two. The instruction tells the
+hidden order, applies only the real reply and compares the two: the values, and two replies
+with a different count of numbers show nothing (a task whose action has more than one valid
+shape gives the lock a `canonical=` function that maps a reply to the fixed-length list that
+is compared). The instruction tells the
 agent exactly this, so an honest solver needs no special case. The lock catches a policy
 that ignores its input; it is not a proof of honesty (a solver can notice a repeated `t`
 and vary its answer on purpose), and isolation, not the lock, keeps the score honest. The
@@ -152,7 +158,7 @@ After an aborted episode (a missed deadline, a crash, a malformed or missing act
 next `reset` stops the solver's whole process group and launches `run.sh` again, which must
 print `READY` again: a late reply left on the wire must not answer the next request. After
 `max_restarts` (3) restarts, or a restart that fails, every remaining episode aborts at
-once. Say so in the instruction, and charge an aborted episode a real cost (the template
+once, and the solver is stopped first. Say so in the instruction, and charge an aborted episode a real cost (the template
 charges what standing still would cost), never drop it: a dropped episode lets a weak
 policy abort its bad starts and average only its good ones.
 

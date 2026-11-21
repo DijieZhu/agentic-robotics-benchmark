@@ -13,10 +13,13 @@ properties make that safe to score:
    grader imposes on the solver it starts (a seccomp filter, limits, a pause).
 2. **Every request has a single deadline.** A solver that hangs must cost the episode,
    not the run. Reads happen on a queue fed by a reader thread, so a stall is a timeout
-   rather than a wedged pipe — and the deadline is fixed once, when the request is written
-   (the `READY` handshake likewise), so blank lines, a partial line or a trickle of output
-   are all charged against the same `step_timeout` and cannot extend it. Missing the
-   deadline aborts the episode exactly as a slow reply does.
+   rather than a wedged pipe — and the deadline is fixed once, before the request is
+   written (the `READY` handshake likewise), so blank lines, a partial line or a trickle of
+   output are all charged against the same `step_timeout` and cannot extend it. The write
+   is charged too: a request larger than the pipe waits for the solver to read it, so the
+   kit writes without blocking and gives up at the same deadline (`Solver._send`). Missing
+   the deadline aborts the episode exactly as a slow reply does. Closing is bounded the
+   same way: a solver that stopped reading is not asked to exit, it is stopped.
 3. **The wire carries no scoring input.** The solver returns actions. The metric is
    computed by the grader from its own simulator state, so nothing the solver prints can
    move its score.
@@ -55,8 +58,11 @@ because a solver that keeps a PID file, a fixed port or a lock file has to survi
 started twice.
 """
 
+import fcntl
+import io
 import json
 import os
+import select
 import signal
 import subprocess
 import time
@@ -84,6 +90,10 @@ MAX_BLANK_LINES = 1000
 #: than a step). With the template's 30 s step deadline that is 120 s; the instruction
 #: quotes the product, so keep the two in sync.
 READY_TIMEOUT_FACTOR = 4
+
+#: How long `close` waits for the pipe to take its one short message. A solver that reads
+#: its requests takes it at once; one that stopped reading is stopped without it.
+CLOSE_WRITE_TIMEOUT = 1.0
 
 
 class SolverAborted(Exception):
@@ -133,6 +143,7 @@ class Solver(object):
         self._broken = False   # the wire may be out of step: restart before the next episode
         self._dead = False     # no more restarts: every later episode aborts at once
         self._closed = False
+        self._cut = False      # a request was cut short in the write: the pipe holds part of a line
         if self.clear_account:
             clear_agent_account()
         self._start()
@@ -155,6 +166,7 @@ class Solver(object):
 
     def _start(self):
         self.proc = self._spawn()
+        self._cut = False
         # One queue per process: a late line from a killed process lands in the old queue.
         self._lines = queue.Queue()
         threading.Thread(target=self._pump, args=(self.proc, self._lines), daemon=True).start()
@@ -167,6 +179,9 @@ class Solver(object):
     def _restart(self):
         if self.restarts >= self.max_restarts:
             self._dead = True
+            # Stop it before giving up on it: a solver left running here would compute, and
+            # could sit on a full pipe, through every remaining episode.
+            self._stop(grace=0)
             raise SolverAborted(
                 "solver already restarted {} times (max_restarts); the remaining episodes "
                 "abort".format(self.restarts))
@@ -237,6 +252,61 @@ class Solver(object):
         raise SolverAborted(
             "solver wrote {} lines before READY".format(MAX_PRE_READY_LINES))
 
+    def _send(self, text, deadline, budget, what="step"):
+        """Write one line to the solver, giving up at `deadline` (a `time.monotonic()` instant).
+
+        The pipe to the solver holds 64 KiB by default; a longer line, or any line once the
+        pipe is full, waits for the solver to read. A blocking write would wait outside every
+        deadline, so the bytes go to the descriptor without blocking, and whatever the solver
+        has not taken by `deadline` aborts the request. They do not go through the text
+        wrapper `subprocess` puts on the pipe: a wrapper keeps what it could not write and
+        writes it, blocking, when it is closed.
+
+        A grader that replaced `proc.stdin` with an object of its own (one that bounds its
+        own writes, say) is written to through that object, as before.
+        """
+        stdin = self.proc.stdin
+        if not isinstance(stdin, io.IOBase):
+            try:
+                stdin.write(text)
+                stdin.flush()
+            except (IOError, OSError, ValueError):
+                raise SolverAborted("solver stdin closed")
+            return
+        try:
+            fd = stdin.fileno()
+            flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+            fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+        except (IOError, OSError, ValueError):
+            raise SolverAborted("solver stdin closed")
+        view = memoryview(text.encode("utf-8"))
+        total = len(view)
+        try:
+            while len(view):
+                try:
+                    view = view[os.write(fd, view):]
+                    continue
+                except BlockingIOError:
+                    pass
+                except (IOError, OSError):
+                    raise SolverAborted("solver stdin closed")
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise SolverAborted(
+                        "solver exceeded its {:g}s {} deadline (it did not read the "
+                        "request)".format(budget, what))
+                try:
+                    select.select([], [fd], [], min(remaining, 1.0))
+                except (IOError, OSError, ValueError):
+                    raise SolverAborted("solver stdin closed")
+        finally:
+            if 0 < len(view) < total:
+                self._cut = True
+            try:
+                fcntl.fcntl(fd, fcntl.F_SETFL, flags)
+            except (IOError, OSError, ValueError):
+                pass
+
     def request(self, message):
         if self._dead:
             raise SolverAborted("solver could not be restarted after an earlier abort")
@@ -247,16 +317,14 @@ class Solver(object):
             raise
 
     def _exchange(self, message):
-        try:
-            self.proc.stdin.write(json.dumps(message) + "\n")
-            self.proc.stdin.flush()
-        except (IOError, OSError, ValueError):
-            raise SolverAborted("solver stdin closed")
-        # One deadline per request, fixed the moment it is written. Blank lines are still
-        # skipped, but every read — blank, slow or partial — is charged against this one
-        # deadline, so a solver cannot keep the request alive by dribbling output; and the
-        # blank-line count is capped so a flood faster than the deadline cannot spin.
+        line = json.dumps(message) + "\n"
+        # One deadline per request, fixed before it is written, so the time the solver takes
+        # to read the request counts as well. Blank lines are still skipped, but every read
+        # — blank, slow or partial — is charged against this one deadline, so a solver
+        # cannot keep the request alive by dribbling output; and the blank-line count is
+        # capped so a flood faster than the deadline cannot spin.
         deadline = time.monotonic() + self.step_timeout
+        self._send(line, deadline, self.step_timeout)
         for _ in range(MAX_BLANK_LINES):
             line = self._readline(deadline, self.step_timeout).strip()
             if not line:
@@ -298,19 +366,28 @@ class Solver(object):
         return reply["action"]
 
     def close(self):
-        """Ask the solver to exit, then stop its process group. Safe to call twice."""
+        """Ask the solver to exit, then stop its process group. Safe to call twice.
+
+        Never waits on a solver that does not read: the message is written without blocking,
+        for at most `CLOSE_WRITE_TIMEOUT`, and not at all when a request was cut short in the
+        write (the pipe then holds part of a line) or the solver was given up on. A solver
+        that was asked gets 10 s to exit; one that was not is stopped at once.
+        """
         if self._closed:
             return
         self._closed = True
         if self.proc is None:
             return
-        if self.proc.poll() is None:
+        asked = False
+        if self.proc.poll() is None and not self._cut and not self._dead:
             try:
-                self.proc.stdin.write(json.dumps({"type": "close"}) + "\n")
-                self.proc.stdin.flush()
-            except (IOError, OSError, ValueError):
+                self._send(json.dumps({"type": "close"}) + "\n",
+                           time.monotonic() + CLOSE_WRITE_TIMEOUT, CLOSE_WRITE_TIMEOUT,
+                           what="close")
+                asked = True
+            except (SolverAborted, IOError, OSError, ValueError):
                 pass
-        self._stop(grace=10)
+        self._stop(grace=10 if asked else 0)
 
     def __enter__(self):
         return self
@@ -354,16 +431,23 @@ class ProbeLock(object):
     never applied to the simulator, so a probe cannot change the episode it audits. Verdict
     is a fraction, not a single sample, because a genuine policy may legitimately saturate
     its action range on some states.
+
+    Only values are compared. Two replies with a different count of numbers do not count as
+    differing: a solver could otherwise pass the lock without reading anything, by answering
+    a repeated `t` once in one shape and once in another. A task whose action has more than
+    one valid shape passes `canonical=`, a function that maps a reply to the fixed-length
+    list of numbers that is compared (and raises `SolverAborted` on a reply it rejects).
     """
 
     def __init__(self, rng, rate=0.1, pass_fraction=0.5, magnitude=0.4, dims=3,
-                 tolerance=1e-4):
+                 tolerance=1e-4, canonical=None):
         self.rng = rng
         self.rate = float(rate)
         self.pass_fraction = float(pass_fraction)
         self.magnitude = float(magnitude)
         self.dims = int(dims)
         self.tolerance = float(tolerance)
+        self.canonical = canonical
         self.total = 0
         self.passed = 0
 
@@ -400,15 +484,21 @@ class ProbeLock(object):
     def record(self, action_probe, action_real):
         """Score one probe pair. Returns True if this pair showed sensitivity.
 
-        A reply that is not a nest of numbers is a protocol error: the episode aborts.
+        A reply that is not a nest of numbers is a protocol error: the episode aborts. A
+        pair whose replies hold a different count of numbers shows nothing: it counts in the
+        total and not as passed (see the class docstring; `canonical=` is for a task whose
+        action has more than one shape).
         """
         self.total += 1
         try:
+            if self.canonical is not None:
+                action_probe = self.canonical(action_probe)
+                action_real = self.canonical(action_real)
             a = [float(x) for x in _flatten(action_probe)]
             b = [float(x) for x in _flatten(action_real)]
         except (TypeError, ValueError, OverflowError):
             raise SolverAborted("solver action is not numeric")
-        moved = len(a) != len(b) or max(
+        moved = len(a) == len(b) and max(
             [abs(x - y) for x, y in zip(a, b)] or [0.0]
         ) > self.tolerance
         if moved:

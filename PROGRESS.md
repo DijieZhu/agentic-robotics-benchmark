@@ -698,6 +698,74 @@ order of §13 (§5's platform list predates both).
 - **Identities**: every task's vendored kit changed, so every task has a new
   `content_digest`; `identity-history.json` records them.
 
+## 16. 2026-11-20 — the kit never waits on a solver that does not read; the lock compares values
+
+- **The findings.** The validation review of #80 (fixed in that task's own subclass by #146)
+  and the review of #138 named four paths in `shared/robotics_grader/solver.py`:
+  (1) `_exchange` wrote a request with a blocking `write` and `flush` and started the request's
+  deadline afterwards; a request longer than the pipe (64 KiB), or any request once the pipe
+  is full, waits for the solver to read, so a solver that stopped reading held the grader
+  until the verifier's timeout, with no verdict; (2) `close()` wrote its message the same
+  way; (3) with no restart left, `_restart` raised before it stopped the old process, which
+  then ran on through every remaining episode; (4) `ProbeLock.record` counted two replies
+  with a different count of numbers as differing, so a solver could pass the lock without
+  reading its observation by answering a repeated `t` in two of its action shapes.
+- **The fix.** `Solver._send` writes to the pipe's descriptor without blocking (`O_NONBLOCK`,
+  `select`, `os.write`, the flag restored) and gives up at a deadline; not through the text
+  wrapper, which keeps what it could not write and writes it, blocking, when it is closed.
+  `_exchange` starts the request's one deadline before the write. `close()` sends its message
+  through `_send` for at most 1 s (`CLOSE_WRITE_TIMEOUT`), not at all after a request was cut
+  short in the write or once the solver was given up on, and stops a solver it did not ask at
+  once. `_restart` stops the old process before it raises. `ProbeLock.record` treats a length
+  mismatch as showing nothing; `ProbeLock(canonical=...)` lets a task with more than one
+  action shape map a reply to the fixed-length list that is compared. A grader that replaced
+  `proc.stdin` with an object of its own (the docking task's `BoundedStdin`) is written to
+  through that object as before.
+- **What a solver sees.** One that reads its requests and answers in one shape: nothing. The
+  time a solver takes to read a request now counts toward that request's deadline.
+- **Tests.** `tests/test_kit_solver_bounded_writes.py`: 11 tests over the real wire against
+  child processes, 8 of which fail on the kit as it was (an unread 2 MB request, `close()`
+  after it and on a full pipe, the solver left running with no restart left, the read time
+  outside the deadline, the two lock cases). Five new checks in the kit's selftest.
+- **`keyed_nut_peg_assembly`**: amendment 8 of its selection record, pre-registered
+  (`58d1788a`) and run by the task's rule (`5cc3c611`): all 16 candidates and all 24
+  development candidates repeat amendment 7's runs to the step, the hidden set and the
+  development kits are unchanged, the anchor's verify repeats (1.0, 10 of 10).
+- **Re-validated with this kit** (2026-11-20, `ale validate` on engine `bfb7505`, a clean
+  checkout of `5cc3c611`, one task at a time; the later commits change nothing under
+  `shared/`, `templates/` or these task folders): every grader that runs the kit's `Solver`
+  or `ProbeLock` printed `ok`, untouched 0.0 and the oracle 1.0, no episode aborted, and the
+  oracle's verifier log has no kind of line that its last recorded validate does not have.
+  `arm_hidden_mechanism_box` (`validate-5bbc2efc`: 37 of 39 metrics equal, the other two
+  count probes over wall time, 109 of 109 passed), `kitchen_appliance_tending`
+  (`validate-643fa43b`: 40 of 40 equal), `keyed_nut_peg_assembly` (`validate-b31fcd96`: the
+  ten kits to the step), `fault_adaptive_spacecraft_docking` (`validate-745b7aad`: 66 of 70
+  equal, the others are wall-clock timings; its `BoundedStdin` path),
+  `visual_low_level_flight_control` (`validate-95dc011e`: 8 of 8 fresh scenes, 133 of 185
+  probes, inside the spread of its earlier runs), `longtail_manipulation_recovery`
+  (`validate-8c43f38c`: 15 of 16 equal, the other is controller seconds; this grader has its
+  own write and close paths), `driving_safety_supervisor` (`validate-e6006d1f`: ratio 1.004,
+  24 of 24 episodes), `aerial_search_geolocation` (`validate-3dd270f7`: geolocation score
+  0.928, 341 of 341 probes), `hazard_bay_build` (`validate-6a99b757`: 131 of 131 equal) and
+  `object_finding_and_organizing_on_messy_desk` (`validate-f6a6c2f3`: 26 of 29 equal, the
+  others are controller seconds, 618 of 620 probes).
+  `pantry_jar_refilling` landed on `main` while this was open (#138); it runs the kit's
+  `Solver` and lock, got the kit with the merge of `main` and was validated on that merge
+  (`validate-aa856c6f`, checkout `8ecc6829`: 32 of 33 metrics equal to its last validate, the
+  other is controller seconds, 12 of 12 episodes). `freeflyer_uncrewed_station_caretaking`
+  (#149) uses the kit for its scoring and verdict only.
+  `novel_object_6dof_grasp_detection` starts its solvers through `deprivileged` and runs none
+  of the changed code; its validate, owed since section 15, ran here too (`validate-9bd36858`,
+  with the account clearing of section 15): untouched 0.0, oracle 1.0, 448 of 448 frames
+  valid, no timeout, no restart, prediction 4722 s on a loaded machine (slowest call 209.9 s
+  of 300 s), the container at most 59 GB. The reference reads mean AP 72.458 there (ratio
+  1.0018); section 12's record is 72.339 on another host, so the two differ in the first
+  decimal, which is not explained yet.
+- **Identities**: every task's vendored kit changed, so every task has a new
+  `content_digest`; `identity-history.json` records the 49 of them. `pantry_jar_refilling`
+  is recorded here for the first time, with this kit; its content as merged by #138 has no
+  entry of its own.
+
 ## Open items
 
 - Website, display-only pull request: remove the backend (API, database service, sign-in,
