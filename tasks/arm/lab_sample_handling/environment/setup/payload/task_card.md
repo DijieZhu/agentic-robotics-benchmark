@@ -123,8 +123,9 @@ softly where they meet, and nothing casts a sharp shadow.
   45 mm beyond the plate's free edge, its axis in the plate's mid-plane (6 mm above the hinge's plane when the
   lid is shut), held by two flat arms 112 mm apart. The lid starts either open (1.75 rad, at its stop past vertical) or shut
   (0 rad). It counts as shut at an angle under 0.02 rad. The hinge's friction is the unit's own (the table
-  below). The lid's weight makes 0.7 N m about the hinge when the lid lies flat: on a hinge with less friction a
-  lid let go near the horizontal falls shut, on a stiffer one it stays where it is let go, at any angle.
+  below). The lid's weight makes about 0.7 N m about the hinge when the lid lies flat: on a hinge with clearly
+  less friction a lid let go near the horizontal falls shut, on one near that value or stiffer it stays where it is
+  let go, at any angle.
 - **What differs from unit to unit** (one centrifuge is one unit; a unit's values are its own and are not told):
 
   | Property | Range over the series |

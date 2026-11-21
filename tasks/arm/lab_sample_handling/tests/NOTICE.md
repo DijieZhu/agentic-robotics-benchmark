@@ -15,6 +15,11 @@
 - **The scored units** (tests/units.json, solution/oracle/units.json: hidden u0-u5) are the rotor's hidden turn
   properties, a Latin hypercube over `lab_sim.UNIT_RANGES`. `hidden/selection.json` holds the rule, the os.urandom
   key and the 20 recheck seeds (committed before the recheck); `hidden/recheck.json` the reference's results on them.
+  Since 2026-11-20 a unit also has three fit properties (the rotor bores' clearance and friction, the lid hinge's
+  friction) and a calibration error per camera (`lab_sim.FIT_PROPS`, `lab_sim.CALIB`): `review/unit_fit.py` is the
+  rule, `hidden/selection_fit.json` its record (the key, the values, the reference's recheck on 20 seeds per unit).
+  The development units have draws of their own by the same rule (`bench.json`'s `fit_draw`). `review/mutants.py`
+  runs the reference with one thing wrong at a time on the fixed set.
 - **The development units** (environment/commission_service/bench.json: d0-d2) are a separate Latin hypercube over
   the same ranges, with its own os.urandom key and rule in that file's `draw`. They are in the task image under the
   service's account only; the agent's account cannot read them. A development episode's seed is a hash of the
