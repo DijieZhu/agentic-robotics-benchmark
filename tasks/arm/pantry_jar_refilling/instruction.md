@@ -80,9 +80,11 @@ many episodes). A control step takes 10-25 ms of wall time, so a whole 12000-ste
 images; an image takes 0.05-0.15 s to draw, and the first image of a process about 5 s more. Run a few simulations
 at a time, not dozens.
 
-**Numerics.** Every `/opt/venv` Python runs NumPy's linear algebra on one fixed set of kernels
-(`OPENBLAS_CORETYPE=Haswell` with `OPENBLAS_L2_SIZE=256`; the image also sets them when the variables are missing),
-here and in the graded run, so the simulator computes the same on every machine. Do not unset or change them.
+**Numerics.** Every `/opt/venv` Python computes the same here and in the graded run, on whatever machine: the image
+sets, when the variables are missing, NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell`
+with `OPENBLAS_L2_SIZE=256`) and on one thread (`OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`), NumPy without its
+AVX-512 loops (`NPY_DISABLE_CPU_FEATURES`) and OpenCV's IPP at AVX2 (`OPENCV_IPP=avx2`). Do not unset or change them:
+the simulator would compute differently, and your controller's results would depend on the grading machine's CPU.
 
 ## Credit
 
@@ -196,7 +198,7 @@ failure; run it on a copy of your submission in another folder to check.
 
 Stdout carries only these messages; write logs to stderr. `run.sh` starts with only `PATH`, `HOME` and `LANG` set:
 export anything else you need there (for MuJoCo's own `mujoco.Renderer`, `MUJOCO_GL=osmesa`; the simulator's camera
-images need nothing exported). The two numerics variables need no
+images need nothing exported). The numerics variables need no
 export: a `/opt/venv` Python sets them itself.
 
 **Probes.** About 1 % of steps are asked twice with the same `t`, in a hidden order:

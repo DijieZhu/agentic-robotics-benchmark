@@ -542,7 +542,9 @@ wrong matrix products, not rounding. The fix is the pull request from branch
   `full_at` 0.98 covers the difference and the anchor value stays. For anyone who does set it,
   the names are numpy-version specific: 1.23.5 knows AVX512F, AVX512CD, AVX512_SKX, AVX512_CLX,
   AVX512_CNL and AVX512_ICL and warns about names it does not know or that the CPU lacks;
-  numpy 2.x knows X86_V4, AVX512_ICL and AVX512_SPR.
+  numpy 2.2 knows the same names, numpy 2.5 knows X86_V4, AVX512_ICL and AVX512_SPR instead and
+  disables nothing when given the older ones (measured 2026-11-20 with 2.2.5, 2.2.6, 2.5.3 and 2.5.4 on a
+  Zen 5 host; `tests/test_numerics_pin_names.py`).
 - **Scope and limits.** Scores of this task from machines with AVX512_BF16 Intel CPUs before
   this change are not valid, agent runs included: the grader itself was wrong there. Runs on
   the AMD hosts used so far are not affected. No other task is affected: every other task

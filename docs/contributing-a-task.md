@@ -174,6 +174,30 @@ and scoring alike), and let the verify stage check the products before it scores
 `tasks/arm/novel_object_6dof_grasp_detection` is the worked example (`environment/Dockerfile`,
 `tests/verify.py`'s `NUMERICS_ENV`, `tests/numerics_check.py`; `PROGRESS.md` section 12).
 
+When the grader runs a submitted program (a controller, a mission, an assembly program), the program's own
+arithmetic has to repeat on every grading host as well, or the same submission gets different scores on
+different machines. Three things decide it, and the kernel pin covers only the first:
+
+- OpenBLAS: `OPENBLAS_CORETYPE=Haswell`, and with numpy 2.5.2 to 2.5.5 always together with
+  `OPENBLAS_L2_SIZE=256`; one thread (`OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`), because a threaded
+  product is split by the host's core count.
+- NumPy's own loops: `np.arctan2`, `exp`, `log`, `power`, `arcsin` and others round differently in the last bit
+  where NumPy's AVX-512 loops are on. `NPY_DISABLE_CPU_FEATURES` takes them out, by names that depend on the
+  numpy version: numpy 2.5 knows `X86_V4 AVX512_ICL AVX512_SPR`; numpy 1.23 and 2.2 know `AVX512F AVX512CD
+  AVX512_SKX AVX512_CLX AVX512_CNL AVX512_ICL` (measured; for another version read
+  `numpy._core._multiarray_umath.__cpu_dispatch__`). A name the numpy does not know is rejected with an
+  `ImportWarning` that nobody sees, and then nothing is disabled. Let the image build fail on that warning
+  (`python3 -W error::ImportWarning -c "import numpy"` with the variable set), and check on an AVX-512 host.
+  `tests/test_numerics_pin_names.py` checks every literal pin against the task's numpy.
+- OpenCV: `OPENCV_IPP=avx2` (its IPP picks code by CPU).
+
+Set them where the program's process gets them: a program started with a scrubbed environment sees no image
+`ENV`, so use a `.pth` in the task's Python that sets each as a default, or put them into the environment the
+grader starts the program with. State the pin in `instruction.md`, and let the verify stage hash a set of
+NumPy, SciPy and OpenCV results from a Python started as the program is and refuse to grade when they differ
+from the recorded ones. `tasks/arm/pantry_jar_refilling` is the worked example (`environment/Dockerfile`,
+`tests/numerics_check.py`, `tests/numerics.json`).
+
 ## 6. The anchor bootstrap
 
 The scoring denominator is the reference implementation's own measured value, never a figure
