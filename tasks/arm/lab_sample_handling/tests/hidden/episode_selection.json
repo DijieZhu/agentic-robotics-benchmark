@@ -1,0 +1,2745 @@
+{
+ "format": "lab_sample_handling episode selection 1",
+ "rule": "tests/review/select_set.py (module docstring)",
+ "frozen": {
+  "tests/verify.py": "f8bde81fcab5732f18a54fef5f2a98033876ef1d2d8fa6bf6d01d88cff3088d6",
+  "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+  "tests/lab_env.py": "aa346b6e9bb1c13fc414af55c0c2c701ce8398baad74db04f1193fa1bd24dac9",
+  "tests/lab_sim.py": "2ecadc59ecae56e0e3adca7eab353a901013324461b8c19b99b31a8c36f5e467",
+  "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+  "tests/lab_render.py": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6",
+  "tests/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+  "tests/units.json": "9fb0c7ea2c148621c3e2acf43037d4abd4dff84daaa7040acc7d0528a32bc66f",
+  "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+  "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+  "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+  "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+  "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+  "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+  "solution/oracle/lab_env.py": "aa346b6e9bb1c13fc414af55c0c2c701ce8398baad74db04f1193fa1bd24dac9",
+  "solution/oracle/lab_render.py": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6",
+  "solution/oracle/lab_sim.py": "2ecadc59ecae56e0e3adca7eab353a901013324461b8c19b99b31a8c36f5e467",
+  "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+  "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+  "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+  "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+  "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+  "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+  "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+  "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+  "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+  "solution/oracle/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+  "solution/oracle/units.json": "9fb0c7ea2c148621c3e2acf43037d4abd4dff84daaa7040acc7d0528a32bc66f",
+  "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+ },
+ "frozen_commit": "c4f4cac397af5245c33ad771df7e549ebd82a90f",
+ "draws": [
+  {
+   "draw": 1,
+   "drawn_utc": "2026-11-17T15:55:13Z",
+   "key": "88cf72ae2bbf88d9b94a1752e55baf5ca1fb8d7197849ef0109677a1d9acfe2e",
+   "source": "os.urandom(32)",
+   "frozen_commit": "348307d8d762f6383d601d675b4b37a9bc457a0b",
+   "status": "void",
+   "made_utc": "2026-11-17T16:43:39Z",
+   "lid_shut_at_start": 6,
+   "graded_order": [
+    "u2#0",
+    "u1#0",
+    "u4#0",
+    "u2#1",
+    "u0#0",
+    "u4#1",
+    "u5#0",
+    "u3#1",
+    "u3#0",
+    "u1#1",
+    "u5#1",
+    "u0#1"
+   ],
+   "frozen": {
+    "tests/verify.py": "f8bde81fcab5732f18a54fef5f2a98033876ef1d2d8fa6bf6d01d88cff3088d6",
+    "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/lab_render.py": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6",
+    "tests/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_render.py": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6",
+    "solution/oracle/lab_sim.py": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "void_reason": "the units changed on 2026-11-20 (fit properties and calibration errors per unit, tests/review/unit_fit.py): the frozen simulator, environment and units differ, so the set is selected again",
+   "voided_utc": "2026-11-21T00:59:37Z"
+  },
+  {
+   "draw": 2,
+   "drawn_utc": "2026-11-21T00:59:37Z",
+   "key": "23c4fc7116e6f4521036a4617d9c571ba1e71ab9129aba8fdf813ed5e3b934e4",
+   "source": "os.urandom(32)",
+   "frozen_commit": "c4f4cac397af5245c33ad771df7e549ebd82a90f",
+   "status": "made",
+   "made_utc": "2026-11-21T01:18:07Z",
+   "lid_shut_at_start": 6,
+   "graded_order": [
+    "u5#0",
+    "u1#0",
+    "u4#0",
+    "u3#0",
+    "u0#1",
+    "u4#1",
+    "u3#1",
+    "u2#1",
+    "u1#1",
+    "u5#1",
+    "u0#0",
+    "u2#0"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 9089773451415580172,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 7,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 13733,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 139,
+     "probes_passed": 112,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 356.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 14478,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 132,
+     "probes_passed": 114,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 376.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 14554,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 151,
+     "probes_passed": 125,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 373.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 3081387954885311057,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 3,
+    "n_spin": 6,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 12064,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 117,
+     "probes_passed": 101,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 379.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11177,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 117,
+     "probes_passed": 94,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 336.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11189,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 111,
+     "probes_passed": 93,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 336.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 12436709635138004777,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 3,
+    "n_spin": 5,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9154,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 90,
+     "probes_passed": 71,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 233.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9155,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 91,
+     "probes_passed": 70,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 228.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9154,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 92,
+     "probes_passed": 79,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 225.4
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 17906628609306698360,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 6,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15612,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 146,
+     "probes_passed": 123,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 443.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15901,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 154,
+     "probes_passed": 127,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 449.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15648,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 185,
+     "probes_passed": 161,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 440.8
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 881834531505312538,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 7,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15936,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 169,
+     "probes_passed": 144,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 433.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15937,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 151,
+     "probes_passed": 129,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 430.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 15937,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 162,
+     "probes_passed": 142,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 435.2
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 4286769694189537211,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 7,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 17099,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 174,
+     "probes_passed": 154,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 512.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 17209,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 188,
+     "probes_passed": 159,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 509.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 19274,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 178,
+     "probes_passed": 154,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 571.7
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 16949137200312085253,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 3,
+    "n_spin": 6,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11586,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 113,
+     "probes_passed": 85,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 339.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11451,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 113,
+     "probes_passed": 96,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 330.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11442,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 119,
+     "probes_passed": 94,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 331.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 17489553437701640198,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 4,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9583,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 85,
+     "probes_passed": 67,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 264.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9528,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 89,
+     "probes_passed": 73,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 261.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9291,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 88,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 254.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 1068813534657457513,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 7,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11633,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 106,
+     "probes_passed": 90,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 322.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11637,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 123,
+     "probes_passed": 98,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 319.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11664,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 122,
+     "probes_passed": 103,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 324.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 11626159511612869347,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 6,
+    "n_preloaded": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 10579,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 104,
+     "probes_passed": 88,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 249.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 10584,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 113,
+     "probes_passed": 92,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 251.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 10578,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 113,
+     "probes_passed": 94,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 248.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 7062541551425263050,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 4,
+    "n_preloaded": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11257,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 111,
+     "probes_passed": 101,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 260.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 10832,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 97,
+     "probes_passed": 85,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 251.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 10402,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 92,
+     "probes_passed": 81,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 236.3
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 17883062733024600928,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 4,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6930,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 61,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 172.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6930,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 60,
+     "probes_passed": 49,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 170.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6789,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 73,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 166.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 11915996357488609046,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 2,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5029,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 43,
+     "probes_passed": 35,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 82.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5032,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 58,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 78.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5030,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 56,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 79.1
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 14036239786926566734,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 4,
+    "n_preloaded": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7718,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 77,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 105.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7717,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 57,
+     "probes_passed": 44,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 106.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7706,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 91,
+     "probes_passed": 81,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 104.7
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 15344301339424173023,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 6,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11244,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 122,
+     "probes_passed": 103,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 202.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 11253,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 104,
+     "probes_passed": 90,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 196.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 12667,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 129,
+     "probes_passed": 108,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 223.7
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 11886309002610680208,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 2,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6489,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 67,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 100.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6520,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 77,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 98.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6456,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 62,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 96.1
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 12930012814513471927,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 7,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 12571,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 132,
+     "probes_passed": 107,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 230.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 12865,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 143,
+     "probes_passed": 113,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 233.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 12574,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 120,
+     "probes_passed": 94,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 224.1
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 17201991820010585532,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 6,
+    "n_preloaded": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9696,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 88,
+     "probes_passed": 73,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 138.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9709,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 99,
+     "probes_passed": 82,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 136.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9697,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 83,
+     "probes_passed": 67,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 134.5
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 1918411171015227,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 3,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5925,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 47,
+     "probes_passed": 38,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 86.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5970,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 54,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 85.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5927,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 53,
+     "probes_passed": 40,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 84.0
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 17577534010310196275,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 3,
+    "n_spin": 2,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5038,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 47,
+     "probes_passed": 37,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 78.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5027,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 44,
+     "probes_passed": 33,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 78.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5038,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 63,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 79.3
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 7756539606596201458,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 3,
+    "n_spin": 4,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7888,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 80,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 140.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7360,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 65,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 128.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 7866,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 78,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 137.5
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 15241517562187261977,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 5,
+    "n_preloaded": 1
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 8551,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 87,
+     "probes_passed": 71,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 129.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 8559,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 94,
+     "probes_passed": 80,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 128.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 8537,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 69,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 126.8
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 485911429707569884,
+   "drawn": {
+    "lid_closed_at_start": true,
+    "n_cold": 2,
+    "n_spin": 2,
+    "n_preloaded": 2
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4960,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 38,
+     "probes_passed": 31,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 80.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4960,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 36,
+     "probes_passed": 32,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 77.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 4964,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 45,
+     "probes_passed": 40,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 79.1
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 17107030927203097992,
+   "drawn": {
+    "lid_closed_at_start": false,
+    "n_cold": 2,
+    "n_spin": 6,
+    "n_preloaded": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9615,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 100,
+     "probes_passed": 81,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 150.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9675,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 90,
+     "probes_passed": 70,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 151.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 9669,
+     "aborted": 0,
+     "sim_faults": 0,
+     "probes": 112,
+     "probes_passed": 84,
+     "probes_idle_skipped": 0,
+     "parts": {
+      "cold": 1.0,
+      "pairs": 1.0,
+      "lid": 1.0,
+      "run": 1.0,
+      "kept": 1.0
+     },
+     "wall_s": 150.4
+    }
+   ],
+   "status": "kept",
+   "draw": 2
+  }
+ ],
+ "amendments": [
+  {
+   "amendment": 1,
+   "amended_utc": "2026-11-18T22:00:24Z",
+   "draw": 1,
+   "commit": "27fd79fb2d73479af05cbe4ecc25720112b508ce",
+   "reason": "Maintainer fixes after the first review (2026-11-18; the maintainers' decision: keep tests/hidden/episodes.json byte-identical, so the 12 episodes, their units, seeds, benches, worklists, fills and credit stay what they were). Frozen files that changed, and why none changes an episode: (1) tests/verify.py: the 9000 s budget is charged to the controller's own time (READY and every reply, plus 0.2 s per image asked for) instead of the wall clock with the grader's simulation and rendering in it; a task error if the sandbox starts anything as the agent's account by itself, and every process of the account must carry the launcher's no_new_privs mark (the verifier image, tests/Dockerfile, runs no desktop session); a numerics fingerprint is checked before grading (tests/numerics_check.py, tests/numerics.json); docstrings. The wire, the probe lock and its schedule, the credit and the set are unchanged. (2) tests/grader_config.json: image_cost_s 0.2 added. (3) lab_sim.py and lab_env.py (tests/ and solution/oracle/, byte-identical): one renderer per image size, kept for the episode's model, instead of one per image (24 images compared with the old path: byte-identical, the sensor noise drawn exactly as before); a development-tree import path removed. (4) box_transport_env.py (both copies): the table's half width in y 0.60 -> 0.80 m, so that the cold rack, whose pose and draw are unchanged, stands on the table. This is the one change that is not bit-neutral for the simulation: with the same contacts, the solver's order of constraints changes with the table's bounding box, and the first state after reset differs by 1.3e-6 (rotor, knob, preloaded tubes); everything else was checked bit-identical on a development episode with the table at 0.60. (5) solution/oracle/wire_world.py: the reference no longer answers a hold when its planning thread has not produced a command within 10 s of wall time; it waits for the command, so its actions are a function of the observations alone. solution/solve.sh, tests/episode.py, tests/units.json and the other reference modules are unchanged. Both images pin OPENBLAS_CORETYPE=Haswell (the simulation's numerics fingerprint is identical on two CPU classes with the pin). Because of (4) the reference's runs cannot repeat step for step; the rule's evidence is its full verify on the made set with the new files: every episode at credit 1.0 again.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "6767cfe30179f8888a84024c1126f4f393b1bc6f977d053eb90563cd4b9454ae",
+     "now": "45b309b21400e76ccb205da130832d993fa0bcd7f09c3ffc00965c4da28da49c"
+    },
+    "tests/lab_env.py": {
+     "recorded": "6bcd8b98817e9f5e4daba0cf9905b345ed89e6786f11dede360a77c43a7dbde2",
+     "now": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6"
+    },
+    "tests/lab_sim.py": {
+     "recorded": "b1afc6e726d89223311d21761cef8bbbf5dc090c01722708c8ac40db8abcac8a",
+     "now": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be"
+    },
+    "tests/box_transport_env.py": {
+     "recorded": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+     "now": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc"
+    },
+    "tests/grader_config.json": {
+     "recorded": "45b0b61bf7460e420664d44f6e22cc25d9365450591307f1f56d9a5d0b8b0289",
+     "now": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba"
+    },
+    "solution/oracle/box_transport_env.py": {
+     "recorded": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+     "now": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc"
+    },
+    "solution/oracle/lab_env.py": {
+     "recorded": "6bcd8b98817e9f5e4daba0cf9905b345ed89e6786f11dede360a77c43a7dbde2",
+     "now": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6"
+    },
+    "solution/oracle/lab_sim.py": {
+     "recorded": "b1afc6e726d89223311d21761cef8bbbf5dc090c01722708c8ac40db8abcac8a",
+     "now": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be"
+    },
+    "solution/oracle/wire_world.py": {
+     "recorded": "9f5b04e1d97206786d12bbd3ce55f765099c3032d59f642a3a84ba1248c06b7a",
+     "now": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "6767cfe30179f8888a84024c1126f4f393b1bc6f977d053eb90563cd4b9454ae",
+    "tests/episode.py": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+    "tests/lab_env.py": "6bcd8b98817e9f5e4daba0cf9905b345ed89e6786f11dede360a77c43a7dbde2",
+    "tests/lab_sim.py": "b1afc6e726d89223311d21761cef8bbbf5dc090c01722708c8ac40db8abcac8a",
+    "tests/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "45b0b61bf7460e420664d44f6e22cc25d9365450591307f1f56d9a5d0b8b0289",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "9a41c78b89da056d538cb8e453528efe467cf367b77113586bfe0a3a05f9561e",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "6bcd8b98817e9f5e4daba0cf9905b345ed89e6786f11dede360a77c43a7dbde2",
+    "solution/oracle/lab_sim.py": "b1afc6e726d89223311d21761cef8bbbf5dc090c01722708c8ac40db8abcac8a",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "9f5b04e1d97206786d12bbd3ce55f765099c3032d59f642a3a84ba1248c06b7a",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "196cb9d8d09e19cf0c8112cb2636737ca13ec8b4",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-6c2983f9",
+    "commit": "27fd79fb5d",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 5622.3,
+     "controller_time_s": 608,
+     "budget_s": 9000,
+     "wall_s": 5618
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-7800e461",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1455.0,
+     "probes_passed": 1209.0,
+     "verify_stage_seconds": 4775.2,
+     "steps": [
+      15941,
+      9155,
+      11658,
+      18238,
+      12685,
+      10595,
+      10288,
+      9126,
+      11430,
+      15616,
+      6934,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 2,
+   "amended_utc": "2026-11-19T04:28:48Z",
+   "draw": 1,
+   "commit": "37d05fcc40f269299d7d13e04eed6ebb7d467226",
+   "reason": "Difficulty round after one measured model episode on the fixed version (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json byte-identical, so the 12 episodes, their units and their seeds are the ones of draw 1). The credit rule changed: the credit is the centrifuge run's (tests/episode.py and the reference's copy: the run counts only if the lid is shut, every tube seated in the rotor is half of a balanced pair and there is at least one pair; share of the needed pairs times 0.8 + 0.2 x the cold fraction; otherwise 0); tests/verify.py reports the new part (part_run) and its texts name the commissioning service instead of the agent's copy of the simulator. No episode changes in its bench, worklist, fills, unit, noise or probe schedule; the simulator's three files are byte-identical. An episode the reference completes scores 1.0 under either rule; an incomplete one scores less than before. The agent's side changed with it (no simulator in its home, a commissioning service on development units), which touches no frozen file.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "45b309b21400e76ccb205da130832d993fa0bcd7f09c3ffc00965c4da28da49c",
+     "now": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba"
+    },
+    "tests/episode.py": {
+     "recorded": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+     "now": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c"
+    },
+    "solution/oracle/episode.py": {
+     "recorded": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+     "now": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "45b309b21400e76ccb205da130832d993fa0bcd7f09c3ffc00965c4da28da49c",
+    "tests/episode.py": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "7e3df711625d5713440347eebbe218e75192bf69330abfd3bba3e86449656f85",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "27fd79fb2d73479af05cbe4ecc25720112b508ce",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-de5885fa",
+    "commit": "37d05fcc",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4615.5,
+     "controller_time_s": 498,
+     "budget_s": 9000,
+     "wall_s": 4615
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-6c2983f9",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1479.0,
+     "probes_passed": 1242.0,
+     "verify_stage_seconds": 5622.3,
+     "steps": [
+      15941,
+      9156,
+      11657,
+      19828,
+      12832,
+      10595,
+      10288,
+      9126,
+      11430,
+      15877,
+      6935,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 3,
+   "amended_utc": "2026-11-19T08:29:37Z",
+   "draw": 1,
+   "commit": "46b48f938f468cbd8533661958c6f5f688e39f56",
+   "reason": "The grading kit with clear_agent_account was vendored (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json byte-identical). tests/verify.py calls the kit's clearing of the agent's account itself, before the verify-start kill and the empty-account check and before the controller's clock exists, so that none of it is charged to the controller's time budget (the kit's own call inside the timed controller start then returns the first call's report); new metric agent_account_cleared. No episode changes in its bench, worklist, fills, unit, noise, probe schedule or credit; in the task's own grading image the clearing finds nothing to do.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba",
+     "now": "7368e64e2c3c3d9cd39f95200d48f44f9a05a1df23e51f39e693cf19b0b3f34a"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "449e97f7e53f20979dabbe52febe0bb44e09dbc2c7460e9d9e95faa526c332ba",
+    "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "37d05fcc40f269299d7d13e04eed6ebb7d467226",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-cbeaf63e",
+    "commit": "46b48f93",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4494.6,
+     "controller_time_s": 472,
+     "budget_s": 9000,
+     "wall_s": 4494
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-de5885fa",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1479.0,
+     "probes_passed": 1242.0,
+     "verify_stage_seconds": 4615.5,
+     "steps": [
+      15941,
+      9156,
+      11657,
+      19828,
+      12832,
+      10595,
+      10288,
+      9126,
+      11430,
+      15877,
+      6935,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 4,
+   "amended_utc": "2026-11-19T15:00:04Z",
+   "draw": 1,
+   "commit": "d7a0f557aa51b348f72a49c6cf434cd4bd2d04e4",
+   "reason": "The cameras' renderer changed (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json byte-identical). lab_sim.render draws every image through lab_render.py (MuJoCo's Filament renderer: the bench in a laboratory bay, physically based materials, the room's light) with the numbers of lab_look.json, and lab_sim.build adds one render-only material per kind of part; tests/verify.py's docstring names the renderer. lab_render.py and lab_look.json join the frozen files (tests/ and solution/oracle/). Only the images change: no episode changes in its bench, worklist, fills, unit, noise (an image takes the same draws from the episode's generator as before), probe schedule or credit, and the reference asks for no image on the graded path.",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "7368e64e2c3c3d9cd39f95200d48f44f9a05a1df23e51f39e693cf19b0b3f34a",
+     "now": "f8bde81fcab5732f18a54fef5f2a98033876ef1d2d8fa6bf6d01d88cff3088d6"
+    },
+    "tests/lab_sim.py": {
+     "recorded": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+     "now": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545"
+    },
+    "tests/lab_render.py": {
+     "recorded": null,
+     "now": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27"
+    },
+    "tests/lab_look.json": {
+     "recorded": null,
+     "now": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec"
+    },
+    "solution/oracle/lab_render.py": {
+     "recorded": null,
+     "now": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27"
+    },
+    "solution/oracle/lab_sim.py": {
+     "recorded": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+     "now": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545"
+    },
+    "solution/oracle/lab_look.json": {
+     "recorded": null,
+     "now": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "7368e64e2c3c3d9cd39f95200d48f44f9a05a1df23e51f39e693cf19b0b3f34a",
+    "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_sim.py": "8a01b5f7d584cee4f6000afef4f73934e624ec4cf38a6ad3202e5c728ddff5be",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "46b48f938f468cbd8533661958c6f5f688e39f56",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-4d9f1355",
+    "commit": "d7a0f557",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4542.6,
+     "controller_time_s": 479,
+     "budget_s": 9000,
+     "wall_s": 4542
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-cbeaf63e",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1479.0,
+     "probes_passed": 1242.0,
+     "verify_stage_seconds": 4494.6,
+     "steps": [
+      15941,
+      9156,
+      11657,
+      19828,
+      12832,
+      10595,
+      10288,
+      9126,
+      11430,
+      15877,
+      6935,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "amendment": 5,
+   "amended_utc": "2026-11-19T18:35:15Z",
+   "draw": 1,
+   "commit": "348307d8d762f6383d601d675b4b37a9bc457a0b",
+   "reason": "The cameras' renderer was hardened after the check of keyed_nut_peg_assembly's (2026-11-19; the maintainers' decision: keep tests/hidden/episodes.json byte-identical). lab_render.py finds Filament's view by a breadth-first search (a depth-first walk could miss it and end a process's first image as a renderer error), and draws the robot from MuJoCo's own renderables of a robot-only copy of the process's first model, made once and moved every image, instead of meshes built from the model's arrays. Nothing a correct image shows changes (0.22 % of the pixels differ between the two forms: the fingers by 2 levels); no episode changes in its bench, worklist, fills, unit, noise, probe schedule or credit, and the reference asks for no image on the graded path.",
+   "changed": {
+    "tests/lab_render.py": {
+     "recorded": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27",
+     "now": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6"
+    },
+    "solution/oracle/lab_render.py": {
+     "recorded": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27",
+     "now": "2daea4e829db37334e846b18406b1b2842a282dd49f3647079426907329eeee6"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "f8bde81fcab5732f18a54fef5f2a98033876ef1d2d8fa6bf6d01d88cff3088d6",
+    "tests/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "tests/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "tests/lab_sim.py": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545",
+    "tests/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "tests/lab_render.py": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27",
+    "tests/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+    "tests/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "tests/grader_config.json": "52d07117c2d9dc40e78ba22ba17d3edf01db8e462de7b6e700c5ec77bff365ba",
+    "solution/oracle/bench_estimators.py": "e7567da9cc84a4dbc84f08db944ac2a3460ee6ff9460143ff62d7bd7292485a3",
+    "solution/oracle/box_transport_env.py": "d58137c62f2799cd0355ed811323f36b351af1329f97632abc6df5ec522b18cc",
+    "solution/oracle/centrifuge_probe.py": "2ea79194dbd872e59d35be6d885f8a12ff192a29723a1566d04805ed111fa02b",
+    "solution/oracle/episode.py": "6490a04f2caf129be10aface13d4092ddb7248db443b43c024b4ac9fb9a3df2c",
+    "solution/oracle/fill_read.py": "3c63a1dcb5aa1dfbca27ea7cac8af9e0e88c667d7610d6802202340adbb545ac",
+    "solution/oracle/lab_env.py": "3997cb6e0ca07fd811e03423684378b8d4d3d6c0fb5bd7197cf346e3cd787aa6",
+    "solution/oracle/lab_render.py": "50e9170dad0c6cd536513b37ecbb0f6181f1e6151796f2bf5cec487a28e5ab27",
+    "solution/oracle/lab_sim.py": "cd5054d4a7d000f770a419f8640512352e502d7eefb2b84577e9b591c9fd9545",
+    "solution/oracle/localize_probe.py": "9796601fcb8988401557d12ea1fe999705b8390496286f20a20d47dc3e382069",
+    "solution/oracle/mass_probe.py": "09696e20f98133a35a2b7d9b2768f0c9f5f71d90f4780261cd19615e3829796c",
+    "solution/oracle/oracle_main.py": "fb8c02f30aecd78f5918dabd18d5469d8431e395d8dd3e4743a09d36d6164837",
+    "solution/oracle/rotor_angle.py": "7526168efca73cdd8a66c37e3129c5c6972cf7d74b61bb514113a90f3e029173",
+    "solution/oracle/tube_insert_probe.py": "347ea341de6319115012cf5ad2c0807a585cf79bc3f1e76b069dc95485fa9366",
+    "solution/oracle/turn_probe.py": "e05380e99a561d9fa0d68c3c2e805c58d49479682a4f5917b2800f9927caff6b",
+    "solution/oracle/wire_world.py": "e0c4fc68093aaae6839c4390248b95823b63857076fb65f5872226702cbff8d7",
+    "solution/oracle/worklist_probe.py": "aa9db96f7542b485c5fb99b5911509b59f1c53ed88819801527574a96a6d9fd3",
+    "solution/oracle/worklist_scene.py": "913b78713c3b690a7221749508c8f73b8f85c7ac18ac92bc74dbb8b2d93fcc24",
+    "solution/oracle/lab_look.json": "25012c7369fe8e96ccca04bca098f019139a4ad4cb21d93a79cbd8464357abec",
+    "solution/oracle/units.json": "6adc3a598e440cdacd45980fad853af3e559ff8f7421f1b5f0bf9941b332b0a7",
+    "solution/solve.sh": "6a0a95126aae46ca0fe1f591e6db1181347d1daea5ef6fc890443a7fe440eaa4"
+   },
+   "frozen_commit_before": "d7a0f557aa51b348f72a49c6cf434cd4bd2d04e4",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "what": "one full verify of the privileged reference on the made set as the grader runs it (ale validate, pinned engine bfb7505, the separate verifier's own image built from tests/Dockerfile, the real wire, the grader's probe schedule), with the frozen files of the commit",
+    "run": "validate-567b3c6c",
+    "commit": "348307d8",
+    "reward": 1.0,
+    "reward_exact": 1.0,
+    "mean_episode_credit": 1.0,
+    "episodes_scored": 12.0,
+    "episodes_aborted": 0.0,
+    "sim_faults": 0.0,
+    "probes_total": 1479.0,
+    "probes_passed": 1242.0,
+    "processes_outside_launcher": 0.0,
+    "numerics_ok": 1.0,
+    "budget_exhausted": 0.0,
+    "verify_stage": {
+     "exit_code": 0,
+     "seconds": 4664.1,
+     "controller_time_s": 484,
+     "budget_s": 9000,
+     "wall_s": 4664
+    },
+    "episodes": [
+     {
+      "index": 0,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 15941,
+      "reason": "ok"
+     },
+     {
+      "index": 1,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 9156,
+      "reason": "ok"
+     },
+     {
+      "index": 2,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 11657,
+      "reason": "ok"
+     },
+     {
+      "index": 3,
+      "unit": "u2",
+      "credit": 1.0,
+      "steps": 19828,
+      "reason": "ok"
+     },
+     {
+      "index": 4,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 12832,
+      "reason": "ok"
+     },
+     {
+      "index": 5,
+      "unit": "u4",
+      "credit": 1.0,
+      "steps": 10595,
+      "reason": "ok"
+     },
+     {
+      "index": 6,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 10288,
+      "reason": "ok"
+     },
+     {
+      "index": 7,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 9126,
+      "reason": "ok"
+     },
+     {
+      "index": 8,
+      "unit": "u3",
+      "credit": 1.0,
+      "steps": 11430,
+      "reason": "ok"
+     },
+     {
+      "index": 9,
+      "unit": "u1",
+      "credit": 1.0,
+      "steps": 15877,
+      "reason": "ok"
+     },
+     {
+      "index": 10,
+      "unit": "u5",
+      "credit": 1.0,
+      "steps": 6935,
+      "reason": "ok"
+     },
+     {
+      "index": 11,
+      "unit": "u0",
+      "credit": 1.0,
+      "steps": 11540,
+      "reason": "ok"
+     }
+    ],
+    "before_the_change": {
+     "run": "validate-4d9f1355",
+     "note": "the same set, probe schedule and host with the files as they were recorded",
+     "probes_total": 1479.0,
+     "probes_passed": 1242.0,
+     "verify_stage_seconds": 4542.6,
+     "steps": [
+      15941,
+      9156,
+      11657,
+      19828,
+      12832,
+      10595,
+      10288,
+      9126,
+      11430,
+      15877,
+      6935,
+      11540
+     ],
+     "credit": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  }
+ ]
+}

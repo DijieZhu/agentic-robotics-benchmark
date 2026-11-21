@@ -1,0 +1,274 @@
+{
+ "format": "lab-look/1",
+ "note": "The numbers of the cameras' look (lab_render.py beside this file). The render bundle (LAB_RENDER_DIR) holds the laboratory room's meshes, textures and materials and the image light's panorama; the rest is here. Fitted against path-traced pictures of the same bench in the same room through the same four cameras (tests/review/rendering.md): the image light carries the room's light and the bay luminaires' glow, the two spot lamps half of the bay luminaires' direct light (no shadow maps: ambient occlusion only), the gains bring the room's surfaces and the robot's shells to the reference's levels. The bench's own parts are drawn in the colours lab_sim gives them.",
+ "exposure_scale": 1.0,
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 21198.6,
+  "note": "ibl.ktx of the render bundle; intensity fitted so that the bench top has the reference's level"
+ },
+ "lamps": [
+  {
+   "type": "spot",
+   "name": "bay_a",
+   "pos": [
+    0.42,
+    -0.85,
+    2.59
+   ],
+   "dir": [
+    -0.12,
+    0.85,
+    -1.74
+   ],
+   "cutoff": 60.0,
+   "bulb": 0.05,
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "candela": 27664.8,
+   "shadow": false
+  },
+  {
+   "type": "spot",
+   "name": "bay_b",
+   "pos": [
+    0.42,
+    0.85,
+    2.59
+   ],
+   "dir": [
+    -0.12,
+    -0.85,
+    -1.74
+   ],
+   "cutoff": 60.0,
+   "bulb": 0.05,
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "candela": 27664.8,
+   "shadow": false
+  }
+ ],
+ "headlight": {
+  "lux": 0.0
+ },
+ "room": {
+  "albedo_gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "emissive": 0.0,
+  "cast_shadow": true,
+  "classes": {
+   "default": {},
+   "wall": {
+    "gain": 0.44
+   },
+   "ceiling": {
+    "gain": 0.14
+   },
+   "duct": {
+    "gain": 0.23
+   },
+   "stool": {
+    "gain": 0.4
+   },
+   "floor": {
+    "gain": 0.875
+   },
+   "furniture": {
+    "gain": 1.15
+   },
+   "emitter": {
+    "unlit": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "window": {
+    "gain": 0.45
+   }
+  }
+ },
+ "model_materials": {
+  "cabinet": {
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "shield": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "rotor": {
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "specular": 0.5
+  },
+  "hub": {
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "specular": 0.5
+  },
+  "bore": {
+   "roughness": 0.7,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "mark": {
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "knob": {
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "lid": {
+   "roughness": 0.2,
+   "metallic": 0.0
+  },
+  "lid_handle": {
+   "roughness": 0.7,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "ring": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "ring_floor": {
+   "roughness": 0.6,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "tube": {
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "cap": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "liquid": {
+   "roughness": 0.3,
+   "metallic": 0.0
+  },
+  "scale": {
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "specular": 0.3
+  },
+  "holder": {
+   "roughness": 0.45,
+   "metallic": 0.3,
+   "specular": 0.4
+  },
+  "other": {
+   "roughness": 0.5,
+   "metallic": 0.0
+  },
+  "hand": {
+   "srgb": [
+    0.93,
+    0.93,
+    0.92
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "gain": 0.85,
+   "specular": 0.2
+  },
+  "finger": {
+   "srgb": [
+    0.7,
+    0.71,
+    0.73
+   ],
+   "roughness": 0.4,
+   "metallic": 1.0
+  },
+  "pad": {
+   "srgb": [
+    0.07,
+    0.07,
+    0.075
+   ],
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "specular": 0.1
+  },
+  "robot_default": {
+   "roughness": 0.4,
+   "metallic": 0.0,
+   "specular": 0.2
+  },
+  "robot_by_colour": [
+   {
+    "lum_min": 0.8,
+    "lum_max": 9.0,
+    "chroma_max": 0.1,
+    "srgb": [
+     0.93,
+     0.93,
+     0.92
+    ],
+    "roughness": 0.35,
+    "metallic": 0.0,
+    "gain": 0.883,
+    "specular": 0.2
+   },
+   {
+    "lum_min": 0.0,
+    "lum_max": 0.4,
+    "chroma_max": 0.1,
+    "srgb": [
+     0.06,
+     0.06,
+     0.065
+    ],
+    "roughness": 0.5,
+    "metallic": 0.0,
+    "gain": 0.665,
+    "specular": 0.1
+   }
+  ]
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "post_processing": true,
+  "shadows": true,
+  "reflections": false,
+  "clear_color": [
+   0.024,
+   0.024,
+   0.021
+  ],
+  "supersample": 2,
+  "lavapipe_threads": 3,
+  "mount_camera": "",
+  "mount_note": "mount_camera: a camera that does not see the shell of the hand (none: the wrist camera sees the hand's underside along its lower edge and the fingers, where MuJoCo's own renderer showed the hand's collision box).",
+  "supersample_by_camera": {
+   "rack_cam": 1
+  }
+ }
+}

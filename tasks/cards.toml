@@ -41,6 +41,12 @@ summary = "A fixed Franka Panda must switch and set cooktop burners, ovens and m
 platforms = ["arm"]
 stages = ["behavior"]
 
+[lab_sample_handling]
+title = "Load a centrifuge from a worklist with a Panda"
+summary = "A fixed Franka Panda weighs opaque sample tubes, pairs them by mass and loads them through a centrifuge's single port by turning a one-way rotor whose response is hidden per unit."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [longtail_manipulation_recovery]
 title = "Rescue failed kitchen jobs with a mobile Panda"
 summary = "Write the fallback controller of a mobile Panda: from the exact states where a learned policy failed its kitchen jobs, finish them from the robot's cameras, joint readings and wrist force."

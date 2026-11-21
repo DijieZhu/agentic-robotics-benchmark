@@ -1,0 +1,108 @@
+{
+ "drawn_utc": "2026-11-17T02:42:06+00:00",
+ "rule": "Units are a Latin hypercube over the decided ranges (units.py: strata paired by sha256(key/prefix/prop/perm/stratum), places by sha256(key/prefix/prop/pos/index[/replace])). Every hidden unit is run with the reference (solution/solve.sh's, in process) on the 20 recheck seeds, drawn with the key from os.urandom and committed before the recheck. A unit is kept when every recheck episode scores credit 1.0; a unit that fails is replaced by the next draw in its strata (replace = 1, 2, ...) and rechecked the same way.",
+ "key": "f81b71952dd26ad72f1734bee889900e",
+ "ranges": {
+  "rotor_friction": [
+   0.1,
+   0.45
+  ],
+  "handle_play": [
+   0.0,
+   20.0
+  ],
+  "rotor_inertia": [
+   0.01,
+   0.04
+  ]
+ },
+ "practice_ranges": {
+  "rotor_friction": [
+   0.1,
+   0.15
+  ],
+  "handle_play": [
+   0.0,
+   4.0
+  ],
+  "rotor_inertia": [
+   0.01,
+   0.015
+  ]
+ },
+ "n_hidden": 6,
+ "n_practice": 3,
+ "recheck_seeds": [
+  5368700730790640376,
+  13722144631762548063,
+  1866142865626819448,
+  4404577661753020321,
+  13611331188758026593,
+  6701949871447884519,
+  3982727350763207814,
+  7514308527440927838,
+  17428172653203222389,
+  1115149448047028635,
+  10216061465825810310,
+  6678712050000170148,
+  915602170532218758,
+  16440626964341209911,
+  9834664195965251779,
+  17830473525191023433,
+  8600437172967453995,
+  2273393420122319972,
+  14915633005346126938,
+  11713256893113132997
+ ],
+ "candidates": {
+  "hidden": {
+   "u0": {
+    "rotor_friction": 0.3028,
+    "handle_play": 3.1473,
+    "rotor_inertia": 0.032
+   },
+   "u1": {
+    "rotor_friction": 0.3752,
+    "handle_play": 13.8518,
+    "rotor_inertia": 0.0144
+   },
+   "u2": {
+    "rotor_friction": 0.4314,
+    "handle_play": 6.1672,
+    "rotor_inertia": 0.0166
+   },
+   "u3": {
+    "rotor_friction": 0.1717,
+    "handle_play": 17.8633,
+    "rotor_inertia": 0.0256
+   },
+   "u4": {
+    "rotor_friction": 0.1276,
+    "handle_play": 7.6602,
+    "rotor_inertia": 0.0224
+   },
+   "u5": {
+    "rotor_friction": 0.2231,
+    "handle_play": 12.3264,
+    "rotor_inertia": 0.0351
+   }
+  },
+  "practice": {
+   "p0": {
+    "rotor_friction": 0.1288,
+    "handle_play": 0.8659,
+    "rotor_inertia": 0.0102
+   },
+   "p1": {
+    "rotor_friction": 0.1428,
+    "handle_play": 2.9218,
+    "rotor_inertia": 0.0141
+   },
+   "p2": {
+    "rotor_friction": 0.1013,
+    "handle_play": 1.8016,
+    "rotor_inertia": 0.0133
+   }
+  }
+ }
+}

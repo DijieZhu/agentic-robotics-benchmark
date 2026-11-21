@@ -1,0 +1,45 @@
+# Lab sample handling: a fixed Panda at a lab bench processes a worklist of capped, opaque sample tubes from its
+# cameras, wrist force sensor and a bench scale: some go to named positions of a cold rack, the others are weighed and
+# loaded into a fixed-angle centrifuge rotor as balanced opposite pairs with the tubes already in it, through a
+# shield's single loading port (which needs the one-way rotor turned by hand, its answer to a turn hidden per unit),
+# then the lid is closed. Every instrument's pose is drawn per episode. The credit is the centrifuge run's: nothing
+# without a rotor that could be started (the lid shut, every tube in it half of a balanced pair). The agent has no
+# simulator: it has the equipment's sheets and a commissioning service (environment/commission_service/, its own
+# account, a socket with the public wire only, three development units, 48000 control steps, no truth and no
+# credit). The grader drives the agent's controller over a stdio wire on a fixed hidden set of 12 episodes.
+# Structure after tasks/arm/kitchen_appliance_tending; the service after tasks/arm/pump_skid_startup_and_operation.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/lab_sample_handling"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h, as the appliance task; no trials on the hidden units (the commissioning service's development units are
+# other units of the series).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (2 per hidden unit), each at most 20000 control steps. The grader's budget (grader_config.json:
+# 9000 s) is the controller's own time: its replies, plus 0.2 s for every image it asks for; the simulation is not
+# in it, so the timeout covers both. Worst case: 240000 control steps at 45 ms (20-30 ms measured, the higher figure
+# over the wire on a busy 4-CPU sandbox) = 10800 s of simulation; 9000 s of controller time (if the whole budget
+# went into images, 45000 of them, drawing them at 0.10-0.15 s each would take less than that); the numerics check,
+# the empty-account check and the render self-test 30 s. 19830 s; with 35 % margin 26800 s. The reference's whole
+# verify takes about 80 minutes. The verifier image (tests/Dockerfile) runs no desktop session.
+[verifier]
+timeout_sec = 27000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
