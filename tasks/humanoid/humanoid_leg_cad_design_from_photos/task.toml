@@ -1,0 +1,71 @@
+# humanoid_leg_cad_design_from_photos: the hardware-design (CAD) stage for the right leg of a humanoid robot (an atomic
+# task). A design engineer re-creates the lost CAD of the leg's made parts (19 parts in 18 shapes: printed polymer,
+# printed steel, machined aluminium, steel bar) in FreeCAD 1.1 from one fixed photo set (rendered with Blender Cycles:
+# the complete leg in three poses, a disassembly sequence, every made part on a cutting mat from both sides, close-ups)
+# and from the given components: the outer thigh shell, the one made part whose file survived (damaged, given as it is),
+# and the purchased components as STEP files with data sheets and drawings (19 pieces of 10 components in all). No
+# topology, no templates, no practice unit; the reference is the leg as its authors designed it. It delivers one FreeCAD
+# document, /home/user/submission/leg.FCStd: one PartDesign Body per part tag, the given components placed, one Assembly
+# with the shell's component grounded, Fixed joints inside the rigid groups and a Revolute joint on every axis the leg
+# moves about, saved in the reference pose.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available, and
+# verify records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs and FreeCAD's assembly solver is never run): headless FreeCAD reads the document as an unprivileged
+# account; the leg is aligned rigidly on the given shell; given components are recognised by their full shape; identical
+# parts are matched to installed positions inside their family; shape 0.25, holes 0.20 (the parts' complete round holes;
+# a hole that carries a threaded insert on position and direction only), installation 0.15 (the given components' poses
+# and the joint connections), mechanism 0.20 (the joint axes, the reach of the leg's end, which part moves with which
+# body, and the transmission and closure of the loops, computed by the grader from the given components' positions),
+# mass properties 0.10, fit 0.10, with a placement floor per region of the leg; the reward is the design score.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/humanoid_leg_cad_design_from_photos"
+
+[metadata]
+platform = "humanoid"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are
+# screenshots of it. From vendor/ale bfb7505 on, the engine starts every desktop at the run's
+# `desktop_resolution` (default 1024x768) whatever the image sets, and a task cannot declare its size: run this
+# task with `--set desktop_resolution=1440x900`, as it was validated and measured.
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, neka-nat/freecad-mcp at a pinned commit): it
+# drives the FreeCAD session on the desktop through the addon's local RPC server. Tools: documents, objects (create /
+# edit / delete / inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set and the given components' files and documents. agent: re-model the leg in FreeCAD (6 h).
+# verify: the verifier sandbox's start, the lockdown, the FreeCAD document read by headless FreeCAD and the grade.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root. setup.sh
+# does not run there; the given components the grader reads are the image's own fetched assets
+# (/opt/task-assets/payload, pinned by sha256), and the made parts' reference is in tests/. The verifier runs the
+# image's own desktop as the agent account; verify stops it first. Inside the limit below, the document's extraction may
+# take 20 minutes and the grade 35 minutes.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

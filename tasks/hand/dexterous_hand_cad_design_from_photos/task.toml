@@ -1,0 +1,69 @@
+# dexterous_hand_cad_design_from_photos: the hardware-design (CAD) stage for a four-digit robot hand (an atomic task). A
+# design engineer re-creates the lost CAD of the hand's printed parts (52 parts in 27 shapes) in FreeCAD 1.1 from one
+# fixed photo set (363 photographs rendered with Blender Cycles in a lab room: every printed part on a cutting mat in
+# several resting positions, close-ups, the assembled hand at rest and in other poses, a teardown in stages) and from
+# the given parts: 53 pieces of 8 types as STEP files with data pages and drawings. No drawing of a printed part, no
+# joint list, no simulation model, no practice unit; the reference is the hand as its designers modelled it. It delivers
+# one FreeCAD document, /home/user/submission/hand.FCStd: one PartDesign Body per part tag, the given parts placed, one
+# Assembly with a Grounded joint on the palm, Fixed joints for everything rigid and a Revolute joint for every hinge
+# with its angle limits, saved in the rest pose.
+#
+# The agent drives the FreeCAD GUI session through the task's MCP server ([[environment.mcp_servers]] below; its
+# execute_code runs Python inside the session); the instruction asks for it, the harness's own tools stay available, and
+# verify records the tool use as statistics only.
+#
+# Grading (tests/verify.py, in a separate verifier sandbox: [verifier] below; every number in tests/grader_config.json;
+# no agent code runs): headless FreeCAD reads the document as an unprivileged account; given parts are recognised by
+# their full shape; identical parts are matched to installed positions inside their shape; the mechanism is read from
+# the document's joints (rigid groups, one chain of links per digit from the palm, closed chains solved by the grader,
+# every servo-driven hinge on its servo's output axis); the hand is aligned rigidly on its palm; shape 0.25, kinematics
+# 0.30, holes 0.20, assembly 0.10, mass 0.05, fit 0.05, interference 0.05, with a shape floor and a floor per digit; the
+# reward is the design score.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/dexterous_hand_cad_design_from_photos"
+
+[metadata]
+platform = "hand"
+
+[environment]
+# The desktop is 1440x900 (`VNC_RESOLUTION` in environment/Dockerfile), and the views the agent gets are screenshots of
+# it. The engine starts every desktop at the run's `desktop_resolution` (default 1024x768) whatever the image sets, and
+# a task cannot declare its size: run this task with `--set desktop_resolution=1440x900`, as it was validated and
+# measured.
+cpus = 8
+memory_mb = 16384
+
+# The FreeCAD MCP server of this task (environment/vendor/freecad-mcp, at a pinned commit): it drives the FreeCAD
+# session on the desktop through the addon's local RPC server. Tools: documents, objects (create / edit / delete /
+# inspect), views (screenshots), parts library, FEM, and execute_code (Python inside FreeCAD).
+[[environment.mcp_servers]]
+name = "freecad"
+transport = "stdio"
+command = "/opt/freecad-mcp/bin/freecad-mcp"
+args = ["--freecadcmd", "/opt/freecad/usr/bin/freecadcmd"]
+
+# setup: stage the photo set and the given parts' files and documents. agent: re-model the hand in FreeCAD (6 h).
+# verify: the verifier sandbox's start, the lockdown, the FreeCAD document read by headless FreeCAD and the grade.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one started from the task image,
+# into which it restores only the declared artifact (/home/user/submission, written back by root). Nothing else the
+# agent left behind (a program on root's PATH, its home, its processes) reaches the grader, which runs as root. setup.sh
+# does not run there; the given parts the grader reads are the image's own fetched assets (/opt/task-assets/payload,
+# pinned by sha256), and the made parts' reference is in tests/. The verifier runs the image's own desktop as the agent
+# account; verify stops it first. Inside the limit below, the document's extraction may take 15 minutes and the grade 40
+# minutes.
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

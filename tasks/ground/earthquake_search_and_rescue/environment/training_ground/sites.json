@@ -1,0 +1,99 @@
+{
+"note": "the training ground's sites and allowance (environment/training_ground/trainingd.py). Readable by the service's account only.",
+"rule": "training sites: the test lanes (plan kind lanes, seed 7) and six training rubble sites drawn by the same generator as the graded sites: the first six training candidates of tests/hidden/selection.json (rule version 2) that the reference program completes, at least two of them with a load-bearing prop; none is a graded site or a hidden candidate.",
+"sites": [
+{
+"name": "lanes",
+"kind": "lanes",
+"seed": 7,
+"about": "the standard test lanes: a street and a facade spill, then a beam across a doorway, a step, a narrow breach, a floor gap and a crawl space in a row; a training dummy at the end"
+},
+{
+"name": "site-A",
+"kind": "training",
+"seed": 8428293605671135758,
+"about": "a training rubble site (a collapsed building like the real ones)"
+},
+{
+"name": "site-B",
+"kind": "training",
+"seed": 3861899613821449865,
+"about": "a training rubble site (a collapsed building like the real ones)"
+},
+{
+"name": "site-C",
+"kind": "training",
+"seed": 5999285144657510067,
+"about": "a training rubble site (a collapsed building like the real ones)"
+},
+{
+"name": "site-D",
+"kind": "training",
+"seed": 3608292521381717701,
+"about": "a training rubble site (a collapsed building like the real ones)"
+},
+{
+"name": "site-E",
+"kind": "training",
+"seed": 8261313895032638148,
+"about": "a training rubble site (a collapsed building like the real ones)"
+},
+{
+"name": "site-F",
+"kind": "training",
+"seed": 1031841471497627414,
+"about": "a training rubble site (a collapsed building like the real ones)"
+}
+],
+"missions": 80,
+"open": 2,
+"program_time_cap_s": 1200.0,
+"silence_s": 180.0,
+"config": {
+"sim_cap_s": 1800.0,
+"program_time_cap_s": 1200.0,
+"silence_s": 180.0,
+"max_ticks_per_step": 500,
+"camera_budget_frames": 700,
+"lidar_budget_sweeps": 1800,
+"thermal_budget_frames": 1800,
+"trajectory_hz": 4.0,
+"score": {
+"located": 0.45,
+"kit": 0.25,
+"returned": 0.3,
+"report_full_m": 1.0,
+"report_zero_m": 3.0,
+"seen_px": 40,
+"seen_range_m": 6.0,
+"kit_reach_m": 0.8,
+"home_radius_m": 3.0
+},
+"safety": {
+"survivor_force_N": 60.0,
+"survivor_ticks": 3,
+"prop_move_m": 0.05,
+"overturn_deg": 70.0,
+"overturn_s": 2.0,
+"fall_z_m": -0.8,
+"stop_score_cap": 0.45
+},
+"grip": {
+"min_force_N": 4.0,
+"payload_kg": 8.0,
+"slip_force_N": 260.0,
+"slip_ticks": 20
+},
+"link": {
+"tx_dbm": -28.0,
+"floor_dbm": -85.0,
+"ext_wall_db": 11.0,
+"int_wall_db": 7.0,
+"void_db": 14.0,
+"slab_db": 9.0
+},
+"temps": {
+"spread_c": 0.6
+}
+}
+}

@@ -1,0 +1,297 @@
+{
+ "rule": "candidates k = 1, 2, ..., 16 with seed_k = int.from_bytes(sha256(b'earthquake_search_and_rescue/hidden/v1/<k>')[:8], 'big') >> 1 (tests/review/select_set.py); the hidden set is the first 4 candidates, in k order, on which the frozen reference program (tests/reference/reference.py) completes the mission (score 1.0) in a privileged cell of the task image (MuJoCo 3.14.0, OSMesa, OPENBLAS_CORETYPE=Haswell, the grader's config). Pre-registered before any frontier run.",
+ "cell_version": "0.1.2",
+ "run": "2026-11-13, cell 0.1.2: one container of the task image per candidate (2 CPUs each), ~/ale-tools/sar/container_ref.sh",
+ "runs": [
+  {
+   "k": 1,
+   "seed": 4262001962695810527,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 578.7,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.37786145291325346,
+   "home_dist_m": 0.10991797944902316
+  },
+  {
+   "k": 2,
+   "seed": 1427979090112318540,
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 1800.0,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.37952051665446,
+   "home_dist_m": 12.861578269808543
+  },
+  {
+   "k": 3,
+   "seed": 4364632852533066684,
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 1800.0,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.37531843423565725,
+   "home_dist_m": 9.026156258309337
+  },
+  {
+   "k": 4,
+   "seed": 7377037173067465881,
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 1800.0,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": null,
+   "home_dist_m": 13.405454318722457
+  },
+  {
+   "k": 5,
+   "seed": 5883587602639667042,
+   "score": 0.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [
+    "survivor_injured"
+   ],
+   "sim_time_s": 670.1,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.3732840048076317,
+   "home_dist_m": 0.1124303232981131
+  },
+  {
+   "k": 6,
+   "seed": 8749746166858302209,
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "sim_time_s": 203.0,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 16.025039981464623
+  },
+  {
+   "k": 7,
+   "seed": 509348356188127087,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 411.8,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3741641196807189,
+   "home_dist_m": 0.10809121754154564
+  },
+  {
+   "k": 8,
+   "seed": 4501032253369510534,
+   "score": 0.45,
+   "parts": {
+    "located": 1.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 1709.8,
+   "report_error_m": 0.0,
+   "kit_dist_m": 1.0019060438029392,
+   "home_dist_m": 15.405728867742848
+  },
+  {
+   "k": 9,
+   "seed": 8243428246219919138,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 582.6,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.3764679770674553,
+   "home_dist_m": 0.11017497728995602
+  },
+  {
+   "k": 10,
+   "seed": 4614314506515586962,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 498.7,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.37032819172159337,
+   "home_dist_m": 0.11262849876943862
+  },
+  {
+   "k": 11,
+   "seed": 6712930360145577192,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 997.8,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.34288955491756773,
+   "home_dist_m": 0.10772204192023582
+  },
+  {
+   "k": 12,
+   "seed": 598399822418103768,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 749.6,
+   "report_error_m": 3.972054645195637e-15,
+   "kit_dist_m": 0.38079512828591494,
+   "home_dist_m": 0.11261033106025375
+  },
+  {
+   "k": 13,
+   "seed": 1098437563283646164,
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "sim_time_s": 731.3,
+   "report_error_m": 1.9860273225978185e-15,
+   "kit_dist_m": 0.37724112227184636,
+   "home_dist_m": 8.95858151267717
+  },
+  {
+   "k": 14,
+   "seed": 8910917911177029627,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 849.5,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.38445036960922496,
+   "home_dist_m": 0.11179014748798849
+  },
+  {
+   "k": 15,
+   "seed": 5873536833016265425,
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "sim_time_s": 407.2,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3771605854737718,
+   "home_dist_m": 0.10799072175171456
+  },
+  {
+   "k": 16,
+   "seed": 4856691102482035309,
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "sim_time_s": 334.2,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 18.559464064584887
+  }
+ ],
+ "chosen": [
+  4262001962695810527,
+  509348356188127087,
+  8243428246219919138,
+  4614314506515586962
+ ],
+ "amendments": [
+  {
+   "date": "2026-11-12",
+   "cell_version": "0.1.0",
+   "runs": "the first selection: completions k = 1, 7, 9, 10, 11, 12, 14, 15; chosen k = 1, 7, 9, 10"
+  },
+  {
+   "date": "2026-11-13",
+   "cell_version": "0.1.1",
+   "change": "a closed cordon of concrete road barriers along the far kerb and across both street ends (a program could drive off the open street end)",
+   "rerun": "all 16 candidates re-run with the frozen reference: every score and every end time identical to 0.1.0 (k=1 bit for bit); hidden set unchanged"
+  },
+  {
+   "date": "2026-11-13",
+   "cell_version": "0.1.2",
+   "change": "the welds that hold the props' slabs (and the kit's latch) act at the body's own centre (MuJoCo's default anchor near the world origin let a slab far from the origin sink out of sight, leaving its crate with no visible load)",
+   "rerun": "all 16 candidates re-run with the frozen reference (the runs above): the end times shift slightly, every score is the same as before (completions k = 1, 7, 9, 10, 11, 12, 14, 15); hidden set unchanged"
+  },
+  {
+   "date": "2026-11-13",
+   "cell_version": "0.2.0",
+   "change": "the look: the cameras' colour images from MuJoCo's Filament renderer on a render twin of the scene (physically based materials, the sky, the city around the cordon), depth, lidar, thermal and the visibility record from the classic renderer on a sensor twin with the same drawn-only decor; the physics model and every random generator of the cell untouched (tests/README.md section 7)",
+   "evidence": "the compiled physics model's MJB bytes hash identically before any look code existed and after building and rendering the whole look (4 hidden sites, lanes, two training sites); the frozen reference program in the task image repeats the 0.1.2 selection runs sample for sample on the four hidden sites and the lanes (every state record identical, every score 1.0)",
+   "hidden_set": "unchanged (k = 1, 7, 9, 10): the physics, hence every candidate's run, is the same as 0.1.2's"
+  }
+ ]
+}

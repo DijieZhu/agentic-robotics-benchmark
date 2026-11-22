@@ -1,0 +1,72 @@
+# earthquake_search_and_rescue (search and rescue in a collapsed building, ground robot; built 2026-11-12 by Yuanfang
+# Peng; tests/README.md).
+#
+# An SR-2 rescue crawler (tracks on telescopic cross beams: gauge 0.30-0.50 m, front and rear flippers, a telescopic
+# sensor mast with an RGB-D camera, a radiometric thermal camera, a 16-channel lidar and lamps, a five-axis arm with a
+# parallel gripper, a survival kit on its deck; MuJoCo, CPU) is set down on the street in front of a building an
+# earthquake brought down. Every hidden episode is a different site: the building's bays, which of them still stand,
+# pancaked into crawl voids or filled with rubble, the openings between them and what blocks them (a timber beam across
+# a doorway to lift out, a narrow slot that needs the narrow gauge, a broken slab wedged in a doorway to climb with the
+# flipper technique, a strip of floor dropped into the basement to bridge, crawl spaces under dropped slabs, dead ends,
+# load-bearing props that must not be touched), the survivor's pocket and the decoys (a shop mannequin, a warm boiler).
+# The radio link drops inside the rubble, so the agent writes the robot's AUTONOMOUS program: it searches with the
+# robot's own sensors and odometry only, clears what can be moved, finds the survivor, reports their position in the
+# robot's map frame (it reaches the team over the link), puts the kit within their reach and brings the robot back.
+# Score = the mean over the hidden sites of located 0.45 + kit 0.25 + returned 0.30; a secondary collapse (a prop that
+# really carries its slab, pushed or pulled out) scores a site 0; contact with the survivor above 60 N trips the
+# robot's protective stop, which ends the mission without the return and caps it at 0.45. The hidden set is fixed:
+# eight sites pinned in tests/hidden/seeds.json, selected by the pre-registered rule of tests/hidden/selection.json
+# (rule version 2: candidates from OS entropy, admitted when the reference program completes them). The oracle submits the reference program with a 256-bit token: it reads the site's plan (the
+# route, the obstacles, the survivor) and drives with the true pose, which the agent never gets.
+# Realism rule: the agent gets what a robotics engineer of a response team would have: the robot's manual and API, the
+# team's field guide, the client library, the grader's submission checks, and the team's training ground (a black-box
+# commissioning service under its own account: the test lanes and six training rubble sites, the robot's own mission
+# log after each exercise, no truth of the site, no score, no debrief); the simulator's code, the site plans and every
+# ground truth stay out of its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (rescue.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/earthquake_search_and_rescue"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/ground/<name>/. The metric
+# (rescue_score, higher) lives in tests/anchor.json.
+platform = "ground"
+tags = ["search-and-rescue", "earthquake", "rubble", "tracked-robot", "flippers", "reconfigurable", "mobile-manipulation",
+        "exploration", "lidar", "thermal-camera", "rgbd", "mujoco", "code-as-policy", "hidden-seed", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the training ground.
+# [agent] timeout_sec: 4 h. [verifier] timeout_sec: the import check (at most 120 s), the desktop settle (at most 60 s),
+# then 8 hidden sites, each a site build with its look (the render and sensor twins, the sky: about 15 s on 8 CPUs;
+# the first colour frame's shaders and textures: about 15 s more) plus the program within its 1200 s program-time cap,
+# which does not count the cell's simulation (1800 s simulated at most, at 2-5x real time here: up to about 15 min of
+# wall clock) and sensor rendering (700 camera frames at 0.5-0.9 s: Filament colour on lavapipe, classic depth, the
+# encoding; 1800 lidar sweeps at about 0.2 s, 1800 thermal frames at 0.05 s: up to about 20 min, measured on 8 CPUs),
+# plus the end and clean-up: at the bounds about 4000 s a site, 32000 s for the eight, 36000 s with one site run twice
+# after a cell failure (a request cannot cause one: the cell refuses non-finite and malformed parameters); 11 h leaves
+# 10 % of margin on that bound. A program that uses its whole program time, simulated time and every sensor budget on
+# every site is far from any run seen; the oracle's sites run the reference program inside one privileged call (about
+# 3-6 min each here).
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 39600
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left reaches
+# it. environment/setup/setup.sh does not run there: tests/test.sh builds the grader's root-owned copy of the givens
+# itself. The agent's program runs during verify, so the verifier gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0
