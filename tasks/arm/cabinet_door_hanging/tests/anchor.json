@@ -1,0 +1,8 @@
+{
+  "metric": "mean_episode_credit",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 0.98,
+  "source": "Own measurement, 2026-11-21, on the fixed hidden set (tests/hidden/episodes.json: 12 episodes, one per unit, drawn on frozen commit 79e332e) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505) on the reference host (a shared 96-core x86-64 Linux server running other jobs, Docker), five ale validate runs (the first alone, four concurrent), 12 episodes each: validate-82387e68, validate-59abfb76, validate-c0fe7a1f, validate-c58fdd0b and validate-4fdfbc9e, mean_episode_credit 1.0 in each (the oracle's verification.json), so the mean over 60 episodes is 1.0. Every run: 12 of 12 episodes scored, no simulation faults, the render self-test passed, untouched 0.0, probe pairs 181 of 181 differing, the same steps per episode in all five (1627-1830); the verify stage took 686-699 s for the 12 episodes.",
+  "note": "Measured, not drawn. The set holds only episodes on which the reference scored credit 1.0 in three runs over the real wire when it was selected (tests/hidden/episode_selection.json). full_at 0.98: the five runs showed no spread; one hinge's pin missing in one episode (0.25 of one episode, 0.021 of the metric) still leaves the reference at reward 1.0 after the engine's rounding."
+}
