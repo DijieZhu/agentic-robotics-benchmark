@@ -46,8 +46,8 @@ A box's printed front (its logo) is its -x face in its own frame: a box faces th
 bay's. No product is more than 0.07 m wide across a box's width or a cylinder's diameter.
 
 The date code (`shelf_world.add_code`): two seven-segment digits, each 7 mm tall and 4 mm wide with 0.8 mm strokes,
-2 mm apart, dark (0.08, 0.08, 0.10) on a light patch 11.5 x 10 mm (0.96, 0.96, 0.93) standing 2.4 mm proud of the
-side. Its place is drawn for each unit (`shelf_world.draw_code_at`, from a random stream of its own; a world's `meta`
+2 mm apart, dark (0.08, 0.08, 0.10) on a light patch 11.5 x 10 mm (0.96, 0.96, 0.93). The cameras show it as a printed
+label lying flat on the side (`shelf_parts.code_decal`); the model's own plate, 2.4 mm proud, is not drawn. Its place is drawn for each unit (`shelf_world.draw_code_at`, from a random stream of its own; a world's `meta`
 records it as `code_at`): on a box, one of its four sides, the patch at least 2 mm in from the side's vertical edges;
 on a can or bottle, any angle about its axis; the patch's centre at a height in the unit's upper 70 % (a bottle's
 body, not its cap) and its top at least 40 mm under the unit's top; never over the logo (2 mm clear of the logo's

@@ -5,7 +5,8 @@ The rule, fixed before any candidate ran:
 1. Freeze. The grader (tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py,
    tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json,
    and since draw 2 the launcher and the numerics fingerprint: tests/nonet_exec.py, tests/numerics_check.py,
-   tests/numerics.json)
+   tests/numerics.json; since draw 3 the cameras' renderer: tests/shelf_render.py, shelf_scene.py, shelf_parts.py,
+   shelf_geom.py, shelf_tex.py, shelf_looks.py, shelf_look.json and the render bundle's pin environment/assets.sha256)
    and the reference (the solution/oracle/ modules, solution/solve.sh) are committed first: `draw` refuses to start while any of them differs
    from the checkout's HEAD and records their sha256; `run` and `make` refuse to go on when any of them
    differs from the recorded hashes.
@@ -40,7 +41,7 @@ The rule, fixed before any candidate ran:
 
 `run` needs the task image (Python 3.12, MuJoCo 3.16.0, NumPy 2.5.4, SciPy 1.18.1, OpenCV; environment/
 requirements.txt; the numerics pin of environment/Dockerfile, which the image's .pth gives every /opt/venv Python)
-and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
+and the cameras' render bundle (SHELF_RENDER_DIR; the image has it in /opt/task-assets/payload/render). Outside the image the oracle submission's run.sh names
 this interpreter, and the controller is started directly rather than through nonet_exec.py (which needs root to change
 user); everything else is verify.run_episodes as the grader runs it.
 """
@@ -65,10 +66,13 @@ sys.dont_write_bytecode = True
 FORMAT = "grocery_shelf_restocking episode selection 1"
 SET_FORMAT = "grocery_shelf_restocking fixed set 1"
 ORACLE_MODULES = ("box_transport_env.py", "episode.py", "oracle_main.py", "reference.py", "shelf_ctl.py", "shelf_env.py",
+                  "shelf_render.py", "shelf_scene.py", "shelf_parts.py", "shelf_geom.py", "shelf_tex.py", "shelf_looks.py", "shelf_look.json",
                   "shelf_sim.py", "shelf_world.py", "staging.py", "wire_world.py")
 FROZEN = (("tests/verify.py", "tests/episode.py", "tests/shelf_env.py", "tests/shelf_world.py", "tests/shelf_ctl.py",
            "tests/shelf_sim.py", "tests/box_transport_env.py", "tests/units.json", "tests/grader_config.json",
-           "tests/nonet_exec.py", "tests/numerics_check.py", "tests/numerics.json")
+           "tests/nonet_exec.py", "tests/numerics_check.py", "tests/numerics.json",
+           "tests/shelf_render.py", "tests/shelf_scene.py", "tests/shelf_parts.py", "tests/shelf_geom.py", "tests/shelf_tex.py",
+           "tests/shelf_looks.py", "tests/shelf_look.json", "environment/assets.sha256")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES)
           + ("solution/solve.sh",))
 PER_UNIT = 2

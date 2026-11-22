@@ -16,6 +16,13 @@ carry products of the same class and height too, so a unit's shape does not tell
 product is known only by its printed look: a body colour, a label band, a logo and, on bottles, a cap colour. SKUs
 may share a body colour; their bands and logos tell them apart. A box has a printed front, the face with the logo.
 
+**The aisle.** The bay is one bay of a run of shelving: the run goes on to both sides, a second run stands across
+the aisle, and all of those bays are stocked with other products. None of them is a product of your catalog (a
+neighbouring product of the same shape differs from every catalog product in its body colour or its band), none is
+part of the order, and nothing you do to them counts. Each neighbouring bay is solid from its front plane back: a
+hand or a unit that goes past the side of your bay meets it. Your cameras see the neighbours beside and around
+your bay; the catalog and the planogram say which products are yours.
+
 **The dates.** Every unit carries its best-before date: a two-digit day number in dark seven-segment digits 7 mm
 tall on a small light patch, on one side only. The place differs from unit to unit: any one of a box's four sides,
 any angle round a can or bottle, at any height in the upper part of the unit (the task card gives the ranges).
@@ -57,6 +64,7 @@ not disturb the lanes that are not being restocked.
 | `shelf_world.py` | The world: the bay, the cart and tote, the products and their looks, the robot on its lift, each unit's and episode's draw. The grader runs this exact file. |
 | `shelf_ctl.py`, `shelf_sim.py`, `box_transport_env.py` | The controller, the scene's building blocks (and a kinematic IK), the robot's definitions. The grader runs these exact files. |
 | `episode.py` | An episode and its credit. The grader runs this exact file. |
+| `shelf_render.py`, `shelf_scene.py`, `shelf_parts.py`, `shelf_geom.py`, `shelf_tex.py`, `shelf_looks.py`, `shelf_look.json` | What the cameras draw and how (the bay, the products' print, the aisle). The grader runs these exact files; the pictures they need are in `/opt/task-assets/payload/render` (read-only). |
 | `units.json` | Three practice units (p0-p2): bays and SKUs to develop against, each with eight seeds of episodes like the graded ones (`seeds`). The scored bays and SKUs are different. |
 | `task_card.md` | The scene's numbers in one place: frames, nominal places, ranges, sizes, cameras. |
 | `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units. Per episode it prints the credit and its three parts, each restocked lane's result (the units missing from it or not belonging in it, the day numbers of the units standing in it), the units that moved, fell or are not in the tote, and the controller's own time. This is the practice simulation's own state; nothing like it is given for the graded bays. |
@@ -76,16 +84,18 @@ Each episode's credit (0 to 1) is computed from the simulation when the episode 
 when its centre is within 30 mm of the lane's centre line, between the lip and the back panel, resting on that
 lane's board (its centre within 12 mm of its resting height) and tilted less than 10 deg.
 
-- **Correct lanes, 0.7**, split evenly over the lanes in `delivery`. A lane is correct when the units standing in it
-  are exactly its unexpired old units and the delivered units of its SKU, in date order (above). Anything else is a
-  wrong lane: a unit missing, an expired unit or a unit of another SKU in it, two units out of order.
-- **Facing, 0.2**, split evenly over the lanes in `delivery`: a correct lane whose front unit's front face is within
+An episode earns credit only when **every** lane in `delivery` is correct. A delivery with a lane left wrong is not
+done: that episode's credit is 0, whatever else was achieved in it. In an episode whose lanes are all correct:
+
+- **Correct lanes, 0.7.** A lane is correct when the units standing in it are exactly its unexpired old units and
+  the delivered units of its SKU, in date order (above). Anything else is a wrong lane: a unit missing, an expired
+  unit or a unit of another SKU in it, two units out of order.
+- **Facing, 0.2**, split evenly over the lanes in `delivery`: a lane whose front unit's front face is within
   15 mm of the lip's inner face; for a box, its printed front also faces the aisle (its yaw within 20 deg of the
   bay's).
 - **Kept, 0.1**: every unit of the lanes not in `delivery` within 20 mm of where it started, no unit anywhere lying
   down (tilted more than 45 deg) or on the floor, and every expired unit and every extra standing upright in the
-  tote. It counts
-  only in an episode with at least one correct lane.
+  tote.
 
 An episode ends:
 - when your controller sends the action `[0]` (finished);
@@ -123,7 +133,11 @@ The controller runs at 10 Hz. The observation is a JSON object:
   The four cameras are `left` and `right` (400 x 300, on the lift's carriage beside the robot, looking into the
   shelf in front of it: they ride with the lift), `wrist` (256 x 192, on the hand) and `overview` (640 x 480, fixed,
   behind the robot). An image is empty (`[0, 0, 3]`) unless the previous action asked for it; the first observation
-  has all four. There is no depth image.
+  has all four. There is no depth image. The images are drawn by `shelf_render.py` (a rasteriser on the CPU, with
+  an image light and no cast shadows; the same file draws them at grading), each with a little sensor noise. A
+  date code is a printed label lying flat on the unit's side. An episode's first image takes about 12 s of the
+  simulator's own time (the scene is built then), a later one 0.1 to 0.3 s; neither is charged to your controller
+  beyond the fixed price per image below.
 - **The order:** `order` (above); on the first observation only, `catalog` (128 x 128 images, the same encoding).
 
 The action is a JSON list in one of four shapes:

@@ -35,7 +35,7 @@ Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_tok
 then does every observation also carry `truth` (the unit, the seed, the full simulation state). An untokened
 submission never sees it. Every path agent behaviour can reach is charged as a score, never a crash.
 
-Images: shelf_env renders the cameras and the catalog with MuJoCo's renderer on OSMesa, exactly as the agent's copy
+Images: shelf_env draws the cameras and the catalog through shelf_render.py (a render process per episode), exactly as the agent's copy
 does. Before the first episode a render self-test draws the four cameras and the catalog of one episode (the set's
 first unit at a fixed seed, not a graded episode) and checks their shapes, that none is flat and that their
 brightness is sane; the metric `render_selftest` records that it passed. A renderer failure, in the self-test or at

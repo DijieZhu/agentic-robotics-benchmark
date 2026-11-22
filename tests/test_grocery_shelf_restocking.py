@@ -16,7 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "tasks/arm/grocery_shelf_restocking"
 COPIES = ("tests", "environment/setup/payload", "solution/oracle")
-SHARED = ("box_transport_env.py", "episode.py", "shelf_ctl.py", "shelf_env.py", "shelf_sim.py", "shelf_world.py")
+SHARED = ("box_transport_env.py", "episode.py", "shelf_ctl.py", "shelf_env.py", "shelf_sim.py", "shelf_world.py",
+          "shelf_render.py", "shelf_scene.py", "shelf_parts.py", "shelf_geom.py", "shelf_tex.py", "shelf_looks.py", "shelf_look.json")
 PIN = {"OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256",
        "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
        "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "OPENCV_IPP": "avx2"}
@@ -126,3 +127,28 @@ class Rules(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_credit_needs_every_served_lane_and_the_instruction_says_so():
+    """An episode earns credit only when every served lane is correct (episode.py), and instruction.md states it."""
+    src = (TASK / "tests" / "episode.py").read_text()
+    assert 'complete = bool(lanes) and all(v["correct"] for v in lanes.values())' in src
+    assert "credit = CORRECT + FACE * face + KEEP * kept if (complete and not unstable) else 0.0" in src
+    text = (TASK / "instruction.md").read_text()
+    assert "only when **every** lane in `delivery` is correct" in text
+    assert "split evenly over the lanes in `delivery`. A lane is correct" not in text
+
+
+def test_the_cameras_renderer_is_pinned_and_described():
+    """The render bundle is pinned in environment/assets.sha256, the Dockerfile fetches and checks it, and the
+    instruction names the renderer's files and the neighbouring bays."""
+    lines = (TASK / "environment" / "assets.sha256").read_text().splitlines()
+    files = [ln.split()[1] for ln in lines if ln and not ln.startswith("#")]
+    assert sorted(files) == ["render/ibl.ktx", "render/props_bay/room.json", "render/props_bay/room.npz",
+                             "render/props_world/room.json", "render/props_world/room.npz", "render/textures.json",
+                             "render/textures.npz"]
+    docker = (TASK / "environment" / "Dockerfile").read_text()
+    assert "fetch_assets.py /opt/task-assets/assets.sha256" in docker and "render_check.py" in docker
+    assert "SHELF_RENDER_DIR=/opt/task-assets/payload/render" in docker
+    text = (TASK / "instruction.md").read_text()
+    assert "shelf_render.py" in text and "Each neighbouring bay is solid" in text
