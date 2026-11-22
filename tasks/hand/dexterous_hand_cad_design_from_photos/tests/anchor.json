@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "design_score",
+ "note": "design_score is the weighted sum of the seven criteria (shape, kinematic, features, assembly, mass, fit, interference; all but shape times the shape floor, the last three per digit times that digit's floor) times public_model_reuse, already on [0, 1]; ratio = score / 1.0, reward = ratio",
+ "source": "the oracle's own measured design_score: the native FreeCAD document of the reference (built at oracle time by solution/solve.sh from the made parts' solids and the given STEPs) scores exactly 1.0 through the real extraction and grading path, whatever the pose seed; full_at = 1.0",
+ "value": 1.0
+}
