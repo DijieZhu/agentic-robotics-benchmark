@@ -28,6 +28,7 @@ import mujoco
 import numpy as np
 
 import box_transport_env as B
+import shelf_render as R
 import shelf_sim as S
 import shelf_world as W
 
@@ -46,8 +47,7 @@ def decode_image(d):
     return np.frombuffer(base64.b64decode(d["b64"]), dtype=np.uint8).reshape(d["shape"])
 
 
-class RenderError(RuntimeError):
-    """The renderer failed: a task error (the grader's), never the submission's."""
+RenderError = R.RenderError         # the renderer failed: a task error (the grader's), never the submission's
 
 
 def to_wire(obs):
@@ -76,50 +76,12 @@ def cam_pose(d, cid):
     return T
 
 
-def catalog(unit):
-    """One front-view image per SKU: the product alone on a grey ground, lit as the bay is."""
-    out = {}
-    for name, sku in unit["skus"].items():
-        w = mujoco.MjSpec()
-        w.visual.global_.offwidth = CATALOG_PX
-        w.visual.global_.offheight = CATALOG_PX
-        wb = w.worldbody
-        light = wb.add_light()
-        light.pos = [-0.6, 0.0, 0.8]
-        light.dir = [0.6, 0.0, -0.6]
-        g = wb.add_geom()
-        g.type = mujoco.mjtGeom.mjGEOM_PLANE
-        g.size = [1, 1, 0.1]
-        g.rgba = [0.6, 0.6, 0.62, 1]
-        hh = W.half_h(sku)
-        spec = W.product_spec("p", sku, (0.0, 0.0, hh), 0.0)
-        body = S.add_product(wb, spec)
-        W.add_look(body, sku)
-        c = wb.add_camera()
-        c.name = "front"
-        pos = (-0.45, 0.0, hh + 0.02)
-        c.pos = list(pos)
-        c.quat = list(B.quat_from_mat(B.look_at(pos, (0.0, 0.0, hh))))
-        c.fovy = 35.0
-        m = w.compile()
-        d = mujoco.MjData(m)
-        mujoco.mj_forward(m, d)
-        try:
-            r = mujoco.Renderer(m, CATALOG_PX, CATALOG_PX)
-            r.update_scene(d, camera="front")
-            out[name] = r.render().copy()
-            r.close()
-        except Exception as exc:
-            raise RenderError(f"catalog: {exc}") from exc
-    return out
-
-
 class ShelfEnv:
     def __init__(self, unit, unit_id="dev", render=True):
         self.unit = unit
         self.unit_id = unit_id
         self.render_images = render
-        self._renderers = {}
+        self._view = None                # the episode's render process (shelf_render.Worker), started at its first image
 
     def reset(self, seed):
         self.close()
@@ -176,16 +138,14 @@ class ShelfEnv:
         d = self.w.data if data is None else data
         return cam_pose(d, self.w.model.camera(self.camera_name(cam)).id)
 
+    def view(self):
+        if self._view is None:
+            self._view = R.Worker(self.unit, self.episode)
+        return self._view
+
     def render(self, cam):
         _bit, w, h, _fovy, *_ = CAMS[cam]
-        try:
-            if (w, h) not in self._renderers:
-                self._renderers[(w, h)] = mujoco.Renderer(self.w.model, h, w)
-            r = self._renderers[(w, h)]
-            r.update_scene(self.w.data, camera=self.w.model.camera(self.camera_name(cam)).id)
-            img = r.render().astype(np.float32)
-        except Exception as exc:
-            raise RenderError(f"{cam}: {exc}") from exc
+        img = self.view().render(self.camera_name(cam), self.w.data.qpos, w, h).astype(np.float32)
         img += self.rng.normal(0, B.RGB_NOISE, img.shape)
         return np.clip(img, 0, 255).astype(np.uint8)
 
@@ -209,7 +169,7 @@ class ShelfEnv:
                "ee_pos": w.ee(), "ee_quat": q, "gripper": float(d.qpos[w.gq[0]] - d.qpos[w.gq[1]]),
                "wrench": self.wrench(), "order": self.order}
         if self.first:
-            obs["catalog"] = catalog(self.unit)
+            obs["catalog"] = self.view().catalog(d.qpos, CATALOG_PX) if self.render_images else {}
             self.first = False
         for cam, (bit, cw, ch, fovy, *_r) in CAMS.items():
             obs[f"T_world_{cam}"] = self.camera_pose(cam)
@@ -242,9 +202,9 @@ class ShelfEnv:
         return out
 
     def close(self):
-        for r in self._renderers.values():
-            r.close()
-        self._renderers = {}
+        if self._view is not None:
+            self._view.close()
+        self._view = None
 
     def truth(self):
         """The full state, for a token run only (the reference's shadow): the unit, the seed, qpos and qvel."""

@@ -81,6 +81,15 @@ def add_bay(wb, bay):
                 (xb / 2, UPRIGHT_T / 2, zt / 2), BAY_RGBA)
     # the plinth under the bottom board (to the floor)
     add_box(body, "plinth", (xb / 2, 0, z0 / 2), (xb / 2, W / 2, z0 / 2), BAY_RGBA)
+    # the run of shelving goes on to both sides (shelf_scene.store draws it: the next bay's upright stands against
+    # this bay's, its stock behind its lips): each neighbouring bay is one solid block from its front plane to its
+    # back, from the floor to its top cover. Everything drawn of it lies inside the block (the ticket rail's 0.6 mm
+    # cover aside): a hand or a carried unit meets the neighbour where the picture shows it, 0 to 12 mm in front
+    # of its front products.
+    pitch = W + 2 * UPRIGHT_T
+    for side in (-1, 1):
+        add_box(body, f"neighbour{'LR'[side > 0]}", (xb / 2, side * (W / 2 + UPRIGHT_T + pitch / 2), (zt + BOARD_T) / 2),
+                (xb / 2, pitch / 2, (zt + BOARD_T) / 2), BAY_RGBA)
     return body
 
 

@@ -5,15 +5,17 @@ unstable simulation (credit 0). The credit, read from the simulation at the end 
 when its centre is within LANE_TOL of the lane's centre line, between the lip and the back panel, on the lane's
 board within Z_TOL, tilted less than TILT_MAX; a unit's code is expired when it is before the episode's `today`):
 
-- **correct** (CORRECT, split evenly over the served lanes): a served lane is correct when the units standing in it
+An episode earns credit only when EVERY served lane is correct: a delivery with a lane left wrong is not done, and
+its credit is 0 whatever else was achieved.
+
+- **correct** (CORRECT, all served lanes together): a served lane is correct when the units standing in it
   are exactly its unexpired old units and the delivered units of its SKU, in code order: from the front to the
   back, each unit's code no earlier than the one in front of it (equal codes in either order).
 - **faced** (FACE, split evenly over the served lanes): a correct lane whose front unit's front face is within
   FACE_TOL of the lip's inner face, a box also turned face out (its yaw within FACE_YAW of the bay's).
 - **kept** (KEEP): every unit of the lanes the delivery does not serve within KEEP_TOL of where it started, no unit
   lying down anywhere (tilted past 45 deg) or on the floor, and every expired unit and every extra (a tote unit
-  that is not part of the delivery) standing in the tote; counted
-  only in an episode with some correct lane.
+  that is not part of the delivery) standing in the tote.
 """
 
 import math
@@ -108,8 +110,9 @@ class Episode:
         face = float(np.mean([v["faced"] for v in lanes.values()]))
         kept = bool(not moved and not fallen and not expired_out and not extra_out and place > 0)
         unstable = bool(w.unstable())
-        credit = 0.0 if unstable else CORRECT * place + FACE * face + KEEP * kept
-        return {"credit": round(credit, 4), "place": round(place, 4), "face": round(face, 4), "kept": kept,
+        complete = bool(lanes) and all(v["correct"] for v in lanes.values())
+        credit = CORRECT + FACE * face + KEEP * kept if (complete and not unstable) else 0.0
+        return {"credit": round(credit, 4), "complete": complete, "place": round(place, 4), "face": round(face, 4), "kept": kept,
                 "lanes": lanes, "moved": moved, "fallen": fallen, "expired_out": expired_out,
                 "extra_out": extra_out, "unstable": unstable,
                 "steps": int(w.t), "finished": self.finished}
