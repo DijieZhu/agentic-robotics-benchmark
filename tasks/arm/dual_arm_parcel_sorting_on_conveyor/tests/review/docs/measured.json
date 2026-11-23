@@ -1,0 +1,445 @@
+{
+ "observability": {
+  "table_head": [
+   "camera",
+   "where (label face)",
+   "waybill long x short side (px): smallest carton",
+   "largest carton",
+   "mailer",
+   "square code block side (px)",
+   "share visible"
+  ],
+  "table_rows": [
+   [
+    "`infeed`",
+    "just past the entry (y -1.10 to -0.90)",
+    "51 x 45",
+    "108 x 94",
+    "76 x 66",
+    "17-36",
+    "98-100 %"
+   ],
+   [
+    "`infeed`",
+    "before the work window (y -0.60 to -0.42)",
+    "51 x 45",
+    "108 x 94",
+    "76 x 66",
+    "17-36",
+    "98-100 %"
+   ],
+   [
+    "`head`",
+    "upstream window (y -0.42 to -0.20)",
+    "50-88 x 30-60",
+    "115-218 x 70-124",
+    "78-139 x 43-88",
+    "11-48",
+    "100 %"
+   ],
+   [
+    "`head`",
+    "window centre (y -0.20 to 0.20)",
+    "49-88 x 35-61",
+    "104-218 x 70-128",
+    "74-139 x 51-90",
+    "13-49",
+    "100 %"
+   ],
+   [
+    "`head`",
+    "downstream window (y 0.20 to 0.42)",
+    "49-78 x 34-60",
+    "108-192 x 79-124",
+    "75-122 x 50-89",
+    "13-48",
+    "100 %"
+   ],
+   [
+    "`head`",
+    "towards the scan line (y 0.70 to 0.95)",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-"
+   ],
+   [
+    "`head`",
+    "window, label facing the robot",
+    "n/a",
+    "77-141 x 24-45",
+    "n/a",
+    "9-18",
+    "0-100 %"
+   ],
+   [
+    "`head`",
+    "window, label facing upstream",
+    "n/a",
+    "77-167 x 20-48",
+    "n/a",
+    "11-20",
+    "0-100 %"
+   ],
+   [
+    "`head`",
+    "window, label facing downstream",
+    "n/a",
+    "77-167 x 19-48",
+    "n/a",
+    "11-20",
+    "0-100 %"
+   ],
+   [
+    "`head`",
+    "window, label facing the far side",
+    "n/a",
+    "80 x 46",
+    "n/a",
+    "17",
+    "0-100 %"
+   ],
+   [
+    "`infeed`",
+    "label on the bottom (facing the belt)",
+    "-",
+    "-",
+    "-",
+    "-",
+    "0 %"
+   ],
+   [
+    "`head`",
+    "label on the bottom (facing the belt)",
+    "-",
+    "-",
+    "-",
+    "-",
+    "0 %"
+   ],
+   [
+    "`wrist_*`",
+    "head-on at 0.15 m",
+    "143 x 125",
+    "268 x 233",
+    "206 x 179",
+    "54-102",
+    "-"
+   ],
+   [
+    "`wrist_*`",
+    "head-on at 0.25 m",
+    "86 x 75",
+    "161 x 140",
+    "124 x 107",
+    "32-61",
+    "-"
+   ],
+   [
+    "`wrist_*`",
+    "head-on at 0.40 m",
+    "54 x 47",
+    "101 x 87",
+    "77 x 67",
+    "20-38",
+    "-"
+   ]
+  ],
+  "note": "Sizes for the waybill's projected outline, as ranges over the places named, the lateral range of the landing and two yaws, where the camera sees at least half of it; the share visible is the part of that outline the camera sees with the robot at its start posture, over all those poses (a side label is hidden where it faces away from the camera); a dash: not in view; n/a: that parcel never carries its label on that face. The wrist rows: the waybill seen head-on from that distance.",
+  "look": "classic",
+  "tool": "tests/review/observability.py"
+ },
+ "gripper": {
+  "close_s": 0.36,
+  "open_s": 0.52,
+  "opening_open_m": 0.0851,
+  "opening_start_m": 0.0852,
+  "opening_closed_m": 0.0004,
+  "block_mm": 50.0,
+  "pad_force_N": 94.9,
+  "detect_ms": 140,
+  "hold_kg": 3.0,
+  "opening_over_command": [
+   [
+    0.0,
+    0.0851
+   ],
+   [
+    0.2,
+    0.0698
+   ],
+   [
+    0.4,
+    0.0529
+   ],
+   [
+    0.6,
+    0.0349
+   ],
+   [
+    0.8,
+    0.0162
+   ],
+   [
+    1.0,
+    0.0004
+   ]
+  ],
+  "tool": "tests/review/gripper_sheet.py"
+ },
+ "timing": {
+  "reply_mb_max": 1.06,
+  "tool": "tests/review/timing.py",
+  "shift_start_text": "about a second: the development shifts' parcel looks are made when the image is built (a shift's cell built from them in 0.8-1.0 s in the task image); a shift whose looks are not made yet takes them first, several seconds a parcel",
+  "shift_start_tool": "measured in containers of the task image: the image build's proof (development shift 1 built from the look cache in 0.8 s), the verifier's cell builds from its look cache (1.0 s a shift, three line shifts) and its look prebuild (131 parcels in 399 s with 4 worker processes, host load average about 150-300 on 48 cores)"
+ },
+ "sandbox": {
+  "nproc": 8,
+  "os_cpu_count": "the host machine's CPU count (48 on the build host)",
+  "nproc_program": 2,
+  "os_cpu_count_program": "the host machine's CPU count as well",
+  "note": " (the sandbox is held to its CPUs by a quota, which `os.cpu_count()` does not see: size thread pools by the sandbox's CPUs, not by it)",
+  "tool": "measured in a container of the task image with an 8-CPU quota: nproc and os.cpu_count() in the agent account's login shell and in the grader's minimal program environment (OMP_NUM_THREADS=2)"
+ },
+ "tool_pose": {
+  "text": "at rest the measured pose is within 0.04 mm and 0.14 degrees of a reached target; a 50 mm move settles within the tolerance about 0.4 to 1.0 s after the command (the computed solution gets there within the first few ticks; the rest is the servos following). Straight paths of 20 cm at 0.2 m/s, given as one target per tick, measured per region: with a hand over the belt's near half in the work window (the tool axis horizontal and along the belt), a path that stays in reach (along the belt towards the column, straight up) is followed within 2.2 mm of the line and 0.6 degrees of the orientation; near the start posture (the hands parked beside the column), a path that stays in reach (towards the belt, straight down) within 5.8 mm and 1.5 degrees; elsewhere a path soon meets a joint's bound or the arm's reach, and there the tool leaves the line (30 to 70 mm off it at the end of the measured paths that did) while its orientation is kept within about 2 degrees, up to 14 degrees where a wrist joint stands at its bound; the tool trails the commanded point by about 14 to 17 mm along the path (the servos' lag, about 75 to 80 ms at that speed); `error_m` and `error_deg` in every state give how far the solution is from the target. A target beyond the arm's reach is approached at no more than 0.114 rad per tick of any joint, with no protective stop and no cut by the speed limiter; the arm ends short in position with the tool's orientation within about 2 degrees of the target's (up to 14 degrees when a wrist joint is at its bound) and comes to rest; `out_of_reach` turns true about 0.12 s after the command (after 5 ticks without progress) and then stays true, clearing only when the solution gains clearly on the target again (it did so once or twice in the measured cases, while the arm still slid along a joint's bound) or the target changes. The solve is local: it does not swing the arm into another configuration, so a pose that needs one (for example a large turn of the tool from the start posture) is reported out of reach from where the arm is. A load held in the gripper adds its own sag, which the correction does not know: about 2 mm and 0.3 degrees per kilogram with a hand over the belt in the work window (the tool axis horizontal and along the belt), under 1 mm per kilogram in the start posture.",
+  "rest_err_mm_max": 0.039534794801559366,
+  "rest_err_deg_max": 0.13744101139871331,
+  "settle_ms": [
+   400,
+   400,
+   380,
+   400,
+   660,
+   380
+  ],
+  "line_cross_track_mm_max": 2.968764894699462,
+  "line_lag_mm": [
+   16.29588636363638,
+   14.400272727272752,
+   16.33863636363638,
+   16.275090909090927,
+   14.763363636363662
+  ],
+  "line_orient_deg_max": 0.621389505818529,
+  "out_of_reach_max_step_rad": 0.11799599999999999,
+  "payload": {
+   "two_palm_mm_per_kg": 2.09,
+   "two_palm_deg_per_kg": 0.32,
+   "start_mm_per_kg": 0.73
+  },
+  "cost_ms_per_tick": {
+   "joint_level_ms_per_tick": 0.8918645939168831,
+   "joint_level_controller_ms": 0.023461182912190754,
+   "tool_both_moving_ms_per_tick": 1.67366710336258,
+   "tool_both_moving_controller_ms": 0.36973317464192706,
+   "tool_both_at_rest_ms_per_tick": 1.330724003103872,
+   "tool_both_at_rest_controller_ms": 0.1454448699951172,
+   "note": "wall per step(n=1) call through handle(); controller = the tool-pose level's own time (solve + measured poses), charged to the cell"
+  },
+  "tool": "tool-pose evaluation through the cell's dispatcher (reach, settling, straight paths per region, out-of-reach targets)",
+  "transient_flags": [
+   {
+    "side": "left",
+    "dz": 0.05,
+    "oor_ticks": 3,
+    "reached_end": true
+   },
+   {
+    "side": "left",
+    "dz": 0.1,
+    "oor_ticks": 22,
+    "reached_end": false
+   },
+   {
+    "side": "right",
+    "dz": 0.05,
+    "oor_ticks": 3,
+    "reached_end": true
+   },
+   {
+    "side": "right",
+    "dz": 0.1,
+    "oor_ticks": 22,
+    "reached_end": false
+   }
+  ]
+ },
+ "palm_views": {
+  "text": "with the fingers open, the two fingertips stand at the image's left and right edges at mid-height (about 12 % of the frame together) and the view between them looks straight along the tool axis; a parcel face 10 cm ahead fills about 83 % of the frame; a face at the fingertips (the palm against it) fills everything between the fingertips (about 89 %) and a waybill on it is legible.",
+  "stats": {
+   "a_start_open": {
+    "wrist_left": {
+     "depth_valid_share": 0.411,
+     "depth_median_m": 0.31,
+     "shares": {
+      "parcel": 0.0,
+      "gripper": 0.121,
+      "robot": 0.248,
+      "station": 0.455,
+      "none": 0.175
+     }
+    },
+    "wrist_right": {
+     "depth_valid_share": 0.411,
+     "depth_median_m": 0.31,
+     "shares": {
+      "parcel": 0.0,
+      "gripper": 0.121,
+      "robot": 0.248,
+      "station": 0.455,
+      "none": 0.175
+     }
+    }
+   },
+   "b_face_10cm_left": {
+    "wrist_left": {
+     "depth_valid_share": 0.88,
+     "depth_median_m": 0.1,
+     "shares": {
+      "parcel": 0.831,
+      "gripper": 0.114,
+      "robot": 0.055,
+      "station": 0.0,
+      "none": 0.0
+     }
+    },
+    "wrist_right": {
+     "depth_valid_share": 0.511,
+     "depth_median_m": 0.321,
+     "shares": {
+      "parcel": 0.107,
+      "gripper": 0.114,
+      "robot": 0.248,
+      "station": 0.411,
+      "none": 0.12
+     }
+    }
+   },
+   "b_face_10cm_right": {
+    "wrist_left": {
+     "depth_valid_share": 0.511,
+     "depth_median_m": 0.321,
+     "shares": {
+      "parcel": 0.107,
+      "gripper": 0.114,
+      "robot": 0.248,
+      "station": 0.411,
+      "none": 0.12
+     }
+    },
+    "wrist_right": {
+     "depth_valid_share": 0.88,
+     "depth_median_m": 0.1,
+     "shares": {
+      "parcel": 0.831,
+      "gripper": 0.114,
+      "robot": 0.055,
+      "station": 0.0,
+      "none": 0.0
+     }
+    }
+   },
+   "two_palm_tcp": {
+    "left": {
+     "pos": [
+      0.245261,
+      0.100293,
+      0.953778
+     ],
+     "quat": [
+      0.70292,
+      0.711209,
+      0.004764,
+      -0.007864
+     ]
+    },
+    "right": {
+     "pos": [
+      0.24526,
+      -0.100294,
+      0.953777
+     ],
+     "quat": [
+      0.70292,
+      -0.71121,
+      0.004765,
+      0.007865
+     ]
+    }
+   },
+   "d_two_palm_open": {
+    "wrist_left": {
+     "depth_valid_share": 0.43,
+     "depth_median_m": 0.173,
+     "shares": {
+      "parcel": 0.001,
+      "gripper": 0.139,
+      "robot": 0.04,
+      "station": 0.384,
+      "none": 0.435
+     }
+    },
+    "wrist_right": {
+     "depth_valid_share": 0.43,
+     "depth_median_m": 0.173,
+     "shares": {
+      "parcel": 0.0,
+      "gripper": 0.139,
+      "robot": 0.04,
+      "station": 0.384,
+      "none": 0.437
+     }
+    }
+   },
+   "c_two_palm_on_parcel": {
+    "wrist_left": {
+     "depth_valid_share": 0.886,
+     "depth_median_m": 0.074,
+     "shares": {
+      "parcel": 0.886,
+      "gripper": 0.114,
+      "robot": 0.0,
+      "station": 0.0,
+      "none": 0.0
+     }
+    },
+    "wrist_right": {
+     "depth_valid_share": 0.886,
+     "depth_median_m": 0.075,
+     "shares": {
+      "parcel": 0.886,
+      "gripper": 0.114,
+      "robot": 0.0,
+      "station": 0.0,
+      "none": 0.0
+     }
+    }
+   },
+   "two_palm_gap_m": 0.200587
+  }
+ },
+ "landing_drift": {
+  "text": "Riding free, a parcel keeps its set-down pose closely: of 6418 parcels of 160 running-line shifts replayed with the arms at the start posture, none was more than 7 mm off the centre line or turned more than 11 degrees about the vertical when it reached the scan line (on an indexing line a soft parcel may turn by up to about 14 degrees while the belt stops and starts again under it).",
+  "source": "the line physics check (a maintainer's tool, physcheck.py): 200 line shifts, the arms at the start posture; each parcel's pose at the scan line against its set-down pose"
+ },
+ "observability_faces": {
+  "text": "Measured on the station's geometry with every camera's exact pose and calibration (the robot at its start posture, the station's hardware as occluders, the kit's waybill placement): a waybill counts as shown when at least 90 % of it is in the image and unoccluded, it is seen at most 70 degrees from its face's normal and its shorter side covers at least 12 px; the stricter test asks for 60 degrees and 20 px. \"Before the work window\" means while the parcel's centre is upstream of y = -0.45 m, \"inside\" while it is within the window (|y| < 0.42 m); the stretch is the longest run of belt travel in view there (divide by the belt's speed for the time). Cartons of the population, 200 per label position, and 200 mailers, every belt position from the entry on in 2 cm steps. No camera sees a waybill on a side face (near or far), on the upstream face or underneath before the work window: the overhead `infeed` camera sees only top faces, the `head` camera looks at the work window, and the palm cameras at their start posture look along the belt, so the left one sees a downstream face coming and nothing else of an arriving parcel. A parcel that shows no waybill on its top or its downstream face has its label underneath or on one of the faces outside the duty, and the cameras cannot tell which until it is turned. Parcels nearby and a working arm can hide a face for a while; the table is for a parcel alone with the robot parked.",
+  "table": "| label position | camera that shows the waybill, and where | share of parcels | median stretch of belt travel in view | median shorter side of the waybill | share at the stricter test |\n|---|---|---|---|---|---|\n| top | `infeed`, before the work window (straight down) | 100 % | 0.66 m | 55 px | 100 % |\n| top (also a label turned up) | `head`, inside the work window | 100 % | 0.50 m | 90 px | 100 % |\n| downstream face | `wrist_left` with the left arm at its start posture, before the work window | 100 % | 0.70 m | 24 px | 100 % |\n| upstream face, near side face, far side face | none before the work window | 0 % | - | - | - |\n| underneath (bottom face) | none while the parcel lies on the belt | - | - | - | - |\n| mailer, top | `infeed`, before the work window; `head`, inside it | 100 %; 100 % | 0.70 m | 51 px | 100 % |",
+  "tool": "the observability tools (camera projection and ray casts on the cell's own geometry), the task's cell with its four cameras, the configured parcel population"
+ },
+ "look_text": "The colour images are drawn with the station's own light, distilled from its path-traced look: an image light of the hall around the work area and the task light's two bars over the belt as seven lamps: one at the bars' centre casts soft-edged shadows, six along the bars light without shadows. They show the station as it stands in a parcel hall: the belt's dark rubber cover between brushed steel rails, the cell's wire-mesh fence in yellow frames, yellow and black floor markings, the robot's pearl-white shell and dark grippers, and the hall beyond the fence. Cartons are kraft board (light, mid, dark or reddish brown) or white board (about a third of them), closed with tape strips over the flap seams (clear, brown or white film tape, or matt kraft paper tape, 38 to 72 mm wide); many carry stickers: red, orange or small pale ones with a few printed words or arrows, and plain paper stickers about the waybill's size with no print at all; mailers are white, grey or black film, matt or glossy; the waybill is a white printed sheet (below). Light falls mostly from above, so top faces are brighter than side faces and the palm cameras see darker faces when a hand shades them; in the overhead camera the parked arm casts a soft shadow on the floor beside the belt; the exposure keeps a white waybill distinguishable on the palest carton. There is no motion blur, no depth of field and no distortion; reflections are approximate.",
+ "indexing": {
+  "text": "The drive brings the belt to a stand within about 0.2 s (at most 1.6 mm/s 0.2 s after the halt, at every belt speed); a parcel riding into the zone stops with it at most 10 mm further on, its centre between y = -0.15 and -0.12 m; once its centre has left the zone the belt is back at the shift's speed within half a second (1555 halts on 40 indexing shifts replayed).",
+  "source": "the same check: the belt's speed 0.1, 0.2 and 0.5 s after each halt, the parcel's slide and rest position, the belt's speed 0.5 s after the parcel was moved past the zone (min 0.9983 of the shift's speed)"
+ },
+ "damage_look": {
+  "text": "measured on 20 parcels of both kinds, crushed and intact, a window on each one's top face: in the `infeed` camera the mean grey level of the crushed face is 0.62-0.78 of the intact one and its share of edge pixels 1.7-24 times as high; in the `head` camera 0.45-0.66 and 1.5-20 times (an edge share below 1 % counted as 1 %).",
+  "source": "the crushed-look sheet (a maintainer's tool, crush_sheet.py, the filament backend, the one-lamp look): 20 parcels of a line shift, each placed under the infeed camera and at the head camera's aim, intact and then crushed; an 80 px window around its centre; the switch took 0.34 s at most"
+ },
+ "tool_pose_beyond": {
+  "text": "measured without a parcel, both tool axes horizontal along the belt and pointing towards each other, the fingers' closing axes across the belt, the tool centre points 0.19-0.25 m apart over the belt at 0.04-0.07 m above it, then lifted 0.1 m, turned half a turn about the belt's direction and lowered 5 cm, where neither arm reaches the turned orientation: both hands stopped 6.9-14.2 cm from their targets, 4.6-10.3 cm of it sideways and 1.8-7.5 cm of that towards the other hand (the two hands 6.6-10.7 cm closer together than commanded), with error_m 0.069-0.142 m and out_of_reach true, and no protective stop",
+  "source": "the tool-pose check (a maintainer's tool, toolpose_turn.py): from the start posture, each hand approaching along waypoints at 0.6 m/s with the target orientation, 1 s held at the grasp posture (reached within 0-7 cm), lifted 0.1 m in 1 s, turned by half a turn about +y at 1.57 rad/s, lowered in 1 cm steps until out_of_reach, then 5 cm lower, held 2 s; 8 runs (two heights, two centres, two gaps)"
+ }
+}

@@ -1,0 +1,877 @@
+{
+ "rule": "development shifts, chosen by a rule written before any draw (tests/review/gen_shifts.py, the line development rule): seeds line_seed('line-dev', k, mix=salt) with the development set's own salt (salt_hex: 16 bytes drawn once from the system's entropy), shared with nothing the graded set uses. Sites 1-3, the bench shifts (the bench profile: the list holds the stated parcels): bench b is the first k = 1000 b, 1000 b + 1, ... drawn with its stated belt class and mode whose list is exactly its stated contents (bench 1 (slow belt, running): one rigid parcel with its label underneath; bench 2 (medium belt, running): one soft parcel with its label underneath and one rigid parcel with its label on a side face; bench 3 (slow belt, indexing): a flat rigid parcel with its label not up, one parcel arriving label up and one soft parcel with its label not up). Sites 4-8: the first draw, k = 4001 .. 4005, of the full shifts slow running, medium running, fast running, slow indexing, fast indexing.",
+ "shifts": 12,
+ "open": 2,
+ "sites": [
+  {
+   "site": 1,
+   "kind": "bench",
+   "package": "shifts/dev_01.json",
+   "sha256": "979fcf8be4161b78c1cc108e9ea74814195919b43a5d50bc03a221790e5e9605",
+   "seed": 2234180683193126506,
+   "k": 1006,
+   "belt_class": "slow",
+   "indexing": false,
+   "n_parcels": 1,
+   "n_soft": 0,
+   "n_flat": 0,
+   "n_label_not_up": 1,
+   "label_faces": {
+    "0": 0,
+    "1": 1,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0
+   },
+   "label_positions": {
+    "top": 0,
+    "underneath": 1,
+    "downstream": 0,
+    "upstream": 0,
+    "near_side": 0,
+    "far_side": 0
+   },
+   "classes": {
+    "W": 1,
+    "U": 0,
+    "X": 0
+   },
+   "duration_s": 300.0,
+   "belt_speed": 0.107
+  },
+  {
+   "site": 2,
+   "kind": "bench",
+   "package": "shifts/dev_02.json",
+   "sha256": "21d0934e1c4f0ab7e5e24453d1b80df7f57229cf37b47af38584b839dd2d810e",
+   "seed": 2455180452298802457,
+   "k": 2011,
+   "belt_class": "medium",
+   "indexing": false,
+   "n_parcels": 2,
+   "n_soft": 1,
+   "n_flat": 1,
+   "n_label_not_up": 2,
+   "label_faces": {
+    "0": 0,
+    "1": 1,
+    "2": 0,
+    "3": 1,
+    "4": 0,
+    "5": 0
+   },
+   "label_positions": {
+    "top": 0,
+    "underneath": 1,
+    "downstream": 0,
+    "upstream": 0,
+    "near_side": 0,
+    "far_side": 1
+   },
+   "classes": {
+    "W": 2,
+    "U": 0,
+    "X": 0
+   },
+   "duration_s": 300.0,
+   "belt_speed": 0.229
+  },
+  {
+   "site": 3,
+   "kind": "bench",
+   "package": "shifts/dev_03.json",
+   "sha256": "c11d2a844fa539309da8de653e174fbb3541db44b0976ac5f11a255db09ff133",
+   "seed": 2303777820325428102,
+   "k": 3002,
+   "belt_class": "slow",
+   "indexing": true,
+   "n_parcels": 3,
+   "n_soft": 1,
+   "n_flat": 2,
+   "n_label_not_up": 2,
+   "label_faces": {
+    "0": 1,
+    "1": 1,
+    "2": 1,
+    "3": 0,
+    "4": 0,
+    "5": 0
+   },
+   "label_positions": {
+    "top": 1,
+    "underneath": 1,
+    "downstream": 0,
+    "upstream": 0,
+    "near_side": 1,
+    "far_side": 0
+   },
+   "classes": {
+    "W": 2,
+    "U": 1,
+    "X": 0
+   },
+   "duration_s": 300.0,
+   "belt_speed": 0.083
+  },
+  {
+   "site": 4,
+   "kind": "full",
+   "package": "shifts/dev_04.json",
+   "sha256": "c93087a2a5c20664645e2104a61b99db540f504d31b07234ea83aa8c8d2d4fb2",
+   "seed": 6822417118584942355,
+   "k": 4001,
+   "belt_class": "slow",
+   "indexing": false,
+   "n_parcels": 32,
+   "n_soft": 10,
+   "n_flat": 8,
+   "n_label_not_up": 23,
+   "label_faces": {
+    "0": 9,
+    "1": 12,
+    "2": 0,
+    "3": 1,
+    "4": 8,
+    "5": 2
+   },
+   "label_positions": {
+    "top": 9,
+    "underneath": 12,
+    "downstream": 5,
+    "upstream": 2,
+    "near_side": 0,
+    "far_side": 4
+   },
+   "classes": {
+    "W": 23,
+    "U": 9,
+    "X": 0
+   },
+   "duration_s": 600.0,
+   "belt_speed": 0.142
+  },
+  {
+   "site": 5,
+   "kind": "full",
+   "package": "shifts/dev_05.json",
+   "sha256": "374172d6383ab4963559154040142f728379798c39f94bc42779ce3d43075b67",
+   "seed": 8358772696172965308,
+   "k": 4002,
+   "belt_class": "medium",
+   "indexing": false,
+   "n_parcels": 38,
+   "n_soft": 17,
+   "n_flat": 10,
+   "n_label_not_up": 27,
+   "label_faces": {
+    "0": 11,
+    "1": 8,
+    "2": 5,
+    "3": 4,
+    "4": 5,
+    "5": 5
+   },
+   "label_positions": {
+    "top": 11,
+    "underneath": 8,
+    "downstream": 2,
+    "upstream": 9,
+    "near_side": 4,
+    "far_side": 4
+   },
+   "classes": {
+    "W": 27,
+    "U": 11,
+    "X": 0
+   },
+   "duration_s": 600.0,
+   "belt_speed": 0.177
+  },
+  {
+   "site": 6,
+   "kind": "full",
+   "package": "shifts/dev_06.json",
+   "sha256": "4f058a60b33a5a787d1299cebc360511b5f835cd6d79a58009f189a1b5cb8cb6",
+   "seed": 6294368457480160337,
+   "k": 4003,
+   "belt_class": "fast",
+   "indexing": false,
+   "n_parcels": 50,
+   "n_soft": 22,
+   "n_flat": 9,
+   "n_label_not_up": 37,
+   "label_faces": {
+    "0": 13,
+    "1": 10,
+    "2": 4,
+    "3": 9,
+    "4": 6,
+    "5": 8
+   },
+   "label_positions": {
+    "top": 13,
+    "underneath": 10,
+    "downstream": 8,
+    "upstream": 3,
+    "near_side": 8,
+    "far_side": 8
+   },
+   "classes": {
+    "W": 37,
+    "U": 13,
+    "X": 0
+   },
+   "duration_s": 600.0,
+   "belt_speed": 0.26
+  },
+  {
+   "site": 7,
+   "kind": "full",
+   "package": "shifts/dev_07.json",
+   "sha256": "2113b4daf2e60eb4028c36764a04991bc4c9b52ab4b8a0b4f867c726203f2a13",
+   "seed": 8500013064615873954,
+   "k": 4004,
+   "belt_class": "slow",
+   "indexing": true,
+   "n_parcels": 27,
+   "n_soft": 14,
+   "n_flat": 8,
+   "n_label_not_up": 16,
+   "label_faces": {
+    "0": 11,
+    "1": 8,
+    "2": 3,
+    "3": 2,
+    "4": 2,
+    "5": 1
+   },
+   "label_positions": {
+    "top": 11,
+    "underneath": 8,
+    "downstream": 4,
+    "upstream": 2,
+    "near_side": 2,
+    "far_side": 0
+   },
+   "classes": {
+    "W": 16,
+    "U": 11,
+    "X": 0
+   },
+   "duration_s": 600.0,
+   "belt_speed": 0.114
+  },
+  {
+   "site": 8,
+   "kind": "full",
+   "package": "shifts/dev_08.json",
+   "sha256": "fb07ed533214186af0016e35afb9bba617042211d18a42a99285c6d7536b2d87",
+   "seed": 6657837972738195163,
+   "k": 4005,
+   "belt_class": "fast",
+   "indexing": true,
+   "n_parcels": 57,
+   "n_soft": 29,
+   "n_flat": 13,
+   "n_label_not_up": 39,
+   "label_faces": {
+    "0": 18,
+    "1": 16,
+    "2": 7,
+    "3": 2,
+    "4": 10,
+    "5": 4
+   },
+   "label_positions": {
+    "top": 18,
+    "underneath": 16,
+    "downstream": 3,
+    "upstream": 7,
+    "near_side": 7,
+    "far_side": 6
+   },
+   "classes": {
+    "W": 39,
+    "U": 18,
+    "X": 0
+   },
+   "duration_s": 600.0,
+   "belt_speed": 0.316
+  }
+ ],
+ "seeds": [
+  2234180683193126506,
+  2455180452298802457,
+  2303777820325428102,
+  6822417118584942355,
+  8358772696172965308,
+  6294368457480160337,
+  8500013064615873954,
+  6657837972738195163
+ ],
+ "skipped": [],
+ "config": {
+  "world": {
+   "solver": {
+    "integrator": "implicitfast",
+    "cone": "elliptic",
+    "impratio": 100.0,
+    "iterations": 100,
+    "ls_iterations": 50,
+    "noslip_iterations": 0,
+    "tolerance": 1e-08
+   },
+   "lock_gripper_couplers": true,
+   "finger_pads": {
+    "soft": true,
+    "solref": [
+     0.005,
+     1.0
+    ],
+    "condim": 4,
+    "friction": 1.8
+   },
+   "parcel_contact": {
+    "rigid": {
+     "solimp": [
+      0.95,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+     ],
+     "solref": [
+      0.005,
+      1.0
+     ]
+    },
+    "soft_geom": {
+     "solimp": [
+      0.6,
+      0.95,
+      0.008,
+      0.5,
+      2.0
+     ],
+     "solref": [
+      0.02,
+      0.6
+     ]
+    },
+    "soft_pad": {
+     "solimp": [
+      0.5,
+      0.9,
+      0.01,
+      0.5,
+      2.0
+     ],
+     "solref": [
+      0.03,
+      0.5
+     ]
+    }
+   },
+   "station": {
+    "belt_height": 0.9,
+    "belt_center_x": 0.38,
+    "belt_width": 0.44,
+    "visible_half_len": 1.3,
+    "work_window_half": 0.42,
+    "belt_friction": 0.9,
+    "lip_full_window": true,
+    "lip_height": 0.03,
+    "near_guide_up_height": 0.09,
+    "near_guide_down_height": 0.09,
+    "leg_style": "posts"
+   },
+   "hardware_boxes": [
+    [
+     "infeed_camera_body",
+     [
+      0.38,
+      -0.75,
+      1.7823
+     ],
+     [
+      0.045,
+      0.014,
+      0.0321
+     ]
+    ],
+    [
+     "infeed_camera_bracket",
+     [
+      0.38,
+      -0.738,
+      1.82
+     ],
+     [
+      0.022,
+      0.022,
+      0.0025
+     ]
+    ],
+    [
+     "infeed_camera_rod",
+     [
+      0.38,
+      -0.715,
+      2.125
+     ],
+     [
+      0.015,
+      0.015,
+      0.295
+     ]
+    ],
+    [
+     "belt_drive_unit",
+     [
+      0.38,
+      0.98,
+      0.7625
+     ],
+     [
+      0.217,
+      0.126,
+      0.0785
+     ]
+    ],
+    [
+     "belt_drive_motor_cover",
+     [
+      0.684,
+      0.975,
+      0.75
+     ],
+     [
+      0.062,
+      0.085,
+      0.074
+     ]
+    ],
+    [
+     "belt_drive_motor",
+     [
+      0.674,
+      1.18,
+      0.75
+     ],
+     [
+      0.064,
+      0.12,
+      0.0632
+     ]
+    ],
+    [
+     "belt_drive_motor_terminal",
+     [
+      0.674,
+      1.13,
+      0.825
+     ],
+     [
+      0.04,
+      0.045,
+      0.022
+     ]
+    ]
+   ],
+   "robot_mounts": {
+    "head_camera_housing": {
+     "body": "Base_Link",
+     "centre": [
+      0.078,
+      0.0,
+      1.3045
+     ],
+     "half_size": [
+      0.0866,
+      0.044,
+      0.0425
+     ]
+    },
+    "wrist_cameras": {
+     "Left": {
+      "pos": [
+       0.0,
+       0.0042,
+       0.0913
+      ],
+      "side_sign": 1.0,
+      "pitch_deg": 0.0
+     },
+     "Right": {
+      "pos": [
+       0.0,
+       -0.0042,
+       0.0913
+      ],
+      "side_sign": -1.0,
+      "pitch_deg": 0.0
+     }
+    }
+   },
+   "start_posture": [
+    -0.7842,
+    2.1067,
+    0.7271,
+    1.946,
+    -1.9143,
+    -1.54,
+    -1.1825,
+    0.7842,
+    -2.1067,
+    -0.7271,
+    1.946,
+    1.9143,
+    1.54,
+    1.1825
+   ],
+   "settle_s": 0.3,
+   "target_speed_limit_rad_s": 6.0,
+   "tool_pose": {
+    "iterations": 6,
+    "damping": 0.0001,
+    "residual_damping": 0.1,
+    "rot_length_m": 2.0,
+    "max_step_error_m": 0.5,
+    "joint_margin_rad": 0.01,
+    "speed_share": 0.95,
+    "bound_approach": 0.3,
+    "reached_m": 0.001,
+    "reached_deg": 0.5,
+    "stall_rel": 0.002,
+    "stall_ticks": 5,
+    "unlatch_m": 0.005,
+    "unlatch_rel": 0.05,
+    "gravity_compensation": true
+   },
+   "belt_speed_compensation": true,
+   "solid_frame": true,
+   "entry_y": -1.15,
+   "scan_y": 0.95,
+   "exit_y": 1.32,
+   "entry_clearance_m": 0.06,
+   "gripper_object": {
+    "hold_s": 0.2,
+    "short_m": 0.003,
+    "still_m": 0.0005,
+    "free_opening_m": [
+     0.0851,
+     0.0815,
+     0.0777,
+     0.0738,
+     0.0698,
+     0.0657,
+     0.0615,
+     0.0572,
+     0.0529,
+     0.0485,
+     0.044,
+     0.0395,
+     0.0349,
+     0.0303,
+     0.0256,
+     0.0209,
+     0.0162,
+     0.0115,
+     0.0067,
+     0.002,
+     0.0004
+    ]
+   }
+  },
+  "cameras": {
+   "exposure_ticks": 2,
+   "delay_ticks": 3,
+   "ring_states": 4,
+   "list": {
+    "infeed": {
+     "model_camera": "inspect_cam",
+     "size": [
+      640,
+      480
+     ],
+     "fovy_deg": 62.0,
+     "depth_range_m": [
+      0.2,
+      4.0
+     ]
+    },
+    "head": {
+     "model_camera": "head_cam",
+     "size": [
+      640,
+      400
+     ],
+     "fovy_deg": 66.0,
+     "depth_range_m": [
+      0.2,
+      4.0
+     ]
+    },
+    "wrist_left": {
+     "model_camera": "Left_wrist_cam",
+     "size": [
+      424,
+      240
+     ],
+     "fovy_deg": 58.0,
+     "depth_range_m": [
+      0.07,
+      0.6
+     ],
+     "flange_site": "Left_flange"
+    },
+    "wrist_right": {
+     "model_camera": "Right_wrist_cam",
+     "size": [
+      424,
+      240
+     ],
+     "fovy_deg": 58.0,
+     "depth_range_m": [
+      0.07,
+      0.6
+     ],
+     "flange_site": "Right_flange"
+    }
+   },
+   "installation_tolerance": {
+    "infeed": {
+     "position_m": 0.015,
+     "angle_deg": 1.5,
+     "frame": "world"
+    },
+    "head": {
+     "position_m": 0.01,
+     "angle_deg": 1.5,
+     "frame": "the robot's base"
+    },
+    "wrist": {
+     "position_m": 0.003,
+     "angle_deg": 1.0,
+     "frame": "its gripper"
+    },
+    "focal_rel": 0.01
+   }
+  },
+  "sensors": {
+   "rgb_noise_sigma": 2.0,
+   "depth_noise_rel": 0.005,
+   "depth_dropout": 0.01,
+   "tau_noise_rel": 0.015,
+   "tau_offset_rel": 0.01,
+   "tau_offset_period_s": [
+    40.0,
+    240.0
+   ]
+  },
+  "installation": {
+   "cameras": {
+    "head": {
+     "d_pos_m": [
+      0.001097,
+      0.007578,
+      0.000662
+     ],
+     "d_rotvec_rad": [
+      -0.0180772,
+      -0.0019621,
+      -0.0058128
+     ],
+     "focal_scale": 1.008152
+    },
+    "infeed": {
+     "d_pos_m": [
+      0.006044,
+      -0.004106,
+      0.007544
+     ],
+     "d_rotvec_rad": [
+      -0.0056418,
+      -0.0218759,
+      0.0106043
+     ],
+     "focal_scale": 0.994658
+    },
+    "wrist_left": {
+     "d_pos_m": [
+      -0.001861,
+      0.000734,
+      -0.000445
+     ],
+     "d_rotvec_rad": [
+      -0.0013954,
+      0.0072566,
+      -0.0028915
+     ],
+     "focal_scale": 1.004067
+    },
+    "wrist_right": {
+     "d_pos_m": [
+      -0.000973,
+      0.001864,
+      -0.001275
+     ],
+     "d_rotvec_rad": [
+      0.0047929,
+      -0.0034529,
+      -0.0066349
+     ],
+     "focal_scale": 1.005934
+    }
+   },
+   "seed_hex": "5f6ddc668d92c29f137f31aa9f4f8a38",
+   "tool": "tests/review/draw_installed.py cameras"
+  },
+  "look": {
+   "backend": "filament",
+   "parcel_visuals": "kit",
+   "look_file": "look_config/look.json",
+   "render_dir": null,
+   "depth_twin": "auto",
+   "kit_cache_dir": null
+  },
+  "budgets": {
+   "program_time_factor": 1.0,
+   "program_time_extra_s": 60.0,
+   "silence_s": 20.0,
+   "frames_per_shift_s": 2.0,
+   "max_ticks_per_step": 50,
+   "after_over_steps": 50,
+   "after_over_requests": 200,
+   "after_over_s": 60.0,
+   "request_line_bytes": 4194304,
+   "privileged_program_time_factor": 10.0,
+   "start_s": 120.0
+  },
+  "safety": {
+   "structure_N": 60.0,
+   "self_N": 60.0,
+   "belt_N": 100.0,
+   "press_ticks": 3,
+   "stop_lock_s": 5.0,
+   "damage_N": 400.0,
+   "max_stops": 5,
+   "squeeze_N": 300.0,
+   "squeeze_ticks": 3
+  },
+  "score": {
+   "label_tilt_deg": 25.0,
+   "max_angular_speed_rad_s": 2.0,
+   "max_rel_speed_m_s": 0.1,
+   "rest_window_s": 0.5,
+   "rest_clearance_max_m": 0.01,
+   "duty": {
+    "kinds": [
+     "rigid"
+    ],
+    "label_positions": [
+     "underneath",
+     "downstream"
+    ]
+   }
+  },
+  "line": {
+   "note": "the line setting: one parcel of the shift's list in the station at a time, fed on settle; every parcel in the duty",
+   "feed": "on_settle",
+   "indexing_zone_y": [
+    -0.15,
+    0.1
+   ],
+   "score": {
+    "duty": {
+     "kinds": [
+      "rigid",
+      "soft"
+     ],
+     "label_positions": [
+      "underneath",
+      "downstream",
+      "upstream",
+      "near_side",
+      "far_side"
+     ]
+    },
+    "due_margin_s": 5.0
+   },
+   "shifts": {
+    "version": "line-1",
+    "belt_speed_classes": {
+     "slow": [
+      0.05,
+      0.15
+     ],
+     "medium": [
+      0.15,
+      0.25
+     ],
+     "fast": [
+      0.25,
+      0.35
+     ]
+    },
+    "indexing_share": 0.3,
+    "kind_shares": {
+     "rigid": 0.5,
+     "soft": 0.5
+    },
+    "rigid_size_m": [
+     [
+      0.16,
+      0.3
+     ],
+     [
+      0.14,
+      0.26
+     ],
+     [
+      0.07,
+      0.16
+     ]
+    ],
+    "soft_size_m": [
+     [
+      0.16,
+      0.3
+     ],
+     [
+      0.14,
+      0.26
+     ],
+     [
+      0.05,
+      0.1
+     ]
+    ],
+    "mass_kg": [
+     0.2,
+     2.0
+    ],
+    "friction": [
+     0.3,
+     1.5
+    ],
+    "com_offset_max_m": 0.04,
+    "label_uv_max": 0.55,
+    "set_down_y": [
+     -1.15,
+     -1.0
+    ],
+    "yaw_rad": [
+     -3.141592653589793,
+     3.141592653589793
+    ],
+    "duration_s": 600.0,
+    "bench_duration_s": 300.0,
+    "rated_ride_m": 2.025,
+    "rated_handling_s": 4.0
+   }
+  }
+ },
+ "salt_hex": "99f77ef8f333d0008f85e5dac3093c1c"
+}

@@ -1,0 +1,670 @@
+{
+ "belt": {
+  "indexing_zone_y": [
+   -0.15,
+   0.1
+  ],
+  "modes": "running (the belt runs through the shift) or indexing (it stands while the centre of the parcel in the station is inside indexing_zone_y); one mode per shift, not on the wire",
+  "speed": "constant through a shift, set per shift in this range; not on the wire",
+  "speed_m_s": [
+   0.05,
+   0.35
+  ]
+ },
+ "budgets": {
+  "after_over_requests": 200,
+  "after_over_s": 60.0,
+  "after_over_steps": 50,
+  "frames_per_shift_s": 2.0,
+  "max_ticks_per_step": 50,
+  "program_time_extra_s": 60.0,
+  "program_time_factor": 1.0,
+  "request_line_bytes": 4194304,
+  "silence_s": 20.0,
+  "start_s": 120.0
+ },
+ "cameras": {
+  "exposure_period_s": 0.04,
+  "frame_age_s": 0.06,
+  "installation_tolerance": {
+   "focal_rel": 0.01,
+   "head": {
+    "angle_deg": 1.5,
+    "frame": "the robot's base",
+    "position_m": 0.01
+   },
+   "infeed": {
+    "angle_deg": 1.5,
+    "frame": "world",
+    "position_m": 0.015
+   },
+   "wrist": {
+    "angle_deg": 1.0,
+    "frame": "its gripper",
+    "position_m": 0.003
+   }
+  },
+  "list": {
+   "head": {
+    "depth_range_m": [
+     0.2,
+     4.0
+    ],
+    "fovy_deg": 66.0,
+    "model_camera": "head_cam",
+    "size": [
+     640,
+     400
+    ]
+   },
+   "infeed": {
+    "depth_range_m": [
+     0.2,
+     4.0
+    ],
+    "fovy_deg": 62.0,
+    "model_camera": "inspect_cam",
+    "size": [
+     640,
+     480
+    ]
+   },
+   "wrist_left": {
+    "depth_range_m": [
+     0.07,
+     0.6
+    ],
+    "flange_site": "Left_flange",
+    "fovy_deg": 58.0,
+    "model_camera": "Left_wrist_cam",
+    "size": [
+     424,
+     240
+    ]
+   },
+   "wrist_right": {
+    "depth_range_m": [
+     0.07,
+     0.6
+    ],
+    "flange_site": "Right_flange",
+    "fovy_deg": 58.0,
+    "model_camera": "Right_wrist_cam",
+    "size": [
+     424,
+     240
+    ]
+   }
+  },
+  "poses": "the installation drawing's (describe()); the installed cameras differ within installation_tolerance: calibrate them on site"
+ },
+ "cell_version": "parcelcell-3.0",
+ "commissioning": {
+  "bench_shifts": 3,
+  "development_shifts": 8,
+  "full_shifts": 5,
+  "open_at_a_time": 2,
+  "per_shift": "the graded shift's budgets",
+  "shifts": 12
+ },
+ "cpu_cap_factor": 4.0,
+ "friction_ranges": {
+  "belt_cover": [
+   0.75,
+   1.15
+  ],
+  "gripper_pads": [
+   1.5,
+   2.3
+  ],
+  "note": "the data sheet's ranges; the station's values lie inside"
+ },
+ "gripper": {
+  "free_opening_at_command": [
+   0.0,
+   0.05,
+   0.1,
+   0.15,
+   0.2,
+   0.25,
+   0.3,
+   0.35,
+   0.4,
+   0.45,
+   0.5,
+   0.55,
+   0.6,
+   0.65,
+   0.7,
+   0.75,
+   0.8,
+   0.85,
+   0.9,
+   0.95,
+   1.0
+  ],
+  "free_opening_m": [
+   0.0851,
+   0.0815,
+   0.0777,
+   0.0738,
+   0.0698,
+   0.0657,
+   0.0615,
+   0.0572,
+   0.0529,
+   0.0485,
+   0.044,
+   0.0395,
+   0.0349,
+   0.0303,
+   0.0256,
+   0.0209,
+   0.0162,
+   0.0115,
+   0.0067,
+   0.002,
+   0.0004
+  ],
+  "object_detected": {
+   "hold_s": 0.2,
+   "short_m": 0.003,
+   "still_m": 0.0005
+  }
+ },
+ "import_check": {
+  "cpu_s": 120.0,
+  "wall_s": 120.0
+ },
+ "note": "the station's configuration as far as it is public (cell_manual.md gives every value in words). A shift lasts at most its duration (it ends when the last parcel of its list is settled). Program time per shift = program_time_factor x the shift's duration + program_time_extra_s; frames per shift = frames_per_shift_s x the duration, pooled over the four cameras; the CPU time cap = cpu_cap_factor x the program-time budget.",
+ "parcels": {
+  "com_offset_max_m": 0.04,
+  "friction": [
+   0.3,
+   1.5
+  ],
+  "kind_shares": {
+   "rigid": 0.5,
+   "soft": 0.5
+  },
+  "label_face_chance": "equal among the faces whose two sides are both at least label_min_face_side_m (the top or the bottom when none is)",
+  "label_min_face_side_m": 0.08,
+  "label_uv_max": 0.55,
+  "list": {
+   "due": "a parcel is due at the scan line by its set-down time + (scan_y - its set-down y) / belt speed + due_margin_s; a later crossing is not readable",
+   "due_margin_s": 5.0,
+   "length_range": [
+    13,
+    61
+   ],
+   "rated_handling_s": 4.0,
+   "rated_ride_m": 2.025,
+   "rule": "one parcel at a time: the next is set down at the first tick after the one before it is settled (judged at the scan line, fallen or damaged); the list holds floor(duration_s / (rated_ride_m / belt speed + rated_handling_s)) parcels (the station's rated cycle)"
+  },
+  "mass_kg": [
+   0.2,
+   2.0
+  ],
+  "rigid_size_m": [
+   [
+    0.16,
+    0.3
+   ],
+   [
+    0.14,
+    0.26
+   ],
+   [
+    0.07,
+    0.16
+   ]
+  ],
+  "set_down": {
+   "drop_m": 0.002,
+   "x": "the belt's centre line",
+   "y_m": [
+    -1.15,
+    -1.0
+   ],
+   "yaw": "any (uniform on the full circle)"
+  },
+  "soft_size_m": [
+   [
+    0.16,
+    0.3
+   ],
+   [
+    0.14,
+    0.26
+   ],
+   [
+    0.05,
+    0.1
+   ]
+  ],
+  "waybill_papers_mm": [
+   [
+    100.0,
+    180.0
+   ],
+   [
+    76.0,
+    130.0
+   ]
+  ]
+ },
+ "physics_step_s": 0.002,
+ "robot": {
+  "command_speed_limit_rad_s": 6.0,
+  "start_posture": [
+   -0.7842,
+   2.1067,
+   0.7271,
+   1.946,
+   -1.9143,
+   -1.54,
+   -1.1825,
+   0.7842,
+   -2.1067,
+   -0.7271,
+   1.946,
+   1.9143,
+   1.54,
+   1.1825
+  ],
+  "tool_pose": {
+   "gravity_compensation": true,
+   "iterations": 6,
+   "joint_margin_rad": 0.01,
+   "reached_deg": 0.5,
+   "reached_m": 0.001
+  }
+ },
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "belt_N": 100.0,
+  "damage_N": 400.0,
+  "max_stops": 5,
+  "press_ticks": 3,
+  "self_N": 60.0,
+  "squeeze_N": 300.0,
+  "squeeze_ticks": 3,
+  "stop_lock_s": 5.0,
+  "structure_N": 60.0
+ },
+ "score": {
+  "due_margin_s": 5.0,
+  "duty": {
+   "kinds": [
+    "rigid",
+    "soft"
+   ],
+   "label_positions": [
+    "underneath",
+    "downstream",
+    "upstream",
+    "near_side",
+    "far_side"
+   ]
+  },
+  "label_tilt_deg": 25.0,
+  "max_angular_speed_rad_s": 2.0,
+  "max_rel_speed_m_s": 0.1,
+  "rest_clearance_max_m": 0.01,
+  "rest_window_s": 0.5
+ },
+ "sensors": {
+  "depth_dropout": 0.01,
+  "depth_noise_rel": 0.005,
+  "rgb_noise_sigma": 2.0,
+  "tau": "the drives' torque readings: the motor torque + zero-mean noise (tau_noise_rel x the joint's torque limit, 1 sigma, per joint and tick) + a slowly wandering offset (at most tau_offset_rel x the limit); q and dq exact",
+  "tau_noise_rel": 0.015,
+  "tau_offset_rel": 0.01
+ },
+ "shifts_graded": 8,
+ "station": {
+  "belt_centre_x": 0.38,
+  "belt_top_z": 0.9,
+  "belt_width": 0.44,
+  "entry_y": -1.15,
+  "exit_y": 1.32,
+  "fall_below_belt_m": 0.35,
+  "fall_beyond_m": 2.2,
+  "frame_half_length": 1.3,
+  "hardware": {
+   "belt_drive_motor": {
+    "centre": [
+     0.674,
+     1.18,
+     0.75
+    ],
+    "half_size": [
+     0.064,
+     0.12,
+     0.0632
+    ]
+   },
+   "belt_drive_motor_cover": {
+    "centre": [
+     0.684,
+     0.975,
+     0.75
+    ],
+    "half_size": [
+     0.062,
+     0.085,
+     0.074
+    ]
+   },
+   "belt_drive_motor_terminal": {
+    "centre": [
+     0.674,
+     1.13,
+     0.825
+    ],
+    "half_size": [
+     0.04,
+     0.045,
+     0.022
+    ]
+   },
+   "belt_drive_unit": {
+    "centre": [
+     0.38,
+     0.98,
+     0.7625
+    ],
+    "half_size": [
+     0.217,
+     0.126,
+     0.0785
+    ]
+   },
+   "belt_leg_brace_0": {
+    "centre": [
+     0.38,
+     -1.15,
+     0.2
+    ],
+    "half_size": [
+     0.035,
+     0.015,
+     0.01
+    ]
+   },
+   "belt_leg_brace_1": {
+    "centre": [
+     0.38,
+     0.0,
+     0.2
+    ],
+    "half_size": [
+     0.035,
+     0.015,
+     0.01
+    ]
+   },
+   "belt_leg_brace_2": {
+    "centre": [
+     0.38,
+     1.15,
+     0.2
+    ],
+    "half_size": [
+     0.035,
+     0.015,
+     0.01
+    ]
+   },
+   "belt_leg_cap_0": {
+    "centre": [
+     0.38,
+     -1.15,
+     0.795
+    ],
+    "half_size": [
+     0.085,
+     0.03,
+     0.003
+    ]
+   },
+   "belt_leg_cap_1": {
+    "centre": [
+     0.38,
+     0.0,
+     0.795
+    ],
+    "half_size": [
+     0.085,
+     0.03,
+     0.003
+    ]
+   },
+   "belt_leg_cap_2": {
+    "centre": [
+     0.38,
+     1.15,
+     0.795
+    ],
+    "half_size": [
+     0.085,
+     0.03,
+     0.003
+    ]
+   },
+   "belt_leg_col_0": {
+    "centre": [
+     0.325,
+     -1.15,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_leg_col_0_far": {
+    "centre": [
+     0.435,
+     -1.15,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_leg_col_1": {
+    "centre": [
+     0.325,
+     0.0,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_leg_col_1_far": {
+    "centre": [
+     0.435,
+     0.0,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_leg_col_2": {
+    "centre": [
+     0.325,
+     1.15,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_leg_col_2_far": {
+    "centre": [
+     0.435,
+     1.15,
+     0.405
+    ],
+    "half_size": [
+     0.02,
+     0.02,
+     0.393
+    ]
+   },
+   "belt_lip_near_down": {
+    "centre": [
+     0.142,
+     0.21,
+     0.9045
+    ],
+    "half_size": [
+     0.008,
+     0.21,
+     0.0255
+    ]
+   },
+   "belt_lip_near_up": {
+    "centre": [
+     0.142,
+     -0.21,
+     0.9045
+    ],
+    "half_size": [
+     0.008,
+     0.21,
+     0.0255
+    ]
+   },
+   "belt_rail_far": {
+    "centre": [
+     0.622,
+     0.0,
+     0.895
+    ],
+    "half_size": [
+     0.012,
+     1.3,
+     0.05
+    ]
+   },
+   "belt_rail_near_down": {
+    "centre": [
+     0.138,
+     0.86,
+     0.92
+    ],
+    "half_size": [
+     0.012,
+     0.44,
+     0.07
+    ]
+   },
+   "belt_rail_near_up": {
+    "centre": [
+     0.138,
+     -0.86,
+     0.92
+    ],
+    "half_size": [
+     0.012,
+     0.44,
+     0.07
+    ]
+   },
+   "belt_shell_col": {
+    "centre": [
+     0.38,
+     0.0,
+     0.848
+    ],
+    "half_size": [
+     0.23,
+     1.3,
+     0.05
+    ]
+   },
+   "head_camera_housing": {
+    "centre": [
+     0.078,
+     0.0,
+     1.3045
+    ],
+    "half_size": [
+     0.0866,
+     0.044,
+     0.0425
+    ]
+   },
+   "infeed_camera_body": {
+    "centre": [
+     0.38,
+     -0.75,
+     1.7823
+    ],
+    "half_size": [
+     0.045,
+     0.014,
+     0.0321
+    ]
+   },
+   "infeed_camera_bracket": {
+    "centre": [
+     0.38,
+     -0.738,
+     1.82
+    ],
+    "half_size": [
+     0.022,
+     0.022,
+     0.0025
+    ]
+   },
+   "infeed_camera_rod": {
+    "centre": [
+     0.38,
+     -0.715,
+     2.125
+    ],
+    "half_size": [
+     0.015,
+     0.015,
+     0.295
+    ]
+   }
+  },
+  "scan_y": 0.95,
+  "work_window_half_length": 0.42
+ },
+ "tick_s": 0.02
+}
