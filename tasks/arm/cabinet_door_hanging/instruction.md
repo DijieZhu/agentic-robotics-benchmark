@@ -84,6 +84,12 @@ which pins fit and how the door hangs.
 Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's robot model files).
 There is no network.
 
+**Numerics.** Every `/opt/venv` Python computes the same here and in the graded run, on whatever machine: the image
+sets, when the variables are missing, NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell`
+with `OPENBLAS_L2_SIZE=256`) and on one thread (`OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`), NumPy without its
+AVX-512 loops (`NPY_DISABLE_CPU_FEATURES`) and OpenCV's IPP at AVX2 (`OPENCV_IPP=avx2`). Do not unset or change them:
+the simulator would compute differently, and your controller's results would depend on the grading machine's CPU.
+
 ## Credit
 
 Each episode's credit (0 to 1) is computed from the simulation when the episode ends:
@@ -173,8 +179,8 @@ failure; run it on a copy of your submission in another folder to check.
 - `{"type": "act", "t": t, "obs": {...}}` → `{"action": {...}}`, within 30 s, on one line of at most 4 MiB;
 - `{"type": "close"}` → `{"ok": true}`, then exit.
 
-Stdout carries only these messages; write logs to stderr. `run.sh` starts with only `PATH`, `HOME` and `LANG` set:
-export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`).
+Stdout carries only these messages; write logs to stderr. `run.sh` starts with only `PATH`, `HOME`, `LANG` and the
+numerics variables above set: export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`).
 
 **Probes.** About 1 % of steps are asked twice with the same `t`, in a hidden order:
 - once with the real observation;

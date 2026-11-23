@@ -11,8 +11,10 @@ its grip. `action_for` turns them back into steps from the hand poses of the obs
 observation the shadow was synced to, that is the reference's own step; on the perturbed copy of a repeated step
 index (a probe of the lock) it is the same target seen from the copy's hand pose.
 
-If the reference has not sent its next action within THINK_S, the oracle answers with a hold and keeps answering
-holds without syncing the shadow (which the thread is reading) until the action comes.
+The oracle waits for the reference's next action however long it takes: it has no wall-clock limit of its own, so a
+reply is a function of the observations alone and two runs of an episode are the same run on a busy machine too (the
+grader's own deadline per reply still applies). Once the reference has ended (its job done, or failed), the oracle
+answers holds.
 """
 
 import queue
@@ -24,7 +26,6 @@ import numpy as np
 import door_sim as S
 import reference as R
 
-THINK_S = 20.0                  # s, the longest the oracle waits for the reference's next action before a hold
 HOLD = {"l": [0.0] * 6 + [-1.0], "r": [0.0] * 6 + [-1.0], "cams": 0}
 
 
@@ -108,7 +109,7 @@ class Oracle:
         self.reset_state()
 
     def reset_state(self):
-        self.last_t, self.last_cmd, self.pending = None, None, False
+        self.last_t, self.last_cmd, self.finished = None, None, False
 
     def reset(self):
         self.stop()
@@ -132,6 +133,9 @@ class Oracle:
                 ref.run()
             except EpisodeOver:
                 return
+            except Exception:  # noqa: BLE001 - a failed reference ends its episode instead of leaving it waiting
+                pass
+            self.out_q.put("finish")
 
         self.thread = threading.Thread(target=run, daemon=True)
         self.thread.start()
@@ -141,14 +145,14 @@ class Oracle:
             return action_for(None, obs)
         if t == self.last_t:                       # a repeated step index: the same targets, this copy's poses
             return action_for(self.last_cmd, obs)
+        cmd = None
         if self.thread is None:
             self._start(obs)
-        elif not self.pending:
+        elif not self.finished:
             self.in_q.put(obs)
-        try:
-            cmd = self.out_q.get(timeout=THINK_S)
-            self.pending = False
-        except queue.Empty:
-            cmd, self.pending = None, True         # still thinking: hold this step
+        if not self.finished:
+            cmd = self.out_q.get()                 # no clock of its own: the grader's deadline per reply applies
+            if cmd == "finish":
+                self.finished, cmd = True, None
         self.last_t, self.last_cmd = t, cmd
         return action_for(cmd, obs)

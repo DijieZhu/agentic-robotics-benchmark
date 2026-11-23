@@ -2,7 +2,7 @@
 
 - **The robots** are the Franka Panda model of robosuite 1.5.2 (MIT), installed unmodified in the task image.
 - **The cell** is built from MuJoCo primitives (`door_sim.py`); no third-party assets.
-- **The units**: `units.json` holds the six hidden units (u0-u5), each `door_sim.draw_unit(seed)` for a 64-bit seed
+- **The units**: `units.json` holds the twelve hidden units (u0-u11), each `door_sim.draw_unit(seed)` for a 64-bit seed
   keyed by the key in `hidden/units_selection.json` (os.urandom, drawn before any hidden episode was chosen);
   `environment/setup/payload/units.json` holds the two practice units (p0 = `draw_unit(1)`, p1 = `draw_unit(9)`).
   Practice and hidden units are drawn from the same ranges (`door_sim.N_KN_SET`, `HB_SET`, `HT_SET`,
@@ -13,3 +13,6 @@
   and solution/oracle/ (the grader, the agent and the reference run the same simulator); a change to one is a change
   to all three, and to the frozen hashes of the episode selection. `door_grade.py` is the grader's episode loop;
   `robotics_grader/` is the repository's kit, byte-identical to `shared/robotics_grader/`.
+- **The numerics**: `numerics_check.py` and `numerics.json` are the fingerprint the grader checks before grading (the
+  image's numerics pin, environment/Dockerfile); `numerics.json` was written by `numerics_check.py --write` in the
+  task image.

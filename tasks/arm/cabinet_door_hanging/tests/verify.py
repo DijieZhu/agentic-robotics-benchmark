@@ -24,6 +24,13 @@ are in tests/anchor.json). The episode running when the budget runs out is abort
 they score 0 and the metric `episodes_scored` does not count them. A simulator fatal error (mujoco.FatalError) or an
 unstable simulation scores that episode 0 and grading goes on.
 
+Numerics: the simulation's operational-space controller calls LAPACK every physics step, and OpenBLAS picks its
+kernels by CPU; on another kernel the same controller runs another trajectory. The image pins the kernels and a
+controller's own arithmetic (environment/Dockerfile; the launcher passes the same variables to run.sh,
+nonet_exec.controller_env); tests/numerics_check.py runs a short scripted simulation and a set of NumPy, SciPy and
+OpenCV results, and the grader compares their fingerprint with tests/numerics.json before grading (metric
+`numerics_ok`). A machine that does not reproduce it is a task error (robotics_grader.stage.fail).
+
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference; only
 then does every observation also carry `truth` (the unit, the seed, the world's state). An untokened submission never
 sees it.
@@ -52,6 +59,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import door_env as E  # noqa: E402
 import door_grade as G  # noqa: E402
+import nonet_exec  # noqa: E402
 from door_grade import MAX_LINE  # noqa: E402
 from robotics_grader import (  # noqa: E402
     Solver,
@@ -73,6 +81,9 @@ NONET = os.path.join(STAGE, "nonet_exec.py")
 UNITS = os.path.join(STAGE, "units.json")
 TOKEN_SHA = os.path.join(STAGE, "hidden", "oracle_token.sha256")
 EPISODES = os.path.join(STAGE, "hidden", "episodes.json")
+NUMERICS = os.path.join(STAGE, "numerics_check.py")
+NUMERICS_REF = os.path.join(STAGE, "numerics.json")
+NUMERICS_TIMEOUT_S = 300
 
 
 def log(msg):
@@ -173,9 +184,9 @@ class GuardedSolver(Solver):
         cmd = [sys.executable, "-I", NONET, "--uid", str(uid), "--gid", str(gid), "--rlimit-nproc", str(self.nproc),
                "--cwd", self.submission, "--", "bash", self.entry]
         if not self.guard:
-            cmd = ["/usr/sbin/runuser", "-u", agent_user(), "--", "/usr/bin/env", "-i",
-                   "PATH=/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME=/home/user", "LANG=C.UTF-8",
-                   "bash", self.entry]
+            cmd = (["/usr/sbin/runuser", "-u", agent_user(), "--", "/usr/bin/env", "-i"]
+                   + ["{}={}".format(k, v) for k, v in sorted(nonet_exec.controller_env().items())]
+                   + ["bash", self.entry])
         try:
             return subprocess.Popen(cmd, cwd=self.submission, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                     stderr=subprocess.DEVNULL, universal_newlines=True, bufsize=1,
@@ -272,6 +283,27 @@ def stage_submission(uid, gid):
     return src
 
 
+def check_numerics():
+    """Run numerics_check.py in a fresh interpreter (a short scripted run of the simulation and a controller's
+    arithmetic; the sha256 of their results) and compare with tests/numerics.json. Returns the fingerprint; a machine
+    that does not reproduce the recorded one would run every controller along another trajectory, so it must not
+    grade: a task error."""
+    with open(NUMERICS_REF) as fh:
+        want = json.load(fh)["fingerprint"]
+    try:
+        proc = subprocess.run([sys.executable, "-I", NUMERICS], cwd=STAGE, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, timeout=NUMERICS_TIMEOUT_S, env=dict(os.environ))
+        report = json.loads(proc.stdout.decode("utf-8", "replace").strip().splitlines()[-1])
+        got = str(report["fingerprint"])
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+        fail("the numerics check did not run: {}: {}".format(type(exc).__name__, str(exc)[:200]))
+    if got != want:
+        fail("this machine does not reproduce the recorded numerics (tests/numerics.json): got {}, recorded {}, "
+             "differs in {}; OPENBLAS_CORETYPE={!r}. Grading here would run every controller along another "
+             "trajectory".format(got[:16], want[:16], report.get("differs"), os.environ.get("OPENBLAS_CORETYPE")))
+    return got
+
+
 def oracle_token_ok(workdir):
     """True when the submission's .oracle_token (a regular file, not followed if a link, at most 256 bytes)
     hashes to the recorded value."""
@@ -340,6 +372,10 @@ def main():
         fail("the cameras' renderer failed its self-test: {}".format(exc))
     log("render self-test passed ({:.1f} s, five cameras)".format(time.monotonic() - t_self))
     secured["render_selftest"] = 1.0
+    t_num = time.monotonic()
+    check_numerics()                     # a task error on a machine that computes differently
+    log("numerics check passed ({:.1f} s)".format(time.monotonic() - t_num))
+    secured["numerics_ok"] = 1.0
     try:
         workdir = stage_submission(uid, gid)
     except OSError as exc:

@@ -7,7 +7,8 @@ The rule, fixed before any unit or candidate was drawn:
    int.from_bytes(blake2b(b"unit|<k>", key=key, digest_size=8).digest(), "little"). It refuses to run twice.
 1. Freeze. The grader's episode loop and world (tests/door_grade.py, tests/episode.py, tests/door_env.py,
    tests/door_sim.py, tests/units.json, tests/grader_config.json; verify.py only stages the submission around
-   door_grade.run_episodes, which is what selection runs) and the reference (the solution/oracle/ modules, solution/solve.sh) are
+   door_grade.run_episodes, which is what selection runs; since draw 2 also the launcher and the numerics
+   fingerprint: tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json) and the reference (the solution/oracle/ modules, solution/solve.sh) are
    committed first: `draw` refuses to start while any of them differs from the checkout's HEAD and records their
    sha256 and the commit; `run` and `make` refuse to go on when any of them differs from the recorded hashes.
 2. Draw. `draw` takes the set's key from os.urandom(32) (hex) and writes it to the record before any candidate runs.
@@ -20,7 +21,8 @@ The rule, fixed before any unit or candidate was drawn:
 4. Keep. A candidate is kept when it scores credit 1.0 in each of the three wire runs; per unit the first kept in
    candidate order is the unit's episode. Every candidate tried is recorded: kept, or rejected with its scores.
 5. Void. If a unit has none kept within MAX_CANDIDATES, the draw is void: `draw --void REASON` records why
-   and draws a new key; the record keeps every draw.
+   and draws a new key; the record keeps every draw. A frozen file that changes after a draw voids it too:
+   `draw --void REASON --refreeze` keeps the old hashes with that draw, records the new ones and draws a new key.
 6. Order. `make` shuffles the 12 (one per unit, units in sorted order; a Fisher-Yates in which
    position i swaps with int.from_bytes(blake2b(b"order|<i>", key=key, digest_size=8).digest(), "little") mod (i + 1),
    i from 11 down to 1) and writes tests/hidden/episodes.json in that order: the graded order.
@@ -31,7 +33,10 @@ The rule, fixed before any unit or candidate was drawn:
     python3 -B tests/review/select_set.py make --record tests/hidden/episode_selection.json --out tests/hidden/episodes.json
 
 `run` needs the task image's Python (3.12, MuJoCo 3.16.0, NumPy 2.5.4; environment/requirements.txt, and robosuite
-1.5.2's model files) and an OSMesa renderer (MUJOCO_GL=osmesa). Outside the image the oracle submission's run.sh names
+1.5.2's model files), the numerics pin of environment/Dockerfile (set here from nonet_exec.NUMERICS_ENV; check with
+tests/numerics_check.py that it reproduces tests/numerics.json) and an OSMesa renderer (MUJOCO_GL=osmesa). The
+reference has no wall-clock limit of its own since draw 2 (solution/oracle/wire_world.py), so its three runs of a
+candidate differ only in which steps are probed. Outside the image the oracle submission's run.sh names
 this interpreter, and the controller is started directly rather than through nonet_exec.py (which needs root to change
 user); everything else is door_grade.run_episodes as the grader runs it.
 """
@@ -59,14 +64,14 @@ SET_FORMAT = "cabinet_door_hanging fixed set 1"
 N_UNITS = 12
 ORACLE_MODULES = ("door_env.py", "door_sim.py", "episode.py", "oracle_main.py", "reference.py", "wire_world.py")
 FROZEN = (("tests/door_grade.py", "tests/episode.py", "tests/door_env.py", "tests/door_sim.py",
-           "tests/units.json", "tests/grader_config.json")
+           "tests/units.json", "tests/grader_config.json", "tests/nonet_exec.py", "tests/numerics_check.py",
+           "tests/numerics.json")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES) + ("solution/solve.sh",))
 PER_UNIT = 1
 WIRE_RUNS = 3
 BATCH = 2
 MAX_CANDIDATES = 12
-ENV = {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "MUJOCO_GL": "osmesa",
-       "PYOPENGL_PLATFORM": "osmesa"}
+ENV = {"MKL_NUM_THREADS": "1", "MUJOCO_GL": "osmesa", "PYOPENGL_PLATFORM": "osmesa"}
 
 
 def sha256_file(path):
@@ -127,8 +132,16 @@ def open_draw(rec):
     return d
 
 
+def _numerics_env():
+    sys.path.insert(0, TESTS)
+    import nonet_exec  # noqa: E402
+    env = dict(ENV)
+    env.update(nonet_exec.NUMERICS_ENV)
+    return env
+
+
 def _modules():
-    os.environ.update(ENV)
+    os.environ.update(_numerics_env())
     for p in (ORACLE, TESTS):
         if p not in sys.path:
             sys.path.insert(0, p)              # TESTS first: door_grade, episode, door_env, door_sim (the oracle's identical)
@@ -160,7 +173,7 @@ def submission(work):
     with open(os.path.join(work, "run.sh"), "w") as f:
         f.write("#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n"
                 "export %s\n"
-                "exec %s -I -B oracle_main.py\n" % (" ".join("%s=%s" % kv for kv in sorted(ENV.items())),
+                "exec %s -I -B oracle_main.py\n" % (" ".join("%s='%s'" % kv for kv in sorted(_numerics_env().items())),
                                                    sys.executable))
     os.chmod(os.path.join(work, "run.sh"), 0o755)
     return work
@@ -237,9 +250,15 @@ def cmd_draw(a):
     head = git("rev-parse", "HEAD").stdout.strip()
     if rec is not None:
         last = rec["draws"][-1]
-        if last["status"] == "made":
-            raise SystemExit("the latest draw is made")
-        if last["status"] == "open" and not a.void:
+        if a.refreeze:
+            if not a.void or last["status"] not in ("open", "made"):
+                raise SystemExit("--refreeze voids the latest open or made draw: pass --void REASON")
+            last["frozen"], last["frozen_commit"] = rec["frozen"], rec["frozen_commit"]
+            rec["frozen"], rec["frozen_commit"] = frozen_hashes(), head
+        elif last["status"] == "made":
+            raise SystemExit("the latest draw is made: after a frozen file changed, void it with --void REASON "
+                             "--refreeze")
+        elif last["status"] == "open" and not a.void:
             raise SystemExit("the latest draw is open: pass --void REASON to void it")
         if a.void and last["status"] != "void":
             last.update(status="void", void_reason=a.void, voided_utc=utc_now())
@@ -326,6 +345,7 @@ def main():
     p = sub.add_parser("draw")
     p.add_argument("--record", required=True)
     p.add_argument("--void", default=None, help="void the open draw, with this reason")
+    p.add_argument("--refreeze", action="store_true", help="with --void: a frozen file changed; record the new hashes")
     p = sub.add_parser("run")
     p.add_argument("--record", required=True)
     p.add_argument("--work", required=True, help="a scratch folder for the oracle submissions")

@@ -59,7 +59,14 @@ class F(ctypes.Structure): _fields_ = [("len", ctypes.c_ushort), ("filter", ctyp
 f = F(len(prog) // 8, ctypes.cast(buf, ctypes.c_void_p)); libc = ctypes.CDLL(None, use_errno=True)
 if libc.prctl(38, 1, 0, 0, 0) != 0 or libc.prctl(22, 2, ctypes.byref(f), 0, 0) != 0:
     sys.stderr.write("[practice] could not install the network filter\n")
-env = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/home/user", "LANG": "C.UTF-8"}
+env = {"PATH": "/opt/venv/bin:/usr/local/bin:/usr/bin:/bin", "HOME": "/home/user", "LANG": "C.UTF-8",
+       "OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256", "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
+       "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "OPENCV_IPP": "avx2"}
+try:
+    if "avx512f" in open("/proc/cpuinfo").read().split():
+        env["OPENCV_CPU_DISABLE"] = "AVX512-SKX"
+except OSError:
+    pass
 os.execvpe("bash", ["bash", "run.sh"], env)
 '''
 
