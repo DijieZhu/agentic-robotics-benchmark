@@ -235,8 +235,8 @@ episode, not on your replies.
 - **The time budget.** Your controller has a budget of 9000 s of its own time over the whole run: the time the
   grader waits for `READY` (at the first start and after a restart), for each reset and for each of your replies,
   plus 0.1 s for every image an applied action asks for (a fixed price, whatever the grading machine takes to draw
-  it). The simulation's own time is not counted. The reference controller, which asks for no images, used well under
-  a minute of it for all 12 episodes (1614-1941 steps each). If the budget runs out, the episode running is aborted
+  it). The simulation's own time is not counted. The reference controller, which asks for no images, used about
+  2 minutes of it for all 12 episodes (about 1600-1800 steps each). If the budget runs out, the episode running is aborted
   and the rest are not run; all of them score 0. The practice grader counts the same way and prints
   `controller_seconds`.
 - **Leftover processes.** The whole run scores 0 if the grader
