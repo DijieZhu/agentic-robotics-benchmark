@@ -210,8 +210,8 @@ episode, not on your replies.
   simulation scores that episode 0, and grading goes on. After a failure the next episode restarts the controller;
   after 3 restarts the remaining episodes score 0.
 - **The time budget.** The grader has 9000 s for all 12 episodes. That covers the simulation, drawing the images you
-  ask for, and your controller's own time. On the reference host (a shared 96-core x86-64 Linux server) the
-  reference controller, which asks for no images, used 686-699 s for all 12 episodes (1627-1830 steps each). If the
+  ask for, and your controller's own time. On the reference host (2 x AMD EPYC 9254, 96 hardware threads, shared)
+  the reference controller, which asks for no images, used 730-742 s for all 12 episodes (1614-1941 steps each). If the
   budget runs out, the episode running is aborted and the rest are not run; all of them score 0.
 - **One process.** Your controller runs as one process for the whole run, so it may carry what it learns from one
   episode to the next.
