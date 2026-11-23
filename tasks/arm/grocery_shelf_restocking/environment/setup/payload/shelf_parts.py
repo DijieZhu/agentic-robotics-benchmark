@@ -313,7 +313,7 @@ def tote(CART, TOTE):
 
 # ------------------------------------------------------------------------------------------- the lift
 def lift_static():
-    """on the floor under the robot: a base plate with anchor bolts (the task's column stands on the floor at
+    """on the floor under the robot: a base plate with floor bolts (the task's column stands on the floor at
     (-0.19..0.09, +-0.14))"""
     out = [("lift_plate", _box((-0.27, -0.22, 0.0), (0.17, 0.22, 0.016), 0.003), "steel_plate", {})]
     bolts = []
