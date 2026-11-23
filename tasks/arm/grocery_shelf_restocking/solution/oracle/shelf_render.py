@@ -14,7 +14,7 @@ image's aspect ratio. An image is drawn at a multiple of its size and averaged i
 An image is a function of the unit, the episode, the simulator's state and the camera alone: every renderable,
 mesh, texture and material of an episode is made once, in one order, when its view is opened, and a process draws
 ONE episode (a second open_view in the same process raises RenderError: shelf_env starts a worker process per
-episode); Filament's temporal dithering is switched off (_undither). The sensor noise stays shelf_env.render's.
+episode); Filament's temporal dithering and FXAA are switched off (_undither). The sensor noise stays shelf_env.render's.
 Every failure the renderer sees is raised as RenderError: an error of the environment, never of a controller.
 Nothing here changes the simulation.
 """
@@ -555,9 +555,16 @@ class _Filament(object):
     # (pointers followed, each read by write(2) into a pipe: a wrong guess cannot crash, and a process that is not
     # dumpable may do it) by its state after the first image: viewport (0, 0, width, height) at +0x268,
     # anti-aliasing FXAA, dithering TEMPORAL, shadowing and post-processing as requested at +0x2b1..+0x2b5 (Filament
-    # as linked into MuJoCo 3.16). FXAA stays on: on an image without the noise it is a function of the image.
+    # as linked into MuJoCo 3.16).
+    # FXAA is switched off on the same view (View::setAntiAliasing(AntiAliasing::NONE)): with it, one image in about
+    # two hundred differed between two fresh processes in a single pixel (four levels after the downsampling; the
+    # same two variants every time, about 7 : 3, whatever lavapipe's thread count, with ambient occlusion on or off);
+    # without it the same state gave one image in every process. Edges are smoothed by the supersampling instead
+    # (shelf_look.json: supersample).
     VIEW_SET_DITHERING = "_ZN8filament4View12setDitheringENS_9DitheringE"
     VIEW_GET_DITHERING = "_ZNK8filament4View12getDitheringEv"
+    VIEW_SET_ANTIALIASING = "_ZN8filament4View15setAntiAliasingENS_12AntiAliasingE"
+    VIEW_GET_ANTIALIASING = "_ZNK8filament4View15getAntiAliasingEv"
 
     def _undither(self, width, height, shadows, post):
         lib = ctypes.CDLL(self.F.__file__)
@@ -565,8 +572,14 @@ class _Filament(object):
             setd, getd = getattr(lib, self.VIEW_SET_DITHERING), getattr(lib, self.VIEW_GET_DITHERING)
         except AttributeError as exc:
             raise RenderError("renderer: MuJoCo's Filament module exports no View::setDithering: %s" % exc)
-        setd.restype, setd.argtypes = None, [ctypes.c_void_p, ctypes.c_uint8]
-        getd.restype, getd.argtypes = ctypes.c_uint8, [ctypes.c_void_p]
+        try:
+            seta, geta = getattr(lib, self.VIEW_SET_ANTIALIASING), getattr(lib, self.VIEW_GET_ANTIALIASING)
+        except AttributeError as exc:
+            raise RenderError("renderer: MuJoCo's Filament module exports no View::setAntiAliasing: %s" % exc)
+        for fn in (setd, seta):
+            fn.restype, fn.argtypes = None, [ctypes.c_void_p, ctypes.c_uint8]
+        for fn in (getd, geta):
+            fn.restype, fn.argtypes = ctypes.c_uint8, [ctypes.c_void_p]
         want = (0, 0, width, height, 1, 1, int(shadows), 1, int(post))
         found, seen = set(), set()
         libc = ctypes.CDLL(None, use_errno=True)
@@ -608,6 +621,10 @@ class _Filament(object):
         setd(self.view, 0)                             # filament::View::Dithering::NONE
         if getd(self.view) != 0:
             raise RenderError("renderer: Filament's dithering did not switch off")
+        if not self.look["render"].get("fxaa", False):
+            seta(self.view, 0)                         # filament::View::AntiAliasing::NONE
+            if geta(self.view) != 0:
+                raise RenderError("renderer: Filament's FXAA did not switch off")
 
 
 
