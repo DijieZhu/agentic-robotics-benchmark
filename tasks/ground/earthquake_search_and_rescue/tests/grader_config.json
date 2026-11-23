@@ -1,0 +1,53 @@
+{
+ "episodes": 8,
+ "sim_cap_s": 1800.0,
+ "program_time_cap_s": 1200.0,
+ "privileged_program_time_cap_s": 3600.0,
+ "silence_s": 180.0,
+ "cpu_cap_factor": 4.0,
+ "max_ticks_per_step": 500,
+ "camera_budget_frames": 700,
+ "lidar_budget_sweeps": 1800,
+ "thermal_budget_frames": 1800,
+ "runner_account": "nobody",
+ "socket_sample_s": 0.5,
+ "trajectory_hz": 4.0,
+ "score": {
+  "located": 0.45,
+  "kit": 0.25,
+  "returned": 0.3,
+  "report_full_m": 1.0,
+  "report_zero_m": 3.0,
+  "seen_px": 40,
+  "seen_range_m": 6.0,
+  "kit_reach_m": 0.8,
+  "home_radius_m": 3.0
+ },
+ "safety": {
+  "survivor_force_N": 60.0,
+  "survivor_ticks": 3,
+  "prop_move_m": 0.05,
+  "overturn_deg": 70.0,
+  "overturn_s": 2.0,
+  "fall_z_m": -0.8,
+  "stop_score_cap": 0.45
+ },
+ "grip": {
+  "min_force_N": 4.0,
+  "payload_kg": 8.0,
+  "slip_force_N": 260.0,
+  "slip_ticks": 20
+ },
+ "link": {
+  "tx_dbm": -28.0,
+  "floor_dbm": -85.0,
+  "ext_wall_db": 11.0,
+  "int_wall_db": 7.0,
+  "void_db": 14.0,
+  "slab_db": 9.0
+ },
+ "temps": {
+  "spread_c": 0.6
+ },
+ "note": "the grader's cell configuration (rubblecell.server.DEFAULT_CONFIG with these values); the training ground runs the same numbers (environment/training_ground/sites.json). program_time_cap_s caps the program's own time per site: the wall clock minus the cell's simulation (step) and sensor rendering (get_camera, get_lidar, get_thermal), which the sim cap and the sensor budgets bound (cellkit.wire); cpu_cap_factor x program_time_cap_s = the program's CPU seconds; privileged_program_time_cap_s caps the oracle's episodes, whose reference program steps the cell inside its one call; the submission checks (weight-file extensions, training-call strings, the size cap, the forbidden imports) are the constants of setup_payload/training/submission_checks.py, the file the agent has"
+}

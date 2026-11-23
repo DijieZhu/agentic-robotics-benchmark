@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "rescue_score",
+ "note": "rescue_score is the mean over the hidden sites of the mission's score (rubblecell.server.score: located 0.45, kit 0.25, returned 0.30; a secondary collapse scores the site 0; a protective stop on the survivor ends the mission without the return, at most 0.45), already on [0, 1]; ratio = score / value, reward = clamp(ratio / full_at, 0, 1).",
+ "source": "reference program (tests/reference: the site's plan and the true pose) on the fixed hidden set of cell version 0.4.0 (tests/hidden/seeds.json: 8 sites selected by the pre-registered rule of tests/hidden/selection.json, rule version 2 with amendment 3: the same 32 candidates drawn from OS entropy run again on the cell with the look pack's models, 9 admitted by the reference as amended and frozen in that amendment): the selection runs of 2026-11-22 (one container of the task image's cell per candidate) measured 1.0 on each of the 8 sites (located 1, kit 1, returned 1; no void, no protective stop, no lost robot; 700.81 s simulated per site on average); the reference verify (`ale validate`, separate verification, the task image, 8 CPUs) on these files is recorded in the pull request that brought cell 0.4.0. Earlier cells: validate-4314eb49 and validate-ff0d44a6 (cell 0.3.0, another hidden set, 8 of 8 at 1.0); full_at 0.98: the reference repeats its selection runs exactly, and 0.98 leaves room for a rounding difference on another CPU.",
+ "value": 1.0
+}

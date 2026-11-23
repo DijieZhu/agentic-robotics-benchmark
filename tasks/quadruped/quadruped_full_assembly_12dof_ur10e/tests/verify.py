@@ -465,7 +465,7 @@ def run_episode(cfg, seed, rn, privileged, kit_info, plan, trace_tag=None):
             log("[grader] episode trace not attached: %r" % (e,))
     record_dir(LOGS)
     wire_error, t0 = None, time.time()
-    dirs = rn.prepare("agent_seed%d" % seed, program_source())
+    dirs = rn.prepare(trace_tag or "agent_run", program_source())   # the episode's index (agent_epNN), never its seed
     before = rn.snapshot((dirs["root"],)) if rn.acct else None
     argv, user = launcher_argv(sys.executable, dirs["lib"], dirs["program"]), rn.name
     # the privileged reference assembler runs inside one call (reference_assemble): its own, longer wall-clock cap
@@ -478,7 +478,7 @@ def run_episode(cfg, seed, rn, privileged, kit_info, plan, trace_tag=None):
         with counters, sampler:
             try:
                 proc = wire.AgentProcess(argv, cwd=dirs["program"], user=user, env=rn.env(dirs, None), cpu_s=rn.cpu_s,
-                                         stderr_path=os.path.join(LOGS, "agent_seed%d.log" % seed))
+                                         stderr_path=os.path.join(LOGS, "%s.log" % (trace_tag or "agent_run")))
                 reason = wire.serve_episode(server, proc, wall_cap, float(cfg["silence_s"]), log=log)
             finally:
                 if proc is not None:

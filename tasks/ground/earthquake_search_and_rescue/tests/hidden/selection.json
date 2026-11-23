@@ -1,0 +1,4349 @@
+{
+ "rule_version": 2,
+ "cell_version": "0.4.0",
+ "registered": "2026-11-20 (UTC): this file, with the rule and the candidates below and no run, was committed before the reference program ran on any candidate (tests/review/select_set.py is the rule's implementation)",
+ "rule": "Candidates: 32 hidden and 16 training seeds (63 bits each) drawn once from the operating system's entropy, in the order listed. A candidate is admitted when the frozen reference program (tests/reference/reference.py) completes the mission on it in a privileged cell of the task image (cell 0.3.0, the grader's config): score 1.0 (located, kit, returned), no secondary collapse, no protective stop, the robot not lost. The hidden set is the first 8 admitted hidden candidates in draw order; while one of the four technique obstacles (a beam to lift out, a step, a narrow breach, a floor gap) lies on the route of fewer than 2 of the 8, the last site of the set that can leave without lowering another technique's count below 2 is replaced by the next admitted candidate whose route has the missing one. The training sites are the first 6 admitted training candidates in draw order; while fewer than 2 of them have a load-bearing prop, the last one without is replaced by the next admitted candidate with one. If a pool admits too few, a second batch of the same size is drawn from the operating system's entropy and appended, and the rule is applied to the whole list. No candidate is a site of rule version 1 (selection_v1.json), whose set is retired.",
+ "candidates": {
+  "hidden": [
+   1656914925694907591,
+   5293484087090292255,
+   7501745465691653068,
+   5968869831387924541,
+   7731310490831136009,
+   6901955039370204783,
+   243798336054176504,
+   7122643773327712350,
+   110203644969488577,
+   488831577079123354,
+   2125816647474982220,
+   5693485278995727339,
+   1238382909066966381,
+   257930848639506096,
+   8918127515010578568,
+   77355730200029579,
+   7450789421047716381,
+   1693966511534288503,
+   9125234862025968266,
+   5918520667902607595,
+   2523661328239485697,
+   8811523898313300999,
+   4388720864291176110,
+   3383344061990037949,
+   2664430237491852100,
+   1133247343683784206,
+   4189204824293111632,
+   2922774111996618116,
+   4696094868341066899,
+   1625751820572979302,
+   3358906712417364353,
+   6177644329257731096
+  ],
+  "training": [
+   8428293605671135758,
+   3861899613821449865,
+   5999285144657510067,
+   3608292521381717701,
+   8261313895032638148,
+   8797987665747944027,
+   4232949238430506024,
+   1547661230947249706,
+   1031841471497627414,
+   2803108981900861396,
+   6833042583704382066,
+   5335234346166878613,
+   7630596706875805885,
+   1425029318528640270,
+   4852851744320511425,
+   4916214142413619990
+  ]
+ },
+ "runs": [
+  {
+   "pool": "hidden",
+   "index": 0,
+   "seed": 1656914925694907591,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 701.9999999972237,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.29817746139047296,
+   "home_dist_m": 0.1099815418666784,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 1,
+   "seed": 5293484087090292255,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 1320.6699999825942,
+   "report_error_m": 1.9860273225978185e-15,
+   "kit_dist_m": null,
+   "home_dist_m": 17.920724596964497,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 2,
+   "seed": 7501745465691653068,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1499.2999999783701,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.37823475439346294,
+   "home_dist_m": 15.127690974233705,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 3,
+   "seed": 5968869831387924541,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 551.650000000779,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.3789311804116967,
+   "home_dist_m": 0.11168165777817836,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 4,
+   "seed": 7731310490831136009,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 156.31000000001825,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 11.939896584288444,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 5,
+   "seed": 6901955039370204783,
+   "cell_version": "0.4.0",
+   "score": 0.25,
+   "parts": {
+    "located": 0.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1239.64999998451,
+   "report_error_m": null,
+   "kit_dist_m": 0.37296078906421193,
+   "home_dist_m": 15.908488576419952,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 6,
+   "seed": 243798336054176504,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 587.0999999999407,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3775889259941541,
+   "home_dist_m": 0.11208988820187703,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 7,
+   "seed": 7122643773327712350,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 78.3099999999989,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 5.122096666855739,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 8,
+   "seed": 110203644969488577,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 682.999999997673,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.38205972148990525,
+   "home_dist_m": 0.11061785037963101,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 4,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 9,
+   "seed": 488831577079123354,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 235.1100000003945,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 10.212904145666355,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 10,
+   "seed": 2125816647474982220,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 777.049999995449,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3536562725334643,
+   "home_dist_m": 0.11301148975648159,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 11,
+   "seed": 5693485278995727339,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [
+    "protective_stop"
+   ],
+   "done_reason": "protective_stop",
+   "sim_time_s": 184.61000000015338,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 17.495728247222033,
+   "max_survivor_force_N": 363.705619903332,
+   "route_obstacles": [
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 12,
+   "seed": 1238382909066966381,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1448.3999999795737,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.38424380204611946,
+   "home_dist_m": 13.963311127423356,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 13,
+   "seed": 257930848639506096,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1491.1499999785628,
+   "report_error_m": 5.4025784115714076e-15,
+   "kit_dist_m": 0.3793261779023157,
+   "home_dist_m": 13.802111004798942,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 14,
+   "seed": 8918127515010578568,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 55.640000000022034,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 6.896355466577409,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 15,
+   "seed": 77355730200029579,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1269.6999999837994,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3149169347229828,
+   "home_dist_m": 11.495793082567818,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 16,
+   "seed": 7450789421047716381,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1659.5999999745795,
+   "report_error_m": 5.333694441429199e-15,
+   "kit_dist_m": 0.4058906877935579,
+   "home_dist_m": 10.531753697466597,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 3,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 17,
+   "seed": 1693966511534288503,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": "fell",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_fell",
+   "sim_time_s": 942.3399999915404,
+   "report_error_m": 4.440892098500626e-16,
+   "kit_dist_m": 0.38188934881503406,
+   "home_dist_m": 7.377096189064072,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 18,
+   "seed": 9125234862025968266,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1232.6499999846756,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3063294552589792,
+   "home_dist_m": 5.703542014541613,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 19,
+   "seed": 5918520667902607595,
+   "cell_version": "0.4.0",
+   "score": 0.25,
+   "parts": {
+    "located": 0.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": "fell",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_fell",
+   "sim_time_s": 687.7999999975594,
+   "report_error_m": null,
+   "kit_dist_m": 0.3710915003586114,
+   "home_dist_m": 16.62924711993957,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 3,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 20,
+   "seed": 2523661328239485697,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 157.55000000002417,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 7.01820215729338,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 21,
+   "seed": 8811523898313300999,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 653.2499999983764,
+   "report_error_m": 3.972054645195637e-15,
+   "kit_dist_m": 0.38289623907826426,
+   "home_dist_m": 0.11066384627689402,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 22,
+   "seed": 4388720864291176110,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1377.599999981248,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.2936507364621663,
+   "home_dist_m": 9.570130347553068,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 23,
+   "seed": 3383344061990037949,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 436.51000000135616,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 13.320673706430306,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 24,
+   "seed": 2664430237491852100,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1359.9999999816641,
+   "report_error_m": 2.220446049250313e-15,
+   "kit_dist_m": 0.3718723834719846,
+   "home_dist_m": 12.555447452242037,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 25,
+   "seed": 1133247343683784206,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1015.2999999898151,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 7.860575975636816,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 26,
+   "seed": 4189204824293111632,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 927.6999999918866,
+   "report_error_m": 5.617333549722722e-15,
+   "kit_dist_m": 0.39886779942244943,
+   "home_dist_m": 0.11199345326902052,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 27,
+   "seed": 2922774111996618116,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1625.6499999753823,
+   "report_error_m": 6.4047456679787536e-15,
+   "kit_dist_m": 0.31702423154984133,
+   "home_dist_m": 14.083478162815661,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 2,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 28,
+   "seed": 4696094868341066899,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 724.6999999966869,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3436970668757651,
+   "home_dist_m": 0.10990214270392365,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "hidden",
+   "index": 29,
+   "seed": 1625751820572979302,
+   "cell_version": "0.4.0",
+   "score": 0.7,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 0.0
+   },
+   "lost": "fell",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_fell",
+   "sim_time_s": 758.059999995898,
+   "report_error_m": 3.972054645195637e-15,
+   "kit_dist_m": 0.27259393266732335,
+   "home_dist_m": 7.3331992042691425,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 30,
+   "seed": 3358906712417364353,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 205.3900000002526,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 16.16080871202082,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "hidden",
+   "index": 31,
+   "seed": 6177644329257731096,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 614.8999999992833,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.3755279745583175,
+   "home_dist_m": 0.10829156050630617,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 0,
+   "seed": 8428293605671135758,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 736.3499999964114,
+   "report_error_m": 1.9984014443252818e-15,
+   "kit_dist_m": 0.3747316740296807,
+   "home_dist_m": 0.1076710263091406,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 1,
+   "seed": 3861899613821449865,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 686.2999999975949,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.37915591719276365,
+   "home_dist_m": 0.10839535228599266,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 2,
+   "seed": 5999285144657510067,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 725.3499999966715,
+   "report_error_m": 2.5121479338940403e-15,
+   "kit_dist_m": 0.3740732657528167,
+   "home_dist_m": 0.11344665491019545,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 3,
+   "seed": 3608292521381717701,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 737.7999999963771,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.37863666878114904,
+   "home_dist_m": 0.1084677384338496,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 3,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 4,
+   "seed": 8261313895032638148,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 779.3999999953934,
+   "report_error_m": 3.552713678800501e-15,
+   "kit_dist_m": 0.36949997039594895,
+   "home_dist_m": 0.11109538246208127,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 5,
+   "seed": 8797987665747944027,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [
+    "protective_stop"
+   ],
+   "done_reason": "protective_stop",
+   "sim_time_s": 345.72000000092265,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 17.61479739133214,
+   "max_survivor_force_N": 448.5008714023733,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ]
+   ],
+   "props": 2,
+   "admitted": false
+  },
+  {
+   "pool": "training",
+   "index": 6,
+   "seed": 4232949238430506024,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1612.299999975698,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": null,
+   "home_dist_m": 0.1114405812833188,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "training",
+   "index": 7,
+   "seed": 1547661230947249706,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "sim_cap",
+   "sim_time_s": 1800.0099999712593,
+   "report_error_m": 2.8435583831733384e-15,
+   "kit_dist_m": null,
+   "home_dist_m": 14.38139241991921,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": false
+  },
+  {
+   "pool": "training",
+   "index": 8,
+   "seed": 1031841471497627414,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 1009.3499999899558,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.37651626991272485,
+   "home_dist_m": 0.10914072378335331,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "step"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 9,
+   "seed": 2803108981900861396,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 691.199999997479,
+   "report_error_m": 1.9860273225978185e-15,
+   "kit_dist_m": 0.3878808964255699,
+   "home_dist_m": 0.1116471694263678,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 10,
+   "seed": 6833042583704382066,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": "overturned",
+   "voids": [],
+   "stops": [],
+   "done_reason": "robot_overturned",
+   "sim_time_s": 225.99000000035096,
+   "report_error_m": null,
+   "kit_dist_m": null,
+   "home_dist_m": 17.862038143484057,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 1,
+   "admitted": false
+  },
+  {
+   "pool": "training",
+   "index": 11,
+   "seed": 5335234346166878613,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 834.3999999940928,
+   "report_error_m": 1.7763568394002505e-15,
+   "kit_dist_m": 0.3717420003437311,
+   "home_dist_m": 0.11162880320550787,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 12,
+   "seed": 7630596706875805885,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 872.8999999931824,
+   "report_error_m": 5.617333549722722e-15,
+   "kit_dist_m": 0.35355010152782,
+   "home_dist_m": 0.10935929345850404,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 2,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 13,
+   "seed": 1425029318528640270,
+   "cell_version": "0.4.0",
+   "score": 0.0,
+   "parts": {
+    "located": 0.0,
+    "kit": 0.0,
+    "returned": 0.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "sim_cap",
+   "sim_time_s": 1800.0099999712593,
+   "report_error_m": 0.0,
+   "kit_dist_m": null,
+   "home_dist_m": 20.676494293892482,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "spill"
+    ],
+    [
+     "step"
+    ],
+    [
+     "gap"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "debris"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "props": 2,
+   "admitted": false
+  },
+  {
+   "pool": "training",
+   "index": 14,
+   "seed": 4852851744320511425,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 445.0000000013967,
+   "report_error_m": 0.0,
+   "kit_dist_m": 0.3792007475373598,
+   "home_dist_m": 0.10883648400209144,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "narrow"
+    ],
+    [
+     "step"
+    ],
+    [
+     "debris"
+    ]
+   ],
+   "props": 0,
+   "admitted": true
+  },
+  {
+   "pool": "training",
+   "index": 15,
+   "seed": 4916214142413619990,
+   "cell_version": "0.4.0",
+   "score": 1.0,
+   "parts": {
+    "located": 1.0,
+    "kit": 1.0,
+    "returned": 1.0
+   },
+   "lost": null,
+   "voids": [],
+   "stops": [],
+   "done_reason": "finish",
+   "sim_time_s": 557.6000000006383,
+   "report_error_m": 1.9860273225978185e-15,
+   "kit_dist_m": 0.38017157187257805,
+   "home_dist_m": 0.10845656603134522,
+   "max_survivor_force_N": 0.0,
+   "route_obstacles": [
+    [
+     "step"
+    ],
+    [
+     "narrow"
+    ],
+    [
+     "gap"
+    ]
+   ],
+   "props": 6,
+   "admitted": true
+  }
+ ],
+ "chosen": {
+  "hidden": {
+   "indices": [
+    0,
+    3,
+    6,
+    8,
+    10,
+    21,
+    26,
+    28
+   ],
+   "seeds": [
+    1656914925694907591,
+    5968869831387924541,
+    243798336054176504,
+    110203644969488577,
+    2125816647474982220,
+    8811523898313300999,
+    4189204824293111632,
+    4696094868341066899
+   ],
+   "technique_counts": {
+    "debris": 8,
+    "step": 5,
+    "narrow": 8,
+    "gap": 8
+   },
+   "admitted": [
+    0,
+    3,
+    6,
+    8,
+    10,
+    21,
+    26,
+    28,
+    31
+   ],
+   "complete": true
+  },
+  "training": {
+   "indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    8
+   ],
+   "seeds": [
+    8428293605671135758,
+    3861899613821449865,
+    5999285144657510067,
+    3608292521381717701,
+    8261313895032638148,
+    1031841471497627414
+   ],
+   "with_prop": 4,
+   "admitted": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    8,
+    9,
+    11,
+    12,
+    14,
+    15
+   ],
+   "complete": true
+  },
+  "notes": [
+   "against the sets of cell 0.3.0: the training sites are the same six candidates (0, 1, 2, 3, 4, 8). Hidden: candidates 11, 17 and 19 are not admitted on cell 0.4.0 (11: the reference's stand before the survivor touches an outstretched arm, protective stop; 17 and 19: the robot fell on the way back) and drop out; the rule's next admitted candidates 8, 26 and 28 take their places (8 was not admitted on cell 0.3.0). The set is the first 8 admitted in draw order; the technique rule replaced nothing (debris 8, step 5, narrow 8, gap 8).",
+   "admitted on cell 0.4.0: 9 of 32 hidden candidates (0.3.0: 11) and 11 of 16 training candidates (0.3.0: 10). Survivor poses of the hidden set: back 3, side 3, prone 2."
+  ]
+ },
+ "run": "2026-11-22, cell 0.4.0 (amendment 3): one container of the task image per candidate (2 CPUs each), tests/review/select_set.py --run <pool> --index <i>; every candidate of both pools was run",
+ "amendments": [
+  {
+   "n": 1,
+   "date": "2026-11-20",
+   "files": [
+    "tests/rubblecell/server.py",
+    "tests/rubblecell/site.py"
+   ],
+   "what": "after the selection runs: (a) arm_to answers bad_params for a point that has not 3 coordinates (a request check; the reference always sends 3); (b) the cordon leaves out a last barrier piece of 4 cm or less, which made two candidates' sites impossible to build (hidden 15, training 6: 'size 0 must be positive'); a site that built before is built from the same boxes. Neither candidate is admitted after the fact: the sets stay as selected.",
+   "check": "one full reference verify (`ale validate`) on the amended files completes every hidden site, and each site's sim_time_s, kit_dist_m and home_dist_m equal its selection record digit for digit (tests/anchor.json `source`); the six training sites repeat their records likewise",
+   "result": "validate-4314eb49 (2026-11-20) on the amended files: 8 of 8 hidden sites at 1.0, mean simulated time 659.0937499978304 s, the selection records' mean to the last digit; the six training sites re-run on the amended files give their records' sim_time_s, kit_dist_m and home_dist_m digit for digit"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-20",
+   "files": [
+    "tests/rubblecell/look.py",
+    "tests/rubblecell/twin.py",
+    "tests/rubblecell/server.py"
+   ],
+   "what": "after the selection runs, nothing of the physics: (a) the colour images: on every moving body of the robot the geoms of one material are drawn as one mesh (twin.batch_robot) and the sun's shadows are filtered by type 0 (look.LOOK), so that a frame is the same bytes in every process and on every machine; (b) get_state's pose.z carries 1 cm of noise from get_state's own random stream. The reference program reads neither images nor get_state.",
+   "check": "one full reference verify (`ale validate`) on the amended files completes every hidden site with the selection records' mean simulated time to the last digit (tests/anchor.json `source`)",
+   "result": "validate-ff0d44a6 (2026-11-21 UTC, a clean checkout) on the amended files: 8 of 8 hidden sites at 1.0, mean simulated time 659.0937499978304 s, the selection records' mean to the last digit"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-22",
+   "files": [
+    "tests/rubblecell/site.py",
+    "tests/rubblecell/scene.py",
+    "tests/rubblecell/human.py",
+    "tests/rubblecell/props.py",
+    "tests/rubblecell/decor.py",
+    "tests/rubblecell/look.py",
+    "tests/rubblecell/twin.py",
+    "tests/rubblecell/pbr.py",
+    "tests/rubblecell/sky.py",
+    "tests/rubblecell/figures.json",
+    "tests/rubblecell/__init__.py",
+    "tests/reference/reference.py"
+   ],
+   "what": "cell 0.4.0: the sites are built from the look pack's models, and this changes their geometry, so every candidate is run again and the sets are selected again by the same rule on the same 48 candidates. Changed in a site: (a) the survivor and the mannequin are posed bodies (three lying poses by the plan's pose; the capsules along their bones are the contact), the survivor's shirt and skin tint by the plan; (b) the survivor's arrangement: a broken plate over the lower legs on a rubble heap and one block, a low cupboard against the wall beyond the feet or the head, bare floor within 0.25 m of a lying figure; (c) furniture as the pack's pieces, their sizes the models' (the placement's draws and the room's free space follow those sizes); (d) on the street: the car and the van as real vehicles (mesh hulls), a rescue post beside the deployment point, ruin pieces on the pavement and in rooms off the route, road-barrier models on the cordon's boxes; (e) seen only: window modules on the upper storeys, wall decals, apartment blocks around. The plan generator (plan.py), the robot, the obstacles on the route, the grader and its configuration are unchanged.",
+   "reference": "the reference program is no longer the file frozen for rule 2. Two changes, made before this amendment and before any candidate ran on cell 0.4.0: (1) reference.py, the kit spot: the pieces around the survivor it keeps clear of are now legslab, legstack and cupboard with a radius from each piece's own size (was: wardrobe and legslab at 0.55 m); (2) site.py _route, the last waypoint: the reference stands square to the wall before the survivor's upper body, 1.25 m from the body's axis (was: 1.25 m from the torso towards the bay's centre). Why: with the new arrangement the old stand could be beside the plate over the legs, and on training site B the arm met the plate's corner (kit 1.32 m off, score 0.75). The changes were developed on the lanes site and the six training sites of cell 0.3.0 only (training candidates 0, 1, 2, 3, 4, 8), where the amended reference scores 1.0 on all seven; no hidden candidate was built, run or rendered on cell 0.4.0 before this amendment. The amended file is frozen again here: sha256 b53b48ac6c99c05f336d9d8e45ce676bfa4b2b45a0444daa9e42b4465c0af494.",
+   "rule": "rule 2 as written above, with cell 0.4.0 and the amended reference: every one of the 32 hidden and 16 training candidates is run; the hidden set is the first 8 admitted in draw order with the technique rule, the training sites the first 6 admitted with the prop rule. A site of the 0.3.0 sets that is not admitted any more drops out and the rule's next admitted candidate takes its place; this is recorded under `chosen.notes`. No new candidate is drawn unless a pool admits too few.",
+   "check": "tests/review/select_set.py on every candidate (one container of the task image each), then assemble; one full reference verify (`ale validate`) on the final files completes 8 of 8 hidden sites with the new records' mean simulated time",
+   "result": "selection run 2026-11-22 on cell 0.4.0, every one of the 48 candidates in a container of its own: 9 hidden and 11 training candidates admitted; hidden set candidates 0, 3, 6, 8, 10, 21, 26, 28 (mean simulated time 700.8062499972518 s), training sites candidates 0, 1, 2, 3, 4, 8 (`chosen`, `chosen.notes`); one candidate (hidden 19) was run twice because two runners wrote one log file, its record is of the second run. The reference verify on the final files is recorded in the pull request (tests/anchor.json `source`)."
+  }
+ ],
+ "superseded_cell_0.3.0": {
+  "runs": [
+   {
+    "pool": "hidden",
+    "index": 0,
+    "seed": 1656914925694907591,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 681.8499999977001,
+    "report_error_m": 2.5121479338940403e-15,
+    "kit_dist_m": 0.3819549980898106,
+    "home_dist_m": 0.11098512546600402,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 1,
+    "seed": 5293484087090292255,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 1317.8299999826613,
+    "report_error_m": 1.9860273225978185e-15,
+    "kit_dist_m": null,
+    "home_dist_m": 17.935326228617527,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 2,
+    "seed": 7501745465691653068,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1483.8499999787355,
+    "report_error_m": 6.4047456679787536e-15,
+    "kit_dist_m": 0.37502764172608694,
+    "home_dist_m": 15.123677074186844,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 3,
+    "seed": 5968869831387924541,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 540.950000001032,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.3789268649251295,
+    "home_dist_m": 0.1108235020486156,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 4,
+    "seed": 7731310490831136009,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 156.31000000001825,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 11.939896584288444,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 5,
+    "seed": 6901955039370204783,
+    "cell_version": "0.3.0",
+    "score": 0.25,
+    "parts": {
+     "located": 0.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1312.2499999827933,
+    "report_error_m": null,
+    "kit_dist_m": 0.3776613512564057,
+    "home_dist_m": 15.923021844758622,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 6,
+    "seed": 243798336054176504,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 600.7999999996167,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.38027794022641204,
+    "home_dist_m": 0.11307401235513788,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 7,
+    "seed": 7122643773327712350,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 78.3099999999989,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 5.122096666855739,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 8,
+    "seed": 110203644969488577,
+    "cell_version": "0.3.0",
+    "score": 0.75,
+    "parts": {
+     "located": 1.0,
+     "kit": 0.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 701.1999999972426,
+    "report_error_m": 0.0,
+    "kit_dist_m": 1.094169959082402,
+    "home_dist_m": 0.1087050687400506,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 4,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 9,
+    "seed": 488831577079123354,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 235.1100000003945,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 10.212904145666355,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 10,
+    "seed": 2125816647474982220,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 800.0499999949051,
+    "report_error_m": 0.0,
+    "kit_dist_m": 0.3804350758787539,
+    "home_dist_m": 0.11015488035042716,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 11,
+    "seed": 5693485278995727339,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 397.20000000116846,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.3743069225167144,
+    "home_dist_m": 0.11213558174448653,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 1,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 12,
+    "seed": 1238382909066966381,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1426.7999999800845,
+    "report_error_m": 5.329070518200751e-15,
+    "kit_dist_m": 0.3548206774054621,
+    "home_dist_m": 14.010557148899071,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 13,
+    "seed": 257930848639506096,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1510.4499999781065,
+    "report_error_m": 7.160723346098895e-15,
+    "kit_dist_m": 0.37059524846231845,
+    "home_dist_m": 13.80209687082397,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 14,
+    "seed": 8918127515010578568,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 55.640000000022034,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 6.896355466577409,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 15,
+    "seed": 77355730200029579,
+    "cell_version": "0.3.0",
+    "admitted": false,
+    "score": null,
+    "error": "the site could not be built: ValueError: Error: size 0 must be positive in geom | Element name 'barrier_1824', id 1824",
+    "route_obstacles": [],
+    "props": 0
+   },
+   {
+    "pool": "hidden",
+    "index": 16,
+    "seed": 7450789421047716381,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1628.199999975322,
+    "report_error_m": 0.0,
+    "kit_dist_m": 0.3791386949143032,
+    "home_dist_m": 10.456273303097497,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 3,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 17,
+    "seed": 1693966511534288503,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 912.499999992246,
+    "report_error_m": 1.3322676295501878e-15,
+    "kit_dist_m": 0.37816340073126786,
+    "home_dist_m": 0.1101590307609395,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 18,
+    "seed": 9125234862025968266,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1235.249999984614,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.3453144633287926,
+    "home_dist_m": 5.715635875639215,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 19,
+    "seed": 5918520667902607595,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 696.2499999973596,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.37439636725457104,
+    "home_dist_m": 0.10821027214435838,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 3,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 20,
+    "seed": 2523661328239485697,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 157.55000000002417,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 7.01820215729338,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 21,
+    "seed": 8811523898313300999,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 643.1499999986153,
+    "report_error_m": 2.5121479338940403e-15,
+    "kit_dist_m": 0.3745460476727702,
+    "home_dist_m": 0.10914455676126615,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 22,
+    "seed": 4388720864291176110,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1339.2499999821548,
+    "report_error_m": 0.0,
+    "kit_dist_m": 0.3702839671584447,
+    "home_dist_m": 9.559241711735726,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 23,
+    "seed": 3383344061990037949,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 436.51000000135616,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 13.320673706430306,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 24,
+    "seed": 2664430237491852100,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [
+     "protective_stop"
+    ],
+    "done_reason": "protective_stop",
+    "sim_time_s": 465.2900000014936,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 28.031273324245767,
+    "max_survivor_force_N": 63.00376715098558,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 25,
+    "seed": 1133247343683784206,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 331.1800000008532,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 8.13672886240283,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 26,
+    "seed": 4189204824293111632,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 901.7499999925002,
+    "report_error_m": 5.617333549722722e-15,
+    "kit_dist_m": 0.39858283752076795,
+    "home_dist_m": 0.11247845476655127,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 27,
+    "seed": 2922774111996618116,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1627.8499999753303,
+    "report_error_m": 5.617333549722722e-15,
+    "kit_dist_m": 0.380278865468193,
+    "home_dist_m": 13.943192517956303,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 2,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 28,
+    "seed": 4696094868341066899,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 720.3999999967886,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.38426517637487734,
+    "home_dist_m": 0.11016583210362267,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "hidden",
+    "index": 29,
+    "seed": 1625751820572979302,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": "fell",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_fell",
+    "sim_time_s": 745.5899999961929,
+    "report_error_m": 8.881784197001252e-16,
+    "kit_dist_m": 0.3758756029374438,
+    "home_dist_m": 7.406807554981167,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 30,
+    "seed": 3358906712417364353,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 205.3900000002526,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 16.16080871202082,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "hidden",
+    "index": 31,
+    "seed": 6177644329257731096,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 615.3999999992715,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.3737726624284918,
+    "home_dist_m": 0.10836013510164078,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 0,
+    "seed": 8428293605671135758,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 763.9499999957587,
+    "report_error_m": 1.831026719408895e-15,
+    "kit_dist_m": 0.3934283294030827,
+    "home_dist_m": 0.10912857333235627,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 1,
+    "seed": 3861899613821449865,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 674.7999999978668,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.4143695918351934,
+    "home_dist_m": 0.10801511445654242,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 2,
+    "seed": 5999285144657510067,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 709.3999999970487,
+    "report_error_m": 2.5121479338940403e-15,
+    "kit_dist_m": 0.3792003155252607,
+    "home_dist_m": 0.11341420717829,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 3,
+    "seed": 3608292521381717701,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 762.1499999958013,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.3941335556462587,
+    "home_dist_m": 0.1091043115213563,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 3,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 4,
+    "seed": 8261313895032638148,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 768.6499999956476,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.37222924583114053,
+    "home_dist_m": 0.11058843655774907,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 1,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 5,
+    "seed": 8797987665747944027,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1434.8499999798942,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.37377700950098525,
+    "home_dist_m": 15.461053877806775,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ]
+    ],
+    "props": 2,
+    "admitted": false
+   },
+   {
+    "pool": "training",
+    "index": 6,
+    "seed": 4232949238430506024,
+    "cell_version": "0.3.0",
+    "admitted": false,
+    "score": null,
+    "error": "the site could not be built: ValueError: Error: size 0 must be positive in geom | Element name 'barrier_1703', id 1703",
+    "route_obstacles": [],
+    "props": 0
+   },
+   {
+    "pool": "training",
+    "index": 7,
+    "seed": 1547661230947249706,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "sim_cap",
+    "sim_time_s": 1800.0099999712593,
+    "report_error_m": 1.3322676295501878e-15,
+    "kit_dist_m": null,
+    "home_dist_m": 14.381434135542957,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": false
+   },
+   {
+    "pool": "training",
+    "index": 8,
+    "seed": 1031841471497627414,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 1017.3999999897654,
+    "report_error_m": 3.972054645195637e-15,
+    "kit_dist_m": 0.38513416998575,
+    "home_dist_m": 0.10864258809334322,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "step"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 9,
+    "seed": 2803108981900861396,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 684.3999999976398,
+    "report_error_m": 2.220446049250313e-15,
+    "kit_dist_m": 0.3795541054616773,
+    "home_dist_m": 0.11117119120776668,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 10,
+    "seed": 6833042583704382066,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": "overturned",
+    "voids": [],
+    "stops": [],
+    "done_reason": "robot_overturned",
+    "sim_time_s": 225.99000000035096,
+    "report_error_m": null,
+    "kit_dist_m": null,
+    "home_dist_m": 17.862038143484057,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 1,
+    "admitted": false
+   },
+   {
+    "pool": "training",
+    "index": 11,
+    "seed": 5335234346166878613,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 821.199999994405,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": 0.3751149635643191,
+    "home_dist_m": 0.11206154216854745,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 12,
+    "seed": 7630596706875805885,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 865.1999999933645,
+    "report_error_m": 2.5121479338940403e-15,
+    "kit_dist_m": 0.37776256878016506,
+    "home_dist_m": 0.1085534582799959,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 2,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 13,
+    "seed": 1425029318528640270,
+    "cell_version": "0.3.0",
+    "score": 0.0,
+    "parts": {
+     "located": 0.0,
+     "kit": 0.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "sim_cap",
+    "sim_time_s": 1800.0099999712593,
+    "report_error_m": 3.552713678800501e-15,
+    "kit_dist_m": null,
+    "home_dist_m": 20.743325565777578,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "spill"
+     ],
+     [
+      "step"
+     ],
+     [
+      "gap"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "debris"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ],
+     [
+      "none"
+     ]
+    ],
+    "props": 2,
+    "admitted": false
+   },
+   {
+    "pool": "training",
+    "index": 14,
+    "seed": 4852851744320511425,
+    "cell_version": "0.3.0",
+    "score": 1.0,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 1.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 444.6000000013948,
+    "report_error_m": 0.0,
+    "kit_dist_m": 0.3776442551473859,
+    "home_dist_m": 0.10807019698935137,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "narrow"
+     ],
+     [
+      "step"
+     ],
+     [
+      "debris"
+     ]
+    ],
+    "props": 0,
+    "admitted": true
+   },
+   {
+    "pool": "training",
+    "index": 15,
+    "seed": 4916214142413619990,
+    "cell_version": "0.3.0",
+    "score": 0.7,
+    "parts": {
+     "located": 1.0,
+     "kit": 1.0,
+     "returned": 0.0
+    },
+    "lost": null,
+    "voids": [],
+    "stops": [],
+    "done_reason": "finish",
+    "sim_time_s": 767.7999999956677,
+    "report_error_m": 1.7763568394002505e-15,
+    "kit_dist_m": 0.3400937745989657,
+    "home_dist_m": 11.175850384787166,
+    "max_survivor_force_N": 0.0,
+    "route_obstacles": [
+     [
+      "step"
+     ],
+     [
+      "narrow"
+     ],
+     [
+      "gap"
+     ]
+    ],
+    "props": 6,
+    "admitted": false
+   }
+  ],
+  "chosen": {
+   "hidden": {
+    "indices": [
+     0,
+     3,
+     6,
+     10,
+     11,
+     17,
+     19,
+     21
+    ],
+    "seeds": [
+     1656914925694907591,
+     5968869831387924541,
+     243798336054176504,
+     2125816647474982220,
+     5693485278995727339,
+     1693966511534288503,
+     5918520667902607595,
+     8811523898313300999
+    ],
+    "technique_counts": {
+     "debris": 7,
+     "step": 7,
+     "narrow": 8,
+     "gap": 8
+    },
+    "admitted": [
+     0,
+     3,
+     6,
+     10,
+     11,
+     17,
+     19,
+     21,
+     26,
+     28,
+     31
+    ],
+    "complete": true
+   },
+   "training": {
+    "indices": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     8
+    ],
+    "seeds": [
+     8428293605671135758,
+     3861899613821449865,
+     5999285144657510067,
+     3608292521381717701,
+     8261313895032638148,
+     1031841471497627414
+    ],
+    "with_prop": 4,
+    "admitted": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     8,
+     9,
+     11,
+     12,
+     14
+    ],
+    "complete": true
+   },
+   "notes": []
+  },
+  "run": "2026-11-20, cell 0.3.0: one container of the task image per candidate (2 CPUs each), tests/review/select_set.py --run <pool> --index <i>; every candidate of both pools was run",
+  "note": "the selection of cell 0.3.0 (amendments 1 and 2), kept for the record; replaced by the re-run registered in amendment 3"
+ }
+}

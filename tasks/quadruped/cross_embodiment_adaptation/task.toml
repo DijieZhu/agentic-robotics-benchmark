@@ -1,0 +1,51 @@
+# cross_embodiment_adaptation (quadruped): a UAV surveys an unknown warehouse; a loaded Unitree Go1, commanded
+# joint by joint, has to cross it to a dock on its first deployment there, under a duct and over a deck.
+#
+# The survey is out of date when the Go1 arrives (a pallet moved to the middle rack's other opening, the dock
+# moved, a bollard gone or added) and not to scale; the Go1's leg odometry drifts and its encoders and IMU are noisy,
+# so it has to re-localise on what its mast camera shows and re-plan on site. Each site also draws its own load,
+# servo stiffness and strength, floor friction and fitting clearances (tests/runtime/props.py). Every range is in
+# the instruction and the datasheet; no value is reported. In development the agent has random survey sites (UAV
+# only) and a commissioning pad for the loaded Go1 (a bare bay of the hall and bollards; 40 episodes, 600,000 ticks): no
+# truth, no score, no debrief. A separate verifier runs the agent's mission program once on each of 16 fixed
+# hidden sites (tests/hidden/, tests/review/selection.md) and removes everything a mission leaves behind before
+# the next (tests/isolation.py). The oracle is privileged: a token whose sha256 only tests/ holds.
+#
+# [agent] timeout_sec: 2 h to write, commission and leave the mission program. [verifier] timeout_sec: 16 missions
+# of at most 1800 s of wall clock each (program time <= 600 s, 48,000 ticks) plus the numerics check, the service
+# starts and the clean-up; the oracle's sixteen missions take about 6 minutes.
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/cross_embodiment_adaptation"
+
+[metadata]
+platform = "quadruped"
+
+[environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0
+
+# The robot service's MCP bridge, which setup copies from environment/setup/payload/ into the root-owned
+# /opt/visual_robotics/client. Nothing in it depends on the working directory: Python resolves its one local import
+# (client.py) from the script's own folder, and the bridge uses only stdin, stdout and the service socket.
+[[environment.mcp_servers]]
+name = "robot"
+transport = "stdio"
+command = "/opt/venv/bin/python3"
+args = ["/opt/visual_robotics/client/mcp_stdio.py"]
+
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 30600
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0

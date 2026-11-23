@@ -1,0 +1,29 @@
+{
+ "_doc": "Look of the agent's cameras (agent_render.py) in the baked lab bay (render/room: Cycles DIFFUSE lightmaps, denoised; the HDR KTX of the Cycles panorama over the bench) with the maple bench top (render/bench, maps over 1.6 m). Calibrated against path-traced stills of the same room by region luminance of the top camera's view (bench top, floor, trays, fixture).",
+ "exposure_scale": 0.35,
+ "post_tonemap": "agx_punchy",
+ "post_tonemap_gain": 1.9,
+ "room_baked_emission": 0.18,
+ "room_baked_light_scale": 1800,
+ "room_ibl_ktx_intensity": 2200,
+ "room_bulb_m": 0.6,
+ "surface_albedo_gain": 1.0,
+ "surface_map_m": 1.6,
+ "materials": {
+  "mat_fixture": {
+   "roughness": 0.28,
+   "metallic": 0.35,
+   "albedo_scale": 1.2176
+  },
+  "mat_tray": {
+   "roughness": 0.38,
+   "metallic": 0.35,
+   "albedo_scale": 1.151
+  },
+  "mat_nest": {
+   "roughness": 0.38,
+   "metallic": 0.35,
+   "albedo_scale": 1.5051
+  }
+ }
+}

@@ -1,0 +1,1252 @@
+{
+ "format": "hand-assembly-kit/1",
+ "units": "lengths mm, masses g, angles rad, torques N m; every point, axis and box of a kind is given in that kind's model-file frame",
+ "frame_rule": "Each model file has its own frame, fixed by the unit's own shape and not by where the unit goes on the hand: the origin is the centre of the box around the unit; +z is up as the unit lies in its nest; x runs along the long side of the smallest rectangle around the unit's outline seen from above; +x points to the side of that rectangle's centre on which the centroid of the unit's surface lies. The palm base's frame follows the same rule; where it stands on the fixture is in cell_manual.md.",
+ "mass_note": "Masses, centres of mass and the links' values are those of the model the cell simulates (design values: printed parts from their volume, bought parts from the parts list); nothing was weighed.",
+ "box_note": "box_mm is the size of the unit's solids along x, y and z, centred on the origin; the box of the model file's own triangles agrees with it in size and in centre within 0.02 mm on every axis. collision_box_mm is the box of the convex pieces the cell collides for that unit, with all joints at zero. The pieces themselves are not given (cell_manual.md, Collision model).",
+ "joint_note": "Joints as the cell simulates them, all at zero in the model files. pivot_mm is a point of the joint's axis, axis its direction (a positive angle turns the child link about it by the right-hand rule). drive servo: an unpowered servo joint; drive pin: a free pin of the finger's closed four-bar loop. range_loose_rad holds while the module lies loose; range_mounted_rad once it is fastened, for a finger by the place it is mounted in (the palm base stops it differently in each place); range_rad holds in both states. Every range end is a mechanical stop. published_range_rad is the product's data sheet value, for comparison only.",
+ "joint_data": {
+  "servo": {
+   "friction_Nm": 0.02,
+   "damping_Nms_per_rad": 0.01,
+   "armature_kg_m2": 0.0001
+  },
+  "pin": {
+   "friction_Nm": 0.0,
+   "damping_Nms_per_rad": 0.0001,
+   "armature_kg_m2": 1e-07
+  }
+ },
+ "materials": {
+  "bearing_steel": {
+   "rgb": [
+    0.78,
+    0.78,
+    0.79
+   ],
+   "roughness": 0.2,
+   "metallic": 1.0
+  },
+  "board_black": {
+   "rgb": [
+    0.12,
+    0.12,
+    0.12
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0
+  },
+  "board_blue": {
+   "rgb": [
+    0.08,
+    0.25,
+    0.5
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0
+  },
+  "board_green": {
+   "rgb": [
+    0.14,
+    0.34,
+    0.16
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0
+  },
+  "component_black": {
+   "rgb": [
+    0.13,
+    0.13,
+    0.13
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0
+  },
+  "connector_white": {
+   "rgb": [
+    0.87,
+    0.86,
+    0.82
+   ],
+   "roughness": 0.5,
+   "metallic": 0.0
+  },
+  "contact_gold": {
+   "rgb": [
+    0.95,
+    0.8,
+    0.55
+   ],
+   "roughness": 0.25,
+   "metallic": 1.0
+  },
+  "elastomer_black": {
+   "rgb": [
+    0.12,
+    0.12,
+    0.12
+   ],
+   "roughness": 0.7,
+   "metallic": 0.0
+  },
+  "metal_nickel": {
+   "rgb": [
+    0.8,
+    0.78,
+    0.74
+   ],
+   "roughness": 0.3,
+   "metallic": 1.0
+  },
+  "output_horn_metal": {
+   "rgb": [
+    0.86,
+    0.86,
+    0.87
+   ],
+   "roughness": 0.25,
+   "metallic": 1.0
+  },
+  "pin_steel": {
+   "rgb": [
+    0.78,
+    0.78,
+    0.79
+   ],
+   "roughness": 0.15,
+   "metallic": 1.0
+  },
+  "plastic_beige": {
+   "rgb": [
+    0.69,
+    0.68,
+    0.63
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0
+  },
+  "printed_black_016": {
+   "rgb": [
+    0.18,
+    0.18,
+    0.19
+   ],
+   "roughness": 0.6,
+   "metallic": 0.0
+  },
+  "printed_black_020": {
+   "rgb": [
+    0.18,
+    0.18,
+    0.19
+   ],
+   "roughness": 0.6,
+   "metallic": 0.0
+  },
+  "screw_black": {
+   "rgb": [
+    0.2,
+    0.2,
+    0.21
+   ],
+   "roughness": 0.35,
+   "metallic": 0.9
+  },
+  "screw_bright": {
+   "rgb": [
+    0.8,
+    0.8,
+    0.81
+   ],
+   "roughness": 0.28,
+   "metallic": 1.0
+  },
+  "servo_case_metal": {
+   "rgb": [
+    0.12,
+    0.12,
+    0.13
+   ],
+   "roughness": 0.4,
+   "metallic": 0.8
+  },
+  "terminal_green": {
+   "rgb": [
+    0.2,
+    0.5,
+    0.25
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0
+  }
+ },
+ "kinds": {
+  "palm_base": {
+   "label": "palm base (bottom shell with its wall screws)",
+   "count": 1,
+   "file": "parts/palm_base.stl",
+   "file_triangles": 48594,
+   "mass_g": 62.5,
+   "com_mm": [
+    1.46,
+    -1.52,
+    -3.15
+   ],
+   "box_mm": [
+    102.025,
+    88.6,
+    27.5
+   ],
+   "collision_box_mm": {
+    "max": [
+     51.16,
+     44.54,
+     13.9
+    ],
+    "min": [
+     -51.15,
+     -44.56,
+     -13.9
+    ]
+   },
+   "materials": [
+    "printed_black_016",
+    "printed_black_020",
+    "screw_black"
+   ]
+  },
+  "finger_module": {
+   "label": "finger module",
+   "count": 3,
+   "file": "parts/finger_module.stl",
+   "file_triangles": 251673,
+   "mass_g": 114.5,
+   "com_mm": [
+    16.71,
+    -0.96,
+    -2.75
+   ],
+   "box_mm": [
+    153.262,
+    28.842,
+    41.2
+   ],
+   "collision_box_mm": {
+    "max": [
+     76.63,
+     14.66,
+     20.82
+    ],
+    "min": [
+     -76.88,
+     -14.42,
+     -20.71
+    ]
+   },
+   "materials": [
+    "bearing_steel",
+    "connector_white",
+    "elastomer_black",
+    "output_horn_metal",
+    "pin_steel",
+    "printed_black_016",
+    "screw_black",
+    "screw_bright",
+    "servo_case_metal"
+   ],
+   "module_folder": "parts/finger_module/",
+   "module_model": "parts/finger_module/finger_module.xml",
+   "links": {
+    "base": {
+     "mass_g": 23.72,
+     "com_mm": [
+      59.82,
+      -1.53,
+      5.79
+     ]
+    },
+    "abad": {
+     "mass_g": 35.29,
+     "com_mm": [
+      32.51,
+      -1.2,
+      1.53
+     ]
+    },
+    "pitch": {
+     "mass_g": 32.66,
+     "com_mm": [
+      5.05,
+      -0.44,
+      -8.41
+     ]
+    },
+    "pip": {
+     "mass_g": 9.27,
+     "com_mm": [
+      -15.47,
+      1.39,
+      -10.0
+     ]
+    },
+    "dip": {
+     "mass_g": 12.18,
+     "com_mm": [
+      -51.46,
+      -2.21,
+      -10.37
+     ]
+    },
+    "rocker": {
+     "mass_g": 1.36,
+     "com_mm": [
+      -35.98,
+      -2.12,
+      -9.07
+     ]
+    }
+   },
+   "joints": [
+    {
+     "name": "abad",
+     "parent": "base",
+     "child": "abad",
+     "pivot_mm": [
+      51.102,
+      -1.783,
+      -6.4
+     ],
+     "axis": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_loose_rad": [
+      -0.807215,
+      0.807215
+     ],
+     "range_mounted_rad": {
+      "index": [
+       -0.797518,
+       0.316209
+      ],
+      "middle": [
+       -0.797518,
+       0.73603
+      ],
+      "ring": [
+       -0.454025,
+       0.797518
+      ]
+     },
+     "published_range_rad": [
+      -0.79,
+      0.79
+     ]
+    },
+    {
+     "name": "mcp",
+     "parent": "abad",
+     "child": "pitch",
+     "pivot_mm": [
+      27.554,
+      11.13,
+      -9.4
+     ],
+     "axis": [
+      -0.00367,
+      0.999993,
+      0.0
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_loose_rad": [
+      -2.308739,
+      0.040931
+     ],
+     "range_mounted_rad": {
+      "index": [
+       -2.224754,
+       0.040931
+      ],
+      "middle": [
+       -2.224754,
+       0.040931
+      ],
+      "ring": [
+       -2.224754,
+       0.040931
+      ]
+     },
+     "published_range_rad": [
+      -1.8,
+      0.0
+     ]
+    },
+    {
+     "name": "pip",
+     "parent": "pitch",
+     "child": "pip",
+     "pivot_mm": [
+      -7.946,
+      11.0,
+      -9.4
+     ],
+     "axis": [
+      -0.00367,
+      0.999993,
+      0.0
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_rad": [
+      -1.391489,
+      0.0
+     ],
+     "published_range_rad": [
+      -1.45,
+      0.0
+     ]
+    },
+    {
+     "name": "dip",
+     "parent": "pip",
+     "child": "dip",
+     "pivot_mm": [
+      -40.929,
+      6.379,
+      -9.4
+     ],
+     "axis": [
+      -0.00367,
+      0.999993,
+      0.0
+     ],
+     "drive": "pin",
+     "start_rad": 0.0,
+     "range_rad": [
+      -1.872099,
+      0.008727
+     ]
+    },
+    {
+     "name": "rocker",
+     "parent": "pitch",
+     "child": "rocker",
+     "pivot_mm": [
+      -19.891,
+      -4.044,
+      -4.4
+     ],
+     "axis": [
+      -0.00367,
+      0.999993,
+      0.0
+     ],
+     "drive": "pin",
+     "start_rad": 0.0,
+     "range_rad": [
+      -1.678379,
+      0.008727
+     ]
+    }
+   ],
+   "loop": {
+    "closes": [
+     "dip",
+     "rocker"
+    ],
+    "point_mm": [
+     -50.624,
+     -4.218,
+     -16.418
+    ],
+    "note": "the point is fixed in both links (a pin); with the joint before the last one at angle pip the loop puts the last joint and the rocker's joint at the angles of the law",
+    "law_columns_rad": [
+     "pip",
+     "dip",
+     "rocker"
+    ],
+    "law": [
+     [
+      -1.391489,
+      -1.863372,
+      -1.669652
+     ],
+     [
+      -1.37881,
+      -1.854126,
+      -1.661629
+     ],
+     [
+      -1.361357,
+      -1.841311,
+      -1.650474
+     ],
+     [
+      -1.343904,
+      -1.828391,
+      -1.639191
+     ],
+     [
+      -1.32645,
+      -1.815362,
+      -1.627775
+     ],
+     [
+      -1.308997,
+      -1.80222,
+      -1.616225
+     ],
+     [
+      -1.291544,
+      -1.78896,
+      -1.604538
+     ],
+     [
+      -1.27409,
+      -1.775579,
+      -1.59271
+     ],
+     [
+      -1.256637,
+      -1.762072,
+      -1.580739
+     ],
+     [
+      -1.239184,
+      -1.748435,
+      -1.568621
+     ],
+     [
+      -1.22173,
+      -1.734663,
+      -1.556354
+     ],
+     [
+      -1.204277,
+      -1.720753,
+      -1.543934
+     ],
+     [
+      -1.186824,
+      -1.7067,
+      -1.531358
+     ],
+     [
+      -1.169371,
+      -1.692498,
+      -1.518622
+     ],
+     [
+      -1.151917,
+      -1.678145,
+      -1.505722
+     ],
+     [
+      -1.134464,
+      -1.663634,
+      -1.492656
+     ],
+     [
+      -1.117011,
+      -1.648961,
+      -1.479419
+     ],
+     [
+      -1.099557,
+      -1.634121,
+      -1.466007
+     ],
+     [
+      -1.082104,
+      -1.61911,
+      -1.452416
+     ],
+     [
+      -1.064651,
+      -1.603922,
+      -1.438643
+     ],
+     [
+      -1.047198,
+      -1.588552,
+      -1.424683
+     ],
+     [
+      -1.029744,
+      -1.572995,
+      -1.410531
+     ],
+     [
+      -1.012291,
+      -1.557246,
+      -1.396183
+     ],
+     [
+      -0.994838,
+      -1.541298,
+      -1.381636
+     ],
+     [
+      -0.977384,
+      -1.525146,
+      -1.366883
+     ],
+     [
+      -0.959931,
+      -1.508785,
+      -1.35192
+     ],
+     [
+      -0.942478,
+      -1.492209,
+      -1.336743
+     ],
+     [
+      -0.925025,
+      -1.475412,
+      -1.321346
+     ],
+     [
+      -0.907571,
+      -1.458387,
+      -1.305724
+     ],
+     [
+      -0.890118,
+      -1.441128,
+      -1.289871
+     ],
+     [
+      -0.872665,
+      -1.423629,
+      -1.273784
+     ],
+     [
+      -0.855211,
+      -1.405884,
+      -1.257455
+     ],
+     [
+      -0.837758,
+      -1.387885,
+      -1.240879
+     ],
+     [
+      -0.820305,
+      -1.369625,
+      -1.22405
+     ],
+     [
+      -0.802851,
+      -1.351098,
+      -1.206963
+     ],
+     [
+      -0.785398,
+      -1.332296,
+      -1.189611
+     ],
+     [
+      -0.767945,
+      -1.313211,
+      -1.171989
+     ],
+     [
+      -0.750492,
+      -1.293837,
+      -1.154089
+     ],
+     [
+      -0.733038,
+      -1.274164,
+      -1.135905
+     ],
+     [
+      -0.715585,
+      -1.254186,
+      -1.117431
+     ],
+     [
+      -0.698132,
+      -1.233894,
+      -1.09866
+     ],
+     [
+      -0.680678,
+      -1.213279,
+      -1.079584
+     ],
+     [
+      -0.663225,
+      -1.192333,
+      -1.060198
+     ],
+     [
+      -0.645772,
+      -1.171046,
+      -1.040493
+     ],
+     [
+      -0.628319,
+      -1.14941,
+      -1.020462
+     ],
+     [
+      -0.610865,
+      -1.127415,
+      -1.000099
+     ],
+     [
+      -0.593412,
+      -1.105051,
+      -0.979394
+     ],
+     [
+      -0.575959,
+      -1.082309,
+      -0.958341
+     ],
+     [
+      -0.558505,
+      -1.059177,
+      -0.936931
+     ],
+     [
+      -0.541052,
+      -1.035645,
+      -0.915157
+     ],
+     [
+      -0.523599,
+      -1.011703,
+      -0.893011
+     ],
+     [
+      -0.506145,
+      -0.987338,
+      -0.870483
+     ],
+     [
+      -0.488692,
+      -0.962539,
+      -0.847565
+     ],
+     [
+      -0.471239,
+      -0.937294,
+      -0.82425
+     ],
+     [
+      -0.453786,
+      -0.911589,
+      -0.800527
+     ],
+     [
+      -0.436332,
+      -0.885412,
+      -0.776389
+     ],
+     [
+      -0.418879,
+      -0.858749,
+      -0.751825
+     ],
+     [
+      -0.401426,
+      -0.831585,
+      -0.726827
+     ],
+     [
+      -0.383972,
+      -0.803904,
+      -0.701385
+     ],
+     [
+      -0.366519,
+      -0.775691,
+      -0.675489
+     ],
+     [
+      -0.349066,
+      -0.746929,
+      -0.64913
+     ],
+     [
+      -0.331613,
+      -0.717598,
+      -0.622297
+     ],
+     [
+      -0.314159,
+      -0.687679,
+      -0.594978
+     ],
+     [
+      -0.296706,
+      -0.657152,
+      -0.567164
+     ],
+     [
+      -0.279253,
+      -0.625992,
+      -0.538843
+     ],
+     [
+      -0.261799,
+      -0.594174,
+      -0.510002
+     ],
+     [
+      -0.244346,
+      -0.561671,
+      -0.480628
+     ],
+     [
+      -0.226893,
+      -0.528451,
+      -0.450708
+     ],
+     [
+      -0.20944,
+      -0.494478,
+      -0.420226
+     ],
+     [
+      -0.191986,
+      -0.459712,
+      -0.389166
+     ],
+     [
+      -0.174533,
+      -0.424106,
+      -0.357508
+     ],
+     [
+      -0.15708,
+      -0.387605,
+      -0.325232
+     ],
+     [
+      -0.139626,
+      -0.350145,
+      -0.292312
+     ],
+     [
+      -0.122173,
+      -0.311645,
+      -0.25872
+     ],
+     [
+      -0.10472,
+      -0.272009,
+      -0.22442
+     ],
+     [
+      -0.087266,
+      -0.231117,
+      -0.189367
+     ],
+     [
+      -0.069813,
+      -0.188812,
+      -0.153506
+     ],
+     [
+      -0.05236,
+      -0.14489,
+      -0.116762
+     ],
+     [
+      -0.034907,
+      -0.099073,
+      -0.079035
+     ],
+     [
+      -0.017453,
+      -0.050969,
+      -0.040185
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ]
+    ]
+   }
+  },
+  "thumb_module": {
+   "label": "thumb module",
+   "count": 1,
+   "file": "parts/thumb_module.stl",
+   "file_triangles": 353858,
+   "mass_g": 144.0,
+   "com_mm": [
+    13.46,
+    3.78,
+    -3.04
+   ],
+   "box_mm": [
+    152.601,
+    59.289,
+    38.197
+   ],
+   "collision_box_mm": {
+    "max": [
+     76.3,
+     29.79,
+     19.1
+    ],
+    "min": [
+     -76.56,
+     -29.79,
+     -18.9
+    ]
+   },
+   "materials": [
+    "bearing_steel",
+    "connector_white",
+    "elastomer_black",
+    "output_horn_metal",
+    "printed_black_016",
+    "screw_black",
+    "screw_bright",
+    "servo_case_metal"
+   ],
+   "module_folder": "parts/thumb_module/",
+   "module_model": "parts/thumb_module/thumb_module.xml",
+   "links": {
+    "base": {
+     "mass_g": 23.72,
+     "com_mm": [
+      58.76,
+      15.6,
+      2.32
+     ]
+    },
+    "roll": {
+     "mass_g": 15.75,
+     "com_mm": [
+      54.38,
+      5.66,
+      -6.34
+     ]
+    },
+    "side": {
+     "mass_g": 52.84,
+     "com_mm": [
+      25.87,
+      -7.52,
+      -3.87
+     ]
+    },
+    "mp": {
+     "mass_g": 30.19,
+     "com_mm": [
+      -19.85,
+      4.88,
+      -3.92
+     ]
+    },
+    "ip": {
+     "mass_g": 21.53,
+     "com_mm": [
+      -50.1,
+      15.54,
+      -3.28
+     ]
+    }
+   },
+   "joints": [
+    {
+     "name": "roll",
+     "parent": "base",
+     "child": "roll",
+     "pivot_mm": [
+      68.475,
+      8.23,
+      -6.402
+     ],
+     "axis": [
+      0.807549,
+      -0.589801,
+      0.0
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_loose_rad": [
+      -0.009363,
+      2.661086
+     ],
+     "range_mounted_rad": [
+      -0.009363,
+      2.053893
+     ],
+     "published_range_rad": [
+      0.0,
+      2.15
+     ]
+    },
+    {
+     "name": "side",
+     "parent": "roll",
+     "child": "side",
+     "pivot_mm": [
+      47.522,
+      -0.616,
+      -15.902
+     ],
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_loose_rad": [
+      -0.81376,
+      0.887128
+     ],
+     "range_mounted_rad": [
+      -0.630738,
+      0.887128
+     ],
+     "published_range_rad": [
+      -0.79,
+      0.9
+     ]
+    },
+    {
+     "name": "mp",
+     "parent": "side",
+     "child": "mp",
+     "pivot_mm": [
+      4.006,
+      7.65,
+      1.513
+     ],
+     "axis": [
+      0.270577,
+      0.823494,
+      0.498645
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_rad": [
+      -1.45087,
+      1.570746
+     ],
+     "published_range_rad": [
+      -1.57,
+      1.57
+     ]
+    },
+    {
+     "name": "ip",
+     "parent": "mp",
+     "child": "ip",
+     "pivot_mm": [
+      -29.72,
+      18.731,
+      1.512
+     ],
+     "axis": [
+      0.270577,
+      0.823494,
+      0.498645
+     ],
+     "drive": "servo",
+     "start_rad": 0.0,
+     "range_rad": [
+      -1.59628,
+      1.431505
+     ],
+     "published_range_rad": [
+      -1.57,
+      1.57
+     ]
+    }
+   ]
+  },
+  "electronics_stack": {
+   "label": "electronics stack",
+   "count": 1,
+   "file": "parts/electronics_stack.stl",
+   "file_triangles": 55172,
+   "mass_g": 12.5,
+   "com_mm": [
+    -0.02,
+    0.25,
+    -0.18
+   ],
+   "box_mm": [
+    35.6,
+    35.5,
+    19.5
+   ],
+   "collision_box_mm": {
+    "max": [
+     17.8,
+     17.75,
+     9.75
+    ],
+    "min": [
+     -17.8,
+     -17.75,
+     -7.35
+    ]
+   },
+   "materials": [
+    "board_black",
+    "board_green",
+    "component_black",
+    "connector_white",
+    "contact_gold",
+    "printed_black_020",
+    "screw_bright"
+   ]
+  },
+  "upper_shell": {
+   "label": "upper shell",
+   "count": 1,
+   "file": "parts/upper_shell.stl",
+   "file_triangles": 59848,
+   "mass_g": 10.2,
+   "com_mm": [
+    11.54,
+    -0.03,
+    -0.82
+   ],
+   "box_mm": [
+    92.113,
+    61.749,
+    12.65
+   ],
+   "collision_box_mm": {
+    "max": [
+     46.51,
+     31.31,
+     6.79
+    ],
+    "min": [
+     -46.46,
+     -31.24,
+     -3.31
+    ]
+   },
+   "materials": [
+    "printed_black_016",
+    "printed_black_020",
+    "screw_black"
+   ]
+  },
+  "dorsal_cover": {
+   "label": "dorsal cover",
+   "count": 1,
+   "file": "parts/dorsal_cover.stl",
+   "file_triangles": 23292,
+   "mass_g": 28.6,
+   "com_mm": [
+    5.02,
+    -3.75,
+    4.39
+   ],
+   "box_mm": [
+    88.6,
+    88.014,
+    32.25
+   ],
+   "collision_box_mm": {
+    "max": [
+     44.79,
+     44.39,
+     16.12
+    ],
+    "min": [
+     -44.79,
+     -44.49,
+     -13.61
+    ]
+   },
+   "materials": [
+    "printed_black_020",
+    "screw_black"
+   ]
+  },
+  "power_hub": {
+   "label": "power hub",
+   "count": 1,
+   "file": "parts/power_hub.stl",
+   "file_triangles": 23134,
+   "mass_g": 26.0,
+   "com_mm": [
+    7.7,
+    1.91,
+    -0.03
+   ],
+   "box_mm": [
+    61.892,
+    48.036,
+    19.722
+   ],
+   "collision_box_mm": {
+    "max": [
+     31.29,
+     24.36,
+     10.2
+    ],
+    "min": [
+     -31.29,
+     -24.36,
+     -10.11
+    ]
+   },
+   "materials": [
+    "board_blue",
+    "component_black",
+    "connector_white",
+    "metal_nickel",
+    "plastic_beige",
+    "printed_black_016",
+    "screw_black",
+    "terminal_green"
+   ]
+  },
+  "press_cap": {
+   "label": "press-fit cap",
+   "count": 1,
+   "file": "parts/press_cap.stl",
+   "file_triangles": 8488,
+   "mass_g": 9.8,
+   "com_mm": [
+    1.18,
+    3.2,
+    2.08
+   ],
+   "box_mm": [
+    64.001,
+    59.074,
+    11.0
+   ],
+   "collision_box_mm": {
+    "max": [
+     32.0,
+     29.54,
+     5.5
+    ],
+    "min": [
+     -32.0,
+     -29.54,
+     -5.5
+    ]
+   },
+   "materials": [
+    "printed_black_020"
+   ]
+  }
+ }
+}

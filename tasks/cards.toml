@@ -137,6 +137,12 @@ summary = "Watch an automated car's camera and planner, let the planner drive wh
 platforms = ["ground"]
 stages = ["behavior"]
 
+[earthquake_search_and_rescue]
+title = "Find a quake survivor with a rescue crawler"
+summary = "Program a tracked rescue robot to search a collapsed building with its own sensors, clear debris, find a survivor, leave a kit and come back."
+platforms = ["ground"]
+stages = ["behavior"]
+
 [racecar_cad_design_from_photos]
 title = "Model a tenth-scale race car in CAD"
 summary = "Rebuild the lost CAD of a tenth-scale autonomous race car's 23 made parts in FreeCAD from photos of its staged teardown, and assemble them with its given parts."
@@ -173,6 +179,18 @@ summary = "Plan, from RGB-D images alone, how a dexterous hand posts all eleven 
 platforms = ["hand"]
 stages = ["behavior"]
 
+[dexterous_hand_cad_design_from_photos]
+title = "Model a four-digit robot hand in CAD"
+summary = "Rebuild the lost CAD of a four-digit robot hand's 52 printed parts in FreeCAD from photos of its staged teardown, and assemble them with its 53 bought parts."
+platforms = ["hand"]
+stages = ["hardware-design"]
+
+[dexterous_hand_full_assembly_16dof_panda]
+title = "Assemble a four-digit robot hand with a Panda"
+summary = "Program a Franka Panda to build a four-digit robot hand from its nine bolt-on modules onto its palm, guided by its picture manual and the cell's cameras."
+platforms = ["hand"]
+stages = ["assembly"]
+
 [hot3d_sharpa_retarget]
 title = "Retarget human hand motion to robot hands"
 summary = "Turn clips of people moving objects with both hands into joint targets that make a pair of Sharpa robot hands move the objects the same way."
@@ -189,6 +207,12 @@ stages = ["behavior"]
 title = "Clean a studio apartment with a humanoid"
 summary = "Program a Unitree G1 humanoid to clean a studio apartment after a dinner: sort the trash, wash up, wipe a spill and sweep, from its cameras alone."
 platforms = ["humanoid"]
+stages = ["behavior"]
+
+[cross_embodiment_adaptation]
+title = "Scout a warehouse and dock a loaded Go1"
+summary = "Survey a warehouse by drone, then walk a loaded quadruped joint by joint under a duct and over a deck to its dock, correcting for a load and clearances that differ per site."
+platforms = ["quadruped"]
 stages = ["behavior"]
 
 [humanoid_leg_cad_design_from_photos]
@@ -272,6 +296,12 @@ stages = ["behavior"]
 [aerial_search_geolocation]
 title = "Find and geolocate targets from a drone"
 summary = "Fly a quadrotor to the things a ground team describes, confirm each from above and report where it is, or say with confidence that it is not there."
+platforms = ["uav"]
+stages = ["behavior"]
+
+[time_limited_search_and_rescue]
+title = "Find and evacuate a mannequin by drone"
+summary = "Write the flight program of a small indoor drone that searches two warehouse floors with its cameras, fits the right rescue head, and carries a mannequin on its litter to the open receiving station."
 platforms = ["uav"]
 stages = ["behavior"]
 

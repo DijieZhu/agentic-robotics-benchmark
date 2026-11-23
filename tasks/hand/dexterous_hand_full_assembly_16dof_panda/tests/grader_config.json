@@ -1,0 +1,178 @@
+{
+    "agent_cameras": [
+        "top",
+        "wrist"
+    ],
+    "agent_render": {
+        "live_lamps": 6,
+        "note": "the Filament agent renderer's scene settings (arm/assembly_hand/agent_render.py): omit_hidden_pieces leaves the pieces of render_omit.json (no ray leaves their own link; whole pieces, none changed) out of the RGB and the depth twin, pinned by omit_list_sha256; the live_lamps room lamps nearest the bench light the live objects, the shadow_lamps nearest of them cast shadows; the given STL files keep every triangle",
+        "omit_hidden_pieces": true,
+        "omit_list": "arm/assembly_hand/render_omit.json",
+        "omit_list_sha256": "03ac84c04fb771f734c171ace2fd2773ebda62a8a86502a9a3deaf87560d690d",
+        "shadow_lamps": 2
+    },
+    "agent_renderer": "filament",
+    "camera_budget_frames": 600,
+    "camera_layer": {
+        "enabled": true,
+        "note": "the cell's cameras on: every get_camera call renders through arm/assembly_hand/agent_render.py (Filament in the baked room, depth from MuJoCo on the same geometry)"
+    },
+    "cell": {
+        "note": "the cell's settings over arm/assembly_hand/cell.py CELL_CONFIG; robot_home_q = the Panda's posture at reset, the agent's home (describe()['robot']['home_q']) and the reference's via posture: the hand folded back over the robot base, so the top camera sees the trays, the fixture with the palm base and the fixture board at the start (the earlier posture [0, -0.4, 0, -2.3, 0, 1.9, 0.785] stood over the fixture and hid the palm base and, in some draws, a unit in the parts tray)",
+        "robot_home_q": [
+            0.0,
+            -1.0,
+            0.0,
+            -2.6,
+            0.0,
+            1.6,
+            0.785
+        ]
+    },
+    "cpu_cap_factor": 4.0,
+    "damage": {
+        "exclude_locked_pairs": true,
+        "fastening_loads": true,
+        "note": "R2: (a) the normal forces between a unit and any other body but the pads, summed per (unit, body) pair, contacts inside a fastened cluster excluded; (b) for a fastened or engaged unit the net force its fastening carries (the lock weld's or the guide's constraint force plus the same pair's contacts, as vectors); above part_force_N (25 N, frozen) for `ticks` consecutive 10 ms ticks (0.2 s) is a safety violation",
+        "part_force_N": 25.0,
+        "ticks": 20
+    },
+    "drop": {
+        "speed_m_s": 0.25,
+        "watch_ticks": 50
+    },
+    "episode_trace": {
+        "agent": true,
+        "anchor": false,
+        "every_ticks": 4,
+        "note": "maintainers' replay record of every agent episode under /opt/arb-verify/out/trace (root-only, outside /opt/ale, which the engine clears before it keeps a sandbox; tests/episode_trace.py); never a scoring input"
+    },
+    "episodes": 3,
+    "held": {
+        "force_N": 1.0,
+        "ticks": 5
+    },
+    "hidden_gt": {
+        "files": 91,
+        "note": "the cell's kit (gt/: kit.json, mating_graph.json, joints.json, meshes/visual/, meshes/collision/), not in the repository and never in the image: verify.py fetch_hidden_gt downloads this tarball of the benchmark's asset dataset at verify start, checks its sha256 and file count and unpacks it into the root-only stage folder; until it is uploaded the url is a placeholder and tests/test.sh points ARB_HIDDEN_GT_TARBALL at the local copy tests/assets/gt.tar.xz (the maintainers' build tool rebuilds it byte for byte)",
+        "sha256": "9f72744d49e4181b4dbaa4249c43c2c040c105d02024a242b8116c72cf3e236c",
+        "url": "https://huggingface.co/datasets/grounded-intelligence-initiative/ale-robotics-assets/resolve/3e3af109d4d6eb40f3490af2608b57681c94fa24/tasks/hand/dexterous_hand_full_assembly_16dof_panda/verifier/gt.tar.xz"
+    },
+    "info_layout": {
+        "camera_draw": {
+            "c_rel": 0.02,
+            "f_rel": 0.03,
+            "k1": [
+                -0.08,
+                0.02
+            ],
+            "k2": [
+                -0.02,
+                0.02
+            ],
+            "mount_ang_deg": 3.0,
+            "mount_pos_m": 0.03,
+            "p": 0.001,
+            "wrist_ang_deg": 1.0,
+            "wrist_pos_m": 0.002
+        },
+        "cameras": {
+            "top": {
+                "depth": true,
+                "eye": [
+                    -0.097,
+                    -0.012,
+                    1.25
+                ],
+                "hfov_deg": 70.0,
+                "size": [
+                    1280,
+                    960
+                ],
+                "target": [
+                    -0.097,
+                    -0.012,
+                    0.0
+                ],
+                "up": [
+                    0.0,
+                    1.0,
+                    0.0
+                ]
+            },
+            "wrist": {
+                "depth": true,
+                "hfov_deg": 80.0,
+                "offset_m": 0.05720137772977594,
+                "size": [
+                    640,
+                    480
+                ],
+                "tilt_deg": 16.921104305540013,
+                "z_m": 0.041169104589646295
+            }
+        },
+        "note": "the precedent's camera classes, wrist mount and per-episode spreads; the top camera straight down over the working area at the height chosen by the camera rule"
+    },
+    "lost_z_m": -0.05,
+    "max_ticks_per_step": 500,
+    "oracle_nominal_layout": true,
+    "parse_limits": {
+        "address_space_gib": 12,
+        "per_file_s": 300,
+        "total_s": 1800,
+        "note": "every .py / .sh file of the submission is decoded, scanned and parsed in a separate process, never in the grader itself: that process's address space is limited to address_space_gib GiB, each file to per_file_s seconds of wall clock and the whole audit to total_s seconds of wall clock; a file beyond the per-file limit, or an audit beyond total_s, is a contract failure with its own reason"
+    },
+    "privileged_wall_cap_s": 7200.0,
+    "reach_check": {
+        "enabled": true,
+        "max_draws": 8,
+        "max_grasps": 24,
+        "note": "every non-nominal layout is checked in the built cell (server._reach_check): every loose unit keeps a grasp of the cell's grasp table that reaches with the clearances where it rests; a failed draw redraws the WHOLE layout on a sub-seed, at most max_draws draws, the nominal layout last"
+    },
+    "route_gate": {
+        "forbidden_calls": [
+            "torch.optim",
+            ".backward(",
+            "jax.grad"
+        ],
+        "forbidden_extensions": [
+            ".pt",
+            ".pth",
+            ".onnx",
+            ".safetensors",
+            ".ckpt",
+            ".h5",
+            ".pb",
+            ".pkl",
+            ".npz"
+        ],
+        "max_entries": 10000,
+        "max_submission_mb": 60
+    },
+    "runner_account": "nobody",
+    "safety": {
+        "note": "R1: a Panda link other than the two finger (pad) bodies pressing on anything above panda_force_N (20 N, frozen), the normal forces summed per body pressed on, in any tick; R4: a unit's centre of mass faster than part_speed_m_s (3 m/s, frozen; a unit that falls off the bench counts here)",
+        "panda_force_N": 20.0,
+        "part_speed_m_s": 3.0
+    },
+    "scope": {
+        "mates": null,
+        "name": "default",
+        "note": "every mate of the kit's mating graph (the nine units: four digit modules 1.5 each, the stack, the upper shell, the dorsal cover and the power hub 1.0 each, the press-fit cap 0.5; total 10.5); `mates` null = every mate"
+    },
+    "scoring": {
+        "note": "an episode with a safety violation keeps safety_violation_factor of its stage score (0 would zero it)",
+        "safety_violation_factor": 0.3
+    },
+    "settle_s": 1.0,
+    "silence_s": 120.0,
+    "sim_cap_s": 1200.0,
+    "socket_sample_s": 0.5,
+    "stops": {
+        "note": "R3: the torque a product joint carries against its mechanical stop (its limit constraint) above torque_Nm (0.20 N m, frozen) for `ticks` consecutive ticks (0.2 s) is a safety violation",
+        "ticks": 20,
+        "torque_Nm": 0.2
+    },
+    "wall_cap_s": 2400.0
+}
