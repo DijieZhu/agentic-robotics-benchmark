@@ -2,53 +2,53 @@
  "format": "grocery_shelf_restocking fixed set 1",
  "episodes": [
   {
-   "unit": "u1",
-   "seed": 211133243320152345
-  },
-  {
-   "unit": "u1",
-   "seed": 4303233889695170771
-  },
-  {
    "unit": "u0",
-   "seed": 10124075937690782795
-  },
-  {
-   "unit": "u2",
-   "seed": 4903150679438355602
-  },
-  {
-   "unit": "u2",
-   "seed": 12504814135717582691
-  },
-  {
-   "unit": "u5",
-   "seed": 16794123949479260044
-  },
-  {
-   "unit": "u5",
-   "seed": 1315658696101571354
+   "seed": 8655604427145380922
   },
   {
    "unit": "u3",
-   "seed": 153849798358071879
+   "seed": 12522703258252932785
   },
   {
-   "unit": "u4",
-   "seed": 236102174149986687
+   "unit": "u2",
+   "seed": 17916176778509742015
   },
   {
-   "unit": "u4",
-   "seed": 9361279018738215933
+   "unit": "u1",
+   "seed": 15676078723904254804
   },
   {
-   "unit": "u3",
-   "seed": 5701658480572086538
+   "unit": "u1",
+   "seed": 5232376540320629286
   },
   {
    "unit": "u0",
-   "seed": 9068574022569863314
+   "seed": 6209083839650233759
+  },
+  {
+   "unit": "u5",
+   "seed": 2464385930048794297
+  },
+  {
+   "unit": "u3",
+   "seed": 13673888849098239522
+  },
+  {
+   "unit": "u4",
+   "seed": 4507949046496696936
+  },
+  {
+   "unit": "u4",
+   "seed": 15136533628039104477
+  },
+  {
+   "unit": "u2",
+   "seed": 2662273743987244155
+  },
+  {
+   "unit": "u5",
+   "seed": 8096489541844632549
   }
  ],
- "source": "Selected 2026-11-23 by tests/review/select_set.py (the rule in its docstring), draw 6 of 6 (5 voided); key os.urandom(32), drawn 2026-11-23T03:20:45Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, tests/shelf_render.py, tests/shelf_scene.py, tests/shelf_parts.py, tests/shelf_geom.py, tests/shelf_tex.py, tests/shelf_looks.py, tests/shelf_look.json, environment/assets.sha256, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_render.py, solution/oracle/shelf_scene.py, solution/oracle/shelf_parts.py, solution/oracle/shelf_geom.py, solution/oracle/shelf_tex.py, solution/oracle/shelf_looks.py, solution/oracle/shelf_look.json, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 16, rejected 4: u2#0 (wire [0.0]); u3#1 (wire [0.0]); u5#0 (wire [1.0, 1.0, 0.0]); u5#1 (wire [0.0]). Episodes restocking shelf 0 / 1 / 2: 5/9/10; with an expired unit: 9, with a delivered unit dated before an old one: 11, of the 12. Graded order: a Fisher-Yates keyed by the same key."
+ "source": "Selected 2026-11-23 by tests/review/select_set.py (the rule in its docstring), draw 7 of 7 (6 voided); key os.urandom(32), drawn 2026-11-23T07:15:51Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, tests/shelf_render.py, tests/shelf_scene.py, tests/shelf_parts.py, tests/shelf_geom.py, tests/shelf_tex.py, tests/shelf_looks.py, tests/shelf_look.json, environment/assets.sha256, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_render.py, solution/oracle/shelf_scene.py, solution/oracle/shelf_parts.py, solution/oracle/shelf_geom.py, solution/oracle/shelf_tex.py, solution/oracle/shelf_looks.py, solution/oracle/shelf_look.json, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 16, rejected 4: u1#0 (wire [0.9]); u1#2 (wire [1.0, 0.9]); u1#3 (wire [0.0]); u5#0 (wire [0.9]). Episodes restocking shelf 0 / 1 / 2: 8/8/8; with an expired unit: 10, with a delivered unit dated before an old one: 10, of the 12. Graded order: a Fisher-Yates keyed by the same key."
 }
