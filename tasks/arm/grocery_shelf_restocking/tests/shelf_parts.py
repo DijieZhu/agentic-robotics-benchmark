@@ -87,6 +87,19 @@ def can_unit(sku, nseg=48):
     return [("wrap", wrap, None, {"uv": "own"}), ("ends", G.merge(bot, top), "can_metal", {})]
 
 
+def is_bottle(sku):
+    return sku["kind"] != "box" and sku["size"][1] > 0.08
+
+
+def bottle_radius(sku, z):
+    """a bottle's radius at height z (the unit's frame): the body up to the shoulder, then the shoulder's curve"""
+    r, hh = sku["size"]
+    rn = 0.45 * r
+    zs = hh * 0.30                                                 # the shoulder starts
+    t = min(max((z - zs) / (hh * 0.92 - zs), 0.0), 1.0)
+    return r - (r - rn) * (0.5 - 0.5 * math.cos(math.pi * t))
+
+
 def bottle_unit(sku, nseg=48):
     r, hh = sku["size"]
     rn = 0.45 * r
@@ -94,7 +107,7 @@ def bottle_unit(sku, nseg=48):
     prof = [(0, -hh + 0.003), (r - 0.006, -hh + 0.003), (r - 0.002, -hh), (r, -hh + 0.004), (r, zs)]
     for k in range(1, 9):
         t = k / 8.0
-        prof.append((r - (r - rn) * (0.5 - 0.5 * math.cos(math.pi * t)), zs + t * (hh * 0.92 - zs)))
+        prof.append((bottle_radius(sku, zs + t * (hh * 0.92 - zs)), zs + t * (hh * 0.92 - zs)))
     prof += [(rn, hh)]
     body = _own_uv(G.lathe(prof, nseg, r_uv=1.0), hh)
     cap = G.lathe([(rn, hh), (rn + 0.0012, hh + 0.0005), (rn + 0.0012, hh + 0.022), (rn - 0.0008, hh + 0.024), (0, hh + 0.024)], nseg)
@@ -104,7 +117,7 @@ def bottle_unit(sku, nseg=48):
 def unit_parts(sku, lay, nseg=48):
     if sku["kind"] == "box":
         return box_unit(sku, lay)
-    if sku["size"][1] > 0.08:
+    if is_bottle(sku):
         return bottle_unit(sku, nseg)
     return can_unit(sku, nseg)
 
@@ -127,15 +140,23 @@ def code_decal(sku, at, sizes):
         m.quad([c - rd * pu - zv * pv, c + rd * pu - zv * pv, c + rd * pu + zv * pv, c - rd * pu + zv * pv], n,
                [(0, 0), (1, 0), (1, 1), (0, 1)])
     else:
-        r = sku["size"][0] - 0.0007 + E
+        # on the unit's own surface: a can's wall is 0.7 mm inside the task's cylinder, a bottle's body is the
+        # task's cylinder and its shoulder narrows above (the label follows it in rows). The label's width is the
+        # task's on the task's cylinder (the angle it spans there).
+        bottle = is_bottle(sku)
         phi = math.pi + at["face_yaw"]
-        ha = pu / r
-        ns = 8
-        for k in range(ns):
-            a0, a1 = phi - ha + 2 * ha * k / ns, phi - ha + 2 * ha * (k + 1) / ns
-            d0, d1 = np.array([math.cos(a0), math.sin(a0), 0]), np.array([math.cos(a1), math.sin(a1), 0])
-            m.quad([r * d0 + [0, 0, zc - pv], r * d1 + [0, 0, zc - pv], r * d1 + [0, 0, zc + pv], r * d0 + [0, 0, zc + pv]],
-                   np.asarray([d0, d1, d1, d0]), [(k / ns, 0), ((k + 1) / ns, 0), ((k + 1) / ns, 1), (k / ns, 1)])
+        ha = pu / sku["size"][0]
+        ns, nv = 8, (6 if bottle else 1)
+        for j in range(nv):
+            z0, z1 = zc - pv + 2 * pv * j / nv, zc - pv + 2 * pv * (j + 1) / nv
+            r0 = (bottle_radius(sku, z0) if bottle else sku["size"][0] - 0.0007) + E
+            r1 = (bottle_radius(sku, z1) if bottle else sku["size"][0] - 0.0007) + E
+            for k in range(ns):
+                a0, a1 = phi - ha + 2 * ha * k / ns, phi - ha + 2 * ha * (k + 1) / ns
+                d0, d1 = np.array([math.cos(a0), math.sin(a0), 0]), np.array([math.cos(a1), math.sin(a1), 0])
+                m.quad([r0 * d0 + [0, 0, z0], r0 * d1 + [0, 0, z0], r1 * d1 + [0, 0, z1], r1 * d0 + [0, 0, z1]],
+                       np.asarray([d0, d1, d1, d0]),
+                       [(k / ns, j / nv), ((k + 1) / ns, j / nv), ((k + 1) / ns, (j + 1) / nv), (k / ns, (j + 1) / nv)])
     return m.arrays()
 
 
