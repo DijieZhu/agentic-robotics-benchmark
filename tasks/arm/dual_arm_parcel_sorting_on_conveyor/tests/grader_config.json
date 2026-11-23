@@ -1,0 +1,211 @@
+{
+ "shifts_graded": 8,
+ "runner_account": "nobody",
+ "cpu_cap_factor": 4.0,
+ "socket_sample_s": 0.5,
+ "world": {
+  "solver": {"integrator": "implicitfast", "cone": "elliptic", "impratio": 100.0, "iterations": 100, "ls_iterations": 50, "noslip_iterations": 0, "tolerance": 1e-08},
+  "lock_gripper_couplers": true,
+  "finger_pads": {
+   "soft": true,
+   "solref": [0.005, 1.0],
+   "condim": 4,
+   "friction": 1.8
+  },
+  "parcel_contact": {
+   "rigid": {"solimp": [0.95, 0.99, 0.001, 0.5, 2.0], "solref": [0.005, 1.0]},
+   "soft_geom": {"solimp": [0.6, 0.95, 0.008, 0.5, 2.0], "solref": [0.02, 0.6]},
+   "soft_pad": {"solimp": [0.5, 0.9, 0.01, 0.5, 2.0], "solref": [0.03, 0.5]}
+  },
+  "station": {
+   "belt_height": 0.9,
+   "belt_center_x": 0.38,
+   "belt_width": 0.44,
+   "visible_half_len": 1.3,
+   "work_window_half": 0.42,
+   "belt_friction": 0.9,
+   "lip_full_window": true,
+   "lip_height": 0.03,
+   "near_guide_up_height": 0.09,
+   "near_guide_down_height": 0.09,
+   "leg_style": "posts"
+  },
+  "hardware_boxes": [["infeed_camera_body", [0.38, -0.75, 1.7823], [0.045, 0.014, 0.0321]], ["infeed_camera_bracket", [0.38, -0.738, 1.82], [0.022, 0.022, 0.0025]], ["infeed_camera_rod", [0.38, -0.715, 2.125], [0.015, 0.015, 0.295]], ["belt_drive_unit", [0.38, 0.98, 0.7625], [0.217, 0.126, 0.0785]], ["belt_drive_motor_cover", [0.684, 0.975, 0.75], [0.062, 0.085, 0.074]], ["belt_drive_motor", [0.674, 1.18, 0.75], [0.064, 0.12, 0.0632]], ["belt_drive_motor_terminal", [0.674, 1.13, 0.825], [0.04, 0.045, 0.022]]],
+  "robot_mounts": {
+   "head_camera_housing": {"body": "Base_Link", "centre": [0.078, 0.0, 1.3045], "half_size": [0.0866, 0.044, 0.0425]},
+   "wrist_cameras": {"Left": {"pos": [0.0, 0.0042, 0.0913], "side_sign": 1.0, "pitch_deg": 0.0}, "Right": {"pos": [0.0, -0.0042, 0.0913], "side_sign": -1.0, "pitch_deg": 0.0}}
+  },
+  "start_posture": [-0.7842, 2.1067, 0.7271, 1.946, -1.9143, -1.54, -1.1825, 0.7842, -2.1067, -0.7271, 1.946, 1.9143, 1.54, 1.1825],
+  "settle_s": 0.3,
+  "target_speed_limit_rad_s": 6.0,
+  "tool_pose": {
+   "iterations": 6,
+   "damping": 0.0001,
+   "residual_damping": 0.1,
+   "rot_length_m": 2.0,
+   "max_step_error_m": 0.5,
+   "joint_margin_rad": 0.01,
+   "speed_share": 0.95,
+   "bound_approach": 0.3,
+   "reached_m": 0.001,
+   "reached_deg": 0.5,
+   "stall_rel": 0.002,
+   "stall_ticks": 5,
+   "unlatch_m": 0.005,
+   "unlatch_rel": 0.05,
+   "gravity_compensation": true
+  },
+  "belt_speed_compensation": true,
+  "solid_frame": true,
+  "entry_y": -1.15,
+  "scan_y": 0.95,
+  "exit_y": 1.32,
+  "entry_clearance_m": 0.06,
+  "gripper_object": {
+   "hold_s": 0.2,
+   "short_m": 0.003,
+   "still_m": 0.0005,
+   "free_opening_m": [0.0851, 0.0815, 0.0777, 0.0738, 0.0698, 0.0657, 0.0615, 0.0572, 0.0529, 0.0485, 0.044, 0.0395, 0.0349, 0.0303, 0.0256, 0.0209, 0.0162, 0.0115, 0.0067, 0.002, 0.0004]
+  }
+ },
+ "cameras": {
+  "exposure_ticks": 2,
+  "delay_ticks": 3,
+  "ring_states": 4,
+  "list": {
+   "infeed": {"model_camera": "inspect_cam", "size": [640, 480], "fovy_deg": 62.0, "depth_range_m": [0.2, 4.0]},
+   "head": {"model_camera": "head_cam", "size": [640, 400], "fovy_deg": 66.0, "depth_range_m": [0.2, 4.0]},
+   "wrist_left": {"model_camera": "Left_wrist_cam", "size": [424, 240], "fovy_deg": 58.0, "depth_range_m": [0.07, 0.6], "flange_site": "Left_flange"},
+   "wrist_right": {"model_camera": "Right_wrist_cam", "size": [424, 240], "fovy_deg": 58.0, "depth_range_m": [0.07, 0.6], "flange_site": "Right_flange"}
+  },
+  "installation_tolerance": {
+   "infeed": {"position_m": 0.015, "angle_deg": 1.5, "frame": "world"},
+   "head": {"position_m": 0.01, "angle_deg": 1.5, "frame": "the robot's base"},
+   "wrist": {"position_m": 0.003, "angle_deg": 1.0, "frame": "its gripper"},
+   "focal_rel": 0.01
+  }
+ },
+ "sensors": {
+  "rgb_noise_sigma": 2.0,
+  "depth_noise_rel": 0.005,
+  "depth_dropout": 0.01,
+  "tau_noise_rel": 0.015,
+  "tau_offset_rel": 0.01,
+  "tau_offset_period_s": [40.0, 240.0]
+ },
+ "installation": {"cameras": {"head": {"d_pos_m": [0.001097, 0.007578, 0.000662], "d_rotvec_rad": [-0.0180772, -0.0019621, -0.0058128], "focal_scale": 1.008152}, "infeed": {"d_pos_m": [0.006044, -0.004106, 0.007544], "d_rotvec_rad": [-0.0056418, -0.0218759, 0.0106043], "focal_scale": 0.994658}, "wrist_left": {"d_pos_m": [-0.001861, 0.000734, -0.000445], "d_rotvec_rad": [-0.0013954, 0.0072566, -0.0028915], "focal_scale": 1.004067}, "wrist_right": {"d_pos_m": [-0.000973, 0.001864, -0.001275], "d_rotvec_rad": [0.0047929, -0.0034529, -0.0066349], "focal_scale": 1.005934}}, "seed_hex": "5f6ddc668d92c29f137f31aa9f4f8a38", "tool": "tests/review/draw_installed.py cameras"},
+ "look": {
+  "backend": "filament",
+  "parcel_visuals": "kit",
+  "look_file": "look_config/look.json",
+  "render_dir": null,
+  "depth_twin": "auto",
+  "kit_cache_dir": null
+ },
+ "budgets": {
+  "program_time_factor": 1.0,
+  "program_time_extra_s": 60.0,
+  "silence_s": 20.0,
+  "frames_per_shift_s": 2.0,
+  "max_ticks_per_step": 50,
+  "after_over_steps": 50,
+  "after_over_requests": 200,
+  "after_over_s": 60.0,
+  "request_line_bytes": 4194304,
+  "privileged_program_time_factor": 10.0,
+  "start_s": 120.0
+ },
+ "route_gate": {
+  "forbidden_calls": ["torch.optim", ".backward(", "jax.grad"],
+  "forbidden_extensions": [".pt", ".pth", ".onnx", ".safetensors", ".ckpt", ".h5", ".pb", ".pkl", ".npz"],
+  "max_submission_mb": 60
+ },
+ "safety": {
+  "structure_N": 60.0,
+  "self_N": 60.0,
+  "belt_N": 100.0,
+  "press_ticks": 3,
+  "stop_lock_s": 5.0,
+  "damage_N": 400.0,
+  "max_stops": 5,
+  "squeeze_N": 300.0,
+  "squeeze_ticks": 3
+ },
+ "score": {
+  "label_tilt_deg": 25.0,
+  "max_angular_speed_rad_s": 2.0,
+  "max_rel_speed_m_s": 0.1,
+  "rest_window_s": 0.5,
+  "rest_clearance_max_m": 0.01,
+  "duty": {
+   "kinds": ["rigid"],
+   "label_positions": ["underneath", "downstream"]
+  }
+ },
+ "line": {
+  "note": "the line setting: one parcel of the shift's list in the station at a time, fed on settle; every parcel in the duty",
+  "feed": "on_settle",
+  "indexing_zone_y": [-0.15, 0.10],
+  "score": {"duty": {"kinds": ["rigid", "soft"], "label_positions": ["underneath", "downstream", "upstream", "near_side", "far_side"]}, "due_margin_s": 5.0},
+  "shifts": {
+   "version": "line-1",
+   "belt_speed_classes": {"slow": [0.05, 0.15], "medium": [0.15, 0.25], "fast": [0.25, 0.35]},
+   "indexing_share": 0.3,
+   "kind_shares": {"rigid": 0.5, "soft": 0.5},
+   "rigid_size_m": [[0.16, 0.30], [0.14, 0.26], [0.07, 0.16]],
+   "soft_size_m": [[0.16, 0.30], [0.14, 0.26], [0.05, 0.10]],
+   "mass_kg": [0.2, 2.0],
+   "friction": [0.3, 1.5],
+   "com_offset_max_m": 0.04,
+   "label_uv_max": 0.55,
+   "set_down_y": [-1.15, -1.00],
+   "yaw_rad": [-3.141592653589793, 3.141592653589793],
+   "duration_s": 600.0,
+   "bench_duration_s": 300.0,
+   "rated_ride_m": 2.025,
+   "rated_handling_s": 4.0
+  }
+ },
+ "shifts": {
+  "task_id": "dual_arm_parcel_sorting_on_conveyor",
+  "version": "v1",
+  "belt_speed_classes": {
+   "slow": [0.05, 0.13],
+   "medium": [0.13, 0.21],
+   "fast": [0.21, 0.28]
+  },
+  "mix_classes": {
+   "standard": 0.2
+  },
+  "parcels": [15, 25],
+  "parcels_by_class": {
+   "slow": [15, 21],
+   "medium": [17, 24],
+   "fast": [18, 25]
+  },
+  "bench_parcels": [1, 3],
+  "first_arrival_s": [1.0, 3.0],
+  "gap_margin_m": 0.1,
+  "gap_extra": "exponential",
+  "gap_extra_m": 0.6,
+  "gap_extra_cap_m": 2.4,
+  "bench_gap_extra_m": [1.5, 2.5],
+  "arrival_gap_min": {
+   "t_s": 10.0,
+   "d_m": 0.2
+  },
+  "carton_size_m": [[0.16, 0.3], [0.16, 0.3], [0.11, 0.18]],
+  "mailer_size_m": [[0.16, 0.3], [0.14, 0.26], [0.05, 0.12]],
+  "mass_kg": [0.3, 3.0],
+  "friction": [0.4, 0.75],
+  "com_offset_max_m": 0.0,
+  "label_uv_max": 0.55,
+  "mailer_label_faces": [0, 1],
+  "near_face_gap_m": [0.0, 0.01],
+  "yaw_noise_deg": 8.0,
+  "label_face_weights": "area",
+  "tail_s": 40.0,
+  "duration_s": 600.0,
+  "bench_duration_s": 300.0
+ }
+}

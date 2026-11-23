@@ -1,0 +1,13 @@
+Robotiq 2F-85 gripper model (MJCF and meshes), unmodified copy.
+
+Origin:   MuJoCo Menagerie, https://github.com/google-deepmind/mujoco_menagerie
+Folder:   robotiq_2f85/ (2f85.xml, assets/*.stl, LICENSE)
+Commit:   370c43965323c0944b433b202aac5058b5f907a9 (2026-11-10)
+Licence:  BSD-2-Clause, see LICENSE in this folder (copyright 2013, ROS-Industrial).
+          The model is derived from the ROS-Industrial robotiq URDF description.
+
+Not copied: README.md, CHANGELOG.md, scene.xml, 2f85.png.
+At build time parcelcell attaches this model twice (prefixes L_ and R_) to the
+wrist flange sites, drops its keyframes and, by default, softens the four finger
+pad boxes (solref 0.02 1, sliding friction 1.8) to model compliant pad covers.
+The file itself is not edited.

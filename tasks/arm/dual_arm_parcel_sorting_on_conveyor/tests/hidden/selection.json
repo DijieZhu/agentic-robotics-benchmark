@@ -1,0 +1,1726 @@
+{
+ "placeholder": false,
+ "registered_rule": {
+  "file": "selection_rule.txt",
+  "sha256": "d599aea930349493a1076e2463870d629394a02c5b6e29e8840cec91755cd875",
+  "text": "THE REGISTERED RULE OF THE HIDDEN SET (written before any draw)\n\nEight shifts; slot order and belt class: 1 slow (0.05-0.13 m/s), 2 medium (0.13-0.21), 3 fast (0.21-0.28), 4 medium,\n5 fast, 6 slow, 7 medium, 8 fast. One salt of 16 bytes from the system's entropy, drawn once at selection time and\nrecorded in the hidden selection file; a candidate's seed is the hash of salt, slot label and a counter k = 0, 1, 2,\n... The frozen generator draws each candidate. A slot takes the FIRST candidate that meets all of: (q1) at least 6\nin-duty parcels arriving label not up, of which at least 3 with the label underneath and at least 2 with the label on\nthe downstream face; (q2) at least 2 cartons arriving label-up; (q3) at least 2 mailers; (q4) at least 3 cartons\noutside the duty; (q5) the natural end at most 600 s (true of every generated shift); (q6) at least 2 in-duty cartons\nwhose length along the belt is more than 0.26 m; (a) the frozen reference, through the privileged path on the task's\nown cell with the task's numerics settings, leaves every in-duty parcel and every label-up parcel readable at the scan\nline, loses or damages nothing, and has no protective stop and no limiter clip; (b) a second run in a fresh process\ngives the identical record. Every rejected candidate is recorded with its reason. Nothing else may influence the\nchoice; no candidate is run with a camera-driven program before the set is frozen. The anchor is the reference's\nreward in one fresh full verify in the image.\n\nReadings, fixed before the draw:\n  (q1)  an in-duty parcel arriving label not up is a parcel of class W (a carton whose label is underneath or on the\n        downstream face as it lands, its label more than 25 degrees from vertical up);\n  (q2)  a carton arriving label-up is a carton of class U;\n  (q4)  a carton outside the duty is a carton of class X (its label on the upstream, the near side or the far side\n        face as it lands);\n  (q5)  every full shift lasts the same fixed time, 600 s, whatever its belt speed and arrivals, so (q5) is read as\n        the shift's natural end being at most 600 s: last arrival + 2.1 m / belt speed + 40 s (the last parcel's ride\n        from the entry line past the scan line, and the tail), computed from the arrivals and the belt speed, never\n        from the package's duration field; the frozen generator draws only shifts that meet it; the check stays part\n        of the rule;\n  (q6)  an in-duty carton is a parcel of class W; its length along the belt is the side that lies along the belt as\n        it lands (the landing yaw is a quarter turn k x 90 degrees within the yaw tolerance: the carton's second side\n        for even k, its first side for odd k); it counts when that length is more than 0.26 m.\n\nHow it is carried out (tests/review/select_hidden.py, inside the task image, on the frozen files that\ntests/frozen.json pins):\n  slot label   \"hidden-<slot>\" (slots 1 to 8);\n  seed         parcelcell.shiftgen.labelled_seed(\"hidden-<slot>\", k, mix=salt): the first 8 bytes (shifted right by\n               one bit) of sha256 over the text \"<task id>/hidden-<slot>/<shifts version>/<k>\", a \"/\" and the\n               salt's 16 bytes;\n  candidate    parcelcell.shiftgen.draw_shift(seed, config, profile \"full\", the slot's belt class);\n  quotas       (q1)-(q6) from the candidate's parcels alone (no reference run for a candidate that misses one);\n  (a) and (b)  two runs of the reference, each in a fresh process with the grader's numerics settings, as the grader\n               drives the oracle's program: describe(), one frame of every camera, reference_run(), finish(); (b)\n               compares the shift's record without its wall-clock and render-timing fields, the final physics state\n               digest and the limiter count;\n  record       tests/hidden/selection.json: the salt, this file's sha256, the sha256 of every frozen file before and\n               after the selection, every candidate with its class counts, natural end, quota result, run digests,\n               admission result and reasons; tests/hidden/seeds.json and tests/hidden/shifts/ hold the chosen eight.\n"
+ },
+ "rule": "Eight shifts. Slot order and belt class: 1 slow, 2 medium, 3 fast, 4 medium, 5 fast, 6 slow, 7 medium, 8 fast. One salt of 16 bytes is drawn once from the system's entropy at selection time and recorded here; a candidate's seed is labelled_seed('<set label>-<slot>', k, mix=salt) for k = 0, 1, 2, ... The frozen generator draws each candidate (belt speed inside the slot's class). A slot takes the FIRST candidate that meets all of: (q1) at least 6 in-duty parcels arriving label not up, of which at least 3 with the label underneath and at least 2 with the label on the downstream face; (q2) at least 2 cartons arriving label-up; (q3) at least 2 mailers; (q4) at least 3 cartons outside the duty; (q5) the shift's natural end (last arrival + 2.1 m / belt speed + 40 s, from the arrivals and the belt speed) at most 600 s (true of every generated shift); (q6) at least 2 in-duty cartons whose length along the belt is more than 0.26 m; (a) the frozen reference, through the privileged path on the task's own cell with the task's numerics settings, leaves every in-duty parcel and every label-up parcel readable at the scan line, loses or damages nothing, and has no protective stop and no limiter clip; (b) a second run in a fresh process gives the identical record. Every rejected candidate is recorded with its reason. Nothing else may influence the choice; no candidate is run with a camera-driven program before the set is frozen.",
+ "label": "hidden",
+ "salt_hex": "87293d40e6cde2a44f7047945bbd8c14",
+ "salt_source": "os.urandom(16) at selection time",
+ "generator": "parcel-shiftgen/5",
+ "slots": [
+  "slow",
+  "medium",
+  "fast",
+  "medium",
+  "fast",
+  "slow",
+  "medium",
+  "fast"
+ ],
+ "max_natural_end_s": 600.0,
+ "natural_end_rule": {
+  "ride_m": 2.1,
+  "tail_s": 40.0
+ },
+ "config_ride_and_tail": {
+  "ride_m": 2.1,
+  "tail_s": 40.0,
+  "equal_to_rule": true
+ },
+ "frozen": {
+  "parcelcell/__init__.py": "c210c0e305b9c9406ea60eebedf7495eb117f7780558a2deec8c00776a8ca00c",
+  "parcelcell/_geom.py": "ccdbf9fffee6fc1033e8299afe422d3b0889a43a15eb3d88e4c25afe7f077cbf",
+  "parcelcell/cameras.py": "517329a1877fea37221c8274cb91a6ee38e68145019c968126838c2f6a23697e",
+  "parcelcell/cell.py": "ffd52015fe676766e3ac58538a1c0c8903053f838efe5abb3d69c88296611560",
+  "parcelcell/client.py": "c623e486ea1244167e3178031209cd4ada1d9b07ded4445c0329e6d57bf9448f",
+  "parcelcell/config.py": "d4499dc32f866b8f53c21669494a448acc9eed394b8474b382416545d412976d",
+  "parcelcell/episode.py": "103b71dd18c9c2c56ac9059d1ed16463f403046c67de1ae7883e3ebf30b49227",
+  "parcelcell/filament_engine.py": "8534fbdfba90aa29b658fb7a0628780bd1a878a062f3f372b3796c6427475221",
+  "parcelcell/kitcache.py": "56f309a01b12709d986bd01460c069b1dbedb961ab7b15718ce9c646f9ed4983",
+  "parcelcell/look.py": "709452a075ace48f0735694c1ae4354f884b8c382425e3d6a05e6d3cad728bd6",
+  "parcelcell/look_depth.py": "2bdb102f214429b0cbc99abab14e969ff91a1cc7ef507657cd266b44c307d128",
+  "parcelcell/look_filament.py": "cea14f44a3aa0a4f8197f5b82c5058e3cf6fc24e01537b51967677b5e9ba4289",
+  "parcelcell/monitor.py": "e9090d3051f344838631df8eae27733aa2d5b67ad739c6d8919ed7a9efc0133a",
+  "parcelcell/robot.py": "fa05ce17ad03349f7ea64ea23082cd765e3985a39a3d4ea76a1b33faf46fb4da",
+  "parcelcell/safety.py": "a61ce7ca7a702995114a699dc4fc0cbfb1e252421c386022c81f6b9c3a8a31ca",
+  "parcelcell/sensors.py": "f8e4d6a317eb5d6b988ce9e395c0309ee9b9287c29298a3eca378a4d9334c31f",
+  "parcelcell/server.py": "821a7e1da1ea7a17eed08b893e3fa37c1145c5fc7db9bf074f669b820cbf9c5a",
+  "parcelcell/shiftgen.py": "df0cd2560123bcc5f8021f6b4f1fd0f58cc463dfc5b6ab9c36da3dd5f2070d9c",
+  "parcelcell/station.py": "0992a083c6ca5c1dc91088cfeded7437cabae76ef37cd950d35c9289d9831447",
+  "parcelcell/stream.py": "a708d063789dc8086d010a9dc4a0a626d3325222c19833cf52017719b75a0eb4",
+  "parcelcell/toolpose.py": "ca7817c1da8dbb9c8adaecf286200e3cdf2965f427bf6ff6b08cd6ac7d515914",
+  "parcelcell/truth.py": "af1e8ffefb98f12d86a15c48e9b8d895f78f031d2b8e94510e2e6cd93b5f8330",
+  "parcelcell/visuals.py": "7e0c9aef4634f304cecbcd25ab715cd5df53a2df902407fa9863d80271637825",
+  "parcelcell/world.py": "ee8cb8b8eb8461535f57d52d72e696e0a50ea44b7ffb4c79628f2b4af7d451e0",
+  "parcelcell/assets/gripper_2f85/2f85.xml": "d48aca5f9151798ffd38111ce4e8b2081f3ec2d4f525161b33643451580010de",
+  "parcelcell/assets/gripper_2f85/LICENSE": "3d5edd18d1e22a17666e9bb84270171ed5ac90b192d24e0177fd171708ea2316",
+  "parcelcell/assets/gripper_2f85/SOURCE.txt": "af05818d35141e2ad9a8baaf389d637ac30a4ddd31038ae76e01085d456ed937",
+  "parcelcell/assets/gripper_2f85/assets/base.stl": "1c7b9f2bd92d705fc4e897c94e905973a3c05f406845e942229433deb7041453",
+  "parcelcell/assets/gripper_2f85/assets/base_mount.stl": "87971dfdd6e5311b5a723e7b73c4701ebf5c2364df671500f30dfc1c53c8e61a",
+  "parcelcell/assets/gripper_2f85/assets/coupler.stl": "d5ee95e62f8415bf5b6e503c831a958f5fc1990bf9b2865329ec38a28932727c",
+  "parcelcell/assets/gripper_2f85/assets/driver.stl": "bbd6e868b1778bead60d2516c7ede581d7ad4e431744b1828757d6ea5129c112",
+  "parcelcell/assets/gripper_2f85/assets/follower.stl": "633793332c081641ce200df27a40643cc293b29956e3cb5cb29cb811c33ef1c7",
+  "parcelcell/assets/gripper_2f85/assets/pad.stl": "4af1fa8d9bb285abecbf5dfc88e74cb30f059a7a074c2030dc35e9ee4316019d",
+  "parcelcell/assets/gripper_2f85/assets/silicone_pad.stl": "ca20c0fa61e6d3ce7b04bed25360e048e31dfd88ace04187aa6d9e8f4ca3fd0f",
+  "parcelcell/assets/gripper_2f85/assets/spring_link.stl": "4fb74a8a0d76c0e471cf19fd48bc676fd5b19123798e7a39eb6aa56869354283",
+  "parcelcell/assets/robot/dual_arm.xml": "bfc4fa28d234b85a1545fe7d3f258732182ef0047f6405af8303ad8547ef6052",
+  "parcelcell/assets/robot/meshes/Base_Link.STL": "4ee213808dd13a0380e9a81beb569785ca5ccd62ac6b72d99bcb57eb2313850b",
+  "parcelcell/assets/robot/meshes/Left_Elbow_Pitch_Link.STL": "7983b2e0721d357b558627ddf8aec9c54199f9c30ae04cf542ad29d9d6ca45b9",
+  "parcelcell/assets/robot/meshes/Left_Shoulder_Base_Link.STL": "41e6c21097fa6ed16edcc3542002b1507dbf48a47e99553a72647562d17de16e",
+  "parcelcell/assets/robot/meshes/Left_Shoulder_Pitch_Link.STL": "5193ee4094772f21fa45ee18f512b4ce25aae7e58ba60bca43d2d732c2ae3c25",
+  "parcelcell/assets/robot/meshes/Left_Shoulder_Roll_Link.STL": "597d5df4b89d34959bd299da9642567e83ac326f005c5d675f928225c76bc449",
+  "parcelcell/assets/robot/meshes/Left_Shoulder_Yaw_Link.STL": "19f4d41a4e3a77e4848bc5bf6b19ec66ea45e9d33db5518a97915325174f66a6",
+  "parcelcell/assets/robot/meshes/Left_Wrist_Pitch_Link.STL": "eeedfe6cf5f66304160a681b5956b9851bb0b8b6d62507ae0e56de1d4595e0f5",
+  "parcelcell/assets/robot/meshes/Left_Wrist_Roll_Link.STL": "33231895528a2d8402586e095daf461a6ba5e57015a252c8677b9e37829cdfe0",
+  "parcelcell/assets/robot/meshes/Left_Wrist_Yaw_Link.STL": "707cb24da0357e7d1d487dd1b1a86904f66b7f9ea5d226ff177188c2a816578d",
+  "parcelcell/assets/robot/meshes/Right_Elbow_Pitch_Link.STL": "0f8b88f172fe2b10a3ca2a4c645a67ce140673d96223f8af8dbc60a9894f0a03",
+  "parcelcell/assets/robot/meshes/Right_Shoulder_Base_Link.STL": "934d42955227f5b9a729e536cdf9906af335fefa21d1cf057ad192d76ee68ff0",
+  "parcelcell/assets/robot/meshes/Right_Shoulder_Pitch_Link.STL": "242b1eae5fb67890dc0bb6f1d2e8c5b9265ca8f2659e132bc1d37745efbb4470",
+  "parcelcell/assets/robot/meshes/Right_Shoulder_Roll_Link.STL": "15d02e3afe357f44e59481e192cc460b6eb8b8729e20a16d9d95e143d1307857",
+  "parcelcell/assets/robot/meshes/Right_Shoulder_Yaw_Link.STL": "a4d011e3b45f8e363e99a6ff0394fd43841c6d26f33c22b34c4d325bad9bc059",
+  "parcelcell/assets/robot/meshes/Right_Wrist_Pitch_Link.STL": "f0ab636cda61ed977afdde7074b2066ae62cdbf1e6541e46c3de039c35a1d5cb",
+  "parcelcell/assets/robot/meshes/Right_Wrist_Roll_Link.STL": "52520d64a2ffa013ae6a0d28db688f33cab3c28161bb69c25abd80b54f67d0ab",
+  "parcelcell/assets/robot/meshes/Right_Wrist_Yaw_Link.STL": "6329dd6540aa61b8011dab0cc1ed835970ffb46d979380ee9a68322e6820a730",
+  "parcelcell/look_config/look.json": "8bab5e83849111a390780c70f6ad2a52285e2d2748612caea2c8ecea157384f1",
+  "parcelcell/parcelkit/__init__.py": "eab734888cac959f91cfde5120a40d3402c323e99b2f7b514f0ade4a353432fc",
+  "parcelcell/parcelkit/checks.py": "828c33dc9d9a7490a95e526156629ee8a03f2e34eddb01ab3b106f835d01dd36",
+  "parcelcell/parcelkit/code128.py": "814b87df2ade695f731e68b19bed690929f53d1a0bc1de170bad89b7c4a7b02c",
+  "parcelcell/parcelkit/export.py": "4b01aa809fea317713e8aae3df52da3646971466c24c6ef469767bad24926f8e",
+  "parcelcell/parcelkit/geometry.py": "ecb641cfc6e13579bcd1c6c8bc0297710b1f4d7eb8ba11737f1cd135b5241b57",
+  "parcelcell/parcelkit/identity.py": "16786597d4e89144567e058e86832adb3f7fa52d1d8605254bc2beaeb318c9f6",
+  "parcelcell/parcelkit/maps.py": "c4125b8e21d051897bbfa87bc091b4ef575d48d3b0fe30a40c48edbba05eafbe",
+  "parcelcell/parcelkit/marks.py": "8d187b4cd554b3bb6e608b90a85a96b4a0448141d6ae10a1158cd02e9677f6d0",
+  "parcelcell/parcelkit/mj.py": "7d59789e5ab0cd4a71736cacec218a267803d56c2780170312294896acfac8cf",
+  "parcelcell/parcelkit/noise.py": "b9855ea10749c837024583a273f544316b135434c1aebc1e1540f0d6c4ccb570",
+  "parcelcell/parcelkit/parcel.py": "d1d68aef61e93061122a63cf874c39482a3776ddb19b1da675540a8b88f8e87b",
+  "parcelcell/parcelkit/waybill.py": "4fc3e4f30c3fb9c360b4bd1ee32fc5cc31b47eab81376a8392d713ccc3d4ac23",
+  "parcelcell/parcelkit/fonts/LICENSE-fonts.txt": "8fb8f30f9898fcecec3620dba5847de9b56fa1c111760873ed40c6d466839549",
+  "parcelcell/parcelkit/fonts/RobotoCondensed-Bold.ttf": "7f109b2b6d72e7563522d3c3d2c6c8b79ec5a711bfdf483b93e345eab5b5ef94",
+  "parcelcell/parcelkit/fonts/RobotoCondensed-Medium.ttf": "660d652c17a99d0b4a3f9b7072701bfb4421bb0bce29b2baf096a193d5564bde",
+  "parcelcell/parcelkit/fonts/RobotoCondensed-Regular.ttf": "936069d5e46da383bff37b629a73e0bfb8b8ac7bc54cfb927fb700f6a890e9aa",
+  "reference/README.txt": "319b7f73584336a48241cfd8002e2733762c2e1c426062ec60605c8ae6d32e90",
+  "reference/controller.py": "3194f3027ec95e5fb1131b9b45e3ab2625e3d8c9aeedea08620ff16474d146d7",
+  "reference/refctl/README.txt": "50093ca5614b2e2f59cfa0b8485a4304cf26c49e16000998cb13a02ac29aa58b",
+  "reference/refctl/__init__.py": "7a0a6786e9891f6d344a9f6fb856121b728f035ea9f867b3275109bad2a251b8",
+  "reference/refctl/controller.py": "a1aabaab9de6df99870a41b371484726adeda63bc8466afb71f889fd16af3d13",
+  "reference/refctl/endover.py": "2a17d7ec58800319698fb4b9bad28c838180daa75417058070795bbbeab4ead8",
+  "reference/refctl/execu.py": "27faea70af81c503c674a188fbf729f813882b3644cc40718517ae763896b786",
+  "reference/refctl/flip.py": "b7b2c98a2db62519f0c7aa2fc909ab94a26a9135238ef570582f367c2b6c5dcc",
+  "reference/refctl/geom.py": "fb57bd2ff67ada6d012a73713aafd0e59de122aadfd03958780fb2d65e0b6762",
+  "reference/refctl/kin.py": "e536c7c5e06bdbf7adfb7f2dca02a700ce08df84161570f43075d30c2de54706",
+  "reference/refctl/kin2.py": "cdfb51fdaeec897fcbe2db19d12a175fb5b7f46b97c8d201247f196f79181874",
+  "reference/refctl/motion.py": "fe65d3a5dfdcf6c667c297cee52456991ef39be3e90d7cbb17acb192e86a40b7",
+  "reference/refctl/paths.py": "a10a2e963e69af9e2720655a20f475eb714cb3e248a187dda787ee2ead98d53a",
+  "reference/refctl/rolld.py": "742db0ac6a4adaaac3aa75928d1f4cb8cb02a82f060f1062279107a4d7e092f2",
+  "reference/refctl/sched.py": "ae44a03fa49c24de36553774eb7646ed04d940dbe5074d1def7f04c8218ed454",
+  "reference/refctl/sideturn.py": "041e3ade8b381a1e43cd9ae219a10c3cf013f05639933e18a8f600a023e41dd8",
+  "reference/refctl/squeeze.py": "0a19cc066d4ca3c283df5d0cf8429330f079818ecab40eb1ac6eba54ed810c3e",
+  "reference/refctl/tipover.py": "983e4db867b7576d35cabf7ae979fb37601254fcc69ac08255427c2e81af1677",
+  "grader_config.json": "a5815d5c02de842f8d921e59232e25b52dad5840e753f49f6d996cf8f0dea225"
+ },
+ "frozen_unchanged_during_selection": true,
+ "grader_env": {
+  "OPENBLAS_CORETYPE": "Haswell",
+  "OPENBLAS_L2_SIZE": "256",
+  "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
+  "OMP_NUM_THREADS": "2",
+  "OPENBLAS_NUM_THREADS": "2",
+  "MKL_NUM_THREADS": "2",
+  "LP_NUM_THREADS": "8",
+  "MUJOCO_GL": "osmesa",
+  "PYOPENGL_PLATFORM": "osmesa",
+  "PYTHONNOUSERSITE": "1",
+  "PYTHONDONTWRITEBYTECODE": "1"
+ },
+ "candidates": [
+  {
+   "slot": 1,
+   "belt_class": "slow",
+   "k": 0,
+   "seed": 939391349460307627,
+   "counts": {
+    "n_parcels": 18,
+    "W": 6,
+    "U": 3,
+    "X": 9,
+    "W_underneath": 2,
+    "W_downstream": 4,
+    "carton_label_up": 2,
+    "mailers": 3,
+    "cartons_outside_duty": 7,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.095,
+    "last_arrival_s": 384.98,
+    "natural_end_s": 447.085
+   },
+   "quota_reasons": [
+    "q1: in-duty 6 (underneath 2, downstream 4)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 6 (underneath 2, downstream 4)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 1,
+   "belt_class": "slow",
+   "k": 1,
+   "seed": 6555266113442963916,
+   "counts": {
+    "n_parcels": 20,
+    "W": 3,
+    "U": 4,
+    "X": 13,
+    "W_underneath": 1,
+    "W_downstream": 2,
+    "carton_label_up": 3,
+    "mailers": 5,
+    "cartons_outside_duty": 9,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.092,
+    "last_arrival_s": 487.7,
+    "natural_end_s": 550.526
+   },
+   "quota_reasons": [
+    "q1: in-duty 3 (underneath 1, downstream 2)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 3 (underneath 1, downstream 2)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 1,
+   "belt_class": "slow",
+   "k": 2,
+   "seed": 5683232183421853782,
+   "counts": {
+    "n_parcels": 15,
+    "W": 7,
+    "U": 4,
+    "X": 4,
+    "W_underneath": 5,
+    "W_downstream": 2,
+    "carton_label_up": 2,
+    "mailers": 3,
+    "cartons_outside_duty": 3,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.118,
+    "last_arrival_s": 282.3,
+    "natural_end_s": 340.097
+   },
+   "quota_reasons": [],
+   "package_sha256": "ace7e2bd21cb66732c96ed0919dfec9ddfd78456b0bb82db5cc2dfde3adb5324",
+   "run_wall_s": [
+    158.2,
+    160.1
+   ],
+   "run_digests": [
+    "54907426acfd8a77daf75bb1142fe7690ad6e588d652ba280e6177e63e7e4324",
+    "54907426acfd8a77daf75bb1142fe7690ad6e588d652ba280e6177e63e7e4324"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 7,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 7,
+    "n_W": 7,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "a0e658698fbebd4c76c07cdcc93c60e2504de89bef47e0a53c1103a65d852f58"
+   },
+   "candidate_wall_s": 160.1,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 2,
+   "belt_class": "medium",
+   "k": 0,
+   "seed": 1230764124752765954,
+   "counts": {
+    "n_parcels": 18,
+    "W": 4,
+    "U": 6,
+    "X": 8,
+    "W_underneath": 3,
+    "W_downstream": 1,
+    "carton_label_up": 4,
+    "mailers": 4,
+    "cartons_outside_duty": 6,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.182,
+    "last_arrival_s": 301.52,
+    "natural_end_s": 353.058
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 2,
+   "belt_class": "medium",
+   "k": 1,
+   "seed": 3389965426643729583,
+   "counts": {
+    "n_parcels": 18,
+    "W": 4,
+    "U": 3,
+    "X": 11,
+    "W_underneath": 2,
+    "W_downstream": 2,
+    "carton_label_up": 2,
+    "mailers": 6,
+    "cartons_outside_duty": 6,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.154,
+    "last_arrival_s": 300.58,
+    "natural_end_s": 354.216
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 2, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 2, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 2,
+   "belt_class": "medium",
+   "k": 2,
+   "seed": 71788709442763994,
+   "counts": {
+    "n_parcels": 21,
+    "W": 6,
+    "U": 5,
+    "X": 10,
+    "W_underneath": 4,
+    "W_downstream": 2,
+    "carton_label_up": 2,
+    "mailers": 6,
+    "cartons_outside_duty": 7,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.181,
+    "last_arrival_s": 332.42,
+    "natural_end_s": 384.022
+   },
+   "quota_reasons": [],
+   "package_sha256": "86627b63880d89db0f993b283ce58af0057632ca8f02b1c89600a2ae9cf902d4",
+   "run_wall_s": [
+    179.2,
+    173.5
+   ],
+   "run_digests": [
+    "cef4ea120b833ff613a787de7615d71d653eb8ab9a4c3cd27dad76f23587d511",
+    "cef4ea120b833ff613a787de7615d71d653eb8ab9a4c3cd27dad76f23587d511"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 6,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 6,
+    "n_W": 6,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "dcf8f555b4c3fee2805dcf1dc115f9d8a270e8f707e2a4314a1f94b22c997eea"
+   },
+   "candidate_wall_s": 179.3,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 0,
+   "seed": 8987602187373340917,
+   "counts": {
+    "n_parcels": 21,
+    "W": 6,
+    "U": 5,
+    "X": 10,
+    "W_underneath": 3,
+    "W_downstream": 3,
+    "carton_label_up": 4,
+    "mailers": 2,
+    "cartons_outside_duty": 9,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.259,
+    "last_arrival_s": 317.96,
+    "natural_end_s": 366.068
+   },
+   "quota_reasons": [
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 1,
+   "seed": 2129668660197085388,
+   "counts": {
+    "n_parcels": 22,
+    "W": 5,
+    "U": 8,
+    "X": 9,
+    "W_underneath": 3,
+    "W_downstream": 2,
+    "carton_label_up": 7,
+    "mailers": 4,
+    "cartons_outside_duty": 6,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.275,
+    "last_arrival_s": 300.28,
+    "natural_end_s": 347.916
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 2,
+   "seed": 5632089299025695989,
+   "counts": {
+    "n_parcels": 19,
+    "W": 4,
+    "U": 4,
+    "X": 11,
+    "W_underneath": 3,
+    "W_downstream": 1,
+    "carton_label_up": 3,
+    "mailers": 3,
+    "cartons_outside_duty": 9,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.232,
+    "last_arrival_s": 291.48,
+    "natural_end_s": 340.532
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 3,
+   "seed": 4087477239944095048,
+   "counts": {
+    "n_parcels": 22,
+    "W": 5,
+    "U": 8,
+    "X": 9,
+    "W_underneath": 3,
+    "W_downstream": 2,
+    "carton_label_up": 4,
+    "mailers": 5,
+    "cartons_outside_duty": 8,
+    "W_long": 4,
+    "duration_s": 600.0,
+    "belt_speed": 0.275,
+    "last_arrival_s": 303.22,
+    "natural_end_s": 350.856
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 4,
+   "seed": 2314874672278166514,
+   "counts": {
+    "n_parcels": 24,
+    "W": 5,
+    "U": 10,
+    "X": 9,
+    "W_underneath": 5,
+    "W_downstream": 0,
+    "carton_label_up": 7,
+    "mailers": 4,
+    "cartons_outside_duty": 8,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.21,
+    "last_arrival_s": 366.18,
+    "natural_end_s": 416.18
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 5, downstream 0)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 5, downstream 0)"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 5,
+   "seed": 1831261264264147674,
+   "counts": {
+    "n_parcels": 18,
+    "W": 3,
+    "U": 5,
+    "X": 10,
+    "W_underneath": 2,
+    "W_downstream": 1,
+    "carton_label_up": 2,
+    "mailers": 4,
+    "cartons_outside_duty": 9,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.259,
+    "last_arrival_s": 250.4,
+    "natural_end_s": 298.508
+   },
+   "quota_reasons": [
+    "q1: in-duty 3 (underneath 2, downstream 1)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 3 (underneath 2, downstream 1)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 6,
+   "seed": 6093870196344219482,
+   "counts": {
+    "n_parcels": 20,
+    "W": 6,
+    "U": 6,
+    "X": 8,
+    "W_underneath": 5,
+    "W_downstream": 1,
+    "carton_label_up": 3,
+    "mailers": 5,
+    "cartons_outside_duty": 6,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.248,
+    "last_arrival_s": 277.2,
+    "natural_end_s": 325.668
+   },
+   "quota_reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)"
+   ]
+  },
+  {
+   "slot": 3,
+   "belt_class": "fast",
+   "k": 7,
+   "seed": 8723578870377528506,
+   "counts": {
+    "n_parcels": 24,
+    "W": 8,
+    "U": 6,
+    "X": 10,
+    "W_underneath": 4,
+    "W_downstream": 4,
+    "carton_label_up": 5,
+    "mailers": 3,
+    "cartons_outside_duty": 8,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.224,
+    "last_arrival_s": 371.42,
+    "natural_end_s": 420.795
+   },
+   "quota_reasons": [],
+   "package_sha256": "f3fecaf7bbf9c4bca62909044e00c741bdfaeb6eb2dcc640d9fec13d521391f9",
+   "run_wall_s": [
+    232.8,
+    231.4
+   ],
+   "run_digests": [
+    "ebcaaf5c940a38374c6ad3927a20e98abff5edc036d62987f22d4c67d6ffcfc3",
+    "ebcaaf5c940a38374c6ad3927a20e98abff5edc036d62987f22d4c67d6ffcfc3"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 8,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 8,
+    "n_W": 8,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "fe394c6587a74afb61459b4015554639991f072e1c68ce1dab9e971b4bb986fd"
+   },
+   "candidate_wall_s": 627.7,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 4,
+   "belt_class": "medium",
+   "k": 0,
+   "seed": 8286320067596743164,
+   "counts": {
+    "n_parcels": 24,
+    "W": 6,
+    "U": 12,
+    "X": 6,
+    "W_underneath": 5,
+    "W_downstream": 1,
+    "carton_label_up": 5,
+    "mailers": 9,
+    "cartons_outside_duty": 4,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.158,
+    "last_arrival_s": 391.58,
+    "natural_end_s": 444.871
+   },
+   "quota_reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 4,
+   "belt_class": "medium",
+   "k": 1,
+   "seed": 2481982013386879751,
+   "counts": {
+    "n_parcels": 17,
+    "W": 5,
+    "U": 5,
+    "X": 7,
+    "W_underneath": 4,
+    "W_downstream": 1,
+    "carton_label_up": 4,
+    "mailers": 3,
+    "cartons_outside_duty": 5,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.203,
+    "last_arrival_s": 270.46,
+    "natural_end_s": 320.805
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 4, downstream 1)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 4, downstream 1)"
+   ]
+  },
+  {
+   "slot": 4,
+   "belt_class": "medium",
+   "k": 2,
+   "seed": 212324678351351532,
+   "counts": {
+    "n_parcels": 17,
+    "W": 6,
+    "U": 2,
+    "X": 9,
+    "W_underneath": 4,
+    "W_downstream": 2,
+    "carton_label_up": 1,
+    "mailers": 5,
+    "cartons_outside_duty": 5,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.188,
+    "last_arrival_s": 266.08,
+    "natural_end_s": 317.25
+   },
+   "quota_reasons": [
+    "q2: 1 cartons arriving label-up",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q2: 1 cartons arriving label-up",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 4,
+   "belt_class": "medium",
+   "k": 3,
+   "seed": 1335742549936431117,
+   "counts": {
+    "n_parcels": 17,
+    "W": 5,
+    "U": 7,
+    "X": 5,
+    "W_underneath": 5,
+    "W_downstream": 0,
+    "carton_label_up": 3,
+    "mailers": 6,
+    "cartons_outside_duty": 3,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.185,
+    "last_arrival_s": 260.02,
+    "natural_end_s": 311.371
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 5, downstream 0)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 5, downstream 0)"
+   ]
+  },
+  {
+   "slot": 4,
+   "belt_class": "medium",
+   "k": 4,
+   "seed": 265329142686945177,
+   "counts": {
+    "n_parcels": 19,
+    "W": 8,
+    "U": 4,
+    "X": 7,
+    "W_underneath": 3,
+    "W_downstream": 5,
+    "carton_label_up": 2,
+    "mailers": 3,
+    "cartons_outside_duty": 6,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.166,
+    "last_arrival_s": 328.12,
+    "natural_end_s": 380.771
+   },
+   "quota_reasons": [],
+   "package_sha256": "6993e19fede16f6e1465c420d3ccf6c4db82711765c8b10f18780dd582dccc3f",
+   "run_wall_s": [
+    164.8,
+    169.5
+   ],
+   "run_digests": [
+    "5ee1783f9ef01a2072b7cbf3e63816ac952d2c6931e00eb47859fbbbebe03036",
+    "5ee1783f9ef01a2072b7cbf3e63816ac952d2c6931e00eb47859fbbbebe03036"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 8,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 8,
+    "n_W": 8,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "918137a5ac991c0c5b913fe8393e3394533a9427059aa6e1acba1fb4374e9368"
+   },
+   "candidate_wall_s": 169.5,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 5,
+   "belt_class": "fast",
+   "k": 0,
+   "seed": 3639878483938180889,
+   "counts": {
+    "n_parcels": 20,
+    "W": 6,
+    "U": 6,
+    "X": 8,
+    "W_underneath": 4,
+    "W_downstream": 2,
+    "carton_label_up": 5,
+    "mailers": 1,
+    "cartons_outside_duty": 8,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.243,
+    "last_arrival_s": 316.22,
+    "natural_end_s": 364.862
+   },
+   "quota_reasons": [
+    "q3: 1 mailers",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q3: 1 mailers",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 5,
+   "belt_class": "fast",
+   "k": 1,
+   "seed": 6172703779104717236,
+   "counts": {
+    "n_parcels": 22,
+    "W": 6,
+    "U": 3,
+    "X": 13,
+    "W_underneath": 4,
+    "W_downstream": 2,
+    "carton_label_up": 2,
+    "mailers": 6,
+    "cartons_outside_duty": 8,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.26,
+    "last_arrival_s": 313.7,
+    "natural_end_s": 361.777
+   },
+   "quota_reasons": [
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 5,
+   "belt_class": "fast",
+   "k": 2,
+   "seed": 4031839435086533167,
+   "counts": {
+    "n_parcels": 18,
+    "W": 4,
+    "U": 2,
+    "X": 12,
+    "W_underneath": 1,
+    "W_downstream": 3,
+    "carton_label_up": 0,
+    "mailers": 4,
+    "cartons_outside_duty": 10,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.253,
+    "last_arrival_s": 264.78,
+    "natural_end_s": 313.08
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 1, downstream 3)",
+    "q2: 0 cartons arriving label-up"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 1, downstream 3)",
+    "q2: 0 cartons arriving label-up"
+   ]
+  },
+  {
+   "slot": 5,
+   "belt_class": "fast",
+   "k": 3,
+   "seed": 906938628699997502,
+   "counts": {
+    "n_parcels": 21,
+    "W": 6,
+    "U": 6,
+    "X": 9,
+    "W_underneath": 3,
+    "W_downstream": 3,
+    "carton_label_up": 3,
+    "mailers": 7,
+    "cartons_outside_duty": 5,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.273,
+    "last_arrival_s": 306.2,
+    "natural_end_s": 353.892
+   },
+   "quota_reasons": [],
+   "package_sha256": "b94049921f2ecca5bd45748c0ee6d9cd66754fc1190251e8c5c4bf4785312f74",
+   "run_wall_s": [
+    220.4,
+    217.2
+   ],
+   "run_digests": [
+    "db7c1191c4a8f5338191a2530bfa5f0df02c0870769a2bdeb21841b851746e1e",
+    "db7c1191c4a8f5338191a2530bfa5f0df02c0870769a2bdeb21841b851746e1e"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 6,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 6,
+    "n_W": 6,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "aaf7200a366b627dfd3a1127492e9a0a6f61449cd369523d77017ab3196daaf4"
+   },
+   "candidate_wall_s": 396.4,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 0,
+   "seed": 1502128356127174444,
+   "counts": {
+    "n_parcels": 19,
+    "W": 10,
+    "U": 4,
+    "X": 5,
+    "W_underneath": 4,
+    "W_downstream": 6,
+    "carton_label_up": 2,
+    "mailers": 5,
+    "cartons_outside_duty": 2,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.081,
+    "last_arrival_s": 436.26,
+    "natural_end_s": 502.186
+   },
+   "quota_reasons": [
+    "q4: 2 cartons outside the duty"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q4: 2 cartons outside the duty"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 1,
+   "seed": 3036150834031662581,
+   "counts": {
+    "n_parcels": 19,
+    "W": 8,
+    "U": 5,
+    "X": 6,
+    "W_underneath": 5,
+    "W_downstream": 3,
+    "carton_label_up": 4,
+    "mailers": 3,
+    "cartons_outside_duty": 4,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.072,
+    "last_arrival_s": 487.0,
+    "natural_end_s": 556.167
+   },
+   "quota_reasons": [],
+   "package_sha256": "491271007991e5089e4b4ebdaa6f851137426fd01829692dbf47a830c213b628",
+   "run_wall_s": [
+    227.8,
+    221.6
+   ],
+   "run_digests": [
+    "22967133ca80ab5dcb6522da0ee83610c03d10b8e15d78ada29f57a9cbd4612f",
+    "22967133ca80ab5dcb6522da0ee83610c03d10b8e15d78ada29f57a9cbd4612f"
+   ],
+   "run_summary": {
+    "shift_score": 0.875,
+    "credit": 7,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 7,
+    "n_W": 8,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "5f961744e8f0adc594dddc250c406084a310bd99dbf198ed6023969ba5727248"
+   },
+   "candidate_wall_s": 392.6,
+   "result": "rejected",
+   "reasons": [
+    "a: in-duty parcels not readable [3]"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 2,
+   "seed": 4247563980774188080,
+   "counts": {
+    "n_parcels": 15,
+    "W": 4,
+    "U": 4,
+    "X": 7,
+    "W_underneath": 3,
+    "W_downstream": 1,
+    "carton_label_up": 4,
+    "mailers": 1,
+    "cartons_outside_duty": 6,
+    "W_long": 0,
+    "duration_s": 600.0,
+    "belt_speed": 0.09,
+    "last_arrival_s": 347.68,
+    "natural_end_s": 411.013
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)",
+    "q3: 1 mailers",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)",
+    "q3: 1 mailers",
+    "q6: 0 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 3,
+   "seed": 7920231148183653983,
+   "counts": {
+    "n_parcels": 18,
+    "W": 5,
+    "U": 3,
+    "X": 10,
+    "W_underneath": 3,
+    "W_downstream": 2,
+    "carton_label_up": 1,
+    "mailers": 3,
+    "cartons_outside_duty": 9,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.121,
+    "last_arrival_s": 397.12,
+    "natural_end_s": 454.475
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q2: 1 cartons arriving label-up"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q2: 1 cartons arriving label-up"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 4,
+   "seed": 3339395719652498114,
+   "counts": {
+    "n_parcels": 16,
+    "W": 5,
+    "U": 5,
+    "X": 6,
+    "W_underneath": 3,
+    "W_downstream": 2,
+    "carton_label_up": 4,
+    "mailers": 2,
+    "cartons_outside_duty": 5,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.081,
+    "last_arrival_s": 364.74,
+    "natural_end_s": 430.666
+   },
+   "quota_reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 5 (underneath 3, downstream 2)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 5,
+   "seed": 4866534531544756292,
+   "counts": {
+    "n_parcels": 17,
+    "W": 4,
+    "U": 4,
+    "X": 9,
+    "W_underneath": 2,
+    "W_downstream": 2,
+    "carton_label_up": 2,
+    "mailers": 4,
+    "cartons_outside_duty": 7,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.116,
+    "last_arrival_s": 315.54,
+    "natural_end_s": 373.643
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 2, downstream 2)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 2, downstream 2)"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 6,
+   "seed": 623016208153973250,
+   "counts": {
+    "n_parcels": 15,
+    "W": 4,
+    "U": 7,
+    "X": 4,
+    "W_underneath": 3,
+    "W_downstream": 1,
+    "carton_label_up": 4,
+    "mailers": 4,
+    "cartons_outside_duty": 3,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.071,
+    "last_arrival_s": 430.12,
+    "natural_end_s": 499.697
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 3, downstream 1)"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 7,
+   "seed": 7021154527385970165,
+   "counts": {
+    "n_parcels": 17,
+    "W": 6,
+    "U": 4,
+    "X": 7,
+    "W_underneath": 5,
+    "W_downstream": 1,
+    "carton_label_up": 3,
+    "mailers": 5,
+    "cartons_outside_duty": 3,
+    "W_long": 1,
+    "duration_s": 600.0,
+    "belt_speed": 0.093,
+    "last_arrival_s": 343.56,
+    "natural_end_s": 406.141
+   },
+   "quota_reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 6 (underneath 5, downstream 1)",
+    "q6: 1 in-duty cartons longer than 0.26 m along the belt"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 8,
+   "seed": 5914617167045948314,
+   "counts": {
+    "n_parcels": 17,
+    "W": 6,
+    "U": 2,
+    "X": 9,
+    "W_underneath": 4,
+    "W_downstream": 2,
+    "carton_label_up": 1,
+    "mailers": 4,
+    "cartons_outside_duty": 6,
+    "W_long": 4,
+    "duration_s": 600.0,
+    "belt_speed": 0.104,
+    "last_arrival_s": 376.82,
+    "natural_end_s": 437.012
+   },
+   "quota_reasons": [
+    "q2: 1 cartons arriving label-up"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q2: 1 cartons arriving label-up"
+   ]
+  },
+  {
+   "slot": 6,
+   "belt_class": "slow",
+   "k": 9,
+   "seed": 1221589296788067018,
+   "counts": {
+    "n_parcels": 15,
+    "W": 7,
+    "U": 3,
+    "X": 5,
+    "W_underneath": 4,
+    "W_downstream": 3,
+    "carton_label_up": 2,
+    "mailers": 2,
+    "cartons_outside_duty": 4,
+    "W_long": 4,
+    "duration_s": 600.0,
+    "belt_speed": 0.104,
+    "last_arrival_s": 290.26,
+    "natural_end_s": 350.452
+   },
+   "quota_reasons": [],
+   "package_sha256": "5943a49a4678cc71ec25d26d9277d7a376e7cd7909fce1ce9741502d8eb9f608",
+   "run_wall_s": [
+    193.5,
+    191.5
+   ],
+   "run_digests": [
+    "9abfe970e5b49a5f973485cb95b6ca388b50f8483d201ada8458b4ce1e772701",
+    "9abfe970e5b49a5f973485cb95b6ca388b50f8483d201ada8458b4ce1e772701"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 7,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 7,
+    "n_W": 7,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "8440d4a9f72c9545f235eabe92df82d2efde93cf46dce1cbf26b762927f9e15b"
+   },
+   "candidate_wall_s": 198.3,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 7,
+   "belt_class": "medium",
+   "k": 0,
+   "seed": 8295736166014835254,
+   "counts": {
+    "n_parcels": 21,
+    "W": 7,
+    "U": 7,
+    "X": 7,
+    "W_underneath": 5,
+    "W_downstream": 2,
+    "carton_label_up": 4,
+    "mailers": 4,
+    "cartons_outside_duty": 6,
+    "W_long": 3,
+    "duration_s": 600.0,
+    "belt_speed": 0.199,
+    "last_arrival_s": 316.88,
+    "natural_end_s": 367.433
+   },
+   "quota_reasons": [],
+   "package_sha256": "eda2011e2cc1d295036ab536e75d03c72d23bf4b44ab8f222f449bb467a79a6a",
+   "run_wall_s": [
+    219.4,
+    222.0
+   ],
+   "run_digests": [
+    "3713cc748693b733287b5094e9bd70b5a040a2ed56ec967280eaf7adc02d2085",
+    "3713cc748693b733287b5094e9bd70b5a040a2ed56ec967280eaf7adc02d2085"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 7,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 7,
+    "n_W": 7,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "f04293f81ac68ae54d843f2fec34307d75320a4f056a4b37b78d07314c2ae812"
+   },
+   "candidate_wall_s": 614.6,
+   "result": "chosen",
+   "reasons": []
+  },
+  {
+   "slot": 8,
+   "belt_class": "fast",
+   "k": 0,
+   "seed": 8885906181828219589,
+   "counts": {
+    "n_parcels": 20,
+    "W": 4,
+    "U": 6,
+    "X": 10,
+    "W_underneath": 0,
+    "W_downstream": 4,
+    "carton_label_up": 4,
+    "mailers": 3,
+    "cartons_outside_duty": 9,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.239,
+    "last_arrival_s": 289.36,
+    "natural_end_s": 338.147
+   },
+   "quota_reasons": [
+    "q1: in-duty 4 (underneath 0, downstream 4)"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q1: in-duty 4 (underneath 0, downstream 4)"
+   ]
+  },
+  {
+   "slot": 8,
+   "belt_class": "fast",
+   "k": 1,
+   "seed": 1438708193620607220,
+   "counts": {
+    "n_parcels": 23,
+    "W": 8,
+    "U": 11,
+    "X": 4,
+    "W_underneath": 3,
+    "W_downstream": 5,
+    "carton_label_up": 8,
+    "mailers": 5,
+    "cartons_outside_duty": 2,
+    "W_long": 2,
+    "duration_s": 600.0,
+    "belt_speed": 0.272,
+    "last_arrival_s": 330.74,
+    "natural_end_s": 378.461
+   },
+   "quota_reasons": [
+    "q4: 2 cartons outside the duty"
+   ],
+   "result": "rejected",
+   "reasons": [
+    "q4: 2 cartons outside the duty"
+   ]
+  },
+  {
+   "slot": 8,
+   "belt_class": "fast",
+   "k": 2,
+   "seed": 137313264842286610,
+   "counts": {
+    "n_parcels": 23,
+    "W": 9,
+    "U": 6,
+    "X": 8,
+    "W_underneath": 4,
+    "W_downstream": 5,
+    "carton_label_up": 4,
+    "mailers": 4,
+    "cartons_outside_duty": 6,
+    "W_long": 4,
+    "duration_s": 600.0,
+    "belt_speed": 0.233,
+    "last_arrival_s": 369.52,
+    "natural_end_s": 418.533
+   },
+   "quota_reasons": [],
+   "package_sha256": "0edc0f51619a1be4062a586fdf17fce1ff207acd10590e3e461b754f9e7f6c0a",
+   "run_wall_s": [
+    241.2,
+    236.2
+   ],
+   "run_digests": [
+    "fb6f9f353f2656c80d753807ac27622d1991cc6a45e2f9f9b0fbaabc40fb2b7c",
+    "fb6f9f353f2656c80d753807ac27622d1991cc6a45e2f9f9b0fbaabc40fb2b7c"
+   ],
+   "run_summary": {
+    "shift_score": 1.0,
+    "credit": 9,
+    "t_end": 600.0,
+    "ticks": 30000,
+    "done_reason": "shift_end",
+    "W_readable": 9,
+    "n_W": 9,
+    "U_not_readable": 0,
+    "lost": 0,
+    "stops": 0,
+    "clip_ticks": 0,
+    "frames_used": 4,
+    "state_digest": "0678713e009a0baac8eec217a6d007b466fbc8a5608dc99dec85c8c5f9c2afb4"
+   },
+   "candidate_wall_s": 399.4,
+   "result": "chosen",
+   "reasons": []
+  }
+ ],
+ "per_slot": {
+  "1": {
+   "belt_class": "slow",
+   "candidates": 3,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 2
+  },
+  "2": {
+   "belt_class": "medium",
+   "candidates": 3,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 2
+  },
+  "3": {
+   "belt_class": "fast",
+   "candidates": 8,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 7
+  },
+  "4": {
+   "belt_class": "medium",
+   "candidates": 5,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 4
+  },
+  "5": {
+   "belt_class": "fast",
+   "candidates": 4,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 3
+  },
+  "6": {
+   "belt_class": "slow",
+   "candidates": 10,
+   "quota_passed": 2,
+   "admitted": 1,
+   "chosen_k": 9
+  },
+  "7": {
+   "belt_class": "medium",
+   "candidates": 1,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 0
+  },
+  "8": {
+   "belt_class": "fast",
+   "candidates": 3,
+   "quota_passed": 1,
+   "admitted": 1,
+   "chosen_k": 2
+  }
+ },
+ "hidden_set": [
+  {
+   "tag": "hidden_01",
+   "package": "shifts/hidden_01.json",
+   "sha256": "ace7e2bd21cb66732c96ed0919dfec9ddfd78456b0bb82db5cc2dfde3adb5324",
+   "seed": 5683232183421853782,
+   "k": 2,
+   "label": "hidden-1",
+   "slot": 1,
+   "belt_class": "slow",
+   "mix_class": "standard",
+   "n_parcels": 15,
+   "n_label_not_up": 11,
+   "classes": {
+    "W": 7,
+    "U": 4,
+    "X": 4
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_02",
+   "package": "shifts/hidden_02.json",
+   "sha256": "86627b63880d89db0f993b283ce58af0057632ca8f02b1c89600a2ae9cf902d4",
+   "seed": 71788709442763994,
+   "k": 2,
+   "label": "hidden-2",
+   "slot": 2,
+   "belt_class": "medium",
+   "mix_class": "standard",
+   "n_parcels": 21,
+   "n_label_not_up": 16,
+   "classes": {
+    "W": 6,
+    "U": 5,
+    "X": 10
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_03",
+   "package": "shifts/hidden_03.json",
+   "sha256": "f3fecaf7bbf9c4bca62909044e00c741bdfaeb6eb2dcc640d9fec13d521391f9",
+   "seed": 8723578870377528506,
+   "k": 7,
+   "label": "hidden-3",
+   "slot": 3,
+   "belt_class": "fast",
+   "mix_class": "standard",
+   "n_parcels": 24,
+   "n_label_not_up": 18,
+   "classes": {
+    "W": 8,
+    "U": 6,
+    "X": 10
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_04",
+   "package": "shifts/hidden_04.json",
+   "sha256": "6993e19fede16f6e1465c420d3ccf6c4db82711765c8b10f18780dd582dccc3f",
+   "seed": 265329142686945177,
+   "k": 4,
+   "label": "hidden-4",
+   "slot": 4,
+   "belt_class": "medium",
+   "mix_class": "standard",
+   "n_parcels": 19,
+   "n_label_not_up": 15,
+   "classes": {
+    "W": 8,
+    "U": 4,
+    "X": 7
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_05",
+   "package": "shifts/hidden_05.json",
+   "sha256": "b94049921f2ecca5bd45748c0ee6d9cd66754fc1190251e8c5c4bf4785312f74",
+   "seed": 906938628699997502,
+   "k": 3,
+   "label": "hidden-5",
+   "slot": 5,
+   "belt_class": "fast",
+   "mix_class": "standard",
+   "n_parcels": 21,
+   "n_label_not_up": 15,
+   "classes": {
+    "W": 6,
+    "U": 6,
+    "X": 9
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_06",
+   "package": "shifts/hidden_06.json",
+   "sha256": "5943a49a4678cc71ec25d26d9277d7a376e7cd7909fce1ce9741502d8eb9f608",
+   "seed": 1221589296788067018,
+   "k": 9,
+   "label": "hidden-6",
+   "slot": 6,
+   "belt_class": "slow",
+   "mix_class": "standard",
+   "n_parcels": 15,
+   "n_label_not_up": 12,
+   "classes": {
+    "W": 7,
+    "U": 3,
+    "X": 5
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_07",
+   "package": "shifts/hidden_07.json",
+   "sha256": "eda2011e2cc1d295036ab536e75d03c72d23bf4b44ab8f222f449bb467a79a6a",
+   "seed": 8295736166014835254,
+   "k": 0,
+   "label": "hidden-7",
+   "slot": 7,
+   "belt_class": "medium",
+   "mix_class": "standard",
+   "n_parcels": 21,
+   "n_label_not_up": 14,
+   "classes": {
+    "W": 7,
+    "U": 7,
+    "X": 7
+   },
+   "duration_s": 600.0
+  },
+  {
+   "tag": "hidden_08",
+   "package": "shifts/hidden_08.json",
+   "sha256": "0edc0f51619a1be4062a586fdf17fce1ff207acd10590e3e461b754f9e7f6c0a",
+   "seed": 137313264842286610,
+   "k": 2,
+   "label": "hidden-8",
+   "slot": 8,
+   "belt_class": "fast",
+   "mix_class": "standard",
+   "n_parcels": 23,
+   "n_label_not_up": 17,
+   "classes": {
+    "W": 9,
+    "U": 6,
+    "X": 8
+   },
+   "duration_s": 600.0
+  }
+ ],
+ "complete": true,
+ "stats": {
+  "candidates": 37,
+  "quota_passed": 9,
+  "admitted_of_quota_passed": "8 of 9",
+  "rejected_after_runs": [
+   {
+    "slot": 6,
+    "k": 1,
+    "reasons": [
+     "a: in-duty parcels not readable [3]"
+    ]
+   }
+  ],
+  "candidate_wall_s": [
+   160.1,
+   179.3,
+   627.7,
+   169.5,
+   396.4,
+   392.6,
+   198.3,
+   614.6,
+   399.4
+  ],
+  "selection_wall_s": 627.8
+ },
+ "tool_sha256": "9d3a0151bb48bcf7b7cdd3efff8399df157d097145a720ff30d035f48048ddc5",
+ "selection_run": {
+  "hidden_set": [
+   5683232183421853782,
+   71788709442763994,
+   8723578870377528506,
+   265329142686945177,
+   906938628699997502,
+   1221589296788067018,
+   8295736166014835254,
+   137313264842286610
+  ],
+  "candidate_seeds": [
+   939391349460307627,
+   6555266113442963916,
+   5683232183421853782,
+   1230764124752765954,
+   3389965426643729583,
+   71788709442763994,
+   8987602187373340917,
+   2129668660197085388,
+   5632089299025695989,
+   4087477239944095048,
+   2314874672278166514,
+   1831261264264147674,
+   6093870196344219482,
+   8723578870377528506,
+   8286320067596743164,
+   2481982013386879751,
+   212324678351351532,
+   1335742549936431117,
+   265329142686945177,
+   3639878483938180889,
+   6172703779104717236,
+   4031839435086533167,
+   906938628699997502,
+   1502128356127174444,
+   3036150834031662581,
+   4247563980774188080,
+   7920231148183653983,
+   3339395719652498114,
+   4866534531544756292,
+   623016208153973250,
+   7021154527385970165,
+   5914617167045948314,
+   1221589296788067018,
+   8295736166014835254,
+   8885906181828219589,
+   1438708193620607220,
+   137313264842286610
+  ],
+  "finished_utc": "2026-11-20T14:30:22Z"
+ }
+}

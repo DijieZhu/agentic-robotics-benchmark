@@ -1,0 +1,46 @@
+THE REGISTERED RULE OF THE HIDDEN SET (written before any draw)
+
+Eight shifts; slot order and belt class: 1 slow (0.05-0.13 m/s), 2 medium (0.13-0.21), 3 fast (0.21-0.28), 4 medium,
+5 fast, 6 slow, 7 medium, 8 fast. One salt of 16 bytes from the system's entropy, drawn once at selection time and
+recorded in the hidden selection file; a candidate's seed is the hash of salt, slot label and a counter k = 0, 1, 2,
+... The frozen generator draws each candidate. A slot takes the FIRST candidate that meets all of: (q1) at least 6
+in-duty parcels arriving label not up, of which at least 3 with the label underneath and at least 2 with the label on
+the downstream face; (q2) at least 2 cartons arriving label-up; (q3) at least 2 mailers; (q4) at least 3 cartons
+outside the duty; (q5) the natural end at most 600 s (true of every generated shift); (q6) at least 2 in-duty cartons
+whose length along the belt is more than 0.26 m; (a) the frozen reference, through the privileged path on the task's
+own cell with the task's numerics settings, leaves every in-duty parcel and every label-up parcel readable at the scan
+line, loses or damages nothing, and has no protective stop and no limiter clip; (b) a second run in a fresh process
+gives the identical record. Every rejected candidate is recorded with its reason. Nothing else may influence the
+choice; no candidate is run with a camera-driven program before the set is frozen. The anchor is the reference's
+reward in one fresh full verify in the image.
+
+Readings, fixed before the draw:
+  (q1)  an in-duty parcel arriving label not up is a parcel of class W (a carton whose label is underneath or on the
+        downstream face as it lands, its label more than 25 degrees from vertical up);
+  (q2)  a carton arriving label-up is a carton of class U;
+  (q4)  a carton outside the duty is a carton of class X (its label on the upstream, the near side or the far side
+        face as it lands);
+  (q5)  every full shift lasts the same fixed time, 600 s, whatever its belt speed and arrivals, so (q5) is read as
+        the shift's natural end being at most 600 s: last arrival + 2.1 m / belt speed + 40 s (the last parcel's ride
+        from the entry line past the scan line, and the tail), computed from the arrivals and the belt speed, never
+        from the package's duration field; the frozen generator draws only shifts that meet it; the check stays part
+        of the rule;
+  (q6)  an in-duty carton is a parcel of class W; its length along the belt is the side that lies along the belt as
+        it lands (the landing yaw is a quarter turn k x 90 degrees within the yaw tolerance: the carton's second side
+        for even k, its first side for odd k); it counts when that length is more than 0.26 m.
+
+How it is carried out (tests/review/select_hidden.py, inside the task image, on the frozen files that
+tests/frozen.json pins):
+  slot label   "hidden-<slot>" (slots 1 to 8);
+  seed         parcelcell.shiftgen.labelled_seed("hidden-<slot>", k, mix=salt): the first 8 bytes (shifted right by
+               one bit) of sha256 over the text "<task id>/hidden-<slot>/<shifts version>/<k>", a "/" and the
+               salt's 16 bytes;
+  candidate    parcelcell.shiftgen.draw_shift(seed, config, profile "full", the slot's belt class);
+  quotas       (q1)-(q6) from the candidate's parcels alone (no reference run for a candidate that misses one);
+  (a) and (b)  two runs of the reference, each in a fresh process with the grader's numerics settings, as the grader
+               drives the oracle's program: describe(), one frame of every camera, reference_run(), finish(); (b)
+               compares the shift's record without its wall-clock and render-timing fields, the final physics state
+               digest and the limiter count;
+  record       tests/hidden/selection.json: the salt, this file's sha256, the sha256 of every frozen file before and
+               after the selection, every candidate with its class counts, natural end, quota result, run digests,
+               admission result and reasons; tests/hidden/seeds.json and tests/hidden/shifts/ hold the chosen eight.

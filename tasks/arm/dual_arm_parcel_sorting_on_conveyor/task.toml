@@ -1,0 +1,106 @@
+# dual_arm_parcel_sorting_on_conveyor (the label-facing station of a parcel sorting line; behavior stage;
+# tests/README.md).
+#
+# A fixed dual-arm platform (two arms of seven joints, a parallel two-finger gripper each; MuJoCo, CPU, MuJoCo's
+# Filament renderer on CPU Vulkan for the cameras' colour, its classic renderer on OSMesa for depth) stands at a
+# straight conveyor ahead of the line's top-reading scanner. The line sets parcels down one at a time on the belt's
+# centre line upstream of the station, at any yaw, the next one once the one before it is settled: rigid and soft
+# parcels, their sizes, weights, centres of mass, frictions and the face that carries the shipping label unknown in
+# advance; the belt's speed differs from shift to shift, and on some lines the belt indexes (it stands while the
+# parcel is in front of the robot). The agent writes the robot's program offline (sort.py, solve(cell)): it sees the
+# station only through four cameras (an overhead infeed camera over the upstream belt, a head camera over the work
+# window, a camera in each gripper's palm; frames exposed at a fixed rate in simulated time, delivered with a fixed
+# age, a pooled frame budget per shift) and the robot's own joint, tool and gripper state (no line signal: no belt
+# speed or mode, no photo-eye; per arm a joint level and a tool-pose level the station's controller solves), and it
+# must bring every parcel's label face up and let it travel on, calm and untouched, across the scan line within the
+# station's rated cycle (its free ride + 5 s), and leave every parcel that arrives label up readable.
+# Classes fixed at set-down: W = label not up, U = label up. Per shift: credit = W readable - U done and not readable
+# - parcels lost (off the belt, or damaged by a squeeze: a damaged parcel shows a crushed look in the cameras); a
+# parcel not done when the shift ends costs nothing; shift score = max(0, credit) / #W. facing_score = the contract
+# gate x the mean over the eight graded shifts (tests/hidden/line/: drawn by a registered rule from the line's
+# distribution, nothing selected by content), and the reward is facing_score itself: an absolute scale whose top is
+# every parcel of every list turned in time. A shift lasts at most 600 s and ends when its list is settled; its list
+# is sized at 4 s per parcel beyond the belt's ride. The world advances only inside the program's `step` calls (one
+# tick = 20 ms); the program's own time is budgeted per shift in proportion to the shift's duration, with a cap on one
+# silence. Protective stops on hard contact (structure, arm to arm, a press on the belt), a lock-out for the rest of
+# the shift on damage-level contact or a sixth stop. The oracle submits a short program (one frame of every camera,
+# then one privileged call) with a 256-bit token: the reference program inside the cell plans on the true parcel
+# states and acts only through the cell's own command path; the token's verify runs the station's rated setting
+# (tests/hidden/: aligned landings, the duty of two label positions), where the reference is validated, against
+# tests/anchor.json. It shows that the job can be done; the graded scale leaves room above it (tests/README.md
+# section 6).
+# Realism rule: the agent gets what the automation engineer of a parcel hub would have: the station's datasheet and
+# API, the robot and gripper model files, the client library and a commissioning service (a black-box service under
+# its own account: 8 development shifts, 12 shift runs, the graded shift's budgets, no truth, no score, no debrief);
+# the simulator's code, the shift generator and every ground truth of a graded shift stay out of its reach.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (sort.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/dual_arm_parcel_sorting_on_conveyor"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/arm/<name>/. The metric
+# (facing_score, higher) lives in tests/anchor.json.
+platform = "arm"
+tags = ["parcel-sorting", "conveyor", "dual-arm", "bimanual", "label-facing", "dynamic", "camera-only", "rgbd",
+        "tool-pose-control", "parallel-gripper", "mujoco", "code-as-policy", "commissioning", "hidden-shift",
+        "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the commissioning
+# service (it comes up in a few seconds). [agent] timeout_sec: 4 h.
+# [verifier] timeout_sec, from the graded set's own sizes and the costs measured in the task image (the benchmark's
+# derivation for camera cells), for the larger of the two branches:
+#   T = sum over the graded shifts of [cell build + first frame + simulation + program-time budget + frames at the
+#       full frame budget x p95 frame cost + the crushed looks + after-over 60 + clean-up 30] + one re-run of a shift
+#       (a cell fault) + fixed 250 (import check 120, desktop settle 60, no-network self-test 60, lockdown 10) + the
+#       parcels' looks made once before the first shift; then x 1.35.
+# Inputs (MEASURED in a container of this task's image, 8 CPUs, 16 GB, the grader's environment: numerics pins, the
+# cameras' colour by the filament backend on lavapipe and depth by the classic renderer on OSMesa, 8 rasteriser
+# threads, the parcel kit's looks, the one-lamp look; host load average about 180 on 48 cores at the time), on the
+# graded set's fastest shift (59 parcels at 0.337 m/s):
+#   the 8 graded shifts of tests/hidden/line/seeds.json, each at most 600 s of simulated time (a shift ends earlier
+#     when its list is settled; the derivation takes the full 600 s); 17-59 parcels each, 347 in all;
+#   the looks of the 347 parcels made once (4 worker processes): 59 parcels in 258.4 s (MEASURED) -> 4.38 s a parcel
+#     -> 1520 s;
+#   a cell built from the look cache 2.11 s and its first frame (the renderer's start included) 12.0 s (MEASURED);
+#   simulation 0.1075 wall s per simulated second through the server (MEASURED): 0.1075 x 600 = 64.5 s;
+#   program-time budget 1.0 x 600 + 60 = 660 s;
+#   frames 2 x 600 = 1200 (the full budget), pooled over the four cameras, at the largest per-camera p95 cost:
+#     0.581 s (MEASURED p95: head colour 0.448, wrist_left colour 0.581, wrist_right colour + depth 0.510, infeed
+#     colour + depth 0.556; all frames p50 0.327, p95 0.535) = 697.2 s;
+#   the crushed looks: at most every parcel of the longest list the rule allows (61) damaged, 61 x 0.34 s (the upper
+#     end of the switch's measured cost) = 20.7 s;
+#   after-over 60 s and clean-up 30 s;
+#   per shift 2.11 + 12.0 + 64.5 + 660 + 697.2 + 20.7 + 60 + 30 = 1546.5 s; (8 + 1) x 1546.5 + 250 + 1520 = 15689 s;
+#   x 1.35 = 21180 s -> 21200 s.
+# The oracle's branch (the token's verify runs the rated set, tests/hidden/: eight shifts of 15-24 parcels, one
+# privileged reference_run call each, capped by the cell at budgets.privileged_program_time_factor (10) x the shift's
+# duration): MEASURED in one fresh full verify in this image 1259 s (the 159 parcels' looks 483 s, 88-100 s a shift);
+# x 1.35 = 1700 s, far inside the limit above.
+# The costs scale with the host's load: on this machine at load 12-18 a frame cost 0.19-0.27 s p95 and at load
+# 100-145 up to 1.03 s p95; re-measure on the grading host if it is busier than at the measurement.
+# Peak memory of one cell: 2.66 GB with the filament backend (MEASURED, kit looks, 59 parcels).
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 21200
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0
