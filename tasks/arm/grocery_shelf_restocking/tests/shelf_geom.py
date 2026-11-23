@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PR #47 OVRTX look, version 2: small mesh builders shared by cell_usd2.py and dress_usd2.py. Every builder returns
+"""Small mesh builders for what the cameras draw (shelf_parts.py, shelf_scene.py). Every builder returns
 (V, N, UV, F): vertices, vertex normals, uv in metres (the writer divides by the look's tile), triangles. Faces carry
 their own vertices, so a flat face shades flat and a bevel strip shades round (its two edges take the normals of the
 faces they join).
@@ -235,7 +235,7 @@ def extrude(outline, p0, p1, up):
     return m.arrays()
 
 
-# ---- additions for PR #138 (instrument models) ----
+# ---- turned and swept shapes ----
 
 def lathe(profile, nseg=96, a0=0.0, a1=2 * math.pi, brk=35.0, r_uv=None):
     """Surface of revolution about z of a polyline [(r, z), ...]. The outside is to the right of the direction of

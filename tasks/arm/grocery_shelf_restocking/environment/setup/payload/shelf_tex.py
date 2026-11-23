@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""PR #158 OVRTX look: the maps this look draws itself (PIL / numpy; no text, no brand, no mark).
+"""The pictures the cameras' scene draws itself (PIL / numpy; no text, no brand, no mark).
 
-    python3 -I tex158.py --dump <dump dir> --out <tex dir> [--lib <pr138 tex dir>]
-
-- every SKU's print as one atlas (`sku_<name>_col.png`, with a roughness map): the task's body colour, its band round
-  the unit at the task's height and its logo (shape, colour, size and place from shelf_world.add_look) carry the
-  identity; fine print, a panel of lines, a bar block and a table grid are drawn in tints of those colours beside
-  them. A box: the four sides in a row (front = the unit's -x face, then going to the viewer's right), top and bottom
-  under them. A can or bottle: the wrap (u = the angle from +x, v = height).
-- `code_NN.png` (00-99): the task's best-before code as a label: two seven-segment digits in the task's proportions
-  (7 x 4 mm, 0.8 mm strokes, 2 mm apart) and ink colour on the task's 11.5 x 10 mm light patch.
-- dressing SKUs (`dress_<k>_col.png`) for the neighbouring bays, from a palette of their own;
-- the shelf's ticket strip, the floor (large vinyl tiles, waxed, with wear), the ceiling tiles, an aisle sign.
-The library maps of the earlier looks (powder coat, brushed metal, rubber, robot covers) are copied from --lib.
+- every SKU's print as one atlas (box_atlas, wrap_atlas): the task's body colour, its band round the unit at the
+  task's height and its logo (shape, colour, size and place from shelf_world.add_look) carry the identity; fine
+  print, a panel of lines, a bar block and a table grid are drawn in tints of those colours beside them. A box: the
+  four sides in a row (front = the unit's -x face, then going to the viewer's right), top and bottom under them. A
+  can or bottle: the wrap (u = the angle from +x, v = height).
+- code_label: the task's best-before code as a label: two seven-segment digits in the task's proportions (7 x 4 mm,
+  0.8 mm strokes, 2 mm apart) and ink colour on the task's 11.5 x 10 mm light patch.
+- dress_skus: the products of the neighbouring bays, from a palette of their own.
+The shelf's ticket strip, the floor, the ceiling tiles, the back panel and the aisle sign are in the render bundle
+(the functions that drew them are kept here).
 """
 import argparse
 import json
@@ -682,46 +680,3 @@ def ticket_strip(out, rng):     # noqa: F811
         d.text((cx - hw + 0.0018 * ppm, y1 - 0.0034 * ppm), "%d g  %d.%02d/kg" % (int(rng.integers(8, 90)) * 10, int(rng.integers(1, 30)), int(rng.integers(100))), fill=(70, 70, 74), font=fs)
         barcode(d, cx + 0.006 * ppm, y0 + 0.010 * ppm, cx + hw - 0.0015 * ppm, y1 - 0.0015 * ppm, rng, ppm, digits=False)
     finish_print(im, rng, 1.5).save(os.path.join(out, "ticket_col.png"))
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dump", required=True)
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--lib", default="/home/xiatao/projects/arb-work/pr138_look/tex")
-    a = ap.parse_args()
-    os.makedirs(a.out, exist_ok=True)
-    for f in sorted(os.listdir(a.lib)):
-        if f.endswith(".png") and not f.startswith(("stave", "sugar", "candy")) and not os.path.isfile(os.path.join(a.out, f)):
-            shutil.copy(os.path.join(a.lib, f), os.path.join(a.out, f))
-    ep = json.load(open(os.path.join(a.dump, "episode.json")))
-    lays = {}
-    skus = dict(ep["unit"]["skus"])
-    dress = dress_skus()
-    skus.update(dress)
-    for k, (name, sku) in enumerate(sorted(skus.items())):
-        seed = 5000 + k
-        if sku["kind"] == "box":
-            im, rg, lay = box_atlas(sku, seed)
-        else:
-            im, rg, lay = wrap_atlas(sku, seed, bottle=sku["size"][1] > 0.08)
-        im.save(os.path.join(a.out, "sku_%s_col.png" % name))
-        v = np.asarray(rg)
-        Image.fromarray(np.stack([v, v, v, v], -1), "RGBA").save(os.path.join(a.out, "sku_%s_rgh.png" % name))
-        lays[name] = lay
-    C = ep["consts"]
-    for code in range(100):
-        code_label(code, C["CODE_PAPER"], C["CODE_INK"], C["CODE"]).save(os.path.join(a.out, "code_%02d.png" % code))
-    rng = np.random.default_rng(158)
-    ticket_strip(a.out, rng)
-    floor_maps(a.out, rng)
-    ceiling_maps(a.out, rng)
-    perforated(a.out, rng)
-    aisle_sign(a.out, rng)
-    cardboard(a.out, rng)
-    json.dump({"layouts": lays, "dress": dress, "ppm": PPM}, open(os.path.join(a.out, "sku_atlas.json"), "w"), indent=1)
-    print("[tex158] %d SKU atlases (%d of the task's unit, %d dressing), 100 code labels, strip, floor, ceiling, panel, sign in %s" % (
-        len(skus), len(ep["unit"]["skus"]), len(dress), a.out))
-
-
-if __name__ == "__main__":
-    main()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""PR #158 OVRTX look: the material library (usdw.py's plain look dictionaries; colours linear, S() converts sRGB).
-Parts that carry a task colour keep it: a SKU's body, band and logo are its atlas (tex158.py draws them in the task's
+"""The cameras' material library (plain look dictionaries; colours linear, S() converts sRGB).
+Parts that carry a task colour keep it: a SKU's body, band and logo are its atlas (shelf_tex.py draws them in the task's
 values), the code label its paper and ink, the cap its colour. The bay's own colours (the task: light grey boards,
 dark lips, grey cart, blue tote) stay in their families.
 """
@@ -39,7 +39,7 @@ LOOKS = {
     "cam_arm": {"base": S(0.05, 0.05, 0.055), "rgh": ("pc_rgh", 0.38, 0.8), "tile": 0.03},
     "cam_lens": {"base": [0.02, 0.02, 0.022], "metal": 1.0, "rough": 0.3},
     "cam_glass": {"glass": {"color": [0.55, 0.6, 0.75], "ior": 1.5, "rough": 0.0, "thin": True}},
-    # ---- the Panda (pr138's)
+    # ---- the Panda
     "panda_white": {"base": S(0.93, 0.93, 0.92), "rgh": ("shell_rgh", 0.36, 1.0), "nrm": "shell_nrm", "nrm_strength": 0.4, "tile": 0.08,
                     "coat": 0.6, "coat_rough": 0.08},
     "panda_black": {"base": S(0.06, 0.06, 0.065), "rgh": ("shell_rgh", 0.52, 1.0), "nrm": "shell_nrm", "nrm_strength": 0.3, "tile": 0.08},

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""PR #158 OVRTX look: the things of a store aisle as meshes (geom.py's (V, N, UV, F)), at the task's dimensions.
+"""What the cameras draw: the things of a store aisle as meshes (shelf_geom.py's (V, N, UV, F)), at the task's dimensions.
 
 - products (the task's kinds: a box, a can; and a bottle): the task's primitive is the outer envelope; the print is
-  the SKU's atlas (tex158.py), uv 0..1;
+  the SKU's atlas (shelf_tex.py), uv 0..1;
 - code_decal: the task's best-before code as a label on the side and at the place the task drew for the unit;
 - gondola: a shelving bay in its own frame (the task's bay frame: x into the bay from the lips' outer face, y to
   the left, z up): uprights, perforated back, decks with a ticket rail in place of the lip, brackets, plinth, top;

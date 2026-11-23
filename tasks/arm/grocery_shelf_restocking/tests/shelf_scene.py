@@ -1,6 +1,6 @@
 """Shelf restocking: what the cameras draw (plain data: meshes, materials, frames; no renderer here).
 
-One scene, two renderers: the meshes are the approved look's own builders (shelf_parts, shelf_geom: the gondola bay
+One scene, two renderers: the meshes are the demonstration video's own builders (shelf_parts, shelf_geom: the gondola bay
 with its ticket rail, the cart, the tray tote, the products with their SKU's print and the code label, the Panda's
 visual meshes with soft finger pads, the telescopic lift; the store aisle round the bay: the gondola runs on both
 sides, back to back and across the aisle, end caps, every bay stocked with dressing SKUs, floor, ceiling with lamp
@@ -276,8 +276,8 @@ def consts(S, W):
 
 
 def store(col, bay, C, dress, lays):
-    """The aisle round the task's bay, in the bay's frame (the approved look's store158.py, the same draws in the
-    same order)."""
+    """The aisle round the task's bay, in the bay's frame (the same draws in the same order as the task's
+    demonstration video)."""
     rng = np.random.default_rng(STORE_SEED)
     LT, UT, KT = C["LIP_T"], C["UPRIGHT_T"], C["BACK_T"]
     width, depth, top_z = bay["width"], bay["depth"], bay["top_z"]
@@ -366,7 +366,7 @@ def store(col, bay, C, dress, lays):
 
 
 def cell(col, unit, model, meta, bay, C, lays):
-    """The task's own things (the approved look's cell158.py): the cart, the tote, the lift's plate (world frame),
+    """The task's own things: the cart, the tote, the lift's plate (world frame),
     the bay as a gondola bay (bay frame), every product with its SKU's print and its code label, the Panda's visual
     meshes with the fingers' soft pads, the robot's plate on the carriage, the telescopic column's stages."""
     import mujoco

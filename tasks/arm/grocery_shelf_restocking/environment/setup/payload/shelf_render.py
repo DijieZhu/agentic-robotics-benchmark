@@ -2,7 +2,7 @@
 is Mesa's lavapipe on the CPU (no GPU). shelf_env.render draws every image through this module, in the agent's copy
 of the simulator and in the grader's alike.
 
-What is drawn: shelf_scene.py's items (the approved look's own meshes: the gondola bay, cart, tray tote, products
+What is drawn: shelf_scene.py's items (the demonstration video's own meshes: the gondola bay, cart, tray tote, products
 with their print and code label, the Panda with soft finger pads, the telescopic lift, the store aisle round the
 bay with its stocked runs, floor, ceiling, walls, door and marker) and the render bundle's stock-handling props
 (SHELF_RENDER_DIR, default /opt/task-assets/payload/render: props_bay/, props_world/, textures.npz, textures.json,
