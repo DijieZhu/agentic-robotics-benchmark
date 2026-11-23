@@ -2,10 +2,62 @@
  "format": "door-look/1",
  "note": "The numbers of the cameras' look (door_render.py beside this file). The render bundle (DOOR_RENDER_DIR) holds the room, the colour maps of the task's parts and the image light's panorama; the meshes are door_scene.py's. Fitted against path-traced pictures of the same cell in the same room through the same five cameras.",
  "exposure_scale": 1.0,
- "ibl": {"file": "ibl.ktx", "intensity": 18732.0},
- "materials": {"gain": 1.0, "roughness_scale": 1.0, "metallic_scale": 1.0, "specular": 0.3, "gain_by_look": {}},
- "filament_numeric": {"filament.ao.enabled": 1, "filament.bloom.enabled": 0, "filament.vignette.enabled": 0, "filament.shadows.type": 0},
- "filament_text": {"filament.cg.tone_mapping": "filmic"},
- "render": {"fxaa": false, "post_processing": true, "shadows": false, "reflections": false, "clear_color": [0.02, 0.02, 0.02],
-            "supersample": 2, "lavapipe_threads": 2, "supersample_by_camera": {}}
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 18732.0
+ },
+ "materials": {
+  "gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "specular": 0.3,
+  "gain_by_look": {
+   "bench_top": [
+    0.93,
+    0.89,
+    0.7
+   ],
+   "knuckle_dark": 2.0,
+   "leaf_dark": 2.0,
+   "screw_dark": 2.0,
+   "stand_steel": 2.5,
+   "rack_steel": 2.0,
+   "pin_steel": 1.2,
+   "knuckle_brass": 1.15,
+   "leaf_brass": 1.15,
+   "room_wall": [
+    0.93,
+    0.96,
+    1.0
+   ],
+   "pin_old": 1.9
+  }
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "fxaa": false,
+  "post_processing": true,
+  "shadows": false,
+  "reflections": false,
+  "clear_color": [
+   0.02,
+   0.02,
+   0.02
+  ],
+  "supersample": 2,
+  "lavapipe_threads": 4,
+  "supersample_by_camera": {
+   "overhead": 1,
+   "front": 1,
+   "side": 1
+  }
+ }
 }

@@ -23,6 +23,7 @@ import door_looks as LK
 import door_parts as P
 
 TOP_T = 0.040                     # the worktop's thickness
+PROUD = 0.0004                    # m: a robot's dark parts stand this far off the shell they lie on
 
 
 def _srgb(c):
@@ -74,6 +75,18 @@ def model_soup(m, g):
 def model_mesh(m, g):
     V, N = model_soup(m, g)
     return G.uv_box((V, N, np.zeros((len(V), 2)), np.arange(len(V)).reshape(-1, 3)))
+
+
+def lift(mesh, d):
+    """the mesh moved out by d along its surface: every vertex along the mean normal of all the vertices at its place
+    (the faces carry their own vertices; moved along their own normals they would part at the edges)"""
+    V, N, UV, F = mesh
+    _u, inv = np.unique(np.round(V / 1e-6).astype(np.int64), axis=0, return_inverse=True)
+    inv = inv.reshape(-1)
+    S_ = np.zeros((int(inv.max()) + 1, 3))
+    np.add.at(S_, inv, N)
+    S_ /= np.linalg.norm(S_, axis=1, keepdims=True) + 1e-12
+    return V + d * S_[inv], N, UV, F
 
 
 def panda_look(m, g):
@@ -173,7 +186,11 @@ def parts(unit, episode, m):
                 put(body, "finger_metal", P.finger_metal(V, N, sg), "finger")
                 put(body, "finger_pad", P.finger_pad(sg), "finger_pad")
             else:
-                put(body, "panda_%d" % g, model_mesh(m, g), panda_look(m, g))
+                look = panda_look(m, g)
+                mesh = model_mesh(m, g)
+                if look != "panda_white":               # a band or a cap that lies ON the white shell: proud of it, so no
+                    mesh = lift(mesh, PROUD)            # pixel has two surfaces at one depth
+                put(body, "panda_%d" % g, mesh, look)
             continue
         if t not in (BOX, CYL, CAP) or rgba[3] < 0.5:
             continue
