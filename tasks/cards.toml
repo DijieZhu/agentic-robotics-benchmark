@@ -29,6 +29,12 @@ summary = "Specify seven upgraded replicas of a two-arm robot that has left the 
 platforms = ["arm"]
 stages = ["requirements"]
 
+[cabinet_door_hanging]
+title = "Replace a cabinet door with two Pandas"
+summary = "Two fixed Franka Pandas swap a wall cabinet's door on loose-pin hinges: a vacuum cup holds the hanging door while a gripper pulls the old pins and drives new ones of the right diameter home, from cameras and wrist force on cabinets never seen."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [keyed_nut_peg_assembly]
 title = "Assemble bayonet nut kits with a Panda"
 summary = "A Franka Panda must fit three bayonet nuts onto their pegs within the cell's takt time, working out each nut's hidden groove from camera images and a wrist force sensor on kits it has never seen."

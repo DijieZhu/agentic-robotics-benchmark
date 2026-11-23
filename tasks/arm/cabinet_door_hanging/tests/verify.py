@@ -18,11 +18,14 @@ controller that stays inside the time limits gets one result. episode.py owns th
 door_sim.py are the environment (all three byte-identical to the agent's copies). The metric `mean_episode_credit`
 is the mean over the set of each episode's credit (episode.py); an episode that is aborted or not run counts 0.
 
-The grader's budget (grader_config.json `grader_budget_s`) pays for the simulation, the images the controller asks
-for and the controller's own time (the reference's time per episode over the wire, and the host it was measured on,
-are in tests/anchor.json). The episode running when the budget runs out is aborted and the later ones are not run:
-they score 0 and the metric `episodes_scored` does not count them. A simulator fatal error (mujoco.FatalError) or an
-unstable simulation scores that episode 0 and grading goes on.
+The budget (grader_config.json `grader_budget_s`) is charged to the controller's own time: what the grader waits
+for READY, for each reset and for each reply (`door_grade.Clock`), plus `image_cost_s` for every image an applied
+action asks for, a fixed price whatever this machine takes to draw it. The simulation and the drawing are the
+grader's and are not counted, so the budget does not depend on how fast the grading machine simulates or renders
+(the reference's own time is in tests/anchor.json). The episode running when the budget runs out is aborted and the
+later ones are not run: they score 0 and the metric `episodes_scored` does not count them. A simulator fatal error
+(mujoco.FatalError) or an unstable simulation scores that episode 0 and grading goes on. The log names an episode by
+its index in the set and its unit, never by its seed.
 
 Numerics: the simulation's operational-space controller calls LAPACK every physics step, and OpenBLAS picks its
 kernels by CPU; on another kernel the same controller runs another trajectory. The image pins the kernels and a
@@ -397,10 +400,11 @@ def main():
 
     gconfig = grader_config(config)
     try:
-        solver = GuardedSolver(step_timeout=gconfig["step_timeout_s"], submission=workdir)
+        clock = G.Clock()
+        solver = clock.timed(GuardedSolver, step_timeout=gconfig["step_timeout_s"], submission=workdir)
         try:
             records, lock = G.run_episodes(solver, episodes, units, truth, log=log, config=gconfig,
-                                           t_start=t_start, on_step=watch)
+                                           clock=clock, on_step=watch)
         finally:
             try:
                 solver.close()
@@ -428,6 +432,7 @@ def main():
                  egress_detected=float(egress["hits"]),
                  cleanup_failed=0.0 if cleanup_ok else 1.0,
                  budget_exhausted=1.0 if any("budget" in r["reason"] for r in records) else 0.0,
+                 controller_seconds=round(clock.s, 1),
                  oracle_token=1.0 if truth else 0.0,
                  **secured)
     per_unit = {}
@@ -442,9 +447,11 @@ def main():
                             metric_name="mean_episode_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))
     write_verdict(verdict)
-    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} scored={} faults={} egress={}".format(
-        measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok,
-        extra["episodes_scored"], extra["sim_faults"], egress_mode))
+    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} scored={} faults={} egress={} "
+        "controller={:.0f}s of {:.0f}s wall={:.0f}s".format(
+            measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok,
+            extra["episodes_scored"], extra["sim_faults"], egress_mode, clock.s,
+            float(gconfig.get("grader_budget_s") or 0), time.monotonic() - t_start))
 
 
 if __name__ == "__main__":

@@ -206,7 +206,8 @@ def over_wire(G, units, unit, seed, work):
             "sim_fault": bool(r["sim_fault"]), "probes": int(lock.total), "probes_passed": int(lock.passed),
             "probes_idle_skipped": int(lock.idle_skipped),
             "pinned": sc.get("pinned"), "swings": sc.get("swings"),
-            "swing_deg": (sc.get("swing") or {}).get("opened_deg"), "wall_s": round(time.monotonic() - t0, 1)}
+            "swing_deg": (sc.get("swing") or {}).get("opened_deg"), "wall_s": round(time.monotonic() - t0, 1),
+            "controller_s": round(lock.clock.s, 2)}
 
 
 def run_candidate(args):

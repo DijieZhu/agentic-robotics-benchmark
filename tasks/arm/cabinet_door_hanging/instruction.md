@@ -5,9 +5,8 @@ old door hangs on the wrong pins. The new door stands in a rack on the bench; lo
 The robots see through cameras and feel through wrist force sensors. Write the controller that replaces the door:
 take the old door off and set it aside, then hang the new one: one arm holds it in the opening with its hinge
 knuckles lined up, the other drives a pin down through each hinge. It runs closed loop against
-a simulator and is graded on cabinets you have not seen. You have 2 hours of wall time from the start of your
-session; check the clock (`date`) as you go. Whatever is in `/home/user/submission/` when the time ends is graded, so
-keep a working controller there.
+a simulator and is graded on cabinets you have not seen. You have 2 hours of wall time (see "Session time").
+Whatever is in `/home/user/submission/` when the time ends is graded, so keep a working controller there.
 
 **The cell.** World frame: z up, metres; the bench top is at z = 0.80 and ends at x = 0.55. The left arm's base is at
 (0, 0.28), the right arm's at (0, -0.28), both facing +x. `task_card.md` gives every number in one place.
@@ -78,11 +77,21 @@ which pins fit and how the door hangs.
 | `episode.py` | An episode, its end and its credit. The grader runs this exact file. |
 | `units.json` | The two practice units (p0, p1). |
 | `task_card.md` | The cell's numbers in one place. |
-| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit. |
+| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit and what it is made of (see below). |
+| `session_time.sh` | Prints the minutes of your session used and left (see "Session time"). |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic): copy it into your submission. |
 
 Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's robot model files).
-There is no network.
+There is no network. Your sandbox has 4 CPUs and 12 GB of memory; the grading sandbox has the same.
+
+**Practice.** You may practise as much as the session allows: the simulator is yours to run, and the practice
+units' truth is yours to read (`units.json` gives their hinges, pin class and door mass; the simulator's state gives
+everything else). For each practice episode the practice grader prints the credit, whether the new door hangs, which
+hinges are pinned, whether the door swings and how far it opened, which pins are home, the pin class the unit needs,
+whether the cup still holds a door, whether the old door fell, and the controller's time as the grader counts it
+(`controller_seconds`). None of this exists for the scored units: they are other cabinets, every hidden property of
+which (knuckle count, pin class, clearance, hinge heights, door and handle mass) is drawn anew within the ranges
+above, and nothing but the observation is given for them.
 
 **Numerics.** Every `/opt/venv` Python computes the same here and in the graded run, on whatever machine: the image
 sets, when the variables are missing, NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell`
@@ -121,6 +130,20 @@ An episode ends at the first of:
 
 The score is the mean credit over the graded episodes.
 
+## Session time
+
+- This session is stopped 2 hours of wall-clock time after it started. What is in `/home/user/submission/` at
+  that moment is graded as it is: keep a complete, runnable submission there from early on and replace it as you
+  improve it.
+- The only clock for this limit is the wall clock. `bash /home/user/session_time.sh` prints the minutes used and
+  the minutes left, from a time stamp written when your sandbox was set up (moments before your session started,
+  so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
+  again before every decision that depends on the time left, and whenever you pick the work up from notes or from
+  a summary of what was done. Do not estimate the time used from how much you have done.
+- Two other counts in this task are not your session's time: an episode's length (6000 control steps are 10
+  simulated minutes and a few minutes of wall time in your simulator) and the controller's 9000 s budget at
+  grading. Neither says how much of the 2 hours is left.
+
 ## Observation and action
 
 The controller runs at 10 Hz. The observation is a JSON object:
@@ -156,8 +179,8 @@ The operational-space controller compensates the arm's own weight, not what the 
 hand down until you command against it.
 
 `cams` is a bitmask of the images the next observation carries: 1 overhead, 2 front, 4 side, 8 left wrist, 16 right
-wrist. Images are large (a 640 x 480 image is about 1.2 MB on the wire) and cost the grader time to draw, so ask for
-one only when you need it.
+wrist. Images are large (a 640 x 480 image is about 1.2 MB on the wire) and each one costs 0.1 s of your
+controller's time budget at grading, so ask for one only when you need it.
 
 ## Deliverable and grading
 
@@ -166,7 +189,7 @@ Put your controller in `/home/user/submission/` with a `run.sh`.
 **Only the submission exists at grading.** The grader runs in a separate sandbox where only `/home/user/submission/`
 is restored. Nothing else from your home directory is there: not the simulator files, `units.json`, the practice
 grader or `helpers/`. Everything your controller needs must be inside the submission folder: copy in any of the
-files above that it uses, and import them from there. The folder may hold at most 5000 files and 200 MB, and it must
+files above that it uses, and import them from there. The folder may hold at most 5000 files and 200 MiB, and it must
 be a real folder, not a link. The practice grader runs in your home, where every file exists, so it cannot show this
 failure; run it on a copy of your submission in another folder to check.
 
@@ -209,9 +232,17 @@ episode, not on your replies.
 - **Failures.** A crash, a late or oversize reply, a malformed action, a simulator fatal error or an unstable
   simulation scores that episode 0, and grading goes on. After a failure the next episode restarts the controller;
   after 3 restarts the remaining episodes score 0.
-- **The time budget.** The grader has 9000 s for all 12 episodes. That covers the simulation, drawing the images you
-  ask for, and your controller's own time. On the reference host (2 x AMD EPYC 9254, 96 hardware threads, shared)
-  the reference controller, which asks for no images, used 730-742 s for all 12 episodes (1614-1941 steps each). If the
-  budget runs out, the episode running is aborted and the rest are not run; all of them score 0.
+- **The time budget.** Your controller has a budget of 9000 s of its own time over the whole run: the time the
+  grader waits for `READY` (at the first start and after a restart), for each reset and for each of your replies,
+  plus 0.1 s for every image an applied action asks for (a fixed price, whatever the grading machine takes to draw
+  it). The simulation's own time is not counted. The reference controller, which asks for no images, used well under
+  a minute of it for all 12 episodes (1614-1941 steps each). If the budget runs out, the episode running is aborted
+  and the rest are not run; all of them score 0. The practice grader counts the same way and prints
+  `controller_seconds`.
+- **Leftover processes.** The whole run scores 0 if the grader
+  cannot stop every process your submission left running (it checks when it starts and when the last episode is
+  over): do not start anything that respawns or detaches itself to survive a kill.
+- **No internet sockets.** Your processes cannot open an internet socket (the call fails). On a grading machine
+  where that guard cannot be installed, an internet socket of yours scores the whole run 0.
 - **One process.** Your controller runs as one process for the whole run, so it may carry what it learns from one
   episode to the next.

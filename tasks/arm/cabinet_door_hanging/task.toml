@@ -25,10 +25,12 @@ memory_mb = 12288
 timeout_sec = 7200
 network_mode = "no-network"
 
-# 12 episodes (one per hidden unit), each at most 6000 control steps; the grader's own budget is 9000 s
-# (grader_config.json), and starting the solver, the render self-test and the stops need a little more.
+# 12 episodes (one per hidden unit), each at most 6000 control steps. The 9000 s budget (grader_config.json) is the
+# controller's own time (its replies plus 0.1 s per image asked for); the simulation and the drawing are the grader's
+# and come on top: 72000 steps at 35 ms (measured) are 2520 s, at 100 ms (a loaded host, 3 CPUs) 7200 s.
+# (7200 + 9000 + 60) x 1.35 = 21950 s.
 [verifier]
-timeout_sec = 9600
+timeout_sec = 22000
 environment_mode = "separate"
 
 [verifier.environment]

@@ -8,8 +8,16 @@ Runs your controller (bash run.sh in --submission) against /home/user/door_env.p
 same wire as the hidden grader: READY within 120 s, each reply within 30 s and at most 4 MiB, repeated step indices
 with perturbed observations (only the reply to the real observation is applied), an aborted episode scores 0 and the
 controller is restarted (at most 3 restarts), and the controller runs with only AF_UNIX sockets (the same seccomp
-filter as at grading time). It reports whether the run stayed inside the grading time budget. It never touches the
-hidden units, does not know the reference value and prints no score.
+filter as at grading time). It counts the controller's own time the way the grader does (the time it waits for READY,
+for each reset and for each reply, plus 0.1 s for every image an applied action asks for) and reports whether the run
+stayed inside the grading budget (9000 s over 12 episodes: 750 s an episode on average). It never touches the hidden
+units, does not know the reference value and prints no score.
+
+What it prints, per episode: the credit, whether the new door hangs, which hinges are pinned, whether the door swings
+and how far it opened, which pins are home, the pin class the unit needs, whether the cup still holds a door, and
+whether the old door fell. All of it is the practice simulation's own state, which you can read yourself in
+/home/user (the practice units' hinges, pin class and door mass are in units.json); none of it exists for the graded
+units, whose every hidden property differs from the practice units'.
 
 One difference it cannot show: it runs in your home, where every file of your home exists. The grader runs in a
 separate sandbox where only /home/user/submission exists, so a controller that imports or reads anything outside its
@@ -41,7 +49,8 @@ READY_TIMEOUT = 120.0
 STEP_TIMEOUT = 30.0
 MAX_RESTARTS = 3
 MAX_LINE = 1 << 22
-BUDGET_PER_EPISODE = 9000.0 / 12
+BUDGET_PER_EPISODE = 9000.0 / 12     # of the controller's own time (the grader's budget is 9000 s for 12 episodes)
+IMAGE_COST = 0.1                     # s charged for every image an applied action asks for
 PROBE_RATE = 0.01
 
 _FILTER_SRC = r'''
@@ -81,6 +90,7 @@ class Wire(object):
         self.restarts = 0
         self.dead = False
         self.broken = False
+        self.own_s = 0.0             # the controller's own time: waiting for READY, resets and replies
         self._start()
 
     def _start(self):
@@ -89,9 +99,13 @@ class Wire(object):
                                      bufsize=1, start_new_session=True)
         self.lines = queue.Queue()
         threading.Thread(target=self._pump, args=(self.proc, self.lines), daemon=True).start()
-        for _ in range(200):
-            if self._read(READY_TIMEOUT, "READY").strip() == "READY":
-                return
+        t0 = time.monotonic()
+        try:
+            for _ in range(200):
+                if self._read(READY_TIMEOUT, "READY").strip() == "READY":
+                    return
+        finally:
+            self.own_s += time.monotonic() - t0
         raise WireError("solver never printed READY")
 
     @staticmethod
@@ -128,6 +142,7 @@ class Wire(object):
     def request(self, msg):
         if self.dead:
             raise WireError("solver could not be restarted after an earlier abort")
+        t0 = time.monotonic()
         try:
             self.proc.stdin.write(json.dumps(msg) + "\n")
             self.proc.stdin.flush()
@@ -148,6 +163,8 @@ class Wire(object):
         except WireError:
             self.broken = True
             raise
+        finally:
+            self.own_s += time.monotonic() - t0
 
     def reset(self):
         if self.broken:
@@ -255,6 +272,8 @@ def main():
                                 differed += int(differ(act, b))
                         else:
                             act = wire.act(t, wobs)
+                        if isinstance(act, dict) and isinstance(act.get("cams", 0), int):
+                            wire.own_s += IMAGE_COST * bin(act.get("cams", 0) & 31).count("1")
                         obs, done, _info = ep.step(act)     # a malformed action raises ValueError
                         t += 1
                         if ep.env.unstable():
@@ -280,7 +299,8 @@ def main():
         "repeated_t_pairs_that_differed": differed,
         "repeated_t_pairs_not_counted_no_motion": idle,
         "wall_seconds": round(wall, 1),
-        "within_grading_time_budget": wall <= BUDGET_PER_EPISODE * max(1, len(results)),
+        "controller_seconds": round(wire.own_s, 1),
+        "within_grading_time_budget": wire.own_s <= BUDGET_PER_EPISODE * max(1, len(results)),
         "note": "dev sim with the practice units; this is not your score",
     }, indent=1))
     return 0

@@ -9,8 +9,10 @@
   in the set and its seed alone.
 - Images are rendered for the cameras an action's `cams` asks for (the next observation carries them).
 - `truth` (`DoorEnv.truth()`) is added to every observation only in a token run (the caller decides).
-- The grader's budget (`grader_budget_s`): the episode running when it runs out is aborted and the episodes after it
-  are not run; both score 0 and neither counts as scored. A simulator fatal error (`mujoco.FatalError`) or an unstable
+- The budget (`grader_budget_s`) is the controller's own time (`Clock`: the waits for READY, resets and replies, plus
+  `image_cost_s` for every image an applied action asks for; the simulation and the drawing are not counted): the
+  episode running when it runs out is aborted and the episodes after it are not run; both score 0 and neither counts
+  as scored. A simulator fatal error (`mujoco.FatalError`) or an unstable
   simulation ends that episode at 0 and grading goes on. A renderer failure (`door_env.RenderError`) propagates: it is
   the grader's own error, not the controller's.
 """
@@ -29,7 +31,8 @@ from robotics_grader import ProbeLock, SolverAborted, seed_rng
 
 STILL = 1e-9                # an arm's 7-number step whose six motion numbers are all within this of zero: no motion
 PROBE_TAG = b"cabinet_door_hanging verify probe schedule 1"   # probe_stream's domain tag
-CONFIG = {"probe_rate": 0.01, "probe_pass_fraction": 0.1, "step_timeout_s": 30, "grader_budget_s": None}
+CONFIG = {"probe_rate": 0.01, "probe_pass_fraction": 0.1, "step_timeout_s": 30, "grader_budget_s": None,
+          "image_cost_s": 0.1}
 MAX_LINE = 1 << 22          # a reply line longer than 4 MiB closes the wire (the episode aborts); an action is ~300 B
 SELFTEST_SEED = 1           # the render self-test's episode (not a graded seed)
 
@@ -99,15 +102,44 @@ def wire_obs(env, obs, unit_id, truth):
     return w
 
 
-def ask(lock, solver, env, t, obs, unit_id, truth):
+class Clock(object):
+    """The controller's own time (s): what the grader waited for READY, for the reset and for each reply, and what
+    `run_episodes` adds for the images an applied action asks for. The simulation and the drawing happen outside
+    `timed`, so the count does not depend on how fast the grading machine simulates or renders."""
+
+    def __init__(self):
+        self.s = 0.0
+
+    def timed(self, fn, *args, **kwargs):
+        t0 = time.monotonic()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            self.s += time.monotonic() - t0
+
+
+def images_asked(action):
+    """How many images the next observation carries for this action: the set bits of its `cams` mask (0 for an
+    action the environment will refuse)."""
+    try:
+        cams = int(action.get("cams", 0))
+    except (AttributeError, TypeError, ValueError, OverflowError):
+        return 0
+    return bin(cams & S.ALL_CAMS).count("1") if 0 <= cams <= S.ALL_CAMS else 0
+
+
+def ask(lock, solver, env, t, obs, unit_id, truth, clock=None):
     """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
     the stream (lock.due); a probed step draws twice more before either request is written (the perturbation's seed,
-    then the pair's order), so the draws never depend on the replies."""
+    then the pair's order), so the draws never depend on the replies. Only the time the grader waits for the
+    replies is charged to `clock`; building the request (and the perturbed copy) is the grader's."""
+    timed = clock.timed if clock is not None else (lambda fn, *a, **k: fn(*a, **k))
     w = wire_obs(env, obs, unit_id, truth)
     if lock.due():
-        other = env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
-        return lock.probe(solver, t, w, perturbed=wire_obs(env, other, unit_id, truth))
-    return solver.act(t, w)
+        other = wire_obs(env, env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64))),
+                         unit_id, truth)
+        return timed(lock.probe, solver, t, w, perturbed=other)
+    return timed(solver.act, t, w)
 
 
 def render_selftest(unit, unit_id, seed=SELFTEST_SEED):
@@ -127,21 +159,26 @@ def render_selftest(unit, unit_id, seed=SELFTEST_SEED):
         env.close()
 
 
-def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_start=None, on_step=None):
+def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, clock=None, on_step=None):
     """Run `episodes` ([(index in the run, unit id, seed)], in order) over one controller. Returns (records, lock); a
     record per episode: index, unit, seed, credit, reason, `scored` (it ran to its end), steps and the score's parts.
-    The grader's budget (config `grader_budget_s`, counted from `t_start`) aborts the episode running when it runs out
-    and skips the rest (credit 0, not scored). A simulator fatal error or an unstable simulation ends that episode
+    The budget (config `grader_budget_s`) is charged to the controller's own time, `clock` (lock.clock on return):
+    what the grader waited for READY (the caller starts the solver inside `clock.timed`), for each reset and reply,
+    plus config `image_cost_s` for every image an applied action asks for. It aborts the episode running when it
+    runs out and skips the rest (credit 0, not scored). The log names an episode by its index and unit, never by
+    its seed. A simulator fatal error or an unstable simulation ends that episode
     (credit 0, not scored, `sim_fault`). A renderer failure (E.RenderError) propagates: it is the grader's own
     error. `on_step()`, if given, runs before every step (the grader's egress watch)."""
     budget = config.get("grader_budget_s")
-    t_start = time.monotonic() if t_start is None else t_start
+    image_cost = float(config.get("image_cost_s", 0.1))
+    clock = Clock() if clock is None else clock
 
     def over():
-        return budget is not None and time.monotonic() - t_start > budget
+        return budget is not None and clock.s > budget
 
     lock = IdleAwareProbeLock(None, rate=config["probe_rate"], pass_fraction=config["probe_pass_fraction"],
                               tolerance=1e-4)
+    lock.clock = clock
     records = []
     for n, uid, seed in episodes:
         lock.rng = probe_stream(n, seed)
@@ -151,19 +188,20 @@ def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_star
                "sim_fault": False}
         t0 = time.monotonic()
         if over():
-            rec.update(reason="not run: grader budget exhausted", steps=0, wall=0.0)
+            rec.update(reason="not run: controller time budget exhausted", steps=0, wall=0.0)
             records.append(rec)
             continue
         try:
             obs = ep.reset()
-            solver.reset()
+            clock.timed(solver.reset)
             t, done = 0, False
             while not done:
                 if over():
-                    raise SolverAborted("grader budget exhausted")
+                    raise SolverAborted("controller time budget exhausted")
                 if on_step is not None:
                     on_step()
-                action = ask(lock, solver, env, t, obs, uid, truth)
+                action = ask(lock, solver, env, t, obs, uid, truth, clock)
+                clock.s += image_cost * images_asked(action)
                 obs, done, _info = ep.step(action)
                 t += 1
                 if env.unstable():
@@ -179,8 +217,8 @@ def run_episodes(solver, episodes, units, truth, log=None, config=CONFIG, t_star
             env.close()
         rec.update(steps=int(env.t), wall=round(time.monotonic() - t0, 1))
         if log:
-            log("episode {} ({}, {}): credit={:.4f} steps={} {}".format(n, uid, seed, rec["credit"], rec["steps"],
-                                                                        rec["reason"]))
+            log("episode {} ({}): credit={:.4f} steps={} {}".format(n, uid, rec["credit"], rec["steps"],
+                                                                    rec["reason"]))
         records.append(rec)
     return records, lock
 
