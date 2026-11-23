@@ -47,7 +47,10 @@ The first observation also carries `catalog`: one front-view image of each SKU, 
 - leave the lane faced: its front unit within 15 mm of the shelf's front lip and, for a box, its printed front
   facing the aisle.
 
-A lane to be restocked holds one or more old units, anywhere in its depth, not faced; units behind the front one cannot be seen from the aisle. The delivery fills every
+A lane to be restocked holds one or more old units, anywhere in its depth, not faced. Units behind the front one
+are in view from the aisle, over and beside the unit in front of them, but no date code can be read from there: a
+unit in a lane is 0.45 m or more from the carriage cameras, where a code's digits are at most 4 px tall and their
+strokes under half a pixel. The delivery fills every
 restocked lane: once its expired units are gone, the lane holds exactly as many units as fit (`task_card.md`). The
 tote holds the delivery and extras: units of SKUs that no lane in `delivery` carries, which are not part of the
 delivery and stay standing in the tote. At most one of its eight slots is free, often none. Only the unit at the
@@ -67,7 +70,7 @@ not disturb the lanes that are not being restocked.
 | `shelf_render.py`, `shelf_scene.py`, `shelf_parts.py`, `shelf_geom.py`, `shelf_tex.py`, `shelf_looks.py`, `shelf_look.json` | What the cameras draw and how (the bay, the products' print, the aisle). The grader runs these exact files; the pictures they need are in `/opt/task-assets/payload/render` (read-only). |
 | `units.json` | Three practice units (p0-p2): bays and SKUs to develop against, each with eight seeds of episodes like the graded ones (`seeds`). The scored bays and SKUs are different. |
 | `task_card.md` | The scene's numbers in one place: frames, nominal places, ranges, sizes, cameras. |
-| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units. Per episode it prints the credit and its three parts, each restocked lane's result (the units missing from it or not belonging in it, the day numbers of the units standing in it), the units that moved, fell or are not in the tote, and the controller's own time. This is the practice simulation's own state; nothing like it is given for the graded bays. |
+| `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units. Per episode it prints the credit, the credit the same end state had under this task's earlier rule (each correct lane earning its share: `credit_by_the_earlier_partial_rule`, for your information, never scored), its three parts, each restocked lane's result (the units missing from it or not belonging in it, the day numbers of the units standing in it), the units that moved, fell or are not in the tote, and the controller's own time. This is the practice simulation's own state; nothing like it is given for the graded bays. |
 | `session_time.sh` | Prints the minutes of your session used and left (see "Session time"). |
 | `helpers/wire_skeleton.py` | Optional boilerplate for the wire (no control logic); copy it into your submission to use it. |
 
@@ -99,12 +102,14 @@ done: that episode's credit is 0, whatever else was achieved in it. In an episod
 
 An episode ends:
 - when your controller sends the action `[0]` (finished);
-- after 15000 control steps (25 simulated minutes);
+- when the step count `t` reaches 15000 (25 simulated minutes). The count includes the 20 steps in which the scene
+  settles before your first observation (which carries `t` = 20), so a controller has 14,980 actions;
 - at an unstable simulation (an arm joint faster than 8 rad/s, or a product faster than 10 m/s), which scores 0.
   A unit that is dropped and falls is not one: it lies where it lands, the episode goes on, and it counts as any
   other unit that is not where it belongs.
 
-The score is the mean credit over the graded episodes.
+The score is the mean credit over the graded episodes. (The grader also records, beside it, the mean the same episodes would have under the
+earlier rule in which each correct lane earned its share; that number is reported, never scored.)
 
 ## Session time
 
@@ -116,7 +121,7 @@ The score is the mean credit over the graded episodes.
   so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
   again before every decision that depends on the time left, and whenever you pick the work up from notes or from
   a summary of what was done. Do not estimate the time used from how much you have done.
-- Two other counts in this task are not your session's time: an episode's length (15000 control steps are 25
+- Two other counts in this task are not your session's time: an episode's length (15000 control steps, 20 of them the scene's own, are 25
   simulated minutes and several minutes of wall time in your simulator) and the controller's 9000 s budget at
   grading. Neither says how much of the 2 hours is left.
 
@@ -164,7 +169,8 @@ that folder (at the same path, at most 5000 files and 200 MiB, else the run scor
 else of your home directory is there, so copy into the submission everything the controller imports or reads
 (the world files above, your own modules, any data). The practice grader runs in your home directory and does not
 show this. The grader starts the controller with `bash run.sh` in that folder, as your user, with only local
-(AF_UNIX) sockets, and speaks one JSON object per line on its stdin and stdout:
+(AF_UNIX) sockets and at the lowest scheduling priority (`nice` 19, as the practice grader starts it: the controller
+and anything it starts yield to the simulation and the drawing, which run between its replies), and speaks one JSON object per line on its stdin and stdout:
 
 - your controller prints `READY` within 120 s (a controller that never does scores 0 on every episode);
 - `{"type": "reset"}` → `{"ok": true}` (an episode starts);
@@ -186,7 +192,8 @@ differently on the grading machine than it did here.
 (joints by up to 1 mrad with the poses recomputed, force by up to 0.2 N; images unchanged), in a hidden order. Only
 the reply to the real one is applied. A pair in which both replies command no motion (`[0]`, or 9 numbers whose
 first six and eighth are all zero, within 1e-9) is not counted either way. If fewer than 10 % of the other pairs
-get replies that differ (by more than 1e-4 in some number), the whole run scores 0: a controller that ignores its
+get replies that differ (two replies of the same length, apart by more than 1e-4 in some number; two replies of
+different lengths do not count as differing), the whole run scores 0: a controller that ignores its
 input, answers a repeated `t` from a cache, or commands a fixed absolute joint target (the same 10 numbers whatever
 it is told) fails. Which steps are probed depends only on the episode, not on
 your replies.

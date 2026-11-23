@@ -137,6 +137,10 @@ def main():
         sys.exit("nonet_exec: cannot change user without root")
     if a.cwd:
         os.chdir(a.cwd)
+    try:
+        os.nice(19)                # the controller and whatever it starts yield to the grader's own simulation and
+    except OSError:                # drawing, which are not charged to it
+        pass
     os.execvpe(cmd[0], cmd, controller_env())
 
 

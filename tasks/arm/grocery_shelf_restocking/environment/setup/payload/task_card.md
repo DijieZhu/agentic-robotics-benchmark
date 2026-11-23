@@ -83,4 +83,5 @@ Images carry noise (2 levels). Poses and intrinsics come with every observation.
 - Codes: an old unit's day number is today to today + 14, or, expired, today - 9 to today - 1; a delivered unit's
   is mostly today + 2 to today + 24, but may be earlier than an old unit's. In at least two of the three lanes the
   codes matter (an expired unit, or a delivered unit earlier than an old one).
-- The episode ends on `[0]`, after 15000 control steps, or at an unstable simulation.
+- The episode ends on `[0]`, when the step count reaches 15000 (20 of them are the scene's settling before the
+  first observation: 14,980 actions), or at an unstable simulation.

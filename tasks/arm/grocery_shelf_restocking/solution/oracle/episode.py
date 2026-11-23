@@ -112,7 +112,10 @@ class Episode:
         unstable = bool(w.unstable())
         complete = bool(lanes) and all(v["correct"] for v in lanes.values())
         credit = CORRECT + FACE * face + KEEP * kept if (complete and not unstable) else 0.0
-        return {"credit": round(credit, 4), "complete": complete, "place": round(place, 4), "face": round(face, 4), "kept": kept,
+        # the rule this task had until 2026-11-23 (a share of the lanes earns its share): reported beside the credit,
+        # never scored
+        partial = 0.0 if unstable else CORRECT * place + FACE * face + KEEP * kept
+        return {"credit": round(credit, 4), "credit_partial": round(partial, 4), "complete": complete, "place": round(place, 4), "face": round(face, 4), "kept": kept,
                 "lanes": lanes, "moved": moved, "fallen": fallen, "expired_out": expired_out,
                 "extra_out": extra_out, "unstable": unstable,
                 "steps": int(w.t), "finished": self.finished}

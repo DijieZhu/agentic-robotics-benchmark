@@ -524,13 +524,15 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
                 skipped += 1
                 scores.append(0.0)
                 per_unit.setdefault(unit, []).append(0.0)
-                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "controller time budget exhausted",
+                records.append({"index": n, "unit": unit, "score": 0.0, "partial": 0.0,
+                                "reason": "controller time budget exhausted",
                                 "steps": 0})
                 log("episode {} ({}): score=0.0000 not run (controller time budget exhausted)".format(n, unit))
                 continue
             lock.rng = probe_stream(n, seed)
             ep = Run(units[unit], unit, seed)
             score, reason = 0.0, "ok"
+            partial = 0.0              # the episode's credit by the earlier rule (episode.py), reported only
             try:
                 obs = ep.reset()
                 clock.timed(solver.reset)
@@ -552,6 +554,7 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
                         raise SolverAborted("simulation unstable")
                 sc = ep.score()
                 score = sc["credit"]
+                partial = float(sc["credit_partial"])
                 per_part["correct"].append(float(sc["place"]))
                 per_part["face"].append(float(sc["face"]))
                 per_part["kept"].append(1.0 if sc["kept"] else 0.0)
@@ -569,11 +572,15 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
                 ep.env.close()
             if not (isinstance(score, float) and math.isfinite(score)) or score < 0:
                 score = 0.0
+            if reason != "ok" or not math.isfinite(partial) or partial < 0:
+                partial = 0.0          # an aborted episode earns nothing by either rule
             scores.append(score)
             per_unit.setdefault(unit, []).append(score)
             steps = getattr(ep.env, "t", 0)
-            log("episode {} ({}): score={:.4f} steps={} {}".format(n, unit, score, steps, reason))
-            records.append({"index": n, "unit": unit, "score": score, "reason": reason, "steps": steps})
+            log("episode {} ({}): score={:.4f} partial_rule={:.4f} steps={} {}".format(n, unit, score, partial, steps,
+                                                                                    reason))
+            records.append({"index": n, "unit": unit, "score": score, "partial": partial, "reason": reason,
+                            "steps": steps})
     finally:
         try:
             solver.close()
@@ -621,7 +628,7 @@ def main():
     log("egress guard: {}; oracle token: {}; {} episodes in the fixed set".format(egress_mode, truth, len(episodes)))
     try:
         (scores, aborted, skipped, faults, per_unit, per_part, egress_hits, budget_exhausted,
-         lock, _records) = run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episodes)
+         lock, records) = run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episodes)
     except E.RenderError as exc:
         kill_agent_processes(uid)
         fail("the cameras' renderer failed during the episodes: {}".format(exc))
@@ -650,6 +657,10 @@ def main():
     for part, vals in sorted(per_part.items()):
         if vals:
             extra["part_" + part] = sum(vals) / len(vals)
+    # The same episodes by the rule this task had until 2026-11-23 (a share of the lanes earns its share; an
+    # aborted or skipped episode 0): reported so that a run can be read under both rules; never part of the reward.
+    extra["mean_episode_credit_partial_rule"] = (sum(float(r.get("partial", 0.0)) for r in records) / len(records)
+                                                 if records else 0.0)
     verdict = ratio_rewards(measured, anchor, cap=config.get("scoring_cap", 1.5), higher_is_better=True,
                             metric_name="mean_episode_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))

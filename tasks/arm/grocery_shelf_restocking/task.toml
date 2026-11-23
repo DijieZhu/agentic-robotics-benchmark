@@ -1,6 +1,7 @@
 # Grocery shelf restocking: a Franka Panda on a vertical lift restocks one gondola bay (three shelves) from a tote of
-# delivered products, following a planogram and rotating the stock (the units already on a shelf end in front, the
-# delivered ones behind them), each lane's front unit faced and boxes face out. The products are known only by their
+# delivered products, following a planogram and rotating the stock by date (in every restocked lane each unit's
+# best-before day is no earlier than that of the unit in front of it, the expired units taken out), each lane's front
+# unit faced and boxes face out. The products are known only by their
 # printed look against a catalog image; the bay's pose and the old units behind the front ones must be found with the
 # cameras. The grader drives the agent's controller over a stdio wire on a fixed hidden set of 12 episodes.
 # Structure after tasks/arm/lab_sample_handling.

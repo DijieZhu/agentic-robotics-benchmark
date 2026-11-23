@@ -182,14 +182,22 @@ class ShelfEnv:
 
     def perturbed_observation(self, obs, rng):
         """The probe lock's other copy: joints offset by up to 1 mrad, the hand's and the wrist camera's poses
-        recomputed from them, the force offset by up to 0.2 N; images unchanged."""
+        recomputed from them, the force offset by up to 0.2 N; images unchanged.
+
+        The real observation's poses are those of the last physics substep's start (MuJoCo computes the poses,
+        then moves the joints: q is one substep newer than ee_pos). The copy's are built the same way: from the
+        arm's and the lift's joints of that moment (q - dt * dq, exact for these joints), offset by the same
+        amounts, so a copy cannot be told from a real observation by how its poses fit its joints."""
         w = self.w
         m = w.model
         out = dict(obs)
         q = np.asarray(obs["q"], float) + rng.uniform(-0.001, 0.001, 7)
         d = mujoco.MjData(m)
         d.qpos[:] = w.data.qpos
-        d.qpos[w.jq] = q
+        dt = float(m.opt.timestep)
+        lift_q, lift_v = int(m.joint("lift").qposadr[0]), int(m.joint("lift").dofadr[0])
+        d.qpos[w.jq] = w.data.qpos[w.jq] - dt * w.data.qvel[w.jv] + (q - np.asarray(obs["q"], float))
+        d.qpos[lift_q] = w.data.qpos[lift_q] - dt * w.data.qvel[lift_v]
         mujoco.mj_kinematics(m, d)
         mujoco.mj_camlight(m, d)
         Rs = d.site_xmat[w.site].reshape(3, 3)

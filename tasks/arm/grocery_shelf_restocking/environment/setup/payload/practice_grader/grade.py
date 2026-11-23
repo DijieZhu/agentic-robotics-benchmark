@@ -73,6 +73,10 @@ except OSError:
     flags = set()
 if "avx512f" in flags:
     env["OPENCV_CPU_DISABLE"] = "AVX512-SKX"
+try:
+    os.nice(19)        # as at grading: the controller yields to the simulation and the drawing
+except OSError:
+    pass
 os.execvpe("bash", ["bash", "run.sh"], env)
 '''
 
@@ -194,7 +198,8 @@ def differ(a, b):
         aa, bb = [float(v) for v in a], [float(v) for v in b]
     except (TypeError, ValueError):
         return False
-    return len(aa) != len(bb) or max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
+    # as the grading lock counts: two replies of different lengths do NOT count as differing
+    return len(aa) == len(bb) and max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
 
 
 def still(action):
@@ -283,10 +288,11 @@ def main():
                         done = ep.step_done(env.finished)
                         t += 1
                         if env.unstable():
-                            raise WireError("simulation unstable (an arm joint over 8 rad/s or a product over 5 m/s)")
+                            raise WireError("simulation unstable (an arm joint over 8 rad/s or a product over 10 m/s)")
                     sc = ep.score()
                     parts = ("place", "face", "kept", "lanes", "moved", "fallen", "expired_out", "extra_out")
-                    results.append({"unit": uid, "seed": seed, "episode_credit": round(sc["credit"], 5), "steps": t,
+                    results.append({"unit": uid, "seed": seed, "episode_credit": round(sc["credit"], 5),
+                                    "credit_by_the_earlier_partial_rule": round(sc["credit_partial"], 5), "steps": t,
                                     **{k: sc[k] for k in parts}})
                 except (WireError, ValueError, TypeError) as exc:
                     results.append({"unit": uid, "seed": seed, "episode_credit": 0.0, "aborted": str(exc)[:200]})
