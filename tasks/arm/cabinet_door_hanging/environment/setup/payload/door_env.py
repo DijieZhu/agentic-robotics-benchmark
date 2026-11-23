@@ -147,7 +147,7 @@ class DoorEnv:
             obs[f"T_world_{cam}"] = self.camera_pose(cam)
             obs[f"K_{cam}"] = self.camera_matrix(cam)
             if self.render_images and self.render_next & S.CAMERA_BITS[cam]:
-                obs[cam] = S.render(self.w.m, self.w.d, cam, self.rng, self.renderers)
+                obs[cam] = S.render(self.w, cam, self.rng, self.renderers)
             else:
                 obs[cam] = np.zeros((0, 0, 3), np.uint8)
         return obs

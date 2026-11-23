@@ -34,8 +34,13 @@ facing +x; the cabinet hangs on a wall beyond the table's edge, so nothing is be
 import math
 import os
 
+import sys
+
 import mujoco
 import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import door_parts  # noqa: E402
 
 TIMESTEP = 0.002
 SUBSTEPS = 50                       # 10 Hz control
@@ -84,6 +89,7 @@ PARK_GAP = 0.012                    # the parking rack's channel: 8 mm free each
 RACK_JITTER = 0.008                 # each rack's place, x and y
 OLD_PIN_R = 0.0020                  # the old door's wrong pins: 4 mm, smaller than every class
 STANDS = [np.array([0.45, y]) for y in (0.30, 0.38, 0.46, 0.54, 0.62, 0.70)]
+BAG_AT = (0.05, -1.12, math.radians(20.0))   # the tool bag on the floor: x, y, yaw
 
 CUP_R = 0.030
 CUP_DROP = 0.090                    # the L tool: flange to the cup's centre line
@@ -132,28 +138,17 @@ def cam_pose(d, cid):
     return R, d.cam_xpos[cid].copy()
 
 
-_SCENE_OPT = None
-
-
-def scene_option():
-    global _SCENE_OPT
-    if _SCENE_OPT is None:
-        _SCENE_OPT = mujoco.MjvOption()
-        _SCENE_OPT.sitegroup[:] = 0            # no site markers in the images
-        _SCENE_OPT.geomgroup[:] = 1
-    return _SCENE_OPT
-
-
-def render(m, d, cam, rng, cache):
-    """One camera's image (uint8 H x W x 3) with sensor noise; `cache` keeps a renderer per image size for model m.
-    Raises RenderError when the renderer fails."""
+def render(world, cam, rng, cache):
+    """One camera's image (uint8 H x W x 3) of the world's state, with sensor noise. The cameras are drawn by
+    door_render.py (beside this file) in a process of its own per episode, started at the episode's first image;
+    `cache` keeps that process. Raises RenderError when the renderer fails."""
+    import door_render
     w, h, _fovy = camera_size(cam)
     try:
-        r = cache.get((w, h))
-        if r is None:
-            r = cache[(w, h)] = mujoco.Renderer(m, h, w)
-        r.update_scene(d, camera=MJ_CAMERA[cam], scene_option=scene_option())
-        img = r.render().astype(np.float32)
+        view = cache.get("view")
+        if view is None:
+            view = cache["view"] = door_render.Worker(world.unit, world.episode)
+        img = view.render(MJ_CAMERA[cam], world.d.qpos, w, h).astype(np.float32)
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, RGB_NOISE, img.shape)
@@ -416,6 +411,25 @@ def build(unit, episode):
     for name in ("door", "old"):
         w.add_equality(name=f"vac_{name}", type=mujoco.mjtEq.mjEQ_WELD, objtype=mujoco.mjtObj.mjOBJ_BODY,
                        name1="r_g_eef", name2=name, active=False, solref=list(CUP_SOLREF))
+    # the contact shapes of the drawn parts a hand or a carried door can reach (door_parts.contact_shapes: the fitter's
+    # things on the bench, the tool bag, the rail behind the cabinet, the vacuum tool's
+    # bellows, fitting and hose); they are not drawn themselves (door_scene.py draws the parts)
+    for name, frame, kind, a, b, r in door_parts.contact_shapes(unit, TABLE_Z, DEPTH, DOOR_W + EDGE_GAP, DOOR_H + 0.02, BAG_AT):
+        body = {"world": wb, "carcass": cb, "cup": w.body("r_g_right_gripper")}[frame]
+        a, b = np.asarray(a, float), np.asarray(b, float)
+        if kind == "cyl":
+            g = body.add_geom(name=name, type=mujoco.mjtGeom.mjGEOM_CYLINDER, size=[r, 0, 0], fromto=list(a) + list(b))
+        else:
+            pos, quat = (a + b) / 2, (1, 0, 0, 0)
+            if kind == "bag":
+                c, s_ = math.cos(BAG_AT[2]), math.sin(BAG_AT[2])
+                pos = np.array([BAG_AT[0] + c * pos[0] - s_ * pos[1], BAG_AT[1] + s_ * pos[0] + c * pos[1], pos[2]])
+                quat = (math.cos(BAG_AT[2] / 2), 0, 0, math.sin(BAG_AT[2] / 2))
+            g = body.add_geom(name=name, type=mujoco.mjtGeom.mjGEOM_BOX, size=list((b - a) / 2), pos=list(pos), quat=list(quat))
+        g.rgba = [0.5, 0.5, 0.5, 0.0]
+        g.group = 3
+        g.mass = 0.0
+        g.friction = [0.4, 0.005, 0.0001]
     for name, (pos, tgt, fovy, _w, _h) in CAMERAS.items():
         wb.add_camera(name=name, pos=list(pos), fovy=fovy, quat=list(quat_from_mat(look_at(pos, tgt))))
     m = w.compile()
