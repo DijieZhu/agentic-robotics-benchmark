@@ -17,7 +17,8 @@ probe lock draws which steps are probed, the order of a pair and the perturbatio
 its hidden seed. An episode's probe schedule is therefore a function of the episode alone, not of the controller's
 replies, of how many steps earlier episodes took, of the clock or of the process. The grader adds no run-to-run
 randomness of its own, so a deterministic controller that stays inside the time limits (the step deadline, which
-also bounds the controller's start, and the grader budget are wall-clock) gets one result: with one OS-entropy
+also bounds the controller's start, and the budget on the controller's own time are wall-clock) gets one result: with
+one OS-entropy
 stream for the whole run, where the lock probed changed from run to run, and a controller that advanced its state
 on the probe copy scored between 0.278 and 0.407 in seven gradings of one fixed set. The hidden seed stays the only
 secret; the tag keeps the stream apart from everything the environment draws from the seed. The lock's counts are
@@ -26,6 +27,25 @@ episode.py owns the requests and the credit (byte-identical to the agent's copy)
 appliance_env.py is the environment (byte-identical too). The metric `mean_request_credit` is the mean over
 episodes of the mean request credit (reached 0.5 + completed 0.5). Each episode's requests and their outcomes are
 logged on stderr with the episode's index in the set (never its seed).
+
+The budget (grader_config.json `grader_budget_s`) is the controller's own time: what the grader waits for READY, for
+every reset and for every reply (Clock), plus `image_cost_s` for every image an applied action asks for, a fixed price
+whatever this machine takes to draw it. The simulation and the drawing are not charged. The episode running when the
+budget runs out is aborted and the later ones are not run: they score 0.
+
+The controller's processes run only while a request is outstanding (Pauser): every process of the agent's account that
+runs is stopped (SIGSTOP) once a reply has been read (or READY seen) and continued before the next request is written,
+so the simulation and the drawing never share the CPUs with it and it cannot compute ahead of a request. A pause holds
+only once /proc shows every thread of every process of the account stopped; processes that do not stop within
+FREEZE_TIMEOUT_S, or more than MAX_PROCESSES processes of the account at a pause, abort the episode (score 0). The
+time a pause takes is not charged.
+
+Numerics: the environment's operational-space controller inverts two matrices with LAPACK in every physics substep, and
+NumPy's OpenBLAS picks its kernels by CPU. The image pins them (OPENBLAS_CORETYPE=Haswell, OPENBLAS_L2_SIZE=256, with
+NumPy's AVX-512 loops off and one BLAS thread: environment/Dockerfile, also for a controller's own Python);
+tests/numerics_check.py runs a short scripted simulation and a set of NumPy, SciPy and OpenCV results, and the grader
+compares their fingerprint with tests/numerics.json before grading. A machine that does not reproduce it is a task
+error.
 
 Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_token.sha256 is the reference;
 only then does every observation also carry `truth` (the unit's placement jitter, its joint values, the
@@ -39,7 +59,7 @@ and checks their shapes, that none is flat and that their brightness is sane; th
 that it passed. A renderer failure, in the self-test or at any later image (appliance_env.RenderError: a missing
 or broken room-bundle file, an error while drawing, a call that does not return), is the grader's own error: the
 run ends as a task error (robotics_grader.stage.fail: no reward written, exit status 1), never as a controller fault
-or a 0 for the submission. A Vulkan backend that cannot start at all aborts the grader's process inside Filament
+or a 0 for the submission. The controller cannot bring it about: its processes are stopped while an image is drawn. A Vulkan backend that cannot start at all aborts the grader's process inside Filament
 (SIGABRT, before Python can catch anything): no reward is written either; the image's build-time render check
 (environment/render_check/) proves the driver for every account that renders.
 """
@@ -89,6 +109,13 @@ MAX_LINE = 1 << 22          # an observation with three images is about 1 MB; re
 SELFTEST_SEED = 1           # the render self-test's episode (not one of the graded seeds)
 SELFTEST_SHAPES = {"left": (240, 320, 3), "right": (240, 320, 3), "wrist": (192, 256, 3)}
 PROBE_TAG = b"kitchen_appliance_tending verify probe schedule 1"   # probe_stream's domain tag
+NUMERICS = os.path.join(STAGE, "numerics_check.py")
+NUMERICS_REF = os.path.join(STAGE, "numerics.json")
+NUMERICS_TIMEOUT_S = 300
+FREEZE_TIMEOUT_S = 5.0      # every thread of the agent's account must show as stopped within this
+MAX_PROCESSES = 512         # processes of the agent's account at a pause (the instruction states it)
+STOPPED_STATES = ("T", "t")  # a thread that is stopped (or traced and stopped)
+GONE_STATES = ("Z", "X")     # a thread that has exited: it runs nothing
 
 
 def log(msg):
@@ -135,6 +162,149 @@ def kill_agent_processes(uid, rounds=20, pause=0.25):
                 pass
         time.sleep(pause)
     return not _agent_pids(uid)
+
+
+def _account_pids(uid):
+    """PIDs owned by `uid` (the owner of /proc/<pid>), zombies included: one stat per process."""
+    pids = []
+    for name in os.listdir("/proc"):
+        if name.isdigit():
+            try:
+                if os.stat("/proc/" + name).st_uid == uid:
+                    pids.append(int(name))
+            except OSError:
+                continue
+    return pids
+
+
+def _thread_states(pid):
+    """The state letter of every thread of `pid` (empty once the process is gone)."""
+    states = []
+    try:
+        tids = os.listdir("/proc/{}/task".format(pid))
+    except OSError:
+        return states
+    for tid in tids:
+        try:
+            with open("/proc/{}/task/{}/stat".format(pid, tid)) as f:
+                states.append(f.read().rsplit(")", 1)[1].split()[0])
+        except (OSError, IndexError):
+            continue
+    return states
+
+
+def _runs(pid):
+    """True while a thread of `pid` is neither stopped nor gone."""
+    return any(st not in STOPPED_STATES and st not in GONE_STATES for st in _thread_states(pid))
+
+
+def _alive(pid):
+    """True while `pid` has a thread that has not exited."""
+    return any(st not in GONE_STATES for st in _thread_states(pid))
+
+
+def _describe(pid):
+    try:
+        with open("/proc/{}/cmdline".format(pid), "rb") as f:
+            return "{} {}".format(pid, f.read(120).replace(b"\0", b" ").decode("utf-8", "replace").strip())
+    except OSError:
+        return "{} (gone)".format(pid)
+
+
+class Clock(object):
+    """The controller's own time (s): what the grader waited for READY, for each reset and for each reply (`timed`),
+    and what run_episodes adds for the images an applied action asks for. The simulation, the drawing of the images
+    and the pauses happen outside `timed`."""
+
+    def __init__(self):
+        self.s = 0.0
+
+    def timed(self, fn, *args, **kwargs):
+        t0 = time.monotonic()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            self.s += time.monotonic() - t0
+
+
+class Pauser(object):
+    """Stops the agent's account between requests (longtail_manipulation_recovery's rule). `freeze` sends SIGSTOP to
+    every process of the account with a running thread and confirms it thread by thread: a scan that finds one
+    running signals it again and scans anew, so a fork chain is caught process by process; the pause holds when two
+    consecutive scans find the same processes, none running (a stopped process cannot start another). Not reached
+    within FREEZE_TIMEOUT_S: `unstoppable` names them. `thaw` continues exactly the processes this object stopped
+    (a process the image itself left stopped is never continued). `count` is the number of the account's processes
+    alive at the last scan."""
+
+    def __init__(self, uid):
+        self.uid = uid
+        self._stopped = set()
+        self.unstoppable = []
+        self.count = 0
+        self.peak = 0
+
+    def freeze(self):
+        previous = None
+        deadline = time.monotonic() + FREEZE_TIMEOUT_S
+        self.unstoppable = []
+        while True:
+            pids = _account_pids(self.uid)
+            running = [p for p in pids if _runs(p)]
+            for pid in running:
+                try:
+                    os.kill(pid, signal.SIGSTOP)
+                    self._stopped.add(pid)
+                except OSError:
+                    pass
+            current = frozenset(pids)
+            if not running and current == previous:
+                break
+            previous = None if running else current
+            if time.monotonic() > deadline:
+                self.unstoppable = [_describe(p) for p in running[:5]]
+                break
+            if running:
+                time.sleep(0.0005)
+        self.count = sum(1 for p in pids if _alive(p))
+        self.peak = max(self.peak, self.count)
+        return self.count
+
+    def thaw(self):
+        for pid in sorted(self._stopped):
+            try:
+                os.kill(pid, signal.SIGCONT)
+            except OSError:
+                pass
+        self._stopped = set()
+
+    def pause_or_abort(self):
+        self.freeze()
+        if self.unstoppable:
+            raise SolverAborted("processes of the controller's account did not stop within {:g} s ({})".format(
+                FREEZE_TIMEOUT_S, "; ".join(self.unstoppable)))
+        if self.count > MAX_PROCESSES:
+            raise SolverAborted("more than {} processes in the controller's account".format(MAX_PROCESSES))
+
+
+def check_numerics():
+    """Run numerics_check.py in a fresh interpreter (a short scripted run of the simulation and a set of NumPy, SciPy
+    and OpenCV results from a Python started as a controller is) and compare its fingerprint with tests/numerics.json.
+    A machine that does not reproduce the recorded one would run every controller along another trajectory, so it
+    must not grade: a task error."""
+    with open(NUMERICS_REF) as fh:
+        want = json.load(fh)["fingerprint"]
+    try:
+        proc = subprocess.run([sys.executable, "-I", NUMERICS], cwd=STAGE, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, timeout=NUMERICS_TIMEOUT_S, env=dict(os.environ))
+        report = json.loads(proc.stdout.decode("utf-8", "replace").strip().splitlines()[-1])
+        got = str(report["fingerprint"])
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+        fail("the numerics check did not run: {}: {}".format(type(exc).__name__, str(exc)[:200]))
+    if got != want:
+        fail("this machine does not reproduce the recorded numerics (tests/numerics.json): got {}, recorded {}; "
+             "differing parts {}; OPENBLAS_CORETYPE={!r}. Grading here would run every controller along another "
+             "trajectory".format(got[:16], want[:16], report.get("differs"), os.environ.get("OPENBLAS_CORETYPE")))
+    return got
 
 
 def _proc_state(pid):
@@ -365,17 +535,19 @@ def probe_stream(index, seed):
     return seed_rng(entropy=int.from_bytes(digest, "little"))
 
 
-def ask(lock, solver, ep, t, obs, unit, truth):
+def ask(lock, solver, ep, t, obs, unit, truth, call=None):
     """Step `t`'s action: one request, or a probe pair when the lock's stream says so. Every step draws once from
     the stream (lock.due); a probed step draws twice more, both before either request is written: the seed of the
-    perturbation, then the order of the pair (ProbeLock.probe). The draws a step consumes never depend on the
+    perturbation, then the order of the pair (ProbeLock.probe). `call` runs the exchange (run_episodes passes the
+    one that continues the controller's processes, charges the wait to its clock and stops them again). The draws a step consumes never depend on the
     replies, and a pair that is not counted (both replies command no motion) has consumed the same draws as a
     counted one."""
+    call = call or (lambda fn, *a, **k: fn(*a, **k))
     w = wire_obs(ep, obs, unit, truth)
     if lock.due():
         other = ep.env.perturbed_observation(obs, np.random.default_rng(lock.rng.seed(bits=64)))
-        return lock.probe(solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
-    return solver.act(t, w)
+        return call(lock.probe, solver, t, w, perturbed=wire_obs(ep, other, unit, truth))
+    return call(solver.act, t, w)
 
 
 def render_selftest(spec, seed=SELFTEST_SEED):
@@ -438,12 +610,32 @@ def valid_action(action):
     return 0 <= action[7] <= 7 and float(action[7]).is_integer()
 
 
-def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes):
+def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes, clock=None, pauser=None):
     """Run `episodes` ([(unit, seed)], the fixed set in its order) over one controller. Returns (scores, aborted,
     faults, per_unit, per_request, egress_hits, budget_exhausted, lock, records); a record per episode: its index
     in the set, unit, score, reason, steps and the requests' outcomes (episode.score()). During episode n the
-    probe lock draws from probe_stream(n, seed); its counts run over all episodes."""
+    probe lock draws from probe_stream(n, seed); its counts run over all episodes. `clock` carries the controller's
+    own time (the budget is compared with it; `t_start` is no longer used for it) and `pauser` stops the agent's
+    account between requests; without a pauser (the selection tool outside the image, which starts the controller
+    as itself) nothing is stopped."""
     budget = float(config.get("grader_budget_s", 6000))
+    image_cost = float(config.get("image_cost_s", 0.0))
+    clock = clock if clock is not None else Clock()
+
+    def call(fn, *args, **kwargs):
+        # one exchange with the controller: its processes run only inside it, and only its wait is charged
+        if pauser is not None:
+            pauser.thaw()
+        try:
+            out = clock.timed(fn, *args, **kwargs)
+        except BaseException:
+            if pauser is not None:
+                pauser.freeze()
+            raise
+        if pauser is not None:
+            pauser.pause_or_abort()
+        return out
+
     lock = IdleAwareProbeLock(None, rate=config.get("probe_rate", 0.01),
                               pass_fraction=config.get("probe_pass_fraction", 0.1), tolerance=1e-4)
     scores, aborted, faults = [], 0, 0
@@ -453,38 +645,44 @@ def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episo
     budget_exhausted = False
     GuardedSolver.guard = egress_mode == "seccomp"
     GuardedSolver.nproc = int(config.get("solver_nproc_limit", 0))
-    solver = GuardedSolver(step_timeout=config.get("step_timeout_s", 30), submission=workdir)
+    solver = clock.timed(GuardedSolver, step_timeout=config.get("step_timeout_s", 30), submission=workdir)
+    if pauser is not None:
+        pauser.freeze()                  # READY seen: stopped until the first reset is written
     try:
         for n, (unit, seed) in enumerate(episodes):
-            if time.monotonic() - t_start > budget:
+            if clock.s > budget:
                 budget_exhausted = True
                 scores.append(0.0)
                 per_unit.setdefault(unit, []).append(0.0)
-                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "grader budget exhausted",
+                records.append({"index": n, "unit": unit, "score": 0.0, "reason": "controller time budget exhausted",
                                 "steps": 0, "requests": []})
-                log("episode {} ({}): score=0.0000 not run (grader budget exhausted)".format(n, unit))
+                log("episode {} ({}): score=0.0000 not run (controller time budget exhausted)".format(n, unit))
                 continue
             lock.rng = probe_stream(n, seed)
             ep = EP.Episode(E.ApplianceEnv(specs[unit], None, render=True), seed)
             score, reason, sc = 0.0, "ok", None
             try:
                 obs = ep.reset()
-                solver.reset()
+                call(solver.reset)
                 t, done = 0, False
                 while not done:
-                    if time.monotonic() - t_start > budget:
+                    if clock.s > budget:
                         budget_exhausted = True
-                        raise SolverAborted("grader budget exhausted")
+                        raise SolverAborted("controller time budget exhausted")
                     if egress_mode == "detect" and agent_inet_sockets(uid):
                         egress_hits += 1
-                    action = ask(lock, solver, ep, t, obs, unit, truth)
+                    action = ask(lock, solver, ep, t, obs, unit, truth, call)
                     if not valid_action(action):
                         raise SolverAborted("malformed action")
+                    clock.s += image_cost * bin(int(action[7])).count("1")     # the images it asks for
                     obs, done, _info = ep.step(action)
                     t += 1
                     if ep.env.unstable():
                         faults += 1
                         raise SolverAborted("simulation unstable")
+                if clock.s > budget:             # the step that ended the episode may have spent the last of it
+                    budget_exhausted = True
+                    raise SolverAborted("controller time budget exhausted")
                 sc = ep.score()
                 score = sc["credit"]
                 for r in sc["requests"]:
@@ -511,6 +709,8 @@ def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episo
             records.append({"index": n, "unit": unit, "score": score, "reason": reason, "steps": steps,
                             "requests": sc["requests"]})
     finally:
+        if pauser is not None:
+            pauser.thaw()                # the close message is read by a running controller
         try:
             solver.close()
         except Exception:  # noqa: BLE001 - closing a broken solver must not crash the grader
@@ -538,6 +738,8 @@ def main():
     specs = {u: E.unit_spec(c["model"], files=E.read_unit_files(os.path.join(STAGE, c["dir"])), quirks=c.get("quirks"))
              for u, c in sorted(units.items())}
     episodes = load_episode_set(config, specs)
+    check_numerics()                     # a task error on a machine that computes differently
+    secured["numerics_ok"] = 1.0
     t_self = time.monotonic()
     try:
         render_selftest(specs[episodes[0][0]])
@@ -556,9 +758,11 @@ def main():
     truth = oracle_token_ok(workdir)
     egress_mode = "seccomp" if egress_self_test(uid, gid, int(config.get("solver_nproc_limit", 0))) else "detect"
     log("egress guard: {}; oracle token: {}; {} episodes in the fixed set".format(egress_mode, truth, len(episodes)))
+    clock, pauser = Clock(), Pauser(uid)
     try:
         (scores, aborted, faults, per_unit, per_request, egress_hits, budget_exhausted,
-         lock, _records) = run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes)
+         lock, _records) = run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episodes,
+                                        clock=clock, pauser=pauser)
     except E.RenderError as exc:
         kill_agent_processes(uid)
         fail("the cameras' renderer failed during the episodes: {}".format(exc))
@@ -580,6 +784,8 @@ def main():
                  cleanup_failed=0.0 if cleanup_ok else 1.0,
                  lab_stopped=1.0 if lab_stopped else 0.0,
                  budget_exhausted=1.0 if budget_exhausted else 0.0,
+                 controller_seconds=round(float(clock.s), 1),
+                 agent_processes_peak=float(pauser.peak),
                  oracle_token=1.0 if truth else 0.0,
                  **secured)
     for unit, vals in sorted(per_unit.items()):
@@ -590,9 +796,10 @@ def main():
                             metric_name="mean_request_credit", locks_ok=lock.ok, extra=extra,
                             full_at=meta.get("full_at", 1.0))
     write_verdict(verdict)
-    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={}".format(
-        measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
-        egress_mode))
+    log("measured={:.5f} anchor={} ratio={:.3f} reward={:.3f} lock={} aborted={} faults={} egress={} "
+        "controller_time={:.0f}s of {:.0f}s wall={:.0f}s".format(
+            measured, anchor, verdict["metrics"]["ratio"], verdict["rewards"]["reward"], lock.ok, aborted, faults,
+            egress_mode, clock.s, float(config.get("grader_budget_s", 6000)), time.monotonic() - t_start))
 
 
 if __name__ == "__main__":

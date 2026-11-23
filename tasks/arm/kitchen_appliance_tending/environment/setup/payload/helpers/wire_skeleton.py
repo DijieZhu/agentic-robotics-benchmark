@@ -1,7 +1,6 @@
 """Boilerplate for the grading wire (optional to use; it contains no control logic).
 
-    import sys; sys.path.insert(0, "/home/user/helpers")
-    from wire_skeleton import serve
+    from wire_skeleton import serve          # with a copy of this file INSIDE your submission folder
 
     class MyController(object):
         def reset(self):            # called at the start of every episode (optional)
@@ -10,6 +9,10 @@
             return [...]
 
     serve(MyController)            # builds ONE controller, prints READY, then answers reset / act / close
+
+Copy this file into /home/user/submission/ and import it from there: when your controller is graded only the
+submission folder exists, /home/user/helpers does not (the practice grader runs in your home, where it does, and
+lists the paths outside the submission that your files name).
 
 The controller is built once and serves the whole grading run (until a restart after a crash): its `reset`
 hook runs at the start of every episode, and whatever it keeps on itself (what it learned about a unit,

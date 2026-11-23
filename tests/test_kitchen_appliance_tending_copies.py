@@ -56,6 +56,73 @@ class Copies(unittest.TestCase):
             self.assertIn(key, look)
 
 
+class Budget(unittest.TestCase):
+    """The numbers the instruction states about grading are the ones the grader and the practice grader use."""
+
+    def setUp(self):
+        self.config = json.loads((TASK / "tests/grader_config.json").read_text())
+        self.instruction = (TASK / "instruction.md").read_text()
+        self.verify = (TASK / "tests/verify.py").read_text()
+        self.practice = (TASK / "environment/setup/payload/practice_grader/grade.py").read_text()
+
+    def test_the_budget_is_controller_time_with_a_fixed_image_price(self):
+        self.assertEqual(self.config["grader_budget_s"], 6000)
+        self.assertEqual(self.config["image_cost_s"], 0.03)
+        self.assertIn("time budget of 6000 s", self.instruction)
+        self.assertIn("a fixed price of 0.03 s for every image", self.instruction)
+        self.assertNotIn("time.monotonic() - t_start > budget", self.verify)      # wall time is not the budget
+        self.assertIn("IMAGE_COST = 0.03", self.practice)
+        self.assertIn("BUDGET_PER_EPISODE = 6000.0 / 18", self.practice)
+        card = (TASK / "environment/setup/payload/task_card.md").read_text()
+        self.assertIn("costs 0.03 s of the controller's 6000 s budget", card)
+
+    def test_the_image_bill_of_a_full_run_is_as_stated(self):
+        price = self.config["image_cost_s"]
+        self.assertIn("between 54,000 and 63,000 steps", self.instruction)
+        for steps, images, text in ((54000, 3, "4,860"), (63000, 3, "5,670"), (54000, 1, "1,620"), (63000, 1, "1,890")):
+            self.assertEqual("{:,}".format(round(steps * images * price)), text)
+            self.assertIn(text, self.instruction)
+
+    def test_the_pause_and_the_process_cap_are_stated(self):
+        self.assertIn("MAX_PROCESSES = 512", self.verify)
+        self.assertIn("FREEZE_TIMEOUT_S = 5.0", self.verify)
+        self.assertIn("more than 512 processes of your account", self.instruction)
+        self.assertIn("do not stop within 5 s", self.instruction)
+        self.assertIn("more than 512 processes of your account", self.practice)
+
+    def test_the_verifier_timeout_covers_the_worst_case(self):
+        toml = (TASK / "task.toml").read_text()
+        timeout = int(re.search(r"\[verifier\]\s*\ntimeout_sec = (\d+)", toml).group(1))
+        self.assertGreaterEqual(timeout, 3 * self.config["grader_budget_s"])
+
+    def test_the_probe_pair_rule_is_the_kits(self):
+        # since the kit's value-only lock, two replies of different lengths do not count as differing
+        self.assertIn("return len(aa) == len(bb) and max(", self.practice)
+        self.assertIn("different count of numbers do not count as", self.instruction)
+
+
+class Numerics(unittest.TestCase):
+
+    def test_the_pin_is_in_the_image_and_checked_before_grading(self):
+        docker = (TASK / "environment/Dockerfile").read_text()
+        for needle in ('"OPENBLAS_CORETYPE", "Haswell"', '"OPENBLAS_L2_SIZE", "256"', '"OPENBLAS_NUM_THREADS", "1"',
+                       '"NPY_DISABLE_CPU_FEATURES", "X86_V4 AVX512_ICL AVX512_SPR"', '"OPENCV_IPP", "avx2"',
+                       "kitchen_numerics_pin.pth", "-W error::ImportWarning"):
+            self.assertIn(needle, docker)
+        ref = json.loads((TASK / "tests/numerics.json").read_text())
+        self.assertEqual(len(ref["fingerprint"]), 64)
+        verify = (TASK / "tests/verify.py").read_text()
+        self.assertIn("check_numerics()", verify)
+        instruction = (TASK / "instruction.md").read_text()
+        for name in ("OPENBLAS_CORETYPE=Haswell", "OPENBLAS_L2_SIZE=256", "OPENBLAS_NUM_THREADS=1", "OMP_NUM_THREADS=1",
+                     'NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"', "OPENCV_IPP=avx2"):
+            self.assertIn(name, instruction)
+
+    def test_nothing_tells_agents_to_import_from_outside_the_submission(self):
+        skeleton = (TASK / "environment/setup/payload/helpers/wire_skeleton.py").read_text()
+        self.assertNotIn('sys.path.insert(0, "/home/user/helpers")', skeleton)
+
+
 class Assets(unittest.TestCase):
 
     def _listed(self):
