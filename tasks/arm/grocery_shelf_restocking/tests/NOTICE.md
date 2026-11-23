@@ -46,12 +46,24 @@
   carries whose body and band are both within CIE76 20 of one of the unit's SKUs is not stocked round that unit's
   bay (`shelf_scene.dress_for`; on the nine units none is that close: the nearest is 25.8 away). An episode earns
   credit only when every lane of its delivery is correct (`episode.py`). The renderer's files, `shelf_look.json`
-  and `environment/assets.sha256` joined the frozen list. Draws 2 to 7 are void by rule step 5 (frozen
+  and `environment/assets.sha256` joined the frozen list. Draws 2 to 8 are void by rule step 5 (frozen
   files changed: the renderer; then FXAA, switched off after draw 3 had run to remove a one-pixel difference between
   fresh render processes; then comments and docstrings in the render modules after draws 4 and 5 were made, the
   pictures byte-identical; then the date-code label of a bottle, which `shelf_parts.py` had drawn inside the bottle's
   body, after draw 6 was made; then the product speed limit of an unstable simulation, 5 -> 10 m/s, since a unit dropped
   from the top shelf reached 5 m/s in free fall, and the render process's fresh-process retry, after draw 7 was
-  made); the record keeps them. Draw 8's key was written and committed before any candidate ran; its candidates
-  were run on two hosts of the same image (the first two on one, the rest on the other, after the first host ran
-  short of memory).
+  made; then the validator's points, after draw 8 was made: the probe copy's poses, the controller's priority and
+  the earlier rule's credit reported beside the credit); the record keeps them. Draw 8's candidates were run on two
+  hosts of the same image (the first two on one, the rest on the other, after the first host ran short of memory).
+  Draw 9's key was written and committed before any candidate ran.
+- **v7 (2026-11-24, maintainers, after the validator's second review).** The session is 4 hours (it was 2): with
+  the cameras drawn by Filament on the CPU a practice run of a controller that reads them takes about twice the
+  wall time (one saved controller on the six practice episodes, same host and image: 28.7 ms a step before, 53.2 ms
+  now); the reference, which asks for few images, takes 2 to 9 % longer. The verifier timeout (86400 s) is derived
+  for a loaded host (`task.toml`). The grader reports `mean_episode_credit_partial_rule` beside the credit: the
+  same episodes by the rule this task had until v6 (each correct lane earning its share); it is never scored. The
+  controller is started at `nice` 19, at grading and in practice. `solver_nproc_limit` stays unset: RLIMIT_NPROC
+  counts every process of the same UID on the host, other sandboxes' included. A probe copy's poses are those of
+  the joints one physics substep earlier, as a real observation's are (on 400 pairs a threshold on
+  |ee_pos - FK(q, lift)| told 100 % of copies from real observations before and 50.25 % after). The practice
+  grader counts a probe pair of different lengths as the lock does (not differing).

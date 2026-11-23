@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# How much of the 2-hour session is used and left. The stamp was written when this sandbox was set up, moments
+# How much of the 4-hour session is used and left. The stamp was written when this sandbox was set up, moments
 # before the session started, so the time left is slightly more than printed, never less.
 #   bash /home/user/session_time.sh
 set -u
-LIMIT_MIN=120
+LIMIT_MIN=240
 STAMP=/run/session/start
 if ! start=$(cat "$STAMP" 2>/dev/null) || ! [ "$start" -gt 0 ] 2>/dev/null; then
   echo "session_time: no stamp at $STAMP; note the time with 'date' yourself" >&2

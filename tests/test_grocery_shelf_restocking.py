@@ -44,14 +44,15 @@ class Copies(unittest.TestCase):
 
 class SessionTime(unittest.TestCase):
 
-    def test_script_instruction_and_task_agree_on_two_hours(self):
+    def test_script_instruction_and_task_agree_on_four_hours(self):
         script = (TASK / "environment/setup/payload/session_time.sh").read_text()
         self.assertEqual(int(re.search(r"^LIMIT_MIN=(\d+)", script, re.M).group(1)) * 60,
                          toml_int((TASK / "task.toml").read_text(), "agent", "timeout_sec"))
         text = (TASK / "instruction.md").read_text()
         self.assertIn("## Session time", text)
         self.assertIn("bash /home/user/session_time.sh", text)
-        self.assertIn("stopped 2 hours of wall-clock time", text)
+        self.assertIn("stopped 4 hours of wall-clock time", text)
+        self.assertNotIn("2 hours", text)
 
     def test_the_stamp_is_roots(self):
         setup = (TASK / "environment/setup/setup.sh").read_text()
@@ -75,7 +76,9 @@ class Budget(unittest.TestCase):
     def test_the_verifier_timeout_covers_simulation_and_budget(self):
         config = json.loads((TASK / "tests/grader_config.json").read_text())
         timeout = toml_int((TASK / "task.toml").read_text(), "verifier", "timeout_sec")
-        worst = 12 * 15000 * 0.045 + config["grader_budget_s"] + 60
+        # a loaded host: 60 ms a control step, and 0.6 s to draw an image that is priced at image_cost_s
+        images = config["grader_budget_s"] / config["image_cost_s"]
+        worst = 12 * 15000 * 0.060 + config["grader_budget_s"] + images * (0.6 - config["image_cost_s"]) + 12 * 40 + 120
         self.assertGreaterEqual(timeout, worst * 1.3)
 
     def test_the_grader_charges_the_controllers_own_time(self):

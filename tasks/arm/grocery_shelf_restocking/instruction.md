@@ -3,7 +3,7 @@
 You are a retail-automation engineer. A Franka Panda on a vertical lift stands in a store aisle in front of one
 gondola bay of three shelves, with a tote of delivered products on a cart beside it. Write the controller that
 restocks the bay from the tote, following the store's planogram and rotating the stock by date. It runs closed loop
-against a simulator and is graded on bays you have not seen. You have 2 hours of wall time (see "Session time").
+against a simulator and is graded on bays you have not seen. You have 4 hours of wall time (see "Session time").
 
 **The bay.** Three shelves, five lanes each. Shelves are numbered 0-2 from the bottom; lanes 0-4 from the right as
 seen from the aisle. Each shelf holds products of one height, and its headroom (from the board to the shelf above) is
@@ -113,7 +113,7 @@ earlier rule in which each correct lane earned its share; that number is reporte
 
 ## Session time
 
-- This session is stopped 2 hours of wall-clock time after it started. What is in `/home/user/submission/` at
+- This session is stopped 4 hours of wall-clock time after it started. What is in `/home/user/submission/` at
   that moment is graded as it is: keep a complete, runnable submission there from early on and replace it as you
   improve it.
 - The only clock for this limit is the wall clock. `bash /home/user/session_time.sh` prints the minutes used and
@@ -123,7 +123,7 @@ earlier rule in which each correct lane earned its share; that number is reporte
   a summary of what was done. Do not estimate the time used from how much you have done.
 - Two other counts in this task are not your session's time: an episode's length (15000 control steps, 20 of them the scene's own, are 25
   simulated minutes and several minutes of wall time in your simulator) and the controller's 9000 s budget at
-  grading. Neither says how much of the 2 hours is left.
+  grading. Neither says how much of the 4 hours is left.
 
 ## Observation and action
 
