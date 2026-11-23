@@ -209,6 +209,12 @@ summary = "Program a Unitree G1 humanoid to clean a studio apartment after a din
 platforms = ["humanoid"]
 stages = ["behavior"]
 
+[cross_embodiment_adaptation]
+title = "Scout a warehouse and dock a loaded Go1"
+summary = "Survey a warehouse by drone, then walk a loaded quadruped joint by joint under a duct and over a deck to its dock, correcting for a load and clearances that differ per site."
+platforms = ["quadruped"]
+stages = ["behavior"]
+
 [humanoid_leg_cad_design_from_photos]
 title = "Model a humanoid leg in CAD"
 summary = "Rebuild the lost CAD of the 19 made parts of a humanoid robot's right leg in FreeCAD from photos of its staged teardown, and assemble them with its given components and the leg's joints."
