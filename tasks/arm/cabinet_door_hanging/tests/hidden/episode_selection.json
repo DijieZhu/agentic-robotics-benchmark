@@ -2,12 +2,12 @@
  "format": "cabinet_door_hanging episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/door_grade.py": "d87f50b3b3cde74e2036d929b63a6b8dc98d5f198afb6054a88935064a828971",
+  "tests/door_grade.py": "29b1cdb7cc3a14499e4f076b401e3212455368f7a81e5a1aa89cfb81378b53e6",
   "tests/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
   "tests/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
   "tests/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
   "tests/units.json": "67003f460f1d84f8067e9370102f26169ab155735c0adf164d0f5ce53bb0084e",
-  "tests/grader_config.json": "9c08539cf4da61e440b14038f38e8175a79fa5fbc16359d9f08be852be2c1f1e",
+  "tests/grader_config.json": "01def5a67fdd5307f2d3d5bb5562ad13e3c56c26d48ddb81fdf9d2a08742a809",
   "tests/nonet_exec.py": "793a647065d7f27ee4469e4f0a7cdab9a983f2bd40e646aecfe1403fce3fd7a5",
   "tests/numerics_check.py": "62796644e01a615382438b1b03e55b2b890afab186bc7994d93b0c97351a5f6a",
   "tests/numerics.json": "1dfc5437c33af89b790b35f5622e4890c5c5a37894eba466feb0f57fe4785031",
@@ -19,7 +19,7 @@
   "solution/oracle/wire_world.py": "06d39e51969197504bbb6dae116616717cee121f0ef03e32478ba127011f6531",
   "solution/solve.sh": "d4c3e455812a55c68adef1276f2ee739c67c4f6724e31c88fa97a1b835e55e6c"
  },
- "frozen_commit": "bc22c12cea65aec8e11d356251528193c87ba57d",
+ "frozen_commit": "5c38be093d2734592db73b13782cfcb598a62bb8",
  "draws": [
   {
    "draw": 1,
@@ -67,7 +67,7 @@
    "key": "fcfc177feebad5a30ed86420054e8ca9fbe0517533ac62e4954de501893edbc8",
    "source": "os.urandom(32)",
    "frozen_commit": "bc22c12cea65aec8e11d356251528193c87ba57d",
-   "status": "made",
+   "status": "void",
    "made_utc": "2026-11-23T00:29:52Z",
    "graded_order": [
     "u9#0",
@@ -82,7 +82,35 @@
     "u1#1",
     "u4#0",
     "u0#0"
-   ]
+   ],
+   "frozen": {
+    "tests/door_grade.py": "d87f50b3b3cde74e2036d929b63a6b8dc98d5f198afb6054a88935064a828971",
+    "tests/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
+    "tests/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
+    "tests/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+    "tests/units.json": "67003f460f1d84f8067e9370102f26169ab155735c0adf164d0f5ce53bb0084e",
+    "tests/grader_config.json": "9c08539cf4da61e440b14038f38e8175a79fa5fbc16359d9f08be852be2c1f1e",
+    "tests/nonet_exec.py": "793a647065d7f27ee4469e4f0a7cdab9a983f2bd40e646aecfe1403fce3fd7a5",
+    "tests/numerics_check.py": "62796644e01a615382438b1b03e55b2b890afab186bc7994d93b0c97351a5f6a",
+    "tests/numerics.json": "1dfc5437c33af89b790b35f5622e4890c5c5a37894eba466feb0f57fe4785031",
+    "solution/oracle/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
+    "solution/oracle/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+    "solution/oracle/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
+    "solution/oracle/oracle_main.py": "6fd692a90f38d65315955a2101a49d64941b62d4df16b9d4bb5310aa1d5e9307",
+    "solution/oracle/reference.py": "579ea2342ba666d8e37dbe5c2734d9b5f7444df8a09e75153d74921b0755e7a8",
+    "solution/oracle/wire_world.py": "06d39e51969197504bbb6dae116616717cee121f0ef03e32478ba127011f6531",
+    "solution/solve.sh": "d4c3e455812a55c68adef1276f2ee739c67c4f6724e31c88fa97a1b835e55e6c"
+   },
+   "void_reason": "frozen files changed in the maintainer fix round: tests/door_grade.py (the budget is the controller's own time; the log names no seed) and tests/grader_config.json (image_cost_s)",
+   "voided_utc": "2026-11-23T08:23:57Z"
+  },
+  {
+   "draw": 3,
+   "drawn_utc": "2026-11-23T08:23:57Z",
+   "key": "ba7bc15c1ddec1e138cd9ed33ee9cace8f2454c245075b0bf1bffb9e1ae93d2e",
+   "source": "os.urandom(32)",
+   "frozen_commit": "5c38be093d2734592db73b13782cfcb598a62bb8",
+   "status": "open"
   }
  ],
  "candidates": [
