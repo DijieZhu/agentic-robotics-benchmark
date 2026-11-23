@@ -46,6 +46,7 @@
   carries whose body and band are both within CIE76 20 of one of the unit's SKUs is not stocked round that unit's
   bay (`shelf_scene.dress_for`; on the nine units none is that close: the nearest is 25.8 away). An episode earns
   credit only when every lane of its delivery is correct (`episode.py`). The renderer's files, `shelf_look.json`
-  and `environment/assets.sha256` joined the frozen list. Draws 2 and 3 are void by rule step 5 (frozen files
-  changed; draw 3 after it ran, when FXAA was switched off to remove a one-pixel difference between fresh render
-  processes); the record keeps them. Draw 4's key was written and committed before any candidate ran.
+  and `environment/assets.sha256` joined the frozen list. Draws 2, 3 and 4 are void by rule step 5 (frozen
+  files changed: the renderer; then FXAA, switched off after draw 3 had run to remove a one-pixel difference between
+  fresh render processes; then comments in the render modules after draw 4 was made, the pictures byte-identical);
+  the record keeps them. Draw 5's key was written and committed before any candidate ran.
