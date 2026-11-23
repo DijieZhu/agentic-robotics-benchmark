@@ -29,6 +29,10 @@ summary = "Specify seven upgraded replicas of a two-arm robot that has left the 
 platforms = ["arm"]
 stages = ["requirements"]
 
+[dual_arm_parcel_sorting_on_conveyor]
+title = "Turn parcels label-up with a dual-arm robot"
+summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a moving belt so its shipping label faces up at the line's scanner, within 5 s of delay, seeing the station only through four cameras."
+
 [grocery_shelf_restocking]
 title = "Restock a grocery shelf with a lifted Panda"
 summary = "A Franka Panda on a vertical lift restocks a three-shelf bay from a nearly full tote, reading tiny date codes to rotate the stock oldest-first and facing each lane, from cameras and wrist force."
@@ -191,6 +195,12 @@ summary = "Rebuild the lost CAD of a four-digit robot hand's 52 printed parts in
 platforms = ["hand"]
 stages = ["hardware-design"]
 
+[dexterous_hand_full_assembly_16dof_panda]
+title = "Assemble a four-digit robot hand with a Panda"
+summary = "Program a Franka Panda to build a four-digit robot hand from its nine bolt-on modules onto its palm, guided by its picture manual and the cell's cameras."
+platforms = ["hand"]
+stages = ["assembly"]
+
 [hot3d_sharpa_retarget]
 title = "Retarget human hand motion to robot hands"
 summary = "Turn clips of people moving objects with both hands into joint targets that make a pair of Sharpa robot hands move the objects the same way."
@@ -296,6 +306,12 @@ stages = ["behavior"]
 [aerial_search_geolocation]
 title = "Find and geolocate targets from a drone"
 summary = "Fly a quadrotor to the things a ground team describes, confirm each from above and report where it is, or say with confidence that it is not there."
+platforms = ["uav"]
+stages = ["behavior"]
+
+[time_limited_search_and_rescue]
+title = "Find and evacuate a mannequin by drone"
+summary = "Write the flight program of a small indoor drone that searches two warehouse floors with its cameras, fits the right rescue head, and carries a mannequin on its litter to the open receiving station."
 platforms = ["uav"]
 stages = ["behavior"]
 

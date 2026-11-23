@@ -1,0 +1,13 @@
+{
+ "direction": "higher",
+ "full_at": 0.98,
+ "metric": "facing_score",
+ "note": "facing_score is the mean over the hidden shifts of the shift score max(0, credit) / #W parcels (parcelcell.episode), already on [0, 1]. The privileged oracle is graded on the rated set: ratio = score / value, reward = clamp(ratio / full_at, 0, 1). Every other submission is graded on the line set: the reward is the absolute score (the block 'line': value 1.0, full_at 1.0; 1.0 = every parcel of every shift's list turned label up and across readable).",
+ "source": "Measured on 2026-11-21: one fresh full verify of the oracle (solution/: one privileged reference_run call, the frozen reference program of tests/reference inside the cell) on the frozen rated set of tests/hidden/seeds.json, with tests/test.sh as root in a fresh container of the task image that held only the oracle's submission: facing_score 1.0000 (every one of the eight shift scores 1.0), verify 1259 s. The reference implementation's own measured value on this task's cell; nothing else enters it.",
+ "value": 1.0,
+ "line": {
+  "value": 1.0,
+  "full_at": 1.0,
+  "note": "the line set's scale is absolute: 1.0 is every parcel of every list done right; nothing is normalised by the reference"
+ }
+}

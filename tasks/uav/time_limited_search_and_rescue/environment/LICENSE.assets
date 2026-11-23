@@ -1,0 +1,38 @@
+Scene geometry is authored for this task under the repository's Apache-2.0 license.
+No commercial warehouse pack or private research-lab environment is redistributed.
+
+Photo textures: Poly Haven, CC0-1.0 (https://polyhaven.com/license).
+The pinned URLs and SHA-256 hashes are in environment/visual_assets.json:
+https://polyhaven.com/a/concrete_floor_02
+https://polyhaven.com/a/asphalt_02
+https://polyhaven.com/a/brick_wall_001
+https://polyhaven.com/a/rusty_metal_02
+https://polyhaven.com/a/utility_box_01
+https://polyhaven.com/a/portable_generator
+https://polyhaven.com/a/concrete_road_barrier
+Powered by Poly Haven. Discovery uses its public API only at authoring time;
+container builds use pinned URLs and SHA-256 hashes. Mesh/texture conversion is
+reproducible with environment/fetch_visual_assets.py and its pinned dependencies.
+
+The cameras' render bundle (environment/assets.sha256: 18 maps and ibl.ktx, fetched from the
+benchmark's asset dataset at a pinned commit) is drawn by MuJoCo 3.16.0's Filament renderer:
+- wall, floor-tile and ceiling maps: from the Unity Asset Store pack "Chernobyl", which the
+  benchmark's maintainer holds and supplied for the benchmark; resized to 512 px, the walls'
+  dado band desaturated, per-map gains from a fit against path-traced stills of the task's look;
+- concrete, timber, rubber and wear maps: from Poly Haven scans, CC0-1.0
+  (concrete_floor_worn_001, concrete_wall_008, rough_wood, rusty_metal_02, rubber_tiles);
+- six worn floor-paint maps and the window picture: made for this task;
+- look.tar, the models that stand in a site (one OBJ set and its pictures at 256 px per model):
+  furniture, posters and wall cabinets, the yard's fence, vehicles and plants from the "Chernobyl" pack;
+  warehouse stock from the Unity Asset Store packs "Warehouse" and "Factory props"; the airframe from
+  "Realistic Drones"; the casualty from the Microsoft Rocketbox avatar library (MIT) in a pose taken from
+  one frame of the "Ultimate Animation Collection"; cars from "Realistic Car HD 02". The maintainer holds
+  the packs and supplied them for the benchmark; meshes are thinned and re-exported, not the packs' files.
+  The litter, the receiver's frame, the blanket and the paper are made for this task;
+- ibl.ktx: the image light, a two-tone profile over the elevation made for this task and
+  prefiltered with Filament's cmgen (Apache-2.0). No probe of a commercial environment is in it.
+
+Nominal robot visual meshes: Google DeepMind MuJoCo Menagerie at
+f3b6013629c7b94f8ee93fd977b161fa8350f9bc.
+Crazyflie and Unitree Go1 original license texts accompany this file.
+These are simplified benchmark dynamics, not manufacturer-certified digital twins.

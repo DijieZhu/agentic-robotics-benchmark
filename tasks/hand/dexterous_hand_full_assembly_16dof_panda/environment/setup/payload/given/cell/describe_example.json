@@ -1,0 +1,272 @@
+{
+ "budgets": {
+  "camera_frames": 600,
+  "max_ticks_per_step": 500,
+  "silence_abort_s": 120.0,
+  "sim_time_cap_s": 1200.0,
+  "wall_clock_cap_s": 2400.0
+ },
+ "camera_budget_frames": 600,
+ "cameras": {
+  "top": {
+   "depth": true,
+   "nominal_hfov_deg": 70,
+   "resolution": [
+    1280,
+    960
+   ],
+   "rgb": true
+  },
+  "wrist": {
+   "depth": true,
+   "nominal_hfov_deg": 80,
+   "resolution": [
+    640,
+    480
+   ],
+   "rgb": true
+  }
+ },
+ "cell_version": "hand-assembly-cell/0.1.0",
+ "control": {
+  "cartesian_angular_limit_rad_s": 1.5,
+  "cartesian_speed_limit_m_s": 0.5,
+  "joint_rate_limit_rad_s": 1.5,
+  "modes": [
+   "joint",
+   "cartesian"
+  ],
+  "stiffness_scale_range": [
+   0.2,
+   1.0
+  ],
+  "tick_s": 0.01
+ },
+ "datums": {
+  "bench_board": {
+   "black_corner_square": "at the board's -x, +y corner",
+   "inner_corner_cell_m": "x = 0.335 + (i - 4.5) x 0.020, y = 0.005 + (3 - j) x 0.020, z = 0.00305 (i = 1..8, j = 1..5)",
+   "lies_flat_on_bench": true,
+   "margin_mm": 20.0,
+   "square_mm": 20.0,
+   "squares": [
+    9,
+    6
+   ],
+   "thickness_mm": 3.0
+  },
+  "fixture_board": {
+   "centre_in_palm_frame_mm": [
+    41.0,
+    3.0
+   ],
+   "margin_mm": 4.0,
+   "note": "moves with the fixture",
+   "on": "the fixture's base plate",
+   "square_mm": 10.0,
+   "squares": [
+    5,
+    4
+   ],
+   "thickness_mm": 2.0
+  },
+  "frame": "cell frame: origin at the bench-top centre, z up (the bench top is z = 0, 0.994 m above the floor); the robot base at (-0.45, 0, 0) with its axes aligned with the cell frame",
+  "hand_plate": {
+   "black_corner_square": "at the plate's -y, -z corner",
+   "inner_corner_hand_m": "x = -0.03505, y = 0.050 + (i - 2.5) x 0.007, z = 0.020 + (j - 2) x 0.007 (i = 1..4, j = 1..3)",
+   "margin_mm": 3.0,
+   "mounting": "flat on the Panda hand's -x face (hand frame: z = approach along the fingers, y = the closing direction), facing -x",
+   "mounting_tolerance": "about 1 mm / 0.5 deg",
+   "square_mm": 7.0,
+   "squares": [
+    5,
+    4
+   ],
+   "thickness_mm": 1.5
+  }
+ },
+ "fastening": {
+  "hold_ticks": 50,
+  "rest_deg_s": 2.0,
+  "rest_mm_s": 5.0,
+  "seat_support_share_min": 0.5
+ },
+ "fixture": {
+  "jitter_m": 0.01,
+  "nominal_xy_m": [
+   -0.01,
+   0.0
+  ],
+  "nominal_yaw_deg": 0.0,
+  "palmar_face_above_bench_m": 0.15,
+  "yaw_jitter_deg": 2.0
+ },
+ "robot": {
+  "base_pos": [
+   -0.45,
+   0.0,
+   0.0
+  ],
+  "gravity_compensated": true,
+  "gripper": {
+   "force_model": "625 N/m x (object width - target width) per finger, capped at 30 N",
+   "max_width_m": 0.08,
+   "pad_size_m": [
+    0.017,
+    0.017
+   ],
+   "rate_m_s": 0.05
+  },
+  "home_q": [
+   0.0,
+   -1.0,
+   0.0,
+   -2.6,
+   0.0,
+   1.6,
+   0.785
+  ],
+  "joint_range": [
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -1.7628,
+    1.7628
+   ],
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -3.0718,
+    -0.0698
+   ],
+   [
+    -2.8973,
+    2.8973
+   ],
+   [
+    -0.0175,
+    3.7525
+   ],
+   [
+    -2.8973,
+    2.8973
+   ]
+  ],
+  "joints": [
+   "panda/joint1",
+   "panda/joint2",
+   "panda/joint3",
+   "panda/joint4",
+   "panda/joint5",
+   "panda/joint6",
+   "panda/joint7"
+  ],
+  "tcp_offset_in_hand_m": [
+   0.0,
+   0.0,
+   0.1034
+  ],
+  "tcp_site": "tcp"
+ },
+ "safety": {
+  "panda_force_N": 20.0,
+  "part_force_N": 25.0,
+  "part_force_window_s": 0.2,
+  "part_speed_m_s": 3.0,
+  "stop_torque_Nm": 0.2,
+  "stop_window_s": 0.2
+ },
+ "trays": {
+  "digit_tray": {
+   "nests": [
+    {
+     "holds": "finger_module",
+     "nest": "nest_f1",
+     "x_in_tray_m": -0.1355,
+     "y_in_tray_m": 0.0
+    },
+    {
+     "holds": "finger_module",
+     "nest": "nest_f2",
+     "x_in_tray_m": -0.0655,
+     "y_in_tray_m": 0.0
+    },
+    {
+     "holds": "finger_module",
+     "nest": "nest_f3",
+     "x_in_tray_m": 0.0045,
+     "y_in_tray_m": 0.0
+    },
+    {
+     "holds": "thumb_module",
+     "nest": "nest_thumb",
+     "x_in_tray_m": 0.11,
+     "y_in_tray_m": 0.064
+    }
+   ],
+   "nominal_xy_m": [
+    -0.181,
+    -0.269
+   ],
+   "nominal_yaw_deg": 45.0,
+   "plate_m": [
+    0.36,
+    0.24,
+    0.015
+   ]
+  },
+  "parts_tray": {
+   "nests": [
+    {
+     "holds": "dorsal_cover",
+     "nest": "nest_cover",
+     "x_in_tray_m": -0.055,
+     "y_in_tray_m": -0.045
+    },
+    {
+     "holds": "upper_shell",
+     "nest": "nest_top",
+     "x_in_tray_m": 0.065,
+     "y_in_tray_m": -0.05
+    },
+    {
+     "holds": "electronics_stack",
+     "nest": "nest_stack",
+     "x_in_tray_m": -0.08,
+     "y_in_tray_m": 0.06
+    },
+    {
+     "holds": "power_hub",
+     "nest": "nest_hub",
+     "x_in_tray_m": -0.008,
+     "y_in_tray_m": 0.06
+    },
+    {
+     "holds": "press_cap",
+     "nest": "nest_cap",
+     "x_in_tray_m": 0.078,
+     "y_in_tray_m": 0.055
+    }
+   ],
+   "nominal_xy_m": [
+    -0.189,
+    0.322
+   ],
+   "nominal_yaw_deg": 141.0,
+   "plate_m": [
+    0.24,
+    0.2,
+    0.015
+   ]
+  }
+ },
+ "units": {
+  "angle": "rad",
+  "length": "m",
+  "quaternion": "wxyz"
+ }
+}

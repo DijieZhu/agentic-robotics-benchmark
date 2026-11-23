@@ -1,0 +1,336 @@
+{
+ "format": "parcelcell-look/1",
+ "status": "distilled 2026-11-19 from the approved station look (scene of record v3): image light from a probe at the work area, the two task-light bars as spot lamps (one with a shadow map at the bars' centre, six segments without), light strengths and per-class gains fitted in linear light against path-traced references through the four agent cameras (12 states, 8 fitted, 4 held out); the agent cameras' exposure set so that pale parcel faces do not clip and a white waybill differs in tone from a white carton and a white mailer",
+ "render": {
+  "ssaa": 2,
+  "lavapipe_threads": 8,
+  "clear_color": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "near_m": 0.02,
+  "far_m": 120.0,
+  "timeout_s": 300.0,
+  "undither": true,
+  "shadow_type": "pcf",
+  "frame_timeout_s": 60.0,
+  "surface_maps": true
+ },
+ "view": {
+  "numeric": {
+   "filament.ao.enabled": 1,
+   "filament.shadows.map_size": 1024
+  },
+  "text": {
+   "filament.cg.tone_mapping": "filmic"
+  }
+ },
+ "exposure": {
+  "default": 400.0,
+  "per_camera": {
+   "infeed": 0.15625,
+   "head": 0.125,
+   "wrist_left": 0.2,
+   "wrist_right": 0.2
+  }
+ },
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 172.356047
+ },
+ "lamps": [
+  {
+   "name": "task_bars_shadow",
+   "pos": [
+    0.39,
+    -0.23,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 2256.834,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "shadow": true,
+   "shadow_map": 1024,
+   "bulb_m": 0.05,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar0_a",
+   "pos": [
+    0.28,
+    -0.867,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar0_b",
+   "pos": [
+    0.28,
+    -0.23,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar0_c",
+   "pos": [
+    0.28,
+    0.407,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar1_a",
+   "pos": [
+    0.5,
+    -0.867,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar1_b",
+   "pos": [
+    0.5,
+    -0.23,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  },
+  {
+   "name": "bar1_c",
+   "pos": [
+    0.5,
+    0.407,
+    2.35
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "candela": 459.808,
+   "cutoff_deg": 80.0,
+   "softness": 1.0,
+   "color": [
+    1.0,
+    0.616,
+    0.382
+   ]
+  }
+ ],
+ "static": {
+  "albedo_gain": 1.0,
+  "emissive_scale": 1.0,
+  "classes": {
+   "belt": {
+    "gain": [
+     0.6675,
+     0.6831,
+     0.7216
+    ]
+   },
+   "conveyor": {
+    "gain": [
+     1.8529,
+     1.7818,
+     1.6663
+    ]
+   },
+   "station": {
+    "gain": [
+     1.2057,
+     1.2254,
+     1.2663
+    ]
+   },
+   "floor": {
+    "gain": [
+     1.8979,
+     1.7868,
+     1.7943
+    ]
+   },
+   "hall": {
+    "gain": [
+     3.6662,
+     4.0686,
+     4.3038
+    ]
+   },
+   "luminaire": {
+    "gain": [
+     2.9639,
+     2.6901,
+     2.5248
+    ]
+   }
+  }
+ },
+ "robot": {
+  "albedo_gain": 1.0,
+  "classes": {
+   "anod_mount": {
+    "gain": [
+     0.6768,
+     0.7538,
+     0.7945
+    ]
+   },
+   "anod_ring": {
+    "gain": [
+     1.3399,
+     1.246,
+     1.1784
+    ]
+   },
+   "column": {
+    "gain": [
+     0.7251,
+     0.7362,
+     0.7783
+    ]
+   },
+   "fastener": {
+    "gain": [
+     1.0531,
+     0.9256,
+     0.8971
+    ]
+   },
+   "grip_body": {
+    "gain": [
+     2.1453,
+     1.955,
+     1.8291
+    ]
+   },
+   "grip_label": {
+    "gain": [
+     1.6897,
+     1.6842,
+     1.6744
+    ]
+   },
+   "grip_turned": {
+    "gain": [
+     1.2854,
+     1.2295,
+     1.1733
+    ]
+   },
+   "pad": {
+    "gain": [
+     1.6376,
+     1.4819,
+     1.395
+    ]
+   },
+   "pearl": {
+    "gain": [
+     0.9705,
+     0.9472,
+     0.9328
+    ]
+   },
+   "seam": {
+    "gain": [
+     1.1766,
+     1.1874,
+     1.1968
+    ]
+   }
+  }
+ },
+ "parcels": {
+  "roughness": 0.8,
+  "metallic": 0.0,
+  "gain": [
+   1.2933,
+   1.2842,
+   1.3393
+  ]
+ },
+ "housings": {
+  "rgba": [
+   0.05,
+   0.05,
+   0.055,
+   1.0
+  ],
+  "roughness": 0.45,
+  "metallic": 1.0
+ }
+}

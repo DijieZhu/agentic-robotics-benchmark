@@ -1,0 +1,157 @@
+{
+ "format": 1,
+ "note": "The cameras' look (rescue_render.py reads it). classes: what a kind of surface is painted with: map = a picture of the render bundle (sRGB), tile = metres per repeat (without it the picture spans the face), tint = the model's colour times the map, rgb = a fixed colour, glow = drawn as it is (a window's daylight). material: the one material everything is drawn with. ibl.intensity is fitted against the look's path-traced references; a site's tone scales it.",
+ "exposure_scale": 1.0,
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 30000.0
+ },
+ "classes": {
+  "floor_lower": {
+   "map": "floor_lower",
+   "tile": 3.0,
+   "roughness": 0.62
+  },
+  "floor_upper": {
+   "map": "floor_upper",
+   "tile": 2.0,
+   "roughness": 0.6
+  },
+  "ceiling_lower": {
+   "map": "ceiling_lower",
+   "tile": 3.0,
+   "roughness": 0.78
+  },
+  "ceiling_upper": {
+   "map": "ceiling_upper",
+   "tile": 3.0,
+   "roughness": 0.78
+  },
+  "wall_lower": {
+   "map": "wall_lower",
+   "tile": 3.0,
+   "roughness": 0.68
+  },
+  "wall_upper": {
+   "map": "wall_upper",
+   "tile": 3.0,
+   "roughness": 0.7
+  },
+  "concrete": {
+   "map": "concrete",
+   "tile": 2.71,
+   "roughness": 0.8
+  },
+  "skirting": {
+   "map": "skirting",
+   "tile": 0.5,
+   "roughness": 0.7
+  },
+  "door_frame": {
+   "map": "door_frame",
+   "tile": 0.6,
+   "roughness": 0.6
+  },
+  "window_frame": {
+   "rgb": [
+    0.62,
+    0.63,
+    0.62
+   ],
+   "roughness": 0.5
+  },
+  "window_pane": {
+   "map": "window",
+   "glow": 1.0,
+   "roughness": 1.0
+  },
+  "paint": {
+   "map": "wear",
+   "tint": true,
+   "tile": 1.0,
+   "roughness": 0.55
+  },
+  "metal": {
+   "map": "wear",
+   "tint": true,
+   "tile": 1.0,
+   "roughness": 0.45,
+   "metallic": 0.0
+  },
+  "plain": {
+   "roughness": 0.5
+  },
+  "soft": {
+   "roughness": 0.85
+  },
+  "airframe": {
+   "roughness": 0.45
+  },
+  "floor_paint": {
+   "roughness": 0.7
+  },
+  "mat": {
+   "roughness": 0.8
+  },
+  "sign": {
+   "roughness": 0.62
+  },
+  "scan": {
+   "roughness": 0.7
+  }
+ },
+ "material": {
+  "roughness": 0.65,
+  "metallic": 0.0,
+  "specular": 0.1,
+  "glow": 1.0
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "post_processing": true,
+  "supersample": 2,
+  "lavapipe_threads": 2,
+  "far": 60.0,
+  "clear_color": [
+   0.86,
+   0.9,
+   0.95
+  ]
+ },
+ "sun": {
+  "dir": [
+   -0.852,
+   -0.31,
+   -0.423
+  ],
+  "grid": 0.01,
+  "gain": 3.0,
+  "outdoor": 1.6
+ },
+ "window_holes": true,
+ "ground_margin": 0.12,
+ "paints": {
+  "desat": 0.22,
+  "dust_rgb": [
+   0.6,
+   0.58,
+   0.54
+  ],
+  "dust": {
+   "metal": 0.05,
+   "wall": 0.07,
+   "floor": 0.1,
+   "mat": 0.08
+  }
+ },
+ "look_frames": false,
+ "well_dim": 0.35
+}

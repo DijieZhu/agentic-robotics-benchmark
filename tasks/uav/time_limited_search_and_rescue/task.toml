@@ -1,0 +1,41 @@
+# The agent writes the aircraft's flight program; grading flies it in a separate verifier on eight fixed sites.
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/time_limited_search_and_rescue"
+
+[metadata]
+platform = "uav"
+
+[environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0
+
+# The commissioning aircraft's MCP bridge, which setup copies from environment/setup/payload/ into the root-owned
+# /opt/visual_robotics/client. Nothing in it depends on the working directory: Python resolves its one local import
+# (client.py) from the script's own folder, and the bridge uses only stdin, stdout and the service socket.
+[[environment.mcp_servers]]
+name = "robot"
+transport = "stdio"
+command = "/opt/venv/bin/python3"
+args = ["/opt/visual_robotics/client/mcp_stdio.py"]
+
+# 2 hours (instruction.md "Session time", environment/setup/payload/session_time.sh LIMIT_MIN=120).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# Separate verification: the engine releases the agent's sandbox and scores in a fresh one that holds tests/ and the
+# restored /home/user/submission only. Eight flights, each at most 2,100 s of wall time (tests/grader_config.json:
+# a program's 900 s of its own time, plus the aircraft's answers, about 0.13 s each for up to 4,400 actions), plus the
+# start of the verifier and the per-site services: 8 x 2,100 + 1,200.
+[verifier]
+timeout_sec = 18000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 4096
+gpus = 0
