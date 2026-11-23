@@ -30,7 +30,7 @@ network_mode = "no-network"
 # the cameras' renderer (shelf_render.py, on the CPU) needs 0.07 to 0.25 s for one (0.3 s taken here): a controller
 # that spent its whole budget on images asks for 90000 of them, 18000 s beyond their price; a render process per
 # episode, 12 x 20 s; the numerics check, the account clearing and the render self-test 60 s. 35400 s; with 35 %
-# margin 47800 s. The reference's whole verify takes about 25 minutes.
+# margin 47800 s. The reference's whole verify takes about 36 minutes.
 [verifier]
 timeout_sec = 48000
 environment_mode = "separate"
