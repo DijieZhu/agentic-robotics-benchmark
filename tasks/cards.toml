@@ -185,6 +185,12 @@ summary = "Rebuild the lost CAD of a four-digit robot hand's 52 printed parts in
 platforms = ["hand"]
 stages = ["hardware-design"]
 
+[dexterous_hand_full_assembly_16dof_panda]
+title = "Assemble a four-digit robot hand with a Panda"
+summary = "Program a Franka Panda to build a four-digit robot hand from its nine bolt-on modules onto its palm, guided by its picture manual and the cell's cameras."
+platforms = ["hand"]
+stages = ["assembly"]
+
 [hot3d_sharpa_retarget]
 title = "Retarget human hand motion to robot hands"
 summary = "Turn clips of people moving objects with both hands into joint targets that make a pair of Sharpa robot hands move the objects the same way."

@@ -1,0 +1,84 @@
+# `dexterous_hand_full_assembly_16dof_panda` (assembly stage).
+# A Franka Panda with its stock parallel gripper builds a four-digit robot hand of 16 joints
+# (13 servo joints; each finger's last joint follows the one before it through a four-bar loop) from its
+# nine bolt-on modules: three identical finger modules, the thumb module, the electronics stack, the upper
+# shell, the dorsal cover, the power hub and the press-fit cap, onto the palm's bottom shell held dorsal side up on a
+# raised fixture with a rest deck under the fingers. Every unit the cell simulates is the product's own released CAD geometry
+# (tessellated; nothing is modelled); the collision pieces are cut from the true solids. The digit modules keep their
+# joints, unpowered and friction-held, as the cell simulates them.
+#
+# The agent receives the units as delivered (STL files, the digit modules as MJCF with per-link meshes, kit.json), the
+# bought parts list, a 25-photograph picture manual, the cell manual, the cell API, the cell's configuration and a
+# describe() example, the Panda model, the cell library with the cameras' render layer and the baked room; no
+# practice. It delivers assemble.py (solve(cell): a camera-only program), run as an
+# unprivileged account on 3 OS-entropy episodes of the grader's MuJoCo cell (tests/arm/assembly_hand: the units in the
+# nests of two trays, the fixture and the trays placed and turned, the finger chains' and the thumb's angles in their
+# nests and the flat parts' directions drawn per episode; noisy F/T, no part poses, no fastening events). Score = the
+# episode mean of the fastened mates' weight / the scope's total weight, an episode with a safety violation keeping 30 %
+# of it. The reference submission is the privileged reference program (tests/arm/assembly_hand/reference.py) with a secret
+# token: it runs inside the cell on the nominal layout. Grader knobs live in tests/grader_config.json; the cell's kit
+# (gt/: the units' meshes, collision pieces, joints and frames) is never in the image: the grader fetches it at verify
+# start (pinned by its digest and file count).
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/dexterous_hand_full_assembly_16dof_panda"
+
+[metadata]
+platform = "hand"
+direction = "assembly"
+metric = {name = "assembly_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+hidden_instance = "none"
+practice_instances = []
+render_backend = "filament"
+photo_set_version = "1"
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "assembly-cell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "panda", fastening = "coupling (module slide guided across its channel, part seats centred once seated, a pressed cap; lock at rest with free tool access)", joints = "unpowered friction-held servo joints inside the digit modules", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["fixture +-10 mm / +-2 deg", "tray place and yaw per episode", "finger chain ab/ad angle in its nest", "thumb chain angle in its nest", "flat part direction", "cameras (mount, intrinsics, distortion)", "lighting", "F/T bias"]
+siblings = ["tensegrity_strut_assembly_3bar_panda", "robotic_arm_full_assembly_so101_panda"]
+tags = ["assembly", "mujoco", "panda", "code-as-policy", "camera-only", "rgbd", "calibration", "dexterous-hand", "articulated-units", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+# [agent] timeout_sec: 21600 s = 6 h.
+# [verifier] timeout_sec: 14400 s. The worst case of an agent's program, term by term:
+#     the source audit (grader_config.json parse_limits.total_s)             1800 s
+#   + the import check (verify.py contract_check: timeout)                    120 s
+#   + 3 episodes x (reach_check.max_draws 8 layout draws x 3 s to build and settle a cell + wall_cap_s 2400 s)
+#     = 3 x 2424 s
+#   = 9192 s, which leaves 5208 s for the verifier sandbox's start, tests/test.sh's copy of the givens and the
+#     kit's fetch (0.5 s measured from the local copy).
+# The reference submission's verify, measured: 1003 s in validate-92ed8b66 (3 episodes of the reference program, about
+# 208 s simulated and 332 s of wall clock each); 709-1446 s over the last four validates, by host load.
+# The reference's own wall cap is privileged_wall_cap_s, 7200 s per episode.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself, and the grader fetches the cell's kit. The agent's program
+# runs during verify, beside the cell and its own camera renderer, so the verifier gets the agent's CPUs and more
+# memory than the agent: 24 GiB. CPU rendering: no GPU.
+[verifier]
+timeout_sec = 14400
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0

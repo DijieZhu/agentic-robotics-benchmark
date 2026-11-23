@@ -1,0 +1,127 @@
+{
+ "format": "hand-bench-plan/1",
+ "scope": "default",
+ "source": "the grasps the privileged reference took in a passing full run on the nominal layout without a plan",
+ "planner_seed": 0,
+ "park_deg": {
+  "seat_FI": -45.0,
+  "seat_FR": 45.0,
+  "seat_FM": 0.0
+ },
+ "thumb_side_deg": 0.0,
+ "steps": [
+  {
+   "slot": "seat_FI",
+   "unit": "finger_module_1",
+   "nest": "nest_f1",
+   "grasp": {
+    "row": 0,
+    "sign": 1,
+    "span_mm": 28.6
+   }
+  },
+  {
+   "slot": "seat_FR",
+   "unit": "finger_module_2",
+   "nest": "nest_f2",
+   "grasp": {
+    "row": 0,
+    "sign": 1,
+    "span_mm": 28.6
+   }
+  },
+  {
+   "slot": "seat_FM",
+   "unit": "finger_module_3",
+   "nest": "nest_f3",
+   "grasp": {
+    "row": 0,
+    "sign": 1,
+    "span_mm": 28.6
+   }
+  },
+  {
+   "slot": "seat_TM",
+   "unit": "thumb_module",
+   "nest": "nest_thumb",
+   "grasp": {
+    "row": 0,
+    "sign": 1,
+    "span_mm": 23.0
+   }
+  },
+  {
+   "slot": "seat_BS",
+   "unit": "electronics_stack",
+   "nest": "nest_stack",
+   "grasp": {
+    "row": 4,
+    "sign": 1,
+    "span_mm": 34.03,
+    "release_m": 0.013
+   }
+  },
+  {
+   "slot": "seat_PT",
+   "unit": "upper_shell",
+   "nest": "nest_top",
+   "grasp": {
+    "row": 28,
+    "sign": 1,
+    "span_mm": 65.9,
+    "release_m": 0.012
+   },
+   "push": {
+    "push_point_mm": [
+     -10.8,
+     1.1
+    ],
+    "yaw_deg": 0.0,
+    "top_mm": 4.08,
+    "support_mm2": 67
+   }
+  },
+  {
+   "slot": "seat_PC",
+   "unit": "dorsal_cover",
+   "nest": "nest_cover",
+   "grasp": {
+    "row": 0,
+    "sign": 1,
+    "span_mm": 7.1,
+    "release_m": 0.0
+   }
+  },
+  {
+   "slot": "seat_HB",
+   "unit": "power_hub",
+   "nest": "nest_hub",
+   "grasp": {
+    "row": 5,
+    "sign": 1,
+    "span_mm": 48.0,
+    "release_m": 0.001
+   }
+  },
+  {
+   "slot": "seat_CC",
+   "unit": "press_cap",
+   "nest": "nest_cap",
+   "grasp": {
+    "row": 3,
+    "sign": 1,
+    "span_mm": 59.07,
+    "release_m": 0.0035
+   },
+   "push": {
+    "push_point_mm": [
+     2.5,
+     -6.0
+    ],
+    "yaw_deg": 0.0,
+    "top_mm": 5.5,
+    "support_mm2": 351
+   }
+  }
+ ]
+}
