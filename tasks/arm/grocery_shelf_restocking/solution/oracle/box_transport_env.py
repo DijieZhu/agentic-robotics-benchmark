@@ -34,7 +34,8 @@ CONTROL_DT = TIMESTEP * SUBSTEPS
 MAX_DPOS = 0.03
 MAX_DROT = 0.2
 MAX_ARM_SPEED = 8.0               # rad/s: faster is an unstable simulation (box_env's rule)
-MAX_OBJECT_SPEED = 5.0            # m/s, the container or the item: a simulation blow-up, not a throw
+MAX_OBJECT_SPEED = 10.0           # m/s, a product: a simulation blow-up, not a fall (a unit dropped from the
+                                  # highest reach, 2.1 m, lands at 6.4 m/s; 5 m/s was reached from 1.27 m)
 WRENCH_NOISE = 0.3
 RGB_NOISE = 2.0
 VISUAL_MASS = 1e-6

@@ -100,7 +100,9 @@ done: that episode's credit is 0, whatever else was achieved in it. In an episod
 An episode ends:
 - when your controller sends the action `[0]` (finished);
 - after 15000 control steps (25 simulated minutes);
-- at an unstable simulation (an arm joint faster than 8 rad/s, or a product faster than 5 m/s), which scores 0.
+- at an unstable simulation (an arm joint faster than 8 rad/s, or a product faster than 10 m/s), which scores 0.
+  A unit that is dropped and falls is not one: it lies where it lands, the episode goes on, and it counts as any
+  other unit that is not where it belongs.
 
 The score is the mean credit over the graded episodes.
 

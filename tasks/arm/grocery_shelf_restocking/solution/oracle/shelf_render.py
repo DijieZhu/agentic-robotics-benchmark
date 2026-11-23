@@ -89,6 +89,8 @@ BUNDLE_FILES = ("textures.npz", "textures.json", "ibl.ktx", "props_bay/room.npz"
                 "props_world/room.npz", "props_world/room.json")
 CALL_TIMEOUT = float(os.environ.get("SHELF_RENDER_TIMEOUT", "300"))
 CAM_FAR = 40.0
+VIEW_NOT_FOUND = "cannot find the Filament view"
+VIEW_RETRIES = 3                 # fresh render processes for an episode whose first one did not find its view
 SKU_SCALE = 0.25               # a task SKU's atlas: the look's 8000 px/m map scaled to 2000 px/m
 CODE_SCALE = 0.1               # a code label: the look's 60000 px/m map scaled to 6000 px/m
 
@@ -615,8 +617,7 @@ class _Filament(object):
             os.close(rfd)
             os.close(wfd)
         if len(found) != 1:
-            raise RenderError("renderer: cannot find the Filament view to switch its dithering off (%d candidates)"
-                              % len(found))
+            raise RenderError("renderer: %s to switch its dithering off (%d candidates)" % (VIEW_NOT_FOUND, len(found)))
         self.view = found.pop()
         setd(self.view, 0)                             # filament::View::Dithering::NONE
         if getd(self.view) != 0:
@@ -695,12 +696,18 @@ class Worker(object):
     """The cameras of one episode, drawn in a process of its own."""
 
     def __init__(self, unit, episode):
+        self.unit, self.episode = unit, episode
+        self.drawn = 0                   # answered requests
+        self.restarts = 0
+        self._start()
+
+    def _start(self):
         import subprocess
         try:
             self.proc = subprocess.Popen([sys.executable, "-I", "-B", os.path.abspath(__file__), "--worker"],
                                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
             self.w, self.r = self.proc.stdin.fileno(), self.proc.stdout.fileno()
-            _write_msg(self.w, {"unit": unit, "episode": episode})
+            _write_msg(self.w, {"unit": self.unit, "episode": self.episode})
             rep = _read_msg(self.r, time.monotonic() + CALL_TIMEOUT)
         except RenderError:
             self.close()
@@ -715,12 +722,30 @@ class Worker(object):
         self.info = rep
 
     def _ask(self, obj, payload=b""):
+        # A process that cannot find its Filament view at its first image (_undither: seen once in about 700 process
+        # starts, on a heavily loaded host) is replaced by a fresh one, at most VIEW_RETRIES times: where the view
+        # lies in memory differs from process to process, and what a process draws does not.
+        while True:
+            try:
+                return self._ask_once(obj, payload)
+            except RenderError as exc:
+                if self.drawn or self.restarts >= VIEW_RETRIES or VIEW_NOT_FOUND not in str(exc):
+                    raise
+                self.restarts += 1
+                sys.stderr.write("[shelf_render] the render process did not find its view; a fresh one is started (%d of %d)\n"
+                                 % (self.restarts, VIEW_RETRIES))
+                self.close()
+                self._start()
+
+    def _ask_once(self, obj, payload=b""):
         try:
             _write_msg(self.w, obj, payload)
             rep = _read_msg(self.r, time.monotonic() + CALL_TIMEOUT)
             if not rep.get("ok"):
                 raise RenderError(rep.get("error", "renderer: failed"))
-            return rep, _read_exact(self.r, int(rep["bytes"]), time.monotonic() + CALL_TIMEOUT)
+            raw = _read_exact(self.r, int(rep["bytes"]), time.monotonic() + CALL_TIMEOUT)
+            self.drawn += 1
+            return rep, raw
         except RenderError:
             raise
         except Exception as exc:  # noqa: BLE001
