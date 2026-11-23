@@ -32,6 +32,8 @@ stages = ["requirements"]
 [dual_arm_parcel_sorting_on_conveyor]
 title = "Turn parcels label-up with a dual-arm robot"
 summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a moving belt so its shipping label faces up at the line's scanner, within 5 s of delay, seeing the station only through four cameras."
+platforms = ["arm"]
+stages = ["behavior"]
 
 [grocery_shelf_restocking]
 title = "Restock a grocery shelf with a lifted Panda"
