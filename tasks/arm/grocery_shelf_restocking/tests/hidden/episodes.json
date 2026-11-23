@@ -2,53 +2,53 @@
  "format": "grocery_shelf_restocking fixed set 1",
  "episodes": [
   {
-   "unit": "u1",
-   "seed": 18257453239096945727
+   "unit": "u2",
+   "seed": 3309027787696431765
   },
   {
    "unit": "u3",
-   "seed": 859610178588597517
+   "seed": 2765004536058719804
   },
   {
-   "unit": "u3",
-   "seed": 5993648162774156755
+   "unit": "u4",
+   "seed": 4193897461800669732
   },
   {
    "unit": "u1",
-   "seed": 14113145843564932556
+   "seed": 3392868020239225209
+  },
+  {
+   "unit": "u3",
+   "seed": 15780023115750325789
   },
   {
    "unit": "u5",
-   "seed": 2040861741079528018
-  },
-  {
-   "unit": "u0",
-   "seed": 470860791099576905
+   "seed": 3106760648464569657
   },
   {
    "unit": "u4",
-   "seed": 15959181144502913841
+   "seed": 3692944614123752111
   },
   {
    "unit": "u5",
-   "seed": 12883989866761528779
+   "seed": 2501160629754810109
   },
   {
-   "unit": "u4",
-   "seed": 9584024697617172318
+   "unit": "u1",
+   "seed": 2044234467556812788
   },
   {
    "unit": "u0",
-   "seed": 17852830002057188321
+   "seed": 2693790578489148678
+  },
+  {
+   "unit": "u0",
+   "seed": 11035936075493703548
   },
   {
    "unit": "u2",
-   "seed": 9386783992228694411
-  },
-  {
-   "unit": "u2",
-   "seed": 18397142443270959424
+   "seed": 6018738180601820853
   }
  ],
- "source": "Selected 2026-11-21 by tests/review/select_set.py (the rule in its docstring), draw 2 of 2 (1 voided); key os.urandom(32), drawn 2026-11-21T23:05:02Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 19, rejected 7: u1#0 (wire [0.3]); u1#2 (wire [1.0, 0.9]); u1#3 (wire [0.6]); u1#4 (wire [0.933]); u4#0 (wire [1.0, 1.0, 0.3]); u4#1 (wire [1.0, 1.0, 0.6]); u4#3 (wire [0.6]). Episodes restocking shelf 0 / 1 / 2: 8/12/4; with an expired unit: 10, with a delivered unit dated before an old one: 10, of the 12. Graded order: a Fisher-Yates keyed by the same key."
+ "source": "Selected 2026-11-23 by tests/review/select_set.py (the rule in its docstring), draw 4 of 4 (3 voided); key os.urandom(32), drawn 2026-11-23T00:57:54Z, written to tests/hidden/episode_selection.json before any candidate ran. Frozen at the draw (sha256 in the record): tests/verify.py, tests/episode.py, tests/shelf_env.py, tests/shelf_world.py, tests/shelf_ctl.py, tests/shelf_sim.py, tests/box_transport_env.py, tests/units.json, tests/grader_config.json, tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json, tests/shelf_render.py, tests/shelf_scene.py, tests/shelf_parts.py, tests/shelf_geom.py, tests/shelf_tex.py, tests/shelf_looks.py, tests/shelf_look.json, environment/assets.sha256, solution/oracle/box_transport_env.py, solution/oracle/episode.py, solution/oracle/oracle_main.py, solution/oracle/reference.py, solution/oracle/shelf_ctl.py, solution/oracle/shelf_env.py, solution/oracle/shelf_render.py, solution/oracle/shelf_scene.py, solution/oracle/shelf_parts.py, solution/oracle/shelf_geom.py, solution/oracle/shelf_tex.py, solution/oracle/shelf_looks.py, solution/oracle/shelf_look.json, solution/oracle/shelf_sim.py, solution/oracle/shelf_world.py, solution/oracle/staging.py, solution/oracle/wire_world.py, solution/solve.sh. Per unit, candidate seeds from the key in a fixed order; kept: the reference scored credit 1.0 in 3 runs over the real wire (verify.run_episodes, the oracle submission, the probe lock); the first 2 kept per unit. Tried 17, rejected 5: u1#0 (wire [0.9]); u1#2 (wire [0.9]); u1#3 (wire [1.0, 0.0]); u3#1 (wire [0.0]); u4#0 (wire [1.0, 1.0, 0.0]). Episodes restocking shelf 0 / 1 / 2: 8/8/8; with an expired unit: 12, with a delivered unit dated before an old one: 10, of the 12. Graded order: a Fisher-Yates keyed by the same key."
 }
