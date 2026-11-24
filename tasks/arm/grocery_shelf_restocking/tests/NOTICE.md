@@ -88,3 +88,12 @@
   4. The numerics fingerprint's own episode does not depend on the cap (checked before the draw).
   5. The hidden set is drawn again by `review/select_set.py`'s rule (a new key, committed before any candidate
      runs).
+- **v9, what was found (2026-11-24).** The fingerprint is unchanged by the cap. The reference on the 24 practice
+  episodes under the cap: 24 at 1.0, 2907 to 6051 steps. Draw 9 is void (the cap is in a frozen file). Draw 10
+  (this branch's; the 4-lane trial had draws of its own, which are not in this record): key committed before any
+  candidate ran; 16 candidates, 12 kept, 4 rejected (a lane lost in each; none was cut by the cap: they ended by
+  themselves after 6730 to 8720 steps); the kept episodes' 36 wire runs took 3642 to 6333 steps, 70 % of the cap
+  at most, so the cap stays 9000. The rejection rate at the selection is 4 of 16 (25 %), one candidate over the
+  registered 22 %; with the practice episodes it is 4 of 40. Stated, not acted on: the same 4 of 16 was seen in
+  three of the 3-lane draws before.
+
