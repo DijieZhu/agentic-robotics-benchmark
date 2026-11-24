@@ -4,22 +4,35 @@
  "frozen": {
   "tests/door_grade.py": "29b1cdb7cc3a14499e4f076b401e3212455368f7a81e5a1aa89cfb81378b53e6",
   "tests/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
-  "tests/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
-  "tests/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+  "tests/door_env.py": "59faa03821dd6fefd86799acc59d347dae3d8045a168fdd3286487d5b325a03e",
+  "tests/door_sim.py": "6847100f4fc93d967f2414339e3b5ed81f691ab370da3663b48c08a75fcab22a",
   "tests/units.json": "67003f460f1d84f8067e9370102f26169ab155735c0adf164d0f5ce53bb0084e",
   "tests/grader_config.json": "01def5a67fdd5307f2d3d5bb5562ad13e3c56c26d48ddb81fdf9d2a08742a809",
   "tests/nonet_exec.py": "793a647065d7f27ee4469e4f0a7cdab9a983f2bd40e646aecfe1403fce3fd7a5",
   "tests/numerics_check.py": "62796644e01a615382438b1b03e55b2b890afab186bc7994d93b0c97351a5f6a",
   "tests/numerics.json": "1dfc5437c33af89b790b35f5622e4890c5c5a37894eba466feb0f57fe4785031",
-  "solution/oracle/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
-  "solution/oracle/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+  "tests/door_render.py": "22a86bb59898bc81728b4914b394dfc89a0f6f79bdae921a423ae6e477516223",
+  "tests/door_scene.py": "6c4279cd7eeb53abc7e1fc4a1d3d2a346848a2589c4b9b1295e6f7d4bb4ca27a",
+  "tests/door_parts.py": "aa966037caa3b5a61623c385a6b067d688fa0f0b799c3114e7d755b9a4ec6398",
+  "tests/door_geom.py": "f792098ca37744005c0f3b26afe91b98dce7aeb94bb5c6cba3b9f27d9e4d2d7d",
+  "tests/door_looks.py": "f90e687d7fd180c1294d81ba400714e0020fbd3b55656f0b9e85ccb87fe85390",
+  "tests/door_look.json": "c19932ded0c6ca1d153cb545c48d3a1f7ff5d995d593e07b1e6558c54ff5eef0",
+  "environment/assets.sha256": "7a5d8468547b42317be159924f6ed760d1a9bb4c27e63551586f8f86a248ab15",
+  "solution/oracle/door_env.py": "59faa03821dd6fefd86799acc59d347dae3d8045a168fdd3286487d5b325a03e",
+  "solution/oracle/door_sim.py": "6847100f4fc93d967f2414339e3b5ed81f691ab370da3663b48c08a75fcab22a",
   "solution/oracle/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
   "solution/oracle/oracle_main.py": "6fd692a90f38d65315955a2101a49d64941b62d4df16b9d4bb5310aa1d5e9307",
   "solution/oracle/reference.py": "579ea2342ba666d8e37dbe5c2734d9b5f7444df8a09e75153d74921b0755e7a8",
   "solution/oracle/wire_world.py": "06d39e51969197504bbb6dae116616717cee121f0ef03e32478ba127011f6531",
+  "solution/oracle/door_render.py": "22a86bb59898bc81728b4914b394dfc89a0f6f79bdae921a423ae6e477516223",
+  "solution/oracle/door_scene.py": "6c4279cd7eeb53abc7e1fc4a1d3d2a346848a2589c4b9b1295e6f7d4bb4ca27a",
+  "solution/oracle/door_parts.py": "aa966037caa3b5a61623c385a6b067d688fa0f0b799c3114e7d755b9a4ec6398",
+  "solution/oracle/door_geom.py": "f792098ca37744005c0f3b26afe91b98dce7aeb94bb5c6cba3b9f27d9e4d2d7d",
+  "solution/oracle/door_looks.py": "f90e687d7fd180c1294d81ba400714e0020fbd3b55656f0b9e85ccb87fe85390",
+  "solution/oracle/door_look.json": "c19932ded0c6ca1d153cb545c48d3a1f7ff5d995d593e07b1e6558c54ff5eef0",
   "solution/solve.sh": "d4c3e455812a55c68adef1276f2ee739c67c4f6724e31c88fa97a1b835e55e6c"
  },
- "frozen_commit": "5c38be093d2734592db73b13782cfcb598a62bb8",
+ "frozen_commit": "167e2a16406cf3d1a105b746365656c7e3140a1f",
  "draws": [
   {
    "draw": 1,
@@ -110,7 +123,7 @@
    "key": "ba7bc15c1ddec1e138cd9ed33ee9cace8f2454c245075b0bf1bffb9e1ae93d2e",
    "source": "os.urandom(32)",
    "frozen_commit": "5c38be093d2734592db73b13782cfcb598a62bb8",
-   "status": "made",
+   "status": "void",
    "made_utc": "2026-11-23T08:57:47Z",
    "graded_order": [
     "u6#0",
@@ -125,7 +138,35 @@
     "u3#0",
     "u7#0",
     "u8#0"
-   ]
+   ],
+   "frozen": {
+    "tests/door_grade.py": "29b1cdb7cc3a14499e4f076b401e3212455368f7a81e5a1aa89cfb81378b53e6",
+    "tests/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
+    "tests/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
+    "tests/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+    "tests/units.json": "67003f460f1d84f8067e9370102f26169ab155735c0adf164d0f5ce53bb0084e",
+    "tests/grader_config.json": "01def5a67fdd5307f2d3d5bb5562ad13e3c56c26d48ddb81fdf9d2a08742a809",
+    "tests/nonet_exec.py": "793a647065d7f27ee4469e4f0a7cdab9a983f2bd40e646aecfe1403fce3fd7a5",
+    "tests/numerics_check.py": "62796644e01a615382438b1b03e55b2b890afab186bc7994d93b0c97351a5f6a",
+    "tests/numerics.json": "1dfc5437c33af89b790b35f5622e4890c5c5a37894eba466feb0f57fe4785031",
+    "solution/oracle/door_env.py": "c0edca2aff68f2aeaa123c0a224899dfdea8d97f1b43ba4b56195a0c34a4393b",
+    "solution/oracle/door_sim.py": "884b2dc7c0c85d9b75f4c5cc48592ea2b2344f3132e19517dd866a8a958e32bb",
+    "solution/oracle/episode.py": "f38528a001e8d9c78986e9b4043e33780d356fd5b49ac6197735044c9c77dbdc",
+    "solution/oracle/oracle_main.py": "6fd692a90f38d65315955a2101a49d64941b62d4df16b9d4bb5310aa1d5e9307",
+    "solution/oracle/reference.py": "579ea2342ba666d8e37dbe5c2734d9b5f7444df8a09e75153d74921b0755e7a8",
+    "solution/oracle/wire_world.py": "06d39e51969197504bbb6dae116616717cee121f0ef03e32478ba127011f6531",
+    "solution/solve.sh": "d4c3e455812a55c68adef1276f2ee739c67c4f6724e31c88fa97a1b835e55e6c"
+   },
+   "void_reason": "frozen files changed: tests/door_sim.py and tests/door_env.py draw the cameras through door_render.py and the model has contact shapes for the drawn fitter's things; the renderer's files and the render bundle's pin join the frozen list (rule step 5)",
+   "voided_utc": "2026-11-24T20:11:22Z"
+  },
+  {
+   "draw": 4,
+   "drawn_utc": "2026-11-24T20:11:22Z",
+   "key": "e9631ca97ddba00eb7b80afed4a521cc310ff4f618399e21f43a0b549e94933a",
+   "source": "os.urandom(32)",
+   "frozen_commit": "167e2a16406cf3d1a105b746365656c7e3140a1f",
+   "status": "open"
   }
  ],
  "candidates": [
