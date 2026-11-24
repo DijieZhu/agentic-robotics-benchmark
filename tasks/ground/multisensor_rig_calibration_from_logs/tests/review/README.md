@@ -1,0 +1,10 @@
+# Review material (nothing here runs at verify)
+
+| file | what |
+|---|---|
+| `stamp_leak.py` | The test that must fail to find the clocks: offset and drift estimated from the logs' stamps alone (stamp spacing; where each sequence's first and last stamps fall), against the estimate "zero". It passes when no stamp-only estimate is better than 0.8 x zero's error. On the first version of this task the stamp spacing gave the drift to 1 ppm. |
+| `ident.py` | Identifiability: a privileged, truth-initialised calibration of every scored parameter from a rig's given sequences (each sweep registered to the site's surface, then against the gyro; rests; edge alignment of LiDAR and camera over the mount, the focal length, the principal point, k1, k2 and the readout time, before and after a knock; clock offsets per sequence and a line through them), and the task's metrics of where it settles. It may use the truth to associate data and to start, never as the answer. It is the acceptance check of a generated rig, not a reference solution, and no score is derived from it but the full points. |
+| `cpu_account_test.py` | The grader charges a run its own processor time: a burner of 30 CPU-seconds (one process in the run's session, one that left it) is charged 29.9 s on a quiet host and 29.9 s on a host at load 47. |
+| `author_calibrator_v1.py`, `author_rigsim_v1.py` | The author's first reference calibrator and generator (first version of the task: a room of boxes, undistorted 320x240 frames, instantaneous scans). Not judged; the anchor is not its score. |
+| `program_v2_easy/` | The program a frontier model wrote for the second version of this task (given intrinsics, global shutter, 32 beams, practice truth and a practice grader; it scored 0.985 there), kept as a reference point: run on this version's hidden rigs through the grader. |
+| `records/` | The measurements behind the numbers in `grader_config.json`: the settled calibration of every rig, the truth-and-mutant table, the stamp test. Hidden rigs appear by index only. |

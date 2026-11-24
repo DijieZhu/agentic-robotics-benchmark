@@ -364,3 +364,9 @@ title = "Isolate a subsea manifold leak with an ROV"
 summary = "Program an inspection ROV to find a subsea manifold by sonar, trace the gas plume to the leaking branch, close its valves by rolling the vehicle and latch a hot stab."
 platforms = ["underwater"]
 stages = ["behavior"]
+
+[multisensor_rig_calibration_from_logs]
+title = "Calibrate a warehouse robot's sensors from logs"
+summary = "Write a program that recovers a warehouse robot's camera and IMU mounts, sensor clocks and IMU biases from its driving logs, and flags faulty stretches, on robots it has never seen."
+platforms = ["ground"]
+stages = ["robot-description"]

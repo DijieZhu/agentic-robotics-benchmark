@@ -1,0 +1,31 @@
+schema_version = "1.4+ale.1"
+
+# Where the agent leaves its work: a calibration program (run.sh and whatever it needs).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/multisensor_rig_calibration_from_logs"
+
+[metadata]
+platform = "ground"
+
+# 8 CPUs, 16 GB, no GPU, no network: the agent develops and tests its calibration program on the three practice rigs.
+[environment]
+cpus = 8
+memory_mb = 16384
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+# Verify: fetch the six hidden rigs' logs (one pinned archive, about 0.7 GB), run the submission on all six at
+# once (1800 s of its own processor time each, a wall-clock stop at 7200 s), then measure (under a minute). The
+# reference is token-privileged and finishes in seconds.
+[verifier]
+timeout_sec = 10800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 32768
+gpus = 0

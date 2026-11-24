@@ -1,0 +1,9 @@
+{
+  "metric": "mean_rig_credit",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 0.98,
+  "source": "Own measurement, 2026-11-24: the token-privileged reference (solution/solve.sh writes the grader's truth) through the pinned engine (vendor/ale bfb7505), ale validate validate-9ca21a1a: mean_rig_credit 1.0 over the six fixed hidden rigs (1.0 on each), untouched 0.0. Never a published figure.",
+  "reference_commit": "the commit that makes tasks/ground/multisensor_rig_calibration_from_logs version 3 (logs only in practice; unknown intrinsics, rolling shutter, bracket states, a knock)",
+  "note": "The reference is privileged, not a calibrator: its score is the score of the true parameters on the six fixed hidden rigs (1.0 on each: every full point is several times what the truth leaves on the held-out drive). No unprivileged reference is run or judged; the author's first calibrator is kept in tests/review/ as review material."
+}
