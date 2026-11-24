@@ -19,11 +19,13 @@ submission folder works here and fails there. Run it on a copy of the submission
 """
 
 import argparse
+import fcntl
 import json
 import math
 import os
 import queue
 import random
+import select
 import signal
 import subprocess
 import sys
@@ -107,11 +109,32 @@ class Wire(object):
             lines.put(line)
         lines.put(None)
 
-    def _read(self, timeout, what):
+    def _write(self, text, deadline):
+        """As the grader writes a request: without blocking, a chunk at a time as the pipe drains. A request the
+        solver has not read by the deadline ends the episode like a late reply."""
+        data = memoryview(text.encode("utf-8"))
+        self.proc.stdin.flush()
+        fd = self.proc.stdin.fileno()
+        flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+        try:
+            while data:
+                left = deadline - time.monotonic()
+                if left <= 0 or not select.select([], [fd], [], left)[1]:
+                    raise WireError("solver exceeded its {} s step deadline (it did not read the request)".format(
+                        STEP_TIMEOUT))
+                try:
+                    data = data[os.write(fd, data[:65536]):]
+                except BlockingIOError:
+                    continue
+        finally:
+            fcntl.fcntl(fd, fcntl.F_SETFL, flags)
+
+    def _read(self, timeout, what, budget=None):
         try:
             line = self.lines.get(timeout=timeout)
         except queue.Empty:
-            raise WireError("solver exceeded its {} s {} deadline".format(timeout, what))
+            raise WireError("solver exceeded its {} s {} deadline".format(timeout if budget is None else budget, what))
         if line is None:
             raise WireError("solver closed its stdout (or wrote a line over the length cap)")
         return line
@@ -137,10 +160,12 @@ class Wire(object):
         if self.dead:
             raise WireError("solver could not be restarted after an earlier abort")
         try:
-            self.proc.stdin.write(json.dumps(msg) + "\n")
-            self.proc.stdin.flush()
+            # One deadline for the request, fixed before it is written, as in grading: the time the solver takes
+            # to read the request counts, and every line it writes back is read against what is left.
+            deadline = time.monotonic() + STEP_TIMEOUT
+            self._write(json.dumps(msg) + "\n", deadline)
             while True:
-                line = self._read(STEP_TIMEOUT, "step").strip()
+                line = self._read(max(0.0, deadline - time.monotonic()), "step", STEP_TIMEOUT).strip()
                 if not line:
                     continue
                 try:
@@ -194,7 +219,8 @@ def differ(a, b):
         aa, bb = [float(v) for v in flat(a)], [float(v) for v in flat(b)]
     except (TypeError, ValueError):
         return False
-    return len(aa) != len(bb) or max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
+    # the grader's rule: two replies with a different count of numbers show nothing
+    return len(aa) == len(bb) and max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
 
 
 def still(action):

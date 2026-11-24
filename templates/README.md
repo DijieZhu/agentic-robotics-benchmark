@@ -152,7 +152,27 @@ is compared). The instruction tells the
 agent exactly this, so an honest solver needs no special case. The lock catches a policy
 that ignores its input; it is not a proof of honesty (a solver can notice a repeated `t`
 and vary its answer on purpose), and isolation, not the lock, keeps the score honest. The
-practice grader speaks the same wire, deadlines and repeated-`t` queries included.
+practice grader speaks the same wire, deadlines and repeated-`t` queries included, and it
+counts a repeated-`t` pair with the lock's own rule (`replies_differ`: two replies with a
+different count of numbers show nothing), so its count is the one the grader will find.
+
+A probe copy must be built the way the real observation is. A simulator that steps and then
+reports reads its bodies' poses from the last step's kinematics, i.e. from the joint positions
+*before* that step, and reports the joint positions *after* it; a copy whose poses are the
+exact kinematics of its offset joints is told from the real observation by a zero residual.
+`robotics_grader.probe.stale_copy(kinematics, stale, observed, copy)` gives the copy's poses
+from the older positions plus the copy's offsets; a task whose environment file is also the
+agent's copy writes the same two lines in that file (see `arm_hidden_mechanism_box`).
+
+The solver and everything it starts run at nice 19 from their first instruction: the grader's
+own simulation and rendering share the sandbox's CPUs and are not charged to the solver, so a
+solver that keeps the CPUs busy must not be able to slow them. The kit starts the solver from
+a thread that lowers itself first and then ends; the grader's own threads are never lowered,
+because root in the sandbox cannot raise a priority back (no `CAP_SYS_NICE`). A grader must
+not lower itself either. `Solver.idle_class = True` adds the kernel's idle class. `Solver.max_processes` (0 = off) ends an episode when the
+solver's account holds more processes than that; a task that sets it says the number in its
+instruction. `robotics_grader.deadline.VerifierDeadline` gives a grader a last deadline inside
+the engine's own, so that a run that would outlive the verifier's limit ends with a verdict.
 
 After an aborted episode (a missed deadline, a crash, a malformed or missing action) the
 next `reset` stops the solver's whole process group and launches `run.sh` again, which must
