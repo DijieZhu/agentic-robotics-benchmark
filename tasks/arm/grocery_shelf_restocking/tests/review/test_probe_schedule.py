@@ -6,7 +6,7 @@ DIR defaults: the task's tests/ (the parent of this file's directory when it sit
 --work: a scratch directory for the stub controllers (default: a new temporary directory, removed at the end).
 An episode's schedule is what the grader's lock draws from probe_stream(n, seed) through verify.ask: the steps that
 carry a repeated t, the order of each pair and the seed of each perturbation. Checks:
-  (a) the schedules of the set's 12 episodes over 15000 steps (an episode's longest run), drawn through verify.ask
+  (a) the schedules of the set's 12 episodes over 9000 steps (an episode's longest run), drawn through verify.ask
       with a recording wire and no simulator, are identical in two child processes with different hash seeds;
   (b) the 12 schedules differ from one another;
   (c) at the reference's episode lengths (the first wire run's steps of the set's episodes in
@@ -37,7 +37,7 @@ import tempfile
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-T_MAX = 15000                    # an episode's longest run: episode.EPISODE_STEPS
+T_MAX = 9000                     # an episode's longest run: episode.EPISODE_STEPS
 LOOP_EPISODES = 3
 STOPS = {"mover": (900, 1500, 1200), "reader": (400, 1200, 1500), "still": (1300, 1500, 700)}
 STEP_M, PERIOD = 0.0004, 400     # the movers' circle: 0.4 mm per step, 400 steps per turn (2.5 cm radius)

@@ -102,8 +102,9 @@ done: that episode's credit is 0, whatever else was achieved in it. In an episod
 
 An episode ends:
 - when your controller sends the action `[0]` (finished);
-- when the step count `t` reaches 15000 (25 simulated minutes). The count includes the 20 steps in which the scene
-  settles before your first observation (which carries `t` = 20), so a controller has 14,980 actions;
+- when the step count `t` reaches 9000: the restocking time allowance, 15 simulated minutes at the 10 Hz control
+  rate. The count includes the 20 steps in which the scene settles before your first observation (which carries
+  `t` = 20), so a controller has 8,980 actions. An episode that is not finished by then is scored as it stands;
 - at an unstable simulation (an arm joint faster than 8 rad/s, or a product faster than 10 m/s), which scores 0.
   A unit that is dropped and falls is not one: it lies where it lands, the episode goes on, and it counts as any
   other unit that is not where it belongs.
@@ -121,7 +122,7 @@ earlier rule in which each correct lane earned its share; that number is reporte
   so you have slightly more than it says, never less); `date` shows the same clock. Run the script when you begin,
   again before every decision that depends on the time left, and whenever you pick the work up from notes or from
   a summary of what was done. Do not estimate the time used from how much you have done.
-- Two other counts in this task are not your session's time: an episode's length (15000 control steps, 20 of them the scene's own, are 25
+- Two other counts in this task are not your session's time: an episode's length (9000 control steps, 20 of them the scene's own, are 15
   simulated minutes and several minutes of wall time in your simulator) and the controller's 9000 s budget at
   grading. Neither says how much of the 4 hours is left.
 

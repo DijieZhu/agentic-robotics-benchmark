@@ -27,17 +27,16 @@ memory_mb = 12288
 timeout_sec = 14400
 network_mode = "no-network"
 
-# 12 episodes (2 per hidden unit), each at most 15000 control steps. The grader's budget (grader_config.json:
+# 12 episodes (2 per hidden unit), each at most 9000 control steps. The grader's budget (grader_config.json:
 # 9000 s) is the controller's own time: its replies, plus 0.1 s for every image it asks for; the simulation is not
 # in it, so the timeout covers both. Worst case, taken for a LOADED host (the sandbox's 4 CPUs on a machine at a
-# load average of 60 and more, where these were measured): 180000 control steps at 60 ms (52 ms over a whole run of
-# twelve episodes at the step cap; 33 ms on a quiet host) = 10800 s of simulation; 9000 s of controller time, of
+# load average of 60 and more, where these were measured): 108000 control steps at 60 ms (52 ms over a whole run of
+# twelve episodes at the earlier cap of 15000; 33 ms on a quiet host) = 6480 s of simulation; 9000 s of controller time, of
 # which every image is priced at 0.1 s while the cameras' renderer (shelf_render.py, on the CPU) needed 0.5 to
 # 0.6 s for one there (0.07 to 0.25 s on a quiet host): a controller that spent its whole budget on images asks
 # for 90000 of them, 45000 s beyond their price; a render process per episode, 12 x 40 s; the numerics check, the
-# account clearing and the render self-test 120 s. 65400 s; with 30 % margin 85000 s. On a quiet host the same
-# worst case is about 36000 s. The reference's whole verify takes 21 to 53 minutes (quiet to loaded); a run of
-# twelve episodes at the step cap took 155 minutes on the loaded host.
+# account clearing and the render self-test 120 s. 61080 s; with 30 % margin 79400 s (86400 s kept). On a quiet host
+# the same worst case is about 33000 s. The reference's whole verify takes 19 to 53 minutes (quiet to loaded).
 [verifier]
 timeout_sec = 86400
 environment_mode = "separate"

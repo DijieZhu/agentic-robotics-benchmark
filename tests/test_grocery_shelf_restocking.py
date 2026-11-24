@@ -78,7 +78,7 @@ class Budget(unittest.TestCase):
         timeout = toml_int((TASK / "task.toml").read_text(), "verifier", "timeout_sec")
         # a loaded host: 60 ms a control step, and 0.6 s to draw an image that is priced at image_cost_s
         images = config["grader_budget_s"] / config["image_cost_s"]
-        worst = 12 * 15000 * 0.060 + config["grader_budget_s"] + images * (0.6 - config["image_cost_s"]) + 12 * 40 + 120
+        worst = 12 * 9000 * 0.060 + config["grader_budget_s"] + images * (0.6 - config["image_cost_s"]) + 12 * 40 + 120
         self.assertGreaterEqual(timeout, worst * 1.3)
 
     def test_the_grader_charges_the_controllers_own_time(self):

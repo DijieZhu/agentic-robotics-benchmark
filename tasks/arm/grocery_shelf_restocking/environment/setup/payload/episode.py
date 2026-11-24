@@ -25,7 +25,7 @@ import numpy as np
 import shelf_sim as S
 import shelf_world as W
 
-EPISODE_STEPS = 15000           # 25 simulated minutes
+EPISODE_STEPS = 9000            # the restocking time allowance: 15 simulated minutes at 10 Hz, settling included
 CORRECT, FACE, KEEP = 0.7, 0.2, 0.1
 LANE_TOL = 0.03                 # m
 Z_TOL = 0.012                   # m
