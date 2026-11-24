@@ -35,6 +35,12 @@ summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a movin
 platforms = ["arm"]
 stages = ["behavior"]
 
+[grocery_shelf_restocking]
+title = "Restock a grocery shelf with a lifted Panda"
+summary = "A Franka Panda on a vertical lift restocks a three-shelf bay from a nearly full tote, reading tiny date codes to rotate the stock oldest-first and facing each lane, from cameras and wrist force."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [keyed_nut_peg_assembly]
 title = "Assemble bayonet nut kits with a Panda"
 summary = "A Franka Panda must fit three bayonet nuts onto their pegs within the cell's takt time, working out each nut's hidden groove from camera images and a wrist force sensor on kits it has never seen."
