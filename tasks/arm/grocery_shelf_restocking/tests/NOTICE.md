@@ -67,3 +67,24 @@
   the joints one physics substep earlier, as a real observation's are (on 400 pairs a threshold on
   |ee_pos - FK(q, lift)| told 100 % of copies from real observations before and 50.25 % after). The practice
   grader counts a probe pair of different lengths as the lock does (not differing).
+- **v9, registered before the cap was changed or anything was drawn (2026-11-24, maintainers).** A 4-lane version
+  was tried and not used: the reference lost more than a quarter of its candidates there and scored under 0.98 on
+  its kept set in the graded order (the work is kept outside this branch). Instead the job gets a working-time
+  allowance; the scoring is not touched and an episode still restocks three lanes:
+  1. The step cap of an episode is 9000 control steps (it was 15000): 15 simulated minutes at the 10 Hz control
+     rate, the scene's 20 settling steps included (8980 actions). The reference needed 3523 to 5394 steps on the
+     3-lane hidden set (draw 9), so the cap is 1.67 times its slowest kept run.
+  2. The reference under the cap, on the practice units and on a fresh pool of candidates: its rejection rate must
+     not be above the 3-lane history (22 %), and no kept episode may need more than about 75 % of the cap (6750
+     steps); if one does, the cap is set from the reference's slowest kept run times 1.5 instead, and that number
+     is stated.
+  3. Not a time trap: the saved controller of `opus55-pr158bake-r3-20261124` (it reads the cameras) took 8817 to
+     11696 steps for its five completed episodes of that set, with 17 to 24 grasps where the reference's plan has
+     11 to 16 moves, about 460 to 520 steps a grasp. At that pace a plan as short as the reference's (11 to 17
+     moves on the twelve episodes) takes about 5400 to 8300 steps: every episode fits under 9000, the longest
+     with about 8 % to spare. Cut at 9000, the run as it was scores 0.083; that is what the cap asks for (a
+     shorter plan or a faster hand), not a prediction. Had fewer than about half of the episodes been
+     completable at that pace, the cap would have been raised to the smallest value that makes them so.
+  4. The numerics fingerprint's own episode does not depend on the cap (checked before the draw).
+  5. The hidden set is drawn again by `review/select_set.py`'s rule (a new key, committed before any candidate
+     runs).
