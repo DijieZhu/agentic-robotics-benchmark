@@ -36,7 +36,10 @@ template) may still run on whatever interpreter a legacy stack carries.
 from .account import clear_agent_account
 from .scoring import ratio_rewards, read_anchor, stage_config, zero_verdict
 from .seeds import seed_rng
-from .solver import READY_TIMEOUT_FACTOR, ProbeLock, Solver, SolverAborted, SolverMissing
+from .deadline import VerifierDeadline
+from .probe import stale_copy
+from .solver import (LOWEST_NICE, READY_TIMEOUT_FACTOR, ProbeLock, Solver, SolverAborted, SolverMissing,
+                     agent_process_count, replies_differ)
 from .stage import agent_user, deprivileged, fail, require, stage_dir, verdict_path, write_verdict
 
 __all__ = [

@@ -21,6 +21,9 @@ from . import account, scoring, seeds, solver as solver_mod, stage
 FAILURES = []
 
 
+_START_NICE = os.getpriority(os.PRIO_PROCESS, 0)
+
+
 def check(label, condition, detail=""):
     if condition:
         print("  ok   {}".format(label))
@@ -291,6 +294,13 @@ def test_verdict():
 # --------------------------------------------------------------------------- #
 def test_probe_lock():
     print("[probe lock]")
+    check("two replies of different lengths do not differ", not solver_mod.replies_differ([0.0, 1.0], [0.0, 1.0, 2.0]))
+    check("replies that differ by more than the tolerance do", solver_mod.replies_differ([0.0, 1.0], [0.0, 1.001]))
+    from . import probe as probe_mod
+    check("a probe copy keeps the older positions' offset",
+          probe_mod.stale_copy(lambda q: q, [1.0, 2.0], [1.5, 2.5], [1.6, 2.4]) == [1.1, 1.9]
+          or all(abs(a - b) < 1e-12 for a, b in zip(
+              probe_mod.stale_copy(lambda q: q, [1.0, 2.0], [1.5, 2.5], [1.6, 2.4]), [1.1, 1.9])))
     lock = solver_mod.ProbeLock(seeds.seed_rng(entropy=7))
     for _ in range(10):
         lock.record([0.5], [0.5])          # a constant policy: probe == real
@@ -630,6 +640,16 @@ def test_solver_wire():
             check("a well-behaved solver answers", abs(action[0] - 0.6) < 1e-9)
             second = solver.act(1, [10.0])
             check("the wire survives many exchanges", abs(second[0] - 1.0) < 1e-9)
+            check("the solver runs at the lowest nice value",
+                  os.getpriority(os.PRIO_PROCESS, solver.proc.pid) == solver_mod.LOWEST_NICE,
+                  "nice {}".format(os.getpriority(os.PRIO_PROCESS, solver.proc.pid)))
+            threads = [os.getpriority(os.PRIO_PROCESS, int(t)) for t in os.listdir("/proc/self/task")]
+            check("the grader keeps its own priority, on every thread",
+                  all(n == _START_NICE for n in threads), "nice {} (started at {})".format(threads, _START_NICE))
+            later = subprocess.run(["sh", "-c", "cut -d' ' -f19 /proc/$$/stat"], stdout=subprocess.PIPE,
+                                   universal_newlines=True)
+            check("what the grader starts afterwards runs at the grader's priority",
+                  later.stdout.strip() == str(_START_NICE), later.stdout.strip())
 
     with tempfile.TemporaryDirectory() as tmp:
         with _LocalSolver(_write(tmp, _NOISY_SOLVER)) as solver:

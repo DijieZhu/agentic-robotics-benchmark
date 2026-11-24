@@ -782,6 +782,7 @@ class NutEnv(object):
         d.qpos[self.jq] = HOME_Q
         d.qpos[self.gq[0]], d.qpos[self.gq[1]] = 0.04, -0.04
         mujoco.mj_forward(m, d)
+        self.q_stale = d.qpos.copy()
         self.grip_target = 0.04
         self.q_null = NULLSPACE_Q.copy()
         q_hold = d.qpos[self.jq].copy()
@@ -789,6 +790,7 @@ class NutEnv(object):
             tau = 200.0 * (q_hold - d.qpos[self.jq]) - 20.0 * d.qvel[self.jv] + d.qfrc_bias[self.jv]
             d.ctrl[self.act] = tau
             d.ctrl[self.gact] = [0.04, -0.04]
+            self.q_stale[:] = d.qpos          # the positions this step's poses are computed from
             mujoco.mj_step(m, d)
         self.target_pos = d.site_xpos[self.site].copy()
         self.target_R = d.site_xmat[self.site].reshape(3, 3).copy()
@@ -855,6 +857,7 @@ class NutEnv(object):
             d.ctrl[self.gact] = gw
             if jf is not None:            # the joints' friction (JOINT_FRICTION), which the tracking law does not know
                 d.qfrc_applied[self.jv] = jf[3] - jf[0] / (1.0 + np.exp(-jf[1] * (d.qvel[self.jv] + jf[2])))
+            self.q_stale[:] = d.qpos          # the positions this step's poses are computed from
             mujoco.mj_step(m, d)
         if not np.all(np.isfinite(d.qpos)) or not np.all(np.isfinite(d.qvel)):
             self.fault = "non-finite state"
@@ -994,11 +997,17 @@ class NutEnv(object):
 
     def perturbed_observation(self, obs, rng):
         """A probe copy for the grader's lock: small joint-reading offsets (up to 0.001 rad) with the
-        gripper pose and wrist-camera pose recomputed consistently, and a small wrench offset."""
+        gripper pose and wrist-camera pose moved by the same offsets, and a small wrench offset.
+
+        The observed poses are the simulation's own, computed from the joint positions before the last
+        physics step, so they are not exactly the forward kinematics of the observed `q`. The copy is built
+        the same way: its poses are the kinematics of those older positions plus the copy's offsets. (A copy
+        whose poses were the exact kinematics of its `q` could be told from the real observation by anyone
+        holding the model: its residual would be exactly zero.)"""
         q = np.asarray(obs["q"], float) + np.array([rng.uniform(-0.001, 0.001) for _ in range(7)])
         f = self.fk
-        f.qpos[:] = self.data.qpos
-        f.qpos[self.jq] = q
+        f.qpos[:] = self.q_stale
+        f.qpos[self.jq] = self.q_stale[self.jq] + (q - np.asarray(obs["q"], float))
         mujoco.mj_kinematics(self.model, f)
         out = dict(obs)
         out["q"] = np.round(q, 6)
