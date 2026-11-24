@@ -22,7 +22,7 @@ still running at the limit is cut off.
 | `practice_grader/grade.py` | Runs your controller over the grading wire against the practice units on visible seeds and prints the raw metric, each request's outcome and whether the repeated-step check would pass. |
 | `labclient.py` | Client for the lab (library and command line). |
 | `helpers/lab_bridge.py` | Optional boilerplate: runs your controller (`run.sh`) for one lab trial and logs every observation and action. |
-| `helpers/wire_skeleton.py` | Optional boilerplate for the grading wire (READY / reset / act / close, repeated step indices; one controller object for the whole run, with a reset hook per episode). |
+| `helpers/wire_skeleton.py` | Optional boilerplate for the grading wire (READY / reset / act / close, repeated step indices; one controller object for the whole run, with a reset hook per episode). Copy it into your submission if you use it: `helpers/` is not there when your controller is graded. |
 | `NOTICE.md` | Where the appliance models come from (CC-BY-4.0). |
 
 Run Python as `/opt/venv/bin/python3` (Python 3.12 with NumPy, SciPy, OpenCV, Pillow, MuJoCo 3.16). The cameras are
@@ -33,7 +33,13 @@ exactly what the simulation holds (the unit, the box it stands on, the wall behi
 image of a process takes about 5-7 s (the renderer starts and compiles its shaders; a later episode's first images
 take well under a second), and each process that renders needs about 1 GB of memory. `mujoco.Renderer` (through
 OSMesa) still works for anything else you want to draw. The sandbox has 4 CPUs and 12 GB of memory, while grading
-too (the image sets `OMP_NUM_THREADS=1`, so `nproc` prints 1).
+too. Arithmetic is pinned so that a run repeats on every machine, in your dev sim, in the lab and while grading: every
+`/opt/venv` Python starts with `OPENBLAS_CORETYPE=Haswell`, `OPENBLAS_L2_SIZE=256`, `OPENBLAS_NUM_THREADS=1`,
+`OMP_NUM_THREADS=1`, `NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"` and `OPENCV_IPP=avx2` unless the
+variable is already set (a `.pth` file in the venv; the grader starts `run.sh` with only `PATH`, `HOME` and `LANG`, so
+these are the values your controller's Python gets there). A program that is not a `/opt/venv` Python does not get
+them. In your shell the image also sets `OMP_NUM_THREADS=1`, so `nproc` prints 1 there; started by the grader it
+prints the CPUs.
 
 ## The scored units
 
@@ -131,7 +137,9 @@ action returns the next observation (steps are free) until the episode ends. A t
 its third request closes, or when the simulation becomes unstable), when you send another `reset` or close the
 connection, after 3600 s of wall time or after 900 s without a request; a step cap of 4800 requests applies. A
 `reset` on a connection that has a trial ends that trial; once your trial is charged, every further `reset` is
-refused (`budget_exhausted`). The lab serves at most two connections
+refused (`budget_exhausted`). So the command line's `python3 labclient.py reset <unit>` spends the trial on one
+observation: it closes its connection after the reply; keep one `LabClient` open from `reset` through every `step`
+(`helpers/lab_bridge.py` does). The lab serves at most two connections
 at a time, and a call it cannot answer within 120 s restarts its worker (a trial already charged is not refunded).
 Each trial draws a fresh placement, initial state, request queue, lighting and sensor noise. A reset takes about 1 s
 and a step with all three images about 0.2 s (much less without images). The lab never reports scores, credit or the
@@ -155,7 +163,14 @@ the reply to the real one. The copy differs in `q` (each joint by up to 0.001 ra
 `gripper`, the images and everything else are the same. A pair in which both replies command no motion (the first
 six numbers all zero, within 1e-9) is not counted either way; if fewer than 10 % of the other pairs get two replies
 that differ (by more than 1e-4 in some number), the whole run scores 0: a controller that ignores its input, or
-answers a repeated `t` from a cache, fails.
+answers a repeated `t` from a cache, fails. Two replies that hold a different count of numbers do not count as
+differing (one of them is malformed anyway: an action has 8 numbers).
+
+Your controller's processes run only while a request is outstanding: once a reply has been read (or `READY` seen),
+every process of your account is stopped (SIGSTOP) until the next request is written, so the controller cannot
+compute between steps and the simulator does not share the CPUs with it. Processes that do not stop within 5 s, or
+more than 512 processes of your account at such a pause, abort the episode (it scores 0, and so does every later
+episode in which they are still there).
 
 The grader runs 18 episodes: 2 on each unit, a fixed hidden set (each episode's seed is the same for every
 submission, so are its placement, initial state, lighting and camera offsets), in a hidden order (the observation
@@ -163,15 +178,15 @@ names the unit). The lab, in contrast, draws a fresh episode at every trial. An 
 crashes, answers late or malformed, or makes the simulation unstable (an arm joint faster than 8 rad/s, a burner knob
 or a door faster than 30 rad/s, or a MuJoCo warning of a bad state) scores 0. After a crash, a late answer or a reply
 that breaks the protocol, the controller is started again before the next episode, at most 3 times: the episode that
-would need a fourth restart and every later one score 0. The whole grading run must finish within 6000 s; the
-episode under way when it runs out, and the episodes after it, score 0. The 6000 s cover the simulator and the
-rendering as well as your controller: measured over the grading wire with the task's Python on 4 CPUs (medians of
-two runs), a step costs the grader about 4-6 ms without an image, and an image asked for adds about 30-35 ms (wrist)
-or 15-20 ms (a fixed camera), up to several times that on a busy machine; a step with all three images costs about
-0.08-0.1 s. A run in which every request runs to its deadline has between 54,000 and 63,000 steps: all three images
-at every step of such a run cost the grader about 4,100 to 6,100 s, which leaves little of the 6000 s for your
-controller (nothing on a busy machine), while one fixed image at every step costs about 1,000 to 1,500 s. Before
-the first episode the grader draws one test image of each camera, which takes a few seconds of the 6000 s. Your
-controller is one process for the whole grading run (it is started again only after a crash, a late answer or a reply
+would need a fourth restart and every later one score 0. Your controller has a time budget of 6000 s for the whole
+grading run; the episode under way when it runs out, and the episodes after it, score 0. The budget counts the
+controller's own time only: what the grader waits for `READY`, for every reset and for every reply (from the moment
+it starts to write the request until the reply is read), plus a fixed price of 0.03 s for every image an applied
+action asks for, whatever the grading machine takes to draw it. The simulator's and the renderer's own time and the
+pauses are not counted, so how fast the grading machine simulates and draws does not matter; your controller's own
+computing does (the sandbox has 4 CPUs, and nothing else runs while a request is outstanding). A run in which every
+request runs to its deadline has between 54,000 and 63,000 steps: all three images at every step of such a run cost
+4,860 to 5,670 s of the budget, one image at every step 1,620 to 1,890 s. The render self-test before the first
+episode is not charged. Your controller is one process for the whole grading run (it is started again only after a crash, a late answer or a reply
 that breaks the protocol, at most 3 times), so it may carry what it learned about a unit in one episode into later
 episodes on the same unit. Only the final controller is scored; trial usage is not.

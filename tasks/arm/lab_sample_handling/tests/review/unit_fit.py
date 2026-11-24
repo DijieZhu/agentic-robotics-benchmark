@@ -1,4 +1,4 @@
-"""The units' fit properties and calibration errors (a maintainer's tool; the grader never runs it).
+"""The units' fit properties, calibration errors and camera offsets (a maintainer's tool; the grader never runs it).
 
 Since 2026-11-20 a unit has, beside its three turn properties (tests/hidden/selection.json), three fit properties
 (lab_sim.FIT_PROPS: the rotor bores' radial clearance and friction, the lid hinge's friction) and a calibration
@@ -19,6 +19,17 @@ d0-d2 keep theirs. The rule, fixed and committed before any value was drawn:
    (replace = 0 at first); 4 decimals.
 4. Calibration errors. Component j (0-5) of camera cam of unit u is
    (2 * sha256("<key>|calib|<u>|<cam>|<j>") / 2**256 - 1) * bound, 3 decimals; never redrawn.
+4b. Offsets (added 2026-11-24, after a reviewer showed that the fixed cameras stood exactly at the equipment
+   sheet's poses, so that the sheet's pose against the pose on file gave the calibration error). Per unit and per
+   camera the pose on file is the sheet's nominal pose times an offset, six numbers like a calibration error, each
+   component within +-lab_sim.OFFSET[kind]; the camera's true pose is the pose on file times the inverse of the
+   calibration error of rule 4. `draw-offset` takes a second key from os.urandom(16) (hex) and writes it and the
+   bounds to the record before any value is computed from it. Component j of camera cam of unit u is
+   (2 * sha256("<key2>|offset|<u>|<cam>|<j>") / 2**256 - 1) * bound, 3 decimals; never redrawn. The fit properties
+   and the calibration errors keep their values (the first key, the replace counts as they stand). The offsets come
+   from another key than the errors: what a controller can compute, the pose on file against the nominal pose, is
+   the offset, and it is independent of the error. After `draw-offset` every scored unit is rechecked again by
+   rule 6 (the earlier recheck is kept in the record as `recheck_before_offset`).
 5. Bench separation. A bench whose three fit properties all lie within 2 % of the property's range of one scored
    unit's is drawn again (its replace + 1) until it does not.
 6. Recheck. Every scored unit (its turn properties, its fit properties, its calibration errors) is run with the
@@ -35,6 +46,7 @@ The fixed episode set is selected afterwards by tests/review/select_set.py, as b
 changed).
 
     python3 -B tests/review/unit_fit.py draw --record tests/hidden/selection_fit.json
+    python3 -B tests/review/unit_fit.py draw-offset --record tests/hidden/selection_fit.json
     python3 -B tests/review/unit_fit.py recheck --record tests/hidden/selection_fit.json [--workers 6]
     python3 -B tests/review/unit_fit.py write --record tests/hidden/selection_fit.json
 
@@ -96,7 +108,7 @@ def constants():
     out = {}
     for node in ast.parse(src).body:
         if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name) \
-                and node.targets[0].id in ("UNIT_RANGES", "FIT_PROPS", "CALIB", "CALIB_CAMS"):
+                and node.targets[0].id in ("UNIT_RANGES", "FIT_PROPS", "CALIB", "CALIB_CAMS", "OFFSET"):
             out[node.targets[0].id] = ast.literal_eval(node.value)
     return out
 
@@ -128,6 +140,16 @@ def calib(key, unit, c):
     return out
 
 
+def offset(key2, unit, c):
+    out = {}
+    for cam in c["CALIB_CAMS"]:
+        mm, deg = c["OFFSET"]["wrist" if cam == "wrist" else "fixed"]
+        bounds = [deg] * 3 + [mm] * 3
+        out[cam] = [round((2 * frac("%s|offset|%s|%s|%d" % (key2, unit, cam, j)) - 1) * bounds[j], 3)
+                    for j in range(6)]
+    return out
+
+
 def too_close(bench, scored, c):
     for s in scored.values():
         if all(abs(bench[p] - s[p]) <= SEPARATION * (c["UNIT_RANGES"][p][1] - c["UNIT_RANGES"][p][0])
@@ -144,6 +166,10 @@ def values(rec, c):
         out["scored"][u] = dict(fit_props(key, "scored", u, rec["replace"][u], c), calib=calib(key, u, c))
     for u in GROUPS["bench"]:
         out["bench"][u] = dict(fit_props(key, "bench", u, rec["replace"][u], c), calib=calib(key, u, c))
+    if rec.get("offset"):                                         # rule 4b
+        for g in out:
+            for u in out[g]:
+                out[g][u]["offset"] = offset(rec["offset"]["key"], u, c)
     return out
 
 
@@ -167,6 +193,22 @@ def cmd_draw(a):
     rec["values"] = values(rec, c)
     dump(a.record, rec)
     print("drawn: key and values in %s" % a.record)
+
+
+def cmd_draw_offset(a):
+    rec = load(a.record)
+    if rec.get("offset"):
+        raise SystemExit("%s has its offsets: one draw per record" % a.record)
+    c = constants()
+    rec["offset"] = {"rule": "tests/review/unit_fit.py (module docstring), rule 4b", "drawn_utc": utc_now(),
+                     "key": os.urandom(16).hex(), "bounds_mm_deg": {k: list(v) for k, v in c["OFFSET"].items()}}
+    rec["recheck_before_offset"] = rec["recheck"]
+    rec["recheck"] = {}
+    rec.pop("values", None)
+    dump(a.record, rec)                       # the second key is on disk before any value is computed from it
+    rec["values"] = values(rec, c)
+    dump(a.record, rec)
+    print("offsets drawn: key and values in %s; run recheck" % a.record)
 
 
 # ------------------------------------------------------------------------------------------- recheck
@@ -242,6 +284,9 @@ def cmd_write(a):
                              **vals["bench"][u])
     d["fit_draw"] = {"rule": "tests/review/unit_fit.py (module docstring), group \"bench\"", "drawn_utc": rec["drawn_utc"],
                      "ranges": rec["ranges"], "calib_bounds_mm_deg": rec["calib_bounds_mm_deg"]}
+    if rec.get("offset"):
+        d["fit_draw"]["offset_bounds_mm_deg"] = rec["offset"]["bounds_mm_deg"]
+        d["fit_draw"]["offset_drawn_utc"] = rec["offset"]["drawn_utc"]
     dump(BENCH, d)
     print("written: tests/units.json, solution/oracle/units.json, environment/commission_service/bench.json")
 
@@ -249,7 +294,8 @@ def cmd_write(a):
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name, fn in (("draw", cmd_draw), ("recheck", cmd_recheck), ("write", cmd_write)):
+    for name, fn in (("draw", cmd_draw), ("draw-offset", cmd_draw_offset), ("recheck", cmd_recheck),
+                     ("write", cmd_write)):
         sp = sub.add_parser(name)
         sp.add_argument("--record", required=True)
         sp.add_argument("--workers", type=int, default=6)

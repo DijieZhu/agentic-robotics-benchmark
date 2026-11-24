@@ -814,7 +814,9 @@ class ApplianceEnv(object):
         for _ in range(150):
             d.ctrl[self.act] = 200.0 * (q_hold - d.qpos[self.jq]) - 20.0 * d.qvel[self.jv] + d.qfrc_bias[self.jv]
             d.ctrl[self.gact] = [0.04, -0.04]
+            kin = d.qpos.copy()
             mujoco.mj_step(m, d)
+        self._kin_qpos = kin                      # the positions the poses in `d` belong to (see step)
         self.target_pos = d.site_xpos[self.site].copy()
         self.target_R = d.site_xmat[self.site].reshape(3, 3).copy()
 
@@ -823,6 +825,7 @@ class ApplianceEnv(object):
         j = self.model.joint("u_" + name)
         self.data.qpos[j.qposadr[0]] = value
         mujoco.mj_forward(self.model, self.data)
+        self._kin_qpos = self.data.qpos.copy()
         self.unit.update(self.model, self.data, self.gripper_geoms)
 
     def _osc_torque(self):
@@ -868,7 +871,12 @@ class ApplianceEnv(object):
         for _ in range(SUBSTEPS):
             d.ctrl[self.act] = self._osc_torque()
             d.ctrl[self.gact] = [self.grip_target, -self.grip_target]
+            kin = d.qpos.copy()
             mujoco.mj_step(self.model, d)
+        # mj_step computes the poses (site_xpos, cam_xpos, ...) from the positions it starts from and then integrates:
+        # the poses an observation reports belong to `kin`, one physics substep before its `q`. The probe copy
+        # (perturbed_observation) is built the same way.
+        self._kin_qpos = kin
         # RoboCasa updates fixture state once per control step (after the physics substeps).
         self.unit.update(self.model, d, self.gripper_geoms)
         self.t += 1
@@ -952,11 +960,18 @@ class ApplianceEnv(object):
     def perturbed_observation(self, obs, rng):
         """A probe copy for the grader's lock (box_env's rule): joint readings offset by up to 0.001 rad,
         with the gripper pose and wrist-camera pose recomputed consistently, and a small wrench offset. Its
-        fields carry the decimals of the real observation's (q, ee_pos, ee_quat, T_world_wrist 6; wrench 4)."""
+        fields carry the decimals of the real observation's (q, ee_pos, ee_quat, T_world_wrist 6; wrench 4).
+        Consistently means as the real observation is: its poses belong to the positions one physics substep
+        before its `q` (step), so the copy's poses are the kinematics of those positions with the same joint
+        offset, not of the copy's `q`: the two observations of a pair cannot be told apart by how well their
+        poses fit their joints."""
         f = mujoco.MjData(self.model)
-        f.qpos[:] = self.data.qpos
-        q = np.asarray(obs["q"], float) + rng.uniform(-0.001, 0.001, 7)
-        f.qpos[self.jq] = q
+        kin = getattr(self, "_kin_qpos", None)
+        kin = self.data.qpos if kin is None else kin
+        offset = rng.uniform(-0.001, 0.001, 7)
+        f.qpos[:] = kin
+        q = np.asarray(obs["q"], float) + offset
+        f.qpos[self.jq] = kin[self.jq] + offset
         mujoco.mj_kinematics(self.model, f)
         mujoco.mj_camlight(self.model, f)
         out = dict(obs)

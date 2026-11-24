@@ -554,6 +554,9 @@ def run_episodes(config, uid, egress_mode, t_start, units, workdir, truth, episo
                     if ep.env.unstable():
                         faults += 1
                         raise SolverAborted("simulation unstable")
+                if clock.s > budget:           # the step that ended the episode ran over the budget
+                    budget_exhausted = True
+                    raise SolverAborted("controller time budget exhausted")
                 if watch:
                     outside.extend(outside_processes(uid))
                     if outside:

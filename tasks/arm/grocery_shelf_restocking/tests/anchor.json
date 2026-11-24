@@ -1,0 +1,8 @@
+{
+ "metric": "mean_episode_credit",
+ "direction": "higher",
+ "value": 1.0,
+ "full_at": 0.98,
+ "source": "The reference's measured value on the present set (tests/hidden/episodes.json: draw 10, 12 episodes of three lanes, 2 per unit, a step cap of 9000): `ale validate` of the tree before this note (commit f8b0c80a; validate-796d221e, 2026-11-24, pinned engine vendor/ale bfb7505 on Docker) measured the privileged reference (solution/solve.sh, token truth) in the graded order with the grader's own probe schedule at mean_episode_credit 1.0: 12 of 12 episodes at 1.0 (1.0 by the earlier partial rule as well), 3642 to 6330 steps, no aborts, no simulation faults, probe pairs 574 of 574, the controller's own time 73 s of the 9000 s budget, the verify stage 1051 s; untouched 0.0. At the selection (tests/hidden/episode_selection.json, draw 10) the reference scored 1.0 on each of the 12 episodes in each of its three wire runs (36 runs, each with its own probe schedule). Earlier sets' measurements are in tests/NOTICE.md and the pull request.",
+ "note": "Measured, not drawn: `value` is what the reference scored on this set (tests/hidden/episode_selection.json, draw 10). full_at 0.98: one lane's facing lost in one episode (0.2 / 3 of that episode's credit, 0.0056 of the metric) still gives the reference reward 1.0, and two such losses (0.9889) would; an episode with a lane that is not correct earns nothing under the credit rule, and one such episode (0.9167) would not."
+}

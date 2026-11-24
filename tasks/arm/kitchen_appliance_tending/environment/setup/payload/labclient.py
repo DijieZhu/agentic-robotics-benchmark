@@ -13,7 +13,10 @@ Python 3 standard library only; numpy is used only if you pass numpy arrays or a
 
 Command line:
     python3 labclient.py hello | budget
-    python3 labclient.py reset <instance>
+    python3 labclient.py reset <instance>      # SPENDS a trial and ends it at once: this command closes its
+                                               # connection after the reply, and a closed connection ends its
+                                               # trial. You get one observation and no step. To use a trial, keep
+                                               # one LabClient open from reset() through every step() (as above).
     python3 labclient.py execute <instance> <plan.json | ->
     python3 labclient.py raw '<one JSON request>'
 

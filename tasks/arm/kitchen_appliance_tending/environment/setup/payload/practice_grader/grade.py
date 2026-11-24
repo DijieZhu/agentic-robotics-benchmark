@@ -10,19 +10,35 @@ repeated step indices with perturbed observations (only the reply to the real ob
 pair in which both replies command no motion is not counted, and fewer than 10 % of the counted pairs
 differing would fail the hidden grader's check), an aborted episode scores 0 and the controller is
 restarted (at most 3 restarts), and the controller runs with only AF_UNIX sockets (the same seccomp filter
-as at grading time). One difference: here each line printed before READY gets its own 120 s (at most 200
-lines), while the hidden grader allows 120 s for the whole start. It reports whether the run stayed inside
-the grading time budget. It never touches the hidden units, does not know the reference value and prints no
-score. A failure of the cameras' renderer (appliance_env.RenderError) is the environment's error, as in the
+as at grading time). A request has ONE deadline of 30 s, fixed before it is written: the write (an observation
+with images is larger than the pipe's buffer), blank lines and the reply are all inside it, as in the hidden
+grader. One difference: here each line printed before READY gets its own 120 s (at most 200 lines), while the
+hidden grader allows 120 s for the whole start.
+
+Time: it counts your controller's own time as the hidden grader does (`controller_seconds`: what it waits for
+READY, for every reset and for every reply, plus 0.03 s for every image an applied action asks for; the simulation
+and the drawing are not counted) and reports whether that stayed inside the grading budget for the episodes run
+(6000 s for 18 episodes, so 333.3 s an episode here).
+
+Two things the hidden grader does that this one cannot: it stops your controller's processes between requests
+(they run only while a request is outstanding) and aborts an episode with more than 512 processes of your account
+at such a pause; and it has only your submission folder, nothing else of this home. `paths_outside_submission`
+lists the `/home/user/...` paths outside the submission that the text files of your submission name: none of
+them exists when your controller is graded.
+
+It never touches the hidden units, does not know the reference value and prints no score. A failure of the cameras' renderer (appliance_env.RenderError) is the environment's error, as in the
 hidden grader: the run stops with an error that says so (exit status 3), never as an aborted episode.
 """
 
 import argparse
+import fcntl
 import json
 import math
 import os
 import queue
 import random
+import re
+import select
 import signal
 import subprocess
 import sys
@@ -42,8 +58,11 @@ READY_TIMEOUT = 120.0
 STEP_TIMEOUT = 30.0
 MAX_RESTARTS = 3
 MAX_LINE = 1 << 22
-BUDGET_PER_EPISODE = 6000.0 / 18
+BUDGET_PER_EPISODE = 6000.0 / 18   # the controller's own time, the images' price included
+IMAGE_COST = 0.03                  # s charged for every image an applied action asks for
 PROBE_RATE = 0.01
+MAX_BLANK_LINES = 100
+SCAN_SUFFIXES = (".py", ".sh", ".json", ".txt", ".yaml", ".yml", ".cfg", ".toml", ".ini")
 
 _FILTER_SRC = r'''
 import ctypes, os, platform, struct, sys
@@ -75,7 +94,12 @@ class Wire(object):
         self.restarts = 0
         self.dead = False
         self.broken = False
-        self._start()
+        self.seconds = 0.0           # the controller's own time: every wait for READY, a reset or a reply
+        t0 = time.monotonic()
+        try:
+            self._start()
+        finally:
+            self.seconds += time.monotonic() - t0
 
     def _start(self):
         self.proc = subprocess.Popen([sys.executable, "-I", "-c", _FILTER_SRC], cwd=self.submission,
@@ -102,12 +126,34 @@ class Wire(object):
 
     def _read(self, timeout, what):
         try:
-            line = self.lines.get(timeout=timeout)
+            line = self.lines.get(timeout=max(0.0, timeout))
         except queue.Empty:
-            raise WireError("solver exceeded its {} s {} deadline".format(timeout, what))
+            raise WireError("solver exceeded its {} deadline".format(what))
         if line is None:
             raise WireError("solver closed its stdout (or wrote a line over the length cap)")
         return line
+
+    def _send(self, text, deadline):
+        """Write one line without blocking, giving up at `deadline`: a controller that does not read its request
+        misses the deadline (the hidden grader's rule)."""
+        fd = self.proc.stdin.fileno()
+        flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+        view = memoryview(text.encode("utf-8"))
+        try:
+            while len(view):
+                try:
+                    view = view[os.write(fd, view):]
+                    continue
+                except BlockingIOError:
+                    pass
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise WireError("solver exceeded its {} s step deadline (it did not read the request)".format(
+                        STEP_TIMEOUT))
+                select.select([], [fd], [], min(remaining, 1.0))
+        finally:
+            fcntl.fcntl(fd, fcntl.F_SETFL, flags)
 
     def stop(self):
         try:
@@ -122,11 +168,12 @@ class Wire(object):
     def request(self, msg):
         if self.dead:
             raise WireError("solver could not be restarted after an earlier abort")
+        t0 = time.monotonic()
+        deadline = t0 + STEP_TIMEOUT       # one deadline per request, fixed before it is written
         try:
-            self.proc.stdin.write(json.dumps(msg) + "\n")
-            self.proc.stdin.flush()
-            while True:
-                line = self._read(STEP_TIMEOUT, "step").strip()
+            self._send(json.dumps(msg) + "\n", deadline)
+            for _ in range(MAX_BLANK_LINES):
+                line = self._read(deadline - time.monotonic(), "{} s step".format(STEP_TIMEOUT)).strip()
                 if not line:
                     continue
                 try:
@@ -136,12 +183,15 @@ class Wire(object):
                 if not isinstance(reply, dict):
                     raise WireError("reply is not a JSON object")
                 return reply
+            raise WireError("{} blank lines to one request without a reply".format(MAX_BLANK_LINES))
         except (OSError, ValueError) as exc:
             self.broken = True
             raise WireError(str(exc))
         except WireError:
             self.broken = True
             raise
+        finally:
+            self.seconds += time.monotonic() - t0
 
     def reset(self):
         if self.broken:
@@ -151,7 +201,11 @@ class Wire(object):
             self.restarts += 1
             self.stop()
             self.broken = False
-            self._start()
+            t0 = time.monotonic()
+            try:
+                self._start()
+            finally:
+                self.seconds += time.monotonic() - t0
         self.request({"type": "reset"})
 
     def act(self, t, obs):
@@ -170,11 +224,37 @@ class Wire(object):
 
 
 def differ(a, b):
+    """The hidden grader's rule for a repeated-step pair: the two replies differ when they hold the same count of
+    numbers and some number differs by more than 1e-4. A pair of replies of different lengths shows nothing: it is
+    counted and does not count as differing."""
     try:
         aa, bb = [float(v) for v in a], [float(v) for v in b]
     except (TypeError, ValueError):
         return False
-    return len(aa) != len(bb) or max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
+    return len(aa) == len(bb) and max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-4
+
+
+def outside_paths(submission, limit=1 << 20):
+    """The /home/user/... paths outside the submission that its text files name (sorted, at most 20)."""
+    found = set()
+    sub = os.path.realpath(submission)
+    pat = re.compile(r"/home/user(?:/[A-Za-z0-9_.\-]+)+")
+    for dp, _dns, fns in os.walk(sub):
+        for fn in fns:
+            fp = os.path.join(dp, fn)
+            if not fn.endswith(SCAN_SUFFIXES) or os.path.islink(fp):
+                continue
+            try:
+                if os.path.getsize(fp) > limit:
+                    continue
+                with open(fp, errors="replace") as fh:
+                    text = fh.read()
+            except OSError:
+                continue
+            for m in pat.findall(text):
+                if not (m == "/home/user/submission" or m.startswith("/home/user/submission/")):
+                    found.add(m)
+    return sorted(found)[:20]
 
 
 def still(action):
@@ -254,6 +334,7 @@ def main():
                             act = wire.act(t, wobs)
                         if not valid_action(act):
                             raise WireError("malformed action: 8 finite numbers, the last an integer 0-7")
+                        wire.seconds += IMAGE_COST * bin(int(act[7])).count("1")   # the images it asks for
                         obs, done, _info = ep.step(act)
                         t += 1
                         if ep.env.unstable():
@@ -286,8 +367,12 @@ def main():
         "repeated_t_pairs_not_counted_no_motion": idle,
         "repeated_t_check": "would pass" if pairs == 0 or differed >= 0.1 * pairs else "would FAIL (the whole run scores 0)",
         "wall_seconds": round(wall, 1),
-        "within_grading_time_budget": wall <= BUDGET_PER_EPISODE * max(1, len(results)),
-        "note": "dev sim with the practice units; this is not your score",
+        "controller_seconds": round(wire.seconds, 1),
+        "within_grading_time_budget": wire.seconds <= BUDGET_PER_EPISODE * max(1, len(results)),
+        "paths_outside_submission": outside_paths(a.submission),
+        "note": "dev sim with the practice units; this is not your score. controller_seconds is your controller's "
+                "own time plus 0.03 s per image asked for (the grading budget: 6000 s for 18 episodes); nothing of "
+                "/home/user outside the submission exists at grading",
     }, indent=1))
     return 0
 

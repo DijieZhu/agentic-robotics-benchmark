@@ -1327,19 +1327,26 @@ class _Filament(object):
             k = libc.write(wfd, addr, n)
             return os.read(rfd, k) if k > 0 else None
 
-        def walk(addr, n, depth):                      # pointers within n bytes of addr, three levels deep
-            b = read(addr, n)
-            for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
-                if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
-                    continue
-                seen.add(p)
-                v = None if p % 16 else read(p + 0x268, 0x4e)
-                if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
-                    found.add(p)
-                if depth < 3:
-                    walk(p, 512, depth + 1)
+        # Every pointer within three steps of the Scene object, breadth first: the pointers in the object's first 64
+        # bytes, then the ones in the 512 bytes each of those points at, then once more. (A depth-first walk with one
+        # set of visited pointers for all depths can miss the view: a block that it meets first at its last level,
+        # through some other pointer, is then never read at the level where its own pointers still count. Seen on
+        # sibling tasks about once in a hundred process starts, as a RenderError at the process's first image.)
         try:
-            walk(id(self.scn), 64, 1)
+            level = [(id(self.scn), 64)]
+            for _depth in range(3):
+                nxt = []
+                for addr, n in level:
+                    b = read(addr, n)
+                    for (p,) in struct.iter_unpack("<Q", b[:len(b) // 8 * 8] if b else b""):
+                        if p in seen or p < 0x10000 or p > 0x7fffffffffff or p % 8:
+                            continue
+                        seen.add(p)
+                        v = None if p % 16 else read(p + 0x268, 0x4e)
+                        if v and len(v) == 0x4e and struct.unpack_from("<iiII5B", v[:16] + v[0x49:0x4e]) == want:
+                            found.add(p)
+                        nxt.append((p, 512))
+                level = nxt
         finally:
             os.close(rfd)
             os.close(wfd)
