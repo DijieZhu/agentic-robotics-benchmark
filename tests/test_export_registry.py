@@ -311,7 +311,7 @@ def test_platforms_come_from_this_repository(tmp_path):
     platforms = xr.load_platforms()
     assert [entry["key"] for entry in platforms] == [
         "arm", "hand", "quadruped", "humanoid", "uav", "ground", "underwater", "space",
-        "soft", "surgical", "swarm", "subsystems"]
+        "soft", "surgical", "swarm"]
     assert all(set(entry) == {"key", "label"} and entry["label"] for entry in platforms)
     bad = tmp_path / "platforms.json"
     for payload, match in (([], "non-empty"), ([{"key": "Arm", "label": "x"}], "slug"),

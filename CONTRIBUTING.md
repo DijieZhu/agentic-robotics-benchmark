@@ -20,7 +20,7 @@ This page covers what happens in this repository.
    A retired task keeps its name; never reuse one.
 3. Pick its platform, one of the keys in [`tasks/platforms.json`](tasks/platforms.json):
    `arm`, `hand`, `quadruped`, `humanoid`, `uav`, `ground`, `underwater`, `space`, `soft`,
-   `surgical`, `swarm`, `subsystems`. The most specific one wins: a legged robot is
+   `surgical`, `swarm`. The most specific one wins: a legged robot is
    `quadruped` or `humanoid`; any wheeled or tracked ground vehicle or robot is `ground`
    (a car at any scale on a road or a track, as in autonomous driving or racing; an AMR, AGV
    or UGV; a rover). A task that fits none needs a maintainer first. A task is filed under

@@ -7,8 +7,10 @@
 > before every hand-off. Where it disagrees with the code or `git log`, the code wins: fix
 > this file.
 >
-> Last updated: 2026-11-17 (§14: one stage per task card; `driving` and `ground` become one
-> platform, `ground` "Ground vehicle"). Before that: 2026-11-16 (§13: task cards in
+> Last updated: 2026-11-23 (the platform key `subsystems` is removed from
+> `tasks/platforms.json`: no task was filed under it; eleven platforms remain). Before that:
+> 2026-11-17 (§14: one stage per task card; `driving` and `ground` become one
+> platform, `ground` "Ground vehicle"); 2026-11-16 (§13: task cards in
 > `tasks/cards.toml`, the `ground` platform, the merge gate and the GPU-model check); 2026-11-14 (§12: the grasp task pins OpenBLAS
 > to its Haswell kernels); 2026-11-09 (§11: `vendor/ale` @ `bfb7505`, a task names its GPU
 > models); 2026-11-07 (§10: the asset dataset is renamed `ale-robotics-assets`).

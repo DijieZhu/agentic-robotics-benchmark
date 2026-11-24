@@ -91,10 +91,11 @@ ep.env.unit_state(); ep.env.truth()    # ground truth, dev sim only
   5-7 s (the renderer starts and compiles its shaders), a later episode's reset about 0.7 s; each process that
   renders needs about 1 GB of memory.
 - Images are 8-bit RGB with sensor noise (sigma 2 levels). An image is empty (shape [0, 0, 3]) unless the previous
-  action asked for it; the first observation of an episode carries all three. Rendering costs wall time, and in a
-  grading run it counts against the grader's 6000 s: over the grading wire with the task's Python on 4 CPUs
-  (medians of two runs) about 30-35 ms per wrist image and 15-20 ms per fixed-camera image, against about 4-6 ms for
-  a step without an image (about 0.08-0.1 s for a step with all three), up to several times that on a busy machine.
+  action asked for it; the first observation of an episode carries all three. In a grading run every image an applied action asks for
+  costs 0.03 s of the controller's 6000 s budget, a fixed price whatever the machine takes to draw it (the grader's
+  own time is not counted). Measured in the task image on two cores, drawing costs the machine about 14-19 ms for a
+  wrist image and about 29-37 ms for a fixed-camera image, against about 2 ms for a step without an image (about
+  0.07-0.085 s for a step with all three), more on a busy machine.
 
 ## Sensors
 
