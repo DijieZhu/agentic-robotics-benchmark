@@ -50,10 +50,21 @@ RUN printf '%s\n' \
     && chmod 0644 /opt/venv/lib/python3.12/site-packages/door_numerics_pin.py /opt/venv/lib/python3.12/site-packages/door_numerics_pin.pth \
     && env -i PATH=/opt/venv/bin:/usr/bin:/bin HOME=/tmp /opt/venv/bin/python3 -I -W error::ImportWarning -c "import os; e = os.environ; assert (e.get('OPENBLAS_CORETYPE'), e.get('OPENBLAS_L2_SIZE'), e.get('OPENBLAS_NUM_THREADS'), e.get('OMP_NUM_THREADS'), e.get('OPENCV_IPP')) == ('Haswell', '256', '1', '1', 'avx2'), dict(e); import numpy; from numpy._core._multiarray_umath import __cpu_dispatch__ as D, __cpu_features__ as F; assert set(e['NPY_DISABLE_CPU_FEATURES'].split()) == set(D) - {'X86_V3'}, D; assert [k for k in D if F[k]] in ([], ['X86_V3']), [k for k in D if F[k]]; print('[image] numerics pin OK', D)"
 
-# Software rendering for MuJoCo: Mesa OSMesa (llvmpipe, no display or device needed), checked below as the agent user.
-RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 \
+# Software rendering. The cameras' renderer (door_render.py beside door_sim.py) is MuJoCo 3.16's Filament on Vulkan,
+# and Vulkan here is Mesa's lavapipe on the CPU (mesa-vulkan-drivers, libvulkan1); no display or device is needed.
+# Mesa's OSMesa stays for MuJoCo's own renderer (mujoco.Renderer), which the cameras no longer use.
+RUN apt-get update && apt-get install -y --no-install-recommends libosmesa6 libgl1 mesa-vulkan-drivers libvulkan1 \
     && rm -rf /var/lib/apt/lists/*
 ENV MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa MPLBACKEND=Agg OMP_NUM_THREADS=1 LP_NUM_THREADS=2
+
+# ---- task assets: fetched at the dataset commit pinned in assets.sha256, checked file by file (docs/task-assets.md):
+# render/ (the cameras' render bundle: the room round the bench, the colour maps of the task's own parts, the image
+# light; door_render.py reads it in place, it is not staged into the agent home). Public, and readable by every
+# account: the agent's own copy of the simulator draws its images with it.
+COPY fetch_assets.py assets.sha256 render_check.py /opt/task-assets/
+RUN python3 /opt/task-assets/fetch_assets.py /opt/task-assets/assets.sha256 /opt/task-assets/payload \
+    && chown -R root:root /opt/task-assets && chmod -R u=rwX,go=rX /opt/task-assets
+ENV DOOR_RENDER_DIR=/opt/task-assets/payload/render
 
 RUN mkdir -p /home/user/submission && chown -R user:user /home/user/submission
 
@@ -68,6 +79,16 @@ RUN python3 -c "import numpy, scipy, cv2, mujoco; print('[image] mujoco', mujoco
     && runuser -u user -- /opt/venv/bin/python3 -c "import numpy, scipy, cv2, mujoco; print('[image] agent-UID import OK')" \
     && runuser -u user -- env -i HOME=/tmp PATH=/opt/venv/bin:/usr/bin:/bin /opt/venv/bin/python3 -I -c "import os; assert os.environ.get('OPENBLAS_CORETYPE') == 'Haswell'" \
     && runuser -u user -- env HOME=/tmp /opt/venv/bin/python3 -c "import mujoco; m = mujoco.MjModel.from_xml_string('<mujoco><worldbody><light pos=\"0 0 1\"/><geom type=\"sphere\" size=\".1\"/></worldbody></mujoco>'); d = mujoco.MjData(m); mujoco.mj_forward(m, d); r = mujoco.Renderer(m, 48, 64); r.update_scene(d); im = r.render(); assert im.max() > 0; print('[image] agent-UID MuJoCo OSMesa render OK', im.shape)"
+
+# The cameras' renderer starts and draws on this image's Vulkan driver, as root and as the agent's account (with the
+# environment the grader gives a controller: PATH, HOME, LANG), and the render bundle is readable but not writable
+# for the agent.
+RUN env MESA_SHADER_CACHE_DISABLE=true python3 -I /opt/task-assets/render_check.py \
+    && runuser -u user -- env -i PATH=/opt/venv/bin:/usr/bin:/bin HOME=/tmp LANG=C.UTF-8 MESA_SHADER_CACHE_DISABLE=true \
+         /opt/venv/bin/python3 -I /opt/task-assets/render_check.py /opt/task-assets/payload/render \
+    && ! runuser -u user -- sh -c ': >> /opt/task-assets/payload/render/room.json' 2>/dev/null \
+    && ! runuser -u user -- sh -c ': > /opt/task-assets/payload/render/x' 2>/dev/null \
+    && rm -rf /tmp/.cache /tmp/.config
 
 # The image's working directory is not the agent's home: the engine runs its own root commands from the image's
 # working directory, which must not be a folder the agent can write to. The agent still starts in its home.

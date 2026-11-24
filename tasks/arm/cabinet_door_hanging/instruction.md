@@ -73,6 +73,7 @@ which pins fit and how the door hangs.
 | Path | What it is |
 |---|---|
 | `door_sim.py` | The simulator of the cell: the robots and their controllers, the vacuum cup, the cabinet and its hinges, the doors, the pins and the detent, the cameras, each unit's and each episode's draw. The grader runs this exact file. |
+| `door_render.py`, `door_scene.py`, `door_parts.py`, `door_geom.py`, `door_looks.py`, `door_look.json` | What the cameras draw and the renderer that draws it (see "The pictures"). The grader runs these exact files. They read the room, the colour maps and the light from `/opt/task-assets/payload/render` (readable, not writable). |
 | `door_env.py` | The environment your controller talks to: `DoorEnv(unit).reset(seed)`, `step(action)`, the observation. The grader runs this exact file. |
 | `episode.py` | An episode, its end and its credit. The grader runs this exact file. |
 | `units.json` | The two practice units (p0, p1). |
@@ -164,6 +165,24 @@ The controller runs at 10 Hz. The observation is a JSON object:
   `wrist_r` (320 x 240, on the cup bracket, looking the way the cup faces). An image is empty (`[0, 0, 3]`) unless the
   previous action asked for it; the first observation has all five. There is no depth image.
 
+**The pictures.** The cameras show the cell where it stands: a home kitchen, the bench a worktop on a cabinet body,
+the wall cabinet hung on a rail on a plastered wall. Every part of the simulated cell is drawn at its simulated
+geometry and in its place (`door_scene.py` reads the episode's model): the cabinet in oak veneer, the old door dark
+brown, the new door pale beige, steel knuckles on the cabinet, brass ones on the new door, dark ones on the old door,
+the class pins bright steel, the two old pins dark tarnished steel, the stands and racks dark. Each knuckle and each
+stand is drawn as the tube it is, with its bore. The light is the room's and does not change; nothing casts a
+shadow. Also in the pictures:
+- with a contact shape of their own size (`door_parts.contact_shapes`; geoms `x_*` in the model): a spirit level, a
+  mallet, a punch, a tape measure and a pencil on the bench near the robots' side (x below -0.02), a tool bag on the
+  floor beyond the bench's -y end, the rail and brackets between the cabinet's back and the wall, the cup tool's
+  bellows, fitting and hose. The job needs none of them and none is in the way of it;
+- drawn only: hinge leaves with screws on the cabinet and on both doors, a dark groove under each class pin's head,
+  a felt mat on the bench and a felt strip in the parking rack, the gripper's soft pads, the room.
+
+An episode's images are drawn by a process of its own (MuJoCo 3.16's Filament on the CPU), which starts at the
+episode's first image: that one takes a few seconds, a later one about 0.03 to 0.2 s of wall time, more on a busy
+machine. The same state and camera always give the same image before the sensor noise.
+
 The action is a JSON object `{"l": [...], "r": [...], "cams": mask}`. Each arm's list has one of three shapes:
 
 - **7 numbers** `[dx, dy, dz, drx, dry, drz, grip]`. The operational-space controller moves the tool frame's target
@@ -203,7 +222,7 @@ failure; run it on a copy of your submission in another folder to check.
 - `{"type": "close"}` → `{"ok": true}`, then exit.
 
 Stdout carries only these messages; write logs to stderr. `run.sh` starts with only `PATH`, `HOME`, `LANG` and the
-numerics variables above set: export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`).
+numerics variables above set: export anything else you need there (`door_sim.render` needs nothing more).
 
 **Probes.** About 1 % of steps are asked twice with the same `t`, in a hidden order:
 - once with the real observation;

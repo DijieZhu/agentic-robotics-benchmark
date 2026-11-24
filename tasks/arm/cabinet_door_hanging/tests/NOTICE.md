@@ -1,7 +1,13 @@
 # NOTICE - sources of this task's code and units (verify / maintainers only; never shown to the agent)
 
 - **The robots** are the Franka Panda model of robosuite 1.5.2 (MIT), installed unmodified in the task image.
-- **The cell** is built from MuJoCo primitives (`door_sim.py`); no third-party assets.
+- **The cell** the simulation touches is built from MuJoCo primitives (`door_sim.py`).
+- **The cameras' pictures** are drawn by `door_render.py` (MuJoCo 3.16's Filament on lavapipe) from `door_scene.py`,
+  `door_parts.py`, `door_geom.py`, `door_looks.py`, `door_look.json` and the render bundle pinned in
+  `environment/assets.sha256` (dataset `tasks/arm/cabinet_door_hanging/payload/render/`: `room.npz` / `room.json`,
+  the living room and kitchen of the Unity Asset Store pack "ArchVizPRO Interior Vol.6", decimated; `textures.npz`,
+  oak maps from Poly Haven's `oak_veneer_05`, CC0; `ibl.ktx`, a path-traced light probe of that room). The same
+  scene is the one of the task's demonstration video.
 - **The units**: `units.json` holds the twelve hidden units (u0-u11), each `door_sim.draw_unit(seed)` for a 64-bit seed
   keyed by the key in `hidden/units_selection.json` (os.urandom, drawn before any hidden episode was chosen);
   `environment/setup/payload/units.json` holds the two practice units (p0 = `draw_unit(1)`, p1 = `draw_unit(9)`).

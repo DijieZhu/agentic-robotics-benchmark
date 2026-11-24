@@ -55,6 +55,13 @@ nominal, the episode draws the real one around it (`door_sim.draw_episode`); you
 - **The parking rack:** the same channel, empty, with 8 mm clear of a door on each side, nominally at (0.50, -0.36)
   (a door frame's origin standing in it); each episode moves it by up to 8 mm in x and y. It is a place for the old
   door; any place where the old door stays up will do.
+- **Other things with contact** (`door_parts.contact_shapes`; none is needed, none is in the job's way): on the
+  table a spirit level (x -0.257..-0.224, y 0.42..0.78, 52 mm tall), a mallet (head at x -0.235, y -0.70..-0.61,
+  handle toward x -0.05, y -0.73), a punch (x -0.20..-0.07, y -0.56..-0.585), a tape measure (x -0.25..-0.176,
+  y -0.50..-0.435, 32 mm tall) and a pencil (x -0.15..-0.02, y -0.47..-0.455); a tool bag on the floor (0.41 x 0.23
+  x 0.30 m at x 0.05, y -1.12, turned 20 deg); the rail, two brackets and a spacer between the cabinet's back and the
+  wall; on the cup tool three bellows rings behind the pad (radius 28.5 mm), a fitting and a hose with clips on the
+  post's back. The hinge leaves, the felt pieces and the room in the pictures have no contact.
 - **The old door must not fall.** When its centre of mass comes below z = 0.75 (5 cm under the table top) the
   episode ends and scores 0.
 

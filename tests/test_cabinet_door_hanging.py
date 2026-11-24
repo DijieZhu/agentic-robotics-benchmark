@@ -17,7 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "tasks/arm/cabinet_door_hanging"
 COPIES = ("tests", "environment/setup/payload", "solution/oracle")
-SHARED = ("door_env.py", "door_sim.py", "episode.py")
+SHARED = ("door_env.py", "door_sim.py", "episode.py",
+          "door_render.py", "door_scene.py", "door_parts.py", "door_geom.py", "door_looks.py", "door_look.json")
 PIN = {"OPENBLAS_CORETYPE": "Haswell", "OPENBLAS_L2_SIZE": "256",
        "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR",
        "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "OPENCV_IPP": "avx2"}
@@ -85,6 +86,19 @@ class Budget(unittest.TestCase):
         steps = py_int((TASK / "tests/episode.py").read_text(), "EPISODE_STEPS")
         worst = EPISODES * steps * 0.045 + config["grader_budget_s"] + 60
         self.assertGreaterEqual(timeout, worst * 1.3)
+
+    def test_the_cameras_renderer_is_pinned_and_frozen(self):
+        pin = (TASK / "environment/assets.sha256").read_text()
+        for name in ("render/room.npz", "render/room.json", "render/textures.npz", "render/ibl.ktx"):
+            self.assertIn("  " + name, pin)
+        select = (TASK / "tests/review/select_set.py").read_text()
+        frozen = select[select.index("FROZEN = ("):select.index("PER_UNIT")]
+        for name in SHARED[3:] + ("environment/assets.sha256",):
+            self.assertIn(name, frozen)
+        look = json.loads((TASK / "tests/door_look.json").read_text())
+        self.assertFalse(look["render"]["fxaa"])            # FXAA made one pixel differ between processes elsewhere
+        sim = (TASK / "tests/door_sim.py").read_text()
+        self.assertNotIn("mujoco.Renderer", sim)
 
     def test_the_grader_charges_the_controllers_own_time(self):
         grade = (TASK / "tests/door_grade.py").read_text()

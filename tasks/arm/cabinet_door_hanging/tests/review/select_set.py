@@ -8,7 +8,9 @@ The rule, fixed before any unit or candidate was drawn:
 1. Freeze. The grader's episode loop and world (tests/door_grade.py, tests/episode.py, tests/door_env.py,
    tests/door_sim.py, tests/units.json, tests/grader_config.json; verify.py only stages the submission around
    door_grade.run_episodes, which is what selection runs; since draw 2 also the launcher and the numerics
-   fingerprint: tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json) and the reference (the solution/oracle/ modules, solution/solve.sh) are
+   fingerprint: tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json; since draw 4 the cameras' renderer:
+   tests/door_render.py, door_scene.py, door_parts.py, door_geom.py, door_looks.py, door_look.json and the render
+   bundle's pin environment/assets.sha256) and the reference (the solution/oracle/ modules, solution/solve.sh) are
    committed first: `draw` refuses to start while any of them differs from the checkout's HEAD and records their
    sha256 and the commit; `run` and `make` refuse to go on when any of them differs from the recorded hashes.
 2. Draw. `draw` takes the set's key from os.urandom(32) (hex) and writes it to the record before any candidate runs.
@@ -34,7 +36,8 @@ The rule, fixed before any unit or candidate was drawn:
 
 `run` needs the task image's Python (3.12, MuJoCo 3.16.0, NumPy 2.5.4; environment/requirements.txt, and robosuite
 1.5.2's model files), the numerics pin of environment/Dockerfile (set here from nonet_exec.NUMERICS_ENV; check with
-tests/numerics_check.py that it reproduces tests/numerics.json) and an OSMesa renderer (MUJOCO_GL=osmesa). The
+tests/numerics_check.py that it reproduces tests/numerics.json) and the cameras' render bundle (DOOR_RENDER_DIR; the
+image has it in /opt/task-assets/payload/render). The
 reference has no wall-clock limit of its own since draw 2 (solution/oracle/wire_world.py), so its three runs of a
 candidate differ only in which steps are probed. Outside the image the oracle submission's run.sh names
 this interpreter, and the controller is started directly rather than through nonet_exec.py (which needs root to change
@@ -62,10 +65,13 @@ sys.dont_write_bytecode = True
 FORMAT = "cabinet_door_hanging episode selection 1"
 SET_FORMAT = "cabinet_door_hanging fixed set 1"
 N_UNITS = 12
-ORACLE_MODULES = ("door_env.py", "door_sim.py", "episode.py", "oracle_main.py", "reference.py", "wire_world.py")
+ORACLE_MODULES = ("door_env.py", "door_sim.py", "episode.py", "oracle_main.py", "reference.py", "wire_world.py",
+                  "door_render.py", "door_scene.py", "door_parts.py", "door_geom.py", "door_looks.py", "door_look.json")
 FROZEN = (("tests/door_grade.py", "tests/episode.py", "tests/door_env.py", "tests/door_sim.py",
            "tests/units.json", "tests/grader_config.json", "tests/nonet_exec.py", "tests/numerics_check.py",
-           "tests/numerics.json")
+           "tests/numerics.json",
+           "tests/door_render.py", "tests/door_scene.py", "tests/door_parts.py", "tests/door_geom.py", "tests/door_looks.py",
+           "tests/door_look.json", "environment/assets.sha256")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES) + ("solution/solve.sh",))
 PER_UNIT = 1
 WIRE_RUNS = 3
