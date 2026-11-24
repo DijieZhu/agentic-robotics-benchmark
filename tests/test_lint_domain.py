@@ -417,7 +417,7 @@ def test_full_at_is_bounded_by_the_task_own_scoring_cap(tmp_path):
 def test_the_platform_vocabulary_is_the_fixed_list():
     assert lint_domain.platform_keys() == (
         "arm", "hand", "quadruped", "humanoid", "uav", "ground", "underwater", "space",
-        "soft", "surgical", "swarm", "subsystems")
+        "soft", "surgical", "swarm")
 
 
 def test_every_registered_platform_is_accepted(tmp_path):
