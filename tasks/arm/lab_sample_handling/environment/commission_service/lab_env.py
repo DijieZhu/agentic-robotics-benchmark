@@ -18,7 +18,8 @@ Control at 10 Hz. An action is one of three shapes (JSON numbers):
 The observation (`observation`, on the wire `to_wire`): t, q, dq (7), ee_pos, ee_quat (wxyz), gripper (the
 fingers' opening, m), wrench (the wrist's force and torque in the world frame, with noise), each camera's pose
 T_world_<cam> (4 x 4, OpenCV convention: x right, y down, z forward; the unit's calibration on file: the true pose
-with the unit's fixed error, lab_sim.CALIB) and intrinsics K_<cam>, the requested images
+with the unit's fixed error, lab_sim.CALIB; the camera stands off the sheet's nominal pose, lab_sim.OFFSET) and
+intrinsics K_<cam>, the requested images
 (the others empty), and the worklist: {"cold": {incoming position: cold position}, "spin": [incoming positions]}.
 """
 
@@ -77,6 +78,11 @@ class LabEnv:
         # the unit's calibration on file: per camera the error of the pose the observation reports (lab_sim.CALIB)
         calib = props.get("calib") or {}
         self.calib = {cam: S.calib_matrix(calib.get(cam)) for cam in CAMS}
+        # where the unit's cameras stand: per camera the offset of the pose on file from the sheet's nominal pose
+        # (lab_sim.OFFSET); the true camera is the pose on file with the calibration error taken out
+        offset = props.get("offset") or {}
+        self.offset = {cam: S.calib_matrix(offset.get(cam)) for cam in CAMS}
+        self.mounted = bool(calib or offset)
         self.unit_id = unit_id
         self.render_images = render
         self.renderers = {}              # one per image size, for this episode's model (lab_sim.render)
@@ -87,6 +93,12 @@ class LabEnv:
         self.a = S.sim_args(self.seed)
         self.episode = S.draw_episode(self.seed, self.props)
         self.p, self.src, self.names, self.cold, self.masses = S.world(self.a, self.episode)
+        if self.mounted:                 # a unit without calibration values is the nominal bench, bit for bit
+            m, d = self.p.model, self.p.data
+            for cam, (_bit, _w, _h, _fovy, name) in CAMS.items():
+                S.place_camera(m, m.camera(name).id, self.offset[cam], self.calib[cam])
+            mujoco.mj_kinematics(m, d)
+            mujoco.mj_camlight(m, d)
         self.rng = np.random.default_rng([self.seed % 2**32, self.seed >> 32, 31])
         self.render_next = ALL_CAMS
         self.faulted = False

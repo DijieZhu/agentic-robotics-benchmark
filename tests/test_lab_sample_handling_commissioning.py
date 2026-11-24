@@ -64,13 +64,14 @@ class CommissioningService(unittest.TestCase):
         scored = json.loads((TASK / "tests/units.json").read_text())["units"]
         self.assertEqual(sorted(dev), ["d0", "d1", "d2"])
         self.assertFalse(set(dev) & set(scored))
-        c = constants(TASK / "tests/lab_sim.py", ("UNIT_RANGES", "TURN_PROPS", "FIT_PROPS", "CALIB", "CALIB_CAMS"))
+        c = constants(TASK / "tests/lab_sim.py", ("UNIT_RANGES", "TURN_PROPS", "FIT_PROPS", "CALIB", "CALIB_CAMS",
+                                                   "OFFSET"))
         ranges = c["UNIT_RANGES"]
         self.assertEqual(sorted(ranges), sorted(c["TURN_PROPS"] + c["FIT_PROPS"]))
         self.assertEqual({k: list(ranges[k]) for k in c["TURN_PROPS"]}, BENCH["draw"]["ranges"])
         self.assertEqual({k: list(ranges[k]) for k in c["FIT_PROPS"]}, BENCH["fit_draw"]["ranges"])
         for uid, props in list(dev.items()) + list(scored.items()):
-            self.assertEqual(sorted(props), sorted(list(ranges) + ["calib"]))
+            self.assertEqual(sorted(props), sorted(list(ranges) + ["calib", "offset"]))
             for k, (lo, hi) in ranges.items():
                 self.assertTrue(lo <= props[k] <= hi, "%s.%s is outside the stated range" % (uid, k))
             self.assertEqual(sorted(props["calib"]), sorted(c["CALIB_CAMS"]))
@@ -79,17 +80,42 @@ class CommissioningService(unittest.TestCase):
                 self.assertEqual(len(err), 6)
                 self.assertTrue(all(abs(x) <= deg for x in err[:3]) and all(abs(x) <= mm for x in err[3:]),
                                 "%s.calib.%s is outside the stated bound" % (uid, cam))
+            self.assertEqual(sorted(props["offset"]), sorted(c["CALIB_CAMS"]))
+            for cam, off in props["offset"].items():
+                mm, deg = c["OFFSET"]["wrist" if cam == "wrist" else "fixed"]
+                self.assertEqual(len(off), 6)
+                self.assertTrue(all(abs(x) <= deg for x in off[:3]) and all(abs(x) <= mm for x in off[3:]),
+                                "%s.offset.%s is outside the stated bound" % (uid, cam))
         # no bench has a scored unit's fit, and the scored units' values are the record's (tests/review/unit_fit.py)
         fit = json.loads((TASK / "tests/hidden/selection_fit.json").read_text())
         for uid, props in scored.items():
             self.assertTrue(fit["recheck"][uid]["kept"])
-            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib"]}, fit["values"]["scored"][uid])
+            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib", "offset"]},
+                             fit["values"]["scored"][uid])
         for uid, props in dev.items():
-            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib"]}, fit["values"]["bench"][uid])
+            self.assertEqual({k: props[k] for k in list(c["FIT_PROPS"]) + ["calib", "offset"]},
+                             fit["values"]["bench"][uid])
             for s in scored.values():
                 self.assertFalse(all(abs(props[k] - s[k]) <= 0.02 * (ranges[k][1] - ranges[k][0])
                                      for k in c["FIT_PROPS"]))
         self.assertEqual((TASK / "tests/units.json").read_text(), (TASK / "solution/oracle/units.json").read_text())
+        # the offsets have a key of their own, so the pose on file against the sheet's nominal pose (the offset,
+        # which a controller can compute) is independent of the calibration error: over every unit, camera and
+        # component the two are uncorrelated (216 pairs; 0.25 is more than three standard errors)
+        self.assertNotEqual(fit["offset"]["key"], fit["key"])
+        pairs = []
+        for props in list(dev.values()) + list(scored.values()):
+            for cam in c["CALIB_CAMS"]:
+                kind = "wrist" if cam == "wrist" else "fixed"
+                for j in range(6):
+                    b = 1 if j < 3 else 0
+                    pairs.append((props["offset"][cam][j] / c["OFFSET"][kind][b],
+                                  props["calib"][cam][j] / c["CALIB"][kind][b]))
+        n = len(pairs)
+        mx, my = sum(x for x, _ in pairs) / n, sum(y for _, y in pairs) / n
+        cov = sum((x - mx) * (y - my) for x, y in pairs)
+        r = cov / (sum((x - mx) ** 2 for x, _ in pairs) * sum((y - my) ** 2 for _, y in pairs)) ** 0.5
+        self.assertLess(abs(r), 0.25, "offsets and calibration errors correlate (r = %.3f)" % r)
         # the three strata of every property are covered (a Latin hypercube: the units span the stated ranges)
         for k, (lo, hi) in ranges.items():
             strata = sorted(min(2, int(3 * (dev[u][k] - lo) / (hi - lo))) for u in dev)
@@ -269,6 +295,16 @@ class AgentSide(unittest.TestCase):
             self.assertIn("up to 5 mm", text)
             self.assertIn("0.5 deg", text)
             self.assertIn("calibration on file", text)
+        offset = constants(TASK / "tests/lab_sim.py", ("OFFSET",))["OFFSET"]
+        self.assertEqual(offset, {"wrist": (4.0, 1.5), "fixed": (20.0, 2.0)})
+        for text in (flat(INSTRUCTION), flat(SHEETS)):
+            self.assertIn("up to 4 mm", text)
+            self.assertIn("up to 20 mm", text)
+            self.assertIn("1.5 deg", text)
+            self.assertIn("2 deg", text)
+            self.assertIn("nominal pose", text)
+        # the sheet gives nominal poses only: the fixed cameras' places are not stated as the same on every bench
+        self.assertNotIn("fixed at (1.15", flat(SHEETS))
 
     def test_payload_states_equipment_not_a_method(self):
         """What the agent is given says what the equipment is and what its sensors read. It does not say how to do

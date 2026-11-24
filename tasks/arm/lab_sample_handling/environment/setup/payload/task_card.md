@@ -34,15 +34,27 @@ the same on every bench.
 
 ## 3. The cameras
 
-| Camera | Size | Where |
+| Camera | Size | Nominal pose |
 |---|---|---|
-| `left`, `right` | 320 x 240, vertical field of view 50 deg | fixed at (1.15, +-0.55, 1.35), looking at (0.5, 0, 0.8) |
-| `wrist` | 256 x 192, vertical field of view 75 deg | on the hand; part of the gripper shows at the image's bottom edge |
-| `rack` | 640 x 480, vertical field of view 50 deg | fixed at (-0.09, 0.3625, 0.9555), looking at (0.36, 0.3625, 0.8755): along +x at the incoming rack's nominal place |
+| `left`, `right` | 320 x 240, vertical field of view 50 deg | at (1.15, +-0.55, 1.35), looking at (0.5, 0, 0.8), the image's x axis horizontal |
+| `wrist` | 256 x 192, vertical field of view 75 deg | on the hand: the camera `eye_in_hand` of the robot's model (`robots/panda/robot.xml`); part of the gripper shows at the image's bottom edge |
+| `rack` | 640 x 480, vertical field of view 50 deg | at (-0.09, 0.3625, 0.9555), looking at (0.36, 0.3625, 0.8755), the image's x axis horizontal: along +x at the incoming rack's nominal place |
 
 Every observation carries each camera's pose `T_world_<cam>` (4 x 4, OpenCV convention: x right, y down, z forward)
 and intrinsics `K_<cam>` (a pixel's centre at its index + 0.5). Images carry pixel noise (sd 2 levels per channel).
 There is no depth image.
+
+**No unit's cameras stand at their nominal poses.** A bench's cameras are mounted by hand, and the pose on file is
+where that unit's calibration found each camera, not the table's pose:
+
+| Camera | Offset of the pose on file from the nominal pose, in the camera's own frame |
+|---|---|
+| `wrist` (against the model's camera on the hand) | up to 4 mm along each axis and 1.5 deg about each axis |
+| `left`, `right`, `rack` (fixed) | up to 20 mm along each axis and 2 deg about each axis |
+
+The offset is the unit's own (the same in every episode on that unit, different from unit to unit and from every
+commissioning bench, not told). A point located through a nominal pose is off by centimetres (from `left` or
+`right` typically 3 cm, up to about 8 cm); the nominal poses say where a camera looks, not where things are.
 
 **The poses are the calibration on file, not the cameras' true poses.** Each bench was calibrated once, and
 `T_world_<cam>` is that calibration: the camera's true pose with a fixed error that is the unit's own (the same in
@@ -53,11 +65,14 @@ every episode on that unit, different from unit to unit and from every commissio
 | `wrist` (the hand-eye calibration: the camera's place on the hand) | up to 2 mm along each axis and 0.5 deg about each axis |
 | `left`, `right`, `rack` (fixed) | up to 5 mm along each axis and 0.5 deg about each axis |
 
-The intrinsics are exact, and so are `ee_pos`, `ee_quat` and `q`. A point located through a pose on file is
-therefore off by a few millimetres: 2-4 mm from the wrist camera 0.2 m away, up to about 10 mm from a fixed camera.
-What can be seen and felt on site tells the error: the fingers and whatever the hand holds are in the wrist image
-at a place the kinematics give; the hand is in the fixed cameras' images where `ee_pos` says it is; a hole's rim
-and floor are felt in `wrench`.
+The error does not show in the numbers: how far a pose on file lies from the nominal pose is the unit's mounting
+and says nothing about how far it lies from the true pose. The intrinsics are exact, and so are `ee_pos`,
+`ee_quat` and `q`. A point located through a pose on file is therefore off by millimetres: from the wrist camera
+0.2 m away typically 2 mm and up to about 5 mm; from the `rack` camera 0.45 m away typically 5-6 mm and up to
+about 12 mm; from `left` or `right`, a metre away, typically 8 mm, more than 13 mm in one unit in twenty and up to
+about 20 mm. What can be seen and felt on site tells the error: the fingers and whatever the hand holds are in
+the wrist image at a place the kinematics give; the hand is in the fixed cameras' images where `ee_pos` says it
+is; a hole's rim and floor are felt in `wrench`.
 
 The pictures show the bench where it stands, in a bay of a laboratory: the room's wall benches, shelves, glassware,
 floor and ceiling lights are in them, and the `rack` camera looks past the incoming rack into the room. Nothing of
@@ -99,9 +114,11 @@ softly where they meet, and nothing casts a sharp shadow.
   hole entrances.
   - Each hole is a bore 100 mm deep, wall 10 mm, tilted 45 deg: its entrance is the upper end, and the bore runs
     down and away from the axis. Its width is the unit's own: the tube plus 0.6-1.0 mm all round (18.2-19.0 mm
-    across; the table below). In a tight bore a tube that enters off its axis or is let go early stops
-    short of the floor: it stands proud at the port, it does not count as seated, and the rotor cannot be turned
-    past it.
+    across; the table below). In a tight bore a tube that enters tilted against the bore's axis or is let go
+    early stops short of the floor: it stands proud at the port, it does not count as seated, and the rotor cannot
+    be turned past it. What matters at the entrance is the tube's angle more than its place: a tube that enters
+    along the axis a few millimetres beside it is centred by its round tip, while in the tightest, stickiest bore
+    a tilt of about a degree can be enough to stop it (a bore in the middle of the ranges takes about two).
   - The entrances lie on a circle of radius 65-75 mm around the axis, at z = 0.90-0.92. Both are drawn per episode.
   - Positions are numbered 1-8 counter-clockwise seen from above. Position 1 is marked by a green dot (12 mm across)
     on the rotor's bowl, 18 mm outside its entrance.

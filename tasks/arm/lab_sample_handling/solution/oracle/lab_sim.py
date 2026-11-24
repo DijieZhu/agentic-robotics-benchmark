@@ -78,6 +78,99 @@ def base_world():
     return w, wb
 
 
+_RINGS = []                  # the rings added since the last `add_ring_walls` (one model is built at a time)
+
+
+def ring_wall_mesh(radius, depth):
+    """Vertices and faces of a ring's wall as one surface (the ring's frame: z out of the hole, the entrance at
+    z = 0): the NSEG-sided tube that the wall segments make, inner faces at `radius`, outer faces at
+    `radius + WALL`, with its top. Every face has its own four vertices (flat faces). No bottom: the floor closes it."""
+    half = math.pi / NSEG
+    ang = [2 * math.pi * k / NSEG - half for k in range(NSEG + 1)]
+
+    def corner(apothem, th, z):
+        r = apothem / math.cos(half)
+        return (r * math.cos(th), r * math.sin(th), z)
+
+    verts, faces = [], []
+
+    def quad(a, b, c, d):                         # counter-clockwise seen from outside
+        n = len(verts)
+        verts.extend([a, b, c, d])
+        faces.extend([(n, n + 1, n + 2), (n, n + 2, n + 3)])
+
+    ri, ro = radius, radius + WALL
+    for k in range(NSEG):
+        t0, t1 = ang[k], ang[k + 1]
+        quad(corner(ro, t0, -depth), corner(ro, t1, -depth), corner(ro, t1, 0.0), corner(ro, t0, 0.0))   # outside
+        quad(corner(ri, t1, -depth), corner(ri, t0, -depth), corner(ri, t0, 0.0), corner(ri, t1, 0.0))   # inside
+        quad(corner(ri, t0, 0.0), corner(ro, t0, 0.0), corner(ro, t1, 0.0), corner(ri, t1, 0.0))         # top
+    return np.array(verts), np.array(faces, dtype=np.int32)
+
+
+def add_ring_walls(spec):
+    """For the cameras only: every ring added since the last call gets its wall as ONE mesh geom `<name>_wall`
+    (no contact, no mass), which the renderer draws in place of the wall's box segments. The segments pass through
+    each other where they meet, and which of two crossing faces a pixel on the crossing shows was the renderer's
+    draw order, not the same in every process. Contacts stay the segments'; the physics does not change."""
+    for parent, name, top, R, radius, depth, rgba in _RINGS:
+        verts, faces = ring_wall_mesh(radius, depth)
+        mesh = spec.add_mesh(name=f"{name}_wall")
+        mesh.uservert = verts.flatten().tolist()
+        mesh.userface = faces.flatten().tolist()
+        mesh.inertia = mujoco.mjtMeshInertia.mjMESH_INERTIA_SHELL
+        g = parent.add_geom(name=f"{name}_wall")
+        g.type = mujoco.mjtGeom.mjGEOM_MESH
+        g.meshname = f"{name}_wall"
+        g.pos = list(top)
+        g.quat = list(B.quat_from_mat(R))
+        g.contype = 0
+        g.conaffinity = 0
+        g.density = 0.0
+        g.rgba = list(rgba)
+    del _RINGS[:]
+
+
+_BOX_FACES = ((0, 2, 3, 1), (4, 5, 7, 6), (0, 1, 5, 4), (2, 6, 7, 3), (0, 4, 6, 2), (1, 3, 7, 5))
+
+
+def add_drawn_boxes(spec, body, prefix):
+    """For the cameras only: the box geoms of `body` whose names start with `prefix` (the shield's segments, the
+    cabinet's walls: boxes that pass through each other where they meet) as ONE mesh geom `<prefix>_drawn` with
+    every box's faces (no contact, no mass), which the renderer draws in their place. Within one mesh the faces
+    are drawn in the mesh's order in every process; between separate boxes the order was the renderer's."""
+    verts, faces = [], []
+    rgba = None
+    for g in body.geoms:
+        if not (g.name or "").startswith(prefix) or g.type != mujoco.mjtGeom.mjGEOM_BOX:
+            continue
+        Rg = B.quat_to_mat(np.asarray(g.quat, float))
+        rgba = list(g.rgba)
+        corners = [np.asarray(g.pos, float) + Rg @ (np.array([sx, sy, sz]) * np.asarray(g.size, float))
+                   for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
+        for f in _BOX_FACES:
+            n = len(verts)
+            quad = [corners[i] for i in f]
+            out = np.mean(quad, axis=0) - np.asarray(g.pos, float)
+            if np.dot(np.cross(quad[1] - quad[0], quad[2] - quad[1]), out) < 0:
+                quad.reverse()                    # counter-clockwise seen from outside
+            verts.extend(quad)
+            faces.extend([(n, n + 1, n + 2), (n, n + 2, n + 3)])
+    if not verts:
+        return
+    mesh = spec.add_mesh(name=f"{prefix}_drawn")
+    mesh.uservert = np.array(verts).flatten().tolist()
+    mesh.userface = np.array(faces, dtype=np.int32).flatten().tolist()
+    mesh.inertia = mujoco.mjtMeshInertia.mjMESH_INERTIA_SHELL
+    g = body.add_geom(name=f"{prefix}_drawn")
+    g.type = mujoco.mjtGeom.mjGEOM_MESH
+    g.meshname = f"{prefix}_drawn"
+    g.contype = 0
+    g.conaffinity = 0
+    g.density = 0.0
+    g.rgba = rgba
+
+
 def add_ring(parent, name, top, R, radius, depth, rgba=(0.75, 0.78, 0.85, 1)):
     """A hole of `radius` and `depth` on `parent` (a body; positions in its frame): NSEG wall segments
     around the axis R[:, 2] (pointing out of the hole) from the entrance centre `top`, and a floor."""
@@ -97,6 +190,7 @@ def add_ring(parent, name, top, R, radius, depth, rgba=(0.75, 0.78, 0.85, 1)):
     fl.size = [radius + WALL, radius + WALL, 0.002]
     fl.pos = list(top + R @ np.array([0, 0, -depth - 0.002]))
     fl.quat = list(B.quat_from_mat(R))
+    _RINGS.append((parent, name, np.asarray(top, float), np.asarray(R, float), radius, depth, tuple(rgba)))
     return {"top": np.asarray(top, float), "axis": R[:, 2], "R": R, "radius": radius, "depth": depth}
 
 
@@ -476,6 +570,7 @@ LOOK_PARTS = ("cabinet", "shield", "rotor", "hub", "bore", "mark", "knob", "lid"
 
 
 def build(a, fills=None, extra=None):
+    del _RINGS[:]
     w, wb = base_world()
     light = wb.add_light()                 # box transport's light (rendering only)
     light.pos = [0.4, 0.0, 2.4]
@@ -634,6 +729,9 @@ def build(a, fills=None, extra=None):
         for gg in tb.geoms:
             if gg.name.endswith("_body"):
                 gg.rgba = list(TUBE_OPAQUE_RGBA)
+    add_ring_walls(w)
+    add_drawn_boxes(w, wb, "shield")
+    add_drawn_boxes(w, wb, "wall")
     for part in LOOK_PARTS:                        # the cameras' materials, one per kind of part (lab_render.py sets
         w.add_material(name="look_" + part)        # and binds them in its own copy of the model; nothing here uses them)
     m = w.compile()
@@ -1123,6 +1221,32 @@ UNIT_NOMINAL = {"bore_clearance": 1.0, "bore_friction": 0.6, "lid_friction": 0.5
 # rack cameras. The images are drawn from the true cameras.
 CALIB = {"wrist": (2.0, 0.5), "fixed": (5.0, 0.5)}
 CALIB_CAMS = ("left", "right", "wrist", "rack")
+# Where a unit's cameras stand (since 2026-11-24). The equipment sheet gives each camera's nominal pose (the fixed
+# cameras' place and look-at point, the wrist camera of the robot's model); no unit's camera is mounted exactly
+# there. Per unit and per camera the pose on file is the nominal pose times an offset, a rotation vector (deg, each
+# component within +-OFFSET[...][1]) and a translation (mm, each component within +-OFFSET[...][0]) in the camera's
+# own frame, and the camera's true pose is the pose on file times the inverse of the unit's calibration error
+# (CALIB). The offset and the error are drawn independently, so the pose on file against the sheet's nominal pose
+# (which a controller can compute) says nothing about the error: before this, the fixed cameras stood exactly at
+# the sheet's poses and that comparison gave the error to the last digit.
+OFFSET = {"wrist": (4.0, 1.5), "fixed": (20.0, 2.0)}
+
+
+def place_camera(model, cid, offset, error):
+    """Mount camera `cid` of a compiled model for a unit: its pose becomes nominal @ offset @ inv(error), with
+    `offset` and `error` 4 x 4 in the camera's OpenCV frame (calib_matrix). The model's pose is MuJoCo's (the
+    camera looks along -z): the OpenCV frame is that frame turned by diag(1, -1, -1)."""
+    flip = np.diag([1.0, -1.0, -1.0, 1.0])
+    X = flip @ offset @ np.linalg.inv(error) @ flip
+    R = np.empty(9)
+    mujoco.mju_quat2Mat(R, model.cam_quat[cid])
+    T = np.eye(4)
+    T[:3, :3], T[:3, 3] = R.reshape(3, 3), model.cam_pos[cid]
+    T = T @ X
+    q = np.empty(4)
+    mujoco.mju_mat2Quat(q, np.ascontiguousarray(T[:3, :3]).flatten())
+    model.cam_pos[cid] = T[:3, 3]
+    model.cam_quat[cid] = q
 
 
 def calib_matrix(err):

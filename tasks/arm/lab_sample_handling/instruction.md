@@ -53,11 +53,15 @@ How the rotor answers a turn is a property of each centrifuge unit, and no unit'
 | Radial clearance of the rotor's bores around a tube | 0.6-1.0 mm |
 | Friction of the bores against a tube (coefficient) | 0.35-0.58 |
 | Friction of the lid's hinge | 0.30-1.20 N m |
-| Error of each camera's pose on file (`T_world_<cam>`) | wrist: up to 2 mm and 0.5 deg per axis; fixed cameras: up to 5 mm and 0.5 deg per axis |
+| Offset of each camera's pose on file (`T_world_<cam>`) from the equipment sheet's nominal pose | wrist: up to 4 mm and 1.5 deg per axis; fixed cameras: up to 20 mm and 2 deg per axis |
+| Error of each camera's pose on file against the camera's true pose | wrist: up to 2 mm and 0.5 deg per axis; fixed cameras: up to 5 mm and 0.5 deg per axis |
 
 A grip commanded to turn 45 deg may turn the rotor by much less, and a short grip may not turn it at all. In a
-tight bore a tube that goes in a millimetre off its axis stops short of the floor. A stiff lid stays where it is
-let go. A point located through a camera's pose on file is a few millimetres off. The six scored units and the
+tight bore a tube that goes in tilted against the bore's axis, by as little as a degree, stops short of the floor. A stiff lid stays where it is
+let go. No camera stands
+where the equipment sheet's nominal pose puts it, and a point located through a camera's pose on file is still
+millimetres off (up to about 2 cm from a fixed camera): the offset from the nominal pose is the unit's mounting and
+does not tell the error. The six scored units and the
 three commissioning units were drawn separately over these ranges: a commissioning unit shows what the series is
 like, not what a scored unit's values are. Nothing measured on a commissioning bench is a scored unit's value:
 your controller has to find out on site, in every episode, where things are, whether a tube is seated and
@@ -163,7 +167,8 @@ The controller runs at 10 Hz. The observation is a JSON object:
 - **The scale:** `scale_g`, its display in grams (see `task_card.md`).
 - **Cameras:**
   - `T_world_<cam>`: 4 x 4 pose in the OpenCV convention (x right, y down, z forward): the unit's calibration
-    on file, which is off the camera's true pose by the unit's fixed error (the table above);
+    on file, which is off the camera's true pose by the unit's fixed error and off the equipment sheet's nominal
+    pose by the unit's mounting (the table above);
   - `K_<cam>`: intrinsics, a pixel's centre at its index + 0.5;
   - `<cam>`: the image, `{"dtype": "uint8", "shape": [H, W, 3], "b64": ...}`.
 
@@ -227,13 +232,15 @@ export anything else you need there (to render with MuJoCo, `MUJOCO_GL=osmesa`).
 hidden order. Only the reply to the real one is applied. A pair in which both replies command no motion (8 numbers whose
 first six are all zero, within 1e-9) is not counted either way. If fewer than 10 % of the other pairs get replies that
 differ (by more than 1e-4 in some number), the whole run scores 0: a controller that ignores its input, or answers a
-repeated `t` from a cache, fails. Which steps are probed depends only on the episode, not on your replies.
+repeated `t` from a cache, fails. The action has three shapes: a pair answered in two different shapes (8 numbers
+to one request, 9 or 15 to the other) counts among the pairs and not as differing, whatever the numbers. Which steps are probed depends only on the episode, not on your replies.
 
 **Grading.**
 - There are 12 episodes: 2 for each of 6 hidden units, a fixed hidden set (each episode's seed is the same for
   every submission, so are its bench, worklist, fills, rotor start angle, lid start and noise), in a hidden order
   (the observation names the unit).
-- Before the first episode the grader draws one test image of each camera, which takes a few seconds of its budget.
+- Before the first episode the grader draws one test image of each camera. It is not charged to your controller's
+  time.
 - A crash, a late reply, a malformed action or an unstable simulation scores the episode 0. After 3 restarts the
   remaining episodes score 0.
 - Your controller's time budget is 9000 s in all: the time it takes to print `READY` and to answer each request,

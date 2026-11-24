@@ -1,6 +1,7 @@
 """Boilerplate for the grading wire (optional to use; it contains no control logic).
 
-    import sys; sys.path.insert(0, "/home/user/helpers")
+    # copy this file into /home/user/submission/ first: the graded controller has only that folder
+    import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from wire_skeleton import serve
 
     class MyController(object):

@@ -30,8 +30,9 @@ for a camera named there).
 An image is a function of the model, the simulator's state and the camera alone: the same camera in the same state
 gives the same bytes however often it is drawn, whatever was drawn before it, however many other episodes the
 process has drawn and in whichever process of the same image (Filament's temporal dithering, a new noise per frame,
-is off: _undither; no two drawn boxes share a face's plane: _drawn_model; the robot's shells are drawn in one
-order: robot_model). The sensor noise stays lab_sim.render's.
+is off: _undither; no two drawn boxes share a face's plane and a ring's wall is one mesh, not its crossing box
+segments: _drawn_model; the robot's shells are drawn in one order: robot_model). The sensor noise stays
+lab_sim.render's.
 
 Filament runs in one dedicated thread per process (its engine is thread-bound; a forked child starts its own).
 Objects that live for the process: the context, the room and the robot (meshes, textures, materials, renderables),
@@ -189,7 +190,8 @@ def _box_down(img, k):
 # ----------------------------------------------------------------------------------------------------------------
 PARTS = ("cabinet", "shield", "rotor", "hub", "bore", "mark", "knob", "lid", "lid_handle", "ring", "ring_floor",
          "tube", "cap", "liquid", "scale", "holder", "hand", "finger", "pad", "other")
-_BORE = re.compile(r"^h\d+_(w\d+|floor)$")
+_BORE = re.compile(r"^h\d+_(w\d+|wall|floor)$")
+_SEGMENT = re.compile(r"^(.+)_w\d+$")              # a ring's wall segment: not drawn where the ring has its `_wall` mesh
 
 
 def part_of_geom(m, g):
@@ -252,9 +254,17 @@ def _drawn_model(m, look):
     for t in range(d.ntex):
         d.tex_colorspace[t] = int(mujoco.mjtColorSpace.mjCOLORSPACE_SRGB)        # Filament reads "auto" as linear
     part_mat = {}
+    walls = {m.geom(g).name[:-5] for g in range(m.ngeom) if (m.geom(g).name or "").endswith("_wall")}
+    merged = tuple(m.geom(g).name[:-6] for g in range(m.ngeom) if (m.geom(g).name or "").endswith("_drawn"))
     for g in range(d.ngeom):
         part = part_of_geom(m, g)
-        if part is None or part in ROBOT_PARTS:         # the robot: the process's renderables (robot_model)
+        seg = _SEGMENT.match(m.geom(g).name or "")
+        box = int(m.geom_type[g]) == int(mujoco.mjtGeom.mjGEOM_BOX)
+        if part is None or part in ROBOT_PARTS or (seg and seg.group(1) in walls) or (
+                box and merged and (m.geom(g).name or "").startswith(merged)):
+            # the robot: the process's renderables (robot_model); a ring's wall segments, the shield's segments and
+            # the cabinet's walls: one mesh is drawn in their place (lab_sim.add_ring_walls, add_drawn_boxes: the
+            # boxes pass through each other)
             d.geom_group[g] = HIDDEN_GROUP
             continue
         d.geom_group[g] = GEOM_GROUP

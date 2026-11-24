@@ -66,6 +66,19 @@ needed for it:
 - every drawn box's faces are set in by 0.02 to 0.26 mm (by its place in the model): the bench is built from boxes
   whose faces lie in one plane (a sleeve's wall segments, the shield's plates), and which of two coplanar faces wins
   a pixel differed between processes;
+- a ring's wall, the shield and the cabinet's walls are each drawn as one mesh (2026-11-24; `lab_sim.add_ring_walls`,
+  `lab_sim.add_drawn_boxes`; the mesh geoms have no contact and no mass, and the renderer hides the boxes they
+  stand for). These parts are sets of boxes that pass through each other where they meet (a ring's 16 wall
+  segments, the shield's 15 degree plates, the walls at the cabinet's corners). Setting the faces in removed the
+  coplanar pairs but not the crossings: at a sample on a crossing where two boxes compute the same depth the one
+  drawn first wins, and the order of separate boxes was not the same in every process. Measured with 972 images
+  per fresh process (the four cameras over six steps and the wrist camera over thirty, nine units, two seeds):
+  before, 18 of 540 wrist images took one of two forms over four processes (in the case examined five pixels on
+  the scale holder's ring, one of them by 31 levels; not the rasteriser's thread count, the address layout or the
+  hash seed); with the rings alone as meshes one image in eight processes still did (five pixels by one level
+  where two shield plates cross); with all three, 0 of 972 over 40 fresh processes on each of two hosts, and the
+  two hosts' images are the same bytes. Within one mesh the faces are drawn in the mesh's order. The simulation is
+  untouched: the mass arrays and the states of 400 steps on every unit are the same bits as before;
 - the robot is not drawn from the episode's model but from MuJoCo's renderables of a robot-only copy of the
   process's first episode's model, made once, before anything of an episode, and moved every image
   (`lab_render.robot_model`). The arm's shells pass through each other at the joints; at a sample where two of them

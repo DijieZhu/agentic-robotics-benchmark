@@ -9,6 +9,13 @@ a controller that ignores it, and that a controller that copes keeps its score:
   calib_wrist     every target (a rack hole, a rotor bore) taken where the unit's wrist calibration on file puts a
                   point seen from 0.2 m straight above it: the error of a controller that trusts T_world_wrist
   calib_fixed     the same through the left camera's calibration on file, from where that camera stands
+  card_wrist      the same through the wrist camera of the robot's model (the equipment sheet's nominal pose): the
+                  error of a controller that takes the camera to be where the sheet puts it, which is also what a
+                  controller gets that "corrects" the pose on file by its offset from the nominal pose
+  card_fixed      the same through the left camera's nominal pose on the equipment sheet
+  tilt_plus, tilt_minus
+                  every rotor bore entered TILT_DEG off its axis, about the bore's tangential axis, one way and
+                  the other
   loose_fit       every rotor bore approached 0.8 mm off its axis: inside the nominal bench's 1.0 mm clearance
   lid_let_go      the lid let go at 0.25 rad instead of followed down to shut (it falls shut on a hinge with less
                   friction than the lid's weight makes, and stays open on a stiffer one)
@@ -37,7 +44,10 @@ ORACLE = os.path.join(TASK, "solution", "oracle")
 sys.dont_write_bytecode = True
 ENV = {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "MUJOCO_GL": "osmesa",
        "PYOPENGL_PLATFORM": "osmesa"}
-MUTANTS = ("reference", "nominal_rack", "calib_wrist", "calib_fixed", "loose_fit", "lid_let_go", "robust")
+MUTANTS = ("reference", "nominal_rack", "calib_wrist", "calib_fixed", "card_wrist", "card_fixed", "loose_fit",
+           "lid_let_go", "robust")
+EXTRA = ("tilt_plus", "tilt_minus")          # run when named
+TILT_DEG = float(os.environ.get("LAB_TILT_DEG", "1.0"))
 RESIDUAL_MM = 0.3
 LOOSE_MM = 0.8
 LET_GO_RAD = 0.25
@@ -70,22 +80,40 @@ def _episode(args):
         out["top"] = np.asarray(h["top"], float) + d
         return out
 
-    def calib_shift(cam, X):
-        """Where the calibration on file puts the point X seen by `cam`, less X."""
+    def calib_shift(cam, X, card=False):
+        """Where a believed pose puts the point X seen by `cam`, less X. The believed pose is the calibration on
+        file (the true pose times the unit's error) or, with `card`, the equipment sheet's nominal pose (the pose
+        on file with the unit's offset taken out)."""
         dT = env.calib[cam]
+        if card:
+            dT = dT @ np.linalg.inv(env.offset[cam])                    # true -> on file -> nominal
         if cam == "wrist":      # a look from VIEW_M straight above: x right = world +y, y down = world -x... a fixed frame
             R = np.array([[0.0, -1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, -1.0]])
             c = np.array([0.0, 0.0, VIEW_M])
             return R @ (dT[:3, :3] @ c + dT[:3, 3] - c)
-        T = env.camera_pose(cam) @ np.linalg.inv(dT)                    # the true pose
+        T = env.camera_pose(cam) @ np.linalg.inv(env.calib[cam])        # the true pose
         c = T[:3, :3].T @ (np.asarray(X, float) - T[:3, 3])
         return T[:3, :3] @ (dT[:3, :3] @ c + dT[:3, 3] - c)
 
+    seen = {"calib_wrist": ("wrist", False), "calib_fixed": ("left", False), "card_wrist": ("wrist", True),
+            "card_fixed": ("left", True)}
+
     def target(pp, k):
         h = true_hole(pp, k)
-        if mutant in ("calib_wrist", "calib_fixed"):
-            d = calib_shift("wrist" if mutant == "calib_wrist" else "left", h["top"])
+        if mutant in seen:
+            d = calib_shift(seen[mutant][0], h["top"], seen[mutant][1])
             return shifted(h, np.array([d[0], d[1], 0.0]))
+        if mutant in ("tilt_plus", "tilt_minus") and not isinstance(k, dict):
+            tang = np.cross([0.0, 0.0, 1.0], h["axis"])
+            tang /= np.linalg.norm(tang)
+            ang = math.radians(TILT_DEG) * (1 if mutant == "tilt_plus" else -1)
+            K = np.array([[0, -tang[2], tang[1]], [tang[2], 0, -tang[0]], [-tang[1], tang[0], 0]])
+            Rot = np.eye(3) + math.sin(ang) * K + (1 - math.cos(ang)) * (K @ K)
+            out = dict(h)
+            out["axis"] = Rot @ np.asarray(h["axis"], float)
+            if "R" in h:
+                out["R"] = Rot @ np.asarray(h["R"], float)
+            return out
         if mutant == "loose_fit" and not isinstance(k, dict):
             perp = np.cross(h["axis"], [0.0, 0.0, 1.0])
             return shifted(h, LOOSE_MM * 1e-3 * perp / np.linalg.norm(perp))
@@ -95,11 +123,11 @@ def _episode(args):
             return shifted(h, RESIDUAL_MM * 1e-3 * v / np.linalg.norm(v))
         return h
 
-    if mutant in ("calib_wrist", "calib_fixed", "loose_fit", "robust"):
+    if mutant in seen or mutant in ("loose_fit", "robust", "tilt_plus", "tilt_minus"):
         C.target_hole = target
-    if mutant in ("calib_wrist", "calib_fixed"):
-        cam = "wrist" if mutant == "calib_wrist" else "left"
-        src = [None if s is None else shifted(s, calib_shift(cam, s["top"]) * [1, 1, 0]) for s in src]
+    if mutant in seen:
+        cam, card = seen[mutant]
+        src = [None if s is None else shifted(s, calib_shift(cam, s["top"], card) * [1, 1, 0]) for s in src]
     if mutant == "nominal_rack":
         slots, ncold = W.nominal_layout(a)
         src = [None if s is None else shifted(s, np.array([slots[i][0], slots[i][1], s["top"][2]]) - s["top"])
@@ -143,6 +171,9 @@ def main():
         d = json.load(f)
     eps = [(str(e["unit"]), int(e["seed"])) for e in (d["episodes"] if isinstance(d, dict) else
                                                     [{"unit": u, "seed": s} for u, s in d])]
+    for m in a.mutants.split(","):
+        if m not in MUTANTS + EXTRA:
+            raise SystemExit("no mutant %r" % m)
     jobs = [(m, u, units[u], s, r) for m in a.mutants.split(",") for (u, s) in eps
             for r in range(a.repeat if m == "robust" else 1)]
     with multiprocessing.get_context("spawn").Pool(a.workers, maxtasksperchild=1) as pool:
