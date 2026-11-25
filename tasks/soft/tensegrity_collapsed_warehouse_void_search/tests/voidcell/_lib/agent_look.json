@@ -1,0 +1,136 @@
+{
+ "format": "agent-look/1",
+ "status": "one look for every site: the display transform (AgX minimal x gain 0.6 on the bundle's white-balanced 5800 K linear space), the robot layer's exposure, gains and materials, the window and the shadow; calibrated once against path-traced stills (the robot layer's gains fitted on the total radiance, some states held out) and frozen",
+ "display": {
+  "curve": "agx-minimal",
+  "gain": 0.6,
+  "encode": "srgb8",
+  "about": "scene-linear HdrColor of the bake (its camera exposure applied) in the bundle's white-balanced linear space (every path-traced radiance divided by the 5800 K white point) x gain -> AgX (look none) -> sRGB 8 bit; the same for the plate and for every composed pixel"
+ },
+ "robot_layer": {
+  "sun_lux_per_bake_lux": 0.4166666666666667,
+  "ibl_intensity": 10000.0,
+  "G_sun": 35.68849254365718,
+  "G_amb": 0.9259787284671496,
+  "tone_mapping": "linear",
+  "view_numeric": {
+   "filament.ao.enabled": 0.0,
+   "filament.ao.ssct": 0.0,
+   "filament.bloom.enabled": 0.0,
+   "filament.msaa.enabled": 0.0,
+   "filament.vignette.enabled": 0.0,
+   "filament.fog.enabled": 0.0,
+   "filament.shadows.type": 0.0,
+   "filament.shadows.map_size": 2048.0
+  },
+  "about": "the robot is rendered twice at most in the window: 'amb' = the nearest probe's image light at ibl_intensity; 'lit' = the same image light at ibl_intensity x G_amb / G_sun plus the site's sun (light.json direction, sun_lux_per_bake_lux x the bake's sun illuminance) with the robot's self-shadow. Robot radiance = (1 - V_env) G_amb R_amb + V_env G_sun R_lit; one pass when V_env is 0 (amb) or 1 (lit) on every visible robot sample",
+  "sun_rgb_linear": [
+   1.037504,
+   0.994726,
+   0.941805
+  ],
+  "sun_rgb_about": "the robot layer's sun has the bake's balanced sun colour: the bake's sun irradiance in the bundle's 5 800 K white-balanced linear space divided by its luminance; the light gets it scaled to max 1, the intensity x its max"
+ },
+ "materials": {
+  "sock_red": {
+   "albedo_srgb": [
+    0.8,
+    0.1,
+    0.1
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "group": "sock"
+  },
+  "sock_green": {
+   "albedo_srgb": [
+    0.1,
+    0.62,
+    0.2
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "group": "sock"
+  },
+  "sock_blue": {
+   "albedo_srgb": [
+    0.12,
+    0.25,
+    0.85
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0,
+   "group": "sock"
+  },
+  "endcap": {
+   "albedo_linear": [
+    0.187317,
+    0.191627,
+    0.195994
+   ],
+   "roughness": 0.5,
+   "metallic": 0.0,
+   "group": "endcap"
+  },
+  "housing": {
+   "albedo_linear": [
+    0.03,
+    0.03,
+    0.032
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "group": "housing"
+  },
+  "rod": {
+   "albedo_linear": [
+    0.807346,
+    0.807346,
+    0.827571
+   ],
+   "roughness": 0.28,
+   "metallic": 1.0,
+   "group": "rod"
+  },
+  "other": {
+   "albedo_linear": [
+    0.0404,
+    0.0467,
+    0.0404
+   ],
+   "roughness": 0.45,
+   "metallic": 0.0,
+   "group": "other"
+  }
+ },
+ "group_gain": {
+  "endcap": 1.0467427729764276,
+  "housing": 1.1327022423068214,
+  "other": 0.5485399006276219,
+  "rod": 0.5485399006276219,
+  "sock": 1.4504611461101904
+ },
+ "window": {
+  "size_1x": 128,
+  "supersample": 4,
+  "visible_margin_m": 0.0001,
+  "about": "the window covers the robot's whole projection and its shadow on the floor plane (<= 128 x 128 px); the 4x film uses cx4 = 4 cx + 1.5, cy4 = 4 cy + 1.5; a robot sample is visible when it is nearer than the 4x depth plate by more than visible_margin_m"
+ },
+ "shadow": {
+  "vr": "exact_rays",
+  "subpoints_per_px": 2,
+  "candidate_radius_m": 0.035,
+  "capsule_half_length_m": 0.175,
+  "sky_dirs": 32,
+  "sky_capsule_radius_m": 0.02,
+  "sky_near_radius_m": 0.45,
+  "sky_near_max_z_m": 0.6,
+  "sky_gain": 0.5,
+  "sky_stride_px": 2,
+  "about": "darkening = phi (1 - V_r) + (1 - phi) sky_gain O; V_r = sun visibility past the robot of 2 x 2 sub-points per pixel of the 4x depth plate, exact rays against the robot's decimated meshes after a capsule prefilter; O = share of sky_dirs cosine-weighted directions blocked by the three strut capsules, on every sky_stride_px-th pixel of the 1x depth plate within sky_near_radius_m of the robot, bilinear in between; E = P - (P - A) darkening"
+ },
+ "probes": {
+  "select": "light_class_then_nearest_xy",
+  "about": "the image light is the probe of the robot's light class (sun: mean V_env of its visible samples >= 0.5; a probe's class = V_env at its position >= 0.5), the nearest in xy among them (none of that class: the nearest of all)"
+ }
+}

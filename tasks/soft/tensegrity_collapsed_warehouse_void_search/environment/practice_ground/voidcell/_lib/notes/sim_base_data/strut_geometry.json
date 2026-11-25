@@ -1,0 +1,425 @@
+{
+ "source_mesh": "github.com/shiyoung77/tensegrity_perception, branch ros: mesh/Will_strut_scaled_centered.ply",
+ "source_sha256": "8dc4caff1efa26468660f30d5e2d91f7d927d6b287480ecd3b06b351f88a4614",
+ "split": {
+  "n_faces": 1118331,
+  "n_vertices": 558720,
+  "n_pieces": 494,
+  "rod_centre_file_mm": [
+   5.140974302776158,
+   0.48146065091714263,
+   -5.541302263736725
+  ],
+  "rod_axis_file": [
+   2.9454057297332067e-21,
+   -5.421010862427522e-20,
+   1.0
+  ]
+ },
+ "frame": "strut frame: origin = rod bounding-box centre, z = rod axis (file z), x = file x; metres. Mesh +z end is mapped to the authors' even node (s0, s2, s4) of each strut (ASSUMPTION A-END, see params)",
+ "piece_labels": {
+  "arduino": 1,
+  "elec": 2,
+  "encA": 2,
+  "encB": 2,
+  "endcap": 2,
+  "guide": 1,
+  "motherboard": 1,
+  "other": 478,
+  "rod": 1,
+  "sock": 2,
+  "winch": 2
+ },
+ "files": {
+  "full_chunks": {
+   "sock": [
+    {
+     "file": "full/sock_0.stl",
+     "sha256": "7e4aada84dcc6a82cea650d8aa76d4d4e9c3a4e147b41743bba9a75f04f140b3",
+     "faces": 13136
+    }
+   ],
+   "endcap": [
+    {
+     "file": "full/endcap_0.stl",
+     "sha256": "74db392f73225147ed7d34fd676214840e3b35239836c56b545e6ad184fa6837",
+     "faces": 12680
+    }
+   ],
+   "housing": [
+    {
+     "file": "full/housing_0.stl",
+     "sha256": "9fb0e6ab23bcf7d15f73246d4b00816a68b304864d9d7357ffd7471751fa4f8d",
+     "faces": 31078
+    }
+   ],
+   "rod": [
+    {
+     "file": "full/rod_0.stl",
+     "sha256": "65fd8a3767398062ad92881f948a118b4c24d4e08416ac771523df8d0b5d1e40",
+     "faces": 144
+    }
+   ],
+   "other": [
+    {
+     "file": "full/other_0.stl",
+     "sha256": "40b804dff027cbf5943bf32eaa0c4037c19f20639c48bb104d6739a4f7c09a19",
+     "faces": 189426
+    },
+    {
+     "file": "full/other_1.stl",
+     "sha256": "f3fa89dff0cdd50b303df17141b17e74c8e803f2d9f4eab4aabd96193b0abcca",
+     "faces": 186908
+    },
+    {
+     "file": "full/other_2.stl",
+     "sha256": "e41d78d3f8fcb5210189fbb4911cc6d954034aef869af2dc6e28ef4b662c6078",
+     "faces": 180682
+    },
+    {
+     "file": "full/other_3.stl",
+     "sha256": "b894c69eedd73c37b2adc77dc0fd4199d9b11eba8bacdd8c6ad32ef868d888d9",
+     "faces": 189324
+    },
+    {
+     "file": "full/other_4.stl",
+     "sha256": "f7732aea320f9f7fa7ee6c249d74f9a5b9a689af3292bba1a017f8cb8e339b5b",
+     "faces": 189388
+    },
+    {
+     "file": "full/other_5.stl",
+     "sha256": "1c24dc55f64560947d857a4b987bf52901cede2977c2e6f55bfabc1169d94851",
+     "faces": 125565
+    }
+   ]
+  },
+  "dec/sock.stl": {
+   "sha256": "7e4aada84dcc6a82cea650d8aa76d4d4e9c3a4e147b41743bba9a75f04f140b3",
+   "faces": 13136,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/endcap.stl": {
+   "sha256": "74db392f73225147ed7d34fd676214840e3b35239836c56b545e6ad184fa6837",
+   "faces": 12680,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/housing.stl": {
+   "sha256": "9fb0e6ab23bcf7d15f73246d4b00816a68b304864d9d7357ffd7471751fa4f8d",
+   "faces": 31078,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/rod.stl": {
+   "sha256": "65fd8a3767398062ad92881f948a118b4c24d4e08416ac771523df8d0b5d1e40",
+   "faces": 144,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/other.stl": {
+   "sha256": "1849857316eb73acf7cfd1d3cb5fcf1b8f942dfac41848462de0de71546c4dd2",
+   "faces": 75760,
+   "decimation": {
+    "tool": "fast_simplification 0.2.0",
+    "target_reduction": 0.94,
+    "agg": 7
+   }
+  }
+ },
+ "collision": {
+  "encA_pz": {
+   "type": "cylinder",
+   "axis": "strut z",
+   "radius_m": 0.020000002816297113,
+   "z_range_m": [
+    0.07640001177787781,
+    0.13140001147985458
+   ],
+   "fit": "radius = mean distance from the rod axis of 232 outer-wall vertices (r > 19.5 mm); axis = rod axis",
+   "residual_rms_mm": 8.017356077927328e-06,
+   "residual_max_abs_mm": 1.693100184496643e-05,
+   "max_vertex_radius_mm": 20.000019747298957
+  },
+  "encA_nz": {
+   "type": "cylinder",
+   "axis": "strut z",
+   "radius_m": 0.019999997985479488,
+   "z_range_m": [
+    -0.1313999816775322,
+    -0.07640000432729721
+   ],
+   "fit": "radius = mean distance from the rod axis of 232 outer-wall vertices (r > 19.5 mm); axis = rod axis",
+   "residual_rms_mm": 7.968561347444352e-06,
+   "residual_max_abs_mm": 1.9476004993634888e-05,
+   "max_vertex_radius_mm": 20.000017461484482
+  },
+  "sock_pz": {
+   "type": "sphere",
+   "centre_m": [
+    -8.913005433301962e-10,
+    5.4078116846767446e-09,
+    0.14540002118630307
+   ],
+   "radius_m": 0.017500000204693788,
+   "fit": "algebraic least-squares sphere on 1661 outer-dome vertices of the end-cap cover",
+   "residual_rms_mm": 6.937446523248245e-06,
+   "residual_max_abs_mm": 1.7083227170644477e-05
+  },
+  "sock_nz": {
+   "type": "sphere",
+   "centre_m": [
+    -9.54880609565954e-10,
+    5.171593429054155e-09,
+    -0.1453999984220281
+   ],
+   "radius_m": 0.017499999028343125,
+   "fit": "algebraic least-squares sphere on 1661 outer-dome vertices of the end-cap cover",
+   "residual_rms_mm": 5.855662554620795e-06,
+   "residual_max_abs_mm": 1.7859716830770367e-05
+  },
+  "elec_hull": {
+   "type": "mesh (convex hull)",
+   "file": "col/elec_hull.stl",
+   "sha256": "6d251e99d038f80ba8d284ec91163583f281f4760420fd56769b394d5517df90",
+   "hull_vertices": 31,
+   "hull_volume_mm3": 118040.04157915911,
+   "parts_volume_mm3": 51323.15956363744,
+   "fit": "convex hull of both electronics-enclosure halves",
+   "residual_standoff_p95_mm": 1.3277169342379758,
+   "residual_standoff_max_mm": 4.962846790883116,
+   "max_vertex_radius_mm": 24.12400401016557
+  },
+  "cap_hull_nz": {
+   "type": "mesh (convex hull)",
+   "file": "col/cap_hull_nz.stl",
+   "sha256": "56742f068bed5084bde9d5b13dbf25d34c20c90459d58b3b90b21d4d8ec88262",
+   "hull_vertices": 1627,
+   "fit": "convex hull of the end cap (hooks included); optional collision geom"
+  },
+  "cap_hull_pz": {
+   "type": "mesh (convex hull)",
+   "file": "col/cap_hull_pz.stl",
+   "sha256": "38f81bf96626367314fd5297ad2c72b33ad07d04f35a9388eb24f4ba6b7f9e5a",
+   "hull_vertices": 1627,
+   "fit": "convex hull of the end cap (hooks included); optional collision geom"
+  }
+ },
+ "features": {
+  "hooks_pz": [
+   {
+    "angle_deg": -153.25723707059626,
+    "centroid_mm": [
+     -9.020523603318171,
+     -4.59033304304328,
+     141.2571594119072
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.5000049611495205,
+     13.285330124296653
+    ],
+    "z_range_mm": [
+     139.40001279115677,
+     141.4000168442726
+    ]
+   },
+   {
+    "angle_deg": -63.25719197480161,
+    "centroid_mm": [
+     4.590339310068105,
+     -9.020517721572626,
+     141.2571594119072
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500007373817883,
+     13.28533194090896
+    ],
+    "z_range_mm": [
+     139.40001279115677,
+     141.4000168442726
+    ]
+   },
+   {
+    "angle_deg": 26.742842573361813,
+    "centroid_mm": [
+     9.020521765619161,
+     4.590348893023994,
+     141.2571594119072
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500001204750153,
+     13.285337652136384
+    ],
+    "z_range_mm": [
+     139.40001279115677,
+     141.4000168442726
+    ]
+   },
+   {
+    "angle_deg": 116.7427938248347,
+    "centroid_mm": [
+     -4.590340892069174,
+     9.020524922691818,
+     141.2571594119072
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500007421447975,
+     13.285332090031334
+    ],
+    "z_range_mm": [
+     139.40001279115677,
+     141.4000168442726
+    ]
+   }
+  ],
+  "hooks_nz": [
+   {
+    "angle_deg": -153.25723707059626,
+    "centroid_mm": [
+     -9.020523603318171,
+     -4.59033304304328,
+     -141.2571296095848
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.5000049611495205,
+     13.285330124296653
+    ],
+    "z_range_mm": [
+     -141.39998704195023,
+     -139.39998298883438
+    ]
+   },
+   {
+    "angle_deg": -63.25719197480161,
+    "centroid_mm": [
+     4.590339310068105,
+     -9.020517721572626,
+     -141.2571296095848
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500007373817883,
+     13.28533194090896
+    ],
+    "z_range_mm": [
+     -141.39998704195023,
+     -139.39998298883438
+    ]
+   },
+   {
+    "angle_deg": 26.742842573361813,
+    "centroid_mm": [
+     9.020521765619161,
+     4.590348893023994,
+     -141.2571296095848
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500001204750153,
+     13.285337652136384
+    ],
+    "z_range_mm": [
+     -141.39998704195023,
+     -139.39998298883438
+    ]
+   },
+   {
+    "angle_deg": 116.7427938248347,
+    "centroid_mm": [
+     -4.590340892069174,
+     9.020524922691818,
+     -141.2571296095848
+    ],
+    "n_vertices": 42,
+    "r_range_mm": [
+     7.500007421447975,
+     13.285332090031334
+    ],
+    "z_range_mm": [
+     -141.39998704195023,
+     -139.39998298883438
+    ]
+   }
+  ],
+  "guide_pz": {
+   "centre_mm": [
+    -17.175721121020615,
+    -2.683304119273089,
+    124.78591501712799
+   ],
+   "source": "ring cable guide piece (BOM 'Cable guide'), bbox centre"
+  },
+  "guide_nz": {
+   "centre_mm": [
+    -13.179502951910935,
+    11.336064795457098,
+    -124.78590257137826
+   ],
+   "source": "image of guide_pz under the two-fold symmetry that maps motor enclosure B (+z) onto B (-z) exactly (Procrustes residual 3.02e-05 mm; same map takes the +z winch onto the -z winch, residual 3.10e-05 mm). The mesh carries only one of the two guides listed in the BOM"
+  },
+  "two_fold_R": [
+   [
+    0.8497052479605565,
+    -0.5272579933848796,
+    1.9816923757539323e-07
+   ],
+   [
+    -0.5272579933848976,
+    -0.8497052479605671,
+    5.106346298671794e-08
+   ],
+   [
+    1.4146182141264212e-07,
+    -1.478752070776413e-07,
+    -0.9999999999999793
+   ]
+  ],
+  "winch_pz": {
+   "centre_mm": [
+    -8.337267558090389,
+    -3.8899998762644827,
+    124.15000796318054
+   ],
+   "drum_radius_mm": 3.1754073545539736,
+   "flange_radius_mm": 6.351482153639981,
+   "method": "radius about the winch's own axis (parallel to the rod), max over the drum band |dz| < 2.5 mm"
+  },
+  "winch_nz": {
+   "centre_mm": [
+    -5.033077555708587,
+    7.701538561377674,
+    -124.14999306201935
+   ],
+   "drum_radius_mm": 3.1751745404881024,
+   "flange_radius_mm": 6.351264731928879,
+   "method": "radius about the winch's own axis (parallel to the rod), max over the drum band |dz| < 2.5 mm"
+  },
+  "arduino_board": {
+   "centroid_mm": [
+    -1.490161467255032,
+    4.292786667490868,
+    41.74624498545595
+   ],
+   "normal": [
+    -0.4655230460851344,
+    0.8850194802008524,
+    -0.0053677955094579635
+   ],
+   "long_axis": [
+    -0.010640880477071043,
+    0.0004676913186937304,
+    0.9999432748548808
+   ],
+   "source": "Arduino Nano 33 IoT piece (community model inside the authors' mesh); PCA axes"
+  }
+ }
+}

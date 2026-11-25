@@ -1,0 +1,63 @@
+# Scoring of one void-search episode: the single source of every threshold the scoring, the debrief and the grader
+# use. tests/voidscore/scoring.py, debrief.py, tests/verify.py and the practice ground read the values from here; no
+# number below is spelled anywhere else in that code (the maintainers check it). The site generator writes the
+# weights into every site's search points from here. The cell's own copies of the constants it announces in mission()
+# (voidcell/_lib/mission.py: dwell, credit radii, still tolerance, retrieval radius; voidcell/_lib/budgets.py: reports
+# per point) are checked against this file at every episode (scoring.check_cell_constants: a difference is a task
+# error).
+#
+# Conventions:
+#   position        the planar centroid of the six nodes (end-cap centres), the authors' SE(2) centroid
+#   command         a primitive or a set_targets (a stop is not a command; a refused command never ran)
+#   executing       a command's interval from its acceptance to its end (finished, stopped, or the episode's end)
+#   report          report_point(i) accepted by the station (each point at most reports_per_point times); only the
+#                   last accepted report of a point counts
+#   dwell valid     no command executing in the window [t - window_s, t] before the report at t, the window lies
+#                   inside the episode (t >= window_s), and every truth sample of the window (sample_hz) is within
+#                   still_tolerance_m of the position at t
+#   credit c        dwell valid x clip(1 - (d - full) / (zero - full), 0, 1), d = horizontal distance of the position
+#                   at t to the search point
+#   F               factor_retrieved when, at the episode's end, the position is within radius_m of the pad centre
+#                   and no command is executing; else factor_not_retrieved
+#   S               F x sum over the points of weight x c; no negative part; the robot cannot be damaged
+#   stuck           (debrief only) a run of `primitives` consecutive primitives each moving the position less than
+#                   move_m and turning less than turn_deg
+
+version: 2
+
+weights:
+  1: 0.05
+  2: 0.15
+  3: 0.80
+
+credit_radius_m:
+  full: 0.20
+  zero: 0.40
+
+dwell:
+  window_s: 20.0
+  still_tolerance_m: 0.02
+  sample_hz: 10.0
+
+reports_per_point: 3
+
+retrieval:
+  radius_m: 0.60
+  factor_retrieved: 1.0
+  factor_not_retrieved: 0.85
+
+# numerical slack of the comparisons (times are on a 0.01 s grid, positions in metres)
+eps:
+  time_s: 1.0e-9
+  length_m: 1.0e-12
+
+stuck:
+  primitives: 3
+  move_m: 0.03
+  turn_deg: 5.0
+
+debrief:
+  cal_true_nodes_hz: 2.0
+  decimals_m: 4
+  decimals_deg: 2
+  decimals_s: 3

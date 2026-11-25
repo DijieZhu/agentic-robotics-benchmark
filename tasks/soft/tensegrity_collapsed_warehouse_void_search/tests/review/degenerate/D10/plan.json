@@ -1,0 +1,15 @@
+{
+ "name": "D10_heap_press",
+ "what": "Degenerate submission D10 (task version 2.0; the grader's QC; an attack on the scoring and on the cell, not a way of doing the task): it needs the true pose, so it runs as a plan of the maintainer variant of the privileged reference (tests/review/qc/variants/qc_reference.py, custom 'heap_press', through qc_verify.py --submission oracle --variant-file this file on the frozen hidden set; on a development site through stage_dev.py beside this file). From the pad to a pose before the heap on the open floor nearest the pad (its front, the side away from the line it leans on; else a flank) and push towards the middle of its rectangle until the time limit; no report, no finish. No report gives c = 0 for every point, so S = 0 whatever F is; the cell, its stuck reading and the scoring must show nothing abnormal while the robot leans on the heap's slope. The record carries the cell-side monitor's contact samples with every heap__ geom (for the read-out tool's heap-contact distance line).",
+ "custom": "heap_press",
+ "pre_margin": 0.10,
+ "expected": {
+  "c": {
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0
+  },
+  "S": 0.0,
+  "cell_internal_errors": 0
+ }
+}

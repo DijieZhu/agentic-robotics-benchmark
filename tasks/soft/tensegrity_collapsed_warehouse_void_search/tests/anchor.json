@@ -1,0 +1,46 @@
+{
+ "metric": "void_search_score",
+ "direction": "higher",
+ "value": 1.0,
+ "full_at": 0.95,
+ "source": "the privileged reference's own measured value, not a published figure: the mean void_search_score of two full runs of tests/verify.py with the oracle submission (solution/solve.sh: operate.py and the oracle token; the cell's privileged reference_run, tests/reference/reference.py) on the 10 frozen hidden sites (tests/hidden/seeds.json, limits.json: time limit 1820 s); every final state equal bit for bit between the two runs and to the admission run of the selection (tests/hidden/selection.json): yes",
+ "measured": {
+  "runs": [
+   "oracleA",
+   "oracleB"
+  ],
+  "void_search_score": [
+   1.0,
+   1.0
+  ],
+  "episode_scores": [
+   [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  ],
+  "seeds_json_sha256": "af74174c8f0fe32f6143bc82c90b843f19d066667be8e0154d8fac8407f422f2",
+  "limits_json_sha256": "22f5bb0bc3fc4da098dbfc3da7201cf161a23f8b3f78642aa256f105f2344724"
+ },
+ "note": "reward = clamp(mean / value / full_at, 0, 1); value = the privileged reference's measured mean on the hidden set (two runs)"
+}

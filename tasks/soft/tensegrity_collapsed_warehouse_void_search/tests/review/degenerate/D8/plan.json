@@ -1,0 +1,8 @@
+{
+ "name": "D8_wall_touch_point3",
+ "what": "Degenerate submission D8 (the grader's QC; an attack on the credit rule, not a way of doing the task): it needs the true pose, so it runs as a plan of the maintainer variant of the privileged reference (tests/review/qc/variants/qc_reference.py, through qc_verify.py --submission oracle --variant-file this file). The reference's legs pad -> 1 -> 2 -> 3 are driven, its reports of points 1 and 2 are not sent; at point 3, in place of its report: plan to the foot of the perpendicular from point 3 on the site's back wall, push into the wall, dwell 21 s, report point 3; the same at the side wall of the chamber's corner; finish there. Point 3 is 0.64-0.72 m from both walls (predicate G16), so a pose against a wall is more than the zero-credit radius 0.40 m away and every report gives c3 = 0.",
+ "suppress_reports": [1, 2],
+ "no_return": true,
+ "wall_touch": {"walls": ["back", "side"], "dwell_steps": [10.0, 10.0, 1.0], "max_push": 14},
+ "expected": {"c": {"1": 0.0, "2": 0.0, "3": 0.0}, "S": 0.0, "every_wall_report_c3": 0.0}
+}

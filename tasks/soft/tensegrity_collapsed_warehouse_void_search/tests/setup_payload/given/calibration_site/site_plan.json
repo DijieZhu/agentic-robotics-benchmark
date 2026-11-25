@@ -1,0 +1,525 @@
+{
+ "what": "the calibration site of the practice ground: every dimension, in metres",
+ "frame": "site frame: x east, y north, z up, origin = the south-west floor corner",
+ "size_m": [
+  4.4,
+  5.8
+ ],
+ "time_limit_s": 1400.0,
+ "perimeter_wall": {
+  "thickness_m": 0.2,
+  "height_m": 0.9
+ },
+ "flat_floor": {
+  "x0": 0.7,
+  "x1": 3.7,
+  "y0": 0.05,
+  "y1": 1.55,
+  "grid_lines": [
+   {
+    "axis": "x",
+    "at": 0.7,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 1.2,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 1.7,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 2.2,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 2.7,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 3.2,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "x",
+    "at": 3.7,
+    "from": 0.05,
+    "to": 1.55
+   },
+   {
+    "axis": "y",
+    "at": 0.5,
+    "from": 0.7,
+    "to": 3.7
+   },
+   {
+    "axis": "y",
+    "at": 1.0,
+    "from": 0.7,
+    "to": 3.7
+   },
+   {
+    "axis": "y",
+    "at": 1.5,
+    "from": 0.7,
+    "to": 3.7
+   }
+  ],
+  "line_width_m": 0.012,
+  "crosses": [
+   {
+    "xy": [
+     1.2,
+     0.55
+    ],
+    "arm_m": 0.1,
+    "bar_width_m": 0.02
+   },
+   {
+    "xy": [
+     3.2,
+     0.55
+    ],
+    "arm_m": 0.1,
+    "bar_width_m": 0.02
+   },
+   {
+    "xy": [
+     1.2,
+     1.3
+    ],
+    "arm_m": 0.1,
+    "bar_width_m": 0.02
+   },
+   {
+    "xy": [
+     3.2,
+     1.3
+    ],
+    "arm_m": 0.1,
+    "bar_width_m": 0.02
+   }
+  ]
+ },
+ "pad": {
+  "xy": [
+   2.2,
+   0.45
+  ],
+  "retrieval_radius_m": 0.6,
+  "setdown_error_m": 0.1
+ },
+ "search_points": [
+  {
+   "id": 1,
+   "xy": [
+    0.95,
+    1.05
+   ],
+   "where": "flat floor"
+  },
+  {
+   "id": 2,
+   "xy": [
+    1.75,
+    2.7
+   ],
+   "where": "north of the ridge, open floor"
+  },
+  {
+   "id": 3,
+   "xy": [
+    3.75,
+    5.15
+   ],
+   "where": "roofed chamber"
+  }
+ ],
+ "ridge": {
+  "y0": 1.6,
+  "y1": 2.15,
+  "openings": [
+   {
+    "label": "opening A",
+    "kind": "open gap",
+    "x0": 0.15,
+    "x1": 0.4073,
+    "width_m": 0.2573,
+    "y0": 1.6,
+    "y1": 2.15,
+    "length_m": 0.55
+   },
+   {
+    "label": "opening B",
+    "kind": "open gap",
+    "x0": 0.5473,
+    "x1": 1.0066,
+    "width_m": 0.4593,
+    "y0": 1.6,
+    "y1": 2.15,
+    "length_m": 0.55
+   },
+   {
+    "label": "opening C",
+    "kind": "open gap",
+    "x0": 1.1466,
+    "x1": 1.7059,
+    "width_m": 0.5593,
+    "y0": 1.6,
+    "y1": 2.15,
+    "length_m": 0.55
+   },
+   {
+    "label": "opening D",
+    "kind": "covered slot",
+    "x0": 2.0259,
+    "x1": 2.5852,
+    "width_m": 0.5593,
+    "y0": 1.6,
+    "y1": 2.15,
+    "clear_height_m": 0.15,
+    "roof_thickness_m": 0.1,
+    "length_m": 0.55
+   },
+   {
+    "label": "opening E",
+    "kind": "covered mouth with a back wall",
+    "x0": 2.7652,
+    "x1": 3.3245,
+    "width_m": 0.5593,
+    "y0": 1.6,
+    "y1": 2.15,
+    "clear_height_m": 0.3869,
+    "roof_thickness_m": 0.1,
+    "depth_to_back_wall_m": 0.3
+   },
+   {
+    "label": "opening F",
+    "kind": "covered passage",
+    "x0": 3.5045,
+    "x1": 4.0638,
+    "width_m": 0.5593,
+    "y0": 1.6,
+    "y1": 2.15,
+    "clear_height_m": 0.3869,
+    "roof_thickness_m": 0.1,
+    "length_m": 0.55,
+    "leads_to": "the roofed room"
+   }
+  ],
+  "blocks": [
+   {
+    "label": "block 1",
+    "kind": "rubble block",
+    "x0": 0.0,
+    "x1": 0.15,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.7
+   },
+   {
+    "label": "block 2",
+    "kind": "rubble block",
+    "x0": 0.4073,
+    "x1": 0.5473,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.7
+   },
+   {
+    "label": "block 3",
+    "kind": "rubble block",
+    "x0": 1.0066,
+    "x1": 1.1466,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.7
+   },
+   {
+    "label": "block 4",
+    "kind": "rubble block",
+    "x0": 1.7059,
+    "x1": 1.8459,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.7
+   },
+   {
+    "label": "block 5",
+    "kind": "support",
+    "x0": 1.8459,
+    "x1": 2.0259,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.3869
+   },
+   {
+    "label": "block 6",
+    "kind": "support",
+    "x0": 2.5852,
+    "x1": 2.7652,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.3869
+   },
+   {
+    "label": "block 7",
+    "kind": "support",
+    "x0": 3.3245,
+    "x1": 3.5045,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.3869
+   },
+   {
+    "label": "block 8",
+    "kind": "support",
+    "x0": 4.0638,
+    "x1": 4.2438,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.3869
+   },
+   {
+    "label": "block 9",
+    "kind": "rubble block",
+    "x0": 4.2438,
+    "x1": 4.4,
+    "y0": 1.6,
+    "y1": 2.15,
+    "height_m": 0.7
+   }
+  ]
+ },
+ "roofed_room": {
+  "interior": {
+   "x0": 2.8,
+   "x1": 4.4,
+   "y0": 2.15,
+   "y1": 3.0
+  },
+  "size_m": [
+   1.6,
+   0.85
+  ],
+  "clear_height_m": 0.4069,
+  "roof_thickness_m": 0.12,
+  "wall_thickness_m": 0.18,
+  "entrance": "opening F (covered passage) on its south side",
+  "exit": "the roofed passage, from its north-west corner",
+  "sides": {
+   "west": "the side wall",
+   "east": "the site's east wall",
+   "north": "the roofed passage (x 2.8 to 3.65) and the solid east of it (x 3.65 to 4.4)",
+   "south": "the ridge"
+  }
+ },
+ "roofed_passage": {
+  "interior": {
+   "x0": 2.8,
+   "x1": 3.65,
+   "y0": 3.0,
+   "y1": 4.4
+  },
+  "width_m": 0.85,
+  "length_m": 1.4,
+  "clear_height_m": 0.4069,
+  "leads_from": "the roofed room's north-west corner",
+  "leads_to": "the roofed chamber",
+  "sides": {
+   "west": "the side wall",
+   "east": "the solid east of the passage"
+  },
+  "block": {
+   "kind": "rubble block",
+   "x0": 2.8,
+   "x1": 3.0907,
+   "y0": 3.575,
+   "y1": 3.825,
+   "width_m": 0.2907,
+   "length_m": 0.25,
+   "height_m": 0.4069,
+   "stands": "on the floor against the passage's west wall, up to the roof's underside",
+   "clear_width_beside_m": 0.5593,
+   "beside": "east of it"
+  }
+ },
+ "roofed_chamber": {
+  "interior": {
+   "x0": 2.8,
+   "x1": 4.4,
+   "y0": 4.4,
+   "y1": 5.8
+  },
+  "size_m": [
+   1.6,
+   1.4
+  ],
+  "clear_height_m": 0.4069,
+  "sides": {
+   "west": "the side wall",
+   "east": "the site's east wall",
+   "north": "the site's back wall",
+   "south": "the roofed passage (x 2.8 to 3.65) and the solid east of it (x 3.65 to 4.4)"
+  }
+ },
+ "side_wall": {
+  "x0": 2.62,
+  "x1": 2.8,
+  "y0": 2.15,
+  "y1": 5.8,
+  "thickness_m": 0.18,
+  "height_m": 0.4069,
+  "note": "west of the room, the passage and the chamber; up to the roof's underside"
+ },
+ "solid_east_of_passage": {
+  "x0": 3.65,
+  "x1": 4.4,
+  "y0": 3.0,
+  "y1": 4.4,
+  "height_m": 0.4069,
+  "note": "solid up to the roof's underside, from the passage to the site's east wall"
+ },
+ "roof": {
+  "x0": 2.62,
+  "x1": 4.4,
+  "y0": 2.15,
+  "y1": 5.8,
+  "underside_height_m": 0.4069,
+  "thickness_m": 0.12,
+  "covers": "the roofed room, the roofed passage and the roofed chamber"
+ },
+ "free_standing_wall": {
+  "x0": 0.55,
+  "x1": 2.05,
+  "y0": 3.5,
+  "y1": 3.65,
+  "height_m": 0.6,
+  "length_m": 1.5
+ },
+ "strips": [
+  {
+   "name": "gravel strip",
+   "x0": 0.15,
+   "x1": 1.25,
+   "y0": 2.4,
+   "y1": 3.0
+  },
+  {
+   "name": "dust strip",
+   "x0": 3.75,
+   "x1": 4.35,
+   "y0": 0.3,
+   "y1": 1.2
+  }
+ ],
+ "crates": [
+  {
+   "colour": "red",
+   "x0": 0.15,
+   "x1": 0.45,
+   "y0": 0.2,
+   "y1": 0.48,
+   "height_m": 0.3
+  },
+  {
+   "colour": "blue",
+   "x0": 4.12,
+   "x1": 4.4,
+   "y0": 0.0,
+   "y1": 0.3,
+   "height_m": 0.36
+  }
+ ],
+ "chips": [
+  {
+   "colour": "red",
+   "shape": "disc",
+   "size_m": 0.04,
+   "xy": [
+    1.55,
+    0.95
+   ]
+  },
+  {
+   "colour": "green",
+   "shape": "square",
+   "size_m": 0.05,
+   "xy": [
+    2.85,
+    1.15
+   ]
+  },
+  {
+   "colour": "blue",
+   "shape": "disc",
+   "size_m": 0.055,
+   "xy": [
+    0.95,
+    0.4
+   ]
+  },
+  {
+   "colour": "red",
+   "shape": "square",
+   "size_m": 0.035,
+   "xy": [
+    1.25,
+    3.7
+   ]
+  },
+  {
+   "colour": "green",
+   "shape": "disc",
+   "size_m": 0.045,
+   "xy": [
+    0.4,
+    2.25
+   ]
+  },
+  {
+   "colour": "blue",
+   "shape": "square",
+   "size_m": 0.06,
+   "xy": [
+    2.6,
+    0.85
+   ]
+  }
+ ],
+ "heaps": [
+  {
+   "label": "heap 1",
+   "kind": "rubble heap",
+   "x0": 3.791,
+   "x1": 4.12,
+   "y0": 0.001,
+   "y1": 0.294,
+   "top_height_m": 0.272,
+   "stands": "against the site's south wall"
+  },
+  {
+   "label": "heap 2",
+   "kind": "mound of fill",
+   "x0": 1.051,
+   "x1": 1.554,
+   "y0": 3.178,
+   "y1": 3.5,
+   "top_height_m": 0.197,
+   "stands": "against the free-standing wall's south face"
+  }
+ ],
+ "heaps_what": "the bounding rectangle of each heap's outline (where it stands more than 1 mm above the floor) and its highest point, measured to 1 mm on the site's collision bodies"
+}

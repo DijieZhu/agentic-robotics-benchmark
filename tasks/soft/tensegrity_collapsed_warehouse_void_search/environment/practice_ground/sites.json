@@ -1,0 +1,53 @@
+{
+ "episodes": 30,
+ "open": 2,
+ "config": {
+  "limits": {
+   "time_limit_s": 1820.0,
+   "frames": 600,
+   "cable_length_mm": [
+    100.0,
+    240.0
+   ],
+   "program_time_s": 600.0,
+   "silence_s": 180.0,
+   "cpu_s": 2400.0
+  },
+  "pose_source": "estimated",
+  "render_backend": "plate_filament",
+  "msaa_rgb": true,
+  "plate_root": "plates"
+ },
+ "sites": [
+  {
+   "name": "cal",
+   "package": "cal/cal.tar.xz",
+   "sha256": "4d430654a65a6fd922fe93849ed34fc31b1deee28b44d6beb464ef2e62aac9f3",
+   "kind": "cal",
+   "time_limit_s": 1400.0,
+   "about": "the calibration site: every dimension is on its page (given/calibration_site/)"
+  },
+  {
+   "name": "p1",
+   "package": "sites/p1.tar.xz",
+   "sha256": "937acdd230b481fe431f9112a0c9016dcf92f3c3caad015462b109aa92ccc1b5",
+   "kind": "practice",
+   "about": "a practice site of the same kind as the scored ones"
+  },
+  {
+   "name": "p2",
+   "package": "sites/p2.tar.xz",
+   "sha256": "29ea4a9626af3d66fc0e7c091eb2431d23e1543ceb4f009caf902a5146580c9c",
+   "kind": "practice",
+   "about": "a practice site of the same kind as the scored ones"
+  },
+  {
+   "name": "p3",
+   "package": "sites/p3.tar.xz",
+   "sha256": "53201499dc0acaa891f4c30e5b075f8ac326d89bdb6abc02648ef09d36bceee8",
+   "kind": "practice",
+   "about": "a practice site of the same kind as the scored ones"
+  }
+ ],
+ "note": "practiced.py reads: episodes (the session's allowance), open (at a time), config (the cell's run settings: limits = tests/grader_config.json limits with time_limit_s = tests/hidden/limits.json's value; pose_source, render_backend, msaa_rgb = grader_config.json's), sites[] (package relative to this file's folder, sha256 checked at every reset, kind 'cal' -> the calibration debrief, 'practice' -> the practice debrief; time_limit_s overrides the limit for that site). No noise_seed: every practice episode draws its own set-down error and sensor noise. The per-point report budget comes from voidscore/acceptance.yaml."
+}

@@ -1,0 +1,25 @@
+{
+ "name": "D9_debris_press",
+ "what": "Degenerate submission D9 (the grader's QC; an attack on the credit rule and on the cell, not a way of doing the task): it needs the true pose, so it runs as a plan of the maintainer variant of the privileged reference (tests/review/qc/variants/qc_reference.py, through qc_verify.py --submission oracle --variant-file this file). From the pad straight to the true mouth and into the void up to the first rubble box on the way in; push into its face until three rolls in a row make no progress (three: the stuck rule of the debrief needs three primitives in a row); stay 25 s; report points 1, 2 and 3 there; finish in place. Every rubble box is at least 0.64 m from point 3 by construction (and farther from points 1 and 2, which are on the open floor), so every report gives c = 0; the cell, the stuck reading and the scoring must show nothing abnormal while the robot is pressed against the box.",
+ "custom": "debris_press",
+ "dwell_steps": [
+  10.0,
+  10.0,
+  5.0
+ ],
+ "reports": [
+  1,
+  2,
+  3
+ ],
+ "max_push": 14,
+ "blocked_stop": 3,
+ "expected": {
+  "c": {
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0
+  },
+  "S": 0.0
+ }
+}

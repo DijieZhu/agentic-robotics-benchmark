@@ -1,0 +1,88 @@
+# tensegrity_collapsed_warehouse_void_search (behavior stage: an off-board operating program searches the void under
+# a collapsed slab of a warehouse with a small three-strut, cable-driven tensegrity rolling robot; tests/verify.py).
+#
+# A small rolling robot made of three struts joined by cables (the robot is the authors' published whole-strut mesh,
+# three times, decimated for the camera; six motors shorten or lengthen six cables; MuJoCo on CPU, single-threaded
+# physics) is set down on a pad at the front of a collapsed warehouse bay. A fixed overhead RGB-D search camera on a
+# mast sees the bay from above; the robot carries no camera. The camera's picture is the dressed ruin, computed
+# offline once for each site and stored as the site's plate (the plates are files of the benchmark's asset dataset,
+# not of this folder), with the robot and its shadow rendered into it at every frame on the CPU (MuJoCo's physically
+# based renderer for the robot's colour, its classic renderer on OSMesa for the robot's depth). What the robot touches
+# is the site package's boxes and, for the heaps of rubble and of fill on the open floor, height fields made from
+# the meshes that the picture shows. The agent writes the
+# operator's OFF-BOARD program (operate.py, solve(station)): it reads the camera's raw RGB-D frames and the robot's
+# telemetry, estimates the robot's pose itself, commands the robot's rolling primitives and cable targets, works out
+# which openings lead into the void under the fallen slab, dead-reckons through the part the camera cannot see, dwells
+# 20 s at each of three search points to take an air reading (reports), and brings the robot back to the pad.
+# Score per site S = F x (0.05 c1 + 0.15 c2 + 0.80 c3) (c: after a valid dwell, full credit within 0.20 m of the
+# point, linear to none at 0.40 m; F = 1.0 back within 0.60 m of the pad, else 0.85; tests/voidscore/acceptance.yaml,
+# the single source of every threshold); void_search_score = the contract gate x the
+# mean of S over ten hidden sites, stored as site packages in tests/hidden/sites/ and selected by the pre-registered
+# rule of tests/hidden/selection.json among sites the privileged reference completes. The oracle submits a two-line
+# program with a 256-bit token: the reference program inside the cell gets the true pose and the true layout. The
+# agent gets what an operator of a rescue team would have: the robot's handbook and the station's API (datasheet
+# level), the site briefing, the camera's datasheet, the calibration site's pages, the client library, and a practice
+# ground (a black-box service under its own account: the calibration site and three practice sites, 30 episodes, a
+# debrief after each); the simulator's code, the site generator and every ground truth of a scored site stay out of
+# its reach.
+#
+# setup (no field: the engine bounds it at a fixed 1800 s): the givens in the agent home and the practice ground.
+# [agent] timeout_sec: 4 h.
+# [verifier] timeout_sec = safety factor x (fixed steps + (episodes + MAX_RERUNS_PER_VERIFY) x the bound of one site).
+# Every measured input is taken in containers of the task image with the verifier's CPUs and memory (the maintainers'
+# bench program through ~/training/run_mission.py on practice sites: one episode alone, then two at once; every
+# call timed from the program's side of the wire) and is kept, with the image it was measured in and the host's load,
+# by the maintainers; the field below is set from this formula when the costs of this version's image
+# are measured.
+#   fixed steps: the import check (at most IMPORT_WALL_S of tests/verify.py), the no-network self-test, the desktop
+#     settle, the lockdown, the copy and check of the givens and the acceptance file, and fetching, checking and
+#     unpacking the hidden sites' plates (tests/grader_config.json hidden_plates);
+#   the bound of one site, at the limits of the configuration (tests/grader_config.json limits and
+#     tests/hidden/limits.json: time_limit_s simulated, frames frames, program_time_s of program time):
+#       the cell's build from its stored site package and its first frame (the site's plate is opened and checked)
+#     + program_time_s, the program's own time, which does not count the cell's simulation and rendering
+#     + time_limit_s x the slowest whole-episode pace of the bench (wall clock per simulated second, a primitive
+#       running, the wire included)
+#     + frames x the cost of get_frame that the bench measured (its upper percentile; encoding and wire included)
+#     + the wire's grace after the episode is over + the end, scoring and clean-up of an episode;
+#   episodes + MAX_RERUNS_PER_VERIFY: tests/grader_config.json episodes, and verify.py runs at most one episode again
+#     after a cell failure (a second one is a task error).
+# The oracle's episodes run the reference program inside one privileged call (tests/grader_config.json
+# privileged_program_time_cap_s each).
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work (operate.py and its helper modules).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/tensegrity_collapsed_warehouse_void_search"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/soft/<name>/. The metric
+# (void_search_score, higher) lives in tests/anchor.json.
+platform = "soft"
+tags = ["search-and-rescue", "collapsed-building", "void-search", "tensegrity", "soft-robot", "rolling-robot",
+        "cable-driven", "motion-primitives", "rgbd", "overhead-camera", "pose-estimation", "dead-reckoning",
+        "mujoco", "code-as-policy", "practice-ground", "hidden-site", "oracle-token"]
+
+[environment]
+cpus = 8
+memory_mb = 16384
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[verifier]
+timeout_sec = 22600
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it, so nothing else the agent left (a file,
+# a process, a program planted on root's PATH) reaches it. environment/setup/setup.sh does not run there: tests/test.sh
+# builds the grader's root-owned copy of the givens itself. The agent's program runs during verify, so the verifier
+# gets the agent's resources (CPU rendering: no GPU).
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 16384
+gpus = 0

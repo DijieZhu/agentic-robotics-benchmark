@@ -1,0 +1,53 @@
+{
+ "what": "visual meshes of the robot for the agent camera (classic renderer): the simulation base's decimated copy of the authors' strut mesh, regrouped by material, copied byte for byte (no block changed, none dropped). Derived copy of the truth; hero / demo images use the full resolution.",
+ "source_mesh_sha256": "8dc4caff1efa26468660f30d5e2d91f7d927d6b287480ecd3b06b351f88a4614",
+ "source_mesh_triangles_note": "1 118 331 triangles, 494 pieces",
+ "tool": "ysim.assets.build (fast_simplification 0.2.0 on the 'other' group only: target_reduction 0.94, agg 7; the other four groups kept at full resolution)",
+ "base_record": "tests/voidcell/_lib/notes/sim_base_data/strut_geometry.json files.dec/*",
+ "fully_hidden_pieces": "kept (removing them was optional); total size is below the 15 MB cap without removing any",
+ "files": {
+  "dec/sock.stl": {
+   "sha256": "7e4aada84dcc6a82cea650d8aa76d4d4e9c3a4e147b41743bba9a75f04f140b3",
+   "bytes": 656884,
+   "faces": 13136,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/endcap.stl": {
+   "sha256": "74db392f73225147ed7d34fd676214840e3b35239836c56b545e6ad184fa6837",
+   "bytes": 634084,
+   "faces": 12680,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/housing.stl": {
+   "sha256": "9fb0e6ab23bcf7d15f73246d4b00816a68b304864d9d7357ffd7471751fa4f8d",
+   "bytes": 1553984,
+   "faces": 31078,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/rod.stl": {
+   "sha256": "65fd8a3767398062ad92881f948a118b4c24d4e08416ac771523df8d0b5d1e40",
+   "bytes": 7284,
+   "faces": 144,
+   "decimation": {
+    "tool": "none (kept at full resolution)"
+   }
+  },
+  "dec/other.stl": {
+   "sha256": "1849857316eb73acf7cfd1d3cb5fcf1b8f942dfac41848462de0de71546c4dd2",
+   "bytes": 3788084,
+   "faces": 75760,
+   "decimation": {
+    "tool": "fast_simplification 0.2.0",
+    "target_reduction": 0.94,
+    "agg": 7
+   }
+  }
+ },
+ "total_bytes": 6640320
+}

@@ -1,0 +1,29 @@
+{
+ "schema": "tests/review/variants/plans.json v1: the maintainer variants of the privileged reference that the grader's QC runs through the real verify.py on the frozen hidden set (qc_reference.py documents every key). The expected values are fixed here before any run; every site of the set must give them.",
+ "variants": {
+  "V1_distance_and_inside_retrieval": {
+   "name": "V1_distance_and_inside_retrieval",
+   "question": "Q2: a valid dwell with the report position 0.30 / 0.495 / 0.70 m from the point gives c = 1 / 0.5 / 0; the end 0.59 m from the pad with no command running gives F = 1",
+   "shift_point": {"1": 0.30, "2": 0.495, "3": 0.70},
+   "shift_pad": 0.59,
+   "expected": {"c": {"1": 1.0, "2": 0.5, "3": 0.0}, "F": 1.0, "S": 0.275}
+  },
+  "V2_short_dwell_motion_no_return": {
+   "name": "V2_short_dwell_motion_no_return",
+   "question": "Q3 (and Q2's motion row): a dwell of only 15 s before the report of point 1 gives c1 = 0; a primitive and a motion inside the window of point 2 give c2 = 0; point 3 as the reference does it gives c3 = 1; not returning to the pad gives F = 0.85",
+   "dwell_steps": {"1": [10.0, 5.0]},
+   "move_before_report": [2],
+   "no_return": true,
+   "expected": {"c": {"1": 0.0, "2": 0.0, "3": 1.0}, "F": 0.85, "S": 0.51}
+  },
+  "V3_report_budget_wrong_bottom_outside_retrieval": {
+   "name": "V3_report_budget_wrong_bottom_outside_retrieval",
+   "question": "Q2 / Q3: two early reports far from each point, then the reference's report (the third, it counts), then a fourth one (refused: the budget is 3 per point); after the return, one primitive with a wrong bottom triple (executed with the wrong mapping, no cell failure) and one call with a triple that is not a face (refused, nothing moves); the end 0.61 m from the pad gives F = 0.85",
+   "early_reports": {"1": 2, "2": 2, "3": 2},
+   "late_report": [1, 2, 3],
+   "final_wrong_bottom": true,
+   "shift_pad": 0.61,
+   "expected": {"c": {"1": 1.0, "2": 1.0, "3": 1.0}, "F": 0.85, "S": 0.85}
+  }
+ }
+}

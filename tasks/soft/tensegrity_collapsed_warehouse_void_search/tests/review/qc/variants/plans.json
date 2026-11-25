@@ -1,0 +1,38 @@
+{
+ "schema": "variants/plans.json v2 (task version 1.1: weights 0.05 / 0.15 / 0.80, credit radii 0.20 / 0.40 m, dwell 20 s, still 0.02 m, retrieval 0.60 m and 1.0 / 0.85, 3 reports per point): the maintainer variants of the privileged reference that the grader's QC runs through the real verify.py on the frozen hidden set (qc_reference.py documents every key). The expected values are fixed here before any run; every site of the set must give them. V1-V3 are the three maintainer variants whose scores the reading table of the scoring names (the two visible points and retrieval 0.20; all three points without retrieval 0.85; point 3 at 0.30 m 0.60); V4 holds the remaining edge and mutant cases.",
+ "variants": {
+  "V1_points12_return": {
+   "name": "V1_points12_return",
+   "question": "a program that does the two visible points and retrieves: S = 0.05 + 0.15 = 0.20. Q2 inside it: a valid dwell 0.19 m from point 1 gives c1 = 1; two early reports of point 2 far from it, the reference's report (the third, it counts) and a fourth one (refused: 3 per point); after the return one primitive with a wrong bottom triple (executed with the wrong mapping, no cell failure) and one call with a triple that is not a face (refused, nothing moves); the end 0.59 m from the pad with no command running gives F = 1",
+   "skip_points": [3],
+   "shift_point": {"1": 0.19},
+   "early_reports": {"2": 2},
+   "late_report": [2],
+   "final_wrong_bottom": true,
+   "shift_pad": 0.59,
+   "expected": {"c": {"1": 1.0, "2": 1.0, "3": 0.0}, "F": 1.0, "S": 0.2}
+  },
+  "V2_all_three_no_return": {
+   "name": "V2_all_three_no_return",
+   "question": "Q3: all three points done, no return to the pad: F = 0.85, S = 0.85. Q2 inside it: a valid dwell 0.19 m from point 3 gives c3 = 1",
+   "no_return": true,
+   "shift_point": {"3": 0.19},
+   "expected": {"c": {"1": 1.0, "2": 1.0, "3": 1.0}, "F": 0.85, "S": 0.85}
+  },
+  "V3_point3_at_030": {
+   "name": "V3_point3_at_030",
+   "question": "Q2: a valid dwell 0.30 m from point 3 gives c3 = 0.5 (half way between 0.20 and 0.40 m); everything else as the reference does it: S = 0.05 + 0.15 + 0.80 x 0.5 = 0.60. The trajectory is the reference's own (the moved point is not a physical object), so every final state must equal the admission run",
+   "shift_point": {"3": 0.30},
+   "expected": {"c": {"1": 1.0, "2": 1.0, "3": 0.5}, "F": 1.0, "S": 0.6}
+  },
+  "V4_mutants_015_041_061": {
+   "name": "V4_mutants_015_041_061",
+   "question": "Q3 / Q2: a dwell of only 15 s before the report of point 1 gives c1 = 0 (the window holds the last primitive); a valid dwell 0.41 m from point 2 gives c2 = 0; point 3 as the reference does it gives c3 = 1; no return and the pad moved to 0.61 m from the end (no command running) gives F = 0.85: S = 0.85 x 0.80 = 0.68",
+   "dwell_steps": {"1": [10.0, 5.0]},
+   "shift_point": {"2": 0.41},
+   "no_return": true,
+   "shift_pad": 0.61,
+   "expected": {"c": {"1": 0.0, "2": 0.0, "3": 1.0}, "F": 0.85, "S": 0.68}
+  }
+ }
+}
