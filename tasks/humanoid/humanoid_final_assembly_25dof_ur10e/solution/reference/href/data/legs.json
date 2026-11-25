@@ -1,0 +1,82 @@
+{
+ "schema": "humanoid-reference-legs/1",
+ "sides": {
+  "L": {
+   "extraction_line_in_station": [
+    -0.337419707,
+    -0.163464461,
+    0.927053025
+   ],
+   "hip_chain": [
+    {
+     "anchor_m": [
+      -0.00309760844,
+      0.108499916,
+      -0.491964734
+     ],
+     "axis": [
+      1.0,
+      3.376e-06,
+      -1.2558e-05
+     ],
+     "joint": "left_hip_roll_joint",
+     "ref_rad": 7.74e-07
+    },
+    {
+     "anchor_m": [
+      -0.0453482614,
+      0.108499747,
+      -0.543964204
+     ],
+     "axis": [
+      -1.2558e-05,
+      -5.01e-07,
+      -1.0
+     ],
+     "joint": "left_hip_yaw_joint",
+     "ref_rad": 2.5393e-05
+    }
+   ],
+   "mate": "leg_L"
+  },
+  "R": {
+   "extraction_line_in_station": [
+    -0.337419707,
+    -0.163464461,
+    0.927053025
+   ],
+   "hip_chain": [
+    {
+     "anchor_m": [
+      -0.00309687583,
+      -0.108500636,
+      -0.49196274
+     ],
+     "axis": [
+      1.0,
+      3.376e-06,
+      2.8091e-05
+     ],
+     "joint": "right_hip_roll_joint",
+     "ref_rad": -2.242e-06
+    },
+    {
+     "anchor_m": [
+      -0.0453454151,
+      -0.108500962,
+      -0.543963927
+     ],
+     "axis": [
+      2.8091e-05,
+      -3.516e-06,
+      -1.0
+     ],
+     "joint": "right_hip_yaw_joint",
+     "ref_rad": -8.4044e-05
+    }
+   ],
+   "mate": "leg_R"
+  }
+ },
+ "what": "per leg: the hip chain to place the thigh body from the part body's pose and the hip roll / hip yaw readings (a child turns by (q - ref) about its axis through its anchor; axis, anchor in the parent body's frame, metres, radians) and the leg station's straight extraction line (unit, in the station's frame = the leg's part body frame as it stands)"
+}

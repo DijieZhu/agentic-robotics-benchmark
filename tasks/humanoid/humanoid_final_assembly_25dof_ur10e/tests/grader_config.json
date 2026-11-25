@@ -1,0 +1,72 @@
+{
+ "cell_overrides": {
+  "budgets": {
+   "privileged_wall_cap_s": 4826.0,
+   "sim_cap_s": 1293.0,
+   "wall_cap_s": 8074.0
+  }
+ },
+ "cpu_cap_factor": 4.0,
+ "episodes": 3,
+ "hidden_gt": {
+  "backoff_s": 5.0,
+  "files": 116,
+  "note": "the cell's hidden kit (gt/), never in the repository or the image: the verifier fetches this archive at verify start from the url, which names the pinned commit of the benchmark's asset dataset, and checks it by its sha256 and its number of files before any episode",
+  "sha256": "9cdecdd5105935e68d4e012f3dfdffc75a015fa9cbfdf7aa5c6447ab6aebd7c8",
+  "tries": 4,
+  "url": "https://huggingface.co/datasets/grounded-intelligence-initiative/ale-robotics-assets/resolve/40e06ef3156e5db8b90b481bea0e1378186ad566/tasks/humanoid/humanoid_final_assembly_25dof_ur10e/verifier/gt.tar.xz"
+ },
+ "oracle_nominal_layout": true,
+ "privileged_wall_cap_s": 4826.0,
+ "render_first_frame_s": 51.037,
+ "render_frame_s": 4.37244,
+ "render_threads": 8,
+ "renderer": "given_layer",
+ "route_gate": {
+  "forbidden_calls": [
+   "torch.optim",
+   ".backward(",
+   "jax.grad"
+  ],
+  "forbidden_extensions": [
+   ".pt",
+   ".pth",
+   ".onnx",
+   ".safetensors",
+   ".ckpt",
+   ".h5",
+   ".pb",
+   ".pkl",
+   ".npz"
+  ],
+  "max_submission_mb": 60
+ },
+ "runner_account": "nobody",
+ "schema": "humanoid-asm03-grader-config/1",
+ "scope": {
+  "counted_mates": [
+   "leg_R",
+   "leg_L",
+   "arm_L",
+   "arm_R",
+   "head"
+  ],
+  "release_mates": [
+   "leg_R",
+   "leg_L",
+   "arm_L",
+   "arm_R",
+   "head"
+  ],
+  "release_state": true,
+  "why": "the five mates count, each with its weight (leg_R, leg_L, arm_L, arm_R 1.5; head 1.0; W = 7.0); stage_e = the sum of the weights of the mates LOCKED at their design bolt position on a module not scrapped / 7.0; value_e = stage_e x (1, or the safety violation factor 0.3 with a counted violation); assembly_score = contract_ok x the mean over the three hidden episodes (the complete privileged reference fastens all five)"
+ },
+ "scoring": {
+  "safety_violation_factor": 0.3
+ },
+ "silence_s": 120.0,
+ "socket_sample_s": 0.5,
+ "wall_cap_s": 8074.0,
+ "wall_caps_provisional": false,
+ "wall_caps_source": "the budget of record with its pace amended (the slowest complete program measured in the task image during the quality control; the frame cost scaled: the quiet number of record times the CPU ratio 1.2): the design's budget rule as written on the complete reference's simulated time of record (the arithmetic is in task.toml's [verifier] comment); the cell configuration's budgets block still holds the earlier numbers: cell_overrides carries the rule's simulated cap and the two wall caps into the cell (the cell configuration's own: 6639 s, 5853 s, a simulated cap of 900 s)"
+}

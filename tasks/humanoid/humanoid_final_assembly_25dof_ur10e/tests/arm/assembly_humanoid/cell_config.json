@@ -1,0 +1,631 @@
+{
+ "schema": "humanoid-cell-config/1",
+ "physics": {
+  "compiler_degree": false,
+  "timestep": 0.0005,
+  "tick_steps": 20,
+  "integrator": "implicitfast",
+  "cone": "elliptic",
+  "impratio": 100.0,
+  "noslip_iterations": 5,
+  "multiccd": false,
+  "gravity": 9.80665,
+  "pad_solref": [
+   0.001,
+   1.0
+  ],
+  "pad_condim": 4,
+  "pad_friction": [
+   0.7,
+   0.005,
+   0.0001
+  ],
+  "geom_defaults": {
+   "condim": 4,
+   "friction": [
+    0.8,
+    0.005,
+    0.0001
+   ],
+   "solref": [
+    0.004,
+    1.0
+   ],
+   "solimp": [
+    0.95,
+    0.99,
+    0.001,
+    0.5,
+    2.0
+   ]
+  },
+  "weld_solref": [
+   0.002,
+   1.0
+  ],
+  "weld_solimp": [
+   0.99,
+   0.999,
+   0.001,
+   0.5,
+   2.0
+  ],
+  "rest_contact": {
+   "solref": [
+    0.002,
+    1.0
+   ],
+   "solimp": [
+    0.99,
+    0.999,
+    0.0005,
+    0.5,
+    2.0
+   ]
+  },
+  "joint_friction_impedance": {
+   "solimp_friction": [
+    0.99,
+    0.999,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "solref_friction": [
+    0.001,
+    1.0
+   ]
+  },
+  "arena_memory_bytes": 536870912,
+  "settle_s": 1.0
+ },
+ "joint_model": {
+  "friction_Nm": {
+   "EC-A4310": 0.61,
+   "EC-A4315": 0.27,
+   "EC-A6416": 1.54,
+   "EC-A3814": 0.72,
+   "EC-A5013": 1.21
+  },
+  "damping_Nms_rad": {
+   "EC-A4310": 0.0,
+   "EC-A4315": 0.0,
+   "EC-A6416": 0.0,
+   "EC-A3814": 0.378,
+   "EC-A5013": 1.18
+  },
+  "armature_kg_m2": {
+   "EC-A4310": 0.0246,
+   "EC-A4315": 0.0324,
+   "EC-A6416": 0.065,
+   "EC-A3814": 0.0343,
+   "EC-A5013": 0.1
+  },
+  "parallel_ankle": {
+   "ankle_pitch": {
+    "actuator": "EC-A4310",
+    "friction_factor": 4.04,
+    "armature_kg_m2": 0.20075568,
+    "damping_Nms_rad": 0.0
+   },
+   "ankle_roll": {
+    "actuator": "EC-A4310",
+    "friction_factor": 1.6,
+    "armature_kg_m2": 0.031488,
+    "damping_Nms_rad": 0.0
+   }
+  },
+  "holding_margin_min": 1.25,
+  "range_tolerance_rad": 1e-09
+ },
+ "station": {
+  "pedestal_m": 0.85,
+  "waist_axis_from_ur_m": 0.75,
+  "psi_deg": 90.0,
+  "soles_above_floor_m": 0.1,
+  "robot_yaw_deg": 0.0,
+  "ur_base_pos_m": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "ur_yaw_deg": 0.0,
+  "pedestal_radius_m": 0.11,
+  "floor_half_size_m": 4.0
+ },
+ "robot": {
+  "model": "ur10e",
+  "gripper": "wide",
+  "fingertip_extension_mm": 0,
+  "home_q": [
+   0.0,
+   -1.5708,
+   1.5708,
+   -1.5708,
+   -1.5708,
+   0.0
+  ],
+  "carry_tcp_m_s": 0.25,
+  "carry_acc_m_s2": 0.5
+ },
+ "gripper": {
+  "force_N_default": 100.0,
+  "pad_force_N": [
+   10.0,
+   125.0
+  ]
+ },
+ "safety": {
+  "final": false,
+  "robot_force_N": 150.0,
+  "robot_cap_N": 250.0,
+  "part_force_N": 150.0,
+  "part_cap_N": 300.0,
+  "part_ticks": 20,
+  "part_force_sum": "per (module, body pressed on)",
+  "part_force_excludes": [
+   "pads",
+   "contacts inside one module",
+   "bodies joined by a lock"
+  ],
+  "part_force_counts": [
+   "a module resting in its rack"
+  ],
+  "part_speed_m_s": 3.0,
+  "part_speed_cap_m_s": 4.0,
+  "floor_contact": "scrap_and_violation",
+  "event_repeat_s": 0.5,
+  "count": "once per episode per rule",
+  "rule": "max(proposal, min(cap, ceil(1.5*ref_max)))"
+ },
+ "budgets": {
+  "sim_cap_s": 900.0,
+  "sim_cap_provisional": true,
+  "camera_frames": 450,
+  "silence_s": 120.0,
+  "max_ticks_per_step": 500,
+  "wall_cap_s": 6639.0,
+  "privileged_wall_cap_s": 5853.0,
+  "max_request_bytes": 4194304,
+  "wall_cap_provisional": true
+ },
+ "scoring": {
+  "safety_violation_factor": 0.3,
+  "episodes": 3
+ },
+ "observation": {
+  "wrench_noise": {
+   "sigma_f_N": 0.3,
+   "sigma_t_Nm": 0.02,
+   "bias_f_N": 1.0,
+   "bias_t_Nm": 0.05
+  }
+ },
+ "cameras": {
+  "agent_cameras": [
+   "top",
+   "wrist"
+  ],
+  "camera_draw": {
+   "c_rel": 0.02,
+   "f_rel": 0.03,
+   "k1": [
+    -0.08,
+    0.02
+   ],
+   "k2": [
+    -0.02,
+    0.02
+   ],
+   "mount_ang_deg": 3.0,
+   "mount_pos_m": 0.03,
+   "p": 0.001,
+   "wrist_ang_deg": 1.0,
+   "wrist_pos_m": 0.002
+  },
+  "depth": {
+   "top": true,
+   "wrist": true
+  },
+  "depth_range_m": [
+   0.1,
+   4.0
+  ],
+  "home_q_proposed": [
+   0.0,
+   -1.5708,
+   1.5708,
+   -1.5708,
+   -1.5708,
+   0.0
+  ],
+  "mounts": {
+   "top": {
+    "fovy_deg": 60.0,
+    "lookat": [
+     0.15,
+     -0.02,
+     0.0
+    ],
+    "name": "top",
+    "pos": [
+     0.15,
+     -0.02,
+     1.89
+    ],
+    "up": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "wrist": {
+    "fovy_deg": 64.3664,
+    "hfov_deg": 80.0,
+    "on": "the hand, beside the tool axis"
+   }
+  },
+  "schema": "humanoid-cell-cameras/1",
+  "size": {
+   "top": [
+    1280,
+    960
+   ],
+   "wrist": [
+    640,
+    480
+   ]
+  },
+  "renderer": "null"
+ },
+ "coupling": {
+  "classes": {
+   "arm": {
+    "enter": {
+     "axial_mm": 3.0,
+     "clock_deg": 2.0,
+     "lateral_mm": 1.0,
+     "tilt_deg": 1.5
+    },
+    "lock": {
+     "axial_mm": 0.5,
+     "tilt_deg": 0.5
+    },
+    "positions": 12
+   },
+   "head": {
+    "enter": {
+     "axial_mm": 2.0,
+     "clock_deg": 3.0,
+     "lateral_mm": 0.5,
+     "tilt_deg": 2.0
+    },
+    "lock": {
+     "axial_mm": 0.5,
+     "tilt_deg": 0.5
+    },
+    "positions": 6
+   },
+   "leg": {
+    "enter": {
+     "axial_mm": 2.0,
+     "clock_deg": 2.5,
+     "lateral_mm": 0.6,
+     "tilt_deg": 1.5
+    },
+    "lock": {
+     "axial_mm": 0.5,
+     "tilt_deg": 0.3
+    },
+    "positions": 6
+   }
+  },
+  "final": false,
+  "interfaces": {
+   "arm_L": "arm",
+   "arm_R": "arm",
+   "head": "head",
+   "leg_L": "leg",
+   "leg_R": "leg"
+  },
+  "latch": {
+   "force_before_lock": "none",
+   "hold": "none",
+   "hold_ticks": 50,
+   "mirrored_unit": "never a candidate",
+   "pull": false,
+   "rel_ang_speed_max_deg_s": 2.0,
+   "rel_speed_max_m_s": 0.005,
+   "release_factor": 2.0,
+   "tick_ms": 10
+  },
+  "measured": {
+   "classes": {
+    "arm": {
+     "held_still_short_of_the_face_mm": {
+      "locked_up_to": 0.45,
+      "not_locked_from": 0.55
+     },
+     "lateral_aim_mm": {
+      "not_locked_from": 0.4,
+      "seated_and_locked_up_to": 0.25
+     },
+     "phase_aim_deg": {
+      "locked_up_to": 1.9,
+      "not_locked_from": 2.1
+     },
+     "pressed_square_through_the_seat_centre": {
+      "axial_at_lock_mm_max": 0.065373,
+      "lock_after_s": [
+       0.5
+      ],
+      "locked": true,
+      "tilt_at_lock_deg_max": 0.073054
+     },
+     "released_before_the_lock": [
+      {
+       "axial_after_release_mm_end": 1.05988,
+       "outcome": "stayed in its seat, not fastened",
+       "released": "at the first tick of the lock condition (0.5 mm short of the face)",
+       "tilt_after_release_deg_max": 0.89239
+      },
+      {
+       "axial_after_release_mm_end": 1.06097,
+       "outcome": "stayed in its seat, not fastened",
+       "released": "at the first tick of the lock condition (0.5 mm short of the face)",
+       "tilt_after_release_deg_max": 0.89221
+      },
+      {
+       "axial_after_release_mm_end": 0.88172,
+       "outcome": "stayed in its seat, not fastened",
+       "released": "seated (face on face), 0.05 s after seating",
+       "tilt_after_release_deg_max": 0.9074
+      },
+      {
+       "axial_after_release_mm_end": 0.86361,
+       "outcome": "stayed in its seat, not fastened",
+       "released": "seated (face on face), 0.05 s after seating",
+       "tilt_after_release_deg_max": 0.88481
+      }
+     ],
+     "seated": {
+      "cocked_on_the_seat_by_a_3_deg_twist_deg": 0.36704,
+      "lateral_play_mm": 0.25911
+     },
+     "tilt_aim_deg": {
+      "locked_up_to": 0.25,
+      "not_locked_from": 0.5
+     }
+    },
+    "head": {
+     "held_still_short_of_the_face_mm": {
+      "locked_up_to": 0.45,
+      "not_locked_from": 0.55
+     },
+     "lateral_aim_mm": {
+      "not_locked_from": 0.6,
+      "seated_and_locked_up_to": 0.4
+     },
+     "phase_aim_deg": {
+      "locked_up_to": 2.9,
+      "not_locked_from": 3.1
+     },
+     "pressed_square_through_the_seat_centre": {
+      "axial_at_lock_mm_max": 0.009913,
+      "lock_after_s": [
+       0.5
+      ],
+      "locked": true,
+      "tilt_at_lock_deg_max": 3.1e-05
+     },
+     "released_before_the_lock": [
+      {
+       "axial_after_release_mm_end": -0.00024,
+       "outcome": "locked by itself",
+       "released": "at the first tick of the lock condition (0.5 mm short of the face)",
+       "tilt_after_release_deg_max": 0.00125
+      },
+      {
+       "axial_after_release_mm_end": -0.00024,
+       "outcome": "locked by itself",
+       "released": "seated (face on face), 0.05 s after seating",
+       "tilt_after_release_deg_max": 0.00091
+      }
+     ],
+     "seated": {
+      "cocked_on_the_seat_by_a_3_deg_twist_deg": 2.40942,
+      "lateral_play_mm": 0.2115
+     },
+     "tilt_aim_deg": {
+      "locked_up_to": 0.5,
+      "not_locked_from": 1.0
+     }
+    },
+    "leg": {
+     "held_still_short_of_the_face_mm": {
+      "locked_up_to": 0.45,
+      "not_locked_from": 0.55
+     },
+     "lateral_aim_mm": {
+      "not_locked_from": 0.75,
+      "seated_and_locked_up_to": 0.5
+     },
+     "phase_aim_deg": {
+      "locked_up_to": 2.4,
+      "not_locked_from": 2.6
+     },
+     "pressed_square_through_the_seat_centre": {
+      "axial_at_lock_mm_max": 0.020561,
+      "lock_after_s": [
+       0.5
+      ],
+      "locked": true,
+      "tilt_at_lock_deg_max": 0.055817
+     },
+     "released_before_the_lock": [
+      {
+       "axial_after_release_mm_end": 0.01132,
+       "outcome": "locked by itself",
+       "released": "0.05 mm short of the face",
+       "tilt_after_release_deg_max": 0.09342
+      },
+      {
+       "axial_after_release_mm_end": 0.01058,
+       "outcome": "locked by itself",
+       "released": "0.05 mm short of the face",
+       "tilt_after_release_deg_max": 0.0926
+      },
+      {
+       "axial_after_release_mm_end": 0.0331,
+       "outcome": "locked by itself",
+       "released": "0.10 mm short of the face",
+       "tilt_after_release_deg_max": 0.17449
+      },
+      {
+       "axial_after_release_mm_end": 0.03212,
+       "outcome": "locked by itself",
+       "released": "0.10 mm short of the face",
+       "tilt_after_release_deg_max": 0.17443
+      },
+      {
+       "axial_after_release_mm_end": 0.07832,
+       "outcome": "locked by itself",
+       "released": "0.15 mm short of the face",
+       "tilt_after_release_deg_max": 0.28992
+      },
+      {
+       "axial_after_release_mm_end": 0.07596,
+       "outcome": "locked by itself",
+       "released": "0.15 mm short of the face",
+       "tilt_after_release_deg_max": 0.28945
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "0.20 mm short of the face"
+      },
+      {
+       "axial_after_release_mm_end": 0.13222,
+       "outcome": "stayed in its seat, not fastened",
+       "released": "0.20 mm short of the face",
+       "tilt_after_release_deg_max": 0.44072
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "0.25 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "0.30 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "0.40 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "0.50 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "1.00 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "2.00 mm short of the face"
+      },
+      {
+       "outcome": "fell to the floor (scrapped)",
+       "released": "at the first tick of the lock condition (0.5 mm short of the face)"
+      },
+      {
+       "axial_after_release_mm_end": 0.0384,
+       "outcome": "locked by itself",
+       "released": "seated (face on face), 0.05 s after seating",
+       "tilt_after_release_deg_max": 0.18166
+      },
+      {
+       "axial_after_release_mm_end": 0.03764,
+       "outcome": "locked by itself",
+       "released": "seated (face on face), 0.05 s after seating",
+       "tilt_after_release_deg_max": 0.18117
+      }
+     ],
+     "seated": {
+      "cocked_on_the_seat_by_a_3_deg_twist_deg": 2.49483,
+      "lateral_play_mm": 0.29927
+     },
+     "tilt_aim_deg": {
+      "locked_up_to": 0.5,
+      "not_locked_from": 1.0
+     }
+    }
+   },
+   "holder": "a spring stand-in for the hand: 20 kN/m at the seat's centre, 50 N m/rad, critically damped, the module's weight carried; aims are offsets of the holder's target from the seat"
+  },
+  "schema": "humanoid-coupling-config/1",
+  "weights": {
+   "arm_L": 1.5,
+   "arm_R": 1.5,
+   "head": 1.0,
+   "leg_L": 1.5,
+   "leg_R": 1.5
+  }
+ },
+ "fixtures": {
+  "schema": "humanoid-cell-fixtures/1",
+  "design_sha256": "1146a11d807855e6fa8c4acc1ed606f718a2f1076a7173a6e69687f3a59792b8",
+  "layout_jitter": {
+   "stand_mm": 15,
+   "stand_yaw_deg": 2,
+   "clamp_repeat_mm": 1.0,
+   "clamp_repeat_deg": 0.3,
+   "leg_rack_mm": 12.5,
+   "leg_rack_yaw_deg": 5,
+   "arm_racks_mm": 20,
+   "arm_racks_yaw_deg": 5,
+   "head_nest_mm": 20,
+   "head_nest_yaw_deg": 10,
+   "distribution": "chosen at random, evenly between minus and plus the bound, each axis on its own",
+   "seat_play": "none"
+  },
+  "contact": {
+   "plate_and_nest_friction": [
+    0.8,
+    0.005,
+    0.0001
+   ],
+   "stop_face_friction": [
+    0.15,
+    0.005,
+    0.0001
+   ],
+   "arm_rack_friction": [
+    0.5,
+    0.005,
+    0.0001
+   ],
+   "fixture_geom_priority": 1
+  }
+ },
+ "contact_clusters": {
+  "enabled": true,
+  "query_margin_m": 0.002,
+  "tolerance_m": 1e-05,
+  "hysteresis_m": 2e-05,
+  "horizon_ticks": 20,
+  "requery_min_ticks": 10,
+  "requery_min_reenabled": 10,
+  "requery_disp_m": 0.001,
+  "drop_m_per_tick": 0.005,
+  "quiet_m_per_tick": 0.0005,
+  "quiet_ticks": 10,
+  "never_reduce": [
+   "pedestal"
+  ],
+  "reduce_base": true,
+  "requery_settled_ticks": 20
+ },
+ "performance": {
+  "skip_first_step1": true
+ }
+}

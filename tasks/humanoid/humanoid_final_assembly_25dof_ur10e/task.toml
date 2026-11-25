@@ -1,0 +1,82 @@
+# humanoid_final_assembly_25dof_ur10e (assembly stage: a UR10e-class arm with a wide two-finger parallel gripper builds a
+# humanoid robot from five modules onto its base, which a stand holds: two legs on the hip-pitch output flanges, two arms
+# into the shoulder sockets, the head on the neck's output; five mates of total weight 7.0, a coupling state machine
+# per seat that never pulls or holds, unpowered joints held by friction).
+#
+# The agent receives the units as delivered (each unit's bodies, joints and collision pieces in its own frame), the
+# fixtures at their nominal places, the cell's public configuration, the robot models, the cell's client library and
+# the render layer of its two cameras; no practice. It delivers assemble.py (solve(cell)), run as an unprivileged
+# account under netguard on 3 episodes of the grader's MuJoCo cell (tests/arm/assembly_humanoid), each a fresh layout
+# drawn from OS entropy (the stand, the leg rack, the two arm racks and the head nest placed and turned, the base's
+# clamp repeat, the overhead camera's mount and lens, the F/T bias); two uncalibrated RGB-D cameras, top and wrist, rendered
+# by MuJoCo's Filament on CPU Vulkan in the baked integration bay; no unit poses, no fastening events. Score = the
+# contract gate x the episode mean of the locked mates' weight / 7.0 (legs and arms 1.5, the head 1.0), an episode with a counted
+# safety violation keeping 30 % of its score. The oracle submits the privileged reference program with a 256-bit token
+# (the true poses through two privileged reads; the arm moved only through the public calls) on the nominal layout.
+# The cell's hidden kit (tests/gt/) is not in the repository: the grader unpacks it at verify start from the asset
+# dataset (pinned by sha256 and file count), or from a maintainer's local copy tests/assets/gt.tar.xz.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/humanoid_final_assembly_25dof_ur10e"
+
+[metadata]
+platform = "humanoid"
+direction = "assembly"
+metric = {name = "assembly_score", direction = "higher", hardware_invariant = true}
+mode = "atomic"
+stage = "assembly"
+stage_key = "assembly"
+hidden_instance = "none"
+practice_instances = []
+render_backend = "filament"
+entry = "design-first"
+route = "code-as-policy"
+agent_role = ["assembly engineer", "assembly-cell programmer"]
+artifact_kind = ["program"]
+oracle_kind = "token-privileged"
+compute = "cpu"
+branch = {assembler = "ur10e + wide two-finger gripper", fastening = "coupling (seat capture, lock at rest in the window; no pull, no hold)", joints = "unpowered, held by friction", engine = "mujoco", observation = "cameras-only"}
+observation_tier = "camera-only"
+randomisation = ["stand +-15 mm, yaw +-2 deg", "clamp repeat +-1.0 mm, +-0.3 deg", "leg rack +-12.5 mm, yaw +-5 deg", "arm racks +-20 mm, yaw +-5 deg", "head nest +-20 mm, yaw +-10 deg", "overhead camera (mount, focal lengths, principal point)", "F/T bias"]
+siblings = ["quadruped_full_assembly_12dof_ur10e", "racecar_full_assembly_tenth_scale_ur10e", "rov_final_assembly_and_trim_single_arm"]
+tags = ["assembly", "mujoco", "ur10e", "code-as-policy", "camera-only", "rgbd", "humanoid", "oracle-token"]
+
+# The agent's sandbox: 8 CPUs, 24 GB (an assembly program, its own simulation twin and the CPU renderer share it).
+[environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0
+
+# [agent] timeout_sec: 6 h.
+# [verifier] timeout_sec: THE BUDGET OF RECORD WITH ONE AMENDED INPUT: the pace is the slowest complete program
+# measured in the task image during the quality control (a program that fastens the arms first: the largest of its
+# three episodes' 3.9167 / 4.2421 / 4.0459 wall s / simulated s, at mean 1-minute host loads of 46 to 59), in place of
+# the reference's scaled pace 3.33528; the frame cost is the quiet number of record times the CPU ratio 1.2 (no
+# 1-minute host load of at most 24 came within two hours of the start of the budget measurement on this shared host).
+# The wall cap per episode = 1293 s simulated (ceil(3.5 x the complete reference's longest 369.4 s simulated); the
+# cell's own configured cap is 900 s and the grader overrides it) x 4.2421 wall s / simulated s (MEASURED in the task
+# image; two frames and the worker's opening inside) x 1.1 + 450 frames x 4.37244 s (SCALED: the quiet host's frame of
+# record of the wrist camera with depth, 3.6437 s, x 1.2) + the first frame 51.037 s + the build 21.707 s (both
+# measured in the task image) = 8074 s; the verifier = (3 episodes x (21.707 + 8074) s + 4.2 + 7.5 + 3 x 20.6 + 3 x
+# 4.6 s (the underwater task's measured fixed parts: provision and setup, the verify stage outside the episodes, the
+# overshoot past the wall cap and the trace's save per episode)) x 1.30 = 31687 s (8.8 h); a worst-case cap, not the
+# reference's verify time. The privileged wall cap (the reference's own) keeps the reference's pace: 4826 s.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: the grader runs as root in a fresh verifier sandbox from the task image that the agent never
+# touched, with only the declared artifact (the submission) restored into it. environment/setup/setup.sh does not run
+# there: tests/test.sh builds the grader's root-owned copy of the givens itself, and the grader unpacks the cell's
+# hidden kit. The agent's program runs during verify, beside the cell and its camera renderer: 24 GB.
+[verifier]
+timeout_sec = 31687
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 24576
+gpus = 0

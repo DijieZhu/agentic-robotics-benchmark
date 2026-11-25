@@ -1,0 +1,136 @@
+{
+ "schema": "humanoid-reference-grasps/1",
+ "what": "the grasp of each module the reference uses, in the module's part body frame (metres; the frame of the kit's body at the design pose): closing axis, approach (from the hand into the part), centre (midway between the two pad faces' middles), the module's width across the pads there",
+ "head": [
+  {
+   "use": true,
+   "row": 0,
+   "closing_axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "approach": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "centre_in_part_m": [
+    -0.047271164,
+    1.8871e-05,
+    0.173762551
+   ],
+   "width_m": 0.11654,
+   "torsion_margin_0p5ms2": 10.061,
+   "contact_share": 0.323,
+   "why": "the head's chosen grasp (closing across the head's top from above): usable at the pick and at the mate in all 301 layouts of the fixtures of record (nominal + 300 seeds), the open hand 4 mm clear of everything, the largest torsion margin"
+  }
+ ],
+ "leg_R": [
+  {
+   "use": true,
+   "row": 163,
+   "frame": "thigh",
+   "closing_axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "approach": [
+    -0.923879533,
+    0.0,
+    -0.382683432
+   ],
+   "centre_in_part_m": [
+    -0.0293510915,
+    -0.10848428,
+    -0.624469167
+   ],
+   "width_m": 0.10389,
+   "torsion_margin_0p5ms2": 1.227,
+   "contact_share": 0.318,
+   "why": "the leg's chosen grasp (from the front, closing across the thigh): usable at the pick and at the mate in all 301 layouts of the fixtures of record (4 such grasps); the largest torsion margin among them whose non-pad robot geoms keep >= 2 mm from the leg's collision pieces when the first pad touches (4.82 mm)"
+  }
+ ],
+ "leg_L": [
+  {
+   "use": true,
+   "row": 3,
+   "frame": "thigh",
+   "closing_axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "approach": [
+    -0.923879533,
+    0.0,
+    -0.382683432
+   ],
+   "centre_in_part_m": [
+    -0.0383108038,
+    0.108493744,
+    -0.62746738
+   ],
+   "width_m": 0.10389,
+   "torsion_margin_0p5ms2": 3.062,
+   "contact_share": 0.344,
+   "why": "the leg's chosen grasp (from the front, closing across the thigh): usable at the pick and at the mate in all 301 layouts of the fixtures of record (97 such grasps); the largest torsion margin among them whose non-pad robot geoms keep >= 2 mm from the leg's collision pieces when the first pad touches (2.50 mm)"
+  }
+ ],
+ "arm_R": [
+  {
+   "use": true,
+   "row": 173,
+   "closing_axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "approach": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "centre_in_part_m": [
+    -0.070658578,
+    -0.1455,
+    -0.083958271
+   ],
+   "width_m": 0.08924,
+   "torsion_margin_0p5ms2": 1.971,
+   "contact_share": 0.351,
+   "why": "the right arm's chosen grasp (the shoulder pitch link from above, closing front to back): usable at the pick and at the mate in all 301 layouts of the fixtures of record; torsion margin 1.971 at 0.5 m/s2; the open hand 7.0 mm off the torso at the seat"
+  }
+ ],
+ "arm_L": [
+  {
+   "use": true,
+   "row": 170,
+   "closing_axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "approach": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "centre_in_part_m": [
+    -0.070902241,
+    0.14733063,
+    -0.089922495
+   ],
+   "width_m": 0.08969,
+   "torsion_margin_0p5ms2": 1.784,
+   "contact_share": 0.323,
+   "why": "the left arm's chosen grasp (the shoulder pitch link from above, closing front to back): usable at the pick and at the mate in all 301 layouts of the fixtures of record; torsion margin 1.784 at 0.5 m/s2; chosen over an earlier, superseded grasp of the left arm (the same family) because the pads keep their force once the arm's weight is in the hand"
+  }
+ ],
+ "frames": {
+  "head": "the head's part body frame",
+  "leg_R": "the right thigh body's frame (= the leg's part body frame at the delivered state)",
+  "leg_L": "the left thigh body's frame (= the leg's part body frame at the delivered state)"
+ }
+}

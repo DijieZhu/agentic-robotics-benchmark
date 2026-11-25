@@ -1,0 +1,259 @@
+{
+ "budgets": {
+  "camera_frames": 450,
+  "max_request_bytes": 4194304,
+  "max_ticks_per_step": 500,
+  "silence_s": 120.0,
+  "sim_cap_s": 1293.0,
+  "wall_cap_s": 8074.0
+ },
+ "cameras": {
+  "agent_cameras": [
+   "top",
+   "wrist"
+  ],
+  "camera_draw": {
+   "c_rel": 0.02,
+   "f_rel": 0.03,
+   "mount_ang_deg": 3.0,
+   "mount_pos_m": 0.03
+  },
+  "depth": {
+   "top": true,
+   "wrist": true
+  },
+  "mounts": {
+   "top": {
+    "fovy_deg": 60.0,
+    "lookat": [
+     0.15,
+     -0.02,
+     0.0
+    ],
+    "name": "top",
+    "pos": [
+     0.15,
+     -0.02,
+     1.89
+    ],
+    "up": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "wrist": {
+    "fovy_deg": 64.3664,
+    "hfov_deg": 80.0,
+    "on": "the hand, beside the tool axis"
+   }
+  },
+  "size": {
+   "top": [
+    1280,
+    960
+   ],
+   "wrist": [
+    640,
+    480
+   ]
+  }
+ },
+ "gripper": {
+  "force_N_default": 100.0,
+  "pad_force_N": [
+   10.0,
+   125.0
+  ]
+ },
+ "joint_model": {
+  "armature_kg_m2": {
+   "A": 0.0246,
+   "B": 0.0324,
+   "C": 0.065,
+   "D": 0.0343,
+   "E": 0.1
+  },
+  "damping_Nms_rad": {
+   "A": 0.0,
+   "B": 0.0,
+   "C": 0.0,
+   "D": 0.378,
+   "E": 1.18
+  },
+  "friction_Nm": {
+   "A": 0.61,
+   "B": 0.27,
+   "C": 1.54,
+   "D": 0.72,
+   "E": 1.21
+  },
+  "holding_margin_min": 1.25,
+  "parallel_ankle": {
+   "ankle_pitch": {
+    "actuator": "A",
+    "armature_kg_m2": 0.20075568,
+    "damping_Nms_rad": 0.0,
+    "friction_factor": 4.04
+   },
+   "ankle_roll": {
+    "actuator": "A",
+    "armature_kg_m2": 0.031488,
+    "damping_Nms_rad": 0.0,
+    "friction_factor": 1.6
+   }
+  },
+  "range_tolerance_rad": 1e-09
+ },
+ "layout_draws": {
+  "arm_racks_mm": 20,
+  "arm_racks_yaw_deg": 5,
+  "clamp_repeat_deg": 0.3,
+  "clamp_repeat_mm": 1.0,
+  "distribution": "chosen at random, evenly between minus and plus the bound, each axis on its own",
+  "head_nest_mm": 20,
+  "head_nest_yaw_deg": 10,
+  "leg_rack_mm": 12.5,
+  "leg_rack_yaw_deg": 5,
+  "seat_play": "none",
+  "stand_mm": 15,
+  "stand_yaw_deg": 2
+ },
+ "observation": {
+  "wrench_noise": {
+   "bias_f_N": 1.0,
+   "bias_t_Nm": 0.05,
+   "sigma_f_N": 0.3,
+   "sigma_t_Nm": 0.02
+  }
+ },
+ "physics": {
+  "arena_memory_bytes": 536870912,
+  "compiler_degree": false,
+  "cone": "elliptic",
+  "geom_defaults": {
+   "condim": 4,
+   "friction": [
+    0.8,
+    0.005,
+    0.0001
+   ],
+   "solimp": [
+    0.95,
+    0.99,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "solref": [
+    0.004,
+    1.0
+   ]
+  },
+  "gravity": 9.80665,
+  "impratio": 100.0,
+  "integrator": "implicitfast",
+  "joint_friction_impedance": {
+   "solimp_friction": [
+    0.99,
+    0.999,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "solref_friction": [
+    0.001,
+    1.0
+   ]
+  },
+  "multiccd": false,
+  "noslip_iterations": 5,
+  "pad_condim": 4,
+  "pad_friction": [
+   0.7,
+   0.005,
+   0.0001
+  ],
+  "pad_solref": [
+   0.001,
+   1.0
+  ],
+  "rest_contact": {
+   "solimp": [
+    0.99,
+    0.999,
+    0.0005,
+    0.5,
+    2.0
+   ],
+   "solref": [
+    0.002,
+    1.0
+   ]
+  },
+  "settle_s": 1.0,
+  "tick_steps": 20,
+  "timestep": 0.0005,
+  "weld_solimp": [
+   0.99,
+   0.999,
+   0.001,
+   0.5,
+   2.0
+  ],
+  "weld_solref": [
+   0.002,
+   1.0
+  ]
+ },
+ "robot": {
+  "fingertip_extension_mm": 0,
+  "home_q": [
+   0.0,
+   -1.5708,
+   1.5708,
+   -1.5708,
+   -1.5708,
+   0.0
+  ],
+  "model": "ur10e"
+ },
+ "safety": {
+  "count": "once per episode per rule",
+  "event_repeat_s": 0.5,
+  "floor_contact": "scrap_and_violation",
+  "part_force_N": 150.0,
+  "part_force_counts": [
+   "a module resting in its rack"
+  ],
+  "part_force_excludes": [
+   "pads",
+   "contacts inside one module",
+   "bodies joined by a lock"
+  ],
+  "part_force_sum": "per (module, body pressed on)",
+  "part_speed_m_s": 3.0,
+  "part_ticks": 20,
+  "robot_force_N": 150.0
+ },
+ "schema": "humanoid-cell-public-config/1",
+ "scoring": {
+  "episodes": 3,
+  "safety_violation_factor": 0.3
+ },
+ "station": {
+  "floor_half_size_m": 4.0,
+  "pedestal_m": 0.85,
+  "pedestal_radius_m": 0.11,
+  "psi_deg": 90.0,
+  "robot_yaw_deg": 0.0,
+  "soles_above_floor_m": 0.1,
+  "ur_base_pos_m": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "ur_yaw_deg": 0.0,
+  "waist_axis_from_ur_m": 0.75
+ }
+}
