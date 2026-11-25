@@ -29,6 +29,12 @@ summary = "Specify seven upgraded replicas of a two-arm robot that has left the 
 platforms = ["arm"]
 stages = ["requirements"]
 
+[cabinet_door_hanging]
+title = "Replace a cabinet door with two Pandas"
+summary = "Two fixed Franka Pandas replace a cabinet door on loose-pin hinges: a vacuum cup holds the hanging door while a gripper pulls the old pins and drives in new ones, from cameras and wrist force."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [dual_arm_parcel_sorting_on_conveyor]
 title = "Turn parcels label-up with a dual-arm robot"
 summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a moving belt so its shipping label faces up at the line's scanner, within 5 s of delay, seeing the station only through four cameras."
