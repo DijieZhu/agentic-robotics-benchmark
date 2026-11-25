@@ -41,6 +41,12 @@ summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a movin
 platforms = ["arm"]
 stages = ["behavior"]
 
+[cable_routing_through_clips]
+title = "Route a cable on a harness board with a Panda"
+summary = "A Franka Panda must route a cable through the clips and round the posts of a harness board from two cameras and a wrist force sensor, on boards it has never seen, without overloading the connector."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [grocery_shelf_restocking]
 title = "Restock a grocery shelf with a lifted Panda"
 summary = "A Franka Panda on a vertical lift restocks a three-shelf bay from a nearly full tote, reading tiny date codes to rotate the stock oldest-first and facing each lane, from cameras and wrist force."

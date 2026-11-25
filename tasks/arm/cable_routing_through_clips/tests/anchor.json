@@ -1,0 +1,9 @@
+{
+  "metric": "mean_route_credit",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 1.0,
+  "source": "Own measurement, 2026-11-24: the token oracle (solution/oracle: the fitter's program on the grader's truth) on the fixed hidden set through tests/verify.py: 20 of 20 routes complete, no connector damaged, every probe pair differing (152 of 152), 6 s of controller time, no simulation re-run. The set was chosen by the pre-registered rule (tests/review/PREREG.md), which keeps a board only if this program completes it in process; over the wire it takes the same number of steps on every board. Never a published figure.",
+  "reference_commit": "the commit that adds tasks/arm/cable_routing_through_clips",
+  "note": "The set is fixed, the grader adds no randomness of its own and the simulation's numerics are pinned and checked, so the reference's value does not vary from run to run. The credit is 0 or 1 per board: the metric moves in steps of 0.05."
+}

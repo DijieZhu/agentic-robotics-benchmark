@@ -1,0 +1,46 @@
+# Cable routing through clips: a fixed Panda at a bench routes a cable, fixed at its connector, through the clips and
+# round the posts of a harness form board in the order of the board's drawing, from an overhead camera, a wrist
+# camera, its joint and hand state and a noisy wrist force/torque sensor. The fixtures are mounted within stated
+# tolerances of their printed places; the cable's stiffness, friction and density are not told; the connector is
+# damaged above 40 N (0.1 s mean). Credit per board: 1 for the whole route, undamaged, judged on the settled cable.
+# The agent has no simulator: it has the instruction and a commissioning service (environment/commission_service/,
+# its own account, a socket with the public wire only, three development boards, 20000 control steps, no truth and
+# no credit). The grader drives the agent's controller over a stdio wire on a fixed hidden set of 20 boards.
+# Structure after tasks/arm/lab_sample_handling.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/cable_routing_through_clips"
+
+[metadata]
+platform = "arm"
+
+# 4 CPUs: two development boards at a time (each a simulation and a CPU renderer) beside the agent's own work.
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h. The commissioning window (20000 control steps, about 35 minutes of bench time with its pictures) is about a
+# third of it.
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 20 boards, each at most 1500 control steps. The grader's budget (grader_config.json: 3600 s) is the controller's
+# own time: its replies, plus 0.2 s for every image it asks for; the simulation is not in it, so the timeout covers
+# both. Worst case: 30000 control steps at 0.12 s (0.10 s measured in the grading image on a busy host) = 3600 s of
+# simulation; 3600 s of controller time (if the whole budget went into images, 18000 of them, drawing and encoding
+# them at 0.10 s each takes 1800 s); 20 resets and settles at 12 s; the numerics check, the empty-account check and
+# the render self-test 60 s; two re-runs of an episode whose process ended by itself 400 s. 9700 s; with 35 %
+# margin 13100 s. The reference's whole verify takes about 45 minutes. The verifier image (tests/Dockerfile) runs
+# no desktop session.
+[verifier]
+timeout_sec = 13200
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 8192
+gpus = 0
