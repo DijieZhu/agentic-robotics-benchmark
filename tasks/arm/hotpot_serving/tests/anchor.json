@@ -1,0 +1,8 @@
+{
+  "metric": "mean_episode_credit",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 0.98,
+  "source": "Own measurement, 2026-11-25, on the fixed hidden set (tests/hidden/episodes.json: draw 1, 12 episodes, 2 per unit) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505), five ale validate runs: validate-71a5724d, validate-df7ace01, validate-0f3cc3a0, validate-4bc34a7f and validate-9f83534c. Each: mean_episode_credit 1.0, 12 of 12 episodes scored with every bowl done, no simulation faults, the numerics fingerprint and the render self-test passed, untouched 0.0, probe pairs 719 of 719 differing, the reference's own time 245-269 s of the 8000 s budget, the verify stage 2904-2942 s.",
+  "note": "Measured, not drawn. The set holds only episodes on which the reference scored credit 1.0 in three runs over the real wire when it was selected (tests/hidden/episode_selection.json); over the wire the reference repeats step for step, so the five validates agree. full_at 0.98: one bowl lost (a third of one episode, 0.028 of the metric) would read reward 0.99, two bowls 0.96."
+}

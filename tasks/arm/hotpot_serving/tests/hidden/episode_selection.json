@@ -1,0 +1,6933 @@
+{
+ "format": "hotpot_serving episode selection 1",
+ "rule": "tests/review/select_set.py (module docstring)",
+ "frozen": {
+  "tests/soup_grade.py": "c82e87e7abb9c1f460d9e1c4ac9d5a57f1263e09974162f189c750a0937a6290",
+  "tests/episode.py": "e0c797ba01c5b99dc4d2893e234d5fe72bc92ad522e1ee645fb3fff6bcdba984",
+  "tests/soup_env.py": "9bed8f5da63cc32292a6775047af32d7053a50210e4f8c774256ca9c1e11d31e",
+  "tests/soup_sim.py": "fb9fa215fe799498ef7cd691f464d01bb3c75198b7b5711a91786329cdb0c9a4",
+  "tests/units.json": "2f5a9e303ab2cf4d46ccd197da52859930cfcb44c47ff1f88643a362daa76215",
+  "tests/grader_config.json": "a84d477f8b3fc1092d37de7fab2a1bdbe76cad9401d9090ed9991b34615bf710",
+  "solution/oracle/episode.py": "e0c797ba01c5b99dc4d2893e234d5fe72bc92ad522e1ee645fb3fff6bcdba984",
+  "solution/oracle/soup_env.py": "9bed8f5da63cc32292a6775047af32d7053a50210e4f8c774256ca9c1e11d31e",
+  "solution/oracle/soup_sim.py": "fb9fa215fe799498ef7cd691f464d01bb3c75198b7b5711a91786329cdb0c9a4",
+  "solution/oracle/oracle_main.py": "167f02c95c58404d8aa4c532454360b1f06df04c3f1162c15da3a25b394b44d1",
+  "solution/oracle/reference.py": "2edff2668f394ca8dd26621862014d713db58d596750628d948e8d1bdcdb32cb",
+  "solution/oracle/wire_world.py": "ed74be31e1bf7e2e59a49053e66c781d6e86ed5f7da2ef98460d248de7364616",
+  "solution/solve.sh": "6dd07186577834e59cdeeb057b77ffaf36e8c6c7d715f6024dd9f391162e5794"
+ },
+ "frozen_commit": "a5bbccb4aee06f88c6a9247d8042aca419b2b581",
+ "draws": [
+  {
+   "draw": 1,
+   "drawn_utc": "2026-11-25T06:24:33Z",
+   "key": "fbe591ab2d86dabb597665178a33c6240165cd2d08bc5dec29c5a8c3764843ca",
+   "source": "os.urandom(32)",
+   "frozen_commit": "ec7e46ec300baadf0a98abd68da847f48f2a2359",
+   "status": "made",
+   "made_utc": "2026-11-25T07:26:50Z",
+   "listed_by_place": [
+    12,
+    12,
+    12
+   ],
+   "graded_order": [
+    "u4#7",
+    "u5#18",
+    "u0#5",
+    "u5#8",
+    "u2#19",
+    "u3#2",
+    "u4#4",
+    "u0#1",
+    "u1#2",
+    "u2#14",
+    "u1#6",
+    "u3#1"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 16305758465465147484,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 190
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 210
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5766,
+     "sim_fault": false,
+     "probes": 49,
+     "probes_passed": 49,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 247.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 187.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 207.8
+      }
+     },
+     "halved": false,
+     "wall_s": 229.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 5360620234959849979,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6921,
+     "sim_fault": false,
+     "probes": 71,
+     "probes_passed": 71,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 207.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 247.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      }
+     },
+     "halved": false,
+     "wall_s": 287.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6921,
+     "sim_fault": false,
+     "probes": 74,
+     "probes_passed": 74,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 207.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 247.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      }
+     },
+     "halved": false,
+     "wall_s": 271.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6921,
+     "sim_fault": false,
+     "probes": 75,
+     "probes_passed": 75,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 207.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 247.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      }
+     },
+     "halved": false,
+     "wall_s": 271.8
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 2,
+   "seed": 11485159749181637575,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 140
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 6495,
+     "sim_fault": false,
+     "probes": 72,
+     "probes_passed": 72,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 136.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 146.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 137.8
+      }
+     },
+     "halved": true,
+     "wall_s": 263.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 3,
+   "seed": 7294659920237021934,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 2
+      },
+      "soup_ml": 240
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 5612,
+     "sim_fault": false,
+     "probes": 59,
+     "probes_passed": 59,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 2
+       },
+       "soup_ml": 236.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 218.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 208.4
+      }
+     },
+     "halved": false,
+     "wall_s": 229.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 4,
+   "seed": 994921978155832951,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 110
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 7450,
+     "sim_fault": false,
+     "probes": 76,
+     "probes_passed": 76,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 247.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 106.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 197.1
+      }
+     },
+     "halved": false,
+     "wall_s": 307.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 5,
+   "seed": 2423743778542536624,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6841,
+     "sim_fault": false,
+     "probes": 54,
+     "probes_passed": 54,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 148.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 166.5
+      }
+     },
+     "halved": false,
+     "wall_s": 270.1
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6841,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 148.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 166.5
+      }
+     },
+     "halved": false,
+     "wall_s": 260.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6841,
+     "sim_fault": false,
+     "probes": 67,
+     "probes_passed": 67,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 148.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 166.5
+      }
+     },
+     "halved": false,
+     "wall_s": 259.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 6,
+   "seed": 16574889912754236944,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 79,
+     "probes_passed": 79,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 120.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 197.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 217.3
+      }
+     },
+     "halved": true,
+     "wall_s": 342.2
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u0",
+   "index": 7,
+   "seed": 6375147022197478128,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6399,
+     "sim_fault": false,
+     "probes": 70,
+     "probes_passed": 70,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 156.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 2,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 247.2
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 97.8
+      }
+     },
+     "halved": false,
+     "wall_s": 257.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 2726870166495580936,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 250
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6566,
+     "sim_fault": false,
+     "probes": 79,
+     "probes_passed": 79,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 246.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 157.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 148.0
+      }
+     },
+     "halved": true,
+     "wall_s": 274.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 12660178629749808666,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 120
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 7529,
+     "sim_fault": false,
+     "probes": 93,
+     "probes_passed": 93,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 107.7
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 147.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 116.3
+      }
+     },
+     "halved": false,
+     "wall_s": 277.0
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 2,
+   "seed": 9135363978467284298,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 170
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6370,
+     "sim_fault": false,
+     "probes": 63,
+     "probes_passed": 63,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 168.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 205.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 158.2
+      }
+     },
+     "halved": false,
+     "wall_s": 260.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6370,
+     "sim_fault": false,
+     "probes": 64,
+     "probes_passed": 64,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 168.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 205.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 158.2
+      }
+     },
+     "halved": false,
+     "wall_s": 246.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6370,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 168.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 205.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 158.2
+      }
+     },
+     "halved": false,
+     "wall_s": 246.3
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 3,
+   "seed": 6561275183986346711,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 88,
+     "probes_passed": 88,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 0.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 278.2
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 4,
+   "seed": 3427695537299809152,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 2
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 7752,
+     "sim_fault": false,
+     "probes": 86,
+     "probes_passed": 86,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 217.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 147.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 167.9
+      }
+     },
+     "halved": true,
+     "wall_s": 312.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 5,
+   "seed": 10277742432138467646,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 82,
+     "probes_passed": 82,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 30.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 158.3
+      }
+     },
+     "halved": true,
+     "wall_s": 318.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 6,
+   "seed": 5834415075573140325,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 170
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 2
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5798,
+     "sim_fault": false,
+     "probes": 59,
+     "probes_passed": 59,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 167.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 2
+       },
+       "soup_ml": 217.4
+      }
+     },
+     "halved": false,
+     "wall_s": 227.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5798,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 167.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 2
+       },
+       "soup_ml": 217.4
+      }
+     },
+     "halved": false,
+     "wall_s": 220.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5798,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 167.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 2
+       },
+       "soup_ml": 217.4
+      }
+     },
+     "halved": false,
+     "wall_s": 220.6
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u1",
+   "index": 7,
+   "seed": 9111051392802603400,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 100
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 190
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 6620,
+     "sim_fault": false,
+     "probes": 53,
+     "probes_passed": 53,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 127.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 96.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 188.1
+      }
+     },
+     "halved": true,
+     "wall_s": 278.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 8946784060716687444,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 120
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 75,
+     "probes_passed": 75,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 206.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 288.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 11300904932464766704,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5084,
+     "sim_fault": false,
+     "probes": 57,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.7
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 136.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 238.2
+      }
+     },
+     "halved": false,
+     "wall_s": 229.1
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 2,
+   "seed": 3918286165169012113,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 3
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5190,
+     "sim_fault": false,
+     "probes": 47,
+     "probes_passed": 47,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 206.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 148.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 3
+       },
+       "soup_ml": 158.1
+      }
+     },
+     "halved": false,
+     "wall_s": 215.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 3,
+   "seed": 3457309240119439831,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 74,
+     "probes_passed": 74,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 156.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 137.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 96.1
+      }
+     },
+     "halved": true,
+     "wall_s": 299.8
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 4,
+   "seed": 5389075461577589525,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 190
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6174,
+     "sim_fault": false,
+     "probes": 43,
+     "probes_passed": 43,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 185.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 156.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 107.6
+      }
+     },
+     "halved": true,
+     "wall_s": 257.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 5,
+   "seed": 5231497415946419481,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 120
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6258,
+     "sim_fault": false,
+     "probes": 74,
+     "probes_passed": 74,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 236.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 116.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 157.1
+      }
+     },
+     "halved": false,
+     "wall_s": 257.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 6,
+   "seed": 5378042040231308816,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 240
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5976,
+     "sim_fault": false,
+     "probes": 55,
+     "probes_passed": 55,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 236.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 136.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 167.8
+      }
+     },
+     "halved": false,
+     "wall_s": 228.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 7,
+   "seed": 17025649397088785855,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 5999,
+     "sim_fault": false,
+     "probes": 54,
+     "probes_passed": 54,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 157.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 127.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 197.1
+      }
+     },
+     "halved": false,
+     "wall_s": 257.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 8,
+   "seed": 16484863828652308791,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 250
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.5,
+     "reason": "ok",
+     "steps": 6564,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 96.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 248.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 238.3
+      }
+     },
+     "halved": true,
+     "wall_s": 276.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 9,
+   "seed": 5152728751722828926,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 6217,
+     "sim_fault": false,
+     "probes": 69,
+     "probes_passed": 69,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 96.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 137.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 196.1
+      }
+     },
+     "halved": false,
+     "wall_s": 246.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 10,
+   "seed": 12930094691322153183,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 7690,
+     "sim_fault": false,
+     "probes": 75,
+     "probes_passed": 75,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 96.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 345.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 11,
+   "seed": 7241030575012013828,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 250
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 230
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6164,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 146.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 246.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 227.6
+      }
+     },
+     "halved": false,
+     "wall_s": 277.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 12,
+   "seed": 7320190797313230458,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6056,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 237.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 126.4
+      }
+     },
+     "halved": false,
+     "wall_s": 241.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 13,
+   "seed": 12816754629388579448,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 190
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 80,
+     "probes_passed": 80,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 0.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 206.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 138.2
+      }
+     },
+     "halved": true,
+     "wall_s": 294.2
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 14,
+   "seed": 18082148723253630965,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 240
+     },
+     "blue": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5658,
+     "sim_fault": false,
+     "probes": 49,
+     "probes_passed": 49,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 238.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 146.9
+      }
+     },
+     "halved": false,
+     "wall_s": 214.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5658,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 238.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 146.9
+      }
+     },
+     "halved": false,
+     "wall_s": 213.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5658,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 238.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 146.9
+      }
+     },
+     "halved": false,
+     "wall_s": 213.3
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 15,
+   "seed": 7329406020233193226,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 5026,
+     "sim_fault": false,
+     "probes": 34,
+     "probes_passed": 34,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 208.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 218.1
+      }
+     },
+     "halved": true,
+     "wall_s": 193.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 16,
+   "seed": 12854773354544121640,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 110
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 3,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 76,
+     "probes_passed": 76,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 108.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 177.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 252.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 17,
+   "seed": 10909842670829740971,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5811,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 148.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 96.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.7
+      }
+     },
+     "halved": false,
+     "wall_s": 224.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 18,
+   "seed": 13004689565197862363,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 130
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 190
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 5441,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 127.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 157.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 188.3
+      }
+     },
+     "halved": true,
+     "wall_s": 212.6
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u2",
+   "index": 19,
+   "seed": 8494568113328996974,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5980,
+     "sim_fault": false,
+     "probes": 57,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 217.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 238.1
+      }
+     },
+     "halved": false,
+     "wall_s": 244.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5980,
+     "sim_fault": false,
+     "probes": 64,
+     "probes_passed": 64,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 217.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 238.1
+      }
+     },
+     "halved": false,
+     "wall_s": 242.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5980,
+     "sim_fault": false,
+     "probes": 64,
+     "probes_passed": 64,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 217.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 218.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 238.1
+      }
+     },
+     "halved": false,
+     "wall_s": 242.9
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 1911564736619651841,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 5037,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 96.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 2,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 176.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 218.3
+      }
+     },
+     "halved": false,
+     "wall_s": 214.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 6162186468325520478,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5903,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 98.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 127.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 106.7
+      }
+     },
+     "halved": false,
+     "wall_s": 228.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5903,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 98.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 127.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 106.7
+      }
+     },
+     "halved": false,
+     "wall_s": 214.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5903,
+     "sim_fault": false,
+     "probes": 69,
+     "probes_passed": 69,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 98.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 127.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 106.7
+      }
+     },
+     "halved": false,
+     "wall_s": 213.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 2,
+   "seed": 8227747349004601809,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6750,
+     "sim_fault": false,
+     "probes": 63,
+     "probes_passed": 63,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 208.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 207.6
+      }
+     },
+     "halved": false,
+     "wall_s": 280.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6750,
+     "sim_fault": false,
+     "probes": 66,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 208.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 207.6
+      }
+     },
+     "halved": false,
+     "wall_s": 268.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6750,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 208.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 207.6
+      }
+     },
+     "halved": false,
+     "wall_s": 270.1
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u3",
+   "index": 3,
+   "seed": 9954939857997301643,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 180
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 120
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6250,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 176.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 127.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 116.2
+      }
+     },
+     "halved": false,
+     "wall_s": 252.0
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 14573524209583414703,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 140
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6855,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 106.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 177.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 136.6
+      }
+     },
+     "halved": false,
+     "wall_s": 268.8
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 9644507443846531625,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 190
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 5612,
+     "sim_fault": false,
+     "probes": 43,
+     "probes_passed": 43,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 156.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 187.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 217.1
+      }
+     },
+     "halved": true,
+     "wall_s": 231.2
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 2,
+   "seed": 9625607949306564907,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 7016,
+     "sim_fault": false,
+     "probes": 84,
+     "probes_passed": 84,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 217.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 146.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 97.6
+      }
+     },
+     "halved": false,
+     "wall_s": 289.6
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 3,
+   "seed": 8054968266908082060,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "blue": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6295,
+     "sim_fault": false,
+     "probes": 67,
+     "probes_passed": 67,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 128.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 127.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 137.4
+      }
+     },
+     "halved": false,
+     "wall_s": 265.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 4,
+   "seed": 12824377449156623013,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 110
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5020,
+     "sim_fault": false,
+     "probes": 46,
+     "probes_passed": 46,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 108.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 126.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 107.3
+      }
+     },
+     "halved": false,
+     "wall_s": 221.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5020,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 108.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 126.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 107.3
+      }
+     },
+     "halved": false,
+     "wall_s": 215.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5020,
+     "sim_fault": false,
+     "probes": 48,
+     "probes_passed": 48,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 108.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 126.5
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 107.3
+      }
+     },
+     "halved": false,
+     "wall_s": 213.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 5,
+   "seed": 16394438548051888234,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 190
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 230
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 86,
+     "probes_passed": 86,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 186.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 226.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 341.8
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 6,
+   "seed": 9586744441922603456,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5827,
+     "sim_fault": false,
+     "probes": 65,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 197.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 177.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 216.4
+      }
+     },
+     "halved": false,
+     "wall_s": 235.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u4",
+   "index": 7,
+   "seed": 12661070345750839547,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6226,
+     "sim_fault": false,
+     "probes": 61,
+     "probes_passed": 61,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 147.2
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 146.6
+      }
+     },
+     "halved": false,
+     "wall_s": 245.6
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6226,
+     "sim_fault": false,
+     "probes": 65,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 147.2
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 146.6
+      }
+     },
+     "halved": false,
+     "wall_s": 242.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6226,
+     "sim_fault": false,
+     "probes": 57,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 97.8
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 147.2
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 146.6
+      }
+     },
+     "halved": false,
+     "wall_s": 239.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 8620798639137755030,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 180
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6415,
+     "sim_fault": false,
+     "probes": 72,
+     "probes_passed": 72,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 177.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 126.4
+      }
+     },
+     "halved": false,
+     "wall_s": 283.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 7607030866684407068,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 3,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 3,
+       "mushroom": 0
+      },
+      "soup_ml": 160
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 7113,
+     "sim_fault": false,
+     "probes": 63,
+     "probes_passed": 63,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 156.4
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 197.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 3,
+        "mushroom": 0
+       },
+       "soup_ml": 157.6
+      }
+     },
+     "halved": true,
+     "wall_s": 309.8
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 2,
+   "seed": 17906934867475610792,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 190
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.5,
+     "reason": "ok",
+     "steps": 6653,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 207.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 186.4
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 196.7
+      }
+     },
+     "halved": true,
+     "wall_s": 256.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 3,
+   "seed": 12507724546158161627,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 3
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 120
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 75,
+     "probes_passed": 75,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 134.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 117.4
+      }
+     },
+     "halved": true,
+     "wall_s": 277.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 4,
+   "seed": 17315960141156082831,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 170
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.5,
+     "reason": "ok",
+     "steps": 5734,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 167.6
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 137.1
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 197.6
+      }
+     },
+     "halved": true,
+     "wall_s": 231.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 5,
+   "seed": 9139254184323772361,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 230
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 6615,
+     "sim_fault": false,
+     "probes": 54,
+     "probes_passed": 54,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 126.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 227.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 96.3
+      }
+     },
+     "halved": true,
+     "wall_s": 261.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 6,
+   "seed": 7926212077289196102,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 120
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.5,
+     "reason": "ok",
+     "steps": 6539,
+     "sim_fault": false,
+     "probes": 82,
+     "probes_passed": 82,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 247.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 117.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 167.2
+      }
+     },
+     "halved": true,
+     "wall_s": 266.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 7,
+   "seed": 15572150898448401896,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 200
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 140
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 5479,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 2
+       },
+       "soup_ml": 198.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 137.2
+      }
+     },
+     "halved": false,
+     "wall_s": 220.7
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 8,
+   "seed": 10675101204093244562,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 1
+      },
+      "soup_ml": 160
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 1
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6142,
+     "sim_fault": false,
+     "probes": 61,
+     "probes_passed": 61,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 158.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 127.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 166.2
+      }
+     },
+     "halved": false,
+     "wall_s": 239.5
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6142,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 158.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 127.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 166.2
+      }
+     },
+     "halved": false,
+     "wall_s": 238.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 6142,
+     "sim_fault": false,
+     "probes": 62,
+     "probes_passed": 62,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 158.1
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 127.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 1
+       },
+       "soup_ml": 166.2
+      }
+     },
+     "halved": false,
+     "wall_s": 238.1
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 9,
+   "seed": 17200146190540869510,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 3,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 170
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.1667,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 79,
+     "probes_passed": 79,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 216.2
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 97.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 168.1
+      }
+     },
+     "halved": true,
+     "wall_s": 382.1
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 10,
+   "seed": 13243579322730771096,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 140
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 190
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 5818,
+     "sim_fault": false,
+     "probes": 66,
+     "probes_passed": 66,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 137.3
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 186.9
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 98.4
+      }
+     },
+     "halved": false,
+     "wall_s": 223.4
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 11,
+   "seed": 18077511370142175364,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 180
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 88,
+     "probes_passed": 88,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 133.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.8
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 280.1
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 12,
+   "seed": 7335331696399539522,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 100
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 210
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 65,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 98.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 147.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 300.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 13,
+   "seed": 9838799438268217502,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     },
+     "blue": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 250
+     },
+     "yellow": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6834,
+     "sim_fault": false,
+     "probes": 68,
+     "probes_passed": 68,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 197.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 246.7
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 217.0
+      }
+     },
+     "halved": true,
+     "wall_s": 268.1
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 14,
+   "seed": 42911812741294251,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 230
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 0,
+       "mushroom": 2
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 87,
+     "probes_passed": 87,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 227.7
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 177.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 237.9
+      }
+     },
+     "halved": true,
+     "wall_s": 306.9
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 15,
+   "seed": 4740366907255100913,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 190
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 200
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6268,
+     "sim_fault": false,
+     "probes": 63,
+     "probes_passed": 63,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 186.7
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 198.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 238.3
+      }
+     },
+     "halved": false,
+     "wall_s": 248.5
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 16,
+   "seed": 2132010096301452777,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 220
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 1
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 200
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.6667,
+     "reason": "ok",
+     "steps": 6747,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 1
+       },
+       "soup_ml": 217.5
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 1
+       },
+       "soup_ml": 177.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 196.4
+      }
+     },
+     "halved": false,
+     "wall_s": 258.1
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 17,
+   "seed": 6410239827092270317,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 1
+      },
+      "soup_ml": 150
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 230
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 100
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.3333,
+     "reason": "ok",
+     "steps": 6274,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 146.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 226.6
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 97.8
+      }
+     },
+     "halved": false,
+     "wall_s": 245.2
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 18,
+   "seed": 18359731334301458917,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 2,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 110
+     },
+     "blue": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 180
+     },
+     "yellow": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 0,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5876,
+     "sim_fault": false,
+     "probes": 52,
+     "probes_passed": 52,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 107.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 178.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 216.0
+      }
+     },
+     "halved": false,
+     "wall_s": 231.3
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5876,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 107.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 178.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 216.0
+      }
+     },
+     "halved": false,
+     "wall_s": 229.9
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 5876,
+     "sim_fault": false,
+     "probes": 65,
+     "probes_passed": 65,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 2,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 107.9
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 178.3
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 1,
+        "shrimp": 1,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 216.0
+      }
+     },
+     "halved": false,
+     "wall_s": 229.5
+    }
+   ],
+   "status": "kept",
+   "draw": 1
+  },
+  {
+   "unit": "u5",
+   "index": 19,
+   "seed": 14421238019623599275,
+   "drawn": {
+    "listed_places": [
+     0,
+     1,
+     2
+    ],
+    "order": {
+     "white": {
+      "items": {
+       "fishball": 1,
+       "shrimp": 1,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 130
+     },
+     "blue": {
+      "items": {
+       "fishball": 0,
+       "shrimp": 1,
+       "tofu": 2,
+       "mushroom": 0
+      },
+      "soup_ml": 220
+     },
+     "yellow": {
+      "items": {
+       "fishball": 2,
+       "shrimp": 0,
+       "tofu": 1,
+       "mushroom": 0
+      },
+      "soup_ml": 240
+     }
+    }
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 8000,
+     "sim_fault": false,
+     "probes": 83,
+     "probes_passed": 83,
+     "probes_idle_skipped": 0,
+     "bowls": {
+      "white": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 1,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "blue": {
+       "items_in": {
+        "fishball": 0,
+        "shrimp": 0,
+        "tofu": 2,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      },
+      "yellow": {
+       "items_in": {
+        "fishball": 2,
+        "shrimp": 0,
+        "tofu": 0,
+        "mushroom": 0
+       },
+       "soup_ml": 0.0
+      }
+     },
+     "halved": true,
+     "wall_s": 288.3
+    }
+   ],
+   "status": "rejected",
+   "draw": 1
+  }
+ ],
+ "amendments": [
+  {
+   "amendment": 1,
+   "amended_utc": "2026-11-25T08:14:39Z",
+   "draw": 1,
+   "commit": "a5bbccb4aee06f88c6a9247d8042aca419b2b581",
+   "reason": "doc-only edits of frozen files (module docstrings and comments of solution/oracle/reference.py, wire_world.py, oracle_main.py, tests/soup_grade.py, solution/solve.sh: meatball wording replaced by the hotpot's); no behaviour change",
+   "changed": {
+    "tests/soup_grade.py": {
+     "recorded": "9d66b85459db2de7425cdff0dff37f6f1739fd576eadb6a54e125ac5a4b770cb",
+     "now": "c82e87e7abb9c1f460d9e1c4ac9d5a57f1263e09974162f189c750a0937a6290"
+    },
+    "solution/oracle/oracle_main.py": {
+     "recorded": "4c5f8855fd799c5d64c2dc19212c724cc97d9d232eb162af6cc38a72e5bfab6b",
+     "now": "167f02c95c58404d8aa4c532454360b1f06df04c3f1162c15da3a25b394b44d1"
+    },
+    "solution/oracle/reference.py": {
+     "recorded": "bf5adf2ed6a63cf7fc7d2548c627132475859802893a87e86998eaf3bab2f0fd",
+     "now": "2edff2668f394ca8dd26621862014d713db58d596750628d948e8d1bdcdb32cb"
+    },
+    "solution/oracle/wire_world.py": {
+     "recorded": "1f184264f379b138f09fe907eb32c4b324c58d9b74e7fbd590dc2ebe1e591c3a",
+     "now": "ed74be31e1bf7e2e59a49053e66c781d6e86ed5f7da2ef98460d248de7364616"
+    },
+    "solution/solve.sh": {
+     "recorded": "2a940395f7c6cb3cf636f0a40b47bb25a48dc4fceac236f5e0a8293b87f83703",
+     "now": "6dd07186577834e59cdeeb057b77ffaf36e8c6c7d715f6024dd9f391162e5794"
+    }
+   },
+   "frozen_before": {
+    "tests/soup_grade.py": "9d66b85459db2de7425cdff0dff37f6f1739fd576eadb6a54e125ac5a4b770cb",
+    "tests/episode.py": "e0c797ba01c5b99dc4d2893e234d5fe72bc92ad522e1ee645fb3fff6bcdba984",
+    "tests/soup_env.py": "9bed8f5da63cc32292a6775047af32d7053a50210e4f8c774256ca9c1e11d31e",
+    "tests/soup_sim.py": "fb9fa215fe799498ef7cd691f464d01bb3c75198b7b5711a91786329cdb0c9a4",
+    "tests/units.json": "2f5a9e303ab2cf4d46ccd197da52859930cfcb44c47ff1f88643a362daa76215",
+    "tests/grader_config.json": "a84d477f8b3fc1092d37de7fab2a1bdbe76cad9401d9090ed9991b34615bf710",
+    "solution/oracle/episode.py": "e0c797ba01c5b99dc4d2893e234d5fe72bc92ad522e1ee645fb3fff6bcdba984",
+    "solution/oracle/soup_env.py": "9bed8f5da63cc32292a6775047af32d7053a50210e4f8c774256ca9c1e11d31e",
+    "solution/oracle/soup_sim.py": "fb9fa215fe799498ef7cd691f464d01bb3c75198b7b5711a91786329cdb0c9a4",
+    "solution/oracle/oracle_main.py": "4c5f8855fd799c5d64c2dc19212c724cc97d9d232eb162af6cc38a72e5bfab6b",
+    "solution/oracle/reference.py": "bf5adf2ed6a63cf7fc7d2548c627132475859802893a87e86998eaf3bab2f0fd",
+    "solution/oracle/wire_world.py": "1f184264f379b138f09fe907eb32c4b324c58d9b74e7fbd590dc2ebe1e591c3a",
+    "solution/solve.sh": "2a940395f7c6cb3cf636f0a40b47bb25a48dc4fceac236f5e0a8293b87f83703"
+   },
+   "frozen_commit_before": "ec7e46ec300baadf0a98abd68da847f48f2a2359",
+   "rule": "one full verify of the privileged reference on the made set as the grader runs it, with the frozen files of the commit; every episode scored credit 1.0 again",
+   "evidence": {
+    "run": "experiments/hotpot/amend_evidence.py",
+    "utc": "2026-11-25T08:14:28Z",
+    "probes": 719,
+    "probes_passed": 719,
+    "wall_s": 2852.3,
+    "episodes": [
+     {
+      "unit": "u4",
+      "seed": 12661070345750839547,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6226
+     },
+     {
+      "unit": "u5",
+      "seed": 18359731334301458917,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5876
+     },
+     {
+      "unit": "u0",
+      "seed": 2423743778542536624,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6841
+     },
+     {
+      "unit": "u5",
+      "seed": 10675101204093244562,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6142
+     },
+     {
+      "unit": "u2",
+      "seed": 8494568113328996974,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5980
+     },
+     {
+      "unit": "u3",
+      "seed": 8227747349004601809,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6750
+     },
+     {
+      "unit": "u4",
+      "seed": 12824377449156623013,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5020
+     },
+     {
+      "unit": "u0",
+      "seed": 5360620234959849979,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6921
+     },
+     {
+      "unit": "u1",
+      "seed": 9135363978467284298,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 6370
+     },
+     {
+      "unit": "u2",
+      "seed": 18082148723253630965,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5658
+     },
+     {
+      "unit": "u1",
+      "seed": 5834415075573140325,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5798
+     },
+     {
+      "unit": "u3",
+      "seed": 6162186468325520478,
+      "credit": 1.0,
+      "reason": "ok",
+      "steps": 5903
+     }
+    ]
+   }
+  }
+ ]
+}

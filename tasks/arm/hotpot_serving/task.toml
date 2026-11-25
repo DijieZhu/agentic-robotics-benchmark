@@ -1,0 +1,39 @@
+# Hotpot serving: two fixed Pandas at a kitchen counter serve an order from a hotpot, from RGB cameras and wrist force
+# sensors: turn the burner's knob on, tip dishes of raw fish balls, shrimp, tofu puffs and mushroom caps into a pot of
+# clear broth, ladle each bowl its listed pieces once cooked and before overcooked with a slotted ladle, take the pot by
+# its two tabs with both hands and pour each bowl's listed broth, set the pot back on its ring and turn the burner off.
+# Each unit differs in the burner's power, the pot's empty mass, how much broth it holds and how fast it pours, and the
+# pieces' size (hidden); each episode draws where the bowls stand, the order and which dish holds what. The grader
+# drives the agent's controller over a stdio wire on a fixed hidden set of 12 episodes.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/hotpot_serving"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h; no trials on the hidden units (the full simulator with two practice units is in the agent's home).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (2 per hidden unit), each at most 8000 control steps. The grader's budget (grader_config.json: 8000 s)
+# is the controller's own time: its replies, plus 0.2 s for every image it asks for; the simulation is not in it, so the
+# timeout covers both. Worst case: 96000 control steps at 50 ms (36 ms measured on a quiet host, the higher figure for
+# a busy 4-CPU sandbox) = 4800 s of simulation; 8000 s of controller time; the numerics check, the clearing of the
+# account and the render self-test 60 s. 12860 s; with 35 % margin 17400 s, rounded up to 5 h.
+[verifier]
+timeout_sec = 18000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
