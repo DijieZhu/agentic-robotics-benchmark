@@ -1,0 +1,76 @@
+# freeflyer_environment_twin_from_flight_images (environment stage, platform space): from the wide-angle camera frames
+# of one real flight of the cabin free-flyer through a station module (1068 frames, flight_a), the agent builds a
+# static collision twin of the cabin as an MJCF scene (at most 2000 geoms per flight) and declares the wide camera's
+# pose at every given frame of the flight: submission/<flight>/scene.xml with its mesh files, and cameras.json with
+# one entry per given frame. The grader scores 24 moments of the flight and does not say which; no given file names
+# them.
+#
+# Grading (tests/verify.py; numbers in tests/grader_config.json; static: no agent code runs, CPU only, nothing
+# rendered): the integrity gate G1 (the verify-start lockdown) x per flight the validity gate G0 (the probe library
+# the agent's check tool uses) x the flight's score H x D, where D compares the forward depth camera's ranges cast
+# into the twin from the declared poses with the withheld real depth record at the scored moments (D is the product of
+# its content term and its structure term), and H judges short straight moves of the robot from those poses clear or
+# blocked in the twin against the real record (H is the lower of the moves' score and, among the scored moments that
+# have at least one scored move, the share at which no scored move scores 0); twin_score = G1 x the mean over the
+# flights; reward = twin_score (tests/anchor.json).
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work: one folder per flight (scene.xml, its meshes, cameras.json).
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/freeflyer_environment_twin_from_flight_images"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/space/<name>/. The metric
+# (twin_score, higher) lives in tests/anchor.json.
+platform = "space"
+tags = ["free-flyer", "space-station", "environment-twin", "real-flight-data", "wide-angle-camera",
+        "structure-from-motion", "multi-view-stereo", "collision-geometry", "mjcf", "camera-poses", "depth-truth",
+        "hazard-moves", "cpu-only"]
+
+# The whole sandbox: the image's reconstruction tools (structure from motion and multi-view stereo on the CPU; their
+# starts on ten frames of a flight peak at 2.85 GB) and the agent's own MuJoCo checks run beside each other on 8 CPUs
+# and 32768 MB. No GPU: nothing the agent is given needs one.
+[environment]
+cpus = 8
+memory_mb = 32768
+gpus = 0
+
+# setup: stage the givens (documents, sensor sheets, the module's shell and zone record, the check tool, per flight
+# its frames from one archive and the CSV records) and an empty submission/<flight>/; no warm-up. agent: the frames to
+# a twin (21600 s), no network.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine scores in a fresh verifier sandbox from this task's image
+# into which it restores only the declared artifact /home/user/submission; setup.sh does not run there and nothing
+# else the agent left reaches the grader. As root the grader only locks, measures, snapshots and copies the
+# submission; the gate and the compile run in one worker process as the unprivileged account nobody, single-threaded,
+# under a 6144 MB address-space limit and a hard timeout planned from the verify deadline, and the ray scene's build
+# and the ray casts in a child of that process under the same address-space limit. Every stage of the grading has its
+# own limit (self-test 600, gate 120, scene 120, fit 60, rays 300, hazard 120, score 60: 1380 s in all). A flight
+# whose ray scene is not built inside the scene stage's 120 s, whose rays are not cast inside the ray stage's 300 s,
+# or whose ray scene or rays do not fit inside the 6144 MB scores 0 under rule Z7 and the verification ends with a
+# verdict; every other time-out and an exhausted memory elsewhere void the verification (a task error), never a lower
+# score. timeout_sec = those limits, the worker's margin of 10 s, the grader's reserve of 30 s and the engine's
+# overhead in the verify phase before test.sh at the cap of 5000 files and folders (the start of the verifier sandbox,
+# the restore of the submission and the upload of tests/: 10.0 s for an empty flight folder and 80.6 s for the
+# reference's 2004 files and folders in the local validate, about 0.035 s per file or folder, so 186.2 s at the cap):
+# 1606.2 s, plus a tenth, rounded up to a whole minute (1800 s). Measured on the root path in containers of this image
+# with the verifier's 2 CPUs, 8192 MB, no network and this timeout as the verify deadline (2026-11-23, this task's
+# image, the root path; host load 36 to 182 on 48 cores): the reference answer 43.6 s in test.sh (cgroup memory peak
+# 492 MB); an empty flight folder 22.3 s; the twin at both caps at once (2,000 large overlapping mesh plates holding
+# 496000 triangles) 330.9 s, scored 0 under rule Z7 with a verdict (1231.9 MB); 2,000 geoms naming one mesh of 500000
+# triangles 45.2 s, refused by the cap of mesh triangles counted per geom (rule Z2; 1030.7 MB). The 8192 MB hold the
+# child's address-space limit with room for the worker beside it and for the root process; the child is
+# single-threaded, the worker waits for it and the root process for the worker, so 2 CPUs.
+[verifier]
+timeout_sec = 1800
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 2
+memory_mb = 8192
+gpus = 0

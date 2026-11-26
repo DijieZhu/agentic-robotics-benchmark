@@ -1,0 +1,5 @@
+# the flights' frames: each flight's frames are one archive, payload/flights/<flight>/frames.tar, pinned by sha256 in
+# the grader's given hashes; the published task fetches the archives from the benchmark's asset repository at image
+# build, so they never belong in git (the unpacked frames/ folders neither)
+payload/flights/*/frames.tar
+payload/flights/*/frames/

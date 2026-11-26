@@ -1,0 +1,410 @@
+{
+ "constants": {
+  "depth.band_full_abs": 0.06,
+  "depth.band_full_rel": 0.04,
+  "depth.band_zero_factor": 3,
+  "depth.min_class_pixels_per_frame": 1500,
+  "depth.scored_range_max": 5.0,
+  "depth.scored_range_min": 0.2,
+  "depth.weight_content": 0.6,
+  "depth.weight_structure_times_content": 0.4,
+  "depth_camera.image_size": [
+   224,
+   171
+  ],
+  "depth_camera.ray_table_sha256": "1d8d9dbd3531e66cbc6e57bbe0eaa0dfedbf715df0e6e2b2f355ae50d22649c2",
+  "flights.names_neutral": [
+   "flight_a"
+  ],
+  "gate.mesh_cast": "convex hull (a vertex-only copy of each mesh)",
+  "gate.ray_cutoff": 1000,
+  "hazard.collision_distance": 0.02,
+  "hazard.directions_azimuth": [
+   -20,
+   -15,
+   -10,
+   -5,
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "hazard.directions_elevation": [
+   -12,
+   -6,
+   0,
+   6,
+   12
+  ],
+  "hazard.inflation_offsets": 251,
+  "hazard.inflation_radius": 0.3,
+  "hazard.lengths": [
+   0.6,
+   0.8,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5
+  ],
+  "hazard.max_length": 3.5,
+  "hazard.max_range": 4.0,
+  "hazard.min_range": 0.2,
+  "hazard.move_start": [
+   0.03462969950432764,
+   -0.08609609681043709,
+   -0.11139868174201827
+  ],
+  "hazard.path_sample": 0.02,
+  "hazard.robot_radius": 0.28,
+  "hazard.voxel": 0.08,
+  "key_frames.list": {
+   "flight_a": [
+    "f_0018",
+    "f_0036",
+    "f_0048",
+    "f_0085",
+    "f_0092",
+    "f_0108",
+    "f_0118",
+    "f_0155",
+    "f_0195",
+    "f_0225",
+    "f_0258",
+    "f_0298",
+    "f_0325",
+    "f_0362",
+    "f_0420",
+    "f_0433",
+    "f_0589",
+    "f_0899",
+    "f_0911",
+    "f_0921",
+    "f_0942",
+    "f_0966",
+    "f_1021",
+    "f_1063"
+   ]
+  },
+  "key_frames.per_flight": 24,
+  "key_frames.time_offset_wide_minus_depth_stamp": 0.067,
+  "two_camera_transform.quaternion_xyzw": [
+   -0.006069374726179163,
+   0.008046021087535497,
+   0.9999290115421315,
+   0.006355793535658162
+  ],
+  "two_camera_transform.translation": [
+   0.0764645596864683,
+   -0.0021427546911120254,
+   0.005471206683257068
+  ],
+  "wide_camera.body_mount_quaternion_xyzw": [
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "wide_camera.body_mount_translation": [
+   0.1177,
+   -0.0422,
+   -0.0826
+  ]
+ },
+ "counts": {
+  "content_frames_with_the_minimum": 22,
+  "content_pixels": 96324,
+  "hazard_pixels": 674918,
+  "moves": {
+   "blocked_by_content": 54,
+   "blocked_by_structure": 45,
+   "clear": 90
+  },
+  "structure_frames_with_the_minimum": 24,
+  "structure_pixels": 188201
+ },
+ "files": {
+  "depth_key.npy": "f5644da620214a9e307e51d07a0a09c30132f7edc1a71c193c194710e6769763",
+  "moves.json": "a018899cafa0780c0090407a6ce31ba5751d738ac88fbe1b9492150c595d2a66",
+  "scored_sets.npy": "3e8df478e4825929bfa27e0ff61dc486ed31a0c2c591705575358896f333930a"
+ },
+ "flight": "flight_a",
+ "format": "flight-twin-truth/1",
+ "key_frames": [
+  "f_0018",
+  "f_0036",
+  "f_0048",
+  "f_0085",
+  "f_0092",
+  "f_0108",
+  "f_0118",
+  "f_0155",
+  "f_0195",
+  "f_0225",
+  "f_0258",
+  "f_0298",
+  "f_0325",
+  "f_0362",
+  "f_0420",
+  "f_0433",
+  "f_0589",
+  "f_0899",
+  "f_0911",
+  "f_0921",
+  "f_0942",
+  "f_0966",
+  "f_1021",
+  "f_1063"
+ ],
+ "reference_sha256": "44e287411c461a1b9b8a8a43f2b6a2c0b04aaa06bd8dc0c9be2309216d1fc776",
+ "shaped_by": {
+  "depth_class_content_margin_m": 0.03,
+  "depth_class_shell_registration_variant_m": 0.05,
+  "depth_class_structure_max_m": 0.1,
+  "depth_edge_mask_spread": 0.05,
+  "depth_key.npy": "float32 (24, 171, 224): the recorded range of each key frame's depth frame, as recorded, at the pixels that carry the hazard bit; NaN elsewhere",
+  "depth_pixel_robust_fraction_of_band": 0.5,
+  "masks_incidence_max_deg": 75.0,
+  "moves": {
+   "ambiguous_move_rule": {
+    "counts": {
+     "blocked_by_content": {
+      "candidates_after_step_4": 163,
+      "chosen": 61,
+      "dropped_by_the_restriction": 0,
+      "left_out": 51,
+      "staying": 112
+     },
+     "blocked_by_structure": {
+      "candidates_after_step_4": 92,
+      "chosen": 48,
+      "dropped_by_the_restriction": 1,
+      "left_out": 8,
+      "staying": 84
+     },
+     "clear": {
+      "candidates_after_step_4": 311,
+      "chosen": 96,
+      "dropped_by_the_restriction": 4,
+      "left_out": 127,
+      "staying": 184
+     }
+    },
+    "entry": "truth.ambiguous_move_rule",
+    "restriction": "applied twice: on the reference's ranges as built and with the recorded ranges at the put-back pixels; a move is kept when reproduced in both",
+    "seen_by_other_frames_min": 3
+   },
+   "band_census": {
+    "branch": "full band",
+    "moves_after": 189,
+    "moves_before": 205,
+    "per_class_after": {
+     "blocked_by_content": 54,
+     "blocked_by_structure": 45,
+     "clear": 90
+    },
+    "per_class_before": {
+     "blocked_by_content": 61,
+     "blocked_by_structure": 48,
+     "clear": 96
+    },
+    "removed": [
+     {
+      "class": "clear",
+      "direction": 5,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0325",
+      "length": 1.5,
+      "stop": null
+     },
+     {
+      "class": "clear",
+      "direction": 9,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0362",
+      "length": 2.0,
+      "stop": null
+     },
+     {
+      "class": "clear",
+      "direction": 25,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0899",
+      "length": 0.6,
+      "stop": null
+     },
+     {
+      "class": "clear",
+      "direction": 6,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0325",
+      "length": 0.6,
+      "stop": null
+     },
+     {
+      "class": "clear",
+      "direction": 43,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0899",
+      "length": 1.5,
+      "stop": null
+     },
+     {
+      "class": "clear",
+      "direction": 12,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0036",
+      "length": 3.5,
+      "stop": null
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 2,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0048",
+      "length": 3.5,
+      "stop": 2.44
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 1,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0195",
+      "length": 3.5,
+      "stop": 0.7
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 6,
+      "fragile_at": [
+       "-b",
+       "-b/2"
+      ],
+      "key_frame": "f_0325",
+      "length": 3.5,
+      "stop": 1.1
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 9,
+      "fragile_at": [
+       "-b",
+       "-b/2",
+       "+b"
+      ],
+      "key_frame": "f_0362",
+      "length": 3.5,
+      "stop": 2.88
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 3,
+      "fragile_at": [
+       "+b"
+      ],
+      "key_frame": "f_0018",
+      "length": 3.5,
+      "stop": 3.14
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 9,
+      "fragile_at": [
+       "+b"
+      ],
+      "key_frame": "f_0420",
+      "length": 3.5,
+      "stop": 3.34
+     },
+     {
+      "class": "blocked_by_content",
+      "direction": 4,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0048",
+      "length": 3.5,
+      "stop": 2.4
+     },
+     {
+      "class": "blocked_by_structure",
+      "direction": 36,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0325",
+      "length": 3.5,
+      "stop": 0.8
+     },
+     {
+      "class": "blocked_by_structure",
+      "direction": 17,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0911",
+      "length": 3.5,
+      "stop": 1.04
+     },
+     {
+      "class": "blocked_by_structure",
+      "direction": 37,
+      "fragile_at": [
+       "-b"
+      ],
+      "key_frame": "f_0325",
+      "length": 3.5,
+      "stop": 0.78
+     }
+    ],
+    "rule": "rule BC: the scored moves that the record itself does not earn in full when the returns its hazard check reads are moved along their own rays by the depth term's full band, nearer or farther, are removed, provided every class keeps at least its minimum (moves_min_per_flight) and the reference twin still scores exactly 1.0; the hazard term must not punish what the depth term accepts in full"
+   },
+   "hazard_max_length_m": 3.5,
+   "hazard_path_sample_m": 0.02,
+   "moves_min_per_flight": {
+    "blocked_by_content": 24,
+    "blocked_by_structure": 12,
+    "clear": 24
+   },
+   "moves_target_per_flight": {
+    "blocked_by_content": 96,
+    "blocked_by_structure": 48,
+    "clear": 96
+   },
+   "quota_max_rounds": {
+    "a class short of its target holds what the rounds gave it": true,
+    "entry": "hazard.quota_max_rounds",
+    "rounds_per_class": 8
+   },
+   "reference_agreement_stop_m": 0.12,
+   "selection": "the hidden moves of the frozen selection (amendment 2: the key frame's returns that enter its check are not weak and kept by the free-space vote) after its step 4, less the moves whose result changes when the left-out returns that at least 3 other frames see are put back (truth.ambiguous_move_rule), restricted to those the reference reproduces through the grader's hazard check at the hazard-bit pixels both as built and with the recorded ranges at the put-back pixels, then its step 5 (the quota by rounds, ended after hazard.quota_max_rounds = 8 rounds per class), then rule BC of the second version (the hazard term must not punish what the depth term accepts in full): the moves that the record does not earn in full when the returns its hazard check reads are moved along their rays by the depth term's full band, nearer or farther, are removed (full band list)"
+  },
+  "observability_flight_pass_share": 0.6,
+  "reference_agreement_fraction_of_band": 0.8,
+  "reference_agreement_stop_m": 0.12,
+  "scored_sets.npy": "uint8 bit field: 1 the real frame returns and the pixel is not flagged moving (the twin's ranges feed the hazard check there); 2 / 4 a scored content / structure pixel: every mask, the class rule and the observability check of the frozen selection, then kept only where the reference twin reproduces the recorded range"
+ }
+}

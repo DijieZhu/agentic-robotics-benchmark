@@ -115,6 +115,7 @@ class PauseTest(unittest.TestCase):
     def _solver(self):
         solver = object.__new__(V.GuardedSolver)
         solver.uid, solver._stopped, solver.outside, solver.unstoppable = os.getuid(), [], [], []
+        solver._held, solver.resumed, solver._broken = None, 0, False
         return solver
 
     def _worker(self, tmp, main_thread_exits):

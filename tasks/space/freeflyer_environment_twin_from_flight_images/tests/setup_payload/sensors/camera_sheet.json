@@ -1,0 +1,74 @@
+{
+ "format": "flight-twin-camera-sheet/1",
+ "wide_camera": {
+  "what": "the forward wide camera: 8-bit grey frames (flights/<flight>/frames/f_NNNN.png)",
+  "image_size_px": [
+   1280,
+   960
+  ],
+  "model": "one-coefficient wide-angle (field of view) model: x_u = X / Z, y_u = Y / Z, r_u = sqrt(x_u^2 + y_u^2), r_d = atan(2 r_u tan(w / 2)) / w, u = fx x_u r_d / r_u + cx, v = fy y_u r_d / r_u + cy",
+  "fx_px": 608.8073,
+  "fy_px": 607.61439,
+  "cx_px": 632.53684,
+  "cy_px": 549.08386,
+  "w_rad": 0.998693,
+  "pixel_and_axis_convention": "camera +z forward, +x image right, +y image down; integer pixel coordinates at pixel centres: (0, 0) is the centre of the top-left pixel",
+  "mounting": {
+   "translation_m": [
+    0.1177,
+    -0.0422,
+    -0.0826
+   ],
+   "quaternion_xyzw": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "meaning": "the camera centre in the body frame, and the rotation that turns camera vectors into body vectors (camera +z, the optical axis, is body +x, forward)",
+   "maker_note": "Engineering positions with idealized orientations"
+  }
+ },
+ "time": {
+  "measured_relation": "the exposure of a wide frame lies this long before its recorded stamp (t_s of frames.csv), measured by the maintainers against the depth camera's stamps of the same records",
+  "wide_exposure_before_recorded_stamp_s": 0.067,
+  "spread_s": 0.006
+ },
+ "depth_camera": {
+  "what": "the forward depth camera beside the wide camera: its record is withheld; the grader casts its rays into your twin (wide_to_depth.json places it)",
+  "image_size_px": [
+   224,
+   171
+  ],
+  "ray_table": "sensors/depth_rays.npy: one unit ray per pixel in the depth camera frame, array of rows x columns x 3, float64; pixels that never return are NaN",
+  "ray_table_sha256": "1d8d9dbd3531e66cbc6e57bbe0eaa0dfedbf715df0e6e2b2f355ae50d22649c2",
+  "pixels_without_a_ray": 1304,
+  "field_of_view_deg": {
+   "azimuth_deg": [
+    -30.1,
+    28.9
+   ],
+   "elevation_deg": [
+    -22.7,
+    21.9
+   ]
+  }
+ },
+ "inertial_unit": {
+  "mounting": {
+   "translation_m": [
+    0.0386,
+    0.0247,
+    -0.01016
+   ],
+   "quaternion_xyzw": [
+    0.0,
+    0.0,
+    0.70710678118,
+    0.70710678118
+   ],
+   "meaning": "the inertial unit in the body frame, as the maker's file gives it"
+  },
+  "samples": "imu.csv holds the samples in the unit's own axes, as recorded"
+ }
+}

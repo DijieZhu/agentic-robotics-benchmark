@@ -1,0 +1,242 @@
+{
+ "format": "estimator-controller-grader-config/1",
+ "generated_from": {
+  "fixture": false,
+  "frame_sha256": "0e0fbb335c00129f92a2b2d9b7c678c53b948290fb6c8278b6d674d8441476f5",
+  "generator": "the task's configuration generator",
+  "table_sha256": "09a4bcaaacf2ce246153d476b20f6ebc852e28c4fa82e69936dac2b55fdafa8a"
+ },
+ "layout": {
+  "controller_file": "controller.py",
+  "hidden_set": "hidden/acceptance_set.json",
+  "runner_dir": "runner",
+  "seed_key": "hidden/world_root/seed.bin",
+  "sessions_dir": "hidden/world_root/sessions",
+  "submission_dir": "submission/controller",
+  "token_file": "access_token",
+  "token_sha256": "access_token.sha256",
+  "world_root": "hidden/world_root",
+  "world_table": "hidden/world_root/world_table.json"
+ },
+ "pending_in_table": [],
+ "runtime": {
+  "late_gate_max_gap_s": 600,
+  "megabyte_bytes": 1048576,
+  "reserve_s": 120,
+  "snapshot_root": "/opt/arb-verify",
+  "work_prefix": "arb_ffcontrol_verify_"
+ },
+ "values": {
+  "interface.libraries": [
+   "python standard library",
+   "numpy",
+   "scipy"
+  ],
+  "interface.on_time_share_gate": 0.9,
+  "interface.sandbox": {
+   "address_space_per_process_GiB": 8,
+   "network": "none (no socket of any family)",
+   "processors": 4,
+   "reads": "its own controller folder's read-only copy, the interpreter's installation and the system's libraries",
+   "threads_per_numerics_library": 1,
+   "writes": "its own HOME and TMPDIR"
+  },
+  "interface.step_period_ms": 16.0,
+  "interface.submission_cap": {
+   "files": 200,
+   "megabytes": 16
+  },
+  "interface.verify_timeout_s": 18000,
+  "jobs.camera_mount_m": [
+   0.118,
+   0.0,
+   -0.096
+  ],
+  "jobs.capture_s": 1.7,
+  "jobs.hold_s": 20.0,
+  "jobs.kinds": [
+   "leg",
+   "slew",
+   "hold",
+   "view"
+  ],
+  "monitor.recovery_s": {
+   "nominal": 25,
+   "precision": 17,
+   "quiet": 30
+  },
+  "safety.overspeed_m_s": 0.5,
+  "score.L": "1 at the full end, 0 at the zero end, linear between, and clamped: 1 for a measure at or below the full end, 0 for one at or above the zero end; a measure whose cell does not enter the product (its zero end below twice its full end, score.completed) counts as 1 in its kind's formula",
+  "score.bands": {
+   "cells": {
+    "hold/nominal/att_rms": {
+     "full_end": 0.0017305410275683774,
+     "zero_end": 0.08726646259971647
+    },
+    "hold/nominal/pos_rms": {
+     "full_end": 0.03323235504624486,
+     "zero_end": 0.075
+    },
+    "hold/nominal/rate_rms": {
+     "full_end": 0.00045285747959079593,
+     "zero_end": 0.0012337825297712732
+    },
+    "hold/nominal/speed_rms": {
+     "full_end": 0.007003210988598642,
+     "zero_end": 0.009366869260475124
+    },
+    "hold/precision/att_rms": {
+     "full_end": 0.002446996976940676,
+     "zero_end": 0.08726646259971647
+    },
+    "hold/precision/pos_rms": {
+     "full_end": 0.040335987111628085,
+     "zero_end": 0.075
+    },
+    "hold/precision/rate_rms": {
+     "full_end": 0.0006294909953286212,
+     "zero_end": 0.0012357682034256586
+    },
+    "hold/precision/speed_rms": {
+     "full_end": 0.008318879827604861,
+     "zero_end": 0.012148531157801304
+    },
+    "hold/quiet/att_rms": {
+     "full_end": 0.0010338066699514409,
+     "zero_end": 0.08726646259971647
+    },
+    "hold/quiet/pos_rms": {
+     "full_end": 0.011383891788986307,
+     "zero_end": 0.075
+    },
+    "hold/quiet/rate_rms": {
+     "full_end": 0.0003344672730756743,
+     "zero_end": 0.0009334840647439746
+    },
+    "hold/quiet/speed_rms": {
+     "full_end": 0.0037061272447133694,
+     "zero_end": 0.008283432855541692
+    },
+    "leg/nominal/end_att": {
+     "full_end": 0.0022512023541130565,
+     "zero_end": 0.08726646259971647
+    },
+    "leg/nominal/end_pos": {
+     "full_end": 0.04514305389948954,
+     "zero_end": 0.075
+    },
+    "leg/nominal/overshoot": {
+     "full_end": 0.035451918661079024,
+     "zero_end": 0.075
+    },
+    "leg/precision/end_att": {
+     "full_end": 0.00215536908968003,
+     "zero_end": 0.08726646259971647
+    },
+    "leg/precision/end_pos": {
+     "full_end": 0.030311313066614855,
+     "zero_end": 0.075
+    },
+    "leg/precision/overshoot": {
+     "full_end": 0.03751547661154336,
+     "zero_end": 0.03375306338975648
+    },
+    "leg/quiet/end_att": {
+     "full_end": 0.0013812003678192227,
+     "zero_end": 0.08726646259971647
+    },
+    "leg/quiet/end_pos": {
+     "full_end": 0.015309447761539747,
+     "zero_end": 0.075
+    },
+    "leg/quiet/overshoot": {
+     "full_end": 0.009441126933934488,
+     "zero_end": 0.012671035752214323
+    },
+    "slew/nominal/end_att": {
+     "full_end": 0.002034278465868498,
+     "zero_end": 0.08726646259971647
+    },
+    "slew/nominal/end_pos": {
+     "full_end": 0.03745494296899089,
+     "zero_end": 0.075
+    },
+    "slew/nominal/overshoot": {
+     "full_end": 0.0026236770634682025,
+     "zero_end": 0.0015211870496902623
+    },
+    "slew/precision/end_att": {
+     "full_end": 0.002394049658961959,
+     "zero_end": 0.08726646259971647
+    },
+    "slew/precision/end_pos": {
+     "full_end": 0.03337956925248774,
+     "zero_end": 0.075
+    },
+    "slew/precision/overshoot": {
+     "full_end": 0.002129470305113701,
+     "zero_end": 0.001113598981634917
+    },
+    "slew/quiet/end_att": {
+     "full_end": 0.0010553256053358897,
+     "zero_end": 0.08726646259971647
+    },
+    "slew/quiet/end_pos": {
+     "full_end": 0.01247146041933409,
+     "zero_end": 0.075
+    },
+    "slew/quiet/overshoot": {
+     "full_end": 0.000877279284199407,
+     "zero_end": 0.01696046045606303
+    },
+    "view/nominal/centre": {
+     "full_end": 0.049625183404483825,
+     "zero_end": 0.033
+    },
+    "view/nominal/pointing": {
+     "full_end": 0.0029591104530330816,
+     "zero_end": 0.17453292519943295
+    },
+    "view/nominal/rate_rms": {
+     "full_end": 0.002801918767410978,
+     "zero_end": 0.0022007497671787018
+    }
+   }
+  },
+  "score.completed": "a leg or slew is completed if its event done was accepted, its end window closed inside the block's budget, the end-point check passed, no hand-back occurred, and each of its own measures is inside its completion limit; a view is captured if its event ready was accepted, the capture closed inside the budget and each of its own measures is inside its completion limit; the completion limit of a measure is its zero end, or, where the band rules dropped the measure from the product (zero end below twice the full end), twice its full end, except the optical-centre displacement of a view, whose completion limit is always its zero end (0.033 m); a hold is tested in the same way: it is completed if it was flown for its whole duration inside the block's budget with no hand-back and each of its own measures is inside its completion limit; a measure is inside its completion limit when it is at most that limit",
+  "score.end_window_s": [
+   0.5,
+   2.5
+  ],
+  "score.gates": [
+   "a start of the controller comes up (it imports, builds Controller() and answers setup) in at least one session",
+   "the submission is inside its caps",
+   "the static import audit passes",
+   "at least 90 % of steps answered inside the processor budget",
+   "no process of the controller survives",
+   "the system-call filter installs (else a task error, not a score)"
+  ],
+  "score.hold": "completed(job before) x L(position RMS about the hold's target pose) x L(attitude RMS about it) x L(speed RMS) x L(rate RMS); the target pose is the goal of the job before (as plan.start_tolerance defines it); in completed(job before) the job before is the last leg, slew or view before the hold in its block's list, whatever became of it (a request is not one of them; where there is none, the factor is 1); a hold that is not itself completed (score.completed) scores 0",
+  "score.leg": "completed x L(end position error) x L(end attitude error) x (0.8 + 0.2 O)",
+  "score.refusals": "J x (share of accepted feasible jobs completed), J = share of requests refused + share of feasible jobs accepted - 1, and 0 where J is below 0; the feasible jobs are those that count toward the score, the requests every request of the session; a refused feasible job and a flown request score 0 themselves",
+  "score.session": "weighted mean over the kinds of the jobs that count (a kind without jobs drops out, weights renormalised); jobs that count and are lost to a hand-back, a stop or the end of the session stay in the mean with 0; a session whose setup overran scores 0",
+  "score.slew": "completed x L(end attitude error) x L(end position error) x (0.8 + 0.2 O)",
+  "score.view": "captured x L(pointing error) x L(optical-centre displacement) x L(rate RMS in the capture)",
+  "score.weights": {
+   "holds": 0.15,
+   "legs": 0.25,
+   "refusals": 0.1,
+   "slews": 0.15,
+   "views": 0.35
+  },
+  "sessions.acceptance_count": 6,
+  "sessions.names": [
+   "session_1",
+   "session_2",
+   "session_3",
+   "session_4",
+   "session_5",
+   "session_6"
+  ]
+ }
+}

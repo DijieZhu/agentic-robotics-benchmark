@@ -1,0 +1,105 @@
+{
+ "message": "a request whose frame carries the notice of an ignored event (its reason)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with a controller that sends each reply form once (kept by the maintainers, not given)",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "step",
+  "frame": {
+   "t": 8.048,
+   "in_control": true,
+   "job_id": "j02",
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [
+    {
+     "stamp": 8.033909979,
+     "rate": [
+      0.002816522470707198,
+      -0.0030691507700605306,
+      0.000842267320921472
+     ],
+     "accel": [
+      0.052269410033282185,
+      -0.01625791612460557,
+      0.004962469702718413
+     ]
+    },
+    {
+     "stamp": 8.040108386,
+     "rate": [
+      0.002717542070676605,
+      -0.0002634797720679552,
+      0.0017917877575916968
+     ],
+     "accel": [
+      0.04520153983792385,
+      -0.02242139044496161,
+      0.00882056982569841
+     ]
+    },
+    {
+     "stamp": 8.045858941,
+     "rate": [
+      0.003065690239969028,
+      -0.00012384618318057275,
+      0.00064927446201045
+     ],
+     "accel": [
+      0.059009270240446686,
+      -0.016726338557943327,
+      0.0044338502804825135
+     ]
+    }
+   ],
+   "registrations": [
+    {
+     "camera_id": 32,
+     "stamp": 8.012
+    }
+   ],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": 41.97451082110727,
+    "time_left_s": 41.94251082110728
+   },
+   "notices": [
+    {
+     "kind": "event_ignored",
+     "job_id": "j02",
+     "event": "done",
+     "t": 8.032,
+     "reason": "wrong_kind"
+    }
+   ]
+  }
+ },
+ "line": "{\"op\":\"step\",\"frame\":{\"t\":8.048,\"in_control\":true,\"job_id\":\"j02\",\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[{\"stamp\":8.033909979,\"rate\":[0.002816522470707198,-0.0030691507700605306,0.000842267320921472],\"accel\":[0.052269410033282185,-0.01625791612460557,0.004962469702718413]},{\"stamp\":8.040108386,\"rate\":[0.002717542070676605,-0.0002634797720679552,0.0017917877575916968],\"accel\":[0.04520153983792385,-0.02242139044496161,0.00882056982569841]},{\"stamp\":8.045858941,\"rate\":[0.003065690239969028,-0.00012384618318057275,0.00064927446201045],\"accel\":[0.059009270240446686,-0.016726338557943327,0.0044338502804825135]}],\"registrations\":[{\"camera_id\":32,\"stamp\":8.012}],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":41.97451082110727,\"time_left_s\":41.94251082110728},\"notices\":[{\"kind\":\"event_ignored\",\"job_id\":\"j02\",\"event\":\"done\",\"t\":8.032,\"reason\":\"wrong_kind\"}]}}"
+}

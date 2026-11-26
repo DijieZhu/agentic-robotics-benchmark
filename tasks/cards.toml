@@ -35,6 +35,12 @@ summary = "Two fixed Franka Pandas replace a cabinet door on loose-pin hinges: a
 platforms = ["arm"]
 stages = ["behavior"]
 
+[cloth_material_id_from_video]
+title = "Identify fabric materials from video"
+summary = "Choose the simulator material of ten fabrics from multi-view video of a robot arm handling them, so that a planner using it hits its targets on new slide and overhang handling of the real fabrics."
+platforms = ["arm"]
+stages = ["environment"]
+
 [dual_arm_parcel_sorting_on_conveyor]
 title = "Turn parcels label-up with a dual-arm robot"
 summary = "A fixed dual-arm robot must turn each rigid or soft parcel on a moving belt so its shipping label faces up at the line's scanner, within 5 s of delay, seeing the station only through four cameras."
@@ -316,6 +322,18 @@ title = "Model a cabin free-flyer in CAD"
 summary = "Rebuild the lost CAD of a cube-shaped cabin free-flyer with a stowed perching arm in FreeCAD from photos of its teardown, as 12 tagged parts and a hinged assembly."
 platforms = ["space"]
 stages = ["hardware-design"]
+
+[freeflyer_environment_twin_from_flight_images]
+title = "Build a sim twin of a cabin from flight frames"
+summary = "Build a static MuJoCo collision twin of a pressurised module and its stowage from the camera frames of one real cabin free-flyer flight, and declare the wide camera's pose at all 1068 frames."
+platforms = ["space"]
+stages = ["environment"]
+
+[freeflyer_estimator_and_controller_from_docs]
+title = "Write a free-flyer's estimator and controller"
+summary = "Write the state estimator and controller of a cabin free-flyer from its documents, earlier flight records and photographs, with no simulator; hidden sessions then fly the code and score it."
+platforms = ["space"]
+stages = ["control"]
 
 [freeflyer_uncrewed_station_caretaking]
 title = "Tend an uncrewed space station with a free-flyer"

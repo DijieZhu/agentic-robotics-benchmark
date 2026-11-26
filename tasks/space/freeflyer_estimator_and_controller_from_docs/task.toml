@@ -1,0 +1,57 @@
+# freeflyer_estimator_and_controller_from_docs (control stage, platform space): from the maker's documents, the unit's
+# earlier records and the campaign's photographs, the agent writes the flight software of the cabin free-flyer, its
+# state estimator and its controller in one program: /home/user/submission/controller/controller.py, the class
+# Controller with setup(session), plan(job, frame), step(frame). No simulator and no practice flight: the controller
+# is flown only at acceptance.
+#
+# Grading (tests/verify.py; numbers in tests/grader_config.json): the hidden world flies the submitted controller,
+# behind the runner and its sandbox, on the 6 hidden sessions of the hidden set and scores what the robot's true
+# motion does; reward = gates x mean of the six sessions.
+
+schema_version = "1.4+ale.1"
+# Where the agent leaves its work: the deliverable is the controller folder below it.
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/freeflyer_estimator_and_controller_from_docs"
+
+[metadata]
+# One of the benchmark's platform keys (tasks/platforms.json); the folder lives at tasks/space/<name>/. The
+# metric (acceptance_score, higher) lives in tests/anchor.json.
+platform = "space"
+tags = ["free-flyer", "space-station", "control", "state-estimation", "sensor-fusion", "real-flight-records",
+        "maker-documents", "closed-loop", "hidden-sessions", "no-practice", "cpu-only"]
+
+# The agent's working session, its whole sandbox: 4 processors and 16384 MB of memory for the agent's own work on the
+# given documents, records and photographs and its runs of the toy self-test. No GPU: nothing the agent is given needs
+# one.
+[environment]
+cpus = 4
+memory_mb = 16384
+gpus = 0
+
+# setup: stage the givens (payload/ and controller/) into the agent's home and an empty submission/controller/; no
+# warm-up. agent: the estimator and the controller written from the documents (21600 s), no network; the controller's
+# own libraries (python standard library, numpy, scipy) are installed in the image. When the time limit ends the
+# session, the submission folder as it stands is what the verification flies.
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: after the agent phase the engine scores in a fresh verifier sandbox from this task's image
+# into which it restores only the declared artifact; setup.sh does not run there. timeout_sec, in seconds: by the
+# formula registered before its numbers (per session: the one set-up allowance, the plan calls' wall caps, the
+# session's world time, 5 s per stretch, twice the grader's time per step; six sessions; 600 s fixed; rounded up to
+# 600 s), not from the reference; if the verification reaches this limit it is void: a task error of the run, not a
+# score (no reward is written).
+[verifier]
+timeout_sec = 18000
+environment_mode = "separate"
+
+# The verifier's machine: 4 processors and 16384 MB of memory hold the controller's sandbox as the task's interface
+# prints it (4 processors, 8 GiB of address space per process) beside the hidden world, the runner and the grader. No
+# GPU.
+[verifier.environment]
+cpus = 4
+memory_mb = 16384
+gpus = 0

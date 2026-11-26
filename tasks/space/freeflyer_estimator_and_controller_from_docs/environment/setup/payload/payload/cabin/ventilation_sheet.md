@@ -1,0 +1,15 @@
+# Ventilation sheet: cabin air velocities as several documents state them
+
+The documents below state the velocity of the cabin air in the station's pressurised modules, or report what the air did during an activity. They were written for different purposes (the interface requirements for payload racks, a computed study of the air flow in two modules, the design of the crew quarters, the log of an activity of this robot) and their figures do not agree with one another. Each row quotes a document as it stands, with its date and the place of the sentence in it. The sheet adds no figure of its own and does not say which figure holds at a given place or time in the cabin.
+
+| # | document | date | where | as the document states it |
+|---|---|---|---|---|
+| 1 | the station's pressurised-payload interface requirements, revision R | October 2015 | table 3.9.3-1 (the station's cabin environment) | “Air velocity (Nominal) 0.051 to 0.203 m/s (10 to 40 ft/min)” |
+| 2 | the station's pressurised-payload interface requirements, revision R | October 2015 | table 3.9.3-2 (boundary conditions for thermal analysis), row 'Air velocity, ft min-1 (m s-1)', by module | “LABA: 10 to 40 (0.051 to 0.203); LABB: 15 to 40 (0.076 to 0.203); Labc: Not Specified; Worst Case: 15 to 40 (0.076 to 0.203)” |
+| 3 | a computed study of the air flow in two laboratory modules (conference paper CONF-2018-50) | July 2018 | section on the cabin velocity requirements (page 8) | “In order to meet the STATION ventilation requirements, 67% of the air velocity values must be between 10 and 40 ft/min for the habitable cabin volume.” |
+| 4 | a computed study of the air flow in two laboratory modules (conference paper CONF-2018-50) | July 2018 | results for the first laboratory module (page 7) | “Red zones with velocities exceeding 70 ft/min (0.35 m/s) correspond to the jets issued from the diffusers; the volume of these zones is not large. Overall, most of the slices shown are characterized by velocities within the range from 10 to 40 ft/min.” |
+| 5 | a computed study of the air flow in two laboratory modules (conference paper CONF-2018-50) | July 2018 | table 3 (time-averaged velocity magnitude six inches away from the walls; bins below 7, 7 to 10, 10 to 40, 40 to 200, above 200 ft/min) | “laboratory module A 3.5% 9.6% 82.1% 4.8% 0.0%; Hub 2 0.4% 1.2% 77.9% 20.4% 0.1%” |
+| 6 | the design of the crew quarters' ventilation (conference paper) | 2010 | the crew quarters' vehicle-level ventilation requirements | “The air is then directed though the CQ exhaust duct outlet, see Fig. 1, and directed parallel to the rack face and down the aisle way toward the Hub 2 CAU air return. [...] 0.42-5.1 m3/min of airflow. < 76 m/min exhaust air velocity.” |
+| 7 | the final activity report of a programming activity flown with this robot (report version 1.1) | 24 November 2020 | section 4.12.3, unexpected items | “During run 2, high air flow was noticed (in bay 6) an attempt was made to re-localize but failed.” |
+
+The figures are given in the units each document uses (ft/min, m/s, m/min); none is converted here.

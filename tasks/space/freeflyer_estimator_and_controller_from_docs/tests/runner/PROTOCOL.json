@@ -1,0 +1,657 @@
+{
+ "notices": {
+  "event_ignored": "{kind: event_ignored, job_id or null, event: done | ready, t: the frame's time, reason: step_not_applied | no_job | already_accepted | wrong_kind | before_last_setpoint}",
+  "plan": "{kind: plan, job_id, valid: true} or {kind: plan, job_id, valid: false, rule: plan.max_setpoints | plan.limit_rule | plan.consistency | plan.start_tolerance | plan.end_tolerance | interface.plan_cpu_s | interface.plan_wall_s, setpoint: index or null}",
+  "protocol_error": "{kind: protocol_error, call: plan | step, what: text}",
+  "where": "a list in every frame the controller receives (plan and step), empty in most; a notice is given once, in the first frame sent after its cause"
+ },
+ "process": [
+  "the controller is the class Controller of controller.py, built as Controller() with no argument at each start of its process; HOME and TMPDIR name an empty writable folder of its own",
+  "the process imports controller.py from a read-only copy of the submission's controller folder (regular files and folders only; symbolic links, special files and __pycache__ are not copied); it may read that folder, the interpreter's installation and the system's libraries, write its own HOME and TMPDIR, and nothing else; it runs as python3 -I -B with one thread per numerics library",
+  "the controller's own prints go to the error stream; the reply lines are written by the runner's client",
+  "a system-call filter refuses every socket, signals to any process (itself and its own children included), tracing and reading other processes' memory, new namespaces, leaving the process group and the session, mounts and io_uring",
+  "when the grader runs as root, the process runs under the account nobody (frame.controller_account of the runner's configuration) with that account's group and no supplementary groups: the copies of the submission's folder and of the runner's client are readable and not writable by it, its HOME and TMPDIR are its own, and nothing else of the grader's work folder is open to it; an account that does not exist is a task error and nothing is started; when the grader is not root (the self-test), the process runs under the grader's own account"
+ ],
+ "reply_envelope": "{\"ok\": true, \"result\": <the method's return value>}; an exception in the controller answers {\"ok\": false, \"error\": \"<type>: <message>\"} (reply.exception)",
+ "requests": {
+  "end": {
+   "calls": "nothing",
+   "line": {
+    "op": "end"
+   },
+   "reply": "the process exits"
+  },
+  "plan": {
+   "calls": "Controller.plan(job, frame)",
+   "line": {
+    "frame": "the step frame of that time, with notices",
+    "job": "the job",
+    "op": "plan"
+   },
+   "reply": "{\"setpoints\": [[t, [3] position, [3] velocity, [3] acceleration, [4] attitude x y z w, [3] body rate, [3] angular acceleration], ...]} to accept (a hold may send an empty list), or {\"refuse\": reason} with a reason of refusal.reasons"
+  },
+  "setup": {
+   "calls": "Controller.setup(session)",
+   "line": {
+    "op": "setup",
+    "session": "the session paper"
+   },
+   "reply": "null, or {\"mass_profile\": {\"mass_kg\": number, \"com_m\": [3], \"inertia\": [[3] x 3]}}"
+  },
+  "step": {
+   "calls": "Controller.step(frame)",
+   "line": {
+    "frame": "the step frame, with notices",
+    "op": "step"
+   },
+   "reply": "{\"force\": [3], \"torque\": [3], \"event\": \"none\" | \"done\" | \"ready\"}; force and torque both null: no new command (step.null_command)"
+  }
+ },
+ "rules": [
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "setup.allowance",
+   "notice": null,
+   "rule": "every start of the controller's process in a session (the first and each restart) draws on the session's ONE set-up allowance: interface.setup_cpu_s of processor time and interface.setup_wall_s of wall clock, summed over the starts; the interpreter's start, the import of controller.py, Controller() and setup(session) all count",
+   "table_keys": [
+    "interface.setup_cpu_s",
+    "interface.setup_wall_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "session",
+   "key": "setup.overrun",
+   "notice": null,
+   "rule": "a start that would use more than what is left of the set-up allowance is cut there, and a restart that is needed when nothing is left is not made: a set-up overrun (interface.overrun): that session scores 0 and the controller is not started again in it",
+   "table_keys": [
+    "interface.overrun",
+    "interface.setup_cpu_s",
+    "interface.setup_wall_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "session",
+   "key": "setup.failure",
+   "notice": null,
+   "rule": "a start that cannot go on (the import of controller.py or Controller() raises, the process ends, its ready line is not the client's), or a setup that raises or replies malformed (a reply other than null or {\"mass_profile\": {\"mass_kg\": number > 0, \"com_m\": [3], \"inertia\": [[3] x 3]}}): a set-up failure: that session scores 0 and the controller is not started again in it",
+   "table_keys": [
+    "interface.setup_reply"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "restart",
+   "notice": null,
+   "rule": "the controller's process is started once per session; when it has ended (it exited, or the runner ended it under process.end.*) it is started again before the next call, fresh: Controller() and setup(session) again with the same session paper, nothing of its earlier state handed to it; the start draws on the set-up allowance (setup.allowance); the mass profile of the first setup stands (a later setup reply is checked for its form only)",
+   "table_keys": [
+    "interface.setup_cpu_s",
+    "interface.setup_wall_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.line_over_cap",
+   "notice": null,
+   "rule": "a reply line longer than interface.reply_line_cap_bytes: the stream cannot go on and the process is ended",
+   "table_keys": [
+    "interface.reply_line_cap_bytes"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.stream_closed",
+   "notice": null,
+   "rule": "the reply stream closed (the process exited): the process is ended (its group)",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.out_of_step",
+   "notice": null,
+   "rule": "a line the client did not write (not JSON, or JSON that is not the client's reply object): the stream is out of step, a later reply could be read as the answer to an earlier request, and the process is ended",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.wall_cut",
+   "notice": null,
+   "rule": "a call cut at its wall allowance (a start or setup: what is left of the set-up allowance; a plan: interface.plan_wall_s; a step: what is left of its stretch's allowance, interface.block_wall_rule): the process is ended",
+   "table_keys": [
+    "interface.setup_wall_s",
+    "interface.plan_wall_s",
+    "interface.block_wall_rule"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.cpu_cut",
+   "notice": null,
+   "rule": "a call cut at a processor cap reached while the runner waits for its reply (a start or setup: what is left of the set-up allowance; a plan: interface.plan_cpu_s): the process is ended; a reply that arrives already over its processor cap is read and leaves the process alive",
+   "table_keys": [
+    "interface.setup_cpu_s",
+    "interface.plan_cpu_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.not_ready",
+   "notice": null,
+   "rule": "a start whose ready line reports that the import of controller.py or Controller() raised: the process has ended itself (setup.failure)",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "process.end.session_end",
+   "notice": null,
+   "rule": "at the session's end the controller is asked to end and its process group is ended; a member of the group still alive then is counted (stray_processes)",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing (see protocol_error.block and setup.failure)",
+   "key": "reply.exception",
+   "notice": null,
+   "rule": "an exception the client reports ({\"ok\": false, \"error\": ...}) in plan or step is a protocol error, in setup a set-up failure; the process lives on with its state",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing (see protocol_error.block and setup.failure)",
+   "key": "reply.malformed",
+   "notice": null,
+   "rule": "a reply read whole whose form is refused (a non-finite number, a number beyond the float range, a missing field, a field of the wrong shape, an event other than none / done / ready, a refusal whose reason is not one of refusal.reasons, a plan with both or neither of setpoints and refuse, a setpoint that is not seven entries, an attitude of norm zero, i.e. at most 1e-12) is a protocol error (safety.protocol_error), in setup a set-up failure; the process lives on with its state",
+   "table_keys": [
+    "safety.protocol_error",
+    "refusal.reasons",
+    "interface.command_fields",
+    "interface.plan_reply",
+    "plan.check_order"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "block",
+   "key": "protocol_error.block",
+   "notice": "protocol_error",
+   "rule": "a protocol error at a plan call or at a step of a job ends the block (safety.protocol_error): at a plan call the session is told at once by the call's verdict protocol_error (plan.verdict), at a step by a non-finite wrench, and the block ends at that call; the next frame the controller receives carries the protocol_error notice; the process lives on with its state unless its reply stream could not go on (process.end.*)",
+   "table_keys": [
+    "safety.protocol_error"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "the check-out",
+   "key": "protocol_error.outside_jobs",
+   "notice": "protocol_error",
+   "rule": "a protocol error at a step of the check-out while the controller is in control is a notice, and the rest of the check-out goes to the built-in controller (protocol_error.checkout; the session is told by a non-finite wrench); no block ends; the process lives on with its state",
+   "table_keys": [
+    "safety.protocol_error"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "protocol_error.not_in_control",
+   "notice": "protocol_error",
+   "rule": "a reply refused while the controller is not in control (the start hold, a recovery of the built-in controller, a gap between blocks, the check-out after the controller left its box) costs its notice and nothing else: no block ends, no command is applied (none would be), the watchdog's count does not move, the process lives on with its state; its wall time counts in its stretch as any reply's (interface.block_wall_rule)",
+   "table_keys": [
+    "safety.protocol_error"
+   ]
+  },
+  {
+   "applied_by": "session",
+   "ends": "the check-out",
+   "key": "protocol_error.checkout",
+   "notice": null,
+   "rule": "a protocol error in the check-out while the controller is in control, or a cut at its stretch's wall allowance there (wall.cut_checkout): the built-in controller holds the start pose for the rest of the check-out",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "block (in a block) or process (outside blocks)",
+   "key": "interface.block_wall_rule",
+   "notice": null,
+   "rule": "the running bound: at every step call of a stretch, the wall-clock time of the stretch's step replies so far may not exceed the stretch's world time so far (to the end of this step) plus 5 s; a call that would exceed it is cut there",
+   "slack_s": 5.0,
+   "table_keys": [
+    "interface.block_wall_rule",
+    "interface.step_period_ms"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "wall.stretches",
+   "notice": null,
+   "rule": "the stretches, each with its own 5 s: each block, from its first frame to the frame at which the block ends (block.end); outside blocks, the start hold with the check-out, each gap between blocks and the time after the last block",
+   "table_keys": [
+    "interface.block_wall_rule",
+    "jobs.block_clock"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "the block's stretch",
+   "key": "block.end",
+   "notice": null,
+   "rule": "a block's stretch ends with the block, at the first frame the session sends that is outside the block, for whatever cause the block ended: its clock reaching its budget (read from the frame's block fields: every frame from the block's start plus its budget on is outside it, a recovery's tail after the budget included); the call at which the runner ends it (a protocol error, a cut, the runner's watchdog count at a job's step); the next block's first frame; and where the frame cannot show it (the block's last job over before its budget, the third hand-back, the session's own watchdog: the frames of a recovery inside a block and of the gap after it are alike), the session's record of the block's end (its start, its end and why it ended), which the grader hands the node; nothing of it reaches the controller",
+   "table_keys": [
+    "jobs.block_clock",
+    "monitor.hand_back",
+    "interface.watchdog_s",
+    "interface.block_wall_rule"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process",
+   "key": "wall.cut_outside_blocks",
+   "notice": null,
+   "rule": "a step call cut at its stretch's allowance outside a block and outside the check-out's control loses no job: the process is ended and started again before the next call (restart); the cut reply applies no command; in a block the cut is a protocol error and the block ends (protocol_error.block), also while the built-in controller flies a recovery in it",
+   "table_keys": [
+    "interface.block_wall_rule",
+    "interface.overrun"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "process and the check-out",
+   "key": "wall.cut_checkout",
+   "notice": "protocol_error",
+   "rule": "a step call of the check-out cut at its stretch's allowance while the controller is in control: the process is ended and started again before the next call (restart), and the rest of the check-out goes to the built-in controller, as for a protocol error there (protocol_error.checkout; the session is told by a non-finite wrench); the next frame the controller receives carries the protocol_error notice",
+   "table_keys": [
+    "interface.block_wall_rule",
+    "interface.overrun",
+    "safety.protocol_error"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "charge.since_previous_reply",
+   "notice": null,
+   "rule": "a call is charged everything the controller's process group used since the previous reply: every thread of the interpreter (also the threads that have exited), every waited-for child, every live member of the group (a high-water mark: what one reading misses is charged later); work done between calls counts against the next call",
+   "table_keys": [
+    "interface.step_cpu_ms",
+    "interface.plan_cpu_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "interface.late_reply",
+   "notice": null,
+   "rule": "a step charged more than interface.step_cpu_ms is not applied (the previous command stays) and the next n step calls are skipped, n = (charge - budget) / budget rounded up, counted in step calls in or out of control",
+   "table_keys": [
+    "interface.late_reply",
+    "interface.step_cpu_ms"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "step.skipped_frames",
+   "notice": null,
+   "rule": "the frames of skipped calls are not lost: their inertial, registration and fix lists arrive with the next frame the controller receives",
+   "table_keys": [
+    "interface.frame_fields"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "step.on_time_share",
+   "notice": null,
+   "rule": "a skipped call counts as not on time in the share of steps answered inside the budget (interface.on_time_share_gate)",
+   "table_keys": [
+    "interface.on_time_share_gate"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "step.null_command",
+   "notice": null,
+   "rule": "a step reply whose force and torque are both null is not an applied reply: the previous command stays, the watchdog runs, and an event in it is ignored (step_not_applied)",
+   "table_keys": [
+    "interface.command_fields"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "conditions": [
+    [
+     "the event is in an applied reply (a reply that is on time, well formed and carries a command)",
+     "step_not_applied"
+    ],
+    [
+     "the frame is one of the job being flown",
+     "no_job"
+    ],
+    [
+     "no event was accepted for this job before",
+     "already_accepted"
+    ],
+    [
+     "it is of the job's kind: done for a leg or slew, ready for a view",
+     "wrong_kind"
+    ],
+    [
+     "its frame's time is at or after the time of the last setpoint of the job's accepted plan",
+     "before_last_setpoint"
+    ]
+   ],
+   "ends": "nothing",
+   "key": "interface.event_rule",
+   "notice": "event_ignored",
+   "rule": "an event done or ready is accepted when all five conditions hold, checked in this order; an ignored event is named with its reason in the next frame's notices",
+   "table_keys": [
+    "interface.event_rule"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "block",
+   "key": "interface.watchdog_s",
+   "notice": null,
+   "rule": "the runner's count: the time since the last applied command, counted from the instant control returns to the controller (a block's first frame; the first frame in control after a recovery the built-in controller flew, after a hand-back or an invalid plan); a reply given while not in control does not count; checked at every step of a job (the watchdog runs in the jobs of the scored blocks only; in the check-out the controller's box applies); over interface.watchdog_s the block ends (safety.watchdog_stop)",
+   "table_keys": [
+    "interface.watchdog_s",
+    "safety.watchdog_stop"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "frame.notices",
+   "notice": null,
+   "rule": "every frame the controller receives carries the field notices (forms in 'notices', as the table's interface.frame_notices has them)",
+   "table_keys": [
+    "interface.frame_fields",
+    "interface.frame_notices"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "job",
+   "key": "plan.overrun",
+   "notice": "plan",
+   "rule": "a plan over interface.plan_cpu_s or interface.plan_wall_s is an invalid plan (interface.overrun), a hold's as well: the job scores 0 and the block goes on (the session flies the recovery, at the hold's pose for a hold); the verdict and the notice name interface.plan_cpu_s or interface.plan_wall_s with no setpoint; the process is ended only when the cap was reached while waiting (process.end.*)",
+   "table_keys": [
+    "interface.overrun",
+    "interface.plan_cpu_s",
+    "interface.plan_wall_s",
+    "monitor.recovery_s"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing (the session acts on it)",
+   "key": "plan.verdict",
+   "notice": null,
+   "rule": "every plan call is answered to the session with the runner's verdict: valid (the plan as checked, its attitudes normalised; a hold with no setpoints; an accepted job in a mode that is not in the session paper's list of modes); refused with its reason; invalid with the broken rule's key and the setpoint's index (null for an overrun); protocol_error with what happened (the block ends at once); the session's record of the job carries the verdict, the rule and the setpoint",
+   "table_keys": [
+    "interface.plan_reply",
+    "plan.check_order",
+    "refusal.reasons"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "job",
+   "key": "plan.validity",
+   "notice": "plan",
+   "order": [
+    "plan.max_setpoints",
+    "plan.limit_rule",
+    "plan.consistency",
+    "plan.start_tolerance",
+    "plan.end_tolerance"
+   ],
+   "rule": "a plan of a leg, slew or view holds 1 to 2000 setpoints (plan.max_setpoints; an empty plan breaks it), the attitudes normalised before the check; the validity rules are checked in the order of 'order' (plan.check_order) and the first broken one is named with its setpoint index; 'zero' (the last setpoint's rates) means at most 1e-12",
+   "setpoints": [
+    1,
+    2000
+   ],
+   "table_keys": [
+    "plan.max_setpoints",
+    "plan.limit_rule",
+    "plan.consistency",
+    "plan.start_tolerance",
+    "plan.end_tolerance",
+    "plan.check_order",
+    "plan.speed_limit.nominal",
+    "plan.speed_limit.quiet",
+    "plan.speed_limit.precision",
+    "plan.acceleration_limit",
+    "plan.limit_rule"
+   ],
+   "zero_at_most": 1e-12
+  },
+  {
+   "applied_by": "runner",
+   "ends": "job",
+   "key": "plan.start_pose",
+   "notice": null,
+   "rule": "the start pose of a plan (plan.start_tolerance) is the goal pose of the last job before it in the block that was not refused and was flown, by the controller or by a recovery of the built-in controller (a hand-back, an invalid plan); for the block's first such job, the block's start pose; a refused job, a refused request and an accepted request in a mode that is not in the session paper's list of modes leave it as it was",
+   "table_keys": [
+    "plan.start_tolerance"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "plan.hold",
+   "notice": null,
+   "rule": "a hold's plan is not checked: any well-formed reply but a refusal accepts it (an empty list will do); a plan call over its caps makes the hold invalid (plan.overrun)",
+   "table_keys": [
+    "plan.max_setpoints"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing",
+   "key": "plan.refusal",
+   "notice": null,
+   "rule": "a refusal that names one reason of refusal.reasons is passed on",
+   "table_keys": [
+    "refusal.reasons"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "job",
+   "key": "plan.mode_not_listed",
+   "notice": null,
+   "rule": "an accepted job in a mode that is not in the session paper's list of modes is not flown and not checked (safety.accepted_request)",
+   "table_keys": [
+    "safety.accepted_request"
+   ]
+  },
+  {
+   "applied_by": "session",
+   "ends": "nothing",
+   "key": "plan.invalid_cost",
+   "notice": null,
+   "rule": "an invalid plan costs the mode's recovery time monitor.recovery_s off the block's budget, as a hand-back does: the built-in controller brings the robot to rest at the job's goal pose (a hold made invalid by an overrun: at the hold's pose)",
+   "table_keys": [
+    "monitor.recovery_s",
+    "monitor.hand_back"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "nothing (the session scores 0 already)",
+   "key": "session_failed.calls",
+   "notice": null,
+   "rule": "after a set-up overrun, a set-up failure or a task error the controller is not called again in the session: each plan call is answered to the session with the verdict protocol_error (its block ends at once) and each step with no command",
+   "table_keys": [
+    "interface.overrun",
+    "safety.protocol_error"
+   ]
+  },
+  {
+   "applied_by": "runner",
+   "ends": "the run (a task error)",
+   "key": "task_error.sandbox_missing",
+   "notice": null,
+   "rule": "the client's sandbox (seccomp, Landlock, the subreaper) did not install: the run is a task error, not the controller's failure",
+   "table_keys": []
+  },
+  {
+   "applied_by": "runner",
+   "ends": "the run (a task error)",
+   "key": "task_error.budget_differs",
+   "notice": null,
+   "rule": "a block budget on the session paper differs from jobs.block_budget computed from the paper: a task error",
+   "table_keys": [
+    "jobs.block_budget"
+   ]
+  }
+ ],
+ "table_sentences": {
+  "interface.block_wall_rule": {
+   "also_print": [
+    "a block's stretch ends with the block, at the first frame outside it, whatever ended the block (its budget, its last job, the third hand-back, a protocol error, the watchdog); a recovery's tail after the budget belongs to the gap"
+   ],
+   "value": "at every step of a stretch (each block, from its first step to the step at which it ends; the start hold with the check-out; each gap between blocks; the time after the last block), the wall-clock time of the stretch's step replies so far may not exceed the stretch's world time so far plus 5 s; a call that would exceed it is cut there: in a block it is a protocol error and the block ends, outside a block the controller's process is ended and started again (interface.restart) and no job is lost"
+  },
+  "interface.class": {
+   "value": "Controller with setup(session), plan(job, frame), step(frame)"
+  },
+  "interface.command_fields": {
+   "also_print": [
+    "force and torque both null: not an applied reply (the previous command stays, the watchdog runs, an event in it is ignored as step_not_applied)"
+   ]
+  },
+  "interface.event_rule": {
+   "value": "the event done or ready is accepted only when all five conditions hold, checked in this order: it is in an applied reply (on time, well formed, with a command); its frame is one of the job being flown; no event was accepted for this job before; it is of the job's kind (done for a leg or slew, ready for a view); its frame's time is at or after the time of the last setpoint of the job's accepted plan. An ignored event is named with its reason (step_not_applied, no_job, already_accepted, wrong_kind, before_last_setpoint) in the next frame's notices."
+  },
+  "interface.frame_notices": {
+   "value": {
+    "entry_forms": {
+     "event_ignored": "{kind: event_ignored, job_id or null, event: done | ready, t: the frame's time, reason: step_not_applied | no_job | already_accepted | wrong_kind | before_last_setpoint}",
+     "plan": "{kind: plan, job_id, valid: true} or {kind: plan, job_id, valid: false, rule: plan.max_setpoints | plan.limit_rule | plan.consistency | plan.start_tolerance | plan.end_tolerance | interface.plan_cpu_s | interface.plan_wall_s, setpoint: index or null}",
+     "protocol_error": "{kind: protocol_error, call: plan | step, what: text}"
+    },
+    "field": "notices[]",
+    "where": "a list in every frame the controller receives (plan and step), empty in most; a notice is given once, in the first frame sent after its cause"
+   }
+  },
+  "interface.late_reply": {
+   "also_print": [
+    "the frames of skipped calls are not lost: their inertial, registration and fix lists arrive with the next frame"
+   ],
+   "value": "a step that uses more than its processor budget is not applied: the previous command stays, and the next n step calls are skipped, n = overrun divided by the step budget, rounded up (counted in step calls, not in world time)"
+  },
+  "interface.on_time_share_gate": {
+   "also_print": [
+    "a skipped call counts as not on time"
+   ]
+  },
+  "interface.overrun": {
+   "value": {
+    "plan (processor or wall)": "the job is treated as one with an invalid plan: it scores 0 and the block goes on; the controller's process is ended only when the cap was reached while the runner waited for the reply",
+    "setup (processor or wall)": "every start of the session (the first and each restart) draws on one allowance of interface.setup_cpu_s and interface.setup_wall_s summed over the starts; a start that would use more than what is left is cut there, and a restart that is needed when nothing is left is not made: a set-up overrun, that session scores 0; the other sessions are flown",
+    "setup failure": "a start that cannot go on (the import of controller.py or Controller() raises, the process ends at its start) or a setup that raises or replies malformed: a set-up failure, that session scores 0; the other sessions are flown",
+    "step, processor": "the reply is not applied, the previous command stays, and the next n step calls are skipped, n = overrun divided by the step budget, rounded up",
+    "step, wall (the running bound of its stretch)": "in a block the block ends, as for a protocol error; outside a block the process is ended and started again (interface.block_wall_rule); in the check-out the rest of the check-out goes to the built-in controller"
+   }
+  },
+  "interface.restart": {
+   "value": "The controller's process is started once per session. When it has ended (it exited, or the runner ended it because its reply stream could not go on: a reply line over interface.reply_line_cap_bytes, the stream closed, a line the client did not write, a call cut at its wall allowance or at a processor cap reached while waiting) it is started again before the next call, fresh: Controller() and setup(session) again with the same session paper, nothing of its earlier state handed to it. Every start of a session (the first and each restart) draws on the session's one set-up allowance, interface.setup_cpu_s of processor time and interface.setup_wall_s of wall clock summed over the starts (the interpreter's start, the import of controller.py, Controller() and setup all count); when it is used up: a set-up overrun (interface.overrun), that session scores 0 and no further start is made. The mass profile of the first setup stands; a later setup reply is checked for its form only."
+  },
+  "interface.setup_reply": {
+   "also_print": [
+    "the mass and the inertia of a profile that is sent are taken by the robot's built-in controller; the robot's force allocation keeps the centre of mass of the world configuration's inertia entry on file (cabinflyer/config/worlds/station.config, the same in every edition given) whether a profile is sent or not: the centre of mass of a profile that is sent does not move it"
+   ],
+   "value": "nothing, or a mass profile (mass, centre of mass, inertia) to be sent to the robot before the first block"
+  },
+  "interface.step_cpu_ms": {
+   "also_print": [
+    "a call is charged everything the controller's process group used since the previous reply (threads that exited, waited-for children, live members)"
+   ]
+  },
+  "interface.watchdog_s": {
+   "also_print": [
+    "the count runs from the instant control returns to the controller (a block's start; after a recovery the built-in controller flew) and does not run while the built-in controller flies",
+    "the watchdog runs in the jobs of the scored blocks only; in the check-out the controller's box applies (leaving it hands the check-out to the built-in controller)"
+   ]
+  },
+  "jobs.block_budget": {
+   "value": "B = S + sum over every job announced for the block of (k x t_j + F_j). t_j = max(trap(d_j, a, v), trap(theta_j, alpha, omega)) with trap(x, A, V) = 2 sqrt(x / A) if x <= V^2 / A, else x / V + V / A; d_j and theta_j are the distance and the turn angle between the body pose that meets the goal of the job before (here the last job before it in the block's list that is not a hold, whether it is a request or not; the block's start pose if there is none) and the body pose that meets this job's goal; v, a, omega, alpha are the four hard limits of the job's mode (a job that names a mode that is not in the session paper's list of modes takes the block's mode); a hold has t_j = 0. F_j = 2.5 s for a leg or slew (its end window), the duration for a hold, 1.7 s for a view (its capture). S = jobs.spin_up_term for a block that starts with a mode change, else 0. k = jobs.budget_factor."
+  },
+  "jobs.block_clock": {
+   "value": "the block's clock starts at the first step of the block (for block 3 the mode command is issued at that instant), runs in world time and stops for nothing; plan calls take no world time; when it reaches B the block ends and the built-in controller takes over"
+  },
+  "jobs.finished": {
+   "also_print": [
+    "a job ends, and the next job of the block's list is announced at once by its plan call (plan calls take no world time), when: a leg's or slew's end window closes (the upper end of score.end_window_s after its accepted done); a view's capture closes (jobs.capture_s after its accepted ready); a hold's duration has passed; the built-in controller's recovery after a hand-back or an invalid plan ends; or, for a refused job and an accepted request of the mode kind, at once; a leg, slew or view whose event is never accepted is flown until the block ends, unless a hand-back ends it first"
+   ],
+   "value": "a job is finished if its fixed window (end window, hold, capture) has closed when the block's clock reaches B; a job that is not finished or not started then scores 0 and, if it counts toward the score, stays in the mean; a refused request takes no time"
+  },
+  "jobs.spin_up_term": {
+   "value": "S = |n_new - n_old| / 200 + 2.0 s with n = 2000, 2500, 2800 rpm for fan levels 1, 2, 3 (4.5 s into the quiet mode, 3.5 s into the precision mode)"
+  },
+  "monitor.hand_back": {
+   "value": "control returns to the built-in controller; the job in progress scores 0; the built-in controller brings the robot to rest at that job's goal pose, which takes the recovery time monitor.recovery_s off the block's budget; the controller then flies the next job; the third hand-back in a block ends the block and its remaining jobs score 0"
+  },
+  "monitor.recovery_s": {
+   "also_print": [
+    "an invalid plan costs the mode's recovery time off the block's budget, as a hand-back does (the built-in controller brings the robot to rest at the job's goal); the session applies it",
+    "a hold made invalid by a plan call's overrun is followed by the same recovery, flown at the hold's pose"
+   ]
+  },
+  "plan.check_order": {
+   "also_print": [
+    "an attitude of norm zero means a norm of at most 1e-12 (the printed zero)"
+   ],
+   "value": "plan.max_setpoints, plan.limit_rule, plan.consistency (the times, then the forward integration), plan.start_tolerance, plan.end_tolerance (the rates, then a leg's or slew's last pose); the first broken one is named with its setpoint index; a plan's attitudes are normalised before the check and an attitude of norm zero is a malformed reply"
+  },
+  "plan.consistency": {
+   "value": "setpoint times increase strictly and are at most 1.0 s apart; a setpoint integrated forward at its constant acceleration to the time of the next one agrees with it within 2 mm and 0.2 degrees in pose and 2 mm/s and 0.2 deg/s in velocity and body rate"
+  },
+  "plan.end_tolerance": {
+   "also_print": [
+    "zero means at most 1e-12"
+   ]
+  },
+  "plan.limit_rule": {
+   "value": "every setpoint of a plan: the norms of velocity, acceleration, body rate and angular acceleration are at most the four hard limits of the job's mode (plan.speed_limit, plan.acceleration_limit), relative tolerance 1e-6; checked when plan returns, before the job starts; a plan that breaks it is invalid"
+  },
+  "plan.max_setpoints": {
+   "also_print": [
+    "a plan of a leg, slew or view holds 1 to plan.max_setpoints setpoints: an empty plan breaks plan.max_setpoints (a hold's plan is not checked and may be empty)"
+   ]
+  },
+  "plan.start_tolerance": {
+   "also_print": [
+    "the job before = the last job before it in the block that was not refused and was flown, by the controller or by a recovery of the built-in controller (after a hand-back or an invalid plan); a refused job, a refused request and an accepted request in a mode that is not in the session paper's list of modes leave the start pose as it was; for the first such job, the block's start pose"
+   ]
+  },
+  "safety.protocol_error": {
+   "also_print": [
+    "an exception the controller raises in plan or step and a reply read whole whose form is refused (a non-finite number, a number beyond the float range, a wrong shape, an unknown event, an unknown refusal reason) are protocol errors; at a plan call or a job's step the block ends, elsewhere a notice; the process lives on with its state",
+    "while the controller is not in control a refused reply costs its notice only",
+    "in the check-out, while the controller is in control, a protocol error or a cut at the wall rule hands the rest of the check-out to the built-in controller",
+    "after a set-up overrun or a set-up failure the session has no controller: every plan call is answered as a protocol error, each block ends at once, and the session scores 0"
+   ],
+   "value": "a malformed or non-finite reply ends the block"
+  },
+  "safety.watchdog_stop": {
+   "value": "ends the block"
+  }
+ },
+ "what": "the wire between the grader and the controller: JSON lines over standard input and output, one request line from the grader, one reply line from the controller; every rule the runner applies, by key"
+}

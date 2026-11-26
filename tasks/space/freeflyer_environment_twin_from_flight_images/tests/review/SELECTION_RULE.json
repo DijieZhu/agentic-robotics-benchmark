@@ -1,0 +1,312 @@
+{
+ "file": "SELECTION_RULE.json",
+ "what": "The rule by which the hidden truth of this task was selected from the real depth record, registered by the maintainers before the selection was run. For reviewers; the agent never sees this folder.",
+ "registered_at": "2026-11-22 08:21:33 EST",
+ "statement": "The selection is what the frozen selection code does on the registered inputs; the text describes it. The code's sha256 are listed. No number of the selection existed when the rule was registered.",
+ "scope": "The registration also covered a second recording that is in no version of the task; every part of it on that recording is left out of this copy, which is written for the task's one flight, flight_a.",
+ "rules": [
+  {
+   "id": "K0",
+   "what": "a key frame",
+   "text": "a key frame is one given wide frame n and the depth frame d nearest to it in time; the 24 key frames of a flight are listed in time order."
+  },
+  {
+   "id": "(i)",
+   "what": "pairing",
+   "text": "dt = t_n - (t_d + offset); body speed x |dt| <= the translation limit and angular rate x |dt| <= the rotation limit; speed from the smoothest pose source (fused poses when their second-difference median is below 2 mm, else offline poses), angular rate the gyro's maximum within +-0.05 s of the pairing window; the speed and rate products are the truth chain's pair table as taken; the limits are re-applied from the table.",
+   "numbers": {
+    "n01": 0.001,
+    "n02": 0.002,
+    "n04": 0.067
+   }
+  },
+  {
+   "id": "(ii)",
+   "what": "returning share",
+   "text": "at least the table's share of the depth frame's pixels return (recomputed from the ranges).",
+   "numbers": {
+    "n01": 0.5
+   }
+  },
+  {
+   "id": "(iii)",
+   "what": "nothing moving; the flight's stretches",
+   "text": "the depth frame is neither a flagged moving frame nor inside a moving interval of the final masks; for flight_a no candidate whose paired depth frame lies inside the two stretches of the flight's registered stretches (160.4 to 161.0 s and 167.2 to 167.8 s: the six candidate instants, depth frames 794 to 796 and 828 to 830, on which the range-wrap check counted pixels). Clock: the paired depth stamp minus the flight's first depth stamp; both ends of a stretch are included. Candidates of rules (i) to (iv): flight_a 401 of 407.",
+   "numbers": {
+    "n01": {
+     "stretches_rel_s": [
+      [
+       160.4,
+       161.0
+      ],
+      [
+       167.2,
+       167.8
+      ]
+     ],
+     "clock": "the paired depth frame's stamp minus the flight's first depth stamp",
+     "candidates_of_rules_i_to_iv_inside": 6,
+     "candidates_left": 401,
+     "depth_frames_of_the_six": [
+      794,
+      795,
+      796,
+      828,
+      829,
+      830
+     ]
+    }
+   }
+  },
+  {
+   "id": "(iv)",
+   "what": "trusted registration",
+   "text": "the depth frame's registration to the shell converged with at least the table's structure pixels and RMS at most the table's limit (recomputed from the registration records kept with the truth inputs), and the fused record's consistency trust flag (at least the table's share of points within the trust distance of the model built from the other 10 s blocks) is set. Poses are always the fused record's flight-consistent refined poses. (... and the fused record's trust flag is set (taken as the fused record holds it; the registered value and the registered value describe it and are not recomputed).)",
+   "numbers": {
+    "n02": 0.05,
+    "n03": 2000,
+    "n04": 0.03,
+    "n05": 0.5
+   }
+  },
+  {
+   "id": "(vii)",
+   "what": "the truth pose agrees with the on-board estimate (applied before (v))",
+   "text": "the one-flight fit of the grader (the grader's code) on all candidates' truth wide poses against the on-board estimate interpolated at frame stamp - offset, with the inlier lines replaced by half the one-flight limits; only candidates with e <= the admission position and a <= the admission angle stay. After 24 are chosen, the grader's own fit on the 24 truth poses must find 24 inliers at the half lines; otherwise the worst frame (largest max(e / admission position, a / admission angle)) is removed and replaced from its own pool (the content pool of (v) or, for the six others, all remaining admitted candidates) by farthest-point sampling continued from the 23 that remain; at most the table's number of replacements per flight; a further need stops the selection and is reported, nothing is relaxed. The run records a stop in its row '(vii) the 24 truth poses inside the half limits' (field 'stopped', also when a pool is empty) and still writes its outputs: a non-null 'stopped' stops the selection and those outputs are not used.",
+   "numbers": {
+    "n01": 15,
+    "n02": 10,
+    "n03": 12,
+    "n04": 0.5,
+    "n05": [
+     0.8,
+     1.25
+    ],
+    "n06": 1e-06,
+    "n07": 7.5,
+    "n08": 0.25,
+    "n09": 6
+   }
+  },
+  {
+   "id": "(v)",
+   "what": "the content rule: content frames first",
+   "text": "a content frame has at least the table's number of scored content pixels, counted after every mask of the masks and the class rule and before the observability check and the restriction to what the reference reproduces. Farthest-point sampling with d = sqrt((dp / position scale)^2 + (dangle / angle scale)^2) over the wide camera centre and optical axis, starting at the earliest: 18 from the admitted content frames, then 24 minus the number of content frames chosen from all remaining admitted candidates (content ones included; six when the content pool yields 18). Ties go to the earliest frame; the angle of the metric is the angle between optical axes. A content shortfall is reported, not relaxed.",
+   "numbers": {
+    "n01": 1500,
+    "n02": 0.5,
+    "n03": 0.5,
+    "n04": 18,
+    "n05": 24
+   }
+  },
+  {
+   "id": "(vi)",
+   "what": "content frames after observability",
+   "text": "fewer than the table's minimum of content frames after the observability check fails the flight.",
+   "numbers": {
+    "n01": 12
+   }
+  },
+  {
+   "id": "span",
+   "what": "estimate span",
+   "text": "every key frame's stamp minus the offset lies inside the recorded span of the given on-board estimate."
+  },
+  {
+   "id": "2.4",
+   "what": "masks",
+   "text": "not scored: no return; the never-returning corner pixels; range outside the scored range; range jump (3 x 3 spread above the table's share of the range); the moving-thing masks as taken; every pixel whose point lies within the table's radius of a centre of another free-flyer found in the placement step (every frame); grazing (angle between the view ray and the fused normal above the table's limit; a normal needs the table's minimum of points, else masked) with normals by the registered value; not robust; ambiguous class; no hit on the placed shell. (Only neighbours with a return enter the spread; the spread is compared with the centre pixel's range.) (... of the fused points flagged static in trusted frames; the 20 points are counted in the same 1 cm cells.)",
+   "numbers": {
+    "n01": 0.05,
+    "n02": 5.0,
+    "n03": 0.2,
+    "n04": 1304,
+    "n05": 75,
+    "n06": 20,
+    "n07": 0.05,
+    "n08": 0.4
+   }
+  },
+  {
+   "id": "2.5",
+   "what": "classes",
+   "text": "m = range along the pixel ray to the shell placed by the placement step's one rigid fit per flight (the simulator's multi-ray on the faces, the grader's ray code), r = measured range, b(r) = max(abs, rel x r): content when m - r >= zero factor x b(r) + margin; structure when m - r < the structure line; else ambiguous; the class must agree at m and m +- the table's variant. Poses are the flight-consistent ones, never per-frame shell fits. (m is cast with the simulator's multi-ray call (the call of the grader's ray code) on the shell's triangle faces, cutoff 1000 m.)",
+   "numbers": {
+    "n01": 0.06,
+    "n02": 0.04,
+    "n03": 3,
+    "n04": 0.03,
+    "n05": 0.05,
+    "n06": 0.1
+   }
+  },
+  {
+   "id": "2.6",
+   "what": "pixel robustness",
+   "text": "the frame's own range image resampled under the table's pose variants (+- 1 sigma rotation about each camera axis, +- the lateral translations as a rotation of t / r, +- the optical-axis translation added to the range; first-order pixel shift from the ray-table Jacobian, bilinear); a change above the table's fraction of b(r) under any variant removes the pixel; a variant sampling outside the image or next to a pixel without return counts as a change (the registered value).",
+   "numbers": {
+    "n01": 0.5,
+    "n02": 12,
+    "n04": 0.15,
+    "n05": [
+     0.0016,
+     0.0026,
+     0.004
+    ]
+   }
+  },
+  {
+   "id": "2.7",
+   "what": "observability (as amended)",
+   "text": "for each key-frame pixel point: the given wide frames of V (a wide frame's paired depth frame is the depth frame nearest in time to the wide stamp minus the offset, the first on a tie; frames whose paired depth frame is moving or inside a moving interval, or whose bracketing depth frames are not trusted, are left out) in which it is seen. A point is seen in a frame j of V when it projects at least the margin inside the image, is seen within the incidence limit (from camera j, against the key point's fused normal) and is not occluded. Occlusion is decided by the depth frame paired with j (the same depth frame that admits j to V, with its own fused pose and its measured ranges) where it can be: the point is projected into that depth frame by the ray table's nearest ray (the largest cosine among the rays that exist). It lies outside the depth frame's field when it is behind the depth camera, when its first-order pixel position (the nearest ray's pixel plus the ray table's local pseudo-inverse times the difference of the two directions, rounded to the nearest pixel centre) lies outside the image (outside the table's cone) or on a never-returning corner pixel, or when the nearest ray's pixel has no first-order position (its neighbours on both sides of its row or of its column are corner pixels or beyond the image). Inside the field the 3 x 3 pixels around the nearest ray's pixel that lie inside the image are read: when one of them has a return whose measured range is within max(0.05 m, 0.03 r) of r, r the distance from that depth camera to the point, the point is not occluded; when none does and at least one has a return, the point does not count as seen in j; when none of the nine has a return, or the point lies outside the depth frame's field, the fused record's range buffer decides as before (unoccluded when the range from camera j is at most the buffer's plus max(0.05 m, 0.03 r), with that range). The measurement, where one exists, overrides the reconstruction in both directions; the depth camera's verdict stands for the wide camera beside it. Observable when at least the table's minimum of frames see it and the widest perpendicular baseline B satisfies sqrt(2) r^2 sigma_theta / B <= fraction x b(r) (a 32-direction diameter bound refined exactly where it cannot decide), r here the key frame's measured range; unchanged. Pass line on the content pixels, pooled over the 24 key frames (pixel-weighted); the count of content frames after it. Low texture (a report item and one certification item only): the registered value, unchanged. Sanity line of the rule (a check, not a selection line): of the scored content pixels of the key frames, at least 0.98 are seen in their own wide frame, pooled over the flight; a key frame whose own wide frame is not in V is counted apart. [as the code has it: ... splatted over the cells their projected size (fx x 2 cm / range) covers, at most 6 buffer cells on either side (binding nearer than about 0.25 m).] [as the code has it: ... the occupied 2 cm cells of the fused record's static points of trusted frames.] [as the code has it: The share is taken over all scored content pixels of the 24 key frames together (pixel-weighted).] [as the code has it: the depth frame's verdict is asked only for the pairs (point, frame) that pass the margin and the incidence tests; a return is a pixel with a measured range above 0 and a ray in the table; the depth frame's moving-thing masks are not applied (the paired depth frame of a frame of V is never a moving frame nor inside a moving interval).] A return is a pixel with a measured range above 0 and a ray in the table, whatever its range (returns outside the scored range, range-jump pixels, weak returns and range wraps included); no mask of the depth frame is applied (the paired depth frame of an admitted frame is never a moving frame nor inside a moving interval). Frames outside the depth record are left out of the admitted set. Sanity line (a check, not a selection rule): at least 0.98 of the scored content pixels are seen in their own key frame's wide frame, read on the share pooled over the flight's key frames whose own wide frame is admitted; the smallest share of a single key frame is reported beside it; a flight below the line stops the use of its outputs until the maintainers rule.",
+   "numbers": {
+    "n01": 0.6,
+    "n02": 20,
+    "n03": 75,
+    "n04": 0.5,
+    "n05": 2,
+    "n06": {
+     "abs_m": 0.05,
+     "rel": 0.03
+    },
+    "n07": 0.00082,
+    "n08": 0.5
+   }
+  },
+  {
+   "id": "2.8",
+   "what": "hidden moves (as amended)",
+   "text": "per key frame and the 45 directions of the family: the task's straight-line hazard check at the maximum length on the real depth frame's hazard points (below) under 7 variants (nominal; ranges -2 sigma(r) and +2 sigma(r); grid origin shifted along x, y, z; range-jump pixels removed); all clear: a clear move; all blocked with the stop spread at most the table's and every stop at least the minimum: a blocked move (stop = nominal) plus a clear companion of the largest family length at most the smallest stop minus the margin; class by the shell-only frame (m and m +- variant agree): shell frame clear or stop difference above the content difference: blocked by content; at most the structure difference: blocked by structure; else none. Stop distances are compared as sample indices on the path grid. The hazard points : the pixels of the key depth frame that enter steps 1 to 3 (the real frame and its seven variants, the shell-only frame and so the class) are its returning pixels outside the moving-thing masks less (a) its weak returns (the registered value: the amplitude as the flight's depth record holds it times the squared measured range below 10) and (b) the pixels whose point the free-space vote leaves out. The point is the pixel's measured range along its ray from the key frame's fused pose. Every other depth frame of the flight that is trusted and neither a flagged moving frame nor inside a moving interval votes (the other key frames included): the point is placed in that frame by the frame's own fused pose and looked up as in rule 2.7 (the ray table's nearest ray; outside the depth frame's field by the same tests: no vote); the frame's non-weak returns among the 3 x 3 pixels around the nearest ray's pixel that lie inside the image are read (a return is a measured range above 0 on a ray of the table; a weak return of the voting frame counts as no return; the voting frame's moving-thing masks are not applied): 'seen' when one of them lies within max(0.05 m, 0.03 r) of r, r the distance from that depth camera to the point; 'through' when at least one is there and every one is farther than r by more than that tolerance; no vote otherwise (a nearer return hides the point, or none of the nine pixels has a non-weak return). The key frame's own return counts as one 'seen'; the pixel is left out when the 'through' votes exceed the 'seen' votes (a tie keeps it). Weak pixels are voted on as well, for the record; they are left out whatever their vote. The range-jump mask is computed from all returning pixels as before, and the variant 'range-jump pixels removed' removes them from the pixels that enter; the other free-flyer's variant of step 4 and the blocking points of step 4 are taken among the pixels that enter (the nominal frame's points). Implementation bound, not a rule number: a voting frame looks up only points with z > cos(the widest ray's angle from the optical axis + 1 deg) x r; every run checks that the depth lookup puts no direction beyond that cone inside the field (a band of 10 deg beyond its edge on a 0.02 x 0.05 deg grid, the rest on a 0.25 deg grid) and raises otherwise. The run records per key frame the pixels left out as weak, as voted out and both and the 'seen' and 'through' votes per pixel (hazard_points.npz), the moves of steps 1 to 3 per class before and after the rule, and for every direction whose result changed its old and new moves (moves_pre.json and the moves' rows). Step 4: at least the table's share of blocking points observable, and the same result with and without the other free-flyer's pixels; the reference reproduction belongs to the truth freeze. Step 5: per class, rounds over the key frames in time order, each frame giving its next move in direction order then length. [as the code has it:... on the real depth frame's returning pixels outside the moving-thing masks; since less its weak and its voted-out pixels.] [as the code has it:... each grid variant adds +0.04 m along one axis to the points and the path samples.] [as the code has it: The shell-only frame casts the shell range on the pixels the real frame uses that hit the shell.] [as the code has it: The stop difference is taken in absolute value (a shell stop more than 0.48 m before the real one also reads blocked by content).] [as the code has it:... the points of the nominal frame (the pixels that enter, other free-flyer pixels left out) in whose inflated cells the stop sample or one of its 26 neighbours lies; a pixel without a normal is not observable; a move with no such point is dropped.] [as the code has it: Direction index = 9 x (elevation index) + (azimuth index) in the listed orders of the registered value and the registered value] The voters' trust is the fused record's per-frame trust flag (not the registration test of rule (iv)), and frames of a doubtful stretch or outside an admitted window vote. A voting frame's non-weak return counts whatever its range (outside the scored range and beyond the hazard check's range included), and its range-jump pixels count. The hazard vote and the vote of the reference's input are votes of the same kind, not the same function (3 x 3 pixels without masks on the key pixel's own point here; the nearest pixel with masks on cells of the fused record there): their leave-out sets need not coincide.",
+   "numbers": {
+    "n01": 0.8,
+    "n02": 0.48,
+    "n03": 0.12,
+    "n04": 0.4,
+    "n05": [
+     -20,
+     -15,
+     -10,
+     -5,
+     0,
+     5,
+     10,
+     15,
+     20
+    ],
+    "n06": [
+     -12,
+     -6,
+     0,
+     6,
+     12
+    ],
+    "n07": [
+     0.6,
+     0.8,
+     1.0,
+     1.5,
+     2.0,
+     2.5,
+     3.0,
+     3.5
+    ],
+    "n08": 3.5,
+    "n09": 0.5,
+    "n10": {
+     "clear": 24,
+     "blocked_by_content": 24,
+     "blocked_by_structure": 12
+    },
+    "n11": {
+     "clear": 96,
+     "blocked_by_content": 96,
+     "blocked_by_structure": 48
+    },
+    "n12": 0.02,
+    "n13": 0.08,
+    "n14": 0.04,
+    "n15": 7
+   }
+  },
+  {
+   "id": "range wrap check",
+   "what": "range wrap",
+   "text": "the count of scored pixels whose placed-shell range is at least the first value while the measured range is at most the second must be zero. On flight_a the six candidate instants where the placement step counted such returns (375 pixels) are excluded by rule (iii); the run counts on all admitted candidates and on the key frames and masks nothing. Weak returns (a registered rule) are handled by the reference build and the truth freeze.",
+   "numbers": {
+    "n01": {
+     "shell_min_m": 7.3,
+     "measured_max_m": 5.0
+    }
+   }
+  }
+ ],
+ "readings_without_a_rule_of_their_own": [
+  "Checked and reported per key frame; a key frame outside the span stops the selection (there is no replacement rule for it).",
+  "Each mask's share is of all pixels of the 24 key frames; masks overlap and a pixel counts in every mask it falls in.",
+  "The pixel-robustness rule is the registered one (a pose variant that samples outside the image or next to a pixel without a return counts as a change); an earlier estimate that it removes only pixels seen beyond about 82.5 degrees does not hold."
+ ],
+ "selection_code_sha256": {
+  "check_rehearsal.py": "4d04d1471fbaef75d0425dc559a73d306bb9bcec805c317978867786216e58fd",
+  "rehearse.py": "6ef3121ba69248147937df861976b3ba68159e3cf54ed85f3f7fadda0b73a0d3",
+  "run_select.py": "52d9500f67f9c398a6e4e0818cd0ffa50d11374fa5e36551a447550f5e7dff79",
+  "selectlib.py": "c61a0ebf6879222fee1795b29b318f68741a881eae7b6eedcfaba01808cf0ce7",
+  "regression_robust_moves.json": "39ae760008fc21bf21d57ae0fd8be63c658773ba9ef811e9cb68c15cb954d4b7",
+  "test_hazard_point_rule.py": "0cd8bc3c745223bbbc6e4af6475de39db7498aaf841496d08ef583c114ad608f",
+  "test_robust_moves.py": "6e2f90680085e483de7564a6bc17203e578747227bcc3a19869566a2ddbdcf58",
+  "test_visibility_rule.py": "e25728f8cd30a2ed23a52ca0a3e36c3e27eaf01545f18500646cc18a1fe53daf"
+ },
+ "probe_library_sha256": {
+  "__init__.py": "6c8bc63adb0928f527de6b41afd835231e2cc7060bd2224b70bf3c472b64582d",
+  "gate.py": "c9731e6ef58d3b75d81df85420df67c8906bc77db46be3ba3ae49fd637ab2c25",
+  "hazard.py": "5ec80cfd930c9a496d1eea3f190d1feb57a7575ea3e5b876f5d28dceb47c4b6c",
+  "insidesolid.py": "821cd61fce2c6edd99d491dadd66653d732da393fe96fc250a8cf7bfb181ae63",
+  "oneflight.py": "e40d769e7c151f6bce69a5b10d1ef90fd97a27522eb3b11a38fd0b9da6d8d55b",
+  "posechain.py": "827b1846f4c5f0eb4d6479021b99b2a37da54deb49dae5ebd27d1833d2d876df",
+  "raycast.py": "fb398d954ab0dde1ec577c163759cca394dfcc0f4a9f52bb38fb71efcbaca7e4",
+  "widemodel.py": "c339239f620178de5d773a7bea059055fbc5be8ed1ce69d200d61458c1f9c496"
+ },
+ "interpreter": {
+  "python": "3.12.9",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "mujoco": "3.16.0"
+ },
+ "placement_per_flight": {
+  "flight_a": [
+   [
+    0.9999389867224624,
+    -0.010609270476187304,
+    -0.003076721049832135,
+    -0.048971054821188735
+   ],
+   [
+    0.010636528367609704,
+    0.9999030833518273,
+    0.008982659282917369,
+    -0.1288985885431221
+   ],
+   [
+    0.002981123402412753,
+    -0.00901483685215916,
+    0.9999549217938719,
+    -0.08478746091370339
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "other_free_flyer_centres": {
+  "flight_a": []
+ },
+ "amended_at": [
+  "2026-11-22 10:11:09 EST",
+  "2026-11-22 15:14:16 EST"
+ ],
+ "amendment": "Rule 2.7 was amended once, before the truth was built: where the depth frame paired with a wide frame measured the point, that measurement decides whether the point is hidden; the range buffer of the fused record decides only where no such measurement exists. The first form of the rule judged most points hidden in the wide frame taken at the same instant, which cannot be; it only removed pixels from the observable set. The key frames do not depend on this rule.",
+ "amendment_2": "Rule 2.8 was amended once, before the truth was frozen: a return of the key depth frame enters the hazard check only if it is not a weak return and the other depth frames do not see through its point more often than they see it. The first form took every returning pixel of the single key frame as a possible obstacle, and a handful of returns that no other frame confirms made moves read as blocked."
+}

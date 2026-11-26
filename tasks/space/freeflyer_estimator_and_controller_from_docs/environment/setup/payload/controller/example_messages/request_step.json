@@ -1,0 +1,92 @@
+{
+ "message": "a step request (a frame while the controller is in control)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with controller/example_controller",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "step",
+  "frame": {
+   "t": 3.008,
+   "in_control": true,
+   "job_id": "checkout",
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [
+    {
+     "stamp": 2.992746078,
+     "rate": [
+      0.0008551072733619359,
+      -0.0014272432304226145,
+      0.0011837639666164787
+     ],
+     "accel": [
+      0.048751201801792994,
+      -0.01617492580022754,
+      0.009337629729667375
+     ]
+    },
+    {
+     "stamp": 2.998753179,
+     "rate": [
+      0.0007582193645414045,
+      -2.581122715574792e-05,
+      -0.0006137266040553903
+     ],
+     "accel": [
+      0.048347162290254646,
+      -0.02632289968877808,
+      0.012719808955486658
+     ]
+    },
+    {
+     "stamp": 3.004816191,
+     "rate": [
+      0.002611211951788248,
+      0.000987611879798456,
+      0.000882049018379581
+     ],
+     "accel": [
+      0.03880060325036047,
+      -0.014805759338207155,
+      0.011078036379654838
+     ]
+    }
+   ],
+   "registrations": [],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": null,
+    "time_left_s": null
+   },
+   "notices": []
+  }
+ },
+ "line": "{\"op\":\"step\",\"frame\":{\"t\":3.008,\"in_control\":true,\"job_id\":\"checkout\",\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[{\"stamp\":2.992746078,\"rate\":[0.0008551072733619359,-0.0014272432304226145,0.0011837639666164787],\"accel\":[0.048751201801792994,-0.01617492580022754,0.009337629729667375]},{\"stamp\":2.998753179,\"rate\":[0.0007582193645414045,-2.581122715574792e-05,-0.0006137266040553903],\"accel\":[0.048347162290254646,-0.02632289968877808,0.012719808955486658]},{\"stamp\":3.004816191,\"rate\":[0.002611211951788248,0.000987611879798456,0.000882049018379581],\"accel\":[0.03880060325036047,-0.014805759338207155,0.011078036379654838]}],\"registrations\":[],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":null,\"time_left_s\":null},\"notices\":[]}}"
+}

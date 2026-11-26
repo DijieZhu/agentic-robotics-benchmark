@@ -1,0 +1,43 @@
+{
+ "what": "constants of the built-in (stock) control law as the line's port of the maker's firmware carries them (the line's batched port of the firmware law, checked against the port to 8.7e-16), with the gains of the records",
+ "source_file": "the line's firmware reference (control block)",
+ "source_sha256": "4fdf3d842aa40562040ac5cc9c12622eadb260c756d668aae73072916979512d",
+ "gains_source": "the line's batched port of the firmware law GAINS (the law of the records, velocity gain 1.0; the control records); the kit's reference-build velocity gain 0.5 is NOT used",
+ "gains": {
+  "att_kp": 4.0,
+  "att_ki": 0.002,
+  "omega_kd": 3.2,
+  "pos_kp": 0.6,
+  "pos_ki": 0.0001,
+  "vel_kd": 1.2,
+  "vel_gain": 1.0
+ },
+ "control": {
+  "rate_hz": 62.5,
+  "accel_gain": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "alpha_gain": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "linear_force_limit_n": 100.0,
+  "att_int_limits": [
+   -0.5,
+   0.5
+  ],
+  "pos_int_limits": [
+   -0.1,
+   0.1
+  ],
+  "stopped_pos_thresh": 0.1,
+  "stopped_quat_thresh_rad": 0.17453292519943295,
+  "stopping_vel_thresh_sq": 0.0004,
+  "stopping_omega_thresh_sq": 0.0004,
+  "butterworth_gain_1": 0.0031317642291927056,
+  "butterworth_gain_2": -0.9937364715416146
+ }
+}

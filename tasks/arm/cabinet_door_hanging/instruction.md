@@ -21,7 +21,8 @@ Whatever is in `/home/user/submission/` when the time ends is graded, so keep a 
   episode moves the cabinet by up to 8 mm in x, y and z and turns it by up to 2 deg about z.
 - **A hinge** is a 75 mm stack of 3 or 5 knuckles on one vertical axis, alternately carcass and door, with carcass
   knuckles at both ends. Each door knuckle sits in its slot with 1 mm of play at each end. A pin goes down through
-  every knuckle; its head seats on the top knuckle. A door hangs only on its pins: without them it falls out.
+  every knuckle; its head seats on the top knuckle. A door hangs only on its pins: without them nothing holds it in the
+  hinges, and it sags and tilts (it may stay wedged in the opening by a knuckle rather than drop).
 - **The old door** (dark brown, its knuckles dark) hangs in the opening on two old pins, one in each hinge. They are
   4 mm across, thinner than every pin of the series: they slide freely in any bore (no detent) and rest on their
   heads. They are the wrong pins and do not count.
@@ -97,7 +98,8 @@ above, and nothing but the observation is given for them.
 **Numerics.** Every `/opt/venv` Python computes the same here and in the graded run, on whatever machine: the image
 sets, when the variables are missing, NumPy's linear algebra on one fixed set of kernels (`OPENBLAS_CORETYPE=Haswell`
 with `OPENBLAS_L2_SIZE=256`) and on one thread (`OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`), NumPy without its
-AVX-512 loops (`NPY_DISABLE_CPU_FEATURES`) and OpenCV's IPP at AVX2 (`OPENCV_IPP=avx2`). Do not unset or change them:
+AVX-512 loops (`NPY_DISABLE_CPU_FEATURES`) and OpenCV's IPP at AVX2 (`OPENCV_IPP=avx2`; on a CPU with AVX-512 also
+`OPENCV_CPU_DISABLE=AVX512-SKX`). Do not unset or change them:
 the simulator would compute differently, and your controller's results would depend on the grading machine's CPU.
 
 ## Credit
@@ -128,6 +130,9 @@ An episode ends at the first of:
   - the gripper is open at least 70 mm;
   - both tools are at least 8 cm in front of the door's front face;
 - an unstable simulation (an arm joint faster than 8 rad/s, or a door or a pin faster than 5 m/s), which scores 0.
+
+Step 6 of the job (let go and move away) only ends the episode early. It is not part of the credit: at 6000 steps the
+credit is computed in the same way, and the swing test parks both arms itself.
 
 The score is the mean credit over the graded episodes.
 
@@ -249,14 +254,18 @@ episode, not on your replies.
   hidden order; the observation names the unit.
 - **The render test.** Before the first episode the grader draws one test image of each camera.
 - **Failures.** A crash, a late or oversize reply, a malformed action, a simulator fatal error or an unstable
-  simulation scores that episode 0, and grading goes on. After a failure the next episode restarts the controller;
-  after 3 restarts the remaining episodes score 0.
+  simulation scores that episode 0, and grading goes on. After a crash, a late or oversize reply or a reply that
+  is not one JSON object with an `action`, the next episode restarts the controller; after 3 restarts the remaining
+  episodes score 0. A malformed action or a simulation fault ends the episode without a restart: the same controller
+  process gets the next episode's `reset`.
 - **The time budget.** Your controller has a budget of 9000 s of its own time over the whole run: the time the
   grader waits for `READY` (at the first start and after a restart), for each reset and for each of your replies,
   plus 0.1 s for every image an applied action asks for (a fixed price, whatever the grading machine takes to draw
-  it). The simulation's own time is not counted. The reference controller, which asks for no images, used about
-  2 minutes of it for all 12 episodes (about 1600-1800 steps each). If the budget runs out, the episode running is aborted
-  and the rest are not run; all of them score 0. The practice grader counts the same way and prints
+  it). The simulation's own time is not counted. The reference controller, which asks for no images, used well under
+  2 minutes of it for all 12 episodes (about 1600-1800 steps each; 23 to 31 s on the hosts it was measured on, the
+  figure depends on the host). The budget is compared before each request: if it has run out, the episode running
+  is aborted and the rest are not run; all of them score 0. The reply that ends an episode is not followed by a
+  request, so that episode is scored even if this reply used up the budget. The practice grader counts the same way and prints
   `controller_seconds`.
 - **Leftover processes.** The whole run scores 0 if the grader
   cannot stop every process your submission left running (it checks when it starts and when the last episode is

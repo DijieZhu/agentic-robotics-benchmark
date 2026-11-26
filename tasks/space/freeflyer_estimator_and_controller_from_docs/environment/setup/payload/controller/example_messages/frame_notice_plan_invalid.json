@@ -1,0 +1,68 @@
+{
+ "message": "a request whose frame carries the notice of an invalid plan (its rule and setpoint index)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with a controller that sends each reply form once (kept by the maintainers, not given)",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "plan",
+  "job": {
+   "id": "j02",
+   "kind": "hold",
+   "mode": "nominal",
+   "goal": {
+    "duration_s": 3.0
+   }
+  },
+  "frame": {
+   "t": 8.016,
+   "in_control": true,
+   "job_id": "j02",
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [],
+   "registrations": [],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": 41.97451082110727,
+    "time_left_s": 41.97451082110727
+   },
+   "notices": [
+    {
+     "kind": "plan",
+     "job_id": "j01",
+     "valid": false,
+     "rule": "plan.start_tolerance",
+     "setpoint": 0
+    }
+   ]
+  }
+ },
+ "line": "{\"op\":\"plan\",\"job\":{\"id\":\"j02\",\"kind\":\"hold\",\"mode\":\"nominal\",\"goal\":{\"duration_s\":3.0}},\"frame\":{\"t\":8.016,\"in_control\":true,\"job_id\":\"j02\",\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[],\"registrations\":[],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":41.97451082110727,\"time_left_s\":41.97451082110727},\"notices\":[{\"kind\":\"plan\",\"job_id\":\"j01\",\"valid\":false,\"rule\":\"plan.start_tolerance\",\"setpoint\":0}]}}"
+}

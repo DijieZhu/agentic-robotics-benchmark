@@ -1,0 +1,97 @@
+{
+ "message": "a plan request (the job and the frame of that time)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with controller/example_controller",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "plan",
+  "job": {
+   "id": "j01",
+   "kind": "leg",
+   "mode": "nominal",
+   "goal": {
+    "position": [
+     1.3,
+     2.0,
+     1.5
+    ],
+    "attitude": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  "frame": {
+   "t": 8.016,
+   "in_control": true,
+   "job_id": "j01",
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [
+    {
+     "stamp": 8.00553707,
+     "rate": [
+      0.0019861041416035074,
+      -0.0007987143012983906,
+      0.001480463504099222
+     ],
+     "accel": [
+      0.047472737185568006,
+      -0.01775427582671493,
+      0.0026774751511353537
+     ]
+    },
+    {
+     "stamp": 8.011157285,
+     "rate": [
+      0.0009105412388253347,
+      -0.0013358835412275482,
+      0.0009466283593839688
+     ],
+     "accel": [
+      0.05525901013821604,
+      -0.023420135883640277,
+      0.006759393443607121
+     ]
+    }
+   ],
+   "registrations": [],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": 41.97451082110727,
+    "time_left_s": 41.97451082110727
+   },
+   "notices": []
+  }
+ },
+ "line": "{\"op\":\"plan\",\"job\":{\"id\":\"j01\",\"kind\":\"leg\",\"mode\":\"nominal\",\"goal\":{\"position\":[1.3,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]}},\"frame\":{\"t\":8.016,\"in_control\":true,\"job_id\":\"j01\",\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[{\"stamp\":8.00553707,\"rate\":[0.0019861041416035074,-0.0007987143012983906,0.001480463504099222],\"accel\":[0.047472737185568006,-0.01775427582671493,0.0026774751511353537]},{\"stamp\":8.011157285,\"rate\":[0.0009105412388253347,-0.0013358835412275482,0.0009466283593839688],\"accel\":[0.05525901013821604,-0.023420135883640277,0.006759393443607121]}],\"registrations\":[],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":41.97451082110727,\"time_left_s\":41.97451082110727},\"notices\":[]}}"
+}

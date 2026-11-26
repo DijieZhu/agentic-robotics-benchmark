@@ -1,0 +1,8 @@
+{
+ "direction": "higher",
+ "full_at": 1.0,
+ "metric": "twin_score",
+ "note": "twin_score is the integrity-gated mean over the flights of each flight's score under the configuration's aggregation, already on [0, 1]; ratio = twin_score / value, reward = ratio",
+ "source": "the reference answer's own measured twin_score (a static deterministic grader: the reference twin scores exactly 1.0 in every term on every run, with byte-identical verdicts)",
+ "value": 1.0
+}

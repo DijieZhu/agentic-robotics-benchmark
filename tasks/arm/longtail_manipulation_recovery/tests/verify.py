@@ -22,7 +22,11 @@ Isolation while grading (all stated in the instruction):
   (SIGSTOP) from the moment a reply has been read (or READY seen) until the grader starts writing the next request,
   so kitchen builds, simulation and rendering never share the CPUs with it and it cannot compute ahead of a request.
   A pause holds only once /proc shows every thread of every process of the account stopped; one that does not stop
-  within FREEZE_TIMEOUT_S ends the episode.
+  within FREEZE_TIMEOUT_S ends the episode. SIGSTOP holds only until the next SIGCONT, and a process can arrange its
+  own (a POSIX timer that signals it), so the pause is checked again before the next request is written: every thread
+  that was stopped must still be there and stopped, with the scheduler's record of its run time and of its turns on a
+  CPU unchanged, and no thread may have appeared. Otherwise a process of the account ran during the pause and the
+  episode ends. The time it takes to bring the account to a stop counts as controller time.
 - A request's deadline and its controller time start before the grader writes it: the write itself (an observation
   with images is larger than the pipe's buffer) is bounded by the same deadline, so a controller that reads slowly is
   charged for it and one that stops reading misses the deadline. Controller time is summed per episode and capped.
@@ -66,6 +70,7 @@ from robotics_grader import (  # noqa: E402
     zero_verdict,
 )
 from robotics_grader.stage import secure_exec_path  # noqa: E402
+from robotics_grader.solver import _spawn_at_lowest_priority  # noqa: E402
 
 STAGE = os.path.dirname(os.path.abspath(__file__))
 NONET = os.path.join(STAGE, "nonet_exec.py")
@@ -170,6 +175,51 @@ def _describe(pid):
             return "{} {}".format(pid, f.read(120).replace(b"\0", b" ").decode("utf-8", "replace").strip())
     except OSError:
         return "{} (gone)".format(pid)
+
+
+def _thread_records(pids):
+    """{(pid, tid): (state, run time, turns on a CPU)} for every thread of `pids`: the state letter from the thread's
+    stat and the first and third numbers of its schedstat (ns it has run, times it was given a CPU). A kernel without
+    schedstat gives the thread's user and system ticks instead. A stopped thread's record does not change."""
+    records = {}
+    for pid in pids:
+        try:
+            tids = os.listdir("/proc/{}/task".format(pid))
+        except OSError:
+            continue
+        for tid in tids:
+            base = "/proc/{}/task/{}/".format(pid, tid)
+            try:
+                with open(base + "stat") as f:
+                    fields = f.read().rsplit(")", 1)[1].split()
+                state, ran = fields[0], (fields[11], fields[12])
+            except (OSError, IndexError):
+                continue
+            try:
+                with open(base + "schedstat") as f:
+                    sched = f.read().split()
+                ran = (sched[0], sched[2])
+            except (OSError, IndexError):
+                pass
+            records[(pid, int(tid))] = (state,) + ran
+    return records
+
+
+def _pause_broken(before, now):
+    """What shows that a process ran between two readings of a paused account, or None. A thread that was stopped must
+    still be there, stopped, with the same record; no thread may have appeared. A thread that had already exited
+    (a zombie) may be reaped meanwhile."""
+    for key, rec in now.items():
+        if key not in before:
+            return "{} appeared".format(_describe(key[0]))
+        was = before[key]
+        if rec == was or (was[0] in GONE_STATES and rec[1:] == was[1:]):
+            continue
+        return "{} ran".format(_describe(key[0]))
+    for key, rec in before.items():
+        if key not in now and rec[0] not in GONE_STATES:
+            return "process {} is gone".format(key[0])
+    return None
 
 
 def require_empty_account(uid, quiet_s=QUIET_S):
@@ -300,6 +350,8 @@ class GuardedSolver(Solver):
         self.uid = uid
         self.last_reply_s = 0.0
         self._stopped = []
+        self._held = None                    # the threads' records once a pause holds (None: nothing to compare)
+        self.resumed = 0                     # pauses during which a process of the account ran
         self.outside = []                    # processes of the account found running outside the launcher
         self.unstoppable = []                # processes of the account that did not stop at the last pause
         super().__init__(**kw)
@@ -316,6 +368,7 @@ class GuardedSolver(Solver):
         stopped, previous = set(), None
         deadline = time.monotonic() + FREEZE_TIMEOUT_S
         self.unstoppable = []
+        self._held = None
         while True:
             pids = _agent_pids(self.uid)
             running = [p for p in pids if _runs(p)]
@@ -343,9 +396,35 @@ class GuardedSolver(Solver):
                     os.kill(pid, signal.SIGKILL)
                 except OSError:
                     pass
+        if not self.unstoppable and not self.outside:
+            # /proc shows a thread as stopped an instant before it leaves the CPU: the records are taken once two
+            # readings a millisecond apart agree
+            held = _thread_records(pids)
+            while time.monotonic() <= deadline:
+                time.sleep(0.001)
+                again = _thread_records(_agent_pids(self.uid))
+                if again == held:
+                    self._held = held
+                    break
+                held = again
+            else:
+                self.unstoppable = ["the account's threads keep changing"]
         return alive
 
+    def check_held(self):
+        """Before the next request: did the pause hold? Raises SolverAborted if a process of the account ran since
+        the pause was confirmed (continued by a signal it arranged for itself) or a new one appeared."""
+        held, self._held = self._held, None
+        if held is None:
+            return
+        why = _pause_broken(held, _thread_records(_agent_pids(self.uid)))
+        if why:
+            self.resumed += 1
+            self._broken = True
+            raise SolverAborted("a process of the controller's account ran during a pause ({})".format(why))
+
     def thaw(self):
+        self._held = None
         for pid in self._stopped:
             try:
                 os.kill(pid, signal.SIGCONT)
@@ -380,7 +459,9 @@ class GuardedSolver(Solver):
             raise SolverAborted("solver could not be started: {}".format(exc))
 
     def _start(self):
-        self.proc = self._spawn()
+        # At the lowest priority, as the kit's own start: a process that continues itself during a pause runs until
+        # the next request finds it, and must not slow the simulator meanwhile.
+        self.proc, _idle = _spawn_at_lowest_priority(self._spawn)
         self._lines = queue.Queue(maxsize=W.MAX_QUEUED_LINES)
         threading.Thread(target=self._pump, args=(self.proc, self._lines), daemon=True).start()
         try:
@@ -467,6 +548,8 @@ class GuardedSolver(Solver):
             fcntl.fcntl(fd, fcntl.F_SETFL, flags)
 
     def _exchange(self, message):
+        self.last_reply_s = 0.0
+        self.check_held()                # a process that continued itself during the pause ends the episode
         self._discard_stale()
         data = json.dumps(message) + "\n"
         t0 = time.monotonic()            # the clock and the deadline start before the write, not after it
@@ -487,8 +570,10 @@ class GuardedSolver(Solver):
                 raise SolverAborted("solver reply is not an object")
             raise SolverAborted("solver wrote too many blank lines to one request")
         finally:
-            self.last_reply_s = time.monotonic() - t0
-            self._pause_or_abort()
+            try:
+                self._pause_or_abort()
+            finally:
+                self.last_reply_s = time.monotonic() - t0      # stopping the account is the controller's time too
 
     def close(self):
         """The kit's close without its blocking write. The close message is written under CLOSE_WRITE_S like a

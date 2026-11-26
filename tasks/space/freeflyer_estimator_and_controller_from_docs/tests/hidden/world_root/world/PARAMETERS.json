@@ -1,0 +1,467 @@
+{
+ "parameters": {
+  "body_radius_m": {
+   "provisional": 0.28,
+   "replaces_stand_in": "body radius 0.28 m (safety.body_radius_m)",
+   "status": "replaced by the table's safety.body_radius_m, read by key by world/zone_rule.py: the zone rule is in force in the world for a session whose paper names a zone file in force",
+   "value": null
+  },
+  "corrections_to_fixes_ratio": {
+   "label": "measured",
+   "loader": "world.session.provisional_or_value('corrections_to_fixes_ratio')",
+   "provisional": 1.54,
+   "replaces_stand_in": "ratio of corrections to fixes (1.54)",
+   "rule": "sessions.fix_statistics._ratio_corrections_to_fixes_2022: the ratio of the built-in estimator's corrections to successful fixes on the 2022 flight bags that hold both topics",
+   "status": "pending (needs the records)",
+   "value": null
+  },
+  "fix_success_process": {
+   "label": "structure ours; every parameter measured",
+   "loader": "world.session.provisional_or_value('fix_success_process')",
+   "provisional": {
+    "mean_off_divisor_of_longest": 3.0,
+    "p_track": 0.9,
+    "process": "stand_in"
+   },
+   "replaces_stand_in": "fix success process (p_track 0.9, mean outage a third of the longest)",
+   "rule": "world.fix.success_process: a two-state process bound to the day's four statistics (rate within 10 %, median and 95th percentile of the gap within 25 %, no stretch outside the scored blocks longer than the day's longest)",
+   "status": "pending (its targets need the ratio of corrections to fixes from the records)",
+   "value": null,
+   "value_form": {
+    "per_session": "{session: {p_track, n_on, off_lo_s, off_hi_s}} from world.sensors.fit_four_stat on the day's four statistics",
+    "process": "four_statistics"
+   }
+  },
+  "force_gain": {
+   "calibration_lodo_sd": {
+    "+x": 0.2195555537099769,
+    "+y": 0.16284557267764943,
+    "+z": 0.1593653656595521,
+    "-x": 0.11941474505657211,
+    "-y": 0.07178684985958574,
+    "-z": 0.089166884530363
+   },
+   "calibration_value": {
+    "+x": 1.4776565723818176,
+    "+y": 0.7593733732177423,
+    "+z": 1.1412745943552163,
+    "-x": 1.395869983477553,
+    "-y": 1.5440735076047245,
+    "-z": 1.362680768193493
+   },
+   "inputs": [
+    {
+     "sha256": "f248531b6def91cd5662d02bd89f1f481139b4cab61689cd2efb586041bb9540",
+     "source": "(the level-3 calibration file)"
+    }
+   ],
+   "kept_from_calibration": [
+    "-x",
+    "-y",
+    "-z"
+   ],
+   "label": "ours (the rule) on measured values",
+   "replaced_by_pooled": [
+    "+x",
+    "+y",
+    "+z"
+   ],
+   "replaces_stand_in": "force-gain numbers (the rounded numbers of the rule's text)",
+   "rule": "world.force_gain.rule (applied as registered: per signed axis the level-3 calibrated value where its leave-one-day-out sd is at most 0.15, else 1.54; levels 2 and 1 1.45 on every axis)",
+   "status": "set",
+   "value": {
+    "level2_and_level1": {
+     "+x": 1.45,
+     "+y": 1.45,
+     "+z": 1.45,
+     "-x": 1.45,
+     "-y": 1.45,
+     "-z": 1.45
+    },
+    "level3": {
+     "+x": 1.54,
+     "+y": 1.54,
+     "+z": 1.54,
+     "-x": 1.395869983477553,
+     "-y": 1.5440735076047245,
+     "-z": 1.362680768193493
+    }
+   }
+  },
+  "gross_share": {
+   "inputs": [
+    {
+     "sha256": "41c2877d9fd2962934bc644ea5202fe7292538a12a11b49357b985358c986ede",
+     "source": "the control records' session table"
+    }
+   ],
+   "label": "measured steps; the assignment ours",
+   "replaces_stand_in": "gross share by rank",
+   "rule": "world.fix.gross per_session: the eight 2022 to 2024 days (six acceptance, two development) ranked by the day's 99th-percentile correction step, share = low + rank / 7 x (high - low) with world.fix.gross.share_fewer_than_20 = [low, high]",
+   "status": "set",
+   "value": {
+    "p99_correction_step_mm_by_day": {
+     "2022-05-13": 61.04421210204747,
+     "2022-06-08": 69.62367428929016,
+     "2022-06-17": 47.070014278672545,
+     "2022-07-11": 92.5820907130255,
+     "2022-07-14": 58.9642943721616,
+     "2024-02-05": 66.22954389642919,
+     "2024-04-17": 54.776162964019775,
+     "2024-05-31": 54.8688848845085
+    },
+    "rank_order_low_to_high": [
+     "2022-06-17",
+     "2024-04-17",
+     "2024-05-31",
+     "2022-07-14",
+     "2022-05-13",
+     "2024-02-05",
+     "2022-06-08",
+     "2022-07-11"
+    ],
+    "sessions_by_day": {
+     "2022-05-13": "dev_2022",
+     "2022-06-08": "session_1",
+     "2022-06-17": "session_2",
+     "2022-07-11": "session_3",
+     "2022-07-14": "session_4",
+     "2024-02-05": "dev_2024",
+     "2024-04-17": "session_5",
+     "2024-05-31": "session_6"
+    },
+    "share_fewer_than_20_by_day": {
+     "2022-05-13": 0.12714285714285714,
+     "2022-06-08": 0.1757142857142857,
+     "2022-06-17": 0.03,
+     "2022-07-11": 0.2,
+     "2022-07-14": 0.10285714285714286,
+     "2024-02-05": 0.15142857142857144,
+     "2024-04-17": 0.054285714285714284,
+     "2024-05-31": 0.07857142857142857
+    }
+   }
+  },
+  "gyro_white_noise_level3": {
+   "label": "measured",
+   "loader": "world.session.provisional_or_value('gyro_white_noise_level3')",
+   "provisional": "the level-2 values of world.imu.noise",
+   "replaces_stand_in": "gyro white noise at level 3 (taken equal to level 2)",
+   "rule": "world.imu.noise level3 rate_mrad_s_xyz: the gyro's white noise from a spectrum above the control band on the given records (fan level 3)",
+   "status": "pending (needs the records)",
+   "value": null,
+   "value_form": {
+    "rate_mrad_s_xyz": "[[lo, hi], [lo, hi], [lo, hi]] per sensor axis (drawn per session inside the range, as level 2)"
+   }
+  },
+  "mass_as_prepared": {
+   "allocator": "the maker's allocator keeps the profile on file's centre of mass (world.mass_file); only the physics uses this profile",
+   "arm_mass_kg": 0.6878526396896179,
+   "bay": {
+    "rpy": [
+     0.0,
+     3.1415,
+     0.0
+    ],
+    "xyz": [
+     -0.01,
+     0.0,
+     -0.065
+    ]
+   },
+   "beside_with_the_description_placeholder_inertia": {
+    "inertia_kgm2": [
+     [
+      0.2269217187354155,
+      -8.690154687215563e-06,
+      -0.0031147112813768073
+     ],
+     [
+      -8.690154687215561e-06,
+      0.2192514544128029,
+      4.073917433246253e-05
+     ],
+     [
+      -0.0031147112813768073,
+      4.073917433246253e-05,
+      0.23303855190728529
+     ]
+    ]
+   },
+   "bound": [
+    10.2,
+    10.6
+   ],
+   "inputs": [
+    {
+     "sha256": {
+      "arm_behaviour": "c94b3a5e48afc0ac7cd077b306996c18eca22b27136f4ac1d5f8d63d789b4046",
+      "arm_driver": "8e34b9d1050d732c90254e963a4e5502c182b3109c96e6e375318dcbf49af505",
+      "arm_macro": "b1a3d7d189cd7a84837ae9c6006f79c414a6d8bb6e748899be5021349515ce6f",
+      "meshes": {
+       "arm_distal_link.dae": "e492129cdf9d5242942cd302f5af11a9d8800c20125f732f8b0f942f3c000309",
+       "arm_proximal_link.dae": "f05c0c7dd57938498d6f2a12e85dafc6878a6fea785be7ba80060c25bcd64a43",
+       "base_link.dae": "51d4c920aa75b6a8a68000facd7b16b805c2be0b06ea57a8ffa505403fd18c0e",
+       "gripper_left_distal_link.dae": "f10d09b7e5e1a90fd1294338ba0b75c8147ff19ca682242cc57fa299ac631875",
+       "gripper_left_proximal_link.dae": "ffcf271bd1d4074023c7d1b626edbc8a0f46c9a5052b0c5c23769541c2a9b899",
+       "gripper_right_distal_link.dae": "cb279c660c922f9d77fa58e52add0a419874495d68af050f3c9a7fa63c92c6d0",
+       "gripper_right_proximal_link.dae": "c19c88cd848f1d098759a1dc0212b7ca713a9414abde936ae0f02482c5f5b33c"
+      },
+      "model": "b8d9bda9d2620bf5fadc740f7b4958b8cc5380535a647a2912b7e36849a98913"
+     },
+     "source": "(the maker's arm description, its model placement, the arm behaviour's stow goals, the arm driver's gripper conversions, the link meshes)"
+    }
+   ],
+   "label": "ours (the composition) on published parts",
+   "links": [
+    {
+     "box_inertia_link_kgm2": [
+      0.0007448712515438142,
+      0.0003589367321701862,
+      0.0008055469686263722
+     ],
+     "com_body_m": [
+      -0.01,
+      0.0,
+      -0.065
+     ],
+     "link": "bay_mount",
+     "mass_kg": 0.3078,
+     "mesh_extent_m": [
+      0.09044102999999999,
+      0.1524,
+      0.07624995
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.02705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.02705,
+      "iyz": 0.0,
+      "izz": 0.02705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      0.00010793764809407172,
+      0.00011417852103757291,
+      9.060251550683626e-05
+     ],
+     "com_body_m": [
+      -0.029443977433186025,
+      0.0,
+      -0.13000180183282692
+     ],
+     "link": "arm_distal_link",
+     "mass_kg": 0.1033,
+     "mesh_extent_m": [
+      0.07499986,
+      0.06999999,
+      0.08739989000000001
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.002705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.002705,
+      "iyz": 0.0,
+      "izz": 0.002705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      8.68538238090668e-05,
+      0.00022976677935665024,
+      0.0002679914933644599
+     ],
+     "com_body_m": [
+      -0.1294439770039516,
+      0.0,
+      -0.13001106719228261
+     ],
+     "link": "arm_proximal_link",
+     "mass_kg": 0.1623,
+     "mesh_extent_m": [
+      0.12324996,
+      0.06799982,
+      0.042399870000000006
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.02705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.02705,
+      "iyz": 0.0,
+      "izz": 0.02705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      1.0811892054863204e-06,
+      3.760035847411348e-06,
+      3.593639741380939e-06
+     ],
+     "com_body_m": [
+      0.05653605048781867,
+      -0.027103001301971973,
+      -0.08029383526081622
+     ],
+     "link": "gripper_left_distal_link",
+     "mass_kg": 0.0116026396896178,
+     "mesh_extent_m": [
+      0.056953063,
+      0.02174997,
+      0.02539992
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.002705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.002705,
+      "iyz": 0.0,
+      "izz": 0.002705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      3.7273904366910003e-06,
+      1.7407294653039203e-05,
+      1.6833645516354206e-05
+     ],
+     "com_body_m": [
+      0.00955141751576307,
+      -0.010002,
+      -0.08029818855596871
+     ],
+     "link": "gripper_left_proximal_link",
+     "mass_kg": 0.04,
+     "mesh_extent_m": [
+      0.067653769,
+      0.02174997,
+      0.02539992
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.002705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.002705,
+      "iyz": 0.0,
+      "izz": 0.002705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      2.1292717869597337e-06,
+      7.392094805928151e-06,
+      7.064397736596844e-06
+     ],
+     "com_body_m": [
+      0.05653605048781867,
+      0.027103001301971973,
+      -0.08029383526081622
+     ],
+     "link": "gripper_right_distal_link",
+     "mass_kg": 0.02285,
+     "mesh_extent_m": [
+      0.056893822,
+      0.02174997,
+      0.02539992
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.002705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.002705,
+      "iyz": 0.0,
+      "izz": 0.002705
+     }
+    },
+    {
+     "box_inertia_link_kgm2": [
+      3.7273904366910003e-06,
+      1.7407294653039203e-05,
+      1.6833645516354206e-05
+     ],
+     "com_body_m": [
+      0.00955141751576307,
+      0.010002,
+      -0.08029818855596871
+     ],
+     "link": "gripper_right_proximal_link",
+     "mass_kg": 0.04,
+     "mesh_extent_m": [
+      0.067653769,
+      0.02174997,
+      0.02539992
+     ],
+     "placeholder_inertia_entries": {
+      "ixx": 0.002705,
+      "ixy": 0.0,
+      "ixz": 0.0,
+      "iyy": 0.002705,
+      "iyz": 0.0,
+      "izz": 0.002705
+     }
+    }
+   ],
+   "replaces_stand_in": "mass as prepared (the file's mass plus 0.69 kg with the file's centre of mass and inertia)",
+   "rule": "world.mass_as_prepared: the profile on file (world.mass_file) plus the maker's arm's links at their stowed pose in the top aft bay (world.arm_state), composed with the parallel-axis rule; each link's own inertia is a solid box of its mass with its mesh's extents, about the link's centre of mass on file",
+   "status": "set",
+   "stowed_joint_rad": {
+    "arm_distal": 0.0,
+    "arm_proximal": 1.5707963267948966,
+    "gripper_left_distal": -1.2217300395491466,
+    "gripper_left_proximal": 0.3490657255854705,
+    "gripper_right_distal": 1.2217300395491466,
+    "gripper_right_proximal": -0.3490657255854705
+   },
+   "value": {
+    "com_m": [
+     0.0010880496865335611,
+     -0.0002748152291091527,
+     -0.008566806643022007
+    ],
+    "inertia_kgm2": [
+     [
+      0.16025490755091296,
+      -7.4177945678105595e-06,
+      -0.003114734470485742
+     ],
+     [
+      -7.4177945678105595e-06,
+      0.15236744231729055,
+      4.0739292221201675e-05
+     ],
+     [
+      -0.003114734470485742,
+      4.0739292221201675e-05,
+      0.16662201821114508
+     ]
+    ],
+    "mass_kg": 10.271641307689618
+   }
+  },
+  "zone_file": {
+   "provisional": "the maker's zone file",
+   "replaces_stand_in": "zone file edition (sessions.zone_rule, sessions.zone_file)",
+   "status": "replaced by the table's sessions.zone_file, read by key by world/zone_rule.py: the zone rule is in force in the world for a session whose paper names a zone file in force",
+   "value": null
+  }
+ },
+ "prototype_stand_ins": {
+  "force_gain_rule_numbers": {
+   "level3": {
+    "+x": 1.54,
+    "+y": 1.54,
+    "+z": 1.54,
+    "-x": 1.4,
+    "-y": 1.54,
+    "-z": 1.36
+   },
+   "pooled_level2": 1.45
+  },
+  "note": "force-gain numbers, read only when Settings.compat names 'force_gain' (the comparison flights only)"
+ },
+ "what": "the hidden world's own parameters: set under the table's registered rules, or named pending parameters with their provisional values and the part that sets them; internal (never agent-visible)",
+ "written_by": "a maintainers' tool"
+}
