@@ -151,6 +151,26 @@ set (14 boards) the reference leaves the cable at most 6.4 mm off the surface (n
 Over the wire (`ale validate`, validate-fdbc2035) the reference completes 20 of 20 with the same step counts. The keep
 rule's outcomes, and so the set, are unchanged.
 
+## Third amendment after the draw (the probe copy, the process count, the instruction's wording)
+
+From the same validation review, its recommendations and smaller points. None touches the physics, the route
+generator, the credit rule or the reference's program:
+
+- the probe copy of an observation (`harness_sim.Cell.probe`) is built as an observation is: the grip site's pose
+  one physics step behind the copy's joints (the kit's `stale_copy` rule) and one fresh draw of the wrist noise
+  around the noise-free reading. Before, the copy's pose was the exact kinematics of its joints and its wrench the
+  noisy reading plus more noise: on 400 pairs of a scripted motion the rule "the larger kinematics residual is the
+  real one" picked the real member 400 times, "the wrench nearer the noise-free reading" 308 times; now 195 and 196;
+- the controller's processes are counted before every request (`tests/verify.py`), as the instruction says;
+- the instruction states what happens at a malformed action, after three restarts, at an unstable simulation, at
+  a re-run of an episode, and how the hand-over is timed; `run_bench.py` judges a pair of replies as the grader does;
+  `tests/review/test_rerun.py` asserts what it states.
+
+The reference reads the real observation from the token truth, so the copy's content does not reach its program:
+over the wire it completes 20 of 20 boards with the draw's step count on every board, and the numerics fingerprint
+is unchanged. A controller that takes the copy's numbers into its state sees other numbers in its probed steps than
+before: the published frontier episode was replayed without a model call under each change (tests/review/mutants.md).
+
 ## The walk's tool and record
 
 `tests/review/select_set.py` walks the candidates and writes `tests/hidden/episodes.json` (the set, in the order

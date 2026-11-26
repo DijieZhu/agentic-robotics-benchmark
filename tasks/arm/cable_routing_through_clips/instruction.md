@@ -12,9 +12,8 @@ You have no simulator of the cell. You have this document, a commissioning servi
 ## 1. What you hand in
 
 A folder `/home/user/submission/` with a `run.sh`. The grader starts `bash run.sh` in that folder (as your account,
-with `PATH`, `HOME` and `LANG` only, no network, at the lowest priority, with at most 64 processes of your account
-at a time: more ends the episode) and talks to it over
-standard input and output, one JSON object per line:
+with `PATH`, `HOME` and `LANG` only, no network, at the lowest priority) and talks to it over standard input and
+output, one JSON object per line:
 
 | the grader writes | your program answers |
 |---|---|
@@ -27,10 +26,15 @@ Anything else you print goes to standard error. `/home/user/helpers/wire_skeleto
 (no control logic). Python is `/opt/venv/bin/python3` (NumPy, SciPy, OpenCV, Pillow and MuJoCo are installed, and
 robosuite 1.5.2's files with the Panda's model; there is no model of this cell).
 
-Some steps are asked twice with the same `t` and two slightly different observations (the joints read up to
-1 mrad differently, the wrist sensor's noise drawn again; the same pictures). Only one of the two replies is applied
-and you are not told which. A controller whose replies to such pairs are identical in more than 90 % of the pairs
-that command any motion scores 0 for the whole run: it does not react to what it is shown.
+Some steps are asked twice with the same `t` and two slightly different observations: in the other copy the joints
+read up to 1 mrad differently, the grip site's pose goes with them, and the wrist sensor's noise is a fresh draw
+around the same reading; the pictures are the same. Only one of the two replies is applied and you are not told
+which. A controller whose replies to such pairs are identical in more than 90 % of the pairs that command any
+motion scores 0 for the whole run: it does not react to what it is shown. Two replies of different lengths (8 and
+9 numbers) count as identical.
+
+The processes of your account are counted at every reset and before every request: more than 64 at such a moment
+end the episode, and your program is started again for the next one.
 
 ## 2. The cell
 
@@ -64,8 +68,8 @@ is `z = 0`. Lengths in metres, angles in radians.
   has to pass it on the stated side. **A post is made when the settled cable comes within 10 mm of the post's
   surface, below its top, with the post on the stated side of the cable** (`"left"`: the post is on the left of the
   cable as it runs from the connector).
-- **The route is judged on the settled cable**: when an episode ends the cell opens the hand, lifts it 15 cm and
-  waits 2 s. A stiff cable that is left slack can spring away from a post after the hand lets go, and work at a
+- **The route is judged on the settled cable**: when an episode ends the cell opens the hand and holds it
+  for 0.4 s, raises it 15 cm over 1.2 s and holds it there for 0.8 s; then the cable is judged. A stiff cable that is left slack can spring away from a post after the hand lets go, and work at a
   later fixture can pull or push it off a post that was made before. Fixtures count in route order, by where
   along the cable they hold it.
 - **The hand**: the Panda's two-finger hand with cable jaws: a V groove on each finger, 16 mm long, whose axis is
@@ -86,7 +90,7 @@ Every observation `obs` holds:
 | `t`, `time` | the control step (10 a second) and the time in seconds |
 | `q`, `dq` | the arm's seven joint angles and speeds |
 | `gripper_width` | the opening between the fingers (0.08 open) |
-| `tcp` | `pos` and `quat` (w, x, y, z) of the grip site in the world, from the joint encoders |
+| `tcp` | `pos` and `quat` (w, x, y, z) of the grip site in the world, as the cell's last physics step computed it: the pose 2 ms before the joint angles reported beside it |
 | `wrench` | `force` (N) and `torque` (N m) of the wrist sensor in world axes, with noise (0.3 N and 0.03 N m standard deviation per axis); it includes the hand's own weight |
 | `overhead`, `wrist` | a picture, only when asked for: `{"w", "h", "png"}`, a base64 PNG (RGB) |
 | `job` | the job sheet, the same in every observation of an episode |
@@ -150,12 +154,22 @@ reset about 8 s. `Bench().status()` tells what is left.
 The grader runs your controller on a fixed hidden set of 20 boards with 3 or 4 fixtures each (clips and posts in
 any order), drawn like the development boards. An episode's credit is **1 if the whole route is made in order and
 the connector was not damaged, otherwise 0**; the score is the mean over the 20 boards. An episode ends at your
-`finish`, after 1500 steps, or when a reply is late, missing or malformed (the cable is then judged as it lies and
-your program is restarted for the next episode).
+`finish`, after 1500 steps, or at a fault of your program; the cable is then judged as it lies.
+
+- A reply that is late or missing, a program that has ended, or too many processes: your program is started again
+  for the next episode, at most three times in a run. After the third restart, the next such fault ends every
+  remaining episode at its start (those boards score 0).
+- A malformed action ends the episode without a restart: your program keeps running and gets the next `reset`.
+- A simulation that turns unstable (a numerical blow-up, or an arm joint faster than 8 rad/s) ends the episode,
+  which scores 0.
+- If the grader's own simulation process fails during an episode, the episode is run again from its start on the
+  same board and its time is not charged: your program gets another `reset` in the middle of an episode and is not
+  told why. Clear your controller's state at every `reset`.
 
 Your controller has **3600 s of its own time** for the whole set: the time the grader waits for `READY`, for each
 reset and for each reply, plus **0.2 s for every picture you ask for** (whatever the grader's machine takes to draw
-it; the first observation's two pictures are free). The simulation's time is not counted. When the budget is used
+it; the first observation's two pictures are free). Not counted: the simulation, the drawing, and what your program computes between two requests (the cell does
+not pause your processes; they run at the lowest priority beside the simulation). When the budget is used
 up the running episode ends as it lies and the remaining boards score 0. Asking for both pictures at every step of
 every episode would cost more than three times the budget.
 

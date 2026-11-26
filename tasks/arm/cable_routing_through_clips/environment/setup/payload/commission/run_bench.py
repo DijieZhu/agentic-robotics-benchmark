@@ -156,11 +156,12 @@ def still(action):
 
 
 def differ(a, b):
+    """The grader's rule (the kit's): two replies of different lengths do not differ."""
     try:
         aa, bb = [float(v) for v in a], [float(v) for v in b]
     except (TypeError, ValueError):
         return False
-    return len(aa) != len(bb) or max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-6
+    return len(aa) == len(bb) and max([abs(x - y) for x, y in zip(aa, bb)] or [0.0]) > 1e-6
 
 
 def save_images(bench, folder, tag):

@@ -131,23 +131,32 @@ class Cell(object):
         return self.observe(self.env.observation())
 
     def probe(self, seed):
-        """The probe lock's other copy of the last observation, built as an observation is: the joints read up to
-        1 mrad off, the grip site's pose computed from those joints, the wrist sensor's noise drawn again; the
-        images (if any) are the same pictures."""
+        """The probe lock's other copy of the last observation, built the way an observation is built. The joints
+        are read up to 1 mrad off. The grip site's pose in a real observation is the kinematics of the joints one
+        physics step before the reading (the simulator reports the last step's poses): the copy's pose is the
+        kinematics of those older joints moved by the same offset (the rule of the kit's `stale_copy`,
+        robotics_grader/probe.py), so `tcp - kinematics(q)` is the same in both. The wrist sensor's noise is drawn
+        afresh around the noise-free reading, as the real observation's was: both carry one draw. The images (if
+        any) are the same pictures."""
         import mujoco
         H, env = self.H, self.env
         rng = np.random.default_rng(int(seed))
         out = dict(self.last)
-        q = np.asarray(out["q"], float) + rng.uniform(-0.001, 0.001, 7)
+        offset = rng.uniform(-0.001, 0.001, 7)
+        q = np.asarray(out["q"], float) + offset
         d = mujoco.MjData(env.model)
         d.qpos[:] = env.data.qpos
-        d.qpos[env.jq] = q
+        # the joints the reported poses were computed from: one step back along the reported velocity (the
+        # integrator's position update is q_new = q_old + dt * v_new for these hinge joints)
+        stale = env.data.qpos[env.jq] - H.TIMESTEP * env.data.qvel[env.jv]
+        d.qpos[env.jq] = stale + offset                  # stale + (copy - observed)
         mujoco.mj_kinematics(env.model, d)
         out["q"] = [round(float(v), 5) for v in q]
         out["tcp"] = {"pos": [round(float(v), 5) for v in d.site_xpos[env.site]],
                       "quat": [round(float(v), 6) for v in H.quat_from_mat(d.site_xmat[env.site].reshape(3, 3))]}
-        f = np.asarray(out["wrench"]["force"], float) + rng.normal(0.0, H.WRENCH_NOISE[0], 3)
-        t = np.asarray(out["wrench"]["torque"], float) + rng.normal(0.0, H.WRENCH_NOISE[1], 3)
+        f, t = env.wrench_world()                        # the noise-free reading of the state the observation shows
+        f = f + rng.normal(0.0, H.WRENCH_NOISE[0], 3)
+        t = t + rng.normal(0.0, H.WRENCH_NOISE[1], 3)
         out["wrench"] = {"force": [round(float(v), 3) for v in f], "torque": [round(float(v), 4) for v in t]}
         return out
 
