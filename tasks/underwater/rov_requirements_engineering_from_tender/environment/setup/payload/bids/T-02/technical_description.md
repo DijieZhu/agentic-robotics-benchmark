@@ -8,13 +8,14 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 2026-07-28 | First issue |
+| A | 30 July 2026 | First issue |
+| B | 7 August 2026 | Camera module: external flat-port housing |
 
 ## 2. Summary
 
-A complete inspection system at our lowest price point. The base configuration is specified to that price. Every upgrade is a separate option line, so the Owner pays only for what is ordered.
+We tender an inspection vehicle configured for imaging survey. The forward camera is an external unit behind a flat port, fitted with a wide-angle lens from the lens table of the catalogue; its housing is a part of the catalogue camera-housing series. Pressure-retaining parts are catalogue series parts and are referred to by their series in this description and in the BOM. The factory test reports record the parts that were tested.
 
-Ballast is by removable pieces, and loose pieces come with the vehicle (see BOM). Every factory report states the conditions of its test.
+Documentation follows survey practice: each report is numbered, dated and signed. Ballast is by removable pieces, with loose pieces supplied for trimming (see BOM).
 
 ## 3. Configuration
 
@@ -22,10 +23,10 @@ Ballast is by removable pieces, and loose pieces come with the vehicle (see BOM)
 |---|---|
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-15E |
-| Forward camera | dome camera inside the electronics tube; 90 deg horizontal field of view in air |
-| Lights | 2 |
-| Tether | 6.8 mm diameter, 138 m long |
+| Battery pack | PK-18 |
+| Forward camera | external camera behind a flat port; lens of 120 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
+| Lights | 4 |
+| Tether | 6.8 mm diameter, 200 m long |
 | Ballast | removable pieces; loose pieces supplied |
 | Frame | open frame |
 
@@ -39,20 +40,20 @@ Ballast is by removable pieces, and loose pieces come with the vehicle (see BOM)
 
 ## 5. Power budget
 
-Catalogue values.
+The budget is the sum of the catalogue values of the base load and of the lights.
 
 | Item | Power |
 |---|---|
 | Base load | 32 W |
-| Lights | 2 x 17 W |
-| Total | 66 W |
+| Lights | 4 x 17 W |
+| Total | 100 W |
 
 ## 6. Factory tests
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 2026-08-11 |
-| TR-2 | Bollard pull | 2026-08-12 |
-| TR-3 | Pressure test | 2026-08-10 |
-| TR-4 | Battery discharge | 2026-08-13 |
-| TR-5 | Tow test | 2026-08-12 |
+| TR-1 | Trim sheet | 18 August 2026 |
+| TR-2 | Bollard pull | 19 August 2026 |
+| TR-3 | Pressure test | 17 August 2026 |
+| TR-4 | Battery discharge | 20 August 2026 |
+| TR-5 | Tow test | 19 August 2026 |

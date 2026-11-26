@@ -53,7 +53,7 @@ RUN python3 -c "import importlib.metadata as m, numpy, scipy, pandas, PIL, cv2, 
     && runuser -u user -- /opt/venv/bin/python3 -c "import numpy, scipy, pandas, PIL.Image, cv2, yaml, jsonschema; print('[image] agent-UID import OK')" \
     && runuser -u alelab -- /opt/venv/bin/python3 -c "import numpy; print('[image] lab-UID import OK')"
 
-# The payload's 71 page images and 24 CSV logs are served from the benchmark's asset dataset (docs/task-assets.md):
+# The payload's 77 page images and 24 CSV logs are served from the benchmark's asset dataset (docs/task-assets.md):
 # environment/setup/setup.sh stages them into the agent home next to environment/setup/payload/, at the same paths.
 # ---- task assets: fetched at the dataset commit pinned in assets.sha256, checked file by file (docs/task-assets.md)
 COPY fetch_assets.py assets.sha256 /opt/task-assets/

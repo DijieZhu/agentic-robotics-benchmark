@@ -47,14 +47,16 @@ that campaign. It is not a vehicle of the Owner.
 ## 2. Launch and recovery
 
 - Launch and recovery: from the instrument davit on the tower deck.
+- The surface unit was fed from the socket at the foot of the davit.
 
 ## 3. Tether and payout counter
 
 - Tether: 9.0 mm in diameter.
+- Control position: the pilot's station stood on the tower deck beside the reel.
 - Tether counter: zeroed with the vehicle-end mark at the guard-rail fairlead beside the reel. From there it counts
   the tether paid out, in metres.
 - Deck lead: from the fairlead along the outside of the guard rail, round the corner, over the guide sheave under
-  the davit head, then down. 10.0 m of tether lie between the fairlead and deck level at the davit.
+  the davit head, then down. 9.0 m of tether lie between the fairlead and deck level at the davit.
 
 ## 4. Lights
 
@@ -63,7 +65,8 @@ that campaign. It is not a vehicle of the Owner.
 ## 5. Sensors and telemetry columns
 
 - Depth: from a pressure sensor. The display and the telemetry compute the depth with a fluid density of
-  1025 kg/m3, the sea-water setting.
+  1025 kg/m3, the sea-water setting. The depth was set to zero at the water surface on site
+  before each dive; out of the water it reads zero.
 - The telemetry files hold one row for each second of a dive.
 
 | Column | Unit | Content |

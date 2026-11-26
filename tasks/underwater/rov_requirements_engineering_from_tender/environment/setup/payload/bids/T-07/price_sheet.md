@@ -4,19 +4,19 @@
 - Bid: T-07
 - Bidder: Veltmann Subsea Instruments
 
-All prices are in cu. The base price covers the vehicle of the BOM as built, the factory tests TR-1 to TR-5 and the complete test documentation.
+All prices are in cu. The base price is for the vehicle of the BOM, tested at our works and crated, with the test sheets TR-1 to TR-5.
 
 ## 1. Base price
 
 | Item | Price (cu) |
 |---|---|
-| Base configuration | 12100 |
+| Base configuration | 9640 |
 
 ## 2. Options
 
 | Option | Description | Price (cu) |
 |---|---|---|
-| O-DOME | Dome camera inside the electronics tube in place of the external camera and its housing | 600 |
-| O-TL200 | Thin tether, 3.5 mm x 200 m, in place of the tether in the BOM | 500 |
+| O-71 | 8 lights in place of the number in the BOM | 565 |
+| O-72 | Surface unit SU-R in place of the BOM's surface unit | 385 |
 
 Options may be ordered singly or together. The price of an option is added to the base price.

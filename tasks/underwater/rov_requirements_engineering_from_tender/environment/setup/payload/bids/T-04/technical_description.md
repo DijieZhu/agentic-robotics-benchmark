@@ -8,14 +8,13 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 2026-07-22 | First issue |
-| B | 2026-08-20 | Lights: LED driver board, current production revision |
+| A | 2026-07-28 | First issue |
 
 ## 2. Summary
 
-The vehicle is built and tested to our standard works procedures and is kept under revision control (section 1). The type is proven in our own harbour and quay inspection work.
+A complete inspection system at our lowest price point. The base configuration is specified to that price. Every upgrade is a separate option line, so the Owner pays only for what is ordered.
 
-This bid is made without deviation from Part B of TS-01 rev C.
+Ballast is by removable pieces, and loose pieces come with the vehicle (see BOM). Every factory report states the conditions of its test.
 
 ## 3. Configuration
 
@@ -23,11 +22,11 @@ This bid is made without deviation from Part B of TS-01 rev C.
 |---|---|
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-18 |
-| Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
-| Lights | 4 |
-| Tether | 6.8 mm diameter, 200 m long |
-| Ballast | potted in the frame to our standard works trim; not removable |
+| Battery pack | PK-15E |
+| Forward camera | dome camera inside the electronics tube; 90 deg horizontal field of view in air |
+| Lights | 2 |
+| Tether | 6.8 mm diameter, 115 m long |
+| Ballast | removable pieces; loose pieces supplied |
 | Frame | open frame |
 
 ## 4. Performance
@@ -40,20 +39,20 @@ This bid is made without deviation from Part B of TS-01 rev C.
 
 ## 5. Power budget
 
-In accordance with the catalogue values.
+Catalogue values.
 
 | Item | Power |
 |---|---|
 | Base load | 32 W |
-| Lights | 4 x 17 W |
-| Total | 100 W |
+| Lights | 2 x 17 W |
+| Total | 66 W |
 
 ## 6. Factory tests
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 2026-08-06 |
-| TR-2 | Bollard pull | 2026-08-07 |
-| TR-3 | Pressure test | 2026-08-05 |
-| TR-4 | Battery discharge | 2026-08-10 |
-| TR-5 | Tow test | 2026-08-07 |
+| TR-1 | Trim sheet | 2026-08-11 |
+| TR-2 | Bollard pull | 2026-08-12 |
+| TR-3 | Pressure test | 2026-08-10 |
+| TR-4 | Battery discharge | 2026-08-13 |
+| TR-5 | Tow test | 2026-08-12 |

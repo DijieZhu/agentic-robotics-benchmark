@@ -4,19 +4,19 @@
 - Bid: T-02
 - Bidder: Calderwick Systems
 
-All prices are in cu. Base price for the base configuration of the BOM, factory tested. Upgrades are the option lines below; each option line is priced on its own.
+All prices are in cu. The base price covers the base configuration of the BOM, the factory tests reported in TR-1 to TR-5 and the documentation.
 
 ## 1. Base price
 
 | Item | Price (cu) |
 |---|---|
-| Base configuration | 9950 |
+| Base configuration | 10020 |
 
 ## 2. Options
 
 | Option | Description | Price (cu) |
 |---|---|---|
-| O-PK18 | Battery pack PK-18 in place of the pack in the BOM | 610 |
-| O-TL150 | Tether 6.8 mm x 150 m in place of the tether in the BOM | 460 |
+| O-21 | 6 lights fitted in place of the number in the BOM | 445 |
+| O-22 | Spare DVL of the catalogue type, supplied loose with its bracket and cable; not fitted to the vehicle | 685 |
 
 Options may be ordered singly or together. The price of an option is added to the base price.

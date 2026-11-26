@@ -8,15 +8,16 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 2026-08-03 | First issue |
+| A | 20 Jul 2026 | First issue |
+| B | 27 Jul 2026 | Section 3: catalogue references written as on the catalogue sheets |
 
 ## 2. Summary
 
-This description lists the vehicle as tendered, part family by part family. Section 3 names the part of each family; the BOM gives the catalogue references and the quantities. Where the vehicle does not meet a number of Part B, the compliance matrix declares the deviation and comments on it in its notes.
+We are a small workshop. We build this vehicle ourselves, a few at a time. The parts are listed in section 3 and in the BOM.
 
-Ballast is by removable pieces. Loose pieces are supplied with the vehicle, so that it can be re-trimmed.
+The ballast is potted into the frame for life. It cannot work loose, and there are no loose pieces to count.
 
-Each factory report of this bid is a check of the unit in the state in which it is delivered.
+Each vehicle is tested as it will be delivered. The test sheets show what we measured.
 
 ## 3. Configuration
 
@@ -24,11 +25,11 @@ Each factory report of this bid is a check of the unit in the state in which it 
 |---|---|
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-18 |
+| Battery pack | NC-25 |
 | Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
 | Lights | 4 |
-| Tether | 6.8 mm diameter, 150 m long |
-| Ballast | removable pieces; loose pieces supplied (see BOM) |
+| Tether | 6.8 mm diameter, 200 m long |
+| Ballast | potted in the frame, not removable |
 | Frame | open frame |
 
 ## 4. Performance
@@ -41,7 +42,7 @@ Each factory report of this bid is a check of the unit in the state in which it 
 
 ## 5. Power budget
 
-The figures are catalogue values.
+Worked out from the catalogue pages.
 
 | Item | Power |
 |---|---|
@@ -53,8 +54,10 @@ The figures are catalogue values.
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 2026-08-24 |
-| TR-2 | Bollard pull | 2026-08-25 |
-| TR-3 | Pressure test | 2026-08-21 |
-| TR-4 | Battery discharge | 2026-08-26 |
-| TR-5 | Tow test | 2026-08-25 |
+| TR-1 | Trim sheet | 4 Aug 2026 |
+| TR-2 | Bollard pull | 5 Aug 2026 |
+| TR-3 | Pressure test | 3 Aug 2026 |
+| TR-4 | Battery discharge | 6 Aug 2026 |
+| TR-5 | Tow test | 5 Aug 2026 |
+
+A copy of this description is kept in our files.

@@ -5,11 +5,14 @@ grader never runs it).
     cd /opt/ale/tests && /opt/venv/bin/python3 review/test_rerun.py once      # one process ends by itself: a re-run
     cd /opt/ale/tests && /opt/venv/bin/python3 review/test_rerun.py twice     # the same episode's two processes: a task error
 
-It runs verify.main() with harness_sim.EpisodeProcess replaced by a subclass whose child is killed (SIGSEGV) at
-control step KILL_AT of the first graded episode's first attempt (`once`), or of its first two attempts (`twice`);
-the render self-test's process is left alone. Expected with `once`: the log says the episode was run again, the
-verdict's `sim_reruns` is 1 and the episode's result is the one of an undisturbed run (the controller's clock and
-the lock's counts are set back). Expected with `twice`: no reward is written and the exit status is 1.
+`once` runs verify.main() twice: first undisturbed, then with harness_sim.EpisodeProcess replaced by a subclass
+whose child is killed (SIGSEGV) at control step KILL_AT of the first graded episode's first attempt (the render
+self-test's process is left alone). It then ASSERTS that the disturbed run's verdict has `sim_reruns` 1 and equals
+the undisturbed one in the reward and in every metric but `sim_reruns`, `controller_time_s` (the clock is set
+back to the episode's start, to the time the controller really took the second time) and `root_path_dirs_secured`
+(counted once per process), and prints RERUN TEST PASS.
+That holds for a controller that clears its state at `reset` (the reference does).
+`twice` kills the first episode's first two processes: no reward is written and the exit status is 1.
 """
 import os
 import signal
@@ -43,5 +46,33 @@ class Crashing(Base):
         return Base.step(self, action)
 
 
-verify.S.EpisodeProcess = Crashing
-verify.main()
+import json  # noqa: E402
+
+VERDICT = os.environ.get("ROBOTICS_GRADER_VERDICT_PATH") or "/tmp/rerun_verdict.json"
+
+
+def run(path, crashing):
+    os.environ["ROBOTICS_GRADER_VERDICT_PATH"] = path
+    made[0] = 0
+    verify.S.EpisodeProcess = Crashing if crashing else Base
+    verify.main()
+    with open(path) as fh:
+        return json.load(fh)
+
+
+if MODE == "twice":
+    run(VERDICT, True)                     # ends in robotics_grader.stage.fail: exit status 1, no reward
+    raise SystemExit("the second failure in a row did not end the run")
+plain = run(VERDICT + ".undisturbed", False)
+again = run(VERDICT, True)
+# not compared: the re-run count itself, the controller's clock, and how many of root's PATH folders the first
+# main() of this process had to take back (the second finds them taken)
+skip = ("sim_reruns", "controller_time_s", "root_path_dirs_secured")
+assert again["metrics"]["sim_reruns"] == 1.0, again["metrics"]["sim_reruns"]
+assert plain["metrics"]["sim_reruns"] == 0.0
+assert again["rewards"] == plain["rewards"], (again["rewards"], plain["rewards"])
+differ = sorted(k for k in set(plain["metrics"]) | set(again["metrics"])
+                if k not in skip and plain["metrics"].get(k) != again["metrics"].get(k))
+assert not differ, "metrics that differ between the undisturbed run and the re-run: {}".format(differ)
+print("RERUN TEST PASS: one re-run, reward {} and {} other metrics equal to the undisturbed run's".format(
+    again["rewards"], len(again["metrics"]) - len(skip)), file=sys.stderr)

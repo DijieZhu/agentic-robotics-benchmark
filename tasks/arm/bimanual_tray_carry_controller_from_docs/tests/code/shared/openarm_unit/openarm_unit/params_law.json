@@ -1,0 +1,1708 @@
+{
+ "about": "The law of drawing of the shared unit and everything hidden beside it: ranges, shapes, draw profiles, the thermal model (form and constants), the reply-noise law, the hold-scatter law, the cell's ranges, the mounted-item catalogue, the recorder profiles. HIDDEN: never shipped to an agent; read only through openarm_unit.docs and the hidden modules.",
+ "cell": {
+  "fixture_survey": {
+   "quantity": "true pose of the seating fixture against its surveyed pose (the datum's own error)",
+   "rotation_range_deg": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg about each axis",
+    "value": [
+     -0.05,
+     0.05
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   },
+   "translation_range_m": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "m per axis",
+    "value": [
+     -0.0003,
+     0.0003
+    ]
+   }
+  },
+  "pad_friction": {
+   "quantity": "friction coefficient of each hand's pads on a tray's grip block (the capacity rule's mu)",
+   "range": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     0.55,
+     0.75
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, per hand"
+   }
+  },
+  "shelf_survey": {
+   "quantity": "true pose of the shelf against its surveyed pose (the set-down's difficulty)",
+   "rotation_range_deg": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg about each axis",
+    "value": [
+     -0.3,
+     0.3
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   },
+   "translation_range_m": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "m per axis",
+    "value": [
+     -0.002,
+     0.002
+    ]
+   }
+  }
+ },
+ "format": "openarm_unit/params_law/1",
+ "law_version": "openarm_unit-law/2",
+ "mount_catalogue": {
+  "bracket_screws_kg": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "kg",
+   "value": null
+  },
+  "cable_on_forearm_kg": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "kg",
+   "value": null
+  },
+  "placement": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": null
+  },
+  "realsense_d405": {
+   "back_M3_spacing_m": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Figure 10-13",
+    "spec": "",
+    "status": "PV",
+    "unit": "m",
+    "value": 0.02
+   },
+   "box_half_sizes_m": {
+    "source": "half the vendor's outline",
+    "spec": "",
+    "status": "DR",
+    "unit": "m",
+    "value": [
+     0.021,
+     0.021,
+     0.0115
+    ]
+   },
+   "diaginertia_kg_m2": {
+    "source": "a uniform box of the vendor's mass and outline (uniform density: OURS)",
+    "spec": "",
+    "status": "DR + OURS",
+    "unit": "kg m^2 (about the box's own axes: x along width, y height, z depth)",
+    "value": [
+     1.1082833333333333e-05,
+     1.1082833333333333e-05,
+     1.7052000000000002e-05
+    ]
+   },
+   "mass_kg": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Table 3-54 'Weight 58 g' nominal; note (1): 'can be +/- 10% from the nominal'",
+    "spec": "",
+    "status": "PV",
+    "unit": "kg",
+    "value": 0.058
+   },
+   "mass_kg_product_page": {
+    "source": "https://www.realsenseai.com/products/stereo-depth-camera-d405/ (opened 2026-11-22): 'at 42 mm x 42 mm x 23 mm and 60 g'",
+    "spec": "",
+    "status": "PV",
+    "unit": "kg",
+    "value": 0.06
+   },
+   "mass_tolerance_rel": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Table 3-54 note (1)",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.1
+   },
+   "mounting_points": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Figure 10-13 (drawing MD0603901 rev 02); https://www.realsenseai.com/products/stereo-depth-camera-d405/ (opened 2026-11-22): 'One 1/4-20 UNC thread mounting point', 'Two M3 thread mounting points'",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": {
+     "back_face": "2x M3x0.5, maximum insert 4.0 mm, 20.00 mm apart",
+     "bottom_face": "one 1/4-20 UNC, maximum insert 5.0 mm (8.35 mm dimension on the drawing)",
+     "side_face": "2x M2x0.4, maximum insert 3 mm, 18.00 mm apart (beside the USB Micro-B connector)"
+    }
+   },
+   "outline_m": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Table 3-54 (nominal 42 / 42 / 23 mm, tolerance +-0.15 mm); https://www.realsenseai.com/products/stereo-depth-camera-d405/ (opened 2026-11-22)",
+    "spec": "",
+    "status": "PV",
+    "unit": "m (width, height, depth)",
+    "value": [
+     0.042,
+     0.042,
+     0.023
+    ]
+   },
+   "primitive": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "box"
+   },
+   "product": {
+    "source": "https://www.realsenseai.com/products/stereo-depth-camera-d405/ (opened 2026-11-22); RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3)",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": "RealSense Depth Camera D405 (vendor: RealSense, Inc.; sold under licence from Intel)"
+   },
+   "usb_cap_mass_kg": {
+    "source": "RealSense D400 Series Datasheet, Revision 020, August 2025, document number 337029-017, downloaded 2026-11-22 from https://www.realsenseai.com/download/21345/ (sha256 30a66384...abc91d3), Table 3-54 note (1): bulk cameras ship without the USB cap, 'around 2.3g'",
+    "spec": "",
+    "status": "PV",
+    "unit": "kg",
+    "value": 0.0023
+   }
+  }
+ },
+ "params_public_sha256": "7070648afc6cfe5e6169179d31a1c8968207c3f9beae5d0377ff8729d8b45405",
+ "profiles": {
+  "stage04": {
+   "C0": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw",
+     "modules": "all 16"
+    }
+   },
+   "C1": {
+    "source": "published by the maker",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": {
+     "mode": "routine"
+    }
+   },
+   "C2": {
+    "source": "published by the joint module vendor",
+    "spec": "",
+    "status": "PV",
+    "unit": "rad/s",
+    "value": {
+     "mode": "fixed",
+     "value": 10.0
+    }
+   },
+   "C3": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "gripper": {
+      "mode": "fixed",
+      "value": 1.0
+     },
+     "mode": "draw"
+    }
+   },
+   "C4": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "C5": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "TIMEOUT": 0,
+     "gripper_mode": "force_position",
+     "mode": "fixed"
+    }
+   },
+   "C6": {
+    "source": "published by the joint module vendor",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": {
+     "mode": "nominal"
+    }
+   },
+   "C7": {
+    "source": "published by the joint module vendor",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": {
+     "mode": "nominal"
+    }
+   },
+   "HS1": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "P1": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "P2": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "P3": {
+    "source": "fixed",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": {
+     "mode": "nominal"
+    }
+   },
+   "P4": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "P5": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "items": "one realsense_d405 on a printed bracket on ONE arm (side with equal odds) as mount_<side>_1 on the hand, its cable length as mount_<side>_2 on the forearm",
+     "mode": "draw"
+    }
+   },
+   "P6": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "P7": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "PL1": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "nominal"
+    }
+   },
+   "ST1": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw",
+     "stops": "the one stop per arm joint that the zero routine bumps; the other stop nominal"
+    }
+   },
+   "TH1": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "mode": "draw"
+    }
+   },
+   "registry_location": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "the task's hidden tests"
+   },
+   "sessions": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "S1": "draw",
+     "S2": "draw",
+     "S3": "draw (ambient per session; start temperature per module, both nodes alike)",
+     "count": 2,
+     "names": [
+      "commissioning_day",
+      "grading"
+     ]
+    }
+   },
+   "worth_hiding": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "off"
+   }
+  },
+  "stage05": {
+   "location": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "the stage-05 task's own profile file (in that task's contract folder), written by that task; it fixes, narrows or groups the law's quantities per element and never widens them. This file holds every law range it narrows: C1 residual 0.4 deg, PL1 (right arm against left) 0.5 mm / 0.15 deg, TH1, S3 per module up to 20 K, and the cell's pad friction and survey tolerances (law key 'cell')"
+   },
+   "units": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": 3
+   }
+  }
+ },
+ "quantities": {
+  "C0": {
+   "elements": "16 modules (14 arm modules and the 2 grippers)",
+   "in_the_state": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "UnitState.cal.zero_before; when the unit is built with zero_mode = routine, cal.delta = zero_before (zero_source 'as_drawn') until the routine writes its zeros (the 'as zeroed' state)"
+   },
+   "nominal": {
+    "source": "a module arrives with whatever zero it last saved",
+    "spec": "",
+    "status": "OURS",
+    "unit": "rad",
+    "value": 0.0
+   },
+   "quantity": "the zero stored in each module before any routine",
+   "range_rad": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "rad",
+    "value": [
+     -3.141592653589793,
+     3.141592653589793
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, independent per module, its own stream; drawn only when a profile switches it on"
+   }
+  },
+  "C1": {
+   "modes": {
+    "source": "the maker's published routine; the residual ours, inside spans measured on real units",
+    "spec": "",
+    "status": "PM routine; residual OURS inside real spans",
+    "unit": "-",
+    "value": {
+     "residual": "delta = true zero + r, r uniform within +-0.4 deg per joint",
+     "routine": "what refhost.zero_calibration writes on this unit"
+    }
+   },
+   "nominal": {
+    "source": "published by the maker",
+    "spec": "",
+    "status": "PM",
+    "unit": "rad",
+    "value": 0.0
+   },
+   "quantity": "stored zero delta of each arm module (the zero in force after commissioning)",
+   "residual_range_deg": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg",
+    "value": [
+     -0.4,
+     0.4
+    ]
+   },
+   "residual_range_rad": {
+    "source": "residual_range_deg x pi / 180 (0.006981317007977318 rad)",
+    "spec": "",
+    "status": "DR",
+    "unit": "rad",
+    "value": [
+     -0.006981317007977318,
+     0.006981317007977318
+    ]
+   },
+   "routine_on_nominal_stops_deg": {
+    "source": "measured in simulation",
+    "spec": "",
+    "status": "MS",
+    "unit": "deg (J1..J7)",
+    "value": [
+     -0.46,
+     -0.02,
+     0.06,
+     0.37,
+     0.32,
+     0.86,
+     0.24
+    ]
+   }
+  },
+  "C2": {
+   "nominal": {
+    "source": "published by the joint module vendor and by the maker; measured on a real unit's logs",
+    "spec": "",
+    "status": "PV / PM / MR",
+    "unit": "rad/s",
+    "value": 10.0
+   },
+   "quantity": "VMAX register of the two DM4340 per arm",
+   "values": {
+    "source": "published by the joint module vendor and by the maker; measured on a real unit's logs",
+    "spec": "",
+    "status": "PV / PM / MR",
+    "unit": "rad/s",
+    "value": [
+     10.0,
+     8.0
+    ]
+   }
+  },
+  "C3": {
+   "nominal": {
+    "source": "a real source's magnitude used by analogy; the values ours",
+    "spec": "",
+    "status": "AN, values OURS",
+    "unit": "-",
+    "value": 1.0
+   },
+   "quantity": "delivered torque per commanded torque k, 16 modules",
+   "range": {
+    "source": "a real source's magnitude used by analogy; the values ours",
+    "spec": "",
+    "status": "AN, values OURS",
+    "unit": "-",
+    "value": [
+     0.88,
+     1.04
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, independent"
+   }
+  },
+  "C4": {
+   "nominal": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "N m",
+    "value": 0.0
+   },
+   "quantity": "constant torque offset b (the actuator's constant bias), 14 arm modules",
+   "range_Nm": {
+    "source": "ours, inside a bound measured on a real unit's logs",
+    "spec": "",
+    "status": "OURS inside an MR bound",
+    "unit": "N m",
+    "value": {
+     "J1-J4": [
+      -0.15,
+      0.15
+     ],
+     "J5-J7": [
+      -0.04,
+      0.04
+     ]
+    }
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   }
+  },
+  "C5": {
+   "gripper_modes": {
+    "source": "openarm_driver, openarm_teleop",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": [
+     "MIT",
+     "force_position"
+    ]
+   },
+   "nominal": {
+    "source": "published by the joint module vendor; one real unit's register dump",
+    "spec": "",
+    "status": "PV / one real dump",
+    "unit": "-",
+    "value": {
+     "CTRL_MODE_arm": 1,
+     "OC_Value": 0.8,
+     "OT_Value": 100.0,
+     "TIMEOUT": 0,
+     "can_br": 9
+    }
+   },
+   "quantity": "registers",
+   "timeout_groups": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "joints",
+    "value": [
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      5,
+      6,
+      7,
+      8
+     ]
+    ]
+   },
+   "timeout_values_counts": {
+    "source": "the joint module vendor's published time base; three real units",
+    "spec": "",
+    "status": "PV time base; three real units",
+    "unit": "counts of 50 us",
+    "value": [
+     0,
+     1000,
+     5000
+    ]
+   }
+  },
+  "C6": {
+   "quantity": "edition of the modules of each class",
+   "values": {
+    "source": "published by the joint module vendor",
+    "spec": "",
+    "status": "PV",
+    "unit": "-",
+    "value": {
+     "DM4310": [
+      "DM4310_V1_1",
+      "DM4310_V1_2"
+     ],
+     "DM4340": [
+      "DM4340_1",
+      "DM4340_V1_1"
+     ]
+    }
+   }
+  },
+  "C7": {
+   "quantity": "per-unit current base Imax of each module",
+   "values": {
+    "source": "published by the joint module vendor",
+    "spec": "",
+    "status": "PV",
+    "unit": "A",
+    "value": {
+     "DM4310_V1_1": [
+      10.261194,
+      20.522388
+     ]
+    }
+   }
+  },
+  "HS1": {
+   "anchor_modes": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": {
+     "A1": 0.0,
+     "A12": 0.29,
+     "A2": 0.0,
+     "A3": 0.29,
+     "A4": 0.29
+    }
+   },
+   "fixed_for": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "the unit (not per session)"
+   },
+   "form": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "level(q) = P1 x S1 x (1 + rho_i(q)); rho_i periodic in the joint's MECHANICAL angle q (never the module's angle: saving a zero does not move a mechanism's pattern): two harmonics of a base period lambda_i; stored as a table per joint, read by linear interpolation"
+   },
+   "harmonic_weights": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     0.8,
+     0.6
+    ]
+   },
+   "peak": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": 0.57
+   },
+   "period_range_rad": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "rad",
+    "value": [
+     0.03,
+     0.04
+    ]
+   },
+   "phases": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform over one period of each harmonic, per joint"
+   },
+   "quantity": "how the friction level varies along a joint's travel (hold-scatter source), 14 arm joints",
+   "relative_rms": {
+    "source": "ours, inside a bound measured on a real unit's logs",
+    "spec": "",
+    "status": "OURS inside an MR bound",
+    "unit": "-",
+    "value": 0.29
+   },
+   "table_bounds": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     0.4,
+     1.6
+    ]
+   },
+   "table_entries": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": 256
+   }
+  },
+  "P1": {
+   "arm_factor_range": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     0.94,
+     1.06
+    ]
+   },
+   "nominal_Nm": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "N m",
+    "value": [
+     0.59,
+     0.59,
+     0.59,
+     1.14,
+     0.11,
+     0.16,
+     0.1
+    ]
+   },
+   "quantity": "Coulomb friction level (frictionloss), J1..J7",
+   "range_Nm": {
+    "source": "measured on a real unit's logs and real sources' magnitudes used by analogy (the envelope of single-unit figures)",
+    "spec": "",
+    "status": "MR / AN (envelope of single-unit figures)",
+    "unit": "N m",
+    "value": [
+     [
+      0.306,
+      1.02
+     ],
+     [
+      0.306,
+      0.72
+     ],
+     [
+      0.2,
+      0.59
+     ],
+     [
+      0.15,
+      1.27
+     ],
+     [
+      0.05,
+      0.16
+     ],
+     [
+      0.09,
+      0.16
+     ],
+     [
+      0.1,
+      0.31
+     ]
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "log-uniform; the two arms share the draw x a per-arm factor; the product with every factor (arm, session) must stay inside the range, else the element is redrawn"
+   }
+  },
+  "P2": {
+   "nominal_Nm_s_rad": {
+    "source": "the motor read-outs in the file's comment ('reference only'); wrist confirmed MR 0.015-0.08",
+    "spec": "",
+    "status": "PM",
+    "unit": "N m s/rad",
+    "value": [
+     0.13,
+     0.13,
+     0.33,
+     0.33,
+     0.03,
+     0.03,
+     0.03
+    ]
+   },
+   "quantity": "viscous damping (damping)",
+   "range_Nm_s_rad": {
+    "source": "upper ends PM issue 103",
+    "spec": "",
+    "status": "PM / MR",
+    "unit": "N m s/rad",
+    "value": {
+     "J1-J2": [
+      0.0,
+      0.52
+     ],
+     "J3-J4": [
+      0.0,
+      0.81
+     ],
+     "J5-J7": [
+      0.015,
+      0.1
+     ]
+    }
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   }
+  },
+  "P3": {
+   "nominal_kg_m2": {
+    "source": "the maker's file = PV rotor inertia x ratio^2; fixed (not drawn)",
+    "spec": "",
+    "status": "PM",
+    "unit": "kg m^2",
+    "value": [
+     0.016,
+     0.016,
+     0.03,
+     0.03,
+     0.002,
+     0.002,
+     0.002
+    ]
+   },
+   "quantity": "rotor inertia (armature)"
+  },
+  "P4": {
+   "com_range_m": {
+    "source": "ours, inside a bound measured on one real unit's logs",
+    "spec": "",
+    "status": "OURS inside one unit's MR bound",
+    "unit": "m per axis",
+    "value": [
+     -0.003,
+     0.003
+    ]
+   },
+   "mass_range_rel": {
+    "source": "ours, inside a bound measured on one real unit's logs",
+    "spec": "",
+    "status": "OURS inside one unit's MR bound",
+    "unit": "-",
+    "value": [
+     -0.03,
+     0.03
+    ]
+   },
+   "quantity": "link mass and centre of mass as built (per arm: link1..link6, ee_base_link, the two fingers)",
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform; inertia scaled with mass"
+   }
+  },
+  "P5": {
+   "catalogue": "see 'mount_catalogue'",
+   "items_per_arm": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "items",
+    "value": [
+     0,
+     2
+    ]
+   },
+   "nominal": {
+    "source": "published by the maker; a real source's magnitude used by analogy",
+    "spec": "",
+    "status": "PM / AN",
+    "unit": "-",
+    "value": "nothing"
+   },
+   "quantity": "what is mounted on each arm (leaf bodies mount_<side>_<k>)"
+  },
+  "P6": {
+   "nominal_Nm": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "N m",
+    "value": 0.4
+   },
+   "quantity": "gripper friction (finger1 frictionloss)",
+   "range_Nm": {
+    "source": "a real source's magnitude used by analogy",
+    "spec": "",
+    "status": "AN",
+    "unit": "N m",
+    "value": [
+     0.2,
+     0.92
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "log-uniform, per arm"
+   }
+  },
+  "P7": {
+   "nominal_Nm_s_rad": {
+    "source": "published by the maker",
+    "spec": "",
+    "status": "PM",
+    "unit": "N m s/rad",
+    "value": 0.084
+   },
+   "quantity": "gripper viscous damping (finger damping)",
+   "range_Nm_s_rad": {
+    "source": "published by the maker; a real source's magnitude used by analogy",
+    "spec": "",
+    "status": "PM / AN",
+    "unit": "N m s/rad",
+    "value": [
+     0.0,
+     0.1
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, per arm"
+   }
+  },
+  "PL1": {
+   "displaced": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "the right arm's base_link against the left arm's; the left arm stays at the file's pose (PlantState.base_poses[0] nominal, base_poses[1] displaced)"
+   },
+   "nominal": {
+    "source": "conventions",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": "the file's"
+   },
+   "quantity": "where each arm is bolted to the pedestal (pose of base_link)",
+   "rotation_range_deg": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg per axis",
+    "value": [
+     -0.15,
+     0.15
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   },
+   "translation_range_m": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "m per axis",
+    "value": [
+     -0.0005,
+     0.0005
+    ]
+   }
+  },
+  "S1": {
+   "max_session_difference_rel": {
+    "source": "arithmetic on published and measured values",
+    "spec": "",
+    "status": "DR",
+    "unit": "-",
+    "value": 0.1847826086956521
+   },
+   "nominal": {
+    "source": "a real source's magnitude used by analogy",
+    "spec": "",
+    "status": "AN",
+    "unit": "-",
+    "value": 1.0
+   },
+   "quantity": "session factor of P1 and P6, per joint",
+   "range": {
+    "source": "a real source's magnitude used by analogy",
+    "spec": "",
+    "status": "AN",
+    "unit": "-",
+    "value": [
+     0.92,
+     1.09
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   }
+  },
+  "S2": {
+   "nominal": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "N m",
+    "value": 0.0
+   },
+   "quantity": "session step of b",
+   "range_Nm": {
+    "source": "ours, inside a bound measured on a real unit's logs",
+    "spec": "",
+    "status": "OURS inside an MR bound",
+    "unit": "N m",
+    "value": {
+     "J1-J4": [
+      -0.05,
+      0.05
+     ],
+     "J5-J7": [
+      -0.015,
+      0.015
+     ]
+    }
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform"
+   }
+  },
+  "S3": {
+   "ambient_nominal_C": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg C",
+    "value": 25.0
+   },
+   "ambient_range_C": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "deg C",
+    "value": [
+     20.0,
+     30.0
+    ]
+   },
+   "elements": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "16 modules x (T_w0, T_h0) and one ambient per session (SessionState.start_temperatures_C)"
+   },
+   "quantity": "thermal state of a session",
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, independent per module; both nodes of a module start at the same value"
+   },
+   "start_offset_range_K": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "K",
+    "value": [
+     0.0,
+     20.0
+    ]
+   }
+  },
+  "S4": {
+   "nominal_V": {
+    "source": "fixed",
+    "spec": "",
+    "status": "PM",
+    "unit": "V",
+    "value": 24.0
+   },
+   "quantity": "supply"
+  },
+  "ST1": {
+   "elements": "14 arm joints x 2 stops",
+   "nominal": {
+    "source": "joint_ranges_rad",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": "the file's"
+   },
+   "nominal_offset_deg": {
+    "source": "the file's stops (offset 0)",
+    "spec": "",
+    "status": "PM",
+    "unit": "deg",
+    "value": 0.0
+   },
+   "offset_range_deg": {
+    "source": "a real source's magnitude used by analogy; the values ours",
+    "spec": "",
+    "status": "AN, values OURS",
+    "unit": "deg",
+    "value": [
+     -2.0,
+     2.0
+    ]
+   },
+   "quantity": "as-built position of each mechanical stop, 14 arm joints x 2 (the joint's range)",
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, independent per stop, constant for the unit"
+   }
+  },
+  "TH1": {
+   "nominal": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": 1.0
+   },
+   "quantity": "heat factor h of each module",
+   "range": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     0.85,
+     1.15
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, independent"
+   }
+  },
+  "registers_identification_spread": {
+   "quantity": "Flux, Rs, Ls registers = catalogue x (1 + e), e per module and register",
+   "range": {
+    "source": "a real source's magnitude used by analogy; the values ours",
+    "spec": "",
+    "status": "AN, values OURS",
+    "unit": "-",
+    "value": [
+     -0.06,
+     0.06
+    ]
+   },
+   "registers": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": [
+     "Flux",
+     "Rs",
+     "LS"
+    ]
+   },
+   "shape": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "uniform, INDEPENDENTLY of everything else in the unit"
+   }
+  }
+ },
+ "recorder_profiles": {
+  "layout": {
+   "source": "published by the maker",
+   "spec": "",
+   "status": "PM",
+   "unit": "-",
+   "value": "openarm_dataset 0.4.0: episodes/<id>/obs/arms/<side>/state.parquet and .../action/arms/<side>/state.parquet, timestamp in ns, list columns of 8; metadata.yaml"
+  },
+  "real_unit": {
+   "count_difference_histogram": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "arm-episodes",
+    "value": {
+     "-1": 25,
+     "-2": 9,
+     "-3": 2,
+     "-5": 1,
+     "0": 51,
+     "1": 29,
+     "2": 8,
+     "3": 3,
+     "7": 1
+    }
+   },
+   "interpolation": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "inverse transform, linear between quantile points; lost samples at uniformly drawn ticks"
+   },
+   "lead_ms": {
+    "source": "one fit, +26 / +18 / +14 / +18 ms at J1-J4, +-4 ms",
+    "spec": "",
+    "status": "MR",
+    "unit": "ms (the command acts this long BEFORE its stamp)",
+    "value": 18.0
+   },
+   "observation_model": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "-",
+    "value": "signed_phase"
+   },
+   "observation_stamp_path": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "-",
+    "value": "float"
+   },
+   "offset_quantiles_ms": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "ms",
+    "value": {
+     "max": 35.606,
+     "p1": 0.046,
+     "p5": 0.16,
+     "p50": 0.51,
+     "p75": 0.69,
+     "p95": 7.8,
+     "p99": 13.564
+    }
+   },
+   "phase_negative_fraction": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "fraction of observations",
+    "value": 0.056690581809934484
+   },
+   "phase_negative_quantiles_ms": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "ms (the action comes this long AFTER its observation)",
+    "value": {
+     "p25": 0.099,
+     "p5": 0.015,
+     "p50": 0.247,
+     "p75": 0.47,
+     "p95": 1.45
+    }
+   },
+   "phase_positive_quantiles_ms": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "ms (the observation comes this long AFTER its action)",
+    "value": {
+     "p1": 0.044,
+     "p25": 0.347,
+     "p5": 0.158,
+     "p50": 0.492,
+     "p75": 0.648,
+     "p95": 1.025,
+     "p99": 1.467
+    }
+   },
+   "stamp_grid_ns": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "ns (observation rows: the recorder's float path)",
+    "value": 256
+   },
+   "tick_interval_quantiles_ms": {
+    "source": "measured on a real unit's logs",
+    "spec": "",
+    "status": "MR",
+    "unit": "ms",
+    "value": {
+     "max": 44.2,
+     "p1": 3.1,
+     "p25": 9.87,
+     "p5": 5.83,
+     "p50": 11.26,
+     "p75": 12.69,
+     "p95": 15.39,
+     "p99": 17.62,
+     "p99.9": 20.563
+    }
+   }
+  },
+  "stage04_day": {
+   "dispatch_after_stamp_ms": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "ms, uniform per tick",
+    "value": [
+     0.3,
+     1.5
+    ]
+   },
+   "observation_stamp_path": {
+    "source": "published by the maker",
+    "spec": "",
+    "status": "PM",
+    "unit": "-",
+    "value": "int"
+   },
+   "timing": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "-",
+    "value": "as real_unit except the lead and the observation stamp path"
+   }
+  }
+ },
+ "reply_noise": {
+  "shape": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": "normal-like draws of rng.py (four uniforms per draw, 0.6), one stream per bus and field, keyed by the unit's noise key; position = theta + s_q n1, velocity = s qdot + s_v n2, torque = T_del + s_t n3, in steps of each field's resolution"
+  },
+  "steps": {
+   "source": "ours, inside figures measured on a real unit's logs",
+   "spec": "",
+   "status": "OURS inside MR",
+   "unit": "steps of the field",
+   "value": {
+    "position": 0.4,
+    "torque": 0.5,
+    "velocity": 0.5
+   }
+  }
+ },
+ "rules": {
+  "assertion_home_gravity_torque_of_peak": {
+   "source": "measured in simulation",
+   "spec": "",
+   "status": "MS",
+   "unit": "-",
+   "value": 0.17
+  },
+  "assertion_home_hold_slack_Nm": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "N m",
+   "value": 0.02
+  },
+  "assertion_home_winding_C": {
+   "source": "measured in simulation",
+   "spec": "",
+   "status": "MS",
+   "unit": "deg C",
+   "value": 30.0
+  },
+  "registry_entropy_bytes": {
+   "source": "os.urandom, written before any draw",
+   "spec": "",
+   "status": "OURS",
+   "unit": "bytes",
+   "value": 32
+  },
+  "sanity_home_hold_s": {
+   "source": "home pose holds for 5 s under both gain sets with the driver law",
+   "spec": "",
+   "status": "OURS",
+   "unit": "s",
+   "value": 5.0
+  },
+  "spread_rule_stage05": {
+   "source": "any two of stage 05's three units differ by at least w_min in at least two scored quantities",
+   "spec": "",
+   "status": "OURS",
+   "unit": "scored quantities",
+   "value": {
+    "w_min_in_at_least": 2
+   }
+  },
+  "stream_key": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": "(key, quantity id, element index, attempt index); a rejected element advances only its own attempt index; a rejected unit advances the unit index of all streams"
+  },
+  "worth_hiding": {
+   "source": "ours (a rule)",
+   "spec": "",
+   "status": "OURS (a rule)",
+   "unit": "-",
+   "value": {
+    "default": "off",
+    "wrist_mass_kg": 0.15,
+    "zero_deg": 0.3
+   }
+  }
+ },
+ "spec_sha256": "",
+ "thermal_constants": {
+  "a_K_per_s_per_Nm2": {
+   "DM4310_V1_1": {
+    "source": "the V1.2 fit x 1.0715 by copper loss",
+    "spec": "",
+    "status": "DR",
+    "unit": "K/s per (N m)^2",
+    "value": 0.05106
+   },
+   "DM4310_V1_2": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "K/s per (N m)^2",
+    "value": 0.04765
+   },
+   "DM4340_1": {
+    "source": "arithmetic on published and measured values",
+    "spec": "",
+    "status": "DR",
+    "unit": "K/s per (N m)^2",
+    "value": 0.003734
+   },
+   "DM4340_V1_1": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "K/s per (N m)^2",
+    "value": 0.003887
+   },
+   "DM8009P": {
+    "source": "ours",
+    "spec": "",
+    "status": "OURS",
+    "unit": "K/s per (N m)^2",
+    "value": 0.001517
+   }
+  },
+  "alpha_reference_C": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "deg C",
+   "value": 25.0
+  },
+  "alternatives": {
+   "DM4340_V1_1_a_under_14Nm_label": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "K/s per (N m)^2",
+    "value": 0.002967
+   },
+   "DM4340_a_from_DM4310_by_copper_loss": {
+    "source": "cross-check of the 12 N m label (an inference of the revision)",
+    "spec": "",
+    "status": "DR",
+    "unit": "K/s per (N m)^2",
+    "value": 0.003871
+   },
+   "DM8009P_a_scaled": {
+    "source": "arithmetic on published and measured values",
+    "spec": "",
+    "status": "DR",
+    "unit": "K/s per (N m)^2",
+    "value": 0.002539
+   }
+  },
+  "copper_alpha_per_K": {
+   "source": "a textbook value",
+   "spec": "",
+   "status": "RECALLED",
+   "unit": "1/K",
+   "value": 0.00393
+  },
+  "equations": {
+   "source": "ours (the form)",
+   "spec": "",
+   "status": "OURS (form)",
+   "unit": "-",
+   "value": "T_w += dt [ a_i h_i T_del^2 (1 + alpha (T_w - 25)) - k1 (T_w - T_h) ]; T_h += dt [ k2 (T_w - T_h) - k3 (T_h - T_amb) ], dt = 0.001 s"
+  },
+  "fault_hysteresis_K": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "K",
+   "value": 5.0
+  },
+  "fit_ambient_C": {
+   "source": "the manual states 25 deg C for its speed-torque test; the temperature images print none",
+   "spec": "",
+   "status": "PV / OURS",
+   "unit": "deg C",
+   "value": 25.0
+  },
+  "integration": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": "explicit Euler at 1 ms; the state runs whether enabled or not and is kept across disable, enable and fault"
+  },
+  "k1_k2_k3_per_s": {
+   "DM4310_V1_1": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "1/s",
+    "value": [
+     0.02018,
+     0.005395,
+     0.006254
+    ]
+   },
+   "DM4310_V1_2": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "1/s",
+    "value": [
+     0.02018,
+     0.005395,
+     0.006254
+    ]
+   },
+   "DM4340_1": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "1/s",
+    "value": [
+     0.02411,
+     0.00353,
+     0.002979
+    ]
+   },
+   "DM4340_V1_1": {
+    "source": "measured in simulation, fitted to the joint module vendor's published values",
+    "spec": "",
+    "status": "MS (fitted to PV)",
+    "unit": "1/s",
+    "value": [
+     0.02411,
+     0.00353,
+     0.002979
+    ]
+   },
+   "DM8009P": {
+    "source": "the DM4340 rates x (381 / 963)^(1/3) (surface over mass)",
+    "spec": "",
+    "status": "OURS",
+    "unit": "1/s",
+    "value": [
+     0.0177,
+     0.002591,
+     0.002187
+    ]
+   }
+  },
+  "protection": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": "T_w >= OT_Value -> status C, latched, enable dropped (zero torque, no brake); cleared by FB once T_w < OT_Value - hysteresis"
+  },
+  "reply_temperatures": {
+   "source": "ours",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": "T_Rotor = floor(T_h), T_MOS = floor(T_h): the slower node"
+  },
+  "standstill_factor": {
+   "source": "there is NO standstill factor: the same law at standstill",
+   "spec": "",
+   "status": "OURS",
+   "unit": "-",
+   "value": null
+  }
+ }
+}

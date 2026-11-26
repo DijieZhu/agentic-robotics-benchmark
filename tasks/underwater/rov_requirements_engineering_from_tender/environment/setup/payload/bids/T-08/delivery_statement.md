@@ -4,15 +4,16 @@
 - Bid: T-08
 - Bidder: Orrinder Robotics
 
-Our test facilities and our delivery range, for the acceptance under Part D.
+Statement of our works test facilities and of the units we deliver, for acceptance under Part D.
 
 ## 1. Test facilities
 
-Everything needed for acceptance is in house:
+Our standard works facilities:
 
 | Facility | Range |
 |---|---|
-| Trim tank | 4.9 m long, 3.3 m wide, 2.2 m deep |
+| Trim tank | 5.4 m long, 3.6 m wide, 2.4 m deep |
+| Trim tank water | our works standard trim tank, filled once; the water is kept and not changed between weighings |
 | Bollard pool, bench supply at the battery interface | 11 V to 17 V |
 | Climatic chamber | 10 degC to 35 degC |
 | Battery cycler, constant-power load | 60 W to 720 W |
@@ -21,20 +22,24 @@ Everything needed for acceptance is in house:
 
 ## 2. Delivery band
 
-We deliver any unit in these ranges:
+We deliver within the following ranges:
 
 | Item | Range |
 |---|---|
-| Ballast pieces fitted at the works | 0 to 10 pieces, potted. Our practice is the number potted in the tendered unit, 4 (see TR-1). |
-| Battery pack | Stock grade A, B or C of the pack fitted. For the tendered pack the catalogue codes are PK-22, PK-22/B and PK-22/C. With a pack option the grades are those of that pack, coded the same way. |
+| Ballast pieces fitted at the works | 0 to 10 pieces, potted at the works. Standard practice: the number potted in the tendered unit, 4 (TR-1). |
+| Battery pack | Stock grade A, B or C of the pack fitted. Catalogue codes for the tendered pack: NC-31, NC-31/B and NC-31/C. Should an option change the pack, the grades are those of that pack, coded in the same way. |
 | Factory current preset | 42 / 54 / 66 / 72 A |
+| Tether | Cut from the drum to the length ordered, within the length tolerance of the catalogue tether sheet. Made-up lengths in stock, 6.8 mm x 200 m: 198.0 / 199.0 / 200.0 / 201.0 / 202.0 m. |
 
-Every combination of ballast number, grade and preset is available.
+Any combination of the ranges and of the made-up tether lengths can be delivered.
 
 ## 3. Order of preference
 
-Where the acceptance schedule leaves us a choice, we deliver in this order. An earlier item decides before a later.
+Where the acceptance schedule leaves a choice, our standard practice is the following order. An earlier item decides before a later.
 
-(a) Ballast: the number nearest to our practice; of numbers equally near, the smaller.
+(a) Ballast: the number nearest to standard practice; where equally near, the smaller number.
 (b) Battery pack: grade C before B, B before A.
 (c) Current preset: the lowest.
+(d) Tether: the made-up lengths in the order of section 2.
+
+A copy of this statement is kept in our files.

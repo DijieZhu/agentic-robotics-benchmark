@@ -4,19 +4,19 @@
 - Bid: T-08
 - Bidder: Orrinder Robotics
 
-Everything in the base price, a line for each part family.
+Bill of materials of the vehicle as tendered, in our standard format.
 
 ## 1. Vehicle as tendered
 
 | Item | Catalogue reference | Qty |
 |---|---|---|
-| Frame | open frame; guard frame | 1 |
+| Frame | open frame | 1 |
 | Buoyancy foam | foam grade R300 | 1 set |
 | Thrusters | thruster TH-A | 8 |
 | Electronics tube | acrylic tube series, 300 mm | 1 |
-| Battery pack | battery pack PK-22 | 1 |
+| Battery pack | battery pack NC-31 | 1 |
 | Forward camera | camera behind the tube dome | 1 |
-| Camera housing | none: the camera is inside the electronics tube | - |
+| Camera housing | none: the camera is inside the electronics tube | none |
 | Lights | light | 4 |
 | Tether | tether, 6.8 mm, 200 m | 1 |
 | Ballast | ballast weight, potted in the frame | 4 |
@@ -25,11 +25,19 @@ Everything in the base price, a line for each part family.
 | Depth sensor | depth sensor | 1 |
 | Gripper | gripper | 1 |
 
-## 2. Spares supplied
+## 2. Surface equipment
+
+| Item | Catalogue reference | Qty |
+|---|---|---|
+| Surface unit | surface unit SU-S | 1 |
+| Tether reel with deck interface | tether reel RL-S, with its slip ring and deck cable | 1 |
+
+## 3. Spares and accessories supplied
 
 | Item | Qty |
 |---|---|
 | Seal set for each pressure housing | 1 |
 | Ballast weights, loose | 0 |
+| Battery charger of the catalogue | 1 |
 
-The ballast is potted; there are no loose weights.
+No loose ballast is supplied; the ballast is potted.

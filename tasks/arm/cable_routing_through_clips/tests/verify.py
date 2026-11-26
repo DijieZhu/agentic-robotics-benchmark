@@ -6,8 +6,8 @@ and safeguards follow lab_sample_handling's grader: it reclaims root's PATH dire
 agent's account, hands the restored submission (size-capped) to that account in place, starts `bash run.sh` through
 nonet_exec.py (a seccomp filter: only AF_UNIX sockets) at the agent's UID, at the lowest priority (the kit: the
 grader's own simulation and drawing run on the same CPUs and are served first) and with at most
-`solver_max_processes` processes in the account (the kit's count at every reset and every 64 requests: more ends
-the episode and restarts the controller), and speaks the kit wire (Solver, per-request deadline, restarts; a
+`solver_max_processes` processes in the account (counted here before every request, and by the kit at every
+reset: more ends the episode and restarts the controller), and speaks the kit wire (Solver, per-request deadline, restarts; a
 ProbeLock that does not count a pair in which both replies command no motion). During the episodes every process of the account
 must carry the launcher's no_new_privs mark; one without it is killed, that episode and every later one score 0.
 
@@ -37,7 +37,8 @@ tests/review/PREREG.md; tests/review/select_set.py wrote it), the same for every
 The probe lock draws from one stream per episode (probe_stream: the kit's seed_rng keyed by a BLAKE2b hash of a
 domain tag, the episode's index and its seed), so an episode's schedule is a function of the episode alone. The other
 copy of a probed observation is built as an observation is (harness_sim.Cell.probe: the joints read up to 1 mrad
-off, the grip site's pose computed from them, the wrist sensor's noise drawn again; the same pictures).
+off; the grip site's pose one physics step behind them, as in a real observation (the kit's stale_copy rule); the
+wrist sensor's noise one fresh draw around the noise-free reading; the same pictures).
 
 Credit: an episode ends when the controller hands the job over (a ninth number 1 in its action), after
 harness_env.MAX_STEPS control steps, or when a reply is late, malformed or missing (the controller is restarted for
@@ -472,6 +473,7 @@ def run_one(n, seed, solver, lock, clock, config, uid, watch, truth, outside, st
     episode's process ends by itself; EnvironmentError_ if it reports a fault of its own."""
     budget = float(config.get("grader_budget_s", 3000))
     image_cost = float(config.get("image_cost_s", 0.2))
+    cap = int(config.get("solver_max_processes", 64))
     ep = S.EpisodeProcess(render=True)
     reason, aborted = "ok", False
     try:
@@ -490,6 +492,9 @@ def run_one(n, seed, solver, lock, clock, config, uid, watch, truth, outside, st
                     outside.extend(outside_processes(uid))
                     if outside:
                         raise SolverAborted("a process of the controller's account runs outside the launcher")
+                if cap and len(_agent_pids(uid)) > cap:      # at every request (the kit's own count is every 64th)
+                    solver._broken = True                    # the controller is started again before the next episode
+                    raise SolverAborted("too many processes in the controller's account (more than {})".format(cap))
                 if state["egress_mode"] == "detect" and agent_inet_sockets(uid):
                     state["egress_hits"] += 1
                 action = ask(lock, solver, ep, t, obs, truth, clock)

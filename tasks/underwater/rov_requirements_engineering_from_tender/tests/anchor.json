@@ -2,7 +2,7 @@
  "direction": "higher",
  "full_at": 0.98,
  "metric": "tender_evaluation_score",
- "note": "tender_evaluation_score is G0 x G1 x (0.45 V + 0.15 A + 0.15 P + 0.05 Q + 0.20 F), already on [0, 1]; ratio = score / 1.0, reward = min(1, ratio / 0.98)",
- "source": "the reference solution's score under this static, deterministic grader: 1.0 by construction (DESIGN v1.3 sec. 5.3, 6.1). Measured on the frozen world of record (tests/world/, candidate c1-113-c1m): solution/submission scores 1.0 and an untouched submission 0.0 under ale validate (2026-11-15); before that by package P09 on the fixture worlds",
+ "note": "tender_evaluation_score is G0 x G1 x (0.35 V + 0.25 A + 0.10 P + 0.05 Q + 0.25 F), already on [0, 1]; ratio = score / 1.0, reward = min(1, ratio / 0.98)",
+ "source": "the reference solution's score under this static, deterministic grader: 1.0 by construction (every verdict, the award, the site predictions and the Part B labels from the world's truth; one acceptance schedule per accepted bid, at most 12 clauses each, sufficient and economical on its band at every tank-water density the bidder declares, the whole of a declared range included); an untouched submission scores 0.0",
  "value": 1.0
 }

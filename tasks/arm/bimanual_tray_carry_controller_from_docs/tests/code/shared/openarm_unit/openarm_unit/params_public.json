@@ -1,0 +1,2998 @@
+{
+ "about": "Public constants of the shared unit: frames, classes and editions, limits, the envelope, the forced numerics, the frame protocol, the registers, default host profiles, the description policy, and what a model run reports in place of a thermal model and reply noise. Imported by the bus layer and the public runner. Holds nothing of the law of drawing, of the thermal model or of the noise law.",
+ "class_editions": {
+  "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28: rows DM-J8009P-2EC; DM-J4340-2EC and DM-J4340-2EC V1.1; DM-J4310-2EC V1.1 and V1.2 (24 V)",
+  "status": "PV",
+  "unit": "-",
+  "value": {
+   "DM4310": [
+    "DM4310_V1_1",
+    "DM4310_V1_2"
+   ],
+   "DM4340": [
+    "DM4340_1",
+    "DM4340_V1_1"
+   ],
+   "DM8009": [
+    "DM8009P"
+   ]
+  }
+ },
+ "class_nominal_edition": {
+  "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28: rows DM-J8009P-2EC, DM-J4340-2EC and DM-J4310-2EC V1.1 (24 V), the editions of the nominal unit",
+  "status": "PV",
+  "unit": "-",
+  "value": {
+   "DM4310": "DM4310_V1_1",
+   "DM4340": "DM4340_1",
+   "DM8009": "DM8009P"
+  }
+ },
+ "conventions": {
+  "arm_origin_height_m": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/pedestal/openarm_pedestal.xml (attaches the pair at z = 0.697)",
+   "status": "PM",
+   "unit": "m",
+   "value": 0.697
+  },
+  "armature_kg_m2": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-35 (armature 0.016 / 0.030 / 0.002 of the motor classes: 'motor rotor readouts * gear ratio squared')",
+   "status": "PM",
+   "unit": "kg m^2 (J1..J7)",
+   "value": [
+    0.016,
+    0.016,
+    0.03,
+    0.03,
+    0.002,
+    0.002,
+    0.002
+   ]
+  },
+  "base_link_y_m": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_model.xml:23,31 (openarm_left_base_link at y 0.03, openarm_right_base_link at y -0.03)",
+   "status": "PM",
+   "unit": "m",
+   "value": {
+    "left": 0.03,
+    "right": -0.03
+   }
+  },
+  "buses": {
+   "source": "the maintainers' own choice (Frame.bus)",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "left": 0,
+    "right": 1
+   }
+  },
+  "finger_ranges_rad": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml:21-112; openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/right_arm.xml:21-112 (0 = closed)",
+   "status": "PM",
+   "unit": "rad",
+   "value": {
+    "left": [
+     0.0,
+     0.7854
+    ],
+    "right": [
+     -0.7854,
+     0.0
+    ]
+   }
+  },
+  "fingertip_distance_m": {
+   "source": "the maker's FAQ, openarm a15c3ae website/docs/faq/index.md:86 (the lower end of the closed fingertips 0.170 m from the origin of openarm_<side>_ee_base_link along its -Z axis)",
+   "status": "PM",
+   "unit": "m (along the same axis)",
+   "value": 0.17
+  },
+  "home_key_J4_rad": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/pedestal/pedestal.xml key 'home'",
+   "status": "PM",
+   "unit": "rad",
+   "value": 1.570796
+  },
+  "joint_axes": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml:21-112; openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/right_arm.xml:21-112",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "left": [
+     "+y",
+     "-x",
+     "-z",
+     "-y",
+     "-z",
+     "-y",
+     "+x"
+    ],
+    "right": [
+     "-y",
+     "-x",
+     "-z",
+     "-y",
+     "-z",
+     "+y",
+     "+x"
+    ]
+   }
+  },
+  "joint_ranges_rad": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml:21-112; openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/right_arm.xml:21-112 (the nominal stops; the compiled model is the authority)",
+   "status": "PM",
+   "unit": "rad",
+   "value": {
+    "left": [
+     [
+      -3.4907,
+      1.3963
+     ],
+     [
+      -3.3161,
+      0.17453
+     ],
+     [
+      -1.5708,
+      1.5708
+     ],
+     [
+      0.0,
+      2.4435
+     ],
+     [
+      -1.5708,
+      1.5708
+     ],
+     [
+      -0.7854,
+      0.7854
+     ],
+     [
+      -1.5708,
+      1.5708
+     ]
+    ],
+    "right": [
+     [
+      -1.3963,
+      3.4907
+     ],
+     [
+      -0.17453,
+      3.3161
+     ],
+     [
+      -1.5708,
+      1.5708
+     ],
+     [
+      0.0,
+      2.4435
+     ],
+     [
+      -1.5708,
+      1.5708
+     ],
+     [
+      -0.7854,
+      0.7854
+     ],
+     [
+      -1.5708,
+      1.5708
+     ]
+    ]
+   }
+  },
+  "mirror_rule": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml:21-85 and right_arm.xml:21-85 (axes and ranges of joint1 to joint7: the right arm's are the left's mirrored)",
+   "status": "PM",
+   "unit": "-",
+   "value": "q_R = (-q1, -q2, -q3, q4, -q5, -q6, -q7)"
+  },
+  "module_angle": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": "theta_i = s_i (q_i - delta_i)"
+  },
+  "modules": {
+   "source": "ids: openarm_teleop 5b148df src/openarm_constants.hpp:85-92 (command ids 0x01 to 0x08, reply ids 0x11 to 0x18); classes: openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+   "status": "PM",
+   "unit": "-",
+   "value": [
+    {
+     "actuator": "left_joint1_ctrl",
+     "bus": 0,
+     "class": "DM8009",
+     "command_id": 1,
+     "index": 0,
+     "joint": 1,
+     "label": "left J1",
+     "mjcf_joint": "openarm_left_joint1",
+     "product": "DM-J8009P",
+     "reply_id": 17,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint2_ctrl",
+     "bus": 0,
+     "class": "DM8009",
+     "command_id": 2,
+     "index": 1,
+     "joint": 2,
+     "label": "left J2",
+     "mjcf_joint": "openarm_left_joint2",
+     "product": "DM-J8009P",
+     "reply_id": 18,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint3_ctrl",
+     "bus": 0,
+     "class": "DM4340",
+     "command_id": 3,
+     "index": 2,
+     "joint": 3,
+     "label": "left J3",
+     "mjcf_joint": "openarm_left_joint3",
+     "product": "DM-J4340P",
+     "reply_id": 19,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint4_ctrl",
+     "bus": 0,
+     "class": "DM4340",
+     "command_id": 4,
+     "index": 3,
+     "joint": 4,
+     "label": "left J4",
+     "mjcf_joint": "openarm_left_joint4",
+     "product": "DM-J4340",
+     "reply_id": 20,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint5_ctrl",
+     "bus": 0,
+     "class": "DM4310",
+     "command_id": 5,
+     "index": 4,
+     "joint": 5,
+     "label": "left J5",
+     "mjcf_joint": "openarm_left_joint5",
+     "product": "DM-J4310",
+     "reply_id": 21,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint6_ctrl",
+     "bus": 0,
+     "class": "DM4310",
+     "command_id": 6,
+     "index": 5,
+     "joint": 6,
+     "label": "left J6",
+     "mjcf_joint": "openarm_left_joint6",
+     "product": "DM-J4310",
+     "reply_id": 22,
+     "side": "left"
+    },
+    {
+     "actuator": "left_joint7_ctrl",
+     "bus": 0,
+     "class": "DM4310",
+     "command_id": 7,
+     "index": 6,
+     "joint": 7,
+     "label": "left J7",
+     "mjcf_joint": "openarm_left_joint7",
+     "product": "DM-J4310",
+     "reply_id": 23,
+     "side": "left"
+    },
+    {
+     "actuator": "left_finger1_ctrl",
+     "bus": 0,
+     "class": "DM4310",
+     "command_id": 8,
+     "index": 7,
+     "joint": 8,
+     "label": "left J8",
+     "mjcf_joint": "openarm_left_finger_joint1",
+     "product": "DM-J4310",
+     "reply_id": 24,
+     "side": "left"
+    },
+    {
+     "actuator": "right_joint1_ctrl",
+     "bus": 1,
+     "class": "DM8009",
+     "command_id": 1,
+     "index": 8,
+     "joint": 1,
+     "label": "right J1",
+     "mjcf_joint": "openarm_right_joint1",
+     "product": "DM-J8009P",
+     "reply_id": 17,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint2_ctrl",
+     "bus": 1,
+     "class": "DM8009",
+     "command_id": 2,
+     "index": 9,
+     "joint": 2,
+     "label": "right J2",
+     "mjcf_joint": "openarm_right_joint2",
+     "product": "DM-J8009P",
+     "reply_id": 18,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint3_ctrl",
+     "bus": 1,
+     "class": "DM4340",
+     "command_id": 3,
+     "index": 10,
+     "joint": 3,
+     "label": "right J3",
+     "mjcf_joint": "openarm_right_joint3",
+     "product": "DM-J4340P",
+     "reply_id": 19,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint4_ctrl",
+     "bus": 1,
+     "class": "DM4340",
+     "command_id": 4,
+     "index": 11,
+     "joint": 4,
+     "label": "right J4",
+     "mjcf_joint": "openarm_right_joint4",
+     "product": "DM-J4340",
+     "reply_id": 20,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint5_ctrl",
+     "bus": 1,
+     "class": "DM4310",
+     "command_id": 5,
+     "index": 12,
+     "joint": 5,
+     "label": "right J5",
+     "mjcf_joint": "openarm_right_joint5",
+     "product": "DM-J4310",
+     "reply_id": 21,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint6_ctrl",
+     "bus": 1,
+     "class": "DM4310",
+     "command_id": 6,
+     "index": 13,
+     "joint": 6,
+     "label": "right J6",
+     "mjcf_joint": "openarm_right_joint6",
+     "product": "DM-J4310",
+     "reply_id": 22,
+     "side": "right"
+    },
+    {
+     "actuator": "right_joint7_ctrl",
+     "bus": 1,
+     "class": "DM4310",
+     "command_id": 7,
+     "index": 14,
+     "joint": 7,
+     "label": "right J7",
+     "mjcf_joint": "openarm_right_joint7",
+     "product": "DM-J4310",
+     "reply_id": 23,
+     "side": "right"
+    },
+    {
+     "actuator": "right_finger1_ctrl",
+     "bus": 1,
+     "class": "DM4310",
+     "command_id": 8,
+     "index": 15,
+     "joint": 8,
+     "label": "right J8",
+     "mjcf_joint": "openarm_right_finger_joint1",
+     "product": "DM-J4310",
+     "reply_id": 24,
+     "side": "right"
+    }
+   ]
+  },
+  "nominal_link_mass_kg": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml:20-111 and right_arm.xml:20-111 (the link inertials: link1 to the two fingers, 4.987 kg per arm), with every body of v2/pedestal/openarm_pedestal.xml and the files it includes (12.26 kg)",
+   "status": "PM",
+   "unit": "kg",
+   "value": {
+    "moving_per_arm": 4.987,
+    "total_as_printed": 12.26
+   }
+  },
+  "reset_hold_s": {
+   "source": "reset(hold=...)",
+   "status": "OURS",
+   "unit": "s",
+   "value": 1.0
+  },
+  "reset_pose_rad": {
+   "source": "a constant of params_public.json (J4 = 1.5708 rad, all else 0, grippers closed), never a keyframe",
+   "status": "OURS",
+   "unit": "rad",
+   "value": {
+    "gripper": "closed (0)",
+    "joints": [
+     0.0,
+     0.0,
+     0.0,
+     1.5708,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "reset_settle_s": {
+   "source": "reset() without hold",
+   "status": "OURS",
+   "unit": "s",
+   "value": 2.0
+  },
+  "sign_on_unit": {
+   "source": "openarm_ros2 5fd1268 openarm_hardware/src/openarm_simple_hardware.cpp:259-264 (the module's position, velocity and torque are the joint's, 1:1: the signs are the model's joint axes)",
+   "status": "PM",
+   "unit": "-",
+   "value": 1
+  },
+  "time": {
+   "source": "the maintainers' own choice (stage 05: the maker's own rate, dora/timer/millis/4)",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "stage05_steps_per_exchange": 4,
+    "step_s": 0.001,
+    "steps_per_exchange": [
+     1,
+     50
+    ]
+   }
+  },
+  "tool_offset_m": {
+   "source": "the maker's mjlab grasp offset, openarm_mjlab e6fc666 src/openarm_mjlab/openarm_bimanual.py:43-47 (GRASP_LOCAL_OFFSET)",
+   "status": "PM",
+   "unit": "m (in openarm_<side>_ee_base_link's frame)",
+   "value": [
+    0.0,
+    0.0,
+    -0.135
+   ]
+  },
+  "tool_sites": {
+   "source": "the robot-description task's submission contract, section 5.4",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "left_tool",
+    "right_tool"
+   ]
+  }
+ },
+ "editions": {
+  "DM4310_V1_1": {
+   "Damp_register": {
+    "source": "damping_readout_Nm_s_rad / gear_ratio^2: the maker's read-out (approximate, printed with '~') taken back through the conversion its comment states; the Damp register's nominal (one real DM4340P dump reads 1.961228e-04 in openarm_can pull request 146)",
+    "status": "DR",
+    "unit": "N m s/rad (motor side)",
+    "value": 0.0003
+   },
+   "GREF": {
+    "source": "the vendor's user manual's torque-constant formula and the guide's 'Torque Ratio' column (1)",
+    "status": "PV",
+    "unit": "-",
+    "value": 1.0
+   },
+   "Imax_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 ('Maximum Drive Current'); the vendor's user manual's start-up screenshot prints 'Imax: 20.522388'; a per-module value of the unit, printed in the unit's record",
+    "status": "PV",
+    "unit": "A",
+    "value": 10.261194
+   },
+   "Imax_A_alternative": {
+    "source": "the vendor's own user manual shows a unit printing 20.522388 beside the V1.1 flux",
+    "status": "PV",
+    "unit": "A",
+    "value": 20.522388
+   },
+   "KT_NmA": {
+    "source": "1.5 x pole_pairs x flux_Wb x gear_ratio x GREF (the vendor's manual formula)",
+    "status": "DR",
+    "unit": "N m/A",
+    "value": 0.9449999999999998
+   },
+   "OC_Value": {
+    "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.8
+   },
+   "T_lim_Nm": {
+    "source": "OC_Value x Imax_A x KT_NmA (catalogue registers; a module uses its OWN Flux register)",
+    "status": "DR",
+    "unit": "N m",
+    "value": 7.757462663999998
+   },
+   "T_lim_Nm_alternative": {
+    "source": "OC_Value x Imax_A_alternative x KT_NmA",
+    "status": "DR",
+    "unit": "N m",
+    "value": 15.514925327999997
+   },
+   "T_peak_Nm": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 components/left_arm.xml, right_arm.xml actuatorfrcrange, kept for every edition; the module's peak clamp in its own units, applied to the command BEFORE the scale k (clamp, then scale); no hinge carries a joint force range",
+    "status": "PM",
+    "unit": "N m",
+    "value": 7.0
+   },
+   "class": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "DM4310"
+   },
+   "copper_loss_per_Nm2": {
+    "source": "phase_resistance_ohm / KT_NmA^2",
+    "status": "DR",
+    "unit": "ohm/(N m/A)^2",
+    "value": 0.7278631617255958
+   },
+   "damping_readout_Nm_s_rad": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25: 'Armatures approximate motor rotor readouts * gear ratio squared (kg*m^2). Damping references from motor readouts, assuming the same conversion (N*m*s/rad): DM8009P ~0.13, DM4340 ~0.33, DM4310 ~0.03. Reference only' (per module class; no edition is named)",
+    "status": "PM",
+    "unit": "N m s/rad (output side)",
+    "value": 0.03
+   },
+   "fixture_friction": {
+    "source": "the module's friction on the vendor's fixture taken equal to the arm joint class's nominal; added to output torque: c0 + c1 w",
+    "status": "OURS",
+    "unit": "N m; N m s/rad",
+    "value": {
+     "c0_Nm": 0.11,
+     "c1_Nm_s_per_rad": 0.03
+    }
+   },
+   "flux_Wb": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (catalogue; the module's own Flux register differs)",
+    "status": "PV",
+    "unit": "Wb",
+    "value": 0.0045
+   },
+   "gear_ratio": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 10.0
+   },
+   "joints": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "J5-J7, J8"
+   },
+   "mapping_default": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (host table 12.5 / 10 / 28 for the DM4340 since 2026-07-17, 8 before); one real DM4340P dump 12.5 / 10 / 28 (openarm_can pull request 146)",
+    "status": "PV / PM",
+    "unit": "rad, rad/s, N m",
+    "value": {
+     "PMAX": 12.5,
+     "TMAX": 10.0,
+     "VMAX": 30.0
+    }
+   },
+   "module_mass_g": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals",
+    "status": "PV",
+    "unit": "g",
+    "value": 306.0
+   },
+   "name": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": "DM-J4310 V1.1"
+   },
+   "no_load_speed_rpm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 200.0
+   },
+   "peak_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.1 (24 V), column 'Peak Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 7.5
+   },
+   "peak_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 7.0
+   },
+   "phase_inductance_H": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.1 (24 V), column 'Phase-to-Phase Inductance' (340 uH); the Ls register's catalogue value",
+    "status": "PV",
+    "unit": "H",
+    "value": 0.00034
+   },
+   "phase_resistance_ohm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (column 'Phase-to-Phase Resistance')",
+    "status": "PV",
+    "unit": "ohm",
+    "value": 0.65
+   },
+   "pole_pairs": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 14
+   },
+   "rated_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.1 (24 V), column 'Rated Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 2.5
+   },
+   "rated_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 3.0
+   },
+   "rotor_inertia_kg_m2": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.1 (24 V), column 'Rotor Inertia'; the Inertia register's catalogue value (one real DM4340P dump reads 1.970401e-05 in openarm_can pull request 146)",
+    "status": "PV",
+    "unit": "kg m^2",
+    "value": 1.8e-05
+   },
+   "speed_torque_test": {
+    "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of the edition, read to +-1 N m",
+    "status": "PV",
+    "unit": "-",
+    "value": "speed held at 120 rpm up to about 4.5 N m, where the test ends: a LOWER bound"
+   }
+  },
+  "DM4310_V1_2": {
+   "Damp_register": {
+    "source": "damping_readout_Nm_s_rad / gear_ratio^2: the maker's read-out (approximate, printed with '~') taken back through the conversion its comment states; the Damp register's nominal (one real DM4340P dump reads 1.961228e-04 in openarm_can pull request 146)",
+    "status": "DR",
+    "unit": "N m s/rad (motor side)",
+    "value": 0.0003
+   },
+   "GREF": {
+    "source": "the vendor's user manual's torque-constant formula and the guide's 'Torque Ratio' column (1)",
+    "status": "PV",
+    "unit": "-",
+    "value": 1.0
+   },
+   "Imax_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 ('Maximum Drive Current'); the vendor's user manual's start-up screenshot prints 'Imax: 20.522388'; a per-module value of the unit, printed in the unit's record",
+    "status": "PV",
+    "unit": "A",
+    "value": 20.522388
+   },
+   "KT_NmA": {
+    "source": "1.5 x pole_pairs x flux_Wb x gear_ratio x GREF (the vendor's manual formula)",
+    "status": "DR",
+    "unit": "N m/A",
+    "value": 0.9240000000000002
+   },
+   "OC_Value": {
+    "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.8
+   },
+   "T_lim_Nm": {
+    "source": "OC_Value x Imax_A x KT_NmA (catalogue registers; a module uses its OWN Flux register)",
+    "status": "DR",
+    "unit": "N m",
+    "value": 15.170149209600003
+   },
+   "T_peak_Nm": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 components/left_arm.xml, right_arm.xml actuatorfrcrange, kept for every edition; the module's peak clamp in its own units, applied to the command BEFORE the scale k (clamp, then scale); no hinge carries a joint force range",
+    "status": "PM",
+    "unit": "N m",
+    "value": 7.0
+   },
+   "class": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "DM4310"
+   },
+   "copper_loss_per_Nm2": {
+    "source": "phase_resistance_ohm / KT_NmA^2",
+    "status": "DR",
+    "unit": "ohm/(N m/A)^2",
+    "value": 0.6793350949195102
+   },
+   "damping_readout_Nm_s_rad": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25: 'Armatures approximate motor rotor readouts * gear ratio squared (kg*m^2). Damping references from motor readouts, assuming the same conversion (N*m*s/rad): DM8009P ~0.13, DM4340 ~0.33, DM4310 ~0.03. Reference only' (per module class; no edition is named)",
+    "status": "PM",
+    "unit": "N m s/rad (output side)",
+    "value": 0.03
+   },
+   "fixture_friction": {
+    "source": "the module's friction on the vendor's fixture taken equal to the arm joint class's nominal; added to output torque: c0 + c1 w",
+    "status": "OURS",
+    "unit": "N m; N m s/rad",
+    "value": {
+     "c0_Nm": 0.11,
+     "c1_Nm_s_per_rad": 0.03
+    }
+   },
+   "flux_Wb": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (catalogue; the module's own Flux register differs)",
+    "status": "PV",
+    "unit": "Wb",
+    "value": 0.0044
+   },
+   "gear_ratio": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 10.0
+   },
+   "joints": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "J5-J7, J8 (alternative edition)"
+   },
+   "mapping_default": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (host table 12.5 / 10 / 28 for the DM4340 since 2026-07-17, 8 before); one real DM4340P dump 12.5 / 10 / 28 (openarm_can pull request 146)",
+    "status": "PV / PM",
+    "unit": "rad, rad/s, N m",
+    "value": {
+     "PMAX": 12.5,
+     "TMAX": 10.0,
+     "VMAX": 30.0
+    }
+   },
+   "module_mass_g": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals",
+    "status": "PV",
+    "unit": "g",
+    "value": 306.0
+   },
+   "name": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": "DM-J4310 V1.2"
+   },
+   "no_load_speed_rpm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 200.0
+   },
+   "peak_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.2 (24 V), column 'Peak Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 20.0
+   },
+   "peak_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 12.5
+   },
+   "phase_inductance_H": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.2 (24 V), column 'Phase-to-Phase Inductance' (320 uH); the Ls register's catalogue value",
+    "status": "PV",
+    "unit": "H",
+    "value": 0.00032
+   },
+   "phase_resistance_ohm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (column 'Phase-to-Phase Resistance')",
+    "status": "PV",
+    "unit": "ohm",
+    "value": 0.58
+   },
+   "pole_pairs": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 14
+   },
+   "rated_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.2 (24 V), column 'Rated Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 4.9
+   },
+   "rated_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 3.5
+   },
+   "rotor_inertia_kg_m2": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4310-2EC V1.2 (24 V), column 'Rotor Inertia'; the Inertia register's catalogue value (one real DM4340P dump reads 1.970401e-05 in openarm_can pull request 146)",
+    "status": "PV",
+    "unit": "kg m^2",
+    "value": 2e-05
+   },
+   "speed_torque_test": {
+    "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of the edition, read to +-1 N m",
+    "status": "LISTED",
+    "unit": "-",
+    "value": "speed falling from 220 to 135 rpm between 0 and 4.9 N m (LISTED reading; the plot is opened in envelope.DM4310_V1_2.opened_points_rpm_Nm)"
+   }
+  },
+  "DM4340_1": {
+   "Damp_register": {
+    "source": "damping_readout_Nm_s_rad / gear_ratio^2: the maker's read-out (approximate, printed with '~') taken back through the conversion its comment states; the Damp register's nominal (one real DM4340P dump reads 1.961228e-04 in openarm_can pull request 146)",
+    "status": "DR",
+    "unit": "N m s/rad (motor side)",
+    "value": 0.00020625
+   },
+   "GREF": {
+    "source": "the vendor's user manual's torque-constant formula and the guide's 'Torque Ratio' column (1)",
+    "status": "PV",
+    "unit": "-",
+    "value": 1.0
+   },
+   "Imax_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 ('Maximum Drive Current'); the vendor's user manual's start-up screenshot prints 'Imax: 20.522388'; a per-module value of the unit, printed in the unit's record",
+    "status": "PV",
+    "unit": "A",
+    "value": 10.261194
+   },
+   "KT_NmA": {
+    "source": "1.5 x pole_pairs x flux_Wb x gear_ratio x GREF (the vendor's manual formula)",
+    "status": "DR",
+    "unit": "N m/A",
+    "value": 4.074
+   },
+   "OC_Value": {
+    "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.8
+   },
+   "T_lim_Nm": {
+    "source": "OC_Value x Imax_A x KT_NmA (catalogue registers; a module uses its OWN Flux register)",
+    "status": "DR",
+    "unit": "N m",
+    "value": 33.4432834848
+   },
+   "T_peak_Nm": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 components/left_arm.xml, right_arm.xml actuatorfrcrange, kept for every edition; the module's peak clamp in its own units, applied to the command BEFORE the scale k (clamp, then scale); no hinge carries a joint force range",
+    "status": "PM",
+    "unit": "N m",
+    "value": 27.0
+   },
+   "class": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "DM4340"
+   },
+   "copper_loss_per_Nm2": {
+    "source": "phase_resistance_ohm / KT_NmA^2",
+    "status": "DR",
+    "unit": "ohm/(N m/A)^2",
+    "value": 0.05302010980464741
+   },
+   "damping_readout_Nm_s_rad": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25: 'Armatures approximate motor rotor readouts * gear ratio squared (kg*m^2). Damping references from motor readouts, assuming the same conversion (N*m*s/rad): DM8009P ~0.13, DM4340 ~0.33, DM4310 ~0.03. Reference only' (per module class; no edition is named)",
+    "status": "PM",
+    "unit": "N m s/rad (output side)",
+    "value": 0.33
+   },
+   "fixture_friction": {
+    "source": "the module's friction on the vendor's fixture taken equal to the arm joint class's nominal; added to output torque: c0 + c1 w",
+    "status": "OURS",
+    "unit": "N m; N m s/rad",
+    "value": {
+     "c0_Nm": 0.59,
+     "c1_Nm_s_per_rad": 0.33
+    }
+   },
+   "flux_Wb": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (catalogue; the module's own Flux register differs)",
+    "status": "PV",
+    "unit": "Wb",
+    "value": 0.00485
+   },
+   "gear_ratio": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 40.0
+   },
+   "joints": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "J3, J4"
+   },
+   "mapping_default": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (host table 12.5 / 10 / 28 for the DM4340 since 2026-07-17, 8 before); one real DM4340P dump 12.5 / 10 / 28 (openarm_can pull request 146)",
+    "status": "PV / PM",
+    "unit": "rad, rad/s, N m",
+    "value": {
+     "PMAX": 12.5,
+     "TMAX": 28.0,
+     "VMAX": 8.0
+    }
+   },
+   "module_mass_g": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals",
+    "status": "PV",
+    "unit": "g",
+    "value": 362.0
+   },
+   "module_mass_g_P": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals (the P variant)",
+    "status": "PV",
+    "unit": "g",
+    "value": 381.0
+   },
+   "name": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": "DM-J4340 / 4340P, first edition"
+   },
+   "no_load_speed_rpm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page: 52",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 52.5
+   },
+   "no_load_speed_rpm_pm_page": {
+    "source": "the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:32 ('Max No-load Speed' of the DM4340 series; beside the guide's 52.5)",
+    "status": "PM",
+    "unit": "rpm",
+    "value": 52.0
+   },
+   "peak_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC (24 V), column 'Peak Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 8.0
+   },
+   "peak_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 27.0
+   },
+   "phase_inductance_H": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC (24 V), column 'Phase-to-Phase Inductance' (360 uH); the Ls register's catalogue value",
+    "status": "PV",
+    "unit": "H",
+    "value": 0.00036
+   },
+   "phase_resistance_ohm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (column 'Phase-to-Phase Resistance')",
+    "status": "PV",
+    "unit": "ohm",
+    "value": 0.88
+   },
+   "pole_pairs": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 14
+   },
+   "rated_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC (24 V), column 'Rated Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 3.0
+   },
+   "rated_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 9.0
+   },
+   "rotor_inertia_kg_m2": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC (24 V), column 'Rotor Inertia'; the Inertia register's catalogue value (one real DM4340P dump reads 1.970401e-05 in openarm_can pull request 146)",
+    "status": "PV",
+    "unit": "kg m^2",
+    "value": 2e-05
+   },
+   "speed_torque_test": {
+    "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of the edition, read to +-1 N m",
+    "status": "PV",
+    "unit": "-",
+    "value": "speed 36 rpm up to about 13.5 N m, then falling to 27.5 rpm at 18 N m: points on the limit"
+   }
+  },
+  "DM4340_V1_1": {
+   "Damp_register": {
+    "source": "damping_readout_Nm_s_rad / gear_ratio^2: the maker's read-out (approximate, printed with '~') taken back through the conversion its comment states; the Damp register's nominal (one real DM4340P dump reads 1.961228e-04 in openarm_can pull request 146)",
+    "status": "DR",
+    "unit": "N m s/rad (motor side)",
+    "value": 0.00020625
+   },
+   "GREF": {
+    "source": "the vendor's user manual's torque-constant formula and the guide's 'Torque Ratio' column (1)",
+    "status": "PV",
+    "unit": "-",
+    "value": 1.0
+   },
+   "Imax_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 ('Maximum Drive Current'); the vendor's user manual's start-up screenshot prints 'Imax: 20.522388'; a per-module value of the unit, printed in the unit's record",
+    "status": "PV",
+    "unit": "A",
+    "value": 20.522388
+   },
+   "KT_NmA": {
+    "source": "1.5 x pole_pairs x flux_Wb x gear_ratio x GREF (the vendor's manual formula)",
+    "status": "DR",
+    "unit": "N m/A",
+    "value": 3.612
+   },
+   "OC_Value": {
+    "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.8
+   },
+   "T_lim_Nm": {
+    "source": "OC_Value x Imax_A x KT_NmA (catalogue registers; a module uses its OWN Flux register)",
+    "status": "DR",
+    "unit": "N m",
+    "value": 59.301492364800005
+   },
+   "T_peak_Nm": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 components/left_arm.xml, right_arm.xml actuatorfrcrange, kept for every edition; the module's peak clamp in its own units, applied to the command BEFORE the scale k (clamp, then scale); no hinge carries a joint force range",
+    "status": "PM",
+    "unit": "N m",
+    "value": 27.0
+   },
+   "class": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "DM4340"
+   },
+   "copper_loss_per_Nm2": {
+    "source": "phase_resistance_ohm / KT_NmA^2",
+    "status": "DR",
+    "unit": "ohm/(N m/A)^2",
+    "value": 0.05518702884074127
+   },
+   "damping_readout_Nm_s_rad": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25: 'Armatures approximate motor rotor readouts * gear ratio squared (kg*m^2). Damping references from motor readouts, assuming the same conversion (N*m*s/rad): DM8009P ~0.13, DM4340 ~0.33, DM4310 ~0.03. Reference only' (per module class; no edition is named)",
+    "status": "PM",
+    "unit": "N m s/rad (output side)",
+    "value": 0.33
+   },
+   "fixture_friction": {
+    "source": "the module's friction on the vendor's fixture taken equal to the arm joint class's nominal; added to output torque: c0 + c1 w",
+    "status": "OURS",
+    "unit": "N m; N m s/rad",
+    "value": {
+     "c0_Nm": 0.59,
+     "c1_Nm_s_per_rad": 0.33
+    }
+   },
+   "flux_Wb": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (catalogue; the module's own Flux register differs)",
+    "status": "PV",
+    "unit": "Wb",
+    "value": 0.0043
+   },
+   "gear_ratio": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 40.0
+   },
+   "joints": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "J3, J4 (alternative edition)"
+   },
+   "mapping_default": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (host table 12.5 / 10 / 28 for the DM4340 since 2026-07-17, 8 before); one real DM4340P dump 12.5 / 10 / 28 (openarm_can pull request 146)",
+    "status": "PV / PM",
+    "unit": "rad, rad/s, N m",
+    "value": {
+     "PMAX": 12.5,
+     "TMAX": 28.0,
+     "VMAX": 10.0
+    }
+   },
+   "module_mass_g": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals",
+    "status": "PV",
+    "unit": "g",
+    "value": 362.0
+   },
+   "module_mass_g_P": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals (the P variant)",
+    "status": "PV",
+    "unit": "g",
+    "value": 381.0
+   },
+   "name": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": "DM-J4340 / 4340P V1.1"
+   },
+   "no_load_speed_rpm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 56.0
+   },
+   "peak_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC V1.1 (24 V), column 'Peak Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 19.85
+   },
+   "peak_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 40.0
+   },
+   "phase_inductance_H": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC V1.1 (24 V), column 'Phase-to-Phase Inductance' (290 uH); the Ls register's catalogue value",
+    "status": "PV",
+    "unit": "H",
+    "value": 0.00029
+   },
+   "phase_resistance_ohm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (column 'Phase-to-Phase Resistance')",
+    "status": "PV",
+    "unit": "ohm",
+    "value": 0.72
+   },
+   "pole_pairs": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 14
+   },
+   "rated_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC V1.1 (24 V), column 'Rated Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 4.11
+   },
+   "rated_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 12.0
+   },
+   "rotor_inertia_kg_m2": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J4340-2EC V1.1 (24 V), column 'Rotor Inertia'; the Inertia register's catalogue value (one real DM4340P dump reads 1.970401e-05 in openarm_can pull request 146)",
+    "status": "PV",
+    "unit": "kg m^2",
+    "value": 1.97e-05
+   },
+   "speed_torque_test": {
+    "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of the edition, read to +-1 N m",
+    "status": "LISTED",
+    "unit": "-",
+    "value": "speed falling from 57 to 36 rpm between 0 and 18 N m (LISTED reading; the plot is opened in envelope.DM4340_V1_1.opened_points_rpm_Nm)"
+   }
+  },
+  "DM8009P": {
+   "Damp_register": {
+    "source": "damping_readout_Nm_s_rad / gear_ratio^2: the maker's read-out (approximate, printed with '~') taken back through the conversion its comment states; the Damp register's nominal (one real DM4340P dump reads 1.961228e-04 in openarm_can pull request 146)",
+    "status": "DR",
+    "unit": "N m s/rad (motor side)",
+    "value": 0.0016049382716049384
+   },
+   "GREF": {
+    "source": "the vendor's user manual's torque-constant formula and the guide's 'Torque Ratio' column (1)",
+    "status": "PV",
+    "unit": "-",
+    "value": 1.0
+   },
+   "Imax_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 ('Maximum Drive Current'); the vendor's user manual's start-up screenshot prints 'Imax: 20.522388'; a per-module value of the unit, printed in the unit's record",
+    "status": "PV",
+    "unit": "A",
+    "value": 41.04477612
+   },
+   "KT_NmA": {
+    "source": "1.5 x pole_pairs x flux_Wb x gear_ratio x GREF (the vendor's manual formula)",
+    "status": "DR",
+    "unit": "N m/A",
+    "value": 1.261575
+   },
+   "OC_Value": {
+    "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+    "status": "PV",
+    "unit": "-",
+    "value": 0.8
+   },
+   "T_lim_Nm": {
+    "source": "OC_Value x Imax_A x KT_NmA (catalogue registers; a module uses its OWN Flux register)",
+    "status": "DR",
+    "unit": "N m",
+    "value": 41.4248507468712
+   },
+   "T_peak_Nm": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 components/left_arm.xml, right_arm.xml actuatorfrcrange, kept for every edition; the module's peak clamp in its own units, applied to the command BEFORE the scale k (clamp, then scale); no hinge carries a joint force range",
+    "status": "PM",
+    "unit": "N m",
+    "value": 40.0
+   },
+   "class": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "DM8009"
+   },
+   "copper_loss_per_Nm2": {
+    "source": "phase_resistance_ohm / KT_NmA^2",
+    "status": "DR",
+    "unit": "ohm/(N m/A)^2",
+    "value": 0.09110492476471081
+   },
+   "damping_readout_Nm_s_rad": {
+    "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25: 'Armatures approximate motor rotor readouts * gear ratio squared (kg*m^2). Damping references from motor readouts, assuming the same conversion (N*m*s/rad): DM8009P ~0.13, DM4340 ~0.33, DM4310 ~0.03. Reference only' (per module class; no edition is named)",
+    "status": "PM",
+    "unit": "N m s/rad (output side)",
+    "value": 0.13
+   },
+   "fixture_friction": {
+    "source": "the module's friction on the vendor's fixture taken equal to the arm joint class's nominal; added to output torque: c0 + c1 w",
+    "status": "OURS",
+    "unit": "N m; N m s/rad",
+    "value": {
+     "c0_Nm": 0.59,
+     "c1_Nm_s_per_rad": 0.13
+    }
+   },
+   "flux_Wb": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (catalogue; the module's own Flux register differs)",
+    "status": "PV",
+    "unit": "Wb",
+    "value": 0.00445
+   },
+   "gear_ratio": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 9.0
+   },
+   "joints": {
+    "source": "openarm_teleop 5b148df src/openarm_constants.hpp:78-93 (DEFAULT_MOTOR_CONFIG: the motor type of J1 to J7 and of the gripper); the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:12-19 (motor location)",
+    "status": "PM",
+    "unit": "-",
+    "value": "J1, J2"
+   },
+   "mapping_default": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (host table 12.5 / 10 / 28 for the DM4340 since 2026-07-17, 8 before); one real DM4340P dump 12.5 / 10 / 28 (openarm_can pull request 146)",
+    "status": "PV / PM",
+    "unit": "rad, rad/s, N m",
+    "value": {
+     "PMAX": 12.5,
+     "TMAX": 54.0,
+     "VMAX": 45.0
+    }
+   },
+   "module_mass_g": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 and user manuals",
+    "status": "PV",
+    "unit": "g",
+    "value": 963.0
+   },
+   "name": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": "DM-J8009P"
+   },
+   "no_load_speed_rpm": {
+    "source": "kept by the maintainers (OURS; the envelope's no-load point uses it); the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 prints 168 rpm at 24 V for the DM-J8009P-2EC, as does the DM-J8009P V1.3 user manual",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 160.0
+   },
+   "no_load_speed_rpm_manual": {
+    "source": "the DM-J8009P V1.3 user manual; the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 prints the same (row DM-J8009P-2EC, 24 V)",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 168.0
+   },
+   "peak_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J8009P-2EC (24 V), column 'Peak Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 40.0
+   },
+   "peak_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 40.0
+   },
+   "phase_inductance_H": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J8009P-2EC (24 V), column 'Phase-to-Phase Inductance' (80 uH); the Ls register's catalogue value",
+    "status": "PV",
+    "unit": "H",
+    "value": 8e-05
+   },
+   "phase_resistance_ohm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 (column 'Phase-to-Phase Resistance') (the maker's motor page prints 0.090: an older sheet)",
+    "status": "PV",
+    "unit": "ohm",
+    "value": 0.145
+   },
+   "pole_pairs": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28",
+    "status": "PV",
+    "unit": "-",
+    "value": 21
+   },
+   "rated_phase_current_A": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J8009P-2EC (24 V), column 'Rated Phase Current'",
+    "status": "PV",
+    "unit": "A",
+    "value": 18.6
+   },
+   "rated_torque_Nm": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28; the maker's motor page prints 20 / 40, 9 / 27, 3 / 7",
+    "status": "PV",
+    "unit": "N m",
+    "value": 20.0
+   },
+   "rotor_inertia_kg_m2": {
+    "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, row DM-J8009P-2EC (24 V), column 'Rotor Inertia'; the Inertia register's catalogue value (one real DM4340P dump reads 1.970401e-05 in openarm_can pull request 146)",
+    "status": "PV",
+    "unit": "kg m^2",
+    "value": 0.000195
+   },
+   "speed_torque_test": {
+    "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of the edition, read to +-1 N m",
+    "status": "PV",
+    "unit": "-",
+    "value": "speed held at 100 rpm from 0 to 25 N m, where the torque axis ends: a LOWER bound"
+   }
+  }
+ },
+ "envelope": {
+  "DM4310_V1_1": {
+   "no_load_point_rpm_Nm": {
+    "source": "no-load speed: the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'No-load Speed' of the row DM-J4310-2EC V1.1 (24 V); the fixture friction there (0.11 + 0.03 w)",
+    "status": "PV + DR",
+    "unit": "rpm, N m",
+    "value": [
+     200.0,
+     0.738
+    ]
+   },
+   "shape": {
+    "source": "the maintainers' own choice (default)",
+    "status": "OURS",
+    "unit": "-",
+    "value": "as DM8009P"
+   },
+   "test_speed_rpm": {
+    "source": "the vendor's speed-torque plot: speed held to the end of the test (about 4.5 N m)",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 120.0
+   }
+  },
+  "DM4310_V1_2": {
+   "listed_reading": {
+    "source": "a reading of the vendor's plot before it was opened; superseded by opened_points_rpm_Nm",
+    "status": "LISTED",
+    "unit": "-",
+    "value": "speed falling from 220 to 135 rpm between 0 and 4.9 N m"
+   },
+   "opened_points_rpm_Nm": {
+    "source": "the vendor's speed-torque plot 'Motor Performance Curve At 24V' of the DM-J4310 V1.2, opened by code: first and last plotted points (0.225 N m at 219.48 rpm; 4.912 N m at 135.71 rpm) + fixture friction; the line through them is the edition's E, held at T_lim",
+    "status": "PV points + OURS friction",
+    "unit": "rpm, N m (drive torque)",
+    "value": [
+     [
+      219.48,
+      1.025
+     ],
+     [
+      135.71,
+      5.448
+     ]
+    ]
+   },
+   "shape": {
+    "source": "the maintainers' own choice",
+    "status": "OURS",
+    "unit": "-",
+    "value": "a straight line from the no-load point through the LISTED point, held at T_lim"
+   }
+  },
+  "DM4340_1": {
+   "above_first_point": {
+    "source": "the maintainers' own choice",
+    "status": "OURS",
+    "unit": "-",
+    "value": "extended along the first segment and clipped at 0"
+   },
+   "below_last_point": {
+    "source": "the maintainers' own choice",
+    "status": "OURS",
+    "unit": "-",
+    "value": "extended along the last segment (33.15 N m at standstill), never above T_lim"
+   },
+   "points_rpm_Nm": {
+    "source": "the vendor's speed-torque plot of the DM-J4340 V1.0, read to +-1 N m; drive torque = output (0, 13.5, 18 N m) + fixture friction",
+    "status": "PV points + OURS friction",
+    "unit": "rpm, N m (drive torque)",
+    "value": [
+     [
+      52.5,
+      2.404
+     ],
+     [
+      36.0,
+      15.334
+     ],
+     [
+      27.5,
+      19.54
+     ]
+    ]
+   },
+   "standstill_Nm": {
+    "source": "the last segment extended to 0 rpm",
+    "status": "DR",
+    "unit": "N m",
+    "value": 33.15
+   }
+  },
+  "DM4340_V1_1": {
+   "listed_reading": {
+    "source": "a reading of the vendor's plot before it was opened; superseded by opened_points_rpm_Nm",
+    "status": "LISTED",
+    "unit": "-",
+    "value": "speed falling from 57 to 36 rpm between 0 and 18 N m"
+   },
+   "opened_points_rpm_Nm": {
+    "source": "the vendor's speed-torque plot 'Motor Performance Curve At 24V' of the DM-J4340P V1.1, opened by code: first and last plotted points (0.974 N m at 56.35 rpm; 18.247 N m at 35.51 rpm) + fixture friction; the line through them is the edition's E, held at T_lim",
+    "status": "PV points + OURS friction",
+    "unit": "rpm, N m (drive torque)",
+    "value": [
+     [
+      56.35,
+      3.511
+     ],
+     [
+      35.51,
+      20.064
+     ]
+    ]
+   },
+   "shape": {
+    "source": "the maintainers' own choice",
+    "status": "OURS",
+    "unit": "-",
+    "value": "a straight line from the no-load point through the LISTED point, held at T_lim"
+   }
+  },
+  "DM8009P": {
+   "no_load_point_rpm_Nm": {
+    "source": "no-load speed: the maker's motor page, openarm a15c3ae website/docs/hardware/openarm-2.0/motor.mdx:32 (DM-J8009P-2EC at 24V: 160 rpm; the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28 prints 168 rpm), kept by the maintainers; the fixture friction there (0.59 + 0.13 w)",
+    "status": "PV + DR",
+    "unit": "rpm, N m",
+    "value": [
+     160.0,
+     2.768
+    ]
+   },
+   "shape": {
+    "source": "the maintainers' own choice (default)",
+    "status": "OURS",
+    "unit": "-",
+    "value": "E = T_lim from standstill to the test speed; a straight line from there to the no-load point, continued and clipped at 0 above"
+   },
+   "test_speed_rpm": {
+    "source": "the vendor's speed-torque plot: speed held to the end of the test (25 N m)",
+    "status": "PV",
+    "unit": "rpm",
+    "value": 100.0
+   }
+  },
+  "form": {
+   "source": "the vendor's speed-torque plots 'Motor Performance Curve At 24V' of each edition (the points); the maintainers' own choice (the form between and beyond them)",
+   "status": "PV points + OURS",
+   "unit": "-",
+   "value": "E(w), w >= 0: the torque the drive can deliver while turning at w in the direction of the torque, in delivered (drive) torque = output torque on the fixture + fixture friction; L_plus = min(T_lim, E(max(s qdot, 0))), L_minus = min(T_lim, E(max(-s qdot, 0))); in the braking quadrant L = min(T_lim, E(0))"
+  }
+ },
+ "format": "openarm_unit/params_public/1",
+ "frames": {
+  "budget_frames_per_bus_per_step": {
+   "source": "the maker: above a 1 kHz cycle an 8-motor bus 'can result in unstable CAN connections'; at most 8 N_k frames per bus and exchange, at most ONE control frame per module",
+   "status": "DR",
+   "unit": "frames per step of the exchange",
+   "value": 8
+  },
+  "decode": {
+   "source": "the vendor's debugging assistant user manual (Damiao drive control protocol) V1.4, page 33 (the host's ranges must equal the module's PMAX, VMAX and TMAX, 'otherwise the control command is scaled proportionally'); openarm_can 20d66f0 src/openarm/damiao_motor/dm_motor_control.cpp:109-112 and 239-243 (the decoding)",
+   "status": "PV",
+   "unit": "-",
+   "value": "x = u / (2^bits - 1) x 2 X_MAX - X_MAX with the MODULE's stored PMAX, VMAX, TMAX; kp = u / 4095 x 500, kd = u / 4095 x 5"
+  },
+  "encode_reply": {
+   "source": "openarm_can 20d66f0 dm_motor_control.cpp truncates",
+   "status": "PM host code; OURS for the module",
+   "unit": "-",
+   "value": "u = floor((clip(x, -X_MAX, X_MAX) + X_MAX) / (2 X_MAX) x (2^bits - 1))"
+  },
+  "force_position_current_scale": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "counts per unit",
+   "value": 10000.0
+  },
+  "force_position_fields": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": {
+    "current_limit": "uint16 = per unit x 10000",
+    "p": "float32",
+    "speed_limit": "uint16 = rad/s x 100"
+   }
+  },
+  "force_position_id_offset": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164; dm_motor_control.cpp:60-61",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": 768
+  },
+  "force_position_raw_max": {
+   "source": "openarm_can 20d66f0 dm_motor_control.cpp:184-194: the host clamps both sixteen-bit fields (speed limit and current limit) to 0-10000 before it sends them ('values above 10000 clamp to 10000'), that is 0-100 rad/s and 0-1.0 per unit",
+   "status": "PM",
+   "unit": "counts (each uint16 field)",
+   "value": 10000
+  },
+  "force_position_speed_scale": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "counts per rad/s",
+   "value": 100.0
+  },
+  "implemented_kinds": {
+   "source": "position-velocity and velocity modes are not implemented; a frame of those kinds is counted and ignored",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "MIT",
+    "force_position"
+   ]
+  },
+  "kd_range": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "N m s/rad",
+   "value": [
+    0.0,
+    5.0
+   ]
+  },
+  "kp_range": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "N m/rad",
+   "value": [
+    0.0,
+    500.0
+   ]
+  },
+  "mit_bits": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164",
+   "status": "PV / PM",
+   "unit": "bits",
+   "value": {
+    "dq": 12,
+    "kd": 12,
+    "kp": 12,
+    "q": 16,
+    "t_ff": 12
+   }
+  },
+  "param_can_id": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164; dm_motor_control.cpp:66, 84",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": 2047
+  },
+  "param_ops": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164; layouts dm_motor_control.cpp:65-80",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": {
+    "read": 51,
+    "refresh": 204,
+    "save": 170,
+    "write": 85
+   }
+  },
+  "register_write_whitelist": {
+   "source": "the register writes the maker's own host software makes, and nothing else: each gripper's control mode (CTRL_MODE) while the gripper is disabled. The zero-position calibration script of openarm_can 1.4.1 (github.com/enactic/openarm_can at 20d66f0, setup/openarm-can-zero-position-calibration) sets the gripper to MIT mode, and the driver of openarm_driver 0.5.1 (github.com/enactic/openarm_driver at 5c73d83, src/openarm_driver/driver.py, its constructor) sets it to force-position mode, both through init_gripper_motor (openarm_can gripper_component.cpp:26-37). No other register, TIMEOUT included, is writable",
+   "status": "OURS / PM",
+   "unit": "-",
+   "value": {
+    "stage04": [
+     "gripper CTRL_MODE while disabled"
+    ],
+    "stage05": [
+     "gripper CTRL_MODE while disabled"
+    ]
+   }
+  },
+  "reply_bits": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164; D0 = (status << 4) | (id & 0xF); T_MOS and T_Rotor as integer deg C",
+   "status": "PV / PM",
+   "unit": "bits",
+   "value": {
+    "dq": 12,
+    "q": 16,
+    "torque": 12
+   }
+  },
+  "resolution": {
+   "DM4310": {
+    "position_rad": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad",
+     "value": 0.00038147554741741054
+    },
+    "torque_Nm": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "N m",
+     "value": 0.004884004884004884
+    },
+    "velocity_rad_s": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad/s",
+     "value": 0.014652014652014652
+    }
+   },
+   "DM4340": {
+    "position_rad": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad",
+     "value": 0.00038147554741741054
+    },
+    "torque_Nm": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "N m",
+     "value": 0.013675213675213675
+    },
+    "velocity_rad_s": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad/s",
+     "value": 0.004884004884004884
+    }
+   },
+   "DM8009": {
+    "position_rad": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad",
+     "value": 0.00038147554741741054
+    },
+    "torque_Nm": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "N m",
+     "value": 0.026373626373626374
+    },
+    "velocity_rad_s": {
+     "source": "derived from the mapping ranges; the same steps are found in public real logs",
+     "status": "DR",
+     "unit": "rad/s",
+     "value": 0.02197802197802198
+    }
+   }
+  },
+  "resolution_kd_Nm_s_rad": {
+   "source": "5 / 4095",
+   "status": "DR",
+   "unit": "N m s/rad",
+   "value": 0.001221001221001221
+  },
+  "resolution_kp_Nm_rad": {
+   "source": "500 / 4095",
+   "status": "DR",
+   "unit": "N m/rad",
+   "value": 0.1221001221001221
+  },
+  "special_prefix_byte": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164 (FF x7 + tail)",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": 255
+  },
+  "special_tail": {
+   "source": "the vendor's protocol; openarm_can 20d66f0 dm_motor_control.cpp:88-156, dm_motor_constants.hpp:39-60, 93-164; dm_motor_control.cpp:26-34 (FC, FD, FE); FB clear error the vendor's",
+   "status": "PV / PM",
+   "unit": "-",
+   "value": {
+    "clear_error": 251,
+    "disable": 253,
+    "enable": 252,
+    "save_zero": 254
+   }
+  },
+  "status_codes": {
+   "source": "the vendor's DM-J4310-2EC V1.1 user manual, feedback frame, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4310-2ec-v1.1.mdx:185-205; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:41-60",
+   "status": "PV",
+   "unit": "-",
+   "value": {
+    "0": "disabled",
+    "1": "enabled",
+    "9": "under voltage",
+    "C": "coil over temperature",
+    "D": "communication lost"
+   }
+  },
+  "status_never_produced": {
+   "source": "the maintainers' own choice (not modelled)",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "8",
+    "A",
+    "B",
+    "E"
+   ]
+  },
+  "timeout_count_s": {
+   "source": "the vendor's debugging assistant user manual (Damiao drive control protocol) V1.4, page 10 ('CAN Timeout': one counting period is 50 us); trips at ceil(c / 20) steps without a control frame; c = 0 off",
+   "status": "PV",
+   "unit": "s",
+   "value": 5e-05
+  },
+  "velocity_step_host8_on_module10": {
+   "source": "16 / 4095 (host VMAX 8, module VMAX 10); slope 0.800",
+   "status": "DR",
+   "unit": "rad/s",
+   "value": 0.003907203907203907
+  },
+  "wire": {
+   "source": "the maintainers' own choice (the count is big endian, like the id)",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "bytes_per_frame": 12,
+    "fields": [
+     "bus (1)",
+     "length (1, must be 8)",
+     "id (2, big endian)",
+     "data (8)"
+    ],
+    "message_count_bits": 16,
+    "message_count_byte_order": "big endian"
+   }
+  }
+ },
+ "gripper": {
+  "anti_windup": {
+   "source": "the recorded openings after a squeeze cannot tell this form from an integral frozen whenever the output is clipped (both reproduce them alike); of the two it is the one that never holds a squeeze against an opening command at a low speed or current limit",
+   "status": "OURS",
+   "unit": "-",
+   "value": "conditional integration: the speed loop's integral is held only while the drive's output is clipped and the speed error would drive the output further into that clip"
+  },
+  "driver_command_range_rad": {
+   "source": "openarm_driver 5c73d83 src/openarm_driver/configs/openarm_pedestal.yaml:27,37 (the joint8 limits the driver clips to)",
+   "status": "PM",
+   "unit": "rad",
+   "value": [
+    -0.4,
+    1.0472
+   ]
+  },
+  "force_position_host_limits": {
+   "source": "openarm_driver 5c73d83 src/openarm_driver/driver.py:519-526 and its shipped limits [50.0, 1.0]",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "current_limit": 1.0,
+    "speed_rad_s": 50.0
+   }
+  },
+  "loop_gains": {
+   "source": "no published value; fitted to the gripper's closing and opening transients in the maker-format public recorded logs of one OpenArm 2.0 unit (two days of teleoperated cup and bottle tasks, the gripper in the maker driver's force-position mode at 50 rad/s): each transient replayed from its recorded requests (each acting 18 ms before its recorded stamp) through the driver's force-position frame on the maker's finger model; the mean of the two days' fits; constants of this file, not registers",
+   "status": "MR",
+   "unit": "KP_APR 1/s; KP_ASR N m s/rad; KI_ASR N m/rad (the drive's own units at the output shaft)",
+   "value": {
+    "KI_ASR": 47.6,
+    "KP_APR": 5.54,
+    "KP_ASR": 0.121
+   }
+  },
+  "measured_plateaus_Nm": {
+   "source": "measured on the maker's public recorded logs of one OpenArm 2.0 unit, two days",
+   "status": "MR",
+   "unit": "N m",
+   "value": [
+    [
+     4.29,
+     4.31
+    ],
+    [
+     3.22,
+     3.23
+    ]
+   ]
+  },
+  "mit_gains": {
+   "source": "the maker's teleoperation, openarm_teleop 5b148df config/follower.yaml:29-30 (Kp 16.0 and Kd 0.2, the eighth entries: the gripper)",
+   "status": "PM",
+   "unit": "N m/rad; N m s/rad",
+   "value": {
+    "kd": 0.2,
+    "kp": 16.0
+   }
+  },
+  "plateau_divisor": {
+   "source": "plateau = (limit / 4.5) x Imax x KT: openarm_driver 5c73d83 src/openarm_driver/driver.py:519-526 divides the limit by 4.5; anchored on the plateaus of the maker's public recorded logs of one unit",
+   "status": "MR / DR",
+   "unit": "-",
+   "value": 4.5
+  },
+  "r_pad_m": {
+   "source": "the clamp lever: the distance along the hand's z axis from the finger hinge to the seated grip point; openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/components/left_arm.xml lines 98 and 110 and right_arm.xml (the same two bodies) place both finger bodies at z = -0.068 m in openarm_<side>_ee_base_link, and the grip point is the maker's grasp offset 0.135 m along the same axis (openarm_mjlab GRASP_LOCAL_OFFSET): 0.135 - 0.068 = 0.067 m; the clamp force is the finger-stop torque over this lever, both pads together",
+   "status": "PM / DR",
+   "unit": "m",
+   "value": 0.067
+  }
+ },
+ "host_profiles": {
+  "driver_edition": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "-",
+   "value": "openarm_driver 0.5.1"
+  },
+  "gain_sets": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "N m/rad; N m s/rad",
+   "value": {
+    "A": {
+     "kd": [
+      2.75,
+      2.5,
+      2.0,
+      2.0,
+      0.7,
+      0.6,
+      0.5
+     ],
+     "kp": [
+      70.0,
+      70.0,
+      70.0,
+      60.0,
+      10.0,
+      10.0,
+      10.0
+     ]
+    },
+    "B": {
+     "kd": [
+      2.7,
+      2.7,
+      2.2,
+      2.2,
+      1.5,
+      1.5,
+      1.5
+     ],
+     "kp": [
+      230.0,
+      230.0,
+      190.0,
+      190.0,
+      30.0,
+      30.0,
+      30.0
+     ]
+    }
+   }
+  },
+  "gripper_modes": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531); openarm_teleop 5b148df config/follower.yaml:29-30",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "force_position": {
+     "current_limit": 1.0,
+     "speed_rad_s": 50.0
+    },
+    "mit": {
+     "kd": 0.2,
+     "kp": 16.0
+    }
+   }
+  },
+  "host_mapping_vmax_dm4340": {
+   "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:154 (VMAX 10 of the DM4340 since commit 25f8f44 of 2026-07-17, pull request 146; 8 before it)",
+   "status": "PM",
+   "unit": "rad/s",
+   "value": [
+    10.0,
+    8.0
+   ]
+  },
+  "inferred_force_limits": {
+   "source": "the limits read off the maker unit's recorded plateaus at a 10.26 A base: an inference, not a recorded setting",
+   "status": "DR",
+   "unit": "-",
+   "value": [
+    2.0,
+    1.5
+   ]
+  },
+  "joint_limit_clip": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "-",
+   "value": "the file's limits; J8 [-0.4, 1.0472] rad"
+  },
+  "joint_offsets": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531) ('joint_offsets' zeros)",
+   "status": "PM",
+   "unit": "rad (J1..J8)",
+   "value": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "jump_limits_rad": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531) (single-jump stop 1.0 x3 / 1.5 x4 / 3.14)",
+   "status": "PM",
+   "unit": "rad (J1..J8)",
+   "value": [
+    1.0,
+    1.0,
+    1.0,
+    1.5,
+    1.5,
+    1.5,
+    1.5,
+    3.14
+   ]
+  },
+  "start_move": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "duration_s": 2.0,
+    "rate_Hz": 50.0
+   }
+  },
+  "t_ff": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "N m",
+   "value": 0.0
+  },
+  "v_des": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "rad/s",
+   "value": 0.0
+  },
+  "velocity_limiter_dt_cap_s": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "s",
+   "value": 0.04
+  },
+  "velocity_limits_rad_s": {
+   "source": "openarm_driver 5c73d83 (src/openarm_driver/configs/openarm_pedestal.yaml, src/openarm_driver/safety.py:64-160, src/openarm_driver/driver.py:36, 486-531)",
+   "status": "PM",
+   "unit": "rad/s (J1..J8)",
+   "value": [
+    2.0,
+    2.0,
+    3.3,
+    3.3,
+    6.3,
+    6.3,
+    6.3,
+    20.0
+   ]
+  },
+  "zero_routine": {
+   "source": "openarm_can 20d66f0 setup/openarm-can-zero-position-calibration:85-431 (interpolate, bump_to_limit, the right and the left v2 sequence, run_calibration)",
+   "status": "PM",
+   "unit": "-",
+   "value": "openarm_can/setup/openarm-can-zero-position-calibration at 20d66f0 (v2 sequence)"
+  }
+ },
+ "mjcf_policy": {
+  "accept_and_ignore": {
+   "source": "the maintainers' own choice (frames are accepted); the robot-description task's submission contract, section 2 'WHAT A FILE MAY HOLD'",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "compiler (angle and eulerseq honoured; meshdir, assetdir, texturedir replaced)",
+    "option",
+    "size",
+    "visual",
+    "statistic",
+    "default classes (resolved by the compiler)",
+    "materials and builtin textures",
+    "meshes whose file base name is a given file",
+    "frames",
+    "the world's floor and pedestal geoms",
+    "cameras",
+    "lights",
+    "extra sites",
+    "contact",
+    "keyframe"
+   ]
+  },
+  "caps": {
+   "source": "the robot-description task's submission contract, sections 1, 3 and 6 (quoted; 2 MB read as 2 x 1024^2 bytes, 5 MB and 16 kB likewise; range_abs_max_rad = 2 pi and zero_offset_abs_max_rad = pi written as numbers)",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "armature_kg_m2": [
+     0.0,
+     1.0
+    ],
+    "b_abs_max_Nm": 2.0,
+    "body_mass_kg": [
+     0.001,
+     20.0
+    ],
+    "calibration_max_bytes": 16384,
+    "damping_Nm_s_rad": [
+     0.0,
+     10.0
+    ],
+    "frictionloss_Nm": [
+     0.0,
+     10.0
+    ],
+    "k": [
+     0.5,
+     2.0
+    ],
+    "max_bodies": 64,
+    "max_geoms": 200,
+    "max_mounts_per_side": 4,
+    "range_abs_max_rad": 6.283185307179586,
+    "robot_xml_max_bytes": 2097152,
+    "submission_max_bytes": 5242880,
+    "submission_max_entries": 16,
+    "zero_offset_abs_max_rad": 3.141592653589793
+   }
+  },
+  "forbidden_elements": {
+   "source": "the robot-description task's submission contract, section 2 'FORBIDDEN' (the text check keeps only this list)",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "include",
+    "plugin",
+    "extension",
+    "tendon",
+    "flex",
+    "flexcomp",
+    "deformable",
+    "skin",
+    "composite",
+    "attach",
+    "replicate",
+    "custom",
+    "sensor",
+    "model",
+    "hfield"
+   ]
+  },
+  "keep": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "the 20 bodies with their frames and inertials",
+    "the 18 hinges with pos, axis, range, armature, damping, frictionloss",
+    "leaf bodies mount_<side>_<k> (k = 1..4) with at most one primitive geom",
+    "the sites left_tool and right_tool",
+    "the sixteen general actuators"
+   ]
+  },
+  "refused_on_compiled_model": {
+   "source": "the robot-description task's submission contract, section 7 G-4",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    "any equality but the maker's two finger equalities",
+    "any joint type but hinge",
+    "joint stiffness other than 0",
+    "springref other than the reference",
+    "joint ref other than 0",
+    "actuatorgravcomp",
+    "body gravcomp",
+    "free or mocap bodies",
+    "a second actuator on a joint or any other actuator kind",
+    "gear other than 1",
+    "actuator dynamics",
+    "a non-joint transmission",
+    "bias terms beyond the constant",
+    "gain terms after the first",
+    "a file attribute anywhere but on a mesh of the given set",
+    "non-finite numbers"
+   ]
+  }
+ },
+ "model_run": {
+  "heating": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": "none: no thermal state is kept and no coil protection acts; status C never occurs in a model run"
+  },
+  "reply_noise": {
+   "source": "the maintainers' own choice (noise_key None)",
+   "status": "OURS",
+   "unit": "-",
+   "value": "none: the replies are the truncated true values"
+  },
+  "reply_temperature_C": {
+   "source": "a submitted model runs at 25 deg C; the public runner carries no thermal model, so both temperature bytes of every reply read this fixed value",
+   "status": "OURS",
+   "unit": "deg C",
+   "value": 25.0
+  }
+ },
+ "numerics": {
+  "actuators": {
+   "source": "the maintainers' own choice (clamp, then scale)",
+   "status": "OURS",
+   "unit": "-",
+   "value": "gain / bias / force-range arrays rewritten by the bus layer (the carrier of the in-drive law); ctrl limit off; no joint actuatorfrcrange: the clamp (current limit, envelope, peak torque) acts on the command before the scale k"
+  },
+  "applies_to": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "friction": "14 arm joints and 4 finger joints",
+    "stops": "18 hinges"
+   }
+  },
+  "check_weight_shape": {
+   "source": "a point body does not compile",
+   "status": "OURS",
+   "unit": "-",
+   "value": "a steel cylinder of the stated mass"
+  },
+  "environment": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_L2_SIZE": "256",
+    "PYTHONHASHSEED": "0"
+   }
+  },
+  "friction_constraint": {
+   "source": "measured in simulation (default)",
+   "status": "OURS (numerics)",
+   "unit": "-",
+   "value": {
+    "noslip_iterations": 0,
+    "solimpfriction": [
+     0.9999,
+     0.9999,
+     0.001,
+     0.5,
+     2.0
+    ],
+    "solreffriction": [
+     0.002,
+     1.0
+    ]
+   }
+  },
+  "grasp_ramp_steps": {
+   "source": "the maintainers' own choice (100 ms ramp)",
+   "status": "OURS",
+   "unit": "steps",
+   "value": 100
+  },
+  "normal_like_scale": {
+   "source": "sqrt(3) as a literal: (u0 + u1 + u2 + u3 - 2) x 1.7320508075688772 has unit variance",
+   "status": "DR",
+   "unit": "-",
+   "value": 1.7320508075688772
+  },
+  "option": {
+   "source": "openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:64 (timestep, integrator, cone, impratio); solver, iterations, tolerance",
+   "status": "PM / MuJoCo defaults / OURS",
+   "unit": "-",
+   "value": {
+    "cone": "elliptic",
+    "impratio": 10.0,
+    "integrator": "implicitfast",
+    "iterations": 100,
+    "noslip_iterations": 0,
+    "solver": "Newton",
+    "threads": 1,
+    "timestep": 0.001,
+    "tolerance": 1e-08
+   }
+  },
+  "pinned_versions": {
+   "source": "the maintainers' own choice (later MuJoCo releases change how saturated actuators are damped)",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "mujoco": "3.14.0",
+    "numpy": "2.5.3",
+    "python": "3.12"
+   }
+  },
+  "rng": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "bits_per_uniform": 53,
+    "hash": "sha256",
+    "message": "key (32 bytes) || len(stream) (1 byte) || stream (ASCII) || counter (8 bytes, big endian)",
+    "words_per_digest": 4
+   }
+  },
+  "stop_constraint": {
+   "source": "no source gives a stop stiffness; measured in simulation",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "solimplimit": [
+     0.99,
+     0.999,
+     0.001,
+     0.5,
+     2.0
+    ],
+    "solreflimit": [
+     0.002,
+     1.0
+    ]
+   }
+  },
+  "stop_constraint_sensitivity_dmin_dmax": {
+   "source": "halving and doubling the stop compliance",
+   "status": "OURS",
+   "unit": "-",
+   "value": [
+    0.995,
+    0.98
+   ]
+  },
+  "weld": {
+   "source": "the maintainers' own choice",
+   "status": "OURS",
+   "unit": "-",
+   "value": {
+    "solimp": [
+     0.99,
+     0.999,
+     0.001
+    ],
+    "solref": [
+     0.002,
+     1.0
+    ]
+   }
+  }
+ },
+ "quantity_labels": {
+  "C0": "the zero stored in each module before any zero routine runs, rad",
+  "C1": "the stored zero delta in force in each module (the module angle is s (q - delta)), rad",
+  "C2": "the VMAX mapping register of the two DM4340 modules of each arm, rad/s",
+  "C3": "the delivered torque per commanded torque k of each module (the actuator's gain)",
+  "C4": "the constant torque offset b of each module, N m",
+  "C5": "the module's setting registers (OT_Value, OC_Value, TIMEOUT, CTRL_MODE, can_br)",
+  "C6": "the edition of the modules of each class (DM8009, DM4340, DM4310)",
+  "C7": "the current base Imax of each module, as the module reports it at power-up, A",
+  "H1": "the host profile: the gains, checks and settings of the reference hosts",
+  "HS1": "how the friction level of each arm joint varies along its travel (the hold-scatter table)",
+  "P1": "the Coulomb friction level of each arm joint (the joint's frictionloss), N m",
+  "P2": "the viscous damping of each arm joint (the joint's damping), N m s/rad",
+  "P3": "the reflected rotor inertia of each joint (the joint's armature), kg m^2",
+  "P4": "the mass, centre of mass and inertia of each link as built (the body's inertial)",
+  "P5": "the items mounted on an arm (leaf bodies mount_<side>_<k>)",
+  "P6": "the gripper's friction level (finger1's frictionloss), N m",
+  "P7": "the gripper's viscous damping (the finger joints' damping), N m s/rad",
+  "PL1": "where each arm's base link is bolted to the pedestal (the pose of openarm_<side>_base_link)",
+  "S1": "a session's factor on the friction levels P1 and P6 of each module",
+  "S2": "a session's step of the torque offset b of each module, N m",
+  "S3": "a session's thermal state: the lab's ambient and each module's start temperatures, deg C",
+  "ST1": "the two mechanical stops of each arm joint as built (the joint's range), rad",
+  "TH1": "the heat factor h of each module (how fast its winding heats per drive torque squared)"
+ },
+ "registers": {
+  "carried": {
+   "0": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's user manuals (register table); one real register dump in the maker's openarm_can pull request 146",
+     "status": "PV / one real dump",
+     "unit": "-",
+     "value": 15.0
+    },
+    "name": "UV_Value",
+    "rid": 0,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "1": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's debugging assistant user manual (Damiao drive control protocol) V1.4, page 10 ('set to 0 when motor parameter identification is accurate'); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:721-728 (KT_Value); one real register dump in the maker's openarm_can pull request 146",
+     "status": "PV / one real dump",
+     "unit": "-",
+     "value": 0.0
+    },
+    "name": "KT_Value",
+    "rid": 1,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "10": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:39 ControlMode MIT = 1, POS_FORCE = 4",
+     "status": "PM",
+     "unit": "-",
+     "value": "1 on the arm; the gripper per profile (MIT 1, force-position 4)"
+    },
+    "name": "CTRL_MODE",
+    "rid": 10,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "11": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "editions.<edition>.Damp_register: the maker's damping read-outs, openarm_mujoco ed2046f30981398fc610688f08beac0ebd08f972 v2/openarm_bimanual_common.xml:22-25, divided by the gear ratio squared; the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:812-819 (Damp, read only)",
+     "status": "PM / DR",
+     "unit": "-",
+     "value": "edition Damp_register (the maker's damping read-out / gear_ratio^2)"
+    },
+    "name": "Damp",
+    "rid": 11,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "12": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "editions.<edition>.rotor_inertia_kg_m2: the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Rotor Inertia' of the edition's row; the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:821-828 (Inertia, read only)",
+     "status": "PV",
+     "unit": "-",
+     "value": "edition rotor_inertia_kg_m2"
+    },
+    "name": "Inertia",
+    "rid": 12,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "13": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:107 (hw_ver = 13); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:830-837 (reserved, read only); no source prints a value for it",
+     "status": "PM",
+     "unit": "-",
+     "value": null
+    },
+    "name": "hw_ver",
+    "rid": 13,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "14": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:108 (sw_ver = 14); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:839-846 (read only); no source prints a value for it",
+     "status": "PM",
+     "unit": "-",
+     "value": null
+    },
+    "name": "sw_ver",
+    "rid": 14,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "15": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:109 (SN = 15); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:848-855 (reserved, read only); no source prints a value for it",
+     "status": "PM",
+     "unit": "-",
+     "value": null
+    },
+    "name": "SN",
+    "rid": 15,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "16": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Pole Pairs' of the edition's row",
+     "status": "PV",
+     "unit": "-",
+     "value": "edition pole_pairs"
+    },
+    "name": "NPP",
+    "rid": 16,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "17": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Phase-to-Phase Resistance' of the edition's row; e: the drive's own identification of the module, as the unit's register dump prints it",
+     "status": "PV; spread AN, values OURS",
+     "unit": "-",
+     "value": "edition phase_resistance_ohm x (1 + e)"
+    },
+    "name": "Rs",
+    "rid": 17,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "18": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "aliases": [
+     "Ls"
+    ],
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Phase-to-Phase Inductance' of the edition's row (the maker's register table spells it 'Ls'); e: the drive's own identification of the module, as the unit's register dump prints it",
+     "status": "PV; spread AN, values OURS",
+     "unit": "-",
+     "value": "edition phase_inductance_H x (1 + e)"
+    },
+    "name": "LS",
+    "rid": 18,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "19": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Flux Linkage' of the edition's row; e: the drive's own identification of the module, as the unit's register dump prints it",
+     "status": "PV; spread AN, values OURS",
+     "unit": "-",
+     "value": "edition flux_Wb x (1 + e)"
+    },
+    "name": "Flux",
+    "rid": 19,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "2": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:730-737 (OT_Value, range [80, 200)) and line 661 ('recommended not to exceed 100')",
+     "status": "PV",
+     "unit": "-",
+     "value": 100.0
+    },
+    "name": "OT_Value",
+    "rid": 2,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "20": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Gear Ratio' of the edition's row",
+     "status": "PV",
+     "unit": "-",
+     "value": "edition gear_ratio"
+    },
+    "name": "Gr",
+    "rid": 20,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "21": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Default PMAX' of the edition's row; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (the maker's host table)",
+     "status": "PV / PM",
+     "unit": "-",
+     "value": "edition mapping_default.PMAX"
+    },
+    "name": "PMAX",
+    "rid": 21,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "22": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Default VMAX' of the edition's row; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (the maker's host table)",
+     "status": "PV / PM",
+     "unit": "-",
+     "value": "edition mapping_default.VMAX (on the DM4340 the unit's own VMAX register, as its dump prints it)"
+    },
+    "name": "VMAX",
+    "rid": 22,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "23": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Default TMAX' of the edition's row; openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:149-164 (the maker's host table)",
+     "status": "PV / PM",
+     "unit": "-",
+     "value": "edition mapping_default.TMAX"
+    },
+    "name": "TMAX",
+    "rid": 23,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "29": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:123 (OV_Value = 29); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:975-982 (range to be defined); no source prints a value for it",
+     "status": "PM",
+     "unit": "-",
+     "value": null
+    },
+    "name": "OV_Value",
+    "rid": 29,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "3": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's user manuals (default, '80 % of the measurable maximum current'); one real register dump in the maker's openarm_can pull request 146",
+     "status": "PV / one real dump",
+     "unit": "-",
+     "value": 0.8
+    },
+    "name": "OC_Value",
+    "rid": 3,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "30": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's 'Motor Module Selection Guide' of Damiao Technology, edition 2026-10-28, column 'Torque Ratio' (1); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:984-991 (GREF, gear torque efficiency, range (0, 1]); not in the one real dump",
+     "status": "PV",
+     "unit": "-",
+     "value": 1.0
+    },
+    "name": "GREF",
+    "rid": 30,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "35": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's user manuals (register table); one real register dump in the maker's openarm_can pull request 146",
+     "status": "PV / one real dump",
+     "unit": "-",
+     "value": 9
+    },
+    "name": "can_br",
+    "rid": 35,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "7": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the maker's name 'Master ID': the id the module replies on (0x11..0x18)",
+     "status": "DR",
+     "unit": "-",
+     "value": "reply_id"
+    },
+    "name": "MST_ID",
+    "rid": 7,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "8": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the maker's name 'Motor (ESC) ID': the module's own command id (0x01..0x08)",
+     "status": "DR",
+     "unit": "-",
+     "value": "command_id"
+    },
+    "name": "ESC_ID",
+    "rid": 8,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   },
+   "80": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:137-138 (p_m = 80, xout = 81)",
+     "status": "PM",
+     "unit": "-",
+     "value": "live (motor position)"
+    },
+    "name": "p_m",
+    "rid": 80,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "81": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RO"
+    },
+    "default": {
+     "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:137-138 (p_m = 80, xout = 81)",
+     "status": "PM",
+     "unit": "-",
+     "value": "live (output shaft position)"
+    },
+    "name": "xout",
+    "rid": 81,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "float"
+    }
+   },
+   "9": {
+    "access": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "RW"
+    },
+    "default": {
+     "source": "the vendor's debugging assistant user manual (Damiao drive control protocol) V1.4, page 10 ('CAN Timeout': counts of 50 us); the vendor's DM-J4340P-2EC user manual V1.0, register list, as the maker publishes it: damiao 42b460e website/i18n/en/docusaurus-plugin-content-docs/current/products/hardware/dm-j4340p-2ec-v1.0.mdx:793-800 (TIMEOUT); never writable by a host",
+     "status": "PV time base; three real units",
+     "unit": "-",
+     "value": 0
+    },
+    "name": "TIMEOUT",
+    "rid": 9,
+    "type": {
+     "source": "openarm_can 20d66f0 setup/cli/commands/motor_read_param_commands.cpp (RID table)",
+     "status": "PM",
+     "unit": "-",
+     "value": "uint32"
+    }
+   }
+  },
+  "ctrl_mode_codes": {
+   "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:39",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "MIT": 1,
+    "POS_FORCE": 4,
+    "POS_VEL": 2,
+    "VEL": 3
+   }
+  },
+  "firmware": {
+   "source": "the maker-tested editions, openarm a15c3ae website/docs/setup/openarm-setup/6-motor-firmware-update.mdx:37-42 (V5017_04, V5117_04, V6417_04); no behaviour differs between firmware editions in this model",
+   "status": "PM",
+   "unit": "-",
+   "value": "V5017_04 / V5117_04 / V6417_04"
+  },
+  "not_carried": {
+   "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:93-139 (exist in the maker's table; not carried by the unit; the force-position loop gains KP_ASR, KI_ASR, KP_APR are fitted to real transients and are constants of this file, gripper.loop_gains, not register contents: the vendor's scaling of these registers is not published)",
+   "status": "PM",
+   "unit": "-",
+   "value": {
+    "24": "I_BW",
+    "25": "KP_ASR",
+    "26": "KI_ASR",
+    "27": "KP_APR",
+    "28": "KI_APR",
+    "4": "ACC",
+    "5": "DEC",
+    "6": "MAX_SPD"
+   }
+  },
+  "rid_source": {
+   "source": "openarm_can 20d66f0 include/openarm/damiao_motor/dm_motor_constants.hpp:93-139",
+   "status": "PM",
+   "unit": "-",
+   "value": "RID numbers"
+  }
+ },
+ "status_codes": {
+  "AN": "a real source's magnitude used by analogy",
+  "DR": "arithmetic on published or measured values",
+  "LISTED": "a reading of a source that had not yet been opened by code",
+  "MR": "measured on real recorded logs (one unit)",
+  "MS": "measured in simulation",
+  "OURS": "the maintainers' own choice",
+  "PM": "published by the maker (Enactic)",
+  "PV": "published by the module vendor (Damiao)",
+  "RECALLED": "a textbook value not opened at its source"
+ },
+ "supply_V": {
+  "source": "openarm a15c3ae website/docs/setup/openarm-setup/3-configure-test.mdx:68 ('24V supply connected'); the maker's motor page, website/docs/hardware/openarm-2.0/motor.mdx:26 (rated voltage 24V)",
+  "status": "PM",
+  "unit": "V",
+  "value": 24.0
+ }
+}

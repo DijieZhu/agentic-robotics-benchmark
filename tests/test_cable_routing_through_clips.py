@@ -206,7 +206,7 @@ class Statements(unittest.TestCase):
         self.assertEqual(c["OVERHEAD_POS"], (0.49, 0.0, 1.05))
         self.assertIn("fixed 1.05 m above the board's centre", INSTRUCTION)
         self.assertEqual(c["SETTLE_S"], 2.0)
-        self.assertIn("lifts it 15 cm and waits 2 s", INSTRUCTION)
+        self.assertIn("holds it for 0.4 s, raises it 15 cm over 1.2 s and holds it there for 0.8 s", INSTRUCTION)
 
     def test_instruction_states_the_graders_rules(self):
         self.assertEqual((CONFIG["grader_budget_s"], CONFIG["image_cost_s"], CONFIG["step_timeout_s"]), (3600, 0.2, 30))
@@ -214,7 +214,7 @@ class Statements(unittest.TestCase):
         self.assertIn("**0.2 s for every picture you ask for**", INSTRUCTION)
         self.assertIn("within 30 s", INSTRUCTION)
         self.assertEqual(CONFIG["solver_max_processes"], 64)
-        self.assertIn("with at most 64 processes of your account at a time", INSTRUCTION)
+        self.assertIn("counted at every reset and before every request: more than 64 at such a moment end the episode", INSTRUCTION)
         self.assertEqual((CONFIG["probe_rate"], CONFIG["probe_pass_fraction"]), (0.01, 0.1))
         self.assertIn("identical in more than 90 % of the pairs that command any motion scores 0", INSTRUCTION)
         self.assertIn("a fixed hidden set of 20 boards with 3 or 4 fixtures each", INSTRUCTION)
@@ -232,6 +232,23 @@ class Statements(unittest.TestCase):
         self.assertNotIn("axis", fn.replace("to_world_angle(nom[\"connector\"][\"heading\"])", ""))
         self.assertNotIn("clip_axis_tolerance", INSTRUCTION)
         self.assertIn("the axis does not have to be measured", INSTRUCTION)
+
+    def test_post_check_measures_to_the_cables_nearest_point(self):
+        for folder in (TASK / "tests", SERVICE, TASK / "solution/oracle"):
+            src = (folder / "harness_env.py").read_text()
+            fn = src[src.index("def evaluate(ep, P"):src.index("class HarnessEnv")]
+            self.assertIn("_nearest_on_cable(P, c)", fn)
+            self.assertNotIn("argmin", fn, "the post check must not go by the nearest vertex")
+        self.assertTrue((TASK / "tests/review/test_post_check.py").is_file())
+
+    def test_probe_copy_is_built_as_an_observation_is(self):
+        src = (TASK / "tests/harness_sim.py").read_text()
+        fn = src[src.index("    def probe(self, seed):"):src.index("    def truth(self):")]
+        self.assertIn("stale + offset", fn)                      # the pose one physics step behind the joints
+        self.assertIn("env.wrench_world()", fn)                  # fresh noise round the noise-free reading
+        self.assertNotIn('out["wrench"]["force"], float) +', fn)
+        bench = (PAYLOAD / "commission/run_bench.py").read_text()
+        self.assertIn("len(aa) == len(bb) and", bench)           # the grader's pair rule
 
     def test_stamp_is_roots(self):
         setup = (TASK / "environment/setup/setup.sh").read_text()

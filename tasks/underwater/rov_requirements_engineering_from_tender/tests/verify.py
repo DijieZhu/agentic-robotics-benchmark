@@ -16,7 +16,7 @@ Order (lockdown as in the published requirements tasks):
   3. load the stage (grade.load_stage): pinned basis and digest, schemas, the world; the truth table, the sets, the
      Part B labels and the delivery bands are recomputed and checked against the world files -- any difference is a
      TASK ERROR, never a zero;
-  4. G0 (grade.load_submission: strict JSON, schemas, cross-file rules) and the score (grade.grade); the verdict through
+  4. G0 (grade.load_submission: strict JSON, schemas, the id rules; structure only) and the score (grade.grade); the verdict through
      the kit (reward = min(1, score / full_at)), every metric whitelisted.
 The grader executes nothing of the submission: the three files are static JSON.
 """
@@ -32,7 +32,7 @@ import time
 STAGE = Path(__file__).resolve().parent
 sys.path.insert(0, str(STAGE))
 HOME = Path(os.environ.get('ALE_HOME', '/home/user'))
-FILES = ('evaluation.json', 'spec_review.json', 'acceptance_schedule.json')
+FILES = ('evaluation.json', 'spec_review.json', 'acceptance_schedules.json')
 MAX_BYTES = 131072                                   # = grader_config.json submission.max_bytes (checked below)
 SNAPSHOT = Path('/opt/uw-req-submission-snapshot')
 DESK_SOCKET = '/run/ale-desk/lab.sock'

@@ -4,15 +4,16 @@
 - Bid: T-05
 - Bidder: Aldermoor Underwater Engineering
 
-This statement lists our test facilities and the units we can deliver, for the acceptance under Part D.
+Our test gear, and what we can deliver for the acceptance under Part D.
 
 ## 1. Test facilities
 
-Facilities at our works:
+This is what we have in the workshop.
 
 | Facility | Range |
 |---|---|
-| Trim tank | 4.7 m long, 2.8 m wide, 2.1 m deep |
+| Trim tank | 3.2 m long, 2.2 m wide, 1.4 m deep |
+| Trim tank water | the works' own closed tank, filled once; the water is kept and not changed between weighings |
 | Bollard pool, bench supply at the battery interface | 11 V to 17 V |
 | Climatic chamber | 10 degC to 35 degC |
 | Battery cycler, constant-power load | 60 W to 720 W |
@@ -21,20 +22,22 @@ Facilities at our works:
 
 ## 2. Delivery band
 
-We can deliver any unit within these ranges:
+We can deliver any vehicle inside these limits.
 
 | Item | Range |
 |---|---|
-| Ballast pieces fitted at the works | 0 to 10 removable pieces. Our works practice is the number fitted to the tendered unit, 6 (see TR-1). |
-| Battery pack | Stock grade A, B or C of the pack fitted. For the tendered pack the catalogue codes are PK-18, PK-18/B and PK-18/C. If an option changes the pack, the grades are those of that pack, coded the same way. |
+| Ballast pieces fitted at the works | 0 to 10 pieces, potted. Our practice is the number in the tendered unit, 4 (see TR-1). |
+| Battery pack | Grade A, B or C of the pack fitted. For the tendered pack the catalogue codes are NC-25, NC-25/B and NC-25/C. With option O-52 the codes are PK-18, PK-18/B and PK-18/C. |
 | Factory current preset | 42 / 54 / 66 / 72 A |
+| Tether | Cut from the drum to the length ordered, within the length tolerance of the catalogue tether sheet. Made-up lengths in stock, 6.8 mm x 200 m: 198.0 / 199.0 / 200.0 / 201.0 / 202.0 m. |
 
-Any ballast number can be combined with any grade and any preset.
+Any ballast number goes with any grade, any preset and any made-up tether length.
 
 ## 3. Order of preference
 
-Where the acceptance schedule leaves a choice among the units of section 2, we deliver in this order of preference. An earlier item decides before a later.
+If the acceptance schedule leaves us a choice, we choose like this. An earlier line decides before a later line.
 
-(a) Ballast: the number of pieces nearest to our works practice; of numbers equally near, the smaller.
-(b) Battery pack: grade C before grade B, and grade B before grade A.
+(a) Ballast: the number nearest to our practice; if it is a tie, the smaller number.
+(b) Battery pack: grade C before grade B, grade B before grade A.
 (c) Current preset: the lowest.
+(d) Tether: the made-up length listed first in section 2, then the next.

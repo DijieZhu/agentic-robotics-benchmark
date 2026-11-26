@@ -1,0 +1,76 @@
+INTEGRATOR'S SHEET: WHAT WE OBSERVED ON OUR DEVELOPMENT UNITS
+
+Our development units (six pairs of OpenArm 2.0 on the maker's pedestal, zeroed with the maker's routine and
+passed on our fixture) were measured as described below. For every quantity in which a unit differs from the
+maker's files the range observed over those units is given. Customer units were not measured individually.
+
+JOINT FRICTION IN MOTION (Coulomb level, per joint, both arms; N m at the joint):
+  J1: 0.306 to 1.02 N m
+  J2: 0.306 to 0.72 N m
+  J3: 0.2 to 0.586 N m
+  J4: 0.15 to 1.27 N m
+  J5: 0.05 to 0.16 N m
+  J6: 0.09 to 0.16 N m
+  J7: 0.1 to 0.31 N m
+  Observed by slow constant-speed moves in both directions on the free arm. A held joint rests anywhere
+  inside its band.
+  Along a joint's travel (each of J1 to J7, both arms) the level is not constant: it varies about the unit's
+  level by up to about +-57 per cent (29 per cent RMS), in a pattern that repeats every 1.7 to 2.3 deg of joint angle
+  and is fixed for a unit; the levels above are averages over a stroke.
+
+VISCOUS DAMPING (per joint, N m s/rad at the joint):
+  J1-J2: 0 to 0.52;  J3-J4: 0 to 0.81;  J5-J7: 0.015 to 0.1
+  Observed from the same moves at two speeds.
+
+DELIVERED TORQUE: a module delivers between about 12 per cent less and 4 per cent more than it commands
+  (each module on its own; observed against a reference load at the output, every module of every unit).
+
+CONSTANT TORQUE OFFSETS (per joint, N m): J1-J4 within +-0.15, J5-J7 within +-0.04.
+
+ZERO RESIDUAL of a unit that passed the fixture check: every arm joint within +-0.4 deg.
+MOUNTING of the right arm against the left: within +-0.5 mm per axis and +-0.15 deg about each axis.
+
+GRIPPER BLOCK:
+  gripper friction (per hand, N m at the finger drive): 0.20 to 0.92 N m.
+  gripper viscous damping (per hand, at the finger drive, both fingers together): 0.084 N m s/rad on every unit.
+  pad friction on the necks' grip blocks: 0.55 or more.
+  On development units, with a load cell between the pads: the clamp rises as (the delivered torque less
+  the finger's friction) / 0.067 m; it does not change while the delivered torque is lowered by less than
+  twice that friction; lowered further, it follows (the delivered torque plus the finger's friction) / 0.067 m.
+
+REPLIES: a module's reply reaches the host 1 cycle old.
+
+SITES: the lab ambient of our customers' sites lies between 20 and 30 deg C. At the
+hand-over each module's coil reads between the ambient and 15 K above it.
+
+COILS: holds against a fixed stop at standstill, on development units, each module class at several commanded
+torques, from rooms of 20 to 30 deg C with the coil between the room temperature and 15 K above it.
+Each row is min-to-max over the holds made on those units; the coil protection was set to 100 deg C (OT_Value) on every module.
+'time to protection' is the time from the start of the hold to the coil protection ('none in 30 min'
+when none came); 'reply at protection' is what both temperature fields of the module's reply (rotor and
+driver) read at that moment; 'reply, next 60 s' is the highest they read in the following minute of cool-down;
+'clearable after' is the time after the protection at which the module accepted a clear.
+
+  DM-J8009P (class DM8009):
+    held 20 N m: time to protection 243 s to 1263 s; reply at protection 54 to 62 deg C; reply, next 60 s: 54 to 62 deg C; clearable after 7 to 8 s
+    held 25 N m: time to protection 78 s to 293 s; reply at protection 36 to 50 deg C; reply, next 60 s: 40 to 52 deg C; clearable after 5 to 6 s
+    held 30 N m: time to protection 43 s to 119 s; reply at protection 28 to 47 deg C; reply, next 60 s: 33 to 49 deg C; clearable after 4 to 6 s
+    held 35 N m: time to protection 28 s to 67 s; reply at protection 25 to 46 deg C; reply, next 60 s: 30 to 49 deg C; clearable after 4 to 6 s
+    held 40 N m: time to protection 21 s to 45 s; reply at protection 23 to 46 deg C; reply, next 60 s: 29 to 48 deg C; clearable after 4 to 6 s
+
+  DM-J4340 / 4340P, first edition (class DM4340):
+    held 9 N m: time to protection: none in 30 min; reply at the end of the hold 34 to 48 deg C
+    held 12 N m: time to protection: none in 30 min; reply at the end of the hold 47 to 67 deg C
+    held 15 N m: time to protection 169 s to 852 s; reply at protection 53 to 61 deg C; reply, next 60 s: 54 to 61 deg C; clearable after 5 to 6 s
+    held 20 N m: time to protection 44 s to 146 s; reply at protection 32 to 48 deg C; reply, next 60 s: 36 to 50 deg C; clearable after 3 to 4 s
+    held 27 N m: time to protection 19 s to 44 s; reply at protection 24 to 46 deg C; reply, next 60 s: 30 to 48 deg C; clearable after 3 to 4 s
+
+  DM-J4310 V1.1 (class DM4310):
+    held 3 N m: time to protection: none in 30 min; reply at the end of the hold 40 to 56 deg C
+    held 3.5 N m: time to protection 297 s to none in 30 min; reply at protection 56 to 61 deg C; reply, next 60 s: 56 to 61 deg C; clearable after 6 to 7 s
+    held 4 N m: time to protection 124 s to 523 s; reply at protection 49 to 57 deg C; reply, next 60 s: 50 to 57 deg C; clearable after 5 to 6 s
+    held 5 N m: time to protection 51 s to 144 s; reply at protection 36 to 49 deg C; reply, next 60 s: 40 to 51 deg C; clearable after 4 to 5 s
+    held 6 N m: time to protection 30 s to 72 s; reply at protection 30 to 47 deg C; reply, next 60 s: 36 to 50 deg C; clearable after 4 to 5 s
+    held 7 N m: time to protection 20 s to 45 s; reply at protection 26 to 46 deg C; reply, next 60 s: 34 to 49 deg C; clearable after 4 to 5 s
+
+The vendor's temperature-rise curves and their conditions are on the module pages; the observations above are our own.

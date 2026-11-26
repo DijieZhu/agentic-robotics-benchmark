@@ -1,20 +1,16 @@
 {
  "arm": "c1m",
  "basis_revision": {
-  "frozen": {
-   "buoy_hi": 0.01,
-   "buoy_lo": 0.0,
-   "contingency_s": 60.0
-  },
-  "frozen_sha256": "65dc058c2a52c7e4817b6e8e88b986943e71c795ec6cd5231659e955c8b82119",
+  "frozen": null,
+  "frozen_sha256": null,
   "installed": true,
   "keys": [
    "buoy_lo",
    "buoy_hi",
    "contingency_s"
   ],
-  "note": "P02-5 / PREREG 4.4 and ruling O5: the revision is installed in all three copies (D/src/uw_req/basis.py, T/tests/evaluation_basis.py, the payload's tender/evaluation_basis.py): P19's revised bytes (only these POLICY literals changed) with the docstring wording of crane_swl_kg and of n08_launch_mass_margin_kg made neutral (no 'launch crane'), so its sha256 differs from P19's",
-  "p19_revision_sha256": "0e4f458ca06f87865c69973cd3d43fd23d97dbbd025153fc88599c6b18af4411",
+  "note": "the public procedure is kept byte for byte; the world's Part A equals its POLICY",
+  "p19_revision_sha256": null,
   "revised_sha256": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
   "world": {
    "buoy_hi": 0.0095,
@@ -22,41 +18,181 @@
    "contingency_s": 120.0
   }
  },
- "candidate": "c1-113-c1m",
+ "candidate": "c1-115-c1m",
  "inputs": {
-  "D/CONTRACTS.md": "0b6b452d1f535e38d76b55e6a18a121178f0af89862291cf114cda100801166b",
-  "D/gen/world/PREREG_WORLD.md": "24f5d0018ba9b15bb7d12891000f901293e2eab2d2cd52a458e40a9dd923931a",
-  "D/gen/world/instance.py": "b75ce4e588425249149feba2e61e4ef9b9409665d9788ff5193028ec7ebb2a07",
-  "D/gen/world/params/calibrated.json": "cc4a1464e76f07adea253a31c89f62dfeebdfc2bfdecc4a2ec76443a34d806db",
-  "D/gen/world/prereg_world.json": "62932f278dbd50d17dfcd930288df907e0f504918b908b42478b1e15d8c1d786",
-  "D/gen/world/rules_v13.json": "f3b19645d66a9851deb99e049a98b64956e9d16b7d52b8349816b59848594bf1",
-  "D/gen/world/solve.py": "3ef998ad1be6ed4022eff3346ad4fc4295f6e914db5da8cf8400027da6f05ea5",
-  "D/src/uw_req/basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
-  "D/src/uw_req/evidence.py": "a5d533f4528d695fb0afb2186f08a35aa248169eacf4cdb3c541362e142c50b0",
-  "UW/shared/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
   "digest/spec_values.json": "358676915495f3ea4e719154634557669b14a69a7554dce6a134cb80bf3b9bbd",
   "evaluation_basis.py": "8600b171ef386ee2aed3bcfb4fa5fc257705d49e3e611b179409f7ffbcd5f1d2",
-  "world/as_built.json": "10d11e40a63bd5a50b4c90b35b34ea3652268621855626a750cdde3fde6ce30b",
-  "world/catalogue.json": "ffcb22b9dce1d1f0cef29bf15d43fef4ccbae5cb1d3d9fabad963554602e350c",
-  "world/rows.json": "a00975c5bbc23a23fa199df6fee58afe0350fdc6871cb507af4cd9958f34c264",
-  "world/site.json": "1ade03b1986e7da9213b5bcd86914009a80a60eb9e12c66423ac21b2310e05f6",
-  "world/truth_table.json": "6205ca72ba2b0b80ed177556bbd25426a78e1e57672a6ad5b651d4000a339fb9"
+  "generator/CONTRACTS.md": "57e897d5ddaa87fe88a37233d90fd14b04dad85b83ec9c1547a6f08816d544d4",
+  "generator/gen/world/bids.py": "13033d126fdce25d9ec8203aa72113cd5df9fefb07e515e091ba2379666191de",
+  "generator/gen/world/catalogue.py": "3ba590e37ad6af89fd21037ce4413f4c5bbfa21ef53672dd0b0ac09b4f953e97",
+  "generator/gen/world/clauses.py": "7700f10ddfd248cc8fdd532957fdc36668274a73565dd0ff8c299a98d8f19b01",
+  "generator/gen/world/delivery.py": "7a6d01aba65704e9f7ba146bf769eae3660987ab3a41f5e7bfbe93848c39abc9",
+  "generator/gen/world/instance.py": "ea0e70ff8753f61f652c5647f34e6cc2f32f30713f3b7ecc99983124da270c13",
+  "generator/gen/world/params/calibrated.json": "cc4a1464e76f07adea253a31c89f62dfeebdfc2bfdecc4a2ec76443a34d806db",
+  "generator/gen/world/prices.py": "1a1b09a5ca393fa6841f5f98ade3d70f75b230b6dc3a8817a6de321d0fbf8d42",
+  "generator/gen/world/proto_export.py": "ac68a7cbed3c3f648cf2aa012557c71d1366320a1cdcf93e98d1a1c0300c0fb6",
+  "generator/gen/world/reference_v2.py": "d6e2060999dd2421f191b0522740b9a85ef7d6f2569e3edaf9c02abd9913aba2",
+  "generator/gen/world/rules_v13.json": "f3b19645d66a9851deb99e049a98b64956e9d16b7d52b8349816b59848594bf1",
+  "generator/gen/world/sep_audit.py": "e8425b75343f1593a85b101d42f7165ddbf342393789fe7449120e86c40a6b0b",
+  "generator/gen/world/site.py": "5f41612ca76f4b119dad8dfe2762c41d5c990d872bafdb91d02e48c8470deda4",
+  "generator/gen/world/solve.py": "99dd4158fae267804974bb9a43a494bf30e2ece5be93d842a79160db6baa0dfc",
+  "generator/gen/world/v2_world.py": "8d824915228d7ffbbdbbb941c9dbab2f940b600fa6f697c1556aa03daf323b87",
+  "generator/src/uw_req/evidence.py": "b67926af1f2425b1b183c5b47393026e3392219e309b0dd55666f6960f28b2c5",
+  "generator/src/uw_req/predicates_v2.py": "d8a1bca631158eb38ed867464a2931d6e3c17c7e9a72aef7bfd59d2bd254f3f0",
+  "generator/src/uw_req/sets.py": "9414c6eac45af1a77036c38ddbcbc2a7ff95e34589e729ce21f69c0f100ba71f",
+  "world/as_built.json": "8d6f6b95c772f5042a363b9a326d1f5f9351d9d948779d0e7d24244daf880d54",
+  "world/catalogue.json": "e5ee10036c613c8c2be9cd96f1f0a326ebf3dc5f3dfaa57df8a48fca3b50d3ba",
+  "world/clause_map.json": "e287a4bce3f7863f06c15456ea4bfaeecec85027176b5f80744e0f811e74f5d8",
+  "world/delivery_ranges.json": "f6f793ef6164f2b1d5a4520fa2d2d74d7fbcc7a96840f084835f544302893f00",
+  "world/general.json": "4357f1e1bb394275edd1098a88e0008415396d7b11a31ef36e4917d805bc9408",
+  "world/rows.json": "ee0cb1e3f3d0c2911411b6a00bdb423993eb55e34a672bf113cf1735e5d362dd",
+  "world/site.json": "3d678148b98069aa4eb71b84ce4092aa1bcc0307fc2e996219b601e5e966a2c7",
+  "world/truth_table.json": "1fa202aeac3d1bb2d9ad2c17cad654ee564d34db268758243543ff5aff45d4d7"
  },
- "keys_note": "inputs keyed by a path relative to tests/ are checked by grade.py (Stage._check_selection); 'UW/...' and 'D/...' keys are the dev-side inputs (UW = docs/plan/underwater, D = its -dev directory), recorded only; world/clause_map.json and world/delivery_ranges.json are P20's and are not pinned here",
- "ladder_level": 1,
+ "ladder_level": 2,
  "overrides": {
-  "site.t_min_c": 5.1
+  "T-01.cam_hotel_w": 10.0,
+  "T-01.eta": 0.99,
+  "T-01.opts": {
+   "O-PK20": 765,
+   "O-XL": 475
+  },
+  "T-01.price": 10780,
+  "T-02.cam_hotel_w": 60.0,
+  "T-02.opts": {
+   "O-PK18": 695,
+   "O-TL150": 535
+  },
+  "T-02.price": 10300,
+  "T-02.tether_base": 115,
+  "T-02.w1_offset": 0.04,
+  "T-03.lens": 120.0,
+  "T-03.opts": {
+   "O-DVL": 685,
+   "O-L6": 445
+  },
+  "T-03.price": 10020,
+  "T-04.opts": {
+   "O-DVL": 515,
+   "O-L6": 305
+  },
+  "T-04.price": 10410,
+  "T-05.opts": {
+   "O-PK20": 875,
+   "O-TL200": 545
+  },
+  "T-05.price": 11350,
+  "T-06.cam_hotel_w": 0.0,
+  "T-06.eta": 0.97,
+  "T-06.lens": 120.0,
+  "T-06.opts": {
+   "O-L8": 565,
+   "O-PK20": 385
+  },
+  "T-06.price": 9640,
+  "T-07.eta": 0.9,
+  "T-07.opts": {
+   "O-DOME": 945,
+   "O-TL200": 525
+  },
+  "T-07.price": 10560,
+  "T-08.opts": {
+   "O-DVL": 605,
+   "O-XL": 415
+  },
+  "T-08.price": 9150,
+  "ext.k_ext": 1.05,
+  "policy.buoy_lo": -0.0005,
+  "policy.scan_mps": 0.05,
+  "site.bay_h": 3.0,
+  "site.blocked_bays": 1,
+  "site.deck_above": 12.0,
+  "site.depth": 59.85,
+  "site.face_reach": 35.0,
+  "site.rack_h": 12.0,
+  "site.rack_w": 4.5,
+  "site.routing_m": 9.0,
+  "site.secchi": 2.8,
+  "site.swl_kg": 30.0,
+  "site.t_c": 6.4,
+  "site.t_min_c": 6.3,
+  "site.v_target": 0.69
  },
- "overrides_note": "ruling O6 (UW/shared/DECISIONS.md, 2026-11-15): the lowest water temperature of the inspection month is 5.1 degC, the value the shipped CTD casts give under the Part A rule; applied on top of the calibrated parameters (gen/world/solve.py world_of(..., overrides)); only site.json (t_min_c, public_site_record) and the K2 column of truth_table.json change, the sets do not",
+ "overrides_note": "version 2's world: a fresh draw of the kept generator (round c1, arm c1m) with Part A set to the public procedure's POLICY and the site and bid values of the world input",
  "round": "c1",
- "schema": "uw-req-selection/1",
- "supersedes": "D/evidence/world/superseded/P19_selection.json",
- "supersedes_sha256": "5af9e323b95e54b30756ca4ba080be8c1a28a4f2b3a8d6a17b721b22551ccc22",
+ "schema": "uw-req-selection/2",
+ "supersedes": "version 1's tests/world/selection.json (the merged task)",
+ "supersedes_sha256": "cd57c520ba1cd7309b00270e498a0bf305754dabed7129dec63a808c778232d2",
+ "v2_world": {
+  "params_schema": "uw-req-v2-world-params/1",
+  "params_sha256": "c47395c3ee611687b8330b6acb3a536f8a3d0fd6311cc968938da1bd38217bc0",
+  "relabel": {
+   "bid_map_rule": "seeded_constrained/1",
+   "bids": {
+    "T-01": "T-05",
+    "T-02": "T-04",
+    "T-03": "T-02",
+    "T-04": "T-08",
+    "T-05": "T-03",
+    "T-06": "T-07",
+    "T-07": "T-01",
+    "T-08": "T-06"
+   },
+   "n_draws": 4,
+   "note": "selection.json's overrides address the kept generator's template labels; every other world file uses the world's labels and option codes",
+   "option_codes": "seeded_order/1",
+   "options": {
+    "T-01": {
+     "O-SUR": "O-12",
+     "O-TL200": "O-11"
+    },
+    "T-02": {
+     "O-DVL": "O-22",
+     "O-L6": "O-21"
+    },
+    "T-03": {
+     "O-SUX": "O-32",
+     "O-TL200": "O-31"
+    },
+    "T-04": {
+     "O-PK18": "O-41",
+     "O-TL150": "O-42"
+    },
+    "T-05": {
+     "O-PK18": "O-52",
+     "O-XL": "O-51"
+    },
+    "T-06": {
+     "O-DVL": "O-61",
+     "O-XL": "O-62"
+    },
+    "T-07": {
+     "O-L8": "O-71",
+     "O-SUR": "O-72"
+    },
+    "T-08": {
+     "O-DVL": "O-82",
+     "O-L6": "O-81"
+    }
+   },
+   "schema": "uw-req-v2-relabel/1",
+   "seed": 20261123
+  },
+  "switches": [
+   "amendments",
+   "campaign",
+   "cut_lengths",
+   "deck",
+   "facility",
+   "second_maker",
+   "tank_ranges"
+  ]
+ },
  "world_of_record": {
   "calibrated_proto_world_sha256": "3dec34fa012c2c726f5a84b420dc23b51f708643f1f8406cd3fac0075e7d9db7",
   "calibrated_truth_sha256_proto_form": "19ce63f8958a97488246700378b0eb8f4c744202ca932bcf5aa59ceb27b7771a",
-  "proto_world_sha256": "a92d55ff7d3859716f4345ea67f5559eb677866f325b61f4c58a49892020d0f2",
-  "truth_configs_sha256": "263ce03077a58338c7ad153f0064f428f0ba814382a5f131838c037ce2d25b14",
-  "truth_sha256_proto_form": "bf6b3e973e00df58c328d426a213bdc533ecb3a31ad2450021bb8c10ff77b1b2"
+  "proto_world_sha256": "06095796f079ba91f40b7d3818fed016f88cd561571e11ea54734bcfc5a782a7",
+  "truth_configs_sha256": "91c86efde6de9c52a11d19c972f27ce76daf35d4a70bfc0cc247f71107a38dad",
+  "truth_sha256_proto_form": "6d6195af77a81cad9f8b0ee12a7e7f76c19d758b05d42b4044f5e791931e3c69"
  }
 }

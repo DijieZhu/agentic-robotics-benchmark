@@ -1,87 +1,158 @@
 # Completability: the reference submission scores 1.000 from recoverable information
 
-Sources (paths in the task's development folder; sha256 in `evidence_index.json`): QC-1 `evidence/qc/QC_REPORT.md`
-(P24), zero-cost evidence `evidence/difficulty/ZERO_COST.md` (P27), the desk on the real tables
-`evidence/lab/SMOKE_REAL.md` (P28), the difficulty readout `evidence/difficulty/READOUT.md` (P29), the scans
-`scan/SCAN_REPORT.md` (P26). World: the frozen record world of `world/selection.json`. Every number below is a
-deterministic computation, not a model or vehicle measurement.
+This file describes the task as this folder holds it (a hidden world, documents, desk tables, reference and schemas
+that replace those of the form first merged on 2026-11-17, with a revised instruction and submission contract;
+`README.md` says what of the agent's files is byte-equal to the first form's). Evidence entries are named by their id
+in `evidence_index.json` (WORLD, LADDER, QC, DESK, WALK, SCAN); the index pins the sha256 of the task files they were
+computed on except the payload of the agent's home, which it names only by the digest of its build tree (`README.md`).
+Every score and count in sections 1 to 4 is a deterministic computation on the hidden world and the
+formal grader, or a count made on the delivered files and on the verdicts of the readers' walk; none is a measurement
+of a vehicle, and none comes from an agent episode of the task (the readers of the walk were AI review agents that
+took no part in building the task: `fairness.md`, "The independent readers' walk"). Sections 5 and 6 also quote the
+one frontier-model episode (how the desk served it, and its duration), and the verify times of section 6 are
+wall-clock measurements of the runs named there.
 
 ## 1. The reference submission
 
-`solution/submission/` holds the three files written from the frozen world: the evaluation (four bids accepted with
-their cheapest fit option subsets and site predictions, four rejected on the ground that holds, the award T-05), the
-24 template-clause labels, and the four-clause acceptance schedule for T-05's delivery band. Under the formal grader
-it scores **1.000000** with the tolerance scale x 1.0 and x 1.5 (QC-1 sec. 1), and in the engine's separate verifier
-the reference episode scores reward **1.0** (Gate V, `evidence_index.json` `gate_v`). `solution/solve.sh` only copies
-the three files: it asks the desk nothing and reads nothing outside `solution/`.
+`solution/submission/` holds the three files that the reference writer produced from the hidden world itself (a
+privileged reference: it reads the world's truth, it does not solve the task from the documents): the evaluation of
+the eight bids (four accepted, T-01, T-03, T-04 and T-05, each with its cheapest fit set of options and its eight site
+predictions; four rejected, T-02 on PART-D, T-06 on N-03, T-07 on GF and T-08 on N-01 and GF, each ground one that
+holds; the award T-03), the label of each of the 24 Part B template clauses, and one acceptance schedule for each
+accepted bid (3, 3, 4 and 4 clauses). `solution/solve.sh` copies the three files into the submission folder and does
+nothing else: it asks the desk nothing and reads nothing outside `solution/`.
 
-The schedule is not the only full-score answer: 4 536 alternative clause tables built from the separable facility
-quantities of the band (every widest gap, every variant at fixed steps) each score 1.000 as the reference's
-schedule (QC-1 sec. 8, I-ALT), and 17 benign rewrites of the reference (key order, site values moved by 0.99 of a
-tolerance, bounds moved one printed unit, implied or harmless extra clauses) all score 1.000.
+- In the build that assembles this folder, the three files go through `solve.sh` into a fresh home and the task's own
+  verify: score exactly 1.0 on every term (verdicts, award, site predictions, labels, schedules) and both gates
+  passed; the untouched submission and an empty submission folder score 0.0 (QC).
+- Through the engine (`ale validate`, twice), the reference's run scores reward 1.0 with every term 1.0 and the
+  untouched run 0.0 (QC; the runs are listed in `evidence_index.json` beside its reports).
+
+The reference is not the only full-score answer. The award-position bid's schedule written as an air-mass window
+together with a displaced-volume window, both for the unit as built, scores 1.0 (LADDER); the same bid's schedule
+written in displaced volume alone, or in air mass and displaced volume, scores 1.0, and so does a schedule written
+from that bid's witnessed weighing alone, without its as-built reply (WALK). The delivered logs give every site
+statistic a single value under every reasonable treatment (the design discharge over 288 treatments of the hourly log,
+the clarity statistic over 60, the month's lowest water temperature over 72), so no reading of the logs moves a
+score.
 
 ## 2. Where the information is
 
-An engineer has four channel groups: the site records (drawings, level, discharge, CTD, clarity logs, operating
-notes), the previous campaign's records (vehicle card, telemetry, incident note, dive log), the tender documents
-(TS-01, the procedure, eight bids, the catalogue) and the enquiry and witness desk (14 paid requests). Every number
-the agent can read is registered with its source: 4 478 numeric tokens over 149 visible files and 250 desk texts,
-0 unregistered (the payload rebuilt with the formal build command; P26 numeric scan). The public procedure `evaluation_basis.py` is exact and is the grader's own pinned copy.
+The agent's home holds 154 files: 77 page images (29 datasheets and 4 errata of the catalogue, 40 scanned factory
+test reports, five per bid, three site drawings and the previous campaign's hand-kept dive log), 24 CSV logs (the
+reservoir's daily stage, the plant's hourly discharge, a clarity log, 18 CTD casts at three stations and the previous
+campaign's three telemetry files) and 53 text and code files (the tender TS-01 and its exact public procedure
+`evaluation_basis.py`, the submission contract, the desk guide, the eight bids' compliance matrices, technical
+descriptions, bills of materials, price sheets and delivery statements, the site notes). The enquiry and witness desk
+answers 14 paid requests from a fixed table: 88 questions to the Owner's four members of staff and the eight bidders
+and 160 witnessed tests at the bidders' works; four of the replies carry an attachment page. `setup.sh` checks each
+of the 77 page images byte for byte before the agent starts.
 
-Ten decisive facts are carried by one channel only; removing that channel's link and letting the expert re-route
-costs (ZERO_COST sec. 3.1, knock-out K1, default assumptions):
+Every printed number that refers to the world is registered with its source in the world (the fact registry of the
+build: 5 167 printed numbers, none unresolved). The numeric scan then compares the 3 296 numerals the agent can read
+(the text files, the logs' header lines, the strings drawn on the pages and attachments, the desk's texts) with the
+1 008 hidden values. Where a numeral equals a hidden value in its digits, the numeral must carry its own registered
+source, a quantity the documents print for a reason of their own: there are 1 666 such pairs of a numeral and a hidden
+value, made of 17 distinct figures, and 1 525 of the pairs are one common round figure. Six more pairs are waived by
+the scan's registered exceptions, each with its reason (they are among the numeric scan's 15 registered places in
+`fairness.md`, "Nothing leaks to the agent"). Any other match of the same unit, with enough significant digits to
+identify the hidden value, fails the scan, and there is none (SCAN).
 
-| id | channel | fact | drop |
-|---|---|---|---|
-| U1 | discharge log | plant discharge in the inspection-month permit window | 1.0000 |
-| U2 | CTD | water temperature and density at the working depth | 0.6493 |
-| U3 | clarity log | inspection-month visibility at the intake station | 0.5286 |
-| U4 | previous campaign | launch from the tower-deck davit | 0.5179 |
-| U5 | test reports | T-03's as-built camera housing (TR-3) | 0.5000 |
-| U6 | delivery statement | delivery band, facility envelope, ease order | 0.1333 |
-| U7 | desk, owner side | two bottom bays of the rack blocked (asked of the previous campaign's pilot) | 0.6912 |
-| U8' | desk, bidder side or witness | T-08 as tendered (its as-built configuration, or the bollard and tow witnesses) | 0.5077 |
-| U9 | witness | T-04's trim-tank water (weigh witness) | 0.5115 |
-| U10 | previous campaign | the tether's lead across the platform (vehicle card and payout counter) | 0.5179 |
+## 3. What an expert must get right, and the route to each
 
-Removing a whole channel group costs between 0.4333 and 1.000 (ZERO_COST sec. 3.2). Two of the facts (U7 and the
-T-08 cage in U8') have no trace in the documents and are learnt only by asking: asking the previous operator about
-site changes and every bidder for its as-built configuration is the ordinary due diligence the desk's public topic
-list offers (ruling N3; DESIGN sec. 15 item 3 keeps the default and asks the owner).
+The task is built around six considerations, each of which some bid's verdict, option set, ground or schedule hangs
+on. Two of them (1 and 6) rest on a fact that no document carries and that only one holder at the desk gives; the
+other four are read from the documents, with the desk where a document leaves a test condition or a reading open. For
+each one the route below is the one the readers of the walk followed on the delivered files with the hidden truth in
+hand (WALK), or that the reference's own requests take (section 4).
 
-## 3. The expert's route fits the budget
+1. **The site as found.** The flow speed that enters the station-keeping need is the design discharge over the area
+   OPEN to the flow (TS-01 A.3). The rack drawing RK-03 shows four bays of 3.0 m (12.0 m); the previous campaign's
+   dive log and telemetry (November 2025) show a rack open to its toe, and they are true at their date. Since then
+   the lowest bay was blocked in a flood of 2026-05-12, which the daily stage record shows (the largest daily rise of
+   the whole record), and the Owner's previous pilot found it on a later drop-camera look (2026-06-16): bay 1 packed,
+   the three bays above clear, 9.0 m open. Only that pilot's reply on the previous campaign (`rov_pilot`,
+   `previous_campaign`, with his sketch attached) says so; no document, image, log, attachment or other reply carries
+   it. Route: notice that the records of the site are older than the flood, ask the Owner's side about the previous
+   campaign, and use the open height (9.0 m) everywhere it enters. With it the bid with the protective cage (T-06)
+   fails the station-keeping need; with the drawn height it passes. T-06 is priced above the award, so its verdict
+   does not move the award.
+2. **The deck as a workplace.** TS-01 C.1 asks fitness for the duties at the site in the inspection month for
+   everything a bid brings, each part within what its maker states. Route: list what stays out of the water at night
+   (surface unit, reel and its interface, the vehicle before launch, its pack) from the bills of materials, the site
+   plan and the vehicle card; read each item's operating row on its catalogue page against the night AIR of the
+   month (the stage log's air columns, or the telemetry's enclosure temperature before launch), not the water; buy
+   the option that cures an unfit item where one is offered, reject on GF where none is, and buy nothing where
+   nothing is needed (C.6).
+3. **A contract that can be executed.** The supplier may deliver any unit that passes the schedule (D.4), and a
+   clause outside the works' test facility cannot be contracted (D.6). Route: read each accepted bid's delivery
+   statement (its stock and the codes of its pack grades) against the pack maker's change notice; where an alternate
+   cell lot equals the reference lot at and above the works' lowest chamber temperature and is weaker below it, and
+   the site water is colder, no clause inside that works' facility separates the lots: that bid (T-02) is rejected on
+   PART-D although its tendered unit is fit.
+4. **One maker prints another resistance.** The procedure's pack key is the DC resistance after 60 s at load; the
+   second maker's pages print an AC figure at 1 kHz under their own convention line. Route: notice the two labels
+   (the page's own temperature table is labelled DC), have the pack discharged in a bidder's chamber (the witnessed
+   reading is the key itself), and use the measured value: with it one bid's base pack holds the bus at its floor at
+   the end of the dive, so the base configuration cannot hold station, and its option of the first maker's pack cures
+   it; the other bid that carries a second-maker pack (another size of the same range) is fit with its own measured
+   value, read at its own works or at any works whose bid carries that pack model.
+5. **The works' day is not the Owner's.** A works weighs and trims in its own tank water, which the facility
+   dictionary cannot state. Route: read each delivery statement's tank water and logged density range and the two
+   dated weighings of the first test report; on a works whose tank is not fresh water fix the ballast state by
+   clauses on air mass or displaced volume, which do not depend on the water; put a clause only where some unit of
+   the delivery band fails a need, with its bound converted to the works' conditions (every thrust report states its
+   bench supply and its battery current limit; one bid's trim water is asked at the desk); no clause on the tether
+   length (no stock length fails at the site).
+6. **The award-position bid as it is built.** After bids closed (18 September 2026) the works of T-03, the cheapest
+   fit bid, fitted a float of the foam grade the vehicle already carries (0.40 L displaced and 0.24 kg in air with its
+   cradle and fasteners) inside the frame and re-trimmed the unit (2026-09-24: three ballast pieces fixed in the
+   float's cradle, four removable pieces fitted, three loose); every unit of its delivery band is built the same way.
+   Its dated documents describe the unit as tested and stay true at their dates. Only the bidder says so: its reply
+   on the as-built configuration (complete, with the works' re-weigh sheet attached), one line of its reply on the trim
+   test conditions that points to it, and a witnessed weighing, which returns the unit as built. Route: the tender
+   evaluates the tendered unit as it is built (TS-01 C.3) and makes what a bidder answers part of its bid (C.4); ask the
+   award-position bidder for its as-built configuration (or witness its weighing and compare the mass with its first
+   test report), and write that bid's ballast clauses for the unit as built. A schedule written for the unit as
+   tested passes none of the clearly good units of the band as built: the purchase outcome is lost, and that bid's
+   schedule loses its economy and at least half its protection.
 
-The exact minimum set of desk requests that carries every fact without a free document link has **6 cells** within
-the budget of 14 (ZERO_COST C7): `bidder_T01|ask:thrust_test_conditions`, `bidder_T01|ask:trim_test_conditions`,
-`bidder_T04|witness:weigh`, `bidder_T05|ask:thrust_test_conditions`, `bidder_T08|ask:as_built_configuration`,
-`rov_pilot|ask:previous_campaign`. Documents plus those six cells score **1.000** (Interact; Full 1.000).
+Beside these stand the twelve needs of TS-01, the site statistics from the delivered logs (every reasonable treatment
+gives the same value: section 1), the bid documents' own test conditions and tank waters, and the one bid whose cage
+costs thrust and drag (its catalogue page and its technical description; its as-built reply attaches the caged unit's
+bollard and tow figures).
 
-An honest reader with reading noise (printed resolution and instrument tolerance on every value read, site statistics
-drawn from the pool of reasonable log treatments) asking the same six cells, 50 fixed seeds (ZERO_COST I5): the
-decision vector equals the noise-free one and the truth in 50 / 50, the option subsets and grounds in 50 / 50;
-the total has median **1.0000** and minimum **1.0000** both on the calibration pool and on the logs generated from
-the frozen site (every reasonable log treatment gives the world's design flow, clarity statistic and inspection-month
-minimum water temperature, 5.1 degC). On the calibration pool, 200 seeds and the x 1.5 scale give the same 1.000.
-A careful reader who works only from the documents and the six replies recomputes all 32 configurations x 12 needs
-without one sign change against the truth (largest deviation 0.14 tolerances), every site prediction inside its
-tolerance (largest 0.052 of it), the same verdicts, option subsets, grounds and award, and the 24 clause labels.
+## 4. The expert's requests fit the budget
 
-## 4. The desk works on the real tables
+The set of desk requests fixed with the hidden world, the reference's own plan, holds seven cells: one to the Owner's
+side (the previous pilot), two witnessed pack discharges, one question on a bid's trim test conditions, two questions
+on a bid's as-built configuration and one witnessed weighing:
+`rov_pilot|ask:previous_campaign`,
+`bidder_T01|witness:battery_discharge:chamber_c=23:load_w=100`,
+`bidder_T05|witness:battery_discharge:chamber_c=23:load_w=100`, `bidder_T05|ask:trim_test_conditions`,
+`bidder_T03|ask:as_built_configuration`, `bidder_T06|ask:as_built_configuration` and `bidder_T08|witness:weigh`.
+Three of the four attachment pages come with these replies (the pilot's sketch, T-03's re-weigh sheet and the caged
+unit's figures of T-06); the fourth comes with the civil engineer's reply on the inspection scope. A fuller plan that
+a reader with the truth in hand walked on the real table (WALK: it also asks for the launch route, the operation
+during the inspection and its season, the drawings' issue and the water quality, and has the two packs discharged at
+10 degC and 440 W) costs twelve requests, every one served: two are left. The budget does not bind an expert.
 
-In a real sandbox with the shipped image, setup, plugin, configuration, payload and both real tables (P28,
-`validate-bcaf30c6`; rerun with the formal payload and the page-image check of the shipped setup,
-`validate-5a9ec14b`, with the same results): all 248 cells (40 owner-side, 48 bidder-side, 160 witness) and the two redirect texts reach
-the agent byte for byte as registered, 392 witness values bit for bit; refusals are free and identical with a full
-budget, after a restart and at zero; the budget is charged atomically (24 concurrent requests for 11 remaining: exactly
-11 served); all 184 wrong-side requests are charged and answered with the redirect text; the shipped limits hold
-(900 s idle close measured at 900.1 s, 2 000 requests / s, 1 MiB line) and none of them charges; the agent account
-cannot read the hidden tables (40 attempts EACCES, ptrace EPERM). The separate verifier's 77 checks pass.
+## 5. The desk works on the real tables
 
-## 5. The time it takes (a risk, not a gate)
+The desk's tables were checked by the build's desk checker (17 checks, every planted fault caught) and by the build's
+desk tests, which pass as registered (DESK). Among them: the table's registry is the build's fact registry, with its
+four attachments; each of the two desk-only facts sits only in its holder's cells and attachment; the previous
+pilot's reply is his dated look, and his closing remark points to his two topics and adds nothing; the award-position
+bidder's as-built reply is complete and agrees with its witnessed weighing. In the one frontier-model episode the desk
+ran in the task image and served the agent: 10 requests charged of 14, each answered from its own cell (the logged
+digest of every reply equals the table's for its key), none refused, no key asked twice. The verifier never runs the
+desk.
 
-The agent reads 71 page images (1.81 MP each), 3 desk attachments, 24 CSV logs (3.06 MB, 56 836 lines) and about
-220 000 characters of text. The development lane's worst-case estimate of image transcription plus log analysis is
-10 437 s, 72.5 % of the 14 400 s limit (READOUT sec. 6: six model calls per page at the per-call time of a recorded
-requirements episode of another task); if each page reads at a glance, 5 884 s. No model has been run on this task;
-the estimate is accepted as a recorded risk and the first calibrated episode will measure it. The limit stays at the
-published requirements tasks' 14 400 s.
+## 6. The time it takes and the worst-case verify
+
+The agent reads 77 page images, four attachment pages, 24 CSV logs (about 3 MB) and the text files; the sandbox gives
+4 CPUs, 8 GB and 14 400 s. The frontier-model episode ended by itself after 22.6 minutes of its 4 hours. The verifier's
+worst case is bounded (QC; the limit's rule is in `task.toml`): through the engine's separate verifier, three runs
+of the largest legal submission (three files of exactly 128 kB, 12 clauses on each of the four schedules the reference
+reads) scored reward 1.0 with a verify command of at most 0.72 s and a whole verify phase (sandbox start, submission
+restore, stage upload) of at most 6.84 s of the 600 s limit (one fifth: 120 s).

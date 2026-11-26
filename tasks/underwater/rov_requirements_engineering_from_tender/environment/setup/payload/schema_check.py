@@ -1,18 +1,19 @@
-"""Structure check of the three submission files (submission_contract.md, sections 6 to 8).
+"""Structure check of the three submission files (submission_contract.md).
 
     /opt/venv/bin/python3 schema_check.py                 # checks /home/user/submission/
     /opt/venv/bin/python3 schema_check.py SOME/FOLDER     # checks another folder
 
-It checks that evaluation.json, spec_review.json and acceptance_schedule.json exist in the folder, are regular files
+It checks that evaluation.json, spec_review.json and acceptance_schedules.json exist in the folder, are regular files
 of at most 131072 bytes, are strict JSON (UTF-8 without a byte-order mark; no duplicate key; no NaN or Infinity; no
 integer literal longer than Python converts; every number finite; no lone surrogate; an object at the top), match the
 JSON schemas in schemas/ (an array longer than the longest one the schemas allow is refused before the schema
-check), and follow the rules a schema cannot express: the options of an accepted bid are options of
-that bid, the award is a bid the file accepts, spec_review.json labels exactly the clauses of TS-01 Part B, for_bid and
-for_options agree with the award, clause ids are unique, and no (quantity, conditions, comparator) is repeated.
+check), and follow the structural rules a schema cannot express: the options of an accepted bid and the for_options of
+every schedule entry are options of that bid, spec_review.json labels exactly the clauses of TS-01 Part B, and every
+clause of a schedule is a well-formed clause of the facility dictionary.
 
-It looks at structure only. It knows nothing of the site, of the tendered units or of any delivery band, and it says
-nothing about any score. Exit status 0 when every rule holds, 1 otherwise (each problem is printed).
+It looks at structure only. It does not check which bids have a schedule entry, it knows nothing of the site, of the
+tendered units or of any delivery band, and it says nothing about any score. Exit status 0 when every rule holds,
+1 otherwise (each problem is printed).
 """
 import json
 import math
@@ -25,19 +26,10 @@ import jsonschema
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCHEMA_DIR = os.path.join(HERE, "schemas")
 DEFAULT_FOLDER = os.path.join(HERE, "submission")
-FILES = ("evaluation.json", "spec_review.json", "acceptance_schedule.json")
+FILES = ("evaluation.json", "spec_review.json", "acceptance_schedules.json")
 MAX_BYTES = 131072
 # the two priced options of each bid, as the price sheets print them
-OPTION_IDS = {
-    "T-01": ("O-PK20", "O-XL"),
-    "T-02": ("O-PK18", "O-TL150"),
-    "T-03": ("O-DVL", "O-L6"),
-    "T-04": ("O-DVL", "O-L6"),
-    "T-05": ("O-PK20", "O-TL200"),
-    "T-06": ("O-L8", "O-PK20"),
-    "T-07": ("O-DOME", "O-TL200"),
-    "T-08": ("O-DVL", "O-XL"),
-}
+OPTION_IDS = json.loads('{"T-01": ["O-11", "O-12"], "T-02": ["O-21", "O-22"], "T-03": ["O-31", "O-32"], "T-04": ["O-41", "O-42"], "T-05": ["O-51", "O-52"], "T-06": ["O-61", "O-62"], "T-07": ["O-71", "O-72"], "T-08": ["O-81", "O-82"]}')
 
 
 class Problem(ValueError):
@@ -137,7 +129,7 @@ def load_schemas():
             sch = json.load(fh)
         raw.append(sch)
         out[name] = jsonschema.Draft202012Validator(sch)
-    return out, array_limit(raw)
+    return out, raw, array_limit(raw)
 
 
 def array_limit(raw):
@@ -171,41 +163,37 @@ def shape_gate(doc, name, limit):
             todo.extend(x.values())
 
 
-def cross_file(docs, schemas):
+def structure_rules(docs, raw):
+    """The structural rules the schemas do not spell out."""
     probs = []
-    ev = docs["evaluation.json"]
-    bids, award = ev["bids"], ev["award"]
+    bids = docs["evaluation.json"]["bids"]
     for b in sorted(bids):
         d = bids[b]
         if d["verdict"] == "accept":
             extra = sorted(set(d["options"]) - set(OPTION_IDS[b]))
             if extra:
                 probs.append(f"evaluation.json: {b}: {extra} are not options of {b}")
-    if award is not None and bids[award]["verdict"] != "accept":
-        probs.append(f"evaluation.json: the award {award} is not a bid you accept")
-    sc = docs["acceptance_schedule.json"]
-    if award is None:
-        if sc["for_bid"] is not None or sc["for_options"] or sc["clauses"]:
-            probs.append("acceptance_schedule.json: no award, so for_bid must be null and for_options and clauses empty")
-    elif sc["for_bid"] != award or (bids[award]["verdict"] == "accept" and set(sc["for_options"]) != set(bids[award]["options"])):
-        probs.append("acceptance_schedule.json: for_bid / for_options do not match the award in evaluation.json")
-    ids = [c["id"] for c in sc["clauses"]]
-    if len(set(ids)) != len(ids):
-        probs.append("acceptance_schedule.json: clause ids are not unique")
-    seen = set()
-    for c in sc["clauses"]:
-        cond = tuple(sorted((k, float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else v)
-                            for k, v in c["conditions"].items()))
-        k = (c["quantity"], cond, c["comparator"])
-        if k in seen:
-            probs.append(f"acceptance_schedule.json: clause {c['id']} repeats a (quantity, conditions, comparator)")
-        seen.add(k)
+    sc = docs["acceptance_schedules.json"]
+    for b in sorted(sc):
+        extra = sorted(set(sc[b]["for_options"]) - set(OPTION_IDS[b]))
+        if extra:
+            probs.append(f"acceptance_schedules.json: {b}: {extra} are not options of {b}")
+    part_b = sorted(raw[1]["properties"]["clauses"]["properties"])
+    if sorted(docs["spec_review.json"]["clauses"]) != part_b:
+        probs.append("spec_review.json: the labels are not exactly the clauses of TS-01 Part B")
+    for b in sorted(sc):
+        for c in sc[b]["clauses"]:
+            bound = c["bound"]
+            if isinstance(bound, bool) or not isinstance(bound, (int, float)) or not math.isfinite(float(bound)):
+                probs.append(f"acceptance_schedules.json: {b}: clause {c['id']}: the bound is not a finite number")
     return probs
 
 
 def check(folder):
     """The list of problems of the submission folder (empty: the structure is right)."""
-    schemas, limit = load_schemas()
+    if sorted(OPTION_IDS) != ["T-%02d" % i for i in range(1, 9)]:
+        return ["schema_check.py: this copy has no option table (it is a template that was not built)"]
+    schemas, raw, limit = load_schemas()
     docs, probs = {}, []
     for name in FILES:
         try:
@@ -227,7 +215,7 @@ def check(folder):
         docs[name] = doc
     if probs:
         return probs
-    return cross_file(docs, schemas)
+    return structure_rules(docs, raw)
 
 
 def main(argv):

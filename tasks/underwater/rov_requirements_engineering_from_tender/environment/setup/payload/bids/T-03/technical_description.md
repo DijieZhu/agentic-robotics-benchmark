@@ -8,14 +8,15 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 30 July 2026 | First issue |
-| B | 7 August 2026 | Camera module: external flat-port housing |
+| A | 2026-08-03 | First issue |
 
 ## 2. Summary
 
-We tender an inspection vehicle configured for imaging survey. The forward camera is an external unit behind a flat port, fitted with a wide-angle lens from the lens table of the catalogue; its housing is a part of the catalogue camera-housing series. Pressure-retaining parts are catalogue series parts and are referred to by their series in this description and in the BOM. The factory test reports record the parts that were tested.
+This description lists the vehicle as tendered, part family by part family. Section 3 names the part of each family; the BOM gives the catalogue references and the quantities. Where the vehicle does not meet a number of Part B, the compliance matrix declares the deviation and comments on it in its notes.
 
-Documentation follows survey practice: each report is numbered, dated and signed. Ballast is by removable pieces, with loose pieces supplied for trimming (see BOM).
+Ballast is by removable pieces. Loose pieces are supplied with the vehicle, so that it can be re-trimmed.
+
+Each factory report of this bid is a check of the unit in the state in which it is delivered.
 
 ## 3. Configuration
 
@@ -24,10 +25,10 @@ Documentation follows survey practice: each report is numbered, dated and signed
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
 | Battery pack | PK-18 |
-| Forward camera | external camera behind a flat port; lens of 100 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
+| Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
 | Lights | 4 |
-| Tether | 6.8 mm diameter, 200 m long |
-| Ballast | removable pieces; loose pieces supplied |
+| Tether | 6.8 mm diameter, 150 m long |
+| Ballast | removable pieces; loose pieces supplied (see BOM) |
 | Frame | open frame |
 
 ## 4. Performance
@@ -40,7 +41,7 @@ Documentation follows survey practice: each report is numbered, dated and signed
 
 ## 5. Power budget
 
-The budget is the sum of the catalogue values of the base load and of the lights.
+The figures are catalogue values.
 
 | Item | Power |
 |---|---|
@@ -52,8 +53,8 @@ The budget is the sum of the catalogue values of the base load and of the lights
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 18 August 2026 |
-| TR-2 | Bollard pull | 19 August 2026 |
-| TR-3 | Pressure test | 17 August 2026 |
-| TR-4 | Battery discharge | 20 August 2026 |
-| TR-5 | Tow test | 19 August 2026 |
+| TR-1 | Trim sheet | 2026-08-24 |
+| TR-2 | Bollard pull | 2026-08-25 |
+| TR-3 | Pressure test | 2026-08-21 |
+| TR-4 | Battery discharge | 2026-08-26 |
+| TR-5 | Tow test | 2026-08-25 |

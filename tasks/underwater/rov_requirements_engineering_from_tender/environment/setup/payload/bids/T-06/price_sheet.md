@@ -4,19 +4,19 @@
 - Bid: T-06
 - Bidder: Greyfell Dam Services
 
-All prices are in cu. The base price is for the vehicle of the BOM, tested at our works and crated, with the test sheets TR-1 to TR-5.
+All prices are in cu. A single base price for the complete vehicle of the BOM, cage and large battery pack included, factory tested.
 
 ## 1. Base price
 
 | Item | Price (cu) |
 |---|---|
-| Base configuration | 10300 |
+| Base configuration | 11690 |
 
 ## 2. Options
 
 | Option | Description | Price (cu) |
 |---|---|---|
-| O-L8 | 8 lights in place of the number in the BOM | 420 |
-| O-PK20 | Battery pack PK-20 in place of the pack in the BOM | 690 |
+| O-61 | Spare DVL of the catalogue type, supplied loose with its bracket and cable; not fitted to the vehicle | 605 |
+| O-62 | Electronics tube 400 mm long, same series, in place of the tube in the BOM | 415 |
 
 Options may be ordered singly or together. The price of an option is added to the base price.

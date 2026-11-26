@@ -1,0 +1,23 @@
+BYTE COPIES of the verify-stage kit of the merged task of pull request 88 (robotic_arm_motion_controller_from_docs),
+read with 'git archive origin/main tasks/arm/robotic_arm_motion_controller_from_docs' from the benchmark,
+origin/main = 8c2c2e5def2fe16a40ebda00317493bcad6e1f93, on 2026-11-23. Not edited. Path under that task's tests/ and sha256:
+  tests/arm/assembly_cell/__init__.py e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  tests/arm/assembly_cell/runner.py 162d7955c3b5c401ebc6fe012bbd1ea86cce69cc22d8f3fc04ac3a0a40025736
+  tests/arm/assembly_info/__init__.py e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  tests/arm/assembly_info/netaudit.py e7ab773f22a95ad9a02100fa419293a0a75086f96d7f188dc240c9eb47922916
+  tests/arm/assembly_six/__init__.py e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  tests/arm/assembly_six/lockdown.py d48a20e861c34509cb2f448e9ef78703346e308aa61c9b465538a01451b7d633
+  tests/arm/__init__.py e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  tests/arm/verify_freeze.py b017cce7b7b28dc211abeda6ef2c5a901e3bc14d8fa898ebebf0a25b7ecbc13d
+  tests/robotics_grader/account.py 7951366893446c36a01e2dfc4549eaf3c6eb59dbb3e4c4f6c9cf93ff386f4d8c
+  tests/robotics_grader/__init__.py d8f32e4bc489448708584a174d6fddef8c1d7969d254ff145b621f22b947af3d
+  tests/robotics_grader/scoring.py 9353682eb3536df264b3cb5ec3bf2be24a410f88af5b20cf86cb31796930a83b
+  tests/robotics_grader/seeds.py b795f63404d14f0c90ca0098582e80afabd251396b1f4d6ababf4e7f6037b5e1
+  tests/robotics_grader/selftest.py 8ef71b5bd6d924cae1ffca04c3eec51fe781f880b5a9bc818366ee803350dd35
+  tests/robotics_grader/solver.py ed83ebef07e678019cb9c468b4d66976bc40949a63c0ca67e0d8d769754900e6
+  tests/robotics_grader/stage.py 977429b9cd490c3cab06628a1a093dce3bb8080c102f60bc7e47a4e84012057d
+grader/verify.py uses the kit exactly as #88's verify.py does (the early lockdown, the late-write gate, the static
+import audit, the verdict writer) and loads it from the stage. The task folder's tests/arm/ is a byte copy of arm/ here.
+Its tests/robotics_grader/ is the benchmark's shared/robotics_grader/ at the commit that tests/task_record.json
+names, which can be newer than robotics_grader/ here. verify.py loads this folder's copies only where the stage holds
+no robotics_grader/ folder.

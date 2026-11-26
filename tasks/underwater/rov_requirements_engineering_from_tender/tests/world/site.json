@@ -1,57 +1,100 @@
 {
+ "air_record_summary": {
+  "A-camp": -11.1,
+  "A-low": -17.0,
+  "A-mean": -8.72,
+  "A-med": -11.2,
+  "A-p10": -14.2,
+  "A-p90": -8.2
+ },
+ "campaign_records": {
+  "below_toe_m": [
+   1.4,
+   1.9
+  ],
+  "form": "campaign/3",
+  "gauge_density_kg_m3": 1025.0,
+  "n_bays_open": 4,
+  "open_height_m": 12.0,
+  "rack_toe_el_m": 1442.65,
+  "stage_el_m": 1497.22,
+  "stage_el_m_by_night": {
+   "2025-11-04": 1497.22,
+   "2025-11-06": 1497.24,
+   "2025-11-08": 1497.18
+  },
+  "strip_turn_above_debris_m": [
+   0.07,
+   0.14,
+   0.04,
+   0.11
+  ]
+ },
  "public_site_record": {
-  "crane_swl_kg": 25.0,
-  "design_flow_m3s": 22.0,
-  "face_reach_m": 40.0,
-  "launch_path_m": 90.5,
-  "min_water_temp_c": 5.1,
-  "open_height_m": 6.0,
-  "rack_height_m": 8.0,
-  "rack_width_m": 5.0,
+  "crane_swl_kg": 30.0,
+  "design_flow_m3s": 28.0,
+  "face_reach_m": 35.0,
+  "launch_path_m": 80.84999999999991,
+  "min_water_temp_c": 6.3,
+  "open_height_m": 9.0,
+  "rack_height_m": 12.0,
+  "rack_width_m": 4.5,
   "rigging_kg": 3.0,
   "sample_max_mm": 50.0,
-  "secchi_m": 2.5,
+  "secchi_m": 2.8,
   "survey_altitude_m": 0.3,
-  "water_temp_c": 5.2,
-  "working_depth_m": 68.5
+  "water_temp_c": 6.4,
+  "working_depth_m": 59.84999999999991
  },
- "schema": "uw-req-site/1",
+ "schema": "uw-req-site/2",
  "site": {
+  "campaign_dates": [
+   "2025-11-04",
+   "2025-11-06",
+   "2025-11-08"
+  ],
+  "earlier_flood_date": "2021-04-14",
   "el_deck": 1510.0,
   "el_fsl": 1498.0,
-  "el_low": 1429.5,
-  "face_reach": 40.0,
-  "h_open": 6.0,
-  "q_insp": 22.0,
-  "rack_h": 8.0,
-  "rack_w": 5.0,
+  "el_low": 1438.15,
+  "face_reach": 35.0,
+  "flood_date": "2026-05-12",
+  "h_open": 9.0,
+  "n_bays": 4,
+  "n_bays_open": 3,
+  "pilot_look_date": "2026-06-16",
+  "q_insp": 28.0,
+  "rack_bay_h": 3.0,
+  "rack_h": 12.0,
+  "rack_w": 4.5,
   "rigging_kg": 3.0,
-  "routing_m": 10.0,
+  "routing_m": 9.0,
   "sample_max_mm": 50.0,
-  "secchi": 2.5,
+  "secchi": 2.8,
   "survey_alt_m": 0.3,
-  "swl_kg": 25.0,
-  "t_c": 5.2,
-  "t_min_c": 5.1
+  "survey_date": "2018-08-29",
+  "swl_kg": 30.0,
+  "t_c": 6.4,
+  "t_min_c": 6.3
  },
  "site_documents": {
-  "bay_h": 1.0,
-  "n_bays": 8
+  "bay_h": 3.0,
+  "n_bays": 4
  },
  "site_extra": {
-  "blocked_bays": 2,
-  "blocked_since": "after the previous campaign (spring-flood logs; not in RK-03 nor in the telemetry)",
+  "blocked_bays": 1,
+  "blocked_since": "by the spring flood of 2026-05-12 (after the previous campaign of 2025-11-04 to 2025-11-08, which flew the rack open to its toe); found by the previous campaign's pilot on a drop-camera look of 2026-06-16; not drawn on RK-03 and carried by no document of the package (the earlier flood of 2021-04-14 blocked nothing)",
   "launch_point": "tower-deck davit (previous-campaign vehicle card)",
   "prev_campaign_q_ratio": 0.85,
   "routing": "tether led from the payout zero (deck guard-rail fairlead) round the platform guide sheave before the drop; previous-campaign vehicle card and payout counter only (no gap in any other document)"
  },
  "site_readings": {
-  "el_centreline": 1441.0,
-  "el_penstock": 1421.0,
+  "el_centreline": 1448.65,
+  "el_penstock": 1428.15,
   "el_pontoon": 1498.0,
-  "q_all_hours": 35.0,
-  "q_prev_campaign": 18.7,
+  "q_all_hours": 45.0,
+  "q_prev_campaign": 23.8,
   "secchi_annual": 4.6,
-  "v_telemetry": 0.46749999999999997
+  "v_telemetry": 0.44074074074074077
  }
 }

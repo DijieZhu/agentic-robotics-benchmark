@@ -41,8 +41,8 @@ states duties and rules. It gives no dimension, level, flow or temperature of th
 
 ### A.2 The twelve needs
 
-A vehicle is fit for the duty when it meets all twelve needs. For each need the evaluation procedure computes a
-signed margin; zero or more meets the need.
+A vehicle that fails any of the twelve needs is not fit for the duty. For each need the evaluation procedure
+computes a signed margin; zero or more meets the need.
 
 | Need | Name | What the Owner needs |
 |---|---|---|
@@ -86,7 +86,9 @@ rule.
   times the standoff factor of A.4.
 - **Dam-face reach.** The distance along the dam face from the intake to the reach mark, on one side.
 - **Tether path.** The length of tether from the zero of the payout counter, along the payout route, to the lowest
-  point; plus the dam-face reach on one side.
+  point; plus the dam-face reach on one side. It is the length of the route itself, with the tether drawn taut
+  along it. Tether that lies slack and the distance of the vehicle from the route are not part of it, whatever the
+  counter reads during a dive.
 
 ### A.4 The Owner's policy values
 
@@ -169,9 +171,14 @@ every clause, with the value it declares and the evidence for it.
 
 ## Part C. Evaluation of the bids
 
-**C.1 Basis.** A bid is evaluated for its fitness for the duty of Part A: against the twelve needs, under the
-conditions of the Owner's site as they really are, with the evaluation procedure. A need is met when its margin, as
-the procedure computes it, is zero or more.
+**C.1 Basis.** A bid is evaluated for its fitness for the duty of Part A at the site, as the site is in the
+inspection month: against the twelve needs, and in general. The twelve needs are judged under the conditions of the
+Owner's site as they really are, with the evaluation procedure. A need is met when its margin, as the procedure
+computes it, is zero or more. A configuration is fit in general when its tendered unit, with everything that the
+configuration supplies with it, can be brought to the water, operated through a permit window and recovered at the
+site by the Owner's inspection crew, with every item kept within the limits that its maker states for it and with
+no means but those that the configuration supplies and those that the Owner's drawings and records show the site
+to have. The Owner has put no number on general fitness.
 
 **C.2 The bid.** A bid consists of a compliance matrix against Part B, a technical description with its revision
 record, a bill of materials, a price sheet with the base price and two priced options, a delivery statement, and
@@ -191,33 +198,44 @@ whether the bid's own ballast kit allows the unit to be ballasted for the site w
 kit can realise, with removable pieces taken out or loose spare pieces added, at least one puts the net buoyancy in
 the site water inside the window of A.4. A unit whose ballast cannot be changed is judged as it is ballasted.
 
-**C.6 Accepting a bid.** A bid is acceptable when at least one of its configurations meets all twelve needs. It is
-accepted with the cheapest such configuration, and the evaluation names the options of that configuration. An
-option that is not needed is not bought.
+**C.6 Accepting a bid.** A bid is acceptable when at least one of its configurations meets all twelve needs, is fit
+in general (C.1) and is contractable (C.8). It is accepted with the cheapest such configuration, and the evaluation
+names the options of that configuration. An option that is not needed is not bought.
 
-**C.7 Rejecting a bid.** A bid none of whose configurations meets all twelve needs is rejected. The rejection cites
-one or two needs as its grounds. A need is a ground for rejecting a bid only when the bid fails it with every subset
-of its options. **Every ground cited must hold.** A rejection that cites a need which is not such a ground does not
-stand, whatever else it cites.
+**C.7 Rejecting a bid.** A bid that is not acceptable is rejected. The rejection cites one or two grounds. A ground
+is a need of Part A, the code `GF` (general fitness, C.1) or the code `PART-D` (C.8). A need is a ground for
+rejecting a bid only when the bid fails it with every subset of its options. The needs are judged on the tendered
+unit (C.3): what a supplier may deliver under the contract is the matter of Part D, and is not a ground under a
+need. `GF` is a ground only when every configuration of the bid is unfit in general. `PART-D` is a ground only for
+a bid that C.8 describes. **Every ground cited must hold.** A rejection that cites a need which is not such a
+ground does not stand, whatever else it cites. Nor does a rejection that cites `GF` or `PART-D` where it is not a
+ground.
 
-**C.8 Award.** The contract is awarded to the accepted configuration with the lowest price. The award has to stand
+**C.8 Contractability.** A configuration is contractable when an acceptance schedule that is sufficient (D.7) can be
+contracted on it (D.6), in the facility and for the delivery band that the bidder's own delivery statement
+declares. The evaluation shows this by attaching that schedule for every bid it accepts, written for the accepted
+configuration. A bid of which some configurations meet all twelve needs and are fit in general, and none of those
+is contractable, is rejected on the ground `PART-D`.
+
+**C.9 Award.** The contract is awarded to the accepted configuration with the lowest price. The award has to stand
 against every rejected bid whose base price is below the price of the awarded configuration: each of them must have
 been rejected on grounds that hold. When no bid is acceptable, no award is made.
 
-**C.9 Part B in the evaluation.** Whether a bid complies with a clause of Part B or deviates from it is recorded for
-the review of the specification (C.10). It is not a ground for accepting a bid, and it is not a ground for rejecting
-one.
+**C.10 Part B in the evaluation.** Whether a bid complies with a clause of Part B or deviates from it is recorded
+for the review of the specification (C.11). It is not a ground for accepting a bid, and it is not a ground for
+rejecting one.
 
-**C.10 Review of the specification.** With the evaluation, the Owner's engineer reviews every clause of Part B
+**C.11 Review of the specification.** With the evaluation, the Owner's engineer reviews every clause of Part B
 against Part A and the site, and reports for each clause whether it is too lax and whether it is too strict. A
 clause is too lax when a unit can comply with it and still fail the need that the clause supports. A clause is too
 strict when it would turn away a unit that is fit for the duty.
 
 ## Part D. Acceptance at the works
 
-**D.1 The acceptance schedule.** The contract is awarded with a factory acceptance schedule, which the Owner's
-engineer writes for the awarded configuration. The supplier is held to the clauses of the schedule and to nothing
-else. What the schedule does not demand, the supplier does not owe.
+**D.1 The acceptance schedule.** With the evaluation the Owner's engineer writes a factory acceptance schedule for
+every bid that the evaluation accepts, for its accepted configuration (C.8). The contract is awarded with the
+schedule of the awarded configuration. The supplier is held to the clauses of that schedule and to nothing else.
+What the schedule does not demand, the supplier does not owe.
 
 **D.2 A clause.** A clause states one facility quantity of the dictionary (Table D-1), the conditions of its test,
 written out in full, and a bound on one side: the quantity is to be at least the bound (`>=`), or at most the bound
@@ -236,6 +254,10 @@ of the dictionary form six groups, one for each kind of test:
 - hull and tether: in the tow tank, and the tether on its drum;
 - sensing and work: the camera, the sonar and the gripper on the bench.
 
+The Owner does not control the day of an acceptance test. What a clause does not state and section 1 of the
+delivery statement does not fix is, on that day, as the supplier finds it. A schedule is judged for every state of
+it that section 1 of the delivery statement declares: where a range is declared, for every value inside the range.
+
 **D.4 What the supplier may deliver.** Section 2 of the delivery statement declares the delivery band: the units
 that the supplier may deliver under the contract. The supplier may deliver any unit of the band that passes every
 clause of the schedule. Where several units pass, it delivers the one that suits it best, in the order of
@@ -247,12 +269,17 @@ spare pieces are not part of the delivered state. In the acceptance, need N-01 i
 `n01_as_delivered`: the delivered unit, as it is ballasted at the works, has its net buoyancy in the site water
 inside the window of A.4.
 
-**D.6 A schedule that cannot be contracted.** When no unit of the delivery band passes every clause, or when a
-clause asks for a test that the facility cannot run, no contract can be made on the schedule.
+**D.6 A schedule that cannot be contracted.** When, on a state that section 1 of the delivery statement declares,
+no unit of the delivery band passes every clause, or when a clause asks for a test that the facility cannot run, no
+contract can be made on the schedule: then nothing is delivered.
 
 **D.7 What the schedule has to achieve.** The schedule is to be sufficient: no unit of the band that passes it
 fails a need of Part A at the site, as delivered. It is also to be economical: it does not turn away units of the
 band that are fit for the site. Stock that the schedule turns away without need is paid for by the Owner.
+
+**D.8 What is bought.** What is bought is the unit that is delivered: of the units that pass, the supplier delivers
+the first in its own order of preference (D.4). The purchase is sound only when that unit, as delivered, fails no
+need of Part A at the site, on every state that section 1 of the delivery statement declares.
 
 **Table D-1. The dictionary of facility quantities**
 

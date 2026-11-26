@@ -1,0 +1,161 @@
+{
+ "T-01": {
+  "clauses": [
+   {
+    "bound": -0.4,
+    "comparator": ">=",
+    "conditions": {},
+    "id": "AC-01",
+    "quantity": "tank_net_buoyancy_n",
+    "unit": "N"
+   },
+   {
+    "bound": 1.2,
+    "comparator": "<=",
+    "conditions": {},
+    "id": "AC-02",
+    "quantity": "tank_net_buoyancy_n",
+    "unit": "N"
+   },
+   {
+    "bound": 64.2,
+    "comparator": ">=",
+    "conditions": {
+     "axis": "surge_astern",
+     "limiter": "on",
+     "supply_v": 12.0
+    },
+    "id": "AC-03",
+    "quantity": "bollard_thrust_n",
+    "unit": "N"
+   }
+  ],
+  "for_options": [
+   "O-12"
+  ]
+ },
+ "T-03": {
+  "clauses": [
+   {
+    "bound": 15.04,
+    "comparator": ">=",
+    "conditions": {},
+    "id": "AC-01",
+    "quantity": "air_mass_kg",
+    "unit": "kg"
+   },
+   {
+    "bound": 15.233,
+    "comparator": "<=",
+    "conditions": {},
+    "id": "AC-02",
+    "quantity": "air_mass_kg",
+    "unit": "kg"
+   },
+   {
+    "bound": 56.3,
+    "comparator": ">=",
+    "conditions": {
+     "axis": "surge_astern",
+     "limiter": "on",
+     "supply_v": 12.0
+    },
+    "id": "AC-03",
+    "quantity": "bollard_thrust_n",
+    "unit": "N"
+   }
+  ],
+  "for_options": []
+ },
+ "T-04": {
+  "clauses": [
+   {
+    "bound": 13.944,
+    "comparator": ">=",
+    "conditions": {},
+    "id": "AC-01",
+    "quantity": "air_mass_kg",
+    "unit": "kg"
+   },
+   {
+    "bound": 14.137,
+    "comparator": "<=",
+    "conditions": {},
+    "id": "AC-02",
+    "quantity": "air_mass_kg",
+    "unit": "kg"
+   },
+   {
+    "bound": 18.5,
+    "comparator": "<=",
+    "conditions": {
+     "chamber_c": 15.0
+    },
+    "id": "AC-03",
+    "quantity": "pack_dcir_mohm",
+    "unit": "mOhm"
+   },
+   {
+    "bound": 78.6,
+    "comparator": ">=",
+    "conditions": {
+     "axis": "surge_astern",
+     "limiter": "on",
+     "supply_v": 12.0
+    },
+    "id": "AC-04",
+    "quantity": "bollard_thrust_n",
+    "unit": "N"
+   }
+  ],
+  "for_options": [
+   "O-41",
+   "O-42"
+  ]
+ },
+ "T-05": {
+  "clauses": [
+   {
+    "bound": -0.3,
+    "comparator": ">=",
+    "conditions": {},
+    "id": "AC-01",
+    "quantity": "tank_net_buoyancy_n",
+    "unit": "N"
+   },
+   {
+    "bound": 1.3,
+    "comparator": "<=",
+    "conditions": {},
+    "id": "AC-02",
+    "quantity": "tank_net_buoyancy_n",
+    "unit": "N"
+   },
+   {
+    "bound": 20.3,
+    "comparator": "<=",
+    "conditions": {
+     "chamber_c": 10.0
+    },
+    "id": "AC-03",
+    "quantity": "pack_dcir_mohm",
+    "unit": "mOhm"
+   },
+   {
+    "bound": 69.7,
+    "comparator": ">=",
+    "conditions": {
+     "axis": "surge_astern",
+     "limiter": "on",
+     "supply_v": 12.0
+    },
+    "id": "AC-04",
+    "quantity": "bollard_thrust_n",
+    "unit": "N"
+   }
+  ],
+  "for_options": [
+   "O-52"
+  ]
+ }
+}

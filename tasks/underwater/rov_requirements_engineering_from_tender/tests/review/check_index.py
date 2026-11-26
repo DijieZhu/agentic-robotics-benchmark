@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Check that the review evidence still describes this task folder (maintainer tool; standard library only).
 
-    python3 -I -B tests/review/check_index.py [--dev DEV_FOLDER]
+    python3 -I -B tests/review/check_index.py
 
-Reads evidence_index.json next to this file, recomputes the sha256 of every task file it lists (relative to the task
-folder, the parent of tests/) and, with --dev (the task's development folder in the development repository), of every
-cited report and its companions. Prints each file whose bytes changed since the evidence was taken and the reports
-whose inputs it is among ('tests/world/*' style entries match by prefix). Exit 0 when nothing changed, 1 when
-something did (the listed reports must be re-run before they are cited again), 2 on a missing file.
+Reads evidence_index.json next to this file and recomputes the sha256 of every task file it lists (relative to the task
+folder, the parent of tests/), and of the files its publication entry names (the published Dockerfile and the two
+files the published form adds). Prints each file whose bytes changed since the evidence was taken and the evidence
+entries whose inputs it is among ('tests/world/*' style entries match by prefix). Exit 0 when nothing changed, 1 when
+something did (the listed checks must be run again before they are cited), 2 on a missing file.
 """
 import argparse
 import hashlib
@@ -37,33 +37,34 @@ def affected(rel, reports):
     return out
 
 
+def pinned(idx):
+    """{relative path: sha256} of every file the index pins: task_files, then the publication entry's files."""
+    want = dict(idx["task_files"])
+    pub = idx.get("publication") or {}
+    for rel, entry in sorted((pub.get("changed_task_files") or {}).items()):
+        want.setdefault(rel, entry["published_form"])
+    for rel, digest in sorted((pub.get("added_task_files") or {}).items()):
+        want.setdefault(rel, digest)
+    return want
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--dev", type=pathlib.Path, help="the task's development folder")
-    args = ap.parse_args(argv)
+    ap.parse_args(argv)
     idx = json.loads((HERE / "evidence_index.json").read_text(encoding="utf-8"))
     changed, missing = [], []
-    for rel, want in sorted(idx["task_files"].items()):
+    want = pinned(idx)
+    for rel, digest in sorted(want.items()):
         p = TASK / rel
         if not p.is_file():
             missing.append(rel)
-        elif sha(p) != want:
+        elif sha(p) != digest:
             changed.append(rel)
     for rel in changed:
         print("changed  %-55s inputs of: %s" % (rel, ", ".join(affected(rel, idx["reports"])) or "-"))
-    if args.dev:
-        for r in idx["reports"]:
-            for rel, want in [(r["path"], r["sha256"])] + sorted(r.get("also", {}).items()):
-                p = args.dev / rel
-                if not p.is_file():
-                    missing.append(str(args.dev / rel))
-                elif sha(p) != want:
-                    changed.append(rel)
-                    print("changed  %-55s (report %s)" % (rel, r["id"]))
     for rel in missing:
         print("missing  %s" % rel)
-    n = len(idx["task_files"]) + (sum(1 + len(r.get("also", {})) for r in idx["reports"]) if args.dev else 0)
-    print("%d files checked, %d changed, %d missing" % (n, len(changed), len(missing)))
+    print("%d files checked, %d changed, %d missing" % (len(want), len(changed), len(missing)))
     return 2 if missing else 1 if changed else 0
 
 

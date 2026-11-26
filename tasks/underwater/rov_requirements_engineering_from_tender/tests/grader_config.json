@@ -82,7 +82,6 @@
   "speed_mps",
   "hold_min"
  ],
- "f_gate": "c_a in OK",
  "fail_delta_mult": 1.0,
  "full_at": 0.98,
  "grades": [
@@ -90,29 +89,24 @@
   "B",
   "C"
  ],
- "max_clauses": 24,
+ "max_clauses": 12,
  "metrics_whitelist": [
-  "acceptance_ba",
-  "acceptance_contractable",
-  "acceptance_g",
-  "acceptance_guard:N-01",
-  "acceptance_guard:N-03",
-  "acceptance_guard:N-04",
-  "acceptance_in_envelope",
-  "acceptance_schedule",
+  "acceptance_schedules",
   "agent_processes_killed",
   "agent_processes_left",
   "anchor_recorded",
   "award",
   "award_g",
   "award_ok",
-  "delivered_unit_fit",
   "gate_g0_structure",
   "gate_g1_submission_integrity",
   "lab_stopped",
   "n_accepted",
-  "n_clauses",
+  "n_clauses_read",
   "n_rejected",
+  "n_schedules_ignored",
+  "n_schedules_read",
+  "purchase_outcome",
   "ratio",
   "s_acc",
   "s_rej",
@@ -126,7 +120,7 @@
   "part_d": "n01_as_delivered"
  },
  "n_options_per_bid": 2,
- "note": "grader constants of rov_requirements_engineering_from_tender (hidden side). Scoring v1.2 (DESIGN v1.3 sec. 5, rulings L8, J10); rows / site keys / dictionary from CONTRACTS uw-req-contract/1.0 with the 1.1 revision of P02 (15 quantities, two surge axes). Written by package P09.",
+ "note": "grader constants of rov_requirements_engineering_from_tender (hidden side), contract 2.0: tender_evaluation_score = G0 x G1 x (0.35 V + 0.25 A + 0.10 P + 0.05 Q + 0.25 F); one acceptance schedule per accepted bid, at most 12 clauses each; grounds N-01 .. N-12, GF, PART-D; rows / site keys / dictionary unchanged (15 quantities, two surge axes).",
  "phi_plus_delta_mult": 2.0,
  "reward_key": "tender_evaluation_score",
  "row_order": [
@@ -157,7 +151,7 @@
   "N-11": "K6",
   "N-12": "K7"
  },
- "schema": "uw-req-grader-config/1",
+ "schema": "uw-req-grader-config/2",
  "schemas_file": "schemas.json",
  "site_key_order": [
   "as_tendered_net_buoyancy_n",
@@ -183,16 +177,16 @@
   "files": [
    "evaluation.json",
    "spec_review.json",
-   "acceptance_schedule.json"
+   "acceptance_schedules.json"
   ],
   "max_bytes": 131072
  },
  "weights": {
-  "A": 0.15,
-  "F": 0.2,
-  "P": 0.15,
+  "A": 0.25,
+  "F": 0.25,
+  "P": 0.1,
   "Q": 0.05,
-  "V": 0.45
+  "V": 0.35
  },
  "world_dir": "world"
 }

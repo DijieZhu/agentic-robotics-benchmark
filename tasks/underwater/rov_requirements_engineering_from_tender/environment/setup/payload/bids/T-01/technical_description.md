@@ -8,15 +8,14 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 20 Jul 2026 | First issue |
+| A | 2026-07-31 | First issue |
+| B | 2026-09-02 | Tether: thin tether of the same length |
 
 ## 2. Summary
 
-We are a small workshop. We build this vehicle ourselves, a few at a time. The parts are listed in section 3 and in the BOM.
+A configuration for high-grade imaging. The forward camera is an external unit behind a flat port with a wide lens; its housing is from the catalogue camera-housing series. The tether is the thin, low-drag type.
 
-The ballast is potted into the frame for life. It cannot work loose, and there are no loose pieces to count.
-
-Each vehicle is tested as it will be delivered. The test sheets show what we measured.
+We describe the vehicle as built: section 1 records each change to this description, section 3 gives the configuration and section 6 lists the factory tests with their dates. The lens is an option of the lens table of the external camera in the catalogue. Where an as-built detail differs from a catalogue series figure, the compliance matrix states the as-built figure. Ballast is by removable pieces, with loose pieces supplied (see BOM).
 
 ## 3. Configuration
 
@@ -24,11 +23,11 @@ Each vehicle is tested as it will be delivered. The test sheets show what we mea
 |---|---|
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-18 |
-| Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
+| Battery pack | NC-31 |
+| Forward camera | external camera behind a flat port; wide lens, 110 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
 | Lights | 4 |
-| Tether | 6.8 mm diameter, 200 m long |
-| Ballast | potted in the frame, not removable |
+| Tether | 3.5 mm diameter, 150 m long |
+| Ballast | removable pieces; loose pieces supplied |
 | Frame | open frame |
 
 ## 4. Performance
@@ -41,7 +40,7 @@ Each vehicle is tested as it will be delivered. The test sheets show what we mea
 
 ## 5. Power budget
 
-Worked out from the catalogue pages.
+Catalogue values of the base load and of the lights.
 
 | Item | Power |
 |---|---|
@@ -53,8 +52,8 @@ Worked out from the catalogue pages.
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 4 Aug 2026 |
-| TR-2 | Bollard pull | 5 Aug 2026 |
-| TR-3 | Pressure test | 3 Aug 2026 |
-| TR-4 | Battery discharge | 6 Aug 2026 |
-| TR-5 | Tow test | 5 Aug 2026 |
+| TR-1 | Trim sheet | 2026-08-20 |
+| TR-2 | Bollard pull | 2026-08-21 |
+| TR-3 | Pressure test | 2026-08-19 |
+| TR-4 | Battery discharge | 2026-08-24 |
+| TR-5 | Tow test | 2026-08-21 |

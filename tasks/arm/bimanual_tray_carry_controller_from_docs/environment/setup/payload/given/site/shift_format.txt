@@ -1,0 +1,53 @@
+SHIFT SHEET: FORMAT
+
+The supervisor's shift sheet of a unit is handed to setup with the unit's delivery record, as data: one JSON object with the fields below. Per tray slot it gives the windows of the slot, the target list with times and the destination rest. It gives no tray's load. The sheet of another shift (not one of the shifts at acceptance) is in example_shift.json.
+
+FIELDS
+  format_version  (integer)
+      Version of the shift sheet's format (1).
+  cycle_s  (number in s)
+      The exchange cycle (0.004 s). Every time of the sheet is a multiple of it; a slot time t corresponds to the supervisor's slot_cycle t / cycle_s.
+  time_origin  (string)
+      Shift times count from cycle 0, the end of the hand-over; slot times count from the cycle in which the supervisor's signal presents the slot's tray standing in F.
+  frame  (string)
+      Positions are tray reference points in the cell frame of the cell sheet (m), the tray level, its handle line along y.
+  first_presentation_s  (number in s)
+      Shift time at which the first tray is presented (the free interval after the hand-over).
+  move_s  (number in s)
+      Duration of one move of the timed reference: the reference point travels on the straight line from the previous target to the next, its path length by a trapezoid of equal thirds, the tray keeping its orientation.
+  hold_s  (number in s)
+      Duration of the hold that follows every move (the reference point stays at the target).
+  lifted_point_above_seated_m  (number in m)
+      The carry starts at the lifted point L, this far above the reference point of the tray standing in F.
+  slots  (array of slot objects)
+      The tray slots of the shift in the order in which their trays are presented.
+  slots[].tray  (integer)
+      Index of the slot (0 for the first), the value of the supervisor's signal site.tray while the slot's tray is presented.
+  slots[].planned_presentation_s  (number in s)
+      Shift time of the presentation when every earlier tray of the sheet is carried through its whole schedule; after a declined tray or a missed capture the next trays are presented earlier, and the supervisor's signal says when.
+  slots[].job  (string, one of short | medium | lap)
+      The job's length class: short (12 to 16 targets), medium (24 to 32) or the lap (the acceptance list).
+  slots[].pick_rest  (string)
+      Where the tray stands when it is presented: F, the fixture.
+  slots[].destination_rest  (string)
+      Where the carried tray is set down: S, the shelf.
+  slots[].n_targets  (integer)
+      Number of targets of the job n (the first fixed target and the last two fixed targets included); the carry consists of n moves, each followed by a hold.
+  slots[].windows  (object in s (slot time))
+      The slot's windows: closing [0, 5.0] (both grippers capture their necks by its end); trial_lift_and_decision [5.0, 9.0]; decline_accepted [0, 9.0]; carry [9.0, T_e] with T_e = 9.0 + n (move_s + hold_s); set_down [T_e, T_e + 6.0] (lowered from the pre-place point onto the destination rest, both grippers open); retreat [T_e + 6.0, T_e + 9.0] (both hands inside the clear volume by its end; then the supervisor takes the tray off S); next_tray_s T_e + 12.0. Each window is [start, end].
+  slots[].declined  (object in s after the decline)
+      The schedule after a decline sent at slot time t_d inside decline_accepted (and not after a missed capture): put_back_by_s (t_d + 4.0: the tray seated and released in F, its put-back deadline), hands_clear_by_s (t_d + 7.0: both hands inside the clear volume), next_tray_after_s (t_d + 10.0). Values are the offsets from t_d.
+  slots[].missed_capture  (object in s (slot time))
+      The schedule when a hand has not captured its neck by the end of closing and no decline was sent before it: the job has failed, a later decline is ignored; both grippers open and both hands inside the clear volume by clear_by_s (12.0); next tray at next_tray_s (15.0).
+  slots[].targets  (array of target objects)
+      The timed reference of the carry, in the job's order.
+  slots[].targets[].k  (integer)
+      Index of the target in the job (0 for the first).
+  slots[].targets[].p  (array of 3 numbers in m)
+      The target: the tray's reference point in the cell frame (x, y, z).
+  slots[].targets[].move_start_s  (number in s (slot time))
+      Start of the move to this target (from the previous target, or from L for k = 0): 9.0 + k (move_s + hold_s).
+  slots[].targets[].arrive_s  (number in s (slot time))
+      End of the move: the reference point is at the target (move_start_s + move_s).
+  slots[].targets[].hold_end_s  (number in s (slot time))
+      End of the hold at this target (arrive_s + hold_s); the next move starts here.

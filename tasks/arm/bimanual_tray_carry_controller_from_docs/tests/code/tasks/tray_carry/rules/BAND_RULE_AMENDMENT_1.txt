@@ -1,0 +1,766 @@
+STAGE 05 (OpenArm pair, tray-carry controller): THE BAND RULE, AMENDMENT 1
+
+Dated 2026-11-23 06:12 UTC (2026-11-23 01:12 EST, by the clock). Written by the maintainers and corrected after six
+independent readings. It is of record from the one commit that holds this file as
+rules/BAND_RULE_AMENDMENT_1.txt together with rules/band_rule_amendment_1_floors.json and its plain text
+rules/BAND_RULE_AMENDMENT_1_FLOORS.txt, each at the digest given below.
+
+ORDERED by the maintainers on 2026-11-22 (23:13 EST): an amendment to the band rule. This file decides nothing. A
+sentence of a NEW TEXT is the maintainers' order, or a reading of it that the item marks with the words READ AS.
+
+THE COMMITTED FILES ARE NOT EDITED. This amendment is a file of its own and is read with them:
+  rules/BAND_RULE.txt    sha256 3f4dce4e24ba02f674f6f94ebeff57e5ec1173834fa2dbfb5efdd181178791a4
+  rules/band_rule.json   sha256 05a20420ac335172ce86f716d39b18bae38f77f57c34e41da20b4c226d602bbb
+and the two floors files of item 1, committed in the one commit with this file:
+  rules/band_rule_amendment_1_floors.json   sha256 115526c4fd34ae475c2f56192a6b06e732948a9855c1ca7d3506480e38c3e424
+  rules/BAND_RULE_AMENDMENT_1_FLOORS.txt    sha256 90b0d9dbdf9e3fe79831003b9dba07dbfd2ab996962c4ff74c7e630d3057ce72
+The two committed files say the same, and the amendment amends both alike. Where the amendment speaks, it holds. Every
+sentence, number, owner, mutant, weight and floor of the committed rule that no item names stays as committed.
+
+NO NUMBER OF THE BUILT TASK EXISTS. The three hidden units are not drawn: there is no frozen set, no band end and no
+anchor. Every measured figure in this file is a development unit's (the pre-check and its slot-6 row). Each is the
+maintainers' own reading of those units. Such a
+figure stands only under PROMPTED BY and AMENDED AFTER THE FACT; no NEW TEXT holds one. The values of the floors are not
+in this file (item 1).
+
+HOW AN ITEM READS.
+  - It names the section of the committed rule that it amends or adds to, and quotes the sentence it replaces or
+    follows. Quoted lines are marked ">". They are the committed text, wrapped again for this file: compare them with
+    rules/BAND_RULE.txt after reading every run of white space as one space.
+  - It names the fields of rules/band_rule.json that say the same: the word json, a colon and the field's path, between
+    backticks.
+  - It gives THE NEW TEXT in full, as it stands in the rule from this amendment on. A line marked "+" begins a line of
+    the rule; lines marked ":" continue it.
+  - PROMPTED BY names the number that prompted the change. HOLDS WITHOUT IT gives the reason that would stand with no
+    number. Both are the maintainers'; where they give none for a clause, the item says so and what it gives instead
+    is marked READ AS. Where they state them once for a group of clauses and not for a clause, the item says so.
+  - Nothing of this file is printed as it stands. The acceptance specification prints only the sentences that the
+    maintainers mark PRINTED; never a sentence that gives a reason, a rule of the generator, a degenerate
+    submission, PROMPTED BY, HOLDS WITHOUT IT, READ AS, or a figure of a development unit.
+
+THE ITEMS, in the order of the committed rule's sections:
+  item 1    section 2 and the floors of section 6     the floors
+  item 2    section 3                                 how a zero-end mutant is run and read
+  item 3    section 4                                 what the 3x rule decides on the frozen set
+  item 4    section 5                                 the tray's formula, V and Q_i
+  item 5    section 5 and the place block of 6        the place term
+  item 6    section 5                                 J and "declined"
+  item 7    section 6 and section 10                  the landing speed and d_s reported
+  item 8    section 7                                 when the capacity rule is evaluated
+  item 9    section 10                                M-loop, amended after the fact
+  item 10   section 8, one sentence of section 5      the pre-check's lines, closed
+  item 11   section 7                                 a step the plant cannot integrate
+Items 10 and 11 are consequences of items 1 to 9 in places that those items do not name. They are written
+so that the rule as amended contradicts nothing, and each says so at its head.
+After the items: WHAT IS NOT CHANGED, and HOW A UNIT'S SCORE IS COMPUTED UNDER THE RULE AS AMENDED.
+
+---------------------------------------------------------------------------------------------------------------------
+NAMES (each name is used below as it is defined here; they are the committed rule's and the maintainers' names)
+---------------------------------------------------------------------------------------------------------------------
+
+  - the committed rule: rules/BAND_RULE.txt and rules/band_rule.json at the digests above. "Section n" is a section of
+    rules/BAND_RULE.txt.
+  - the reference: the privileged reference.
+  - a zero-end mutant: the reference with ONE belief set to the documents' value (section 3): M-load, M-fric, M-geom or
+    M-shelf.
+  - the frozen set: the three hidden units with their sites, shifts and seats, once they are drawn and frozen.
+    It does not exist yet.
+  - F, S: the seating fixture F and the rack shelf S of the cell. In this file F with an index (F_x, F_P) is a full end,
+    and F alone is the fixture.
+  - slot, tray, job: a unit's shift is a list of slots. In a slot one tray is presented standing in F. The slot's job is
+    its list of n targets: n moves, each followed by a hold.
+  - carry tray, decline tray: the tray's label in the frozen set: a tray to be carried, or a tray to be
+    declined.
+  - lap job, the carried lap: a job is short, medium or the lap. A lap job is a job that is the lap. The
+    carried lap is the unit's one carry tray on a lap job.
+  - t: the time in a slot, in seconds from the cycle in which the tray is presented.
+  - the carry's start: t = 9.0 s. Move k (k = 0, ..., n - 1) starts at t = 9.0 + 2.06 k and takes 1.16 s. Hold k follows
+    it, takes 0.9 s and ends at t = 9.0 + 2.06 (k + 1).
+  - T_e: 9.0 + 2.06 n, the end of the last hold and the start of the set-down window.
+  - the scored window of hold k: its last 0.4 s.
+  - the tray's reference point: the midpoint of the tray's two grip points, read on the true tray.
+  - t_k: the target of hold k, that is the place of the tray's reference point for that hold in the cell frame, as the
+    shift sheet gives it.
+  - the lifted point L: the point 10 mm above the reference point of a tray standing centred in its cups at F's true
+    pose (read as in item 4).
+  - captured, released: a hand has captured its neck at the first instant at which its clamp exceeds 5 N after it closed
+    inside the capture box. It has released when its clamp falls below 2 N. A hand that has released and
+    closes again has captured again by the same condition as a first capture (its clamp above 5 N with its tool frame
+    inside the capture box); the capacity rule at its neck is armed 0.5 s after that capture. At a neck the rule ends
+    when the hand at that neck releases. A tray is released when the last hand that held it has released.
+    READ AS: the two constants and the box are the unit's own, in the shared unit's openarm_unit/world.py:
+    GRASP_CAPTURE_N = 5.0, GRASP_RELEASE_N = 2.0 and
+    CAPTURE_BOX = (0.008, 4.0), that is 8 mm along and 4 deg about each axis. A grasp that is not welded is captured at
+    the first step at which its clamp exceeds GRASP_CAPTURE_N with the tool frame inside the box, and its weld is
+    switched on at the start of the next step; a welded grasp is released at the first step at which its clamp is below
+    GRASP_RELEASE_N. The unit applies the same test to every closing, the first and any later one.
+  - stands in F, said of a tray at an instant: each foot's centre, in F's true frame, lies within 0.6 mm (0.5 mm of
+    clearance plus 0.1 mm) of its cup's centre along x and along y, and its bottom within 1 mm of F's plate. (The
+    instrument's tolerances, as the instrument was first built, marked as the maintainers' own:
+    ref/shift.py, Cell.feet_in_cups, with Cell.CUP_CLEAR = 0.0005 m, tol_xy = 1e-4 m and tol_z = 0.001 m;
+    ref/quantities.py, feet_in_cups, uses it. Where the instrument differs from the values written here, these values
+    hold.)
+  - stands on S inside its seat frame, said of a tray at an instant: each of its four feet lies inside S's seat mark
+    grown by 10 mm on the true shelf, with each foot's bottom within 1 mm of S's top (section 5, as committed, and this
+    amendment). S's seat mark is the outline of the four feet of a tray standing at S's seat as drawn, taken at S's true
+    pose; a foot lies inside the seat frame when each of its bottom corners lies inside its own foot's outline grown by
+    10 mm along S's x and along S's y. (The instrument gets this test before the pre-check's second measurement. Where
+    the instrument differs from the values written here, these values hold.)
+  - both grippers open: both hands released (clamp below 2 N). (The instrument on disk: ref/quantities.py,
+    Run.decline_row, tests g_left.weld_state and g_right.weld_state at most 0, that is both welds off; the unit ends a
+    weld at the first step at which its clamp is below GRASP_RELEASE_N = 2.0 N and logs grasp_released, the event that
+    Run.press reads. Where the instrument differs from the values written here, these values hold.)
+  - x, row, L(x), F_x, Z_x: as in sections 1 to 3: a quantity x of one row, its credit L(x), its full end F_x and its
+    zero end Z_x.
+  - the median of n rows: the value at index n // 2 of the sorted rows, the first index being 0 (item 2).
+  - the 90th percentile of n rows: the nearest rank, that is the value of rank ceil(0.9 n) of the sorted rows, the first
+    rank being 1 (item 2).
+  - H, R, A, P: the four terms of Q, with their quantities e_z and theta, rho_t, e_xy, d_m (section 6).
+  - the press: P_r (section 6). The landing speed is v_c. d_s is the tray's place on the shelf.
+  - PASSES, said of a quantity: defined in item 3.
+  - VISITED, said of a hold: defined in item 4. Section 6 uses the words "visited" and "visits" for the arrivals that a
+    job's list plans at one target (the rows of R). That is another thing; this file writes the new term in capitals.
+  - DECLINED, said of a tray: defined in item 6.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 1. THE FLOORS
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 2. The definition below is added after this sentence, which stays:
+  AS COMMITTED, BAND_RULE.txt lines 13 to 14:
+  > A floor is what a printed tolerance or a field's resolution produces at the scored point, with one line of
+  > derivation; it is never a measurement of what the agent's material allows.
+It also amends the floors of section 6. The figure that section 6 gives after the word "Floor" for e_z, theta, rho_t,
+e_xy and d_m is, from this amendment on, "the committed floor" of that quantity.
+Fields: `json:full_end.floor_rule`, `json:terms.H.quantities.e_z.floor`, `json:terms.H.quantities.theta.floor`,
+`json:terms.R.quantities.rho_t.floor`, `json:terms.A.quantities.e_xy.floor`, `json:terms.P.quantities.d_m.floor`.
+
+NEW TEXT:
+  + FLOORS (amendment 1). floor_x = max(the committed floor, T_x).
+  + The committed floor of x is the floor that section 6 gives for x, with its derivation.
+  + T_x is the 90th percentile (nearest rank) of |x| at the tray's reference point over the targets of the box on the
+  : nominal model, for targets commanded as displacements from the module angles read at the end of the seating with F
+  : taken at its drawn pose (the route of the committed floor of the horizontal error) (the believed hand pose
+  : translated through the nominal inverse kinematics), when the tolerances that reach x and that
+  : no frame shows are drawn uniformly inside their printed ranges in one draw (10,000 draws, the seed written in the
+  : file).
+  + The tolerances, and the quantities that each reaches:
+  + (a) F's survey (+-0.3 mm per axis, +-0.05 deg about each axis): every position and angle, that is the height error
+  : e_z, the tilt theta, the horizontal error e_xy and the path error d_m.
+  + (b) the cups' play (+-0.5 mm per horizontal axis: the documents claim no centring of a presented tray): the
+  : horizontal error e_xy and the path error d_m.
+  + (c) the zero residual (+-0.4 deg per joint) and the mounting (+-0.5 mm, +-0.15 deg): the height error e_z, the tilt
+  : theta and the path error d_m. NOT the horizontal error e_xy, whose owner they are.
+  + On the route of the floors the tray drawing's fit note contributes nothing and is recorded so.
+  + Repeatability (rho_t) is a difference and takes none of them: its floor is its committed floor.
+  + The landing speed and the press keep their working floors (1 mm/s, 0.5 N): no printed tolerance gives a speed or a
+  : force.
+  + THE VALUES. The maintainers compute T_x and floor_x for e_z, theta, e_xy and d_m, on the nominal model and
+  : from the printed tolerances only, into the file rules/band_rule_amendment_1_floors.json, before any number of the
+  : built task exists. That file, at the digest above, is part of this amendment, with its plain text
+  : rules/BAND_RULE_AMENDMENT_1_FLOORS.txt at the digest above; a later file is a later amendment. For each of the four
+  : quantities it holds the committed floor, T_x, floor_x, the tolerances drawn, the targets, the number of draws, the
+  : seed, how the quantity is read, and the line that records what the fit note contributes on the route. No value of it
+  : is typed in this text.
+
+READ AS (what the ordered sentence leaves open; each reading is the plainest one, or is the floors file's):
+  - "The targets of the box" are the 93 targets over which the committed floors of H, R and P were computed (the 90
+    targets of the box's grid and the three fixed targets; section 6, the paragraph that begins "The floor figures of H,
+    R and P").
+  - "|x| at the tray's reference point" is, at one target and in one draw: for e_z the difference in height between the
+    reference point and its target; for e_xy their horizontal distance; for theta the angle of the deck from level. A
+    row of the path error d_m is a move, not a target: the ordered sentence does not say how T is read for it; its
+    moves are the lap's 140 (the move from the lifted point to the fixed first target and the 139 moves between the
+    lap's 140 targets), as stated in the floors file.
+  - The percentile is taken over the pooled values, one value per draw and target (for d_m, one per draw and move),
+    nearest rank, as stated in the floors file.
+  - The route is the floors file's (the believed hand pose translated through the nominal inverse
+    kinematics) and stated in the floors file, with the line that records what the fit note contributes on it.
+  - "In one draw": in each draw all the tolerances that reach x are drawn together, each uniformly and independently
+    inside its printed range. The mounting's two ranges are per axis.
+
+PROMPTED BY: an independent reading. On the development units the height's full end is 0.1355 mm (1.25
+times the reference's 90th percentile; the step floor does not bind). A reader's computation on the nominal model puts
+what printed tolerances leave at the scored point above it. F's vertical survey alone gives 0.27 mm at its 90th
+percentile (its second figure was corrected later). Neither figure is this item's floor.
+HOLDS WITHOUT IT (the maintainers' words): the committed sentence "floor_x is what a printed tolerance or a field's
+resolution produces at the scored point". Section 2 says it with the words "A floor is ...", quoted above.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 2. HOW A ZERO-END MUTANT IS RUN AND READ
+---------------------------------------------------------------------------------------------------------------------
+
+ADDS TO section 3. The text below is added after this sentence, which stays:
+  AS COMMITTED, BAND_RULE.txt lines 18 to 19:
+  > Z_x = the median of x over the rows of the reference with the owning factor's ONE belief set to the documents' value
+  > (the named mutant of section 6), on the three true units.
+Fields: `json:zero_end.rule`.
+
+NEW TEXT:
+  + HOW A ZERO-END MUTANT IS RUN AND READ (amendment 1).
+  + (1) The mutant that places a zero end (M-load, M-fric, M-geom, M-shelf, each at its documents' value) is run once on
+  : each of the three true units over the whole shift, with the trays' labels as the reference has them.
+  + (2) It is run WITH THE GRASP TAKEN AS NEVER LIMITING: a breach of the capacity rule is recorded with its tray, hand
+  : and time and does not end the run; the same for the spill angle and the stop margin, which are rules on the truth
+  : channel and change nothing in the plant. The run ends at E1, at E4, at a dropped tray, at a step the plant cannot
+  : integrate, or at the first cycle at which the mutant's law raises an exception or returns no frame; a missed capture
+  : ends that tray's job only.
+  + (3) Its rows are those of the trays it captured, read with a submission's windows, definitions and code.
+  + (4) Z_x is the median of x over those rows pooled over the three units (the instrument's median: the value at index
+  : n // 2 of the sorted rows; the 90th percentile is the nearest rank). It EXISTS only if those rows number at least
+  : half of the reference's rows of x and at least two units each give at least one tenth of their reference rows.
+  + (5) A quantity whose zero end does not exist is reported only, with the recorded reason. Its factor stays in the
+  : score through completed_i.
+  + (6) On the frozen set nothing is changed to make a zero end exist or a quantity pass.
+  + (An entry added to section 10.) With the frozen set, per zero-end mutant and unit: every breach of the capacity
+  : rule, of the spill angle and of the stop margin that its run recorded, with its tray, hand and time; and for a
+  : quantity whose zero end does not exist, the recorded reason.
+
+READ AS:
+  - (1) The mutant follows the labels: it declines a decline tray as the reference does (item 6), and such a tray gives
+    no row. M-shelf "at its documents' value" takes S at its drawn pose; run on a true unit, it meets that unit's own
+    shelf as its site has it (item 5).
+  - (2) "The spill angle" is the condition of E3 and "the stop margin" the condition of E5. "A dropped tray" is the
+    second half of E2 (a tray released with its feet more than 10 mm above a rest, or anywhere but over F or S). The
+    last line of the NEW TEXT says where a recorded breach is listed; the maintainers' words say that it is recorded, not where.
+  - (3) Of a tray whose job the run did not finish, the rows are those whose windows had run to their end before the run
+    ended. An R row of such a tray is read over the holds at its target whose windows ran to their end, if at least two
+    of them arrived from directions at least 60 deg apart.
+  - (4) "The reference's rows of x" are the rows of the full end F_x: the reference's rows of x on the three units,
+    pooled. "Their reference rows" are, for one unit, the reference's rows of x on that unit. The nearest-rank
+    percentile is the one of section 2's full end and of item 1's T_x.
+  - (5) The recorded reason says, per unit, how the mutant's run ended and how many rows of x it gave.
+  - The second sentence of section 3 stays: the medians at 0.25, 0.5 and 2 times a belief's error are recorded beside
+    Z_x and are never an end. They are run and read as (1) to (3) say. The maintainers' words do not speak of them; this sentence
+    is written so that one family of runs is read in one way.
+
+RECORDED WITH (5), the maintainers' words: "This DEPARTS from the first addendum's sentence that a factor is not taken out
+for biting harder: no band can be placed from rows that do not exist; the factor stays in the score through
+`completed`." The first addendum is the pre-check's first addendum, written before its run.
+NOTE OF THE MAINTAINERS, not a sentence of the rule: the supervisor and the law get the missed-capture branch before
+the pre-check's second measurement.
+
+PROMPTED BY: 7 of the 9 zero-end runs of the pre-check ended at a breach (development units). For the two thresholds of
+(4), the maintainers' words: they "are working values chosen with the pre-check's shares in view (27 to 57 % pooled per
+mutant and quantity; the path error 47 %, repeatability 57 %)".
+HOLDS WITHOUT IT (the maintainers' words): "a zero end scales the credit of rows a submission produced while carrying, so it
+must describe a controller that holds the one wrong belief and still carries. It is a counterfactual chosen knowingly
+(a breach IS the slip), the one the committed label rule already uses for its DECLINE side." For the
+two thresholds: "a pooled median from at least half of the reference's rows lies inside the rows the mutant actually
+carried, and two units keep one unit's draw from setting an end alone."
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 3. WHAT THE 3x RULE DECIDES ON THE FROZEN SET
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 4. Its text from the first sentence to the last is replaced by the NEW TEXT. The sentences that change
+are these two:
+  AS COMMITTED, BAND_RULE.txt lines 23 to 25:
+  > Merged: its credit factor is dropped and the term is computed from the owner's remaining quantity (H keeps the other
+  > of e_z and theta; place keeps the remaining of v_c, P_r, d_s).
+  AS COMMITTED, BAND_RULE.txt lines 25 to 26:
+  > A term left with no scored quantity is reported only and its weight goes to the remaining terms of Q in proportion;
+  > a place term with no quantity left leaves the product (tray = completed x Q).
+Fields: `json:three_x_rule.rule`, `json:three_x_rule.merged`, `json:three_x_rule.reported`, `json:three_x_rule.decided`.
+
+NEW TEXT (section 4 in full):
+  + 4. THE 3x RULE (amendment 1)
+  + A quantity PASSES the 3x rule when its zero end exists (section 3 as amended) and its Z_x is at least 3 F_x. A
+  : quantity whose Z_x is below 3 F_x is merged or reported only. Merging is possible only inside a term: in H, e_z with
+  : theta. A quantity of R, A or P that does not pass is reported, and its term leaves Q. A quantity whose zero end does
+  : not exist is reported only.
+  + Merged: its credit factor is dropped and the term is computed from the owner's remaining quantity (H keeps the other
+  : of e_z and theta). A term of Q left with no scored quantity is reported only and its weight goes to the remaining
+  : terms of Q in proportion; if no term of Q is left, Q_i = 1.
+  + The place term has one quantity that can be scored, the press P_r. If the press does not pass, place_i = 1: the
+  : place term leaves the product (tray_i = completed_i x V_i x Q_i).
+  + Each quantity is decided ONCE, on the frozen set, by this rule, with the floors and the zero ends as amended; never
+  : by looking at a model's episode. H, R, A and P keep their quantities, owners, zero-end mutants and weights of
+  : record. Nothing is taken out before the frozen set exists.
+  + Every outcome of the 3x rule gives a defined score; no outcome sends the form back, and no unit is drawn again
+  : because of one.
+
+READ AS:
+  - A term of Q "passes" (the maintainers' word in "the terms that pass") when at least one of its quantities passes. H
+    passes with e_z, with theta or with both; R with rho_t; A with e_xy; P with d_m.
+  - "Nothing is taken out before the frozen set exists" is the maintainers' "Nothing is taken out now: A, R, P and the tilt
+    are forecast as reported, not excluded". The forecast is a development unit's and is no part of the rule.
+
+PROMPTED BY: the development units' figures (against the provisional full ends). Only the height error under M-load
+(8.4 full ends, on slots 1 to 3 only), the press under M-shelf with S 2.0 mm above its drawing, and the path error under
+M-loop on the one unit with rows (3.65) reach three full ends. The horizontal error under M-geom is at about 2,
+repeatability under M-fric at 1.6, the path error under M-fric at 1.2, the tilt under M-load at 2.5, the landing speed
+at 1.9.
+HOLDS WITHOUT IT: the maintainers state one reason for this change, and it belongs to V (item 4). For this item their
+own sentences are taken. First, each quantity is decided once on the frozen set, so each outcome of that decision must
+give a score; the committed section 4 gives a leaving term's weight to the remaining terms and has no sentence for the
+case that none remains. Second, "On the frozen set nothing is changed to make a zero end exist or a quantity pass":
+a unit drawn again because of an outcome would be such a change.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 4. THE TRAY'S FORMULA, V AND Q_i
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 5. In its block of formula lines this line is replaced:
+  AS COMMITTED, BAND_RULE.txt line 34:
+  > tray_i = completed_i x Q_i x (0.5 + 0.5 x place_i)
+and this sentence gains the case that no term remains:
+  AS COMMITTED, BAND_RULE.txt line 42:
+  > When a term leaves Q (3x rule or a pre-check line) the remaining Q weights are divided by their sum.
+The line of place_i is replaced by item 5, the sentence of J_u by item 6. The other lines of the block stay.
+Fields: `json:structure.tray`, `json:structure.Q`, `json:renormalisation`.
+
+NEW TEXT (the formula lines of section 5 as they stand from this amendment on, then the definitions that are new):
+  + Q_i     = (sum over the terms T of Q that pass of w_T x T) / W, with w_T the weight of record of term T (w_H 0.30,
+  : w_R 0.25, w_A 0.25, w_P 0.20) and W the sum of w_T over the terms that pass; Q_i = 1 if no term passes. Each term T
+  : is the mean of its rows over tray i's job.
+  + H row   = L(e_z) x L(theta), one row per hold. (As committed. If one of the two does not pass, the row is L of the
+  : other: section 4.)
+  + P row   = L(d_m) x progress_m, one row per move; progress = travel projected on the move, in [0, 1]. (As committed.)
+  + V_i     = the share of the job's holds that are VISITED.
+  + place_i = 0.5 + 0.5 x L(P_r) if the press passes, otherwise 1. (Item 5.)
+  + tray_i  = completed_i x V_i x Q_i x place_i
+  + unit_u  = 0.85 x the mean over the unit's CARRY trays of tray_i + 0.15 x J_u. (As committed.)
+  + raw     = gates x the mean over the three units of unit_u; reward = min(1, raw / anchor). (As committed.)
+  + completed_i: as committed (section 5).
+  + V_i, THE JOB FOLLOWED: the share of the job's holds that are VISITED. Let p_k be the mean position of the tray's
+  : reference point over the scored window of hold k (the last 0.4 s) and t_k its target; p_(-1) the reference point at
+  : the carry's start and t_(-1) the lifted point L. Hold k is VISITED when the 3-D distance |p_k - t_k| is at most
+  : 0.020 m AND |(p_k - p_(k-1)) - (t_k - t_(k-1))| is at most 0.020 m. 0.020 m is less than half of the shortest move
+  : any job contains (0.0447 m, a fixed join of the lap; every job's last fixed move is 0.0566 m; a drawn move is at
+  : least 0.06 m) and less than the smallest distance between two targets of the grid (0.030 m): a tray that stays where
+  : it was between two holds is never credited. The definition up to "... is at most 0.020 m." is printed in the
+  : acceptance specification; the sentence that begins "0.020 m is less than half" is not.
+  + Q_i: H, R, A and P keep their quantities, owners, zero-end mutants and weights of record. Each quantity is decided
+  : ONCE, on the frozen set, by the committed 3x rule (section 4 as amended); the weights are renormalised over the
+  : terms that pass; if none passes, Q_i = 1.
+  + When a term leaves Q (3x rule) the remaining Q weights are divided by their sum; if no term remains, Q_i = 1.
+From the words "the share of the job's holds" to its end, the paragraph of V_i is the maintainers' text, word for word
+but for the capitals of VISITED and for its last sentence, which says what of it is printed.
+
+READ AS:
+  - The holds of a job are numbered k = 0, 1, ..., n - 1 in the job's order. V_i is the number of VISITED holds divided
+    by n.
+  - Both distances are 3-D lengths in the cell frame: the length of p_k - t_k, and the length of the vector (p_k -
+    p_(k-1)) - (t_k - t_(k-1)).
+  - p_(-1) is the tray's reference point in the record of the last step before the carry's first cycle (the state at t =
+    9.0 s), one reading, not a window mean. Every other p_k is a mean over a scored window.
+  - L is taken from F's true pose, as the instrument takes the start of the first move for the path rows
+    (ref/quantities.py). Taken from F's drawn pose it would differ by F's survey offset, at most 0.3 mm per axis.
+  - A hold whose scored window did not run to its end before the shift ended is not VISITED.
+  - A hold whose scored window does not end before the next tray's presentation, or that lies after the supervisor has
+    taken its tray out of F, is not VISITED.
+  - The sentence that begins "0.020 m is less than half" is the reason for the number. The acceptance specification
+    prints the rule itself: the two conditions with their numbers.
+  - V_i is not a band term: its tolerance is fixed, and it has no full end and no zero end. Section 6's line "Not band
+    terms" is read with V_i beside completed and J.
+  - In the sentence on the weights the words "or a pre-check line" go: no term is taken out by the pre-check
+    ("Nothing is taken out now").
+
+PROMPTED BY: the development units' figures (they stand under item 3: on the development units most graded quantities stay
+below three full ends).
+HOLDS WITHOUT IT (the maintainers' words): "`completed` never asked that the carry follow the job; a controller that takes
+the tray from F straight to S would have completed it." For the clause "if none passes, Q_i = 1" the maintainers
+state no reason of their own; item 3 gives their sentences that carry it.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 5. THE PLACE TERM
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 5. In its block of formula lines this line is replaced:
+  AS COMMITTED, BAND_RULE.txt line 33:
+  > place_i = L(v_c) x L(P_r) (x L(d_s) only if d_s passes the 3x rule)
+It also amends the place block of section 6, whose head stays and is read with the NEW TEXT:
+  AS COMMITTED, BAND_RULE.txt lines 70 to 71:
+  > place (as 0.5 + 0.5 x place). Owner: setting down by feel (S within its survey tolerance). Mutant M-shelf: S at its
+  > drawn pose, lowering at 8 mm/s to the drawn height, then release. Window: T_e to T_e + 6.0 s.
+Fields: `json:structure.place`, `json:terms.place.quantities.P_r`, `json:terms.place.mutant`.
+
+NEW TEXT:
+  + place_i = 0.5 + 0.5 x L(P_r) if the press passes the 3x rule on the frozen set, otherwise 1 (also if the audit finds
+  : S's height not shown).
+  + From this amendment on the name place_i is the whole factor that enters the tray's product. The committed section 5
+  : gave the name to the product L(v_c) x L(P_r) and entered it as (0.5 + 0.5 x place_i); that use of the name ends.
+  + The place term has one quantity, the press P_r: what S carries minus the tray's weight when the first gripper lets
+  : go (section 6). One row per carry tray: its set-down.
+  + Full end from the reference's set-downs of every carry tray; zero end from M-shelf on each unit's own shelf.
+  + A tray of which S carries less than 2 N in the cycle in which its first gripper lets go has L(P_r) = 0 (let go in
+  : the air).
+  + The first gripper lets go at the first release (clamp below 2 N) of either hand inside the place window, T_e to T_e
+  : + 6.0 s. What S carries in that cycle is the mean, over the cycle's four steps, of the normal force that S's
+  : contacts put on the tray. P_r = |that mean - m g|, with m the tray's true total mass and g = 9.81 m/s^2. The 2 N
+  : test uses the same mean.
+  + With place_i = 1 the place term has left the product: tray_i = completed_i x V_i x Q_i.
+  + The landing speed is reported for good (line (e)'s own clause); d_s is reported (item 7).
+  + The owner, the zero-end mutant, the window and the working floor of the press are those of section 6.
+
+READ AS:
+  - "The audit" is the information audit (maintainers, truth in hand, a gate before the freeze). If it
+    finds that no module frame shows S's height, the press is reported and place_i = 1 for every tray.
+  - "The press passes": item 3. F_P is the full end of section 2 over the reference's set-downs of every carry tray on
+    the three units, pooled. Z_P is the zero end of section 3 as amended over M-shelf's rows: the set-downs of the carry
+    trays that it captured (item 2 (3)), M-shelf taking S at its drawn pose on each unit's own shelf, with the height,
+    tilt and place that the site gives it.
+  - "The first gripper lets go" and what S carries "in the cycle" are defined in the NEW TEXT. The
+    instrument as built took the slot's first release at any time; it follows the NEW TEXT.
+  - The clause on a tray let go in the air has an effect only when the press passes.
+    `json:terms.place.quantities.P_r.what` already names the case: P_r is then the tray's weight.
+
+PROMPTED BY: the maintainers state no line of their own for the place term. From the development units: the landing speed
+stands at 1.9 full ends, below three; the press reached three full ends with S 2.0 mm above its drawing. The clause on a
+tray let go in the air came from an independent reading of the draft and rests on no number of a development
+unit.
+HOLDS WITHOUT IT:
+  - the landing speed: the maintainers' "(line (e)'s own clause)". The clause of the committed pre-check reads: "If one half
+    fails, that quantity is reported and the place term keeps the other".
+  - the rows and the two ends: sections 2 and 3 already take a full end from the reference's rows and a zero end from
+    the mutant's rows "on the three true units"; the item writes that out for the press.
+  - "otherwise 1": every outcome of the 3x rule gives a defined score (item 3).
+  - READ AS: a tray let go in the air: the maintainers give the clause without a reason. The committed rule names the term's
+    owner "setting down by feel"; a tray let go in the air has not been set down.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 6. J AND "DECLINED"
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 5. This sentence is replaced:
+  AS COMMITTED, BAND_RULE.txt lines 39 to 41:
+  > J_u = max(0, TPR - FPR) over the unit's decline and carry trays; a tray counts as declined only if it stands
+  > released in F at its put-back deadline; a tray never reached counts as not declined.
+Fields: `json:structure.J`.
+
+NEW TEXT:
+  + J_u = max(0, TPR - FPR).
+  + A tray counts as DECLINED only if both hands captured it in that slot before the decline was sent and it then stands
+  : released in F at its put-back deadline (its four feet on F's plate inside their cups: "stands in F" and "released"
+  : of NAMES).
+  + A slot whose capture was missed (a hand had not captured its neck at t = 5.0 and no decline had been sent before t =
+  : 5.0) follows the missed capture's schedule: a decline flag sent in it after t = 5.0 is ignored, and its tray is not
+  : DECLINED.
+  + TPR = DECLINED decline trays / decline trays.
+  + FPR is taken over the unit's carry trays on LAP jobs (one per unit): such a tray counts against the controller
+  : unless the first hold of its job is VISITED (item 4), whether or not a decline was sent.
+  + A carried lap that the shift did not reach counts against the controller: FPR is then 1 and J_u = 0, also when
+  : earlier decline trays were DECLINED.
+  + The carried lap, like the decline trays, is never first and never last, and the order of a unit's lap slots is drawn
+  : from the set's entropy.
+  + Degenerate submissions that must score 0: holds still and declines any subset of the slots; captures, weighs,
+  : declines the heavy trays and leaves the carried lap.
+
+READ AS:
+  - "The decline was sent": the cycle of the first reply with the decline flag set inside the tray's decision window (t
+    = 0 to t = 9.0 s). Its time is t_d. The put-back deadline is t_d + 4.0 s. A hand
+    captured before the decline was sent when its capture instant lies before the first step of the cycle whose reply
+    carries the flag.
+  - "Stands released in F": at the put-back deadline both hands have released and the tray's four feet rest on F's plate
+    inside their cups, by the tests of NAMES ("stands in F", "both grippers open").
+  - TPR is taken over the unit's decline trays. FPR is the number of the unit's carry trays on lap jobs that count
+    against the controller, divided by the number of such trays. The frozen set gives every unit one carried lap, so FPR
+    is 0 or 1.
+  - A tray that the shift never reached: a decline tray never reached is not DECLINED (it was not captured), as the
+    committed sentence said. For the carried lap the NEW TEXT says it.
+  - The supervisor's handling of a decline flag is not changed by this item: the item says what COUNTS. A carry tray for
+    which a decline is sent is not carried, so its completed_i is 0 (section 5).
+  - The two degenerate submissions, by the rule. The first captures nothing: no tray is DECLINED, TPR = 0, J_u = 0, and
+    no tray is carried. The second has TPR = 1 and FPR = 1, so J_u = 0; with no tray carried, its unit score is 0.
+  - The sentence on the order of the slots is a rule for the generator of the frozen set. It stands here
+    because "one per unit" and the reading of FPR rest on it.
+
+NOTE OF THE MAINTAINERS, on the reference's side: "The reference declines at the first cycle after both captures (not
+0.5 s after the presentation)."
+
+PROMPTED BY: the development units. Under the committed J, holding still and declining every lap slot gives 0.12 of the
+reward. With the false-positive rate taken over the carried lap only, holding still and declining a subset of the lap
+slots still gives 0.067 expected, and a carried lap that is first or last tells which lap to decline. (Arithmetic on the
+shift's set of trays; no run.)
+HOLDS WITHOUT IT (the maintainers' words): "a decision that costs no grasp is no decision; only a lap slot carries one."
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 7. THE LANDING SPEED AND d_s REPORTED
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS the place block of section 6, where two lines give v_c and d_s as quantities of the place term:
+  AS COMMITTED, BAND_RULE.txt line 72:
+  > v_c, downward speed when the first foot meets S, mm/s.
+  AS COMMITTED, BAND_RULE.txt line 77:
+  > d_s, horizontal distance and yaw from S's true seat mark. Expected to fail the 3x rule and be reported.
+and section 10, where the list "Per tray" holds these words:
+  AS COMMITTED, BAND_RULE.txt line 117:
+  > d_s (if it fails the 3x rule)
+Fields: `json:terms.place.quantities.v_c`, `json:terms.place.quantities.d_s`, `json:reported_not_scored`.
+
+NEW TEXT:
+  + (Section 6, the place block.) v_c, the landing speed: the tray's downward speed when the first foot meets S, mm/s.
+  : Reported for good, by the pre-check's line (e), its own clause. It is not a quantity of the place term and has no
+  : band; its working floor places no end.
+  + (Section 6, the place block.) d_s, horizontal distance and yaw from S's true seat mark. Reported. It is not a
+  : quantity of the place term.
+  + (Section 10, the list "Per tray".) The words "d_s (if it fails the 3x rule)" read: "the landing speed v_c, d_s".
+
+PROMPTED BY: for the landing speed, on the development units it stands at 1.9 full ends, below three.
+For d_s the maintainers name no number.
+HOLDS WITHOUT IT: for the landing speed, the maintainers' "(line (e)'s own clause)", quoted under item 5. For d_s, the
+committed section 6 itself: its floor is the shelf's printed survey tolerance and "by construction it cannot pass the 3x
+rule"; the maintainers' formula of place_i has no factor for it.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 8. WHEN THE CAPACITY RULE IS EVALUATED
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 7, the event E2. Its text is replaced by the NEW TEXT; the words that change are "armed 0.5 s after
+capture until release":
+  AS COMMITTED, BAND_RULE.txt lines 89 to 91:
+  > E2 slip or drop: F_s > mu x F_c or F_n > F_c for 20 ms at a neck (mu printed "0.55 or more"; F_c = the finger stop's
+  > torque over 0.067 m, both pads together), armed 0.5 s after capture until release; or a tray released with its feet
+  > more than 10 mm above a rest, or anywhere but over F or S.
+Fields: `json:events.E2`.
+
+NEW TEXT:
+  + E2 slip or drop: F_s > mu x F_c or F_n > F_c for 20 ms at a neck (mu printed "0.55 or more"; F_c = the finger stop's
+  : torque over 0.067 m, both pads together). The rule is armed 0.5 s after capture. It is evaluated at every step from
+  : the arming until release, except at a step at or after T_e (the start of the set-down window) at which the shelf S
+  : carries at least 2 N of the tray. The 20 ms are consecutive steps at each of which the rule is evaluated and
+  : breached. The exception is a state of that step, not a latch. No exception is made for F: a slip while F holds the
+  : tray is an event. Or a tray released with its feet more than 10 mm above a rest, or anywhere but over F or S.
+  + The events E1 to E5, the capacity rule's 20 ms and its arming 0.5 s after capture are not changed.
+
+READ AS:
+  - "For 20 ms" (the NEW TEXT): "breached" is that one of the two inequalities holds. A step at
+    which the rule is not evaluated, or at which neither inequality holds, ends the run. The monitor counts so today.
+  - The exception has no upper end: it holds at any step at or after T_e at which S carries at
+    least 2 N of the tray, until release. A set-down that is late stays what section 7 says it is, not an event.
+  - "No exception is made for F" covers a tray that is set back into F, after a trial lift or for a decline.
+  - In the run of a zero-end mutant a breach of the rule is recorded and does not end the run (item 2 (2)). The steps at
+    which the rule is evaluated are the same.
+
+PROMPTED BY: the monitor as built. It is a fact of the monitor as built, not a number of a run: the monitor "switches the
+capacity rule off from the first step at which S carries 2 N of a held tray until both grippers release: a touch of S
+during the carry would switch it off for the rest of the job." The maintainers' words on it: "This AMENDS the
+monitor as built: the exception is a state of that step, not a latch."
+HOLDS WITHOUT IT (the maintainers' words): "No exception is made for F: a slip while F holds the tray is an event,
+the decline side rests on it, and an exception there could be switched on by setting the tray back." For the
+state at S the maintainers give the monitor as built as the reason: an exception that lasts longer than S carries
+the tray could be switched on by a touch.
+
+---------------------------------------------------------------------------------------------------------------------
+ITEM 9. M-LOOP: AMENDED AFTER THE FACT
+---------------------------------------------------------------------------------------------------------------------
+
+AMENDS section 10. This sentence is replaced:
+  AS COMMITTED, BAND_RULE.txt line 118:
+  > Where the loop closes, unless the pre-check shows it moves a term of its own by 0.1 (M-loop).
+Fields: `json:reported_not_scored` (its entry that begins "where the loop closes").
+
+NEW TEXT:
+  + Where the loop closes (stillness, velocity ripple of the wrist joints): reported, never scored. M-loop gets no term,
+  : stays a certification mutant and is run again in the corrected cell.
+
+AMENDED AFTER THE FACT. The maintainers' words: "M-loop: by the letter of the pre-check's rule its condition is met
+on the one unit with rows (the path term 1.000 against 0.084). The rule says "stillness or the path term"; the band
+rule says "a term of its own". AMENDED AFTER THE FACT, prompted by that 0.916: the band rule governs, because one
+term belongs to one factor and the path term is friction's; this was true before the run."
+READ AS: "the corrected cell" is the cell in which a closing hand meets nothing inside the capture box.
+
+PROMPTED BY: 0.916. Under M-loop the path term fell from 1.000 to 0.084 on the one development unit on which the mutant
+gave rows.
+HOLDS WITHOUT IT (the maintainers' words): "one term belongs to one factor and the path term is friction's; this was true
+before the run."
+
+---------------------------------------------------------------------------------------------------------------------
+CONSEQUENCES IN PLACES THAT ITEMS 1 TO 9 DO NOT NAME (items 10 and 11)
+---------------------------------------------------------------------------------------------------------------------
+
+The maintainers ordered an amendment for items 1 to 9. Two more places of the committed rule are touched by what
+they decided elsewhere. The two items below give the text that keeps the rule as amended free of contradiction.
+They add no rule of their own. Item 10 can be left out without loss to items 1 to 9; item 11 amends the head of
+section 7, and cannot.
+
+ITEM 10. THE PRE-CHECK'S LINES, CLOSED ("Nothing is taken out now")
+
+AMENDS section 8, which quotes the consequence clauses of the pre-check's rule and ends with this sentence:
+  AS COMMITTED, BAND_RULE.txt line 107:
+  > With fewer than three of the five lines standing the form goes back to design.
+and the sentence of section 5 that points to section 8:
+  AS COMMITTED, BAND_RULE.txt lines 42 to 43:
+  > The unit's 0.85 / 0.15 and the tray's 0.5 / 0.5 change only as section 8 says (J at 0.10 if line a1 fails: 0.90 /
+  > 0.10).
+Fields: `json:precheck_consequences`, `json:renormalisation`.
+
+NEW TEXT:
+  + 8. WHAT THE LINES OF THE PRE-CHECK TOOK OUT (closed by amendment 1). The pre-check was run and was read by its
+  : committed rule and the two addenda written before the run: one line of five stands, line (a). The form went
+  : back to design, and this amendment is the result of that design step. It rules the lines after the fact:
+  + (a) stands. J keeps its weight: the unit's 0.85 / 0.15 stay.
+  + (b) layer 1 stays in the scored chain through completed_i and the events.
+  + (c) and (d): no term is taken out by the pre-check; R, P and A are decided by the 3x rule on the frozen set.
+  + (e) the landing speed is reported; the place term keeps the press, subject to the 3x rule on the frozen set.
+  + The clauses that section 8 quotes stay where they are, in the pre-check's rule file, which is not edited. They take
+  : nothing out of the score.
+  + (Section 5.) The unit's 0.85 / 0.15 and the 0.5 / 0.5 inside place_i do not change.
+
+PROMPTED BY: the reading of the five lines on the development units (one of five stands). The maintainers' order
+on them is headed "The pre-check's lines, decided after the fact".
+HOLDS WITHOUT IT: the first addendum, written before the run, had fixed that for a line that does not stand because its
+belief bites harder than the line assumed, the consequence clause is not applied and the maintainers decide after the
+run. For (e) the line's own clause applies as written.
+
+ITEM 11. A STEP THE PLANT CANNOT INTEGRATE
+
+ADDS TO section 7, before its last line, which stays:
+  AS COMMITTED, BAND_RULE.txt line 96:
+  > Not events: a missed capture, a late or soft set-down, a declined tray, a press on the shelf.
+It also amends the head of section 7:
+  AS COMMITTED, BAND_RULE.txt line 86 (in full):
+  > 7. EVENTS (each ends the unit's shift; the tray in work and every later tray score 0; earlier trays keep their
+  > scores)
+Fields: `json:events`, `json:events.rule`.
+
+NEW TEXT:
+  + A step that the simulated plant cannot integrate (a step after which one of MuJoCo's warning counters of the unit
+  : has risen) ends the unit's shift; it is not one of the events E1 to
+  : E5 but a sixth way a shift ends, recorded with the kind plant_invalid. That the unit is then marked invalid is the
+  : unit's own state (it answers no further call) and changes no score already decided.
+  + The tray in work is the tray of the slot in which the shift ends. An outcome decided before the end of the shift is
+  : kept: a carry tray's completed_i decided at T_e + 6.0, a decline tray DECLINED at its put-back deadline, and the
+  : carried lap's first hold VISITED at the end of its scored window. Every outcome not decided by then is lost:
+  : completed_i = 0, not DECLINED, and the first hold not VISITED. This holds for an event, for a step the plant cannot
+  : integrate and for the stop for late time.
+
+NEW TEXT (the head of section 7):
+  + 7. EVENTS (each ends the unit's shift; what the end of a shift leaves standing: the sentence on the tray in work
+  : below)
+
+READ AS: the maintainers' words say "ends the shift" and end a mutant's run at such a step; it is a sixth way a
+shift ends, not an event. The sentence on the tray in work takes the place of the committed head's clause ("the
+tray in work and every later tray score 0; earlier trays keep their scores") and holds for every way a shift ends:
+a tray that does not stand on S with both grippers open at T_e + 6.0 is not completed.
+
+PROMPTED BY: the development units: in the six runs in which the 9.5 kg tray was carried, the simulation
+became unstable after the first arm-module protection and ran on from a reset state.
+HOLDS WITHOUT IT: the maintainers give no reason here; the unit's side is the shared unit's own rule.
+
+---------------------------------------------------------------------------------------------------------------------
+WHAT IS NOT CHANGED
+---------------------------------------------------------------------------------------------------------------------
+
+  - Section 1: the credit L(x).
+  - Section 2: F_x = max(floor_x, 1.25 x the 90th percentile of the reference's rows, pooled). Only floor_x changes
+    (item 1).
+  - Section 3: Z_x as the median of the mutant's rows, and the medians recorded beside it. Item 2 adds how the mutant is
+    run and read.
+  - Section 4: the ratio 3, and that each quantity is decided once on the frozen set.
+  - Section 5: Q's weights of record, the H row and the P row, completed_i, unit_u with its 0.85 and 0.15, raw, reward,
+    the anchor, and the sentence that a carry tray which is declined, missed at capture, cut by an event (an event
+    before its completed_i was decided: item 11) or never reached has tray_i = 0 and stays in the mean.
+  - Section 6: every term's owner, zero-end mutant, window and quantity, and every committed floor with its derivation.
+    A committed floor is from now on the first of the two values of which item 1 takes the larger.
+  - Section 7: E1, E3, E4, E5, the numbers of E2 (20 ms; armed 0.5 s after capture; 10 mm), and the line of what is no
+    event.
+  - Section 9: the gates.
+  - Section 10: every entry that items 7 and 9 do not name.
+  - Section 11: the reference's gains and the label's margins.
+
+---------------------------------------------------------------------------------------------------------------------
+HOW A UNIT'S SCORE IS COMPUTED UNDER THE RULE AS AMENDED
+---------------------------------------------------------------------------------------------------------------------
+
+The steps are in order. Each names in square brackets the definition it uses: a section of the committed rule, an item
+of this amendment or an entry of NAMES. Step
+0 is done once for the frozen set. Steps 1 to 10 are done for one unit. Step 11 joins the three units.
+
+THE RECORD OF A UNIT'S RUN holds: the shift sheet (per slot the kind of job and its n targets t_0 to t_(n-1)); the
+frozen set's label of each tray (carry or decline); the unit's site (F's and S's true poses, S's seat mark) and each
+tray's true total mass and drawing (feet size and positions); per cycle the controller's reply (in time or late; the
+decline flag); and per step, from the truth channel: the tray's full pose (its reference point and orientation), what F
+and S carry of the tray, each hand's clamp F_c and the loads F_s and F_n at its neck, the instants at which a hand
+captured and released, every module's status, every contact by class, every arm joint's distance to its stops, and
+whether the plant integrated the step.
+
+STEP 0. THE ENDS AND THE FORM OF THE SCORE: once, on the frozen set, before any submission is graded.
+  0.1 floor_x of every quantity: its committed floor [section 6]; for e_z, theta, e_xy and d_m the value in
+      rules/band_rule_amendment_1_floors.json at the digest above [item 1].
+  0.2 F_x = max(floor_x, 1.25 x the 90th percentile of x over the reference's rows on the three units, pooled) [section
+      2; NAMES for the percentile]. The rows of the press are the reference's set-downs of every carry tray [item 5].
+  0.3 Z_x: each zero-end mutant is run and read as item 2 says. Z_x is the median of its pooled rows, if it exists
+      [section 3; item 2].
+  0.4 A quantity passes if Z_x exists and Z_x is at least 3 F_x [item 3]. That fixes the form of the score, the same for
+      every unit and tray:
+      - H is a term of Q if e_z or theta passes. Its row is L(e_z) x L(theta) if both pass, and L of the one that passes
+        if one does.
+      - R is a term of Q if rho_t passes; A if e_xy passes; P if d_m passes.
+      - The weight of a term of Q is its weight of record (0.30 H, 0.25 R, 0.25 A, 0.20 P) divided by the sum of the
+        weights of record of the terms of Q. With no term of Q, Q_i = 1.
+      - place_i holds the press if P_r passes and the audit has found S's height shown. Otherwise place_i = 1 [item 5].
+  0.5 The anchor is the reference's raw score on the frozen set: steps 2 to 11 for the reference, with gates = 1, up to
+      raw [section 5].
+
+STEP 1. THE GATES [section 9]. gates = 1 if every gate holds for the submission, otherwise 0. A unit whose late time
+        exceeds 10 % of its planned shift is stopped there.
+
+STEP 2. WHERE THE UNIT'S SHIFT ENDS. It ends at the first of these: an event E1 to E5 [section 7; E2 as item 8 has it];
+        a step that the plant cannot integrate [item 11]; the stop for late time [section 9]; the end of the last slot.
+        The tray in work is the tray of the slot in which the shift ends. An outcome decided before the end of the shift
+        is kept: a carry tray's completed_i decided at T_e + 6.0, a decline tray DECLINED at its put-back deadline, and
+        the carried lap's first hold VISITED at the end of its scored window. Every outcome not decided by then is lost:
+        completed_i = 0, not DECLINED, and the first hold not VISITED. This holds for an event, for a step the plant
+        cannot integrate and for the stop for late time [section 7; item 11].
+
+STEP 3. WHAT HAPPENED TO EACH TRAY, in the order of the slots. For tray i:
+  - whether it was reached, that is presented before the shift ended;
+  - whether each hand captured its neck by t = 5.0 s [NAMES]. If not, and no decline
+    was sent before t = 5.0, the capture is missed and the job has failed; that is no event [section 7];
+  - whether a decline was sent, and its time t_d [item 6];
+  - whether an event or the end of the shift fell inside its slot [step 2].
+
+STEP 4. completed_i of a carry tray [section 5]. It is 1 if the tray was captured, carried without an event, and stands
+        on S inside its seat frame (the seat mark grown by 10 mm on the true shelf, all four feet, each with its bottom
+        within 1 mm of S's top) with both grippers open at T_e + 6.0 [NAMES: "stands on S inside its seat frame", "both
+        grippers open"]. Otherwise it is 0. A carry tray for which a decline was sent, a carry tray missed at capture,
+        cut by an event or by the end of the shift, or never reached has completed_i = 0.
+
+STEP 5. V_i of a carry tray with completed_i = 1 [item 4]. For k = 0, ..., n - 1, p_k is the mean position of the tray's
+        reference point over the last 0.4 s of hold k. p_(-1) is the tray's reference point in the record of the last
+        step before the carry's first cycle (the state at t = 9.0 s), one reading, not a window mean, and t_(-1) is L.
+        Hold k is VISITED if |p_k - t_k| is at most 0.020 m and |(p_k - p_(k-1)) - (t_k - t_(k-1))| is at most 0.020 m.
+        V_i is the number of VISITED holds divided by n.
+
+STEP 6. Q_i of a carry tray with completed_i = 1 [item 4; section 1 for L; section 6 for the quantities and their
+        windows; step 0 for the ends and the form]. With no term of Q, Q_i = 1. Otherwise:
+  - H, one row per hold k: e_z is the absolute difference in height between p_k and t_k; theta is the mean over the
+    scored window of the angle of the deck from level. The row is L(e_z) x L(theta), or L of the one that passes.
+  - R, one row per target that the job's list reaches at least twice from directions of arrival t_k - t_(k-1), with
+    t_(-1) = L, at least 60 deg apart: rho_t is the largest distance between the p_k of all that target's holds. The row
+    is L(rho_t).
+  - A, one row per hold k: e_xy is the horizontal distance between p_k and t_k. The row is L(e_xy).
+  - P, one row per move k: d_m is the RMS distance of the reference point from the timed straight reference from t_(k-1)
+    to t_k, with path length by the trapezoid of equal thirds over 1.16 s; progress_m is the travel at the
+    move's end projected on the move over its length, clipped to [0, 1]. The row is L(d_m) x progress_m.
+  - Each term of Q is the mean of its rows over the job. Q_i is the sum over the terms of Q of the term times its weight
+    of step 0.4.
+
+STEP 7. place_i of a carry tray with completed_i = 1 [item 5]. If the press does not pass, or the audit found S's height
+        not shown, place_i = 1. Otherwise P_r is the size of the difference between what S carries and the tray's weight
+        in the cycle of item 5; if S carries less than 2 N in that cycle, L(P_r) = 0; and place_i = 0.5 + 0.5 x L(P_r).
+
+STEP 8. tray_i = completed_i x V_i x Q_i x place_i [item 4]. It is 0 for every carry tray with completed_i = 0.
+
+STEP 9. J_u [item 6].
+  - A tray is DECLINED if its slot's capture was not missed (step 3), both hands captured it in its slot before the
+    decline was sent, and at t_d + 4.0 s it stands released in F with its four feet on F's plate inside their cups [item
+    6; NAMES: "stands in F", "both grippers open"].
+  - TPR is the number of the unit's decline trays that are DECLINED, divided by the number of its decline trays. (Every
+    unit of the frozen set has one or two decline trays; a candidate on which any one of its decline trays
+    has no draw that passes the generator's check for a decline tray within 64 draws is rejected before the freeze.)
+  - FPR is 0 if the first hold of the carried lap's job is VISITED (the test of step 5 for k = 0), and 1 if it is not,
+    whether or not a decline was sent for that tray and also when the tray was never reached.
+  - J_u = max(0, TPR - FPR).
+
+STEP 10. unit_u = 0.85 x the mean of tray_i over the unit's carry trays + 0.15 x J_u [section 5]. Every carry tray of
+         the unit is in the mean, also one that was never reached.
+
+STEP 11. raw = gates x the mean of unit_u over the three units. reward = min(1, raw / anchor) [section 5].
+
+NOT A PART OF THE SCORE: what section 10 lists, as items 7 and 9 amend it, and what the run of a zero-end mutant records
+(item 2).
+
+END OF AMENDMENT 1.

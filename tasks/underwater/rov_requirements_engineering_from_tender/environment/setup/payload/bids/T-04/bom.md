@@ -4,7 +4,7 @@
 - Bid: T-04
 - Bidder: Marlstone Harbour Services
 
-Bill of materials of the vehicle as tendered, in our standard format.
+Base configuration, a line for each part family. Options are on the price sheet.
 
 ## 1. Vehicle as tendered
 
@@ -14,22 +14,30 @@ Bill of materials of the vehicle as tendered, in our standard format.
 | Buoyancy foam | foam grade R300 | 1 set |
 | Thrusters | thruster TH-A | 8 |
 | Electronics tube | acrylic tube series, 300 mm | 1 |
-| Battery pack | battery pack PK-18 | 1 |
+| Battery pack | battery pack PK-15E | 1 |
 | Forward camera | camera behind the tube dome | 1 |
-| Camera housing | none: the camera is inside the electronics tube | - |
-| Lights | light | 4 |
-| Tether | tether, 6.8 mm, 200 m | 1 |
-| Ballast | ballast weight, potted in the frame | 4 |
+| Camera housing | none: the camera is inside the electronics tube | none |
+| Lights | light | 2 |
+| Tether | tether, 6.8 mm, 115 m | 1 |
+| Ballast | ballast weight, removable | 4 |
 | Scanning sonar | scanning sonar | 1 |
 | DVL | DVL | 1 |
 | Depth sensor | depth sensor | 1 |
 | Gripper | gripper | 1 |
 
-## 2. Spares supplied
+## 2. Surface equipment
+
+| Item | Catalogue reference | Qty |
+|---|---|---|
+| Surface unit | surface unit SU-R | 1 |
+| Tether reel with deck interface | tether reel RL-R, with its slip ring and deck cable | 1 |
+
+## 3. Spares and accessories supplied
 
 | Item | Qty |
 |---|---|
 | Seal set for each pressure housing | 1 |
-| Ballast weights, loose | 0 |
+| Ballast weights, loose | 5 |
+| Battery charger of the catalogue | 1 |
 
-No loose ballast is supplied; the ballast is potted.
+Codes are catalogue codes.

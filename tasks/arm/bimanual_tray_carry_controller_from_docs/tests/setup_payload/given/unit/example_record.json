@@ -1,0 +1,175 @@
+{
+ "format": "openarm05/DeliveryRecord/1",
+ "home_pose_rad": {
+  "grippers": "open",
+  "left": [
+   0.0,
+   0.0,
+   0.0,
+   1.5708,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "right": [
+   0.0,
+   0.0,
+   0.0,
+   1.5708,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "modules": [
+  {
+   "Imax_A": 41.04477612,
+   "edition": "DM-J8009P",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J1",
+   "product": "DM-J8009P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x1 (Response ID: 0x11)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          17\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          1\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   1.604938e-03\nInertia                       RO   float     /                   1.950000e-04\nNumber of Pole Pairs          RO   uint32    /                   21\nStator Resistance (Rs)        RO   float     /                   1.458438e-01\nStator Inductance (Ls)        RO   float     /                   8.233770e-05\nRotor Flux                    RO   float     /                   4.185954e-03\nGear Ratio                    RO   float     /                   9.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         45.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         54.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 41.044776\n",
+   "serial": "DM0CD4903ABD"
+  },
+  {
+   "Imax_A": 41.04477612,
+   "edition": "DM-J8009P",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J2",
+   "product": "DM-J8009P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x2 (Response ID: 0x12)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          18\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          2\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   1.604938e-03\nInertia                       RO   float     /                   1.950000e-04\nNumber of Pole Pairs          RO   uint32    /                   21\nStator Resistance (Rs)        RO   float     /                   1.486415e-01\nStator Inductance (Ls)        RO   float     /                   7.689573e-05\nRotor Flux                    RO   float     /                   4.525769e-03\nGear Ratio                    RO   float     /                   9.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         45.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         54.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 41.044776\n",
+   "serial": "DM47A6FFCBC0"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4340 / 4340P, first edition",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J3",
+   "product": "DM-J4340P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x3 (Response ID: 0x13)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          19\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          3\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   2.062500e-04\nInertia                       RO   float     /                   2.000000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   9.315690e-01\nStator Inductance (Ls)        RO   float     /                   3.632258e-04\nRotor Flux                    RO   float     /                   5.022439e-03\nGear Ratio                    RO   float     /                   40.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         10.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         28.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM2171D092D4"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4340 / 4340P, first edition",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J4",
+   "product": "DM-J4340",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x4 (Response ID: 0x14)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          20\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          4\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   2.062500e-04\nInertia                       RO   float     /                   2.000000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   9.253358e-01\nStator Inductance (Ls)        RO   float     /                   3.390822e-04\nRotor Flux                    RO   float     /                   4.910167e-03\nGear Ratio                    RO   float     /                   40.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         10.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         28.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM9F32A0829A"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J5",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x5 (Response ID: 0x15)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          21\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          5\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.672539e-01\nStator Inductance (Ls)        RO   float     /                   3.368942e-04\nRotor Flux                    RO   float     /                   4.657704e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DMD153B59128"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J6",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x6 (Response ID: 0x16)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          22\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          6\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.558453e-01\nStator Inductance (Ls)        RO   float     /                   3.461969e-04\nRotor Flux                    RO   float     /                   4.317468e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM8D1BC4FB91"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J7",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x7 (Response ID: 0x17)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          23\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          7\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.236962e-01\nStator Inductance (Ls)        RO   float     /                   3.560955e-04\nRotor Flux                    RO   float     /                   4.625675e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM00766B357F"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "left J8",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x8 (Response ID: 0x18)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          24\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          8\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              4 (POS_FORCE)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.864412e-01\nStator Inductance (Ls)        RO   float     /                   3.353810e-04\nRotor Flux                    RO   float     /                   4.432806e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM354EA5EF4C"
+  },
+  {
+   "Imax_A": 41.04477612,
+   "edition": "DM-J8009P",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J1",
+   "product": "DM-J8009P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x1 (Response ID: 0x11)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          17\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          1\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   1.604938e-03\nInertia                       RO   float     /                   1.950000e-04\nNumber of Pole Pairs          RO   uint32    /                   21\nStator Resistance (Rs)        RO   float     /                   1.446646e-01\nStator Inductance (Ls)        RO   float     /                   7.749144e-05\nRotor Flux                    RO   float     /                   4.477769e-03\nGear Ratio                    RO   float     /                   9.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         45.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         54.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 41.044776\n",
+   "serial": "DM8DAAD04B16"
+  },
+  {
+   "Imax_A": 41.04477612,
+   "edition": "DM-J8009P",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J2",
+   "product": "DM-J8009P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x2 (Response ID: 0x12)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          18\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          2\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   1.604938e-03\nInertia                       RO   float     /                   1.950000e-04\nNumber of Pole Pairs          RO   uint32    /                   21\nStator Resistance (Rs)        RO   float     /                   1.442000e-01\nStator Inductance (Ls)        RO   float     /                   7.775176e-05\nRotor Flux                    RO   float     /                   4.532579e-03\nGear Ratio                    RO   float     /                   9.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         45.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         54.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 41.044776\n",
+   "serial": "DM07F16E5893"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4340 / 4340P, first edition",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J3",
+   "product": "DM-J4340P",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x3 (Response ID: 0x13)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          19\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          3\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   2.062500e-04\nInertia                       RO   float     /                   2.000000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   8.281904e-01\nStator Inductance (Ls)        RO   float     /                   3.668475e-04\nRotor Flux                    RO   float     /                   4.713694e-03\nGear Ratio                    RO   float     /                   40.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         10.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         28.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DMCB714736CF"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4340 / 4340P, first edition",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J4",
+   "product": "DM-J4340",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x4 (Response ID: 0x14)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          20\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          4\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   2.062500e-04\nInertia                       RO   float     /                   2.000000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   8.707324e-01\nStator Inductance (Ls)        RO   float     /                   3.676382e-04\nRotor Flux                    RO   float     /                   4.889701e-03\nGear Ratio                    RO   float     /                   40.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         10.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         28.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM02DA0CA8E6"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J5",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x5 (Response ID: 0x15)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          21\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          5\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.123028e-01\nStator Inductance (Ls)        RO   float     /                   3.423121e-04\nRotor Flux                    RO   float     /                   4.663550e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM2D9AA6A4D1"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J6",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x6 (Response ID: 0x16)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          22\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          6\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.465582e-01\nStator Inductance (Ls)        RO   float     /                   3.488020e-04\nRotor Flux                    RO   float     /                   4.433514e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM700B8167AE"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J7",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x7 (Response ID: 0x17)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          23\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          7\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              1 (MIT)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.234007e-01\nStator Inductance (Ls)        RO   float     /                   3.263593e-04\nRotor Flux                    RO   float     /                   4.630152e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM6ECDECCAAC"
+  },
+  {
+   "Imax_A": 10.261194,
+   "edition": "DM-J4310 V1.1",
+   "firmware": "V5017_04 / V5117_04 / V6417_04",
+   "label": "right J8",
+   "product": "DM-J4310",
+   "register_dump": "\n==================================================\n MOTOR ID: 0x8 (Response ID: 0x18)\n==================================================\nParameter                     R/W  Type      Range               Value\n--------------------------------------------------------------------------------\nUnder-Voltage Threshold       RW   float     (10.0, fmax]        15.0000\nKT Value (Torque Const)       RW   float     [0.0, fmax]         0.0000\nOver-Temp Threshold           RW   float     [80.0, 200)         100.0000\nOver-Current Threshold        RW   float     (0.0, 1.0)          0.8000\nMaster ID                     RW   uint32    [0, 0x7FF]          24\nMotor (ESC) ID                RW   uint32    [0, 0x7FF]          8\nCAN Timeout                   RW   uint32    [0, 2^32-1]         0\nControl Mode                  RW   uint32    [0, 4]              4 (POS_FORCE)\nDamping Ratio                 RO   float     /                   3.000000e-04\nInertia                       RO   float     /                   1.800000e-05\nNumber of Pole Pairs          RO   uint32    /                   14\nStator Resistance (Rs)        RO   float     /                   6.686889e-01\nStator Inductance (Ls)        RO   float     /                   3.428475e-04\nRotor Flux                    RO   float     /                   4.606013e-03\nGear Ratio                    RO   float     /                   10.0000\nPosition Limit (PMAX)         RW   float     (0.0, fmax]         12.5000\nVelocity Limit (VMAX)         RW   float     (0.0, fmax]         30.0000\nTorque Limit (TMAX)           RW   float     (0.0, fmax]         10.0000\nGear Torque Efficiency        RW   float     (0.0, 1.0]          1.0000\nCAN Baudrate                  RW   uint32    [0, 9]              9 (5M)\n\nPower-up serial output:\nImax: 10.261194\n",
+   "serial": "DM6765EB9B19"
+  }
+ ],
+ "mounting": "arms mounted to the pedestal drawing: 0.5 mm, 0.15 deg",
+ "not_identified": "joint friction, damping and delivered torque were not identified on this unit",
+ "pads": "lot PD-08D1B",
+ "unit_id": "OAP-DB9639",
+ "zeroing": "the maker's routine, script edition openarm_can/setup/openarm-can-zero-position-calibration at 20d66f0 (v2 sequence); fixture check passed: every joint within 0.4 deg"
+}

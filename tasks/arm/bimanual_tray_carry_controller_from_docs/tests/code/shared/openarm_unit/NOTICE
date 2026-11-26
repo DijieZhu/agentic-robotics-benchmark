@@ -1,0 +1,29 @@
+openarm_unit: a simulated unit of the OpenArm 2.0 two-arm robot
+
+This folder contains files of a third party, used under their licence:
+
+1. The OpenArm v2 MuJoCo model of Enactic, Inc.
+   Source: https://github.com/enactic/openarm_mujoco, folder v2/, commit ed2046f30981398fc610688f08beac0ebd08f972.
+   Copyright 2026 Enactic, Inc. Licensed under the Apache License, Version 2.0 (see base/LICENSE, a copy of the
+   repository's LICENSE file; http://www.apache.org/licenses/LICENSE-2.0). The repository ships no NOTICE file.
+   Vendored unchanged under base/ (base/v2/pedestal/pedestal.xml, base/v2/pedestal/openarm_pedestal.xml,
+   base/v2/openarm_bimanual_model.xml, base/v2/openarm_bimanual_common.xml, base/v2/components/left_arm.xml,
+   base/v2/components/right_arm.xml, base/v2/assets/), each file pinned by sha256 in base/MANIFEST.json; the files
+   keep their copyright headers. The mesh files under base/v2/assets/ are restored from the source by base/restore.py.
+
+2. The ZED Mini mesh (base/v2/assets/visual/zed/zedm.stl), as the maker's pedestal file states: Stereolabs,
+   Apache-2.0, from https://github.com/stereolabs/zed-ros2-description at commit
+   22468247c1653d08a1e213809f3e9ce76291487d.
+
+3. The maker's OpenArm v2 example URDF (openarm_v20_example.urdf, not shipped), used only as a reference in a
+   test: https://github.com/enactic/openarm_description, commit 0d0240be9a50ca96148fa58abd158f2b45cb4468,
+   assets/robot/openarm_v2.0/urdf/example/v2.urdf. Copyright 2026 Enactic, Inc., Apache License, Version 2.0.
+   Copied unchanged.
+
+Modified files (Apache License 2.0, section 4 b). The unit files that openarm_unit/unitfile.py writes (unit.xml) are
+modified versions of the files in item 1; each carries a header comment stating that it was changed and how: the
+scene, its include and its attachments flattened into one file; the simulation option block and the joint
+constraint settings set; the sixteen actuators replaced by actuators that carry a torque scale and offset; the
+unit's own joint, link, placement and mounted-item values written. The vendored files themselves are not modified.
+
+Everything else in this folder is original work of the benchmark.

@@ -8,18 +8,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "293.1",
-     "raw": 293.13035501237283,
+     "printed": "422.2",
+     "raw": 422.222424489408,
      "resolution": 0.1,
-     "value": 293.1
+     "value": 422.2
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "16.5",
+     "raw": 16.491000000000003,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 16.5
     }
    ],
    "params": {
@@ -35,18 +35,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "280.7",
-     "raw": 280.6829302438526,
+     "printed": "400.1",
+     "raw": 400.14657382120635,
      "resolution": 0.1,
-     "value": 280.7
+     "value": 400.1
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "16.5",
+     "raw": 16.491000000000003,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 16.5
     }
    ],
    "params": {
@@ -58,6 +58,596 @@
   "bidder_T01|witness:battery_discharge:chamber_c=15:load_w=100": {
    "bid": "T-01",
    "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "433.2",
+     "raw": 433.2499901629253,
+     "resolution": 0.1,
+     "value": 433.2
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "15.6",
+     "raw": 15.630600000000005,
+     "resolution": 0.1,
+     "value": 15.6
+    }
+   ],
+   "params": {
+    "chamber_c": 15,
+    "load_w": 100
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T01|witness:battery_discharge:chamber_c=15:load_w=440": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "412.0",
+     "raw": 411.96310907441716,
+     "resolution": 0.1,
+     "value": 412.0
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "15.6",
+     "raw": 15.630600000000005,
+     "resolution": 0.1,
+     "value": 15.6
+    }
+   ],
+   "params": {
+    "chamber_c": 15,
+    "load_w": 440
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T01|witness:battery_discharge:chamber_c=23:load_w=100": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "451.5",
+     "raw": 451.4901726888957,
+     "resolution": 0.1,
+     "value": 451.5
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "14.3",
+     "raw": 14.340000000000002,
+     "resolution": 0.1,
+     "value": 14.3
+    }
+   ],
+   "params": {
+    "chamber_c": 23,
+    "load_w": 100
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T01|witness:battery_discharge:chamber_c=23:load_w=440": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "431.4",
+     "raw": 431.4105983169999,
+     "resolution": 0.1,
+     "value": 431.4
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "14.3",
+     "raw": 14.340000000000002,
+     "resolution": 0.1,
+     "value": 14.3
+    }
+   ],
+   "params": {
+    "chamber_c": 23,
+    "load_w": 440
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=12:limiter=off": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "96.8",
+     "raw": 96.83777026439256,
+     "resolution": 0.1,
+     "value": 96.8
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "98.1",
+     "raw": 98.06809827783744,
+     "resolution": 0.1,
+     "value": 98.1
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "85.1",
+     "raw": 85.13333333333333,
+     "resolution": 0.1,
+     "value": 85.1
+    }
+   ],
+   "params": {
+    "bus_v": 12,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=12:limiter=on": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "85.9",
+     "raw": 85.93334149955648,
+     "resolution": 0.1,
+     "value": 85.9
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "87.0",
+     "raw": 87.02512827910715,
+     "resolution": 0.1,
+     "value": 87.0
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 12,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=13:limiter=off": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "107.5",
+     "raw": 107.45012864953148,
+     "resolution": 0.1,
+     "value": 107.5
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "108.8",
+     "raw": 108.81528713020317,
+     "resolution": 0.1,
+     "value": 108.8
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "92.5",
+     "raw": 92.49230769230769,
+     "resolution": 0.1,
+     "value": 92.5
+    }
+   ],
+   "params": {
+    "bus_v": 13,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=13:limiter=on": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "90.1",
+     "raw": 90.0911779156113,
+     "resolution": 0.1,
+     "value": 90.1
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "91.2",
+     "raw": 91.23579018467942,
+     "resolution": 0.1,
+     "value": 91.2
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 13,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=14:limiter=off": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "118.1",
+     "raw": 118.0624870346704,
+     "resolution": 0.1,
+     "value": 118.1
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "119.6",
+     "raw": 119.56247598256894,
+     "resolution": 0.1,
+     "value": 119.6
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "99.9",
+     "raw": 99.94285714285714,
+     "resolution": 0.1,
+     "value": 99.9
+    }
+   ],
+   "params": {
+    "bus_v": 14,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=14:limiter=on": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "94.0",
+     "raw": 93.97254603001907,
+     "resolution": 0.1,
+     "value": 94.0
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "95.2",
+     "raw": 95.16647124700624,
+     "resolution": 0.1,
+     "value": 95.2
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 14,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=15:limiter=off": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "127.5",
+     "raw": 127.45884602151214,
+     "resolution": 0.1,
+     "value": 127.5
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "129.1",
+     "raw": 129.0782161122678,
+     "resolution": 0.1,
+     "value": 129.1
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "107.5",
+     "raw": 107.46666666666667,
+     "resolution": 0.1,
+     "value": 107.5
+    }
+   ],
+   "params": {
+    "bus_v": 15,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=15:limiter=on": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "96.7",
+     "raw": 96.69555298928087,
+     "resolution": 0.1,
+     "value": 96.7
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "97.9",
+     "raw": 97.9240741261621,
+     "resolution": 0.1,
+     "value": 97.9
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 15,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=16:limiter=off": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "136.9",
+     "raw": 136.8552050083539,
+     "resolution": 0.1,
+     "value": 136.9
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "138.6",
+     "raw": 138.59395624196662,
+     "resolution": 0.1,
+     "value": 138.6
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "115.0",
+     "raw": 115.05,
+     "resolution": 0.1,
+     "value": 115.0
+    }
+   ],
+   "params": {
+    "bus_v": 16,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:bollard_pull:bus_v=16:limiter=on": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "99.3",
+     "raw": 99.2952127188776,
+     "resolution": 0.1,
+     "value": 99.3
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "100.6",
+     "raw": 100.55676264382379,
+     "resolution": 0.1,
+     "value": 100.6
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 16,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T01|witness:tow:speed_mps=0.4": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "12.23",
+     "raw": 12.226200000000002,
+     "resolution": 0.01,
+     "value": 12.23
+    }
+   ],
+   "params": {
+    "speed_mps": 0.4
+   },
+   "test": "tow"
+  },
+  "bidder_T01|witness:tow:speed_mps=0.6": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "24.71",
+     "raw": 24.7149,
+     "resolution": 0.01,
+     "value": 24.71
+    }
+   ],
+   "params": {
+    "speed_mps": 0.6
+   },
+   "test": "tow"
+  },
+  "bidder_T01|witness:tow:speed_mps=0.8": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "41.45",
+     "raw": 41.45400000000001,
+     "resolution": 0.01,
+     "value": 41.45
+    }
+   ],
+   "params": {
+    "speed_mps": 0.8
+   },
+   "test": "tow"
+  },
+  "bidder_T01|witness:weigh": {
+   "bid": "T-01",
+   "bidder": "bidder_T01",
+   "outputs": [
+    {
+     "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
+     "name": "air_mass_kg",
+     "printed": "15.034",
+     "raw": 15.034,
+     "resolution": 0.001,
+     "value": 15.034
+    },
+    {
+     "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
+     "name": "pool_weight_n",
+     "printed": "-0.46",
+     "raw": -0.4609125500000058,
+     "resolution": 0.01,
+     "value": -0.46
+    },
+    {
+     "basis_function": "as_built: tank water density / 1000",
+     "name": "pool_sg",
+     "printed": "0.9991",
+     "raw": 0.9991,
+     "resolution": 0.0001,
+     "value": 0.9991
+    },
+    {
+     "basis_function": "as_built: tanks[<tank>].t_c",
+     "name": "pool_temp_c",
+     "printed": "14.0",
+     "raw": 14.0,
+     "resolution": 0.1,
+     "value": 14.0
+    }
+   ],
+   "params": {},
+   "test": "weigh"
+  },
+  "bidder_T02|witness:battery_discharge:chamber_c=10:load_w=100": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
+   "outputs": [],
+   "params": {
+    "chamber_c": 10,
+    "load_w": 100
+   },
+   "refused": {
+    "declared": [
+     15.0,
+     35.0
+    ],
+    "envelope_key": "chamber_c",
+    "param": "chamber_c",
+    "value": 10
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T02|witness:battery_discharge:chamber_c=10:load_w=440": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
+   "outputs": [],
+   "params": {
+    "chamber_c": 10,
+    "load_w": 440
+   },
+   "refused": {
+    "declared": [
+     15.0,
+     35.0
+    ],
+    "envelope_key": "chamber_c",
+    "param": "chamber_c",
+    "value": 10
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T02|witness:battery_discharge:chamber_c=15:load_w=100": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
@@ -82,9 +672,9 @@
    },
    "test": "battery_discharge"
   },
-  "bidder_T01|witness:battery_discharge:chamber_c=15:load_w=440": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
+  "bidder_T02|witness:battery_discharge:chamber_c=15:load_w=440": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
@@ -109,9 +699,9 @@
    },
    "test": "battery_discharge"
   },
-  "bidder_T01|witness:battery_discharge:chamber_c=23:load_w=100": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
+  "bidder_T02|witness:battery_discharge:chamber_c=23:load_w=100": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
@@ -136,9 +726,9 @@
    },
    "test": "battery_discharge"
   },
-  "bidder_T01|witness:battery_discharge:chamber_c=23:load_w=440": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
+  "bidder_T02|witness:battery_discharge:chamber_c=23:load_w=440": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
@@ -163,9 +753,9 @@
    },
    "test": "battery_discharge"
   },
-  "bidder_T01|witness:bollard_pull:bus_v=12:limiter=off": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
+  "bidder_T02|witness:bollard_pull:bus_v=12:limiter=off": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -198,9 +788,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T01|witness:bollard_pull:bus_v=12:limiter=on": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
+  "bidder_T02|witness:bollard_pull:bus_v=12:limiter=on": {
+   "bid": "T-02",
+   "bidder": "bidder_T02",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -217,612 +807,6 @@
      "raw": 92.4428041062957,
      "resolution": 0.1,
      "value": 92.4
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 12,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=13:limiter=off": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "114.1",
-     "raw": 114.13934561622021,
-     "resolution": 0.1,
-     "value": 114.1
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "115.6",
-     "raw": 115.58949088458496,
-     "resolution": 0.1,
-     "value": 115.6
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "92.5",
-     "raw": 92.49230769230769,
-     "resolution": 0.1,
-     "value": 92.5
-    }
-   ],
-   "params": {
-    "bus_v": 13,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=13:limiter=on": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "95.7",
-     "raw": 95.69972807219327,
-     "resolution": 0.1,
-     "value": 95.7
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "96.9",
-     "raw": 96.91559721090648,
-     "resolution": 0.1,
-     "value": 96.9
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 13,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=14:limiter=off": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "125.4",
-     "raw": 125.41236740547654,
-     "resolution": 0.1,
-     "value": 125.4
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "127.0",
-     "raw": 127.0057368978773,
-     "resolution": 0.1,
-     "value": 127.0
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "99.9",
-     "raw": 99.94285714285714,
-     "resolution": 0.1,
-     "value": 99.9
-    }
-   ],
-   "params": {
-    "bus_v": 14,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=14:limiter=on": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "99.8",
-     "raw": 99.82272747891473,
-     "resolution": 0.1,
-     "value": 99.8
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "101.1",
-     "raw": 101.09097950145166,
-     "resolution": 0.1,
-     "value": 101.1
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 14,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=15:limiter=off": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "135.4",
-     "raw": 135.3936887813806,
-     "resolution": 0.1,
-     "value": 135.4
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "137.1",
-     "raw": 137.11387138881327,
-     "resolution": 0.1,
-     "value": 137.1
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "107.5",
-     "raw": 107.46666666666667,
-     "resolution": 0.1,
-     "value": 107.5
-    }
-   ],
-   "params": {
-    "bus_v": 15,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=15:limiter=on": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "102.7",
-     "raw": 102.71525293555977,
-     "resolution": 0.1,
-     "value": 102.7
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "104.0",
-     "raw": 104.02025461775115,
-     "resolution": 0.1,
-     "value": 104.0
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 15,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=16:limiter=off": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "145.4",
-     "raw": 145.37501015728463,
-     "resolution": 0.1,
-     "value": 145.4
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "147.2",
-     "raw": 147.2220058797492,
-     "resolution": 0.1,
-     "value": 147.2
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "115.0",
-     "raw": 115.05,
-     "resolution": 0.1,
-     "value": 115.0
-    }
-   ],
-   "params": {
-    "bus_v": 16,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:bollard_pull:bus_v=16:limiter=on": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "105.5",
-     "raw": 105.47675228498197,
-     "resolution": 0.1,
-     "value": 105.5
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "106.8",
-     "raw": 106.81683893453088,
-     "resolution": 0.1,
-     "value": 106.8
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 16,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T01|witness:tow:speed_mps=0.4": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "11.64",
-     "raw": 11.644000000000002,
-     "resolution": 0.01,
-     "value": 11.64
-    }
-   ],
-   "params": {
-    "speed_mps": 0.4
-   },
-   "test": "tow"
-  },
-  "bidder_T01|witness:tow:speed_mps=0.6": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "23.54",
-     "raw": 23.537999999999997,
-     "resolution": 0.01,
-     "value": 23.54
-    }
-   ],
-   "params": {
-    "speed_mps": 0.6
-   },
-   "test": "tow"
-  },
-  "bidder_T01|witness:tow:speed_mps=0.8": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "39.48",
-     "raw": 39.480000000000004,
-     "resolution": 0.01,
-     "value": 39.48
-    }
-   ],
-   "params": {
-    "speed_mps": 0.8
-   },
-   "test": "tow"
-  },
-  "bidder_T01|witness:weigh": {
-   "bid": "T-01",
-   "bidder": "bidder_T01",
-   "outputs": [
-    {
-     "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
-     "name": "air_mass_kg",
-     "printed": "14.754",
-     "raw": 14.754000000000001,
-     "resolution": 0.001,
-     "value": 14.754
-    },
-    {
-     "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
-     "name": "pool_weight_n",
-     "printed": "-0.54",
-     "raw": -0.5393657499999798,
-     "resolution": 0.01,
-     "value": -0.54
-    },
-    {
-     "basis_function": "as_built: tank water density / 1000",
-     "name": "pool_sg",
-     "printed": "0.9999",
-     "raw": 0.9998508079837896,
-     "resolution": 0.0001,
-     "value": 0.9999
-    },
-    {
-     "basis_function": "as_built: tanks[<tank>].t_c",
-     "name": "pool_temp_c",
-     "printed": "8.0",
-     "raw": 8.0,
-     "resolution": 0.1,
-     "value": 8.0
-    }
-   ],
-   "params": {},
-   "test": "weigh"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=10:load_w=100": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "230.7",
-     "raw": 230.70318290372856,
-     "resolution": 0.1,
-     "value": 230.7
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "29.3",
-     "raw": 29.259999999999994,
-     "resolution": 0.1,
-     "value": 29.3
-    }
-   ],
-   "params": {
-    "chamber_c": 10,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=10:load_w=440": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "206.1",
-     "raw": 206.06305048047142,
-     "resolution": 0.1,
-     "value": 206.1
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "29.3",
-     "raw": 29.259999999999994,
-     "resolution": 0.1,
-     "value": 29.3
-    }
-   ],
-   "params": {
-    "chamber_c": 10,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=15:load_w=100": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "239.9",
-     "raw": 239.87202587548643,
-     "resolution": 0.1,
-     "value": 239.9
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "26.1",
-     "raw": 26.125,
-     "resolution": 0.1,
-     "value": 26.1
-    }
-   ],
-   "params": {
-    "chamber_c": 15,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=15:load_w=440": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "218.1",
-     "raw": 218.1310090396641,
-     "resolution": 0.1,
-     "value": 218.1
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "26.1",
-     "raw": 26.125,
-     "resolution": 0.1,
-     "value": 26.1
-    }
-   ],
-   "params": {
-    "chamber_c": 15,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=23:load_w=100": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "254.8",
-     "raw": 254.83761978293086,
-     "resolution": 0.1,
-     "value": 254.8
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "20.9",
-     "raw": 20.9,
-     "resolution": 0.1,
-     "value": 20.9
-    }
-   ],
-   "params": {
-    "chamber_c": 23,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:battery_discharge:chamber_c=23:load_w=440": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "238.2",
-     "raw": 238.15674259694882,
-     "resolution": 0.1,
-     "value": 238.2
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "20.9",
-     "raw": 20.9,
-     "resolution": 0.1,
-     "value": 20.9
-    }
-   ],
-   "params": {
-    "chamber_c": 23,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T02|witness:bollard_pull:bus_v=12:limiter=off": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "102.9",
-     "raw": 102.86632382696392,
-     "resolution": 0.1,
-     "value": 102.9
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "104.2",
-     "raw": 104.17324487129262,
-     "resolution": 0.1,
-     "value": 104.2
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "82.3",
-     "raw": 82.3,
-     "resolution": 0.1,
-     "value": 82.3
-    }
-   ],
-   "params": {
-    "bus_v": 12,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T02|witness:bollard_pull:bus_v=12:limiter=on": {
-   "bid": "T-02",
-   "bidder": "bidder_T02",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "93.9",
-     "raw": 93.8502665578797,
-     "resolution": 0.1,
-     "value": 93.9
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "95.0",
-     "raw": 95.04263820894285,
-     "resolution": 0.1,
-     "value": 95.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -862,10 +846,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "89.9",
-     "raw": 89.87692307692308,
+     "printed": "92.5",
+     "raw": 92.49230769230769,
      "resolution": 0.1,
-     "value": 89.9
+     "value": 92.5
     }
    ],
    "params": {
@@ -881,18 +865,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "98.2",
-     "raw": 98.16102144615688,
+     "printed": "95.7",
+     "raw": 95.69972807219327,
      "resolution": 0.1,
-     "value": 98.2
+     "value": 95.7
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "99.4",
-     "raw": 99.40816142246811,
+     "printed": "96.9",
+     "raw": 96.91559721090648,
      "resolution": 0.1,
-     "value": 99.4
+     "value": 96.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -932,10 +916,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "97.5",
-     "raw": 97.5142857142857,
+     "printed": "99.9",
+     "raw": 99.94285714285714,
      "resolution": 0.1,
-     "value": 97.5
+     "value": 99.9
     }
    ],
    "params": {
@@ -951,18 +935,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "102.2",
-     "raw": 102.18782876684133,
+     "printed": "99.8",
+     "raw": 99.82272747891473,
      "resolution": 0.1,
-     "value": 102.2
+     "value": 99.8
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "103.5",
-     "raw": 103.48612950240856,
+     "printed": "101.1",
+     "raw": 101.09097950145166,
      "resolution": 0.1,
-     "value": 103.5
+     "value": 101.1
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -1002,10 +986,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "105.2",
-     "raw": 105.2,
+     "printed": "107.5",
+     "raw": 107.46666666666667,
      "resolution": 0.1,
-     "value": 105.2
+     "value": 107.5
     }
    ],
    "params": {
@@ -1021,18 +1005,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "105.0",
-     "raw": 104.9711867289198,
+     "printed": "102.7",
+     "raw": 102.71525293555977,
      "resolution": 0.1,
-     "value": 105.0
+     "value": 102.7
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "106.3",
-     "raw": 106.30485014645338,
+     "printed": "104.0",
+     "raw": 104.02025461775115,
      "resolution": 0.1,
-     "value": 106.3
+     "value": 104.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -1072,10 +1056,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "112.9",
-     "raw": 112.925,
+     "printed": "115.0",
+     "raw": 115.05,
      "resolution": 0.1,
-     "value": 112.9
+     "value": 115.0
     }
    ],
    "params": {
@@ -1091,18 +1075,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "107.6",
-     "raw": 107.6356955162717,
+     "printed": "105.5",
+     "raw": 105.47675228498197,
      "resolution": 0.1,
-     "value": 107.6
+     "value": 105.5
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "109.0",
-     "raw": 109.00321163192295,
+     "printed": "106.8",
+     "raw": 106.81683893453088,
      "resolution": 0.1,
-     "value": 109.0
+     "value": 106.8
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -1126,10 +1110,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "11.64",
-     "raw": 11.644000000000002,
+     "printed": "12.23",
+     "raw": 12.226200000000002,
      "resolution": 0.01,
-     "value": 11.64
+     "value": 12.23
     }
    ],
    "params": {
@@ -1144,10 +1128,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "23.54",
-     "raw": 23.537999999999997,
+     "printed": "24.71",
+     "raw": 24.7149,
      "resolution": 0.01,
-     "value": 23.54
+     "value": 24.71
     }
    ],
    "params": {
@@ -1162,10 +1146,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "39.48",
-     "raw": 39.480000000000004,
+     "printed": "41.45",
+     "raw": 41.45400000000001,
      "resolution": 0.01,
-     "value": 39.48
+     "value": 41.45
     }
    ],
    "params": {
@@ -1180,18 +1164,18 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "14.233",
-     "raw": 14.233333333333334,
+     "printed": "15.034",
+     "raw": 15.034,
      "resolution": 0.001,
-     "value": 14.233
+     "value": 15.034
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.24",
-     "raw": -0.2353596000000089,
+     "printed": "-0.46",
+     "raw": -0.4609125500000058,
      "resolution": 0.01,
-     "value": -0.24
+     "value": -0.46
     },
     {
      "basis_function": "as_built: tank water density / 1000",
@@ -1732,10 +1716,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "12.46",
-     "raw": 12.459080000000002,
+     "printed": "11.64",
+     "raw": 11.644000000000002,
      "resolution": 0.01,
-     "value": 12.46
+     "value": 11.64
     }
    ],
    "params": {
@@ -1750,10 +1734,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "25.19",
-     "raw": 25.18566,
+     "printed": "23.54",
+     "raw": 23.537999999999997,
      "resolution": 0.01,
-     "value": 25.19
+     "value": 23.54
     }
    ],
    "params": {
@@ -1768,10 +1752,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "42.24",
-     "raw": 42.24360000000001,
+     "printed": "39.48",
+     "raw": 39.480000000000004,
      "resolution": 0.01,
-     "value": 42.24
+     "value": 39.48
     }
    ],
    "params": {
@@ -1786,34 +1770,34 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "15.034",
-     "raw": 15.034,
+     "printed": "15.522",
+     "raw": 15.522320197765001,
      "resolution": 0.001,
-     "value": 15.034
+     "value": 15.522
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.40",
-     "raw": -0.40207264999998615,
+     "printed": "0.72",
+     "raw": 0.7196892083471883,
      "resolution": 0.01,
-     "value": -0.4
+     "value": 0.72
     },
     {
      "basis_function": "as_built: tank water density / 1000",
      "name": "pool_sg",
-     "printed": "0.9982",
-     "raw": 0.9982053291007752,
+     "printed": "1.0130",
+     "raw": 1.013,
      "resolution": 0.0001,
-     "value": 0.9982
+     "value": 1.013
     },
     {
      "basis_function": "as_built: tanks[<tank>].t_c",
      "name": "pool_temp_c",
-     "printed": "20.0",
-     "raw": 20.0,
+     "printed": "7.0",
+     "raw": 7.0,
      "resolution": 0.1,
-     "value": 20.0
+     "value": 7.0
     }
    ],
    "params": {},
@@ -1822,54 +1806,38 @@
   "bidder_T04|witness:battery_discharge:chamber_c=10:load_w=100": {
    "bid": "T-04",
    "bidder": "bidder_T04",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "293.1",
-     "raw": 293.13035501237283,
-     "resolution": 0.1,
-     "value": 293.1
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
-     "resolution": 0.1,
-     "value": 13.5
-    }
-   ],
+   "outputs": [],
    "params": {
     "chamber_c": 10,
     "load_w": 100
+   },
+   "refused": {
+    "declared": [
+     15.0,
+     35.0
+    ],
+    "envelope_key": "chamber_c",
+    "param": "chamber_c",
+    "value": 10
    },
    "test": "battery_discharge"
   },
   "bidder_T04|witness:battery_discharge:chamber_c=10:load_w=440": {
    "bid": "T-04",
    "bidder": "bidder_T04",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "280.7",
-     "raw": 280.6829302438526,
-     "resolution": 0.1,
-     "value": 280.7
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
-     "resolution": 0.1,
-     "value": 13.5
-    }
-   ],
+   "outputs": [],
    "params": {
     "chamber_c": 10,
     "load_w": 440
+   },
+   "refused": {
+    "declared": [
+     15.0,
+     35.0
+    ],
+    "envelope_key": "chamber_c",
+    "param": "chamber_c",
+    "value": 10
    },
    "test": "battery_discharge"
   },
@@ -1880,18 +1848,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "300.7",
-     "raw": 300.73580327940647,
+     "printed": "239.9",
+     "raw": 239.87202587548643,
      "resolution": 0.1,
-     "value": 300.7
+     "value": 239.9
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "26.1",
+     "raw": 26.125,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 26.1
     }
    ],
    "params": {
@@ -1907,18 +1875,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "288.7",
-     "raw": 288.73154065381556,
+     "printed": "218.1",
+     "raw": 218.1310090396641,
      "resolution": 0.1,
-     "value": 288.7
+     "value": 218.1
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "26.1",
+     "raw": 26.125,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 26.1
     }
    ],
    "params": {
@@ -1934,18 +1902,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "313.3",
-     "raw": 313.3191159694642,
+     "printed": "254.8",
+     "raw": 254.83761978293086,
      "resolution": 0.1,
-     "value": 313.3
+     "value": 254.8
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "20.9",
+     "raw": 20.9,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 20.9
     }
    ],
    "params": {
@@ -1961,18 +1929,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "302.0",
-     "raw": 301.99336763419603,
+     "printed": "238.2",
+     "raw": 238.15674259694882,
      "resolution": 0.1,
-     "value": 302.0
+     "value": 238.2
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "20.9",
+     "raw": 20.9,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 20.9
     }
    ],
    "params": {
@@ -2004,10 +1972,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "85.1",
-     "raw": 85.13333333333333,
+     "printed": "87.3",
+     "raw": 87.3,
      "resolution": 0.1,
-     "value": 85.1
+     "value": 87.3
     }
    ],
    "params": {
@@ -2023,18 +1991,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "91.3",
-     "raw": 91.28304906331375,
+     "printed": "89.3",
+     "raw": 89.29179862665656,
      "resolution": 0.1,
-     "value": 91.3
+     "value": 89.3
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "92.4",
-     "raw": 92.4428041062957,
+     "printed": "90.4",
+     "raw": 90.42625474766501,
      "resolution": 0.1,
-     "value": 92.4
+     "value": 90.4
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2074,10 +2042,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "92.5",
-     "raw": 92.49230769230769,
+     "printed": "94.5",
+     "raw": 94.49230769230769,
      "resolution": 0.1,
-     "value": 92.5
+     "value": 94.5
     }
    ],
    "params": {
@@ -2093,18 +2061,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "95.7",
-     "raw": 95.69972807219327,
+     "printed": "93.8",
+     "raw": 93.79296434561056,
      "resolution": 0.1,
-     "value": 95.7
+     "value": 93.8
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "96.9",
-     "raw": 96.91559721090648,
+     "printed": "95.0",
+     "raw": 94.98460796961571,
      "resolution": 0.1,
-     "value": 96.9
+     "value": 95.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2144,10 +2112,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "99.9",
-     "raw": 99.94285714285714,
+     "printed": "101.8",
+     "raw": 101.8,
      "resolution": 0.1,
-     "value": 99.9
+     "value": 101.8
     }
    ],
    "params": {
@@ -2163,18 +2131,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "99.8",
-     "raw": 99.82272747891473,
+     "printed": "98.0",
+     "raw": 97.99236408626649,
      "resolution": 0.1,
-     "value": 99.8
+     "value": 98.0
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "101.1",
-     "raw": 101.09097950145166,
+     "printed": "99.2",
+     "raw": 99.237361263606,
      "resolution": 0.1,
-     "value": 101.1
+     "value": 99.2
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2214,10 +2182,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "107.5",
-     "raw": 107.46666666666667,
+     "printed": "109.2",
+     "raw": 109.2,
      "resolution": 0.1,
-     "value": 107.5
+     "value": 109.2
     }
    ],
    "params": {
@@ -2233,18 +2201,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "102.7",
-     "raw": 102.71525293555977,
+     "printed": "101.0",
+     "raw": 100.97090396686575,
      "resolution": 0.1,
-     "value": 102.7
+     "value": 101.0
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "104.0",
-     "raw": 104.02025461775115,
+     "printed": "102.3",
+     "raw": 102.25374362079532,
      "resolution": 0.1,
-     "value": 104.0
+     "value": 102.3
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2284,10 +2252,10 @@
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "115.0",
-     "raw": 115.05,
+     "printed": "116.7",
+     "raw": 116.675,
      "resolution": 0.1,
-     "value": 115.0
+     "value": 116.7
     }
    ],
    "params": {
@@ -2303,18 +2271,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "105.5",
-     "raw": 105.47675228498197,
+     "printed": "103.8",
+     "raw": 103.80866156555972,
      "resolution": 0.1,
-     "value": 105.5
+     "value": 103.8
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "106.8",
-     "raw": 106.81683893453088,
+     "printed": "105.1",
+     "raw": 105.1275550511658,
      "resolution": 0.1,
-     "value": 106.8
+     "value": 105.1
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2392,34 +2360,34 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "14.754",
-     "raw": 14.754000000000001,
+     "printed": "14.233",
+     "raw": 14.233333333333334,
      "resolution": 0.001,
-     "value": 14.754
+     "value": 14.233
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.49",
-     "raw": -0.49033250000000694,
+     "printed": "-0.74",
+     "raw": -0.735498749999993,
      "resolution": 0.01,
-     "value": -0.49
+     "value": -0.74
     },
     {
      "basis_function": "as_built: tank water density / 1000",
      "name": "pool_sg",
-     "printed": "1.0246",
-     "raw": 1.0246,
+     "printed": "1.0130",
+     "raw": 1.013,
      "resolution": 0.0001,
-     "value": 1.0246
+     "value": 1.013
     },
     {
      "basis_function": "as_built: tanks[<tank>].t_c",
      "name": "pool_temp_c",
-     "printed": "20.0",
-     "raw": 20.0,
+     "printed": "7.0",
+     "raw": 7.0,
      "resolution": 0.1,
-     "value": 20.0
+     "value": 7.0
     }
    ],
    "params": {},
@@ -2432,18 +2400,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "293.1",
-     "raw": 293.13035501237283,
+     "printed": "240.6",
+     "raw": 240.62943810214685,
      "resolution": 0.1,
-     "value": 293.1
+     "value": 240.6
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "59.6",
+     "raw": 59.5512,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 59.6
     }
    ],
    "params": {
@@ -2459,18 +2427,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "280.7",
-     "raw": 280.6829302438526,
+     "printed": "148.7",
+     "raw": 148.66699718156244,
      "resolution": 0.1,
-     "value": 280.7
+     "value": 148.7
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "59.6",
+     "raw": 59.5512,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 59.6
     }
    ],
    "params": {
@@ -2486,18 +2454,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "300.7",
-     "raw": 300.73580327940647,
+     "printed": "253.2",
+     "raw": 253.1987949808816,
      "resolution": 0.1,
-     "value": 300.7
+     "value": 253.2
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "53.8",
+     "raw": 53.81664,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 53.8
     }
    ],
    "params": {
@@ -2513,18 +2481,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "288.7",
-     "raw": 288.73154065381556,
+     "printed": "180.0",
+     "raw": 179.98316670053867,
      "resolution": 0.1,
-     "value": 288.7
+     "value": 180.0
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "53.8",
+     "raw": 53.81664,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 53.8
     }
    ],
    "params": {
@@ -2540,18 +2508,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "313.3",
-     "raw": 313.3191159694642,
+     "printed": "273.7",
+     "raw": 273.6880450050845,
      "resolution": 0.1,
-     "value": 313.3
+     "value": 273.7
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "44.1",
+     "raw": 44.112,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 44.1
     }
    ],
    "params": {
@@ -2567,18 +2535,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "302.0",
-     "raw": 301.99336763419603,
+     "printed": "222.6",
+     "raw": 222.59196767375042,
      "resolution": 0.1,
-     "value": 302.0
+     "value": 222.6
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "44.1",
+     "raw": 44.112,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 44.1
     }
    ],
    "params": {
@@ -2594,26 +2562,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "102.9",
-     "raw": 102.86632382696392,
+     "printed": "106.5",
+     "raw": 106.52154729083183,
      "resolution": 0.1,
-     "value": 102.9
+     "value": 106.5
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "104.2",
-     "raw": 104.17324487129262,
+     "printed": "107.9",
+     "raw": 107.87490810562116,
      "resolution": 0.1,
-     "value": 104.2
+     "value": 107.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "85.1",
-     "raw": 85.13333333333333,
+     "printed": "86.0",
+     "raw": 85.96666666666667,
      "resolution": 0.1,
-     "value": 85.1
+     "value": 86.0
     }
    ],
    "params": {
@@ -2629,18 +2597,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "91.3",
-     "raw": 91.28304906331375,
+     "printed": "93.7",
+     "raw": 93.73665737542152,
      "resolution": 0.1,
-     "value": 91.3
+     "value": 93.7
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "92.4",
-     "raw": 92.4428041062957,
+     "printed": "94.9",
+     "raw": 94.92758561696189,
      "resolution": 0.1,
-     "value": 92.4
+     "value": 94.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2664,26 +2632,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "114.1",
-     "raw": 114.13934561622021,
+     "printed": "118.2",
+     "raw": 118.19514151448462,
      "resolution": 0.1,
-     "value": 114.1
+     "value": 118.2
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "115.6",
-     "raw": 115.58949088458496,
+     "printed": "119.7",
+     "raw": 119.69681584322348,
      "resolution": 0.1,
-     "value": 115.6
+     "value": 119.7
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "92.5",
-     "raw": 92.49230769230769,
+     "printed": "93.3",
+     "raw": 93.26153846153846,
      "resolution": 0.1,
-     "value": 92.5
+     "value": 93.3
     }
    ],
    "params": {
@@ -2699,18 +2667,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "95.7",
-     "raw": 95.69972807219327,
+     "printed": "98.3",
+     "raw": 98.34354103861419,
      "resolution": 0.1,
-     "value": 95.7
+     "value": 98.3
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "96.9",
-     "raw": 96.91559721090648,
+     "printed": "99.6",
+     "raw": 99.59299993415489,
      "resolution": 0.1,
-     "value": 96.9
+     "value": 99.6
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2734,26 +2702,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "125.4",
-     "raw": 125.41236740547654,
+     "printed": "129.9",
+     "raw": 129.86873573813745,
      "resolution": 0.1,
-     "value": 125.4
+     "value": 129.9
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "127.0",
-     "raw": 127.0057368978773,
+     "printed": "131.5",
+     "raw": 131.51872358082582,
      "resolution": 0.1,
-     "value": 127.0
+     "value": 131.5
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "99.9",
-     "raw": 99.94285714285714,
+     "printed": "100.7",
+     "raw": 100.65714285714286,
      "resolution": 0.1,
-     "value": 99.9
+     "value": 100.7
     }
    ],
    "params": {
@@ -2769,18 +2737,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "99.8",
-     "raw": 99.82272747891473,
+     "printed": "102.6",
+     "raw": 102.64316135423218,
      "resolution": 0.1,
-     "value": 99.8
+     "value": 102.6
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "101.1",
-     "raw": 101.09097950145166,
+     "printed": "103.9",
+     "raw": 103.94724710979904,
      "resolution": 0.1,
-     "value": 101.1
+     "value": 103.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2804,26 +2772,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "135.4",
-     "raw": 135.3936887813806,
+     "printed": "140.2",
+     "raw": 140.20473062366338,
      "resolution": 0.1,
-     "value": 135.4
+     "value": 140.2
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "137.1",
-     "raw": 137.11387138881327,
+     "printed": "142.0",
+     "raw": 141.98603772349455,
      "resolution": 0.1,
-     "value": 137.1
+     "value": 142.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "107.5",
-     "raw": 107.46666666666667,
+     "printed": "108.1",
+     "raw": 108.13333333333333,
      "resolution": 0.1,
-     "value": 107.5
+     "value": 108.1
     }
    ],
    "params": {
@@ -2839,18 +2807,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "102.7",
-     "raw": 102.71525293555977,
+     "printed": "105.7",
+     "raw": 105.67244866066889,
      "resolution": 0.1,
-     "value": 102.7
+     "value": 105.7
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "104.0",
-     "raw": 104.02025461775115,
+     "printed": "107.0",
+     "raw": 107.01502164104181,
      "resolution": 0.1,
-     "value": 104.0
+     "value": 107.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2874,26 +2842,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "145.4",
-     "raw": 145.37501015728463,
+     "printed": "150.5",
+     "raw": 150.5407255091893,
      "resolution": 0.1,
-     "value": 145.4
+     "value": 150.5
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "147.2",
-     "raw": 147.2220058797492,
+     "printed": "152.5",
+     "raw": 152.45335186616325,
      "resolution": 0.1,
-     "value": 147.2
+     "value": 152.5
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "115.0",
-     "raw": 115.05,
+     "printed": "115.7",
+     "raw": 115.675,
      "resolution": 0.1,
-     "value": 115.0
+     "value": 115.7
     }
    ],
    "params": {
@@ -2909,18 +2877,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "105.5",
-     "raw": 105.47675228498197,
+     "printed": "108.6",
+     "raw": 108.56221768268932,
      "resolution": 0.1,
-     "value": 105.5
+     "value": 108.6
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "106.8",
-     "raw": 106.81683893453088,
+     "printed": "109.9",
+     "raw": 109.94150530209689,
      "resolution": 0.1,
-     "value": 106.8
+     "value": 109.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -2998,34 +2966,34 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "15.090",
-     "raw": 15.089546798510321,
+     "printed": "14.754",
+     "raw": 14.754000000000001,
      "resolution": 0.001,
-     "value": 15.09
+     "value": 14.754
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.99",
-     "raw": -0.9866303064798406,
+     "printed": "-0.50",
+     "raw": -0.5001391499999841,
      "resolution": 0.01,
-     "value": -0.99
+     "value": -0.5
     },
     {
      "basis_function": "as_built: tank water density / 1000",
      "name": "pool_sg",
-     "printed": "1.0246",
-     "raw": 1.0246,
+     "printed": "0.9999",
+     "raw": 0.9998508079837896,
      "resolution": 0.0001,
-     "value": 1.0246
+     "value": 0.9999
     },
     {
      "basis_function": "as_built: tanks[<tank>].t_c",
      "name": "pool_temp_c",
-     "printed": "20.0",
-     "raw": 20.0,
+     "printed": "8.0",
+     "raw": 8.0,
      "resolution": 0.1,
-     "value": 20.0
+     "value": 8.0
     }
    ],
    "params": {},
@@ -3038,18 +3006,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "293.1",
-     "raw": 293.13035501237283,
+     "printed": "425.0",
+     "raw": 425.0295492177671,
      "resolution": 0.1,
-     "value": 293.1
+     "value": 425.0
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "9.3",
+     "raw": 9.315,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 9.3
     }
    ],
    "params": {
@@ -3065,18 +3033,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "280.7",
-     "raw": 280.6829302438526,
+     "printed": "412.6",
+     "raw": 412.61081977053846,
      "resolution": 0.1,
-     "value": 280.7
+     "value": 412.6
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "13.5",
-     "raw": 13.455,
+     "printed": "9.3",
+     "raw": 9.315,
      "resolution": 0.1,
-     "value": 13.5
+     "value": 9.3
     }
    ],
    "params": {
@@ -3092,18 +3060,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "300.7",
-     "raw": 300.73580327940647,
+     "printed": "436.0",
+     "raw": 435.9581380278238,
      "resolution": 0.1,
-     "value": 300.7
+     "value": 436.0
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "8.8",
+     "raw": 8.829,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 8.8
     }
    ],
    "params": {
@@ -3119,18 +3087,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "288.7",
-     "raw": 288.73154065381556,
+     "printed": "424.0",
+     "raw": 423.9794024979009,
      "resolution": 0.1,
-     "value": 288.7
+     "value": 424.0
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "12.8",
-     "raw": 12.753,
+     "printed": "8.8",
+     "raw": 8.829,
      "resolution": 0.1,
-     "value": 12.8
+     "value": 8.8
     }
    ],
    "params": {
@@ -3146,18 +3114,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "313.3",
-     "raw": 313.3191159694642,
+     "printed": "454.0",
+     "raw": 454.046549515074,
      "resolution": 0.1,
-     "value": 313.3
+     "value": 454.0
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "8.1",
+     "raw": 8.1,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 8.1
     }
    ],
    "params": {
@@ -3173,18 +3141,18 @@
     {
      "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
      "name": "energy_wh",
-     "printed": "302.0",
-     "raw": 301.99336763419603,
+     "printed": "442.7",
+     "raw": 442.74199427744105,
      "resolution": 0.1,
-     "value": 302.0
+     "value": 442.7
     },
     {
      "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
      "name": "internal_resistance_mohm",
-     "printed": "11.7",
-     "raw": 11.700000000000001,
+     "printed": "8.1",
+     "raw": 8.1,
      "resolution": 0.1,
-     "value": 11.7
+     "value": 8.1
     }
    ],
    "params": {
@@ -3200,26 +3168,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "102.1",
-     "raw": 102.14708393112612,
+     "printed": "76.1",
+     "raw": 76.1210796319533,
      "resolution": 0.1,
-     "value": 102.1
+     "value": 76.1
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "103.5",
-     "raw": 103.47899932717795,
+     "printed": "77.1",
+     "raw": 77.08820120475653,
      "resolution": 0.1,
-     "value": 103.5
+     "value": 77.1
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "85.5",
-     "raw": 85.53333333333333,
+     "printed": "85.1",
+     "raw": 85.13333333333333,
      "resolution": 0.1,
-     "value": 85.5
+     "value": 85.1
     }
    ],
    "params": {
@@ -3235,18 +3203,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "90.3",
-     "raw": 90.34534244597752,
+     "printed": "67.5",
+     "raw": 67.54945630685218,
      "resolution": 0.1,
-     "value": 90.3
+     "value": 67.5
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "91.5",
-     "raw": 91.52337267390364,
+     "printed": "68.4",
+     "raw": 68.40767503865881,
      "resolution": 0.1,
-     "value": 91.5
+     "value": 68.4
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -3270,26 +3238,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "104.5",
-     "raw": 104.47389677693766,
+     "printed": "84.5",
+     "raw": 84.46311575600296,
      "resolution": 0.1,
-     "value": 104.5
+     "value": 84.5
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "105.8",
-     "raw": 105.83615193144169,
+     "printed": "85.5",
+     "raw": 85.53622325459285,
      "resolution": 0.1,
-     "value": 105.8
+     "value": 85.5
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "86.9",
-     "raw": 86.8923076923077,
+     "printed": "92.5",
+     "raw": 92.49230769230769,
      "resolution": 0.1,
-     "value": 86.9
+     "value": 92.5
     }
    ],
    "params": {
@@ -3305,18 +3273,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "91.5",
-     "raw": 91.49204531707423,
+     "printed": "70.8",
+     "raw": 70.81779877342302,
      "resolution": 0.1,
-     "value": 91.5
+     "value": 70.8
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "92.7",
-     "raw": 92.68502762341446,
+     "printed": "71.7",
+     "raw": 71.71754193607079,
      "resolution": 0.1,
-     "value": 92.7
+     "value": 71.7
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -3340,26 +3308,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "106.8",
-     "raw": 106.80070962274918,
+     "printed": "92.8",
+     "raw": 92.80515188005263,
      "resolution": 0.1,
-     "value": 106.8
+     "value": 92.8
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "108.2",
-     "raw": 108.19330453570542,
+     "printed": "94.0",
+     "raw": 93.9842453044292,
      "resolution": 0.1,
-     "value": 108.2
+     "value": 94.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "88.3",
-     "raw": 88.34285714285714,
+     "printed": "99.9",
+     "raw": 99.94285714285714,
      "resolution": 0.1,
-     "value": 88.3
+     "value": 99.9
     }
    ],
    "params": {
@@ -3375,18 +3343,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "92.6",
-     "raw": 92.55589281375777,
+     "printed": "73.9",
+     "raw": 73.8688183343969,
      "resolution": 0.1,
-     "value": 92.6
+     "value": 73.9
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "93.8",
-     "raw": 93.76274683141222,
+     "printed": "74.8",
+     "raw": 74.80732483107421,
      "resolution": 0.1,
-     "value": 93.8
+     "value": 74.8
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -3410,26 +3378,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "107.0",
-     "raw": 107.03339090733033,
+     "printed": "100.2",
+     "raw": 100.19132969822164,
      "resolution": 0.1,
-     "value": 107.0
+     "value": 100.2
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "108.4",
-     "raw": 108.42901979613178,
+     "printed": "101.5",
+     "raw": 101.4642648277218,
      "resolution": 0.1,
-     "value": 108.4
+     "value": 101.5
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "88.5",
-     "raw": 88.46666666666668,
+     "printed": "107.5",
+     "raw": 107.46666666666667,
      "resolution": 0.1,
-     "value": 88.5
+     "value": 107.5
     }
    ],
    "params": {
@@ -3445,18 +3413,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "92.8",
-     "raw": 92.75478182320279,
+     "printed": "76.0",
+     "raw": 76.00928717231423,
      "resolution": 0.1,
-     "value": 92.8
+     "value": 76.0
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "94.0",
-     "raw": 93.96422919275328,
+     "printed": "77.0",
+     "raw": 76.97498841713585,
      "resolution": 0.1,
-     "value": 94.0
+     "value": 77.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -3480,26 +3448,26 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "107.3",
-     "raw": 107.2660721919115,
+     "printed": "107.6",
+     "raw": 107.57750751639063,
      "resolution": 0.1,
-     "value": 107.3
+     "value": 107.6
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "108.7",
-     "raw": 108.66473505655819,
+     "printed": "108.9",
+     "raw": 108.94428435101437,
      "resolution": 0.1,
-     "value": 108.7
+     "value": 108.9
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
      "name": "supply_current_a",
-     "printed": "88.7",
-     "raw": 88.65,
+     "printed": "115.0",
+     "raw": 115.05,
      "resolution": 0.1,
-     "value": 88.7
+     "value": 115.0
     }
    ],
    "params": {
@@ -3515,18 +3483,18 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
-     "printed": "92.9",
-     "raw": 92.9001342570249,
+     "printed": "78.1",
+     "raw": 78.05279669088665,
      "resolution": 0.1,
-     "value": 92.9
+     "value": 78.1
     },
     {
      "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
      "name": "reverse_n",
-     "printed": "94.1",
-     "raw": 94.11147690480567,
+     "printed": "79.0",
+     "raw": 79.04446081155284,
      "resolution": 0.1,
-     "value": 94.1
+     "value": 79.0
     },
     {
      "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
@@ -3550,10 +3518,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "12.46",
-     "raw": 12.459080000000002,
+     "printed": "17.47",
+     "raw": 17.466,
      "resolution": 0.01,
-     "value": 12.46
+     "value": 17.47
     }
    ],
    "params": {
@@ -3568,10 +3536,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "25.19",
-     "raw": 25.18566,
+     "printed": "35.31",
+     "raw": 35.306999999999995,
      "resolution": 0.01,
-     "value": 25.19
+     "value": 35.31
     }
    ],
    "params": {
@@ -3586,10 +3554,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "42.24",
-     "raw": 42.24360000000001,
+     "printed": "59.22",
+     "raw": 59.220000000000006,
      "resolution": 0.01,
-     "value": 42.24
+     "value": 59.22
     }
    ],
    "params": {
@@ -3604,18 +3572,18 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "15.034",
-     "raw": 15.034,
+     "printed": "16.066",
+     "raw": 16.066000000000003,
      "resolution": 0.001,
-     "value": 15.034
+     "value": 16.066
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.45",
-     "raw": -0.45110589999999384,
+     "printed": "-0.39",
+     "raw": -0.3922659999999916,
      "resolution": 0.01,
-     "value": -0.45
+     "value": -0.39
     },
     {
      "basis_function": "as_built: tank water density / 1000",
@@ -3806,6 +3774,612 @@
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
      "name": "forward_n",
+     "printed": "104.3",
+     "raw": 104.29754885599192,
+     "resolution": 0.1,
+     "value": 104.3
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "105.7",
+     "raw": 105.65750457617116,
+     "resolution": 0.1,
+     "value": 105.7
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "85.5",
+     "raw": 85.53333333333333,
+     "resolution": 0.1,
+     "value": 85.5
+    }
+   ],
+   "params": {
+    "bus_v": 12,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=12:limiter=on": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "92.2",
+     "raw": 92.24734965536653,
+     "resolution": 0.1,
+     "value": 92.2
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "93.5",
+     "raw": 93.45018051967004,
+     "resolution": 0.1,
+     "value": 93.5
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 12,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=13:limiter=off": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "106.7",
+     "raw": 106.6733472353995,
+     "resolution": 0.1,
+     "value": 106.7
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "108.1",
+     "raw": 108.06428144578784,
+     "resolution": 0.1,
+     "value": 108.1
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "86.9",
+     "raw": 86.8923076923077,
+     "resolution": 0.1,
+     "value": 86.9
+    }
+   ],
+   "params": {
+    "bus_v": 13,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=13:limiter=on": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "93.4",
+     "raw": 93.41819363953897,
+     "resolution": 0.1,
+     "value": 93.4
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "94.6",
+     "raw": 94.63629136285476,
+     "resolution": 0.1,
+     "value": 94.6
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 13,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=14:limiter=off": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "109.0",
+     "raw": 109.04914561480706,
+     "resolution": 0.1,
+     "value": 109.0
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "110.5",
+     "raw": 110.47105831540448,
+     "resolution": 0.1,
+     "value": 110.5
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "88.3",
+     "raw": 88.34285714285714,
+     "resolution": 0.1,
+     "value": 88.3
+    }
+   ],
+   "params": {
+    "bus_v": 14,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=14:limiter=on": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "94.5",
+     "raw": 94.50443792562633,
+     "resolution": 0.1,
+     "value": 94.5
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "95.7",
+     "raw": 95.73669939628404,
+     "resolution": 0.1,
+     "value": 95.7
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 14,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=15:limiter=off": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "109.3",
+     "raw": 109.2867254527478,
+     "resolution": 0.1,
+     "value": 109.3
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "110.7",
+     "raw": 110.71173600236614,
+     "resolution": 0.1,
+     "value": 110.7
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "88.5",
+     "raw": 88.46666666666668,
+     "resolution": 0.1,
+     "value": 88.5
+    }
+   ],
+   "params": {
+    "bus_v": 15,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=15:limiter=on": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "94.7",
+     "raw": 94.70751407211233,
+     "resolution": 0.1,
+     "value": 94.7
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "95.9",
+     "raw": 95.94242349154807,
+     "resolution": 0.1,
+     "value": 95.9
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 15,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=16:limiter=off": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "109.5",
+     "raw": 109.52430529068859,
+     "resolution": 0.1,
+     "value": 109.5
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "111.0",
+     "raw": 110.95241368932783,
+     "resolution": 0.1,
+     "value": 111.0
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "88.7",
+     "raw": 88.65,
+     "resolution": 0.1,
+     "value": 88.7
+    }
+   ],
+   "params": {
+    "bus_v": 16,
+    "limiter": "off"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:bollard_pull:bus_v=16:limiter=on": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
+     "printed": "94.9",
+     "raw": 94.85592655717282,
+     "resolution": 0.1,
+     "value": 94.9
+    },
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
+     "name": "reverse_n",
+     "printed": "96.1",
+     "raw": 96.09277115543314,
+     "resolution": 0.1,
+     "value": 96.1
+    },
+    {
+     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
+     "name": "supply_current_a",
+     "printed": "72.0",
+     "raw": 72.0,
+     "resolution": 0.1,
+     "value": 72.0
+    }
+   ],
+   "params": {
+    "bus_v": 16,
+    "limiter": "on"
+   },
+   "test": "bollard_pull"
+  },
+  "bidder_T07|witness:tow:speed_mps=0.4": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "12.23",
+     "raw": 12.226200000000002,
+     "resolution": 0.01,
+     "value": 12.23
+    }
+   ],
+   "params": {
+    "speed_mps": 0.4
+   },
+   "test": "tow"
+  },
+  "bidder_T07|witness:tow:speed_mps=0.6": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "24.71",
+     "raw": 24.7149,
+     "resolution": 0.01,
+     "value": 24.71
+    }
+   ],
+   "params": {
+    "speed_mps": 0.6
+   },
+   "test": "tow"
+  },
+  "bidder_T07|witness:tow:speed_mps=0.8": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "tow_drag_n(vehicle, speed_mps)",
+     "name": "drag_n",
+     "printed": "41.45",
+     "raw": 41.45400000000001,
+     "resolution": 0.01,
+     "value": 41.45
+    }
+   ],
+   "params": {
+    "speed_mps": 0.8
+   },
+   "test": "tow"
+  },
+  "bidder_T07|witness:weigh": {
+   "bid": "T-07",
+   "bidder": "bidder_T07",
+   "outputs": [
+    {
+     "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
+     "name": "air_mass_kg",
+     "printed": "15.034",
+     "raw": 15.034,
+     "resolution": 0.001,
+     "value": 15.034
+    },
+    {
+     "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
+     "name": "pool_weight_n",
+     "printed": "-0.36",
+     "raw": -0.3628460500000079,
+     "resolution": 0.01,
+     "value": -0.36
+    },
+    {
+     "basis_function": "as_built: tank water density / 1000",
+     "name": "pool_sg",
+     "printed": "0.9982",
+     "raw": 0.9982053291007752,
+     "resolution": 0.0001,
+     "value": 0.9982
+    },
+    {
+     "basis_function": "as_built: tanks[<tank>].t_c",
+     "name": "pool_temp_c",
+     "printed": "20.0",
+     "raw": 20.0,
+     "resolution": 0.1,
+     "value": 20.0
+    }
+   ],
+   "params": {},
+   "test": "weigh"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=10:load_w=100": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "422.2",
+     "raw": 422.222424489408,
+     "resolution": 0.1,
+     "value": 422.2
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "16.5",
+     "raw": 16.491000000000003,
+     "resolution": 0.1,
+     "value": 16.5
+    }
+   ],
+   "params": {
+    "chamber_c": 10,
+    "load_w": 100
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=10:load_w=440": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "400.1",
+     "raw": 400.14657382120635,
+     "resolution": 0.1,
+     "value": 400.1
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "16.5",
+     "raw": 16.491000000000003,
+     "resolution": 0.1,
+     "value": 16.5
+    }
+   ],
+   "params": {
+    "chamber_c": 10,
+    "load_w": 440
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=15:load_w=100": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "433.2",
+     "raw": 433.2499901629253,
+     "resolution": 0.1,
+     "value": 433.2
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "15.6",
+     "raw": 15.630600000000005,
+     "resolution": 0.1,
+     "value": 15.6
+    }
+   ],
+   "params": {
+    "chamber_c": 15,
+    "load_w": 100
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=15:load_w=440": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "412.0",
+     "raw": 411.96310907441716,
+     "resolution": 0.1,
+     "value": 412.0
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "15.6",
+     "raw": 15.630600000000005,
+     "resolution": 0.1,
+     "value": 15.6
+    }
+   ],
+   "params": {
+    "chamber_c": 15,
+    "load_w": 440
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=23:load_w=100": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "451.5",
+     "raw": 451.4901726888957,
+     "resolution": 0.1,
+     "value": 451.5
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "14.3",
+     "raw": 14.340000000000002,
+     "resolution": 0.1,
+     "value": 14.3
+    }
+   ],
+   "params": {
+    "chamber_c": 23,
+    "load_w": 100
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:battery_discharge:chamber_c=23:load_w=440": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
+     "name": "energy_wh",
+     "printed": "431.4",
+     "raw": 431.4105983169999,
+     "resolution": 0.1,
+     "value": 431.4
+    },
+    {
+     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
+     "name": "internal_resistance_mohm",
+     "printed": "14.3",
+     "raw": 14.340000000000002,
+     "resolution": 0.1,
+     "value": 14.3
+    }
+   ],
+   "params": {
+    "chamber_c": 23,
+    "load_w": 440
+   },
+   "test": "battery_discharge"
+  },
+  "bidder_T08|witness:bollard_pull:bus_v=12:limiter=off": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
+   "outputs": [
+    {
+     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
+     "name": "forward_n",
      "printed": "102.9",
      "raw": 102.86632382696392,
      "resolution": 0.1,
@@ -3834,9 +4408,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=12:limiter=on": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=12:limiter=on": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -3869,9 +4443,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=13:limiter=off": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=13:limiter=off": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -3904,9 +4478,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=13:limiter=on": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=13:limiter=on": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -3939,9 +4513,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=14:limiter=off": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=14:limiter=off": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -3974,9 +4548,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=14:limiter=on": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=14:limiter=on": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -4009,9 +4583,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=15:limiter=off": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=15:limiter=off": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -4044,9 +4618,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=15:limiter=on": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=15:limiter=on": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -4079,9 +4653,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=16:limiter=off": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=16:limiter=off": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -4114,9 +4688,9 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:bollard_pull:bus_v=16:limiter=on": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
+  "bidder_T08|witness:bollard_pull:bus_v=16:limiter=on": {
+   "bid": "T-08",
+   "bidder": "bidder_T08",
    "outputs": [
     {
      "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
@@ -4149,612 +4723,6 @@
    },
    "test": "bollard_pull"
   },
-  "bidder_T07|witness:tow:speed_mps=0.4": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "12.46",
-     "raw": 12.459080000000002,
-     "resolution": 0.01,
-     "value": 12.46
-    }
-   ],
-   "params": {
-    "speed_mps": 0.4
-   },
-   "test": "tow"
-  },
-  "bidder_T07|witness:tow:speed_mps=0.6": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "25.19",
-     "raw": 25.18566,
-     "resolution": 0.01,
-     "value": 25.19
-    }
-   ],
-   "params": {
-    "speed_mps": 0.6
-   },
-   "test": "tow"
-  },
-  "bidder_T07|witness:tow:speed_mps=0.8": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
-   "outputs": [
-    {
-     "basis_function": "tow_drag_n(vehicle, speed_mps)",
-     "name": "drag_n",
-     "printed": "42.24",
-     "raw": 42.24360000000001,
-     "resolution": 0.01,
-     "value": 42.24
-    }
-   ],
-   "params": {
-    "speed_mps": 0.8
-   },
-   "test": "tow"
-  },
-  "bidder_T07|witness:weigh": {
-   "bid": "T-07",
-   "bidder": "bidder_T07",
-   "outputs": [
-    {
-     "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
-     "name": "air_mass_kg",
-     "printed": "15.034",
-     "raw": 15.034,
-     "resolution": 0.001,
-     "value": 15.034
-    },
-    {
-     "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
-     "name": "pool_weight_n",
-     "printed": "-0.40",
-     "raw": -0.40207264999998615,
-     "resolution": 0.01,
-     "value": -0.4
-    },
-    {
-     "basis_function": "as_built: tank water density / 1000",
-     "name": "pool_sg",
-     "printed": "0.9982",
-     "raw": 0.9982053291007752,
-     "resolution": 0.0001,
-     "value": 0.9982
-    },
-    {
-     "basis_function": "as_built: tanks[<tank>].t_c",
-     "name": "pool_temp_c",
-     "printed": "20.0",
-     "raw": 20.0,
-     "resolution": 0.1,
-     "value": 20.0
-    }
-   ],
-   "params": {},
-   "test": "weigh"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=10:load_w=100": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "425.0",
-     "raw": 425.0295492177671,
-     "resolution": 0.1,
-     "value": 425.0
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "9.3",
-     "raw": 9.315,
-     "resolution": 0.1,
-     "value": 9.3
-    }
-   ],
-   "params": {
-    "chamber_c": 10,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=10:load_w=440": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "412.6",
-     "raw": 412.61081977053846,
-     "resolution": 0.1,
-     "value": 412.6
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "9.3",
-     "raw": 9.315,
-     "resolution": 0.1,
-     "value": 9.3
-    }
-   ],
-   "params": {
-    "chamber_c": 10,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=15:load_w=100": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "436.0",
-     "raw": 435.9581380278238,
-     "resolution": 0.1,
-     "value": 436.0
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "8.8",
-     "raw": 8.829,
-     "resolution": 0.1,
-     "value": 8.8
-    }
-   ],
-   "params": {
-    "chamber_c": 15,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=15:load_w=440": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "424.0",
-     "raw": 423.9794024979009,
-     "resolution": 0.1,
-     "value": 424.0
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "8.8",
-     "raw": 8.829,
-     "resolution": 0.1,
-     "value": 8.8
-    }
-   ],
-   "params": {
-    "chamber_c": 15,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=23:load_w=100": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "454.0",
-     "raw": 454.046549515074,
-     "resolution": 0.1,
-     "value": 454.0
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "8.1",
-     "raw": 8.1,
-     "resolution": 0.1,
-     "value": 8.1
-    }
-   ],
-   "params": {
-    "chamber_c": 23,
-    "load_w": 100
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:battery_discharge:chamber_c=23:load_w=440": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "battery_delivered_energy_wh(vehicle['pack'], load_w, chamber_c, 12.0)",
-     "name": "energy_wh",
-     "printed": "442.7",
-     "raw": 442.74199427744105,
-     "resolution": 0.1,
-     "value": 442.7
-    },
-    {
-     "basis_function": "pack_dcir_mohm(vehicle['pack'], chamber_c)",
-     "name": "internal_resistance_mohm",
-     "printed": "8.1",
-     "raw": 8.1,
-     "resolution": 0.1,
-     "value": 8.1
-    }
-   ],
-   "params": {
-    "chamber_c": 23,
-    "load_w": 440
-   },
-   "test": "battery_discharge"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=12:limiter=off": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "78.2",
-     "raw": 78.17840610849257,
-     "resolution": 0.1,
-     "value": 78.2
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "79.2",
-     "raw": 79.17166610218239,
-     "resolution": 0.1,
-     "value": 79.2
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "85.1",
-     "raw": 85.13333333333333,
-     "resolution": 0.1,
-     "value": 85.1
-    }
-   ],
-   "params": {
-    "bus_v": 12,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=12:limiter=on": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "69.4",
-     "raw": 69.37511728811845,
-     "resolution": 0.1,
-     "value": 69.4
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "70.3",
-     "raw": 70.25653112078473,
-     "resolution": 0.1,
-     "value": 70.3
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 12,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=13:limiter=off": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "86.7",
-     "raw": 86.74590266832736,
-     "resolution": 0.1,
-     "value": 86.7
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "87.8",
-     "raw": 87.84801307228454,
-     "resolution": 0.1,
-     "value": 87.8
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "92.5",
-     "raw": 92.49230769230769,
-     "resolution": 0.1,
-     "value": 92.5
-    }
-   ],
-   "params": {
-    "bus_v": 13,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=13:limiter=on": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "72.7",
-     "raw": 72.73179333486688,
-     "resolution": 0.1,
-     "value": 72.7
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "73.7",
-     "raw": 73.65585388028892,
-     "resolution": 0.1,
-     "value": 73.7
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 13,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=14:limiter=off": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "95.3",
-     "raw": 95.31339922816217,
-     "resolution": 0.1,
-     "value": 95.3
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "96.5",
-     "raw": 96.52436004238675,
-     "resolution": 0.1,
-     "value": 96.5
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "99.9",
-     "raw": 99.94285714285714,
-     "resolution": 0.1,
-     "value": 99.9
-    }
-   ],
-   "params": {
-    "bus_v": 14,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=14:limiter=on": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "75.9",
-     "raw": 75.8652728839752,
-     "resolution": 0.1,
-     "value": 75.9
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "76.8",
-     "raw": 76.82914442110325,
-     "resolution": 0.1,
-     "value": 76.8
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 14,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=15:limiter=off": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "102.9",
-     "raw": 102.89920347384924,
-     "resolution": 0.1,
-     "value": 102.9
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "104.2",
-     "raw": 104.20654225549805,
-     "resolution": 0.1,
-     "value": 104.2
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "107.5",
-     "raw": 107.46666666666667,
-     "resolution": 0.1,
-     "value": 107.5
-    }
-   ],
-   "params": {
-    "bus_v": 15,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=15:limiter=on": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "78.1",
-     "raw": 78.06359223102544,
-     "resolution": 0.1,
-     "value": 78.1
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "79.1",
-     "raw": 79.05539350949087,
-     "resolution": 0.1,
-     "value": 79.1
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 15,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=16:limiter=off": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "110.5",
-     "raw": 110.4850077195363,
-     "resolution": 0.1,
-     "value": 110.5
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "111.9",
-     "raw": 111.88872446860937,
-     "resolution": 0.1,
-     "value": 111.9
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "115.0",
-     "raw": 115.05,
-     "resolution": 0.1,
-     "value": 115.0
-    }
-   ],
-   "params": {
-    "bus_v": 16,
-    "limiter": "off"
-   },
-   "test": "bollard_pull"
-  },
-  "bidder_T08|witness:bollard_pull:bus_v=16:limiter=on": {
-   "bid": "T-08",
-   "bidder": "bidder_T08",
-   "outputs": [
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_ahead', bus_v, limiter, vehicle)",
-     "name": "forward_n",
-     "printed": "80.2",
-     "raw": 80.1623317365863,
-     "resolution": 0.1,
-     "value": 80.2
-    },
-    {
-     "basis_function": "bench_bollard_thrust_n('surge_astern', bus_v, limiter, vehicle)",
-     "name": "reverse_n",
-     "printed": "81.2",
-     "raw": 81.18079759024346,
-     "resolution": 0.1,
-     "value": 81.2
-    },
-    {
-     "basis_function": "bollard_bus_current_a('surge_astern', bus_v, limiter, vehicle)",
-     "name": "supply_current_a",
-     "printed": "72.0",
-     "raw": 72.0,
-     "resolution": 0.1,
-     "value": 72.0
-    }
-   ],
-   "params": {
-    "bus_v": 16,
-    "limiter": "on"
-   },
-   "test": "bollard_pull"
-  },
   "bidder_T08|witness:tow:speed_mps=0.4": {
    "bid": "T-08",
    "bidder": "bidder_T08",
@@ -4762,10 +4730,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "17.47",
-     "raw": 17.466,
+     "printed": "11.64",
+     "raw": 11.644000000000002,
      "resolution": 0.01,
-     "value": 17.47
+     "value": 11.64
     }
    ],
    "params": {
@@ -4780,10 +4748,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "35.31",
-     "raw": 35.306999999999995,
+     "printed": "23.54",
+     "raw": 23.537999999999997,
      "resolution": 0.01,
-     "value": 35.31
+     "value": 23.54
     }
    ],
    "params": {
@@ -4798,10 +4766,10 @@
     {
      "basis_function": "tow_drag_n(vehicle, speed_mps)",
      "name": "drag_n",
-     "printed": "59.22",
-     "raw": 59.220000000000006,
+     "printed": "39.48",
+     "raw": 39.480000000000004,
      "resolution": 0.01,
-     "value": 59.22
+     "value": 39.48
     }
    ],
    "params": {
@@ -4816,26 +4784,26 @@
     {
      "basis_function": "as_built: air mass of the tendered unit (FormalWorld.vehicle(..)['air_mass_kg'])",
      "name": "air_mass_kg",
-     "printed": "16.066",
-     "raw": 16.066000000000003,
+     "printed": "14.754",
+     "raw": 14.754000000000001,
      "resolution": 0.001,
-     "value": 16.066
+     "value": 14.754
     },
     {
      "basis_function": "-tank_net_buoyancy_n(air_mass_kg, displaced_volume_l, tank_water_density_kg_m3)",
      "name": "pool_weight_n",
-     "printed": "-0.43",
-     "raw": -0.4314926000000047,
+     "printed": "-0.29",
+     "raw": -0.2941995000000111,
      "resolution": 0.01,
-     "value": -0.43
+     "value": -0.29
     },
     {
      "basis_function": "as_built: tank water density / 1000",
      "name": "pool_sg",
-     "printed": "0.9982",
-     "raw": 0.9982053291007752,
+     "printed": "1.0246",
+     "raw": 1.0246,
      "resolution": 0.0001,
-     "value": 0.9982
+     "value": 1.0246
     },
     {
      "basis_function": "as_built: tanks[<tank>].t_c",
@@ -4850,7 +4818,7 @@
    "test": "weigh"
   }
  },
- "desk_table_digest": "51e746590273cba929db2ce2931a9b800356197ceed7fe118d4b57ce0e5f9d94",
+ "desk_table_digest": "88444b6542bf75c16438a46ad1dde38c65bfc98ab59bdfdb7479720523f8d133",
  "schema": "uw-witness-table/1",
- "world_sha256": "a3d02e9c81831e237b68116a8a459c756b2930aa7f947ad22ece32d660a53b56"
+ "world_sha256": "d37711c37c1eec4c2f3051dca0e86ec3ccad365307e90a00bf05c3cb0eb6f627"
 }
