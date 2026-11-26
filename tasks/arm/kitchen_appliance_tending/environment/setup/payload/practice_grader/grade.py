@@ -21,8 +21,10 @@ and the drawing are not counted) and reports whether that stayed inside the grad
 (6000 s for 18 episodes, so 333.3 s an episode here).
 
 Two things the hidden grader does that this one cannot: it stops your controller's processes between requests
-(they run only while a request is outstanding) and aborts an episode with more than 512 processes of your account
-at such a pause; and it has only your submission folder, nothing else of this home. `paths_outside_submission`
+(they run only while a request is outstanding; the time that takes after each reply, a few milliseconds, counts as
+controller time there), aborts an episode with more than 512 processes of your account at such a pause and aborts
+one in which a process continued itself during a pause; and it has only your submission folder, nothing else of
+this home. `paths_outside_submission`
 lists the `/home/user/...` paths outside the submission that the text files of your submission name: none of
 them exists when your controller is graded.
 

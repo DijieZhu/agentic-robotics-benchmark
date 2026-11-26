@@ -74,7 +74,8 @@ nominal, the episode draws the real one around it (`door_sim.draw_episode`); you
   brass coloured.
 - Bore = the pin's radius + the radial clearance (0.2-0.5 mm per unit). Every knuckle's outer radius is 9.0 mm,
   whatever its bore.
-- A door hangs only on its pins: with no pin it falls out of the knuckles.
+- A door hangs only on its pins: with no pin nothing holds it in the knuckles (it sags and tilts, and may stay
+  wedged in the opening).
 
 ## The pins
 

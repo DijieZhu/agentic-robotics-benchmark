@@ -37,8 +37,13 @@ The controller's processes run only while a request is outstanding (Pauser): eve
 runs is stopped (SIGSTOP) once a reply has been read (or READY seen) and continued before the next request is written,
 so the simulation and the drawing never share the CPUs with it and it cannot compute ahead of a request. A pause holds
 only once /proc shows every thread of every process of the account stopped; processes that do not stop within
-FREEZE_TIMEOUT_S, or more than MAX_PROCESSES processes of the account at a pause, abort the episode (score 0). The
-time a pause takes is not charged.
+FREEZE_TIMEOUT_S, or more than MAX_PROCESSES processes of the account at a pause, abort the episode (score 0).
+SIGSTOP holds only until the next SIGCONT, and a process can arrange its own (a POSIX timer that signals it), so the
+pause is checked again before the next request is written: every thread that was stopped must still be there and
+stopped, with the scheduler's record of its run time and of its turns on a CPU unchanged, and no thread may have
+appeared. Otherwise a process of the account ran during the pause and the episode is aborted (score 0). The time it
+takes to bring the account to a stop is the controller's own (a chain of short-lived processes lengthens it) and is
+charged; the simulation and the drawing that follow are not.
 
 Numerics: the environment's operational-space controller inverts two matrices with LAPACK in every physics substep, and
 NumPy's OpenBLAS picks its kernels by CPU. The image pins them (OPENBLAS_CORETYPE=Haswell, OPENBLAS_L2_SIZE=256, with
@@ -59,7 +64,8 @@ and checks their shapes, that none is flat and that their brightness is sane; th
 that it passed. A renderer failure, in the self-test or at any later image (appliance_env.RenderError: a missing
 or broken room-bundle file, an error while drawing, a call that does not return), is the grader's own error: the
 run ends as a task error (robotics_grader.stage.fail: no reward written, exit status 1), never as a controller fault
-or a 0 for the submission. The controller cannot bring it about: its processes are stopped while an image is drawn. A Vulkan backend that cannot start at all aborts the grader's process inside Filament
+or a 0 for the submission. The controller's processes are stopped while an image is drawn, run at the lowest
+priority if they continue themselves, and end the episode at the next request if they did. A Vulkan backend that cannot start at all aborts the grader's process inside Filament
 (SIGABRT, before Python can catch anything): no reward is written either; the image's build-time render check
 (environment/render_check/) proves the driver for every account that renders.
 """
@@ -203,6 +209,51 @@ def _alive(pid):
     return any(st not in GONE_STATES for st in _thread_states(pid))
 
 
+def _thread_records(pids):
+    """{(pid, tid): (state, run time, turns on a CPU)} for every thread of `pids`: the state letter from the thread's
+    stat and the first and third numbers of its schedstat (ns it has run, times it was given a CPU). A kernel without
+    schedstat gives the thread's user and system ticks instead. A stopped thread's record does not change."""
+    records = {}
+    for pid in pids:
+        try:
+            tids = os.listdir("/proc/{}/task".format(pid))
+        except OSError:
+            continue
+        for tid in tids:
+            base = "/proc/{}/task/{}/".format(pid, tid)
+            try:
+                with open(base + "stat") as f:
+                    fields = f.read().rsplit(")", 1)[1].split()
+                state, ran = fields[0], (fields[11], fields[12])
+            except (OSError, IndexError):
+                continue
+            try:
+                with open(base + "schedstat") as f:
+                    sched = f.read().split()
+                ran = (sched[0], sched[2])
+            except (OSError, IndexError):
+                pass
+            records[(pid, int(tid))] = (state,) + ran
+    return records
+
+
+def _pause_broken(before, now):
+    """What shows that a process ran between two readings of a paused account, or None. A thread that was stopped must
+    still be there, stopped, with the same record; no thread may have appeared. A thread that had already exited
+    (a zombie) may be reaped meanwhile."""
+    for key, rec in now.items():
+        if key not in before:
+            return "{} appeared".format(_describe(key[0]))
+        was = before[key]
+        if rec == was or (was[0] in GONE_STATES and rec[1:] == was[1:]):
+            continue
+        return "{} ran".format(_describe(key[0]))
+    for key, rec in before.items():
+        if key not in now and rec[0] not in GONE_STATES:
+            return "process {} is gone".format(key[0])
+    return None
+
+
 def _describe(pid):
     try:
         with open("/proc/{}/cmdline".format(pid), "rb") as f:
@@ -212,9 +263,9 @@ def _describe(pid):
 
 
 class Clock(object):
-    """The controller's own time (s): what the grader waited for READY, for each reset and for each reply (`timed`),
-    and what run_episodes adds for the images an applied action asks for. The simulation, the drawing of the images
-    and the pauses happen outside `timed`."""
+    """The controller's own time (s): what the grader waited for READY, for each reset and for each reply and what it
+    took to stop the account afterwards (`timed`), and what run_episodes adds for the images an applied action asks
+    for. The simulation and the drawing of the images happen outside `timed`."""
 
     def __init__(self):
         self.s = 0.0
@@ -242,11 +293,14 @@ class Pauser(object):
         self.unstoppable = []
         self.count = 0
         self.peak = 0
+        self._held = None          # the threads' records once the pause holds (None: nothing to compare)
+        self.resumed = 0           # pauses during which a process of the account ran
 
     def freeze(self):
         previous = None
         deadline = time.monotonic() + FREEZE_TIMEOUT_S
         self.unstoppable = []
+        self._held = None
         while True:
             pids = _account_pids(self.uid)
             running = [p for p in pids if _runs(p)]
@@ -267,9 +321,34 @@ class Pauser(object):
                 time.sleep(0.0005)
         self.count = sum(1 for p in pids if _alive(p))
         self.peak = max(self.peak, self.count)
+        if not self.unstoppable:
+            # /proc shows a thread as stopped an instant before it leaves the CPU: the records are taken once two
+            # readings a millisecond apart agree
+            held = _thread_records(pids)
+            while time.monotonic() <= deadline:
+                time.sleep(0.001)
+                again = _thread_records(_account_pids(self.uid))
+                if again == held:
+                    self._held = held
+                    break
+                held = again
+            else:
+                self.unstoppable = ["the account's threads keep changing"]
         return self.count
 
+    def check_held(self):
+        """Before the next request: did the pause hold? Raises SolverAborted if a process of the account ran since
+        the pause was confirmed (continued by a signal it arranged for itself) or a new one appeared."""
+        held, self._held = self._held, None
+        if held is None:
+            return
+        why = _pause_broken(held, _thread_records(_account_pids(self.uid)))
+        if why:
+            self.resumed += 1
+            raise SolverAborted("a process of the controller's account ran during a pause ({})".format(why))
+
     def thaw(self):
+        self._held = None
         for pid in sorted(self._stopped):
             try:
                 os.kill(pid, signal.SIGCONT)
@@ -625,15 +704,16 @@ def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episo
     def call(fn, *args, **kwargs):
         # one exchange with the controller: its processes run only inside it, and only its wait is charged
         if pauser is not None:
+            pauser.check_held()
             pauser.thaw()
         try:
             out = clock.timed(fn, *args, **kwargs)
         except BaseException:
             if pauser is not None:
-                pauser.freeze()
+                clock.timed(pauser.freeze)
             raise
         if pauser is not None:
-            pauser.pause_or_abort()
+            clock.timed(pauser.pause_or_abort)      # stopping the account is the controller's time
         return out
 
     lock = IdleAwareProbeLock(None, rate=config.get("probe_rate", 0.01),
@@ -647,7 +727,7 @@ def run_episodes(config, uid, egress_mode, t_start, specs, workdir, truth, episo
     GuardedSolver.nproc = int(config.get("solver_nproc_limit", 0))
     solver = clock.timed(GuardedSolver, step_timeout=config.get("step_timeout_s", 30), submission=workdir)
     if pauser is not None:
-        pauser.freeze()                  # READY seen: stopped until the first reset is written
+        clock.timed(pauser.freeze)       # READY seen: stopped until the first reset is written
     try:
         for n, (unit, seed) in enumerate(episodes):
             if clock.s > budget:
@@ -786,6 +866,7 @@ def main():
                  budget_exhausted=1.0 if budget_exhausted else 0.0,
                  controller_seconds=round(float(clock.s), 1),
                  agent_processes_peak=float(pauser.peak),
+                 pauses_not_held=float(pauser.resumed),
                  oracle_token=1.0 if truth else 0.0,
                  **secured)
     for unit, vals in sorted(per_unit.items()):

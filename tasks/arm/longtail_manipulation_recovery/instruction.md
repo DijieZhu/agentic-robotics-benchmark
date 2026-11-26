@@ -116,7 +116,7 @@ states. There is no partial credit within an episode.
 Limits, all enforced by the grader:
 
 - Controller time is capped at **400 s per episode**: for each `act` request, the time from the grader starting to
-  write the request to your reply line arriving, summed over the episode. Reading the request is your time: an
+  write the request to your reply line arriving and your processes being stopped again, summed over the episode. Reading the request is your time: an
   observation with images is larger than the pipe's buffer, so the grader writes it as you read it, and the request's
   10 s deadline covers the write as well (a request you have not read by then ends the episode like a late reply).
   Simulation and rendering do not count, and your processes cannot run outside that time (see below). An episode that
@@ -149,9 +149,13 @@ from the moment your reply is read
 until the grader starts writing the next request, which includes kitchen builds, simulation and rendering; background
 threads and processes therefore only run while a request is outstanding, and that time is charged to you. A pause
 holds only once every thread of every process of your account shows as stopped; one that has not stopped within 5 s
-ends the episode. The practice grader starts `run.sh` with the same three variables and the same deadlines (it pauses
+ends the episode. Before the next request is written the grader checks that the pause held: every thread it stopped
+is still there and stopped and has not run since (the scheduler's record of its run time), and no new thread has
+appeared. A process that continued itself during the pause (a timer that sends it SIGCONT, for example) ends the
+episode. Your controller's processes run at the lowest scheduling priority (nice 19). The practice grader starts
+`run.sh` with the same three variables and the same deadlines (it pauses
 only `run.sh`'s process group, where the grader pauses every process of your account, and it does not check that the
-pause holds or apply the 5 s rule).
+pause holds, look again before the next request or apply the 5 s rule).
 
 The whole grading run has an outer limit of 8 hours (28,800 s), which these caps keep out of reach: on the author's
 machine a controller that requested every camera with depth at every step took about 156 s per state for simulation,

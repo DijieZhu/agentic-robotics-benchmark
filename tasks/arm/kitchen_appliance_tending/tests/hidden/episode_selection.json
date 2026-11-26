@@ -2,7 +2,7 @@
  "format": "kitchen_appliance_tending episode selection 1",
  "rule": "tests/review/select_set.py (module docstring)",
  "frozen": {
-  "tests/verify.py": "5bf009d442b8ce7b5a9a82f83caefaff7719010d54f21586fa974362800e6efc",
+  "tests/verify.py": "64b52835d8d94b19a48417c788fa6f0139af8a1a03209c6e347efafe06468b4a",
   "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
   "tests/appliance_env.py": "a675cadf962b9ce0baa3f87dfd2064889c7da3d2b8ea00e583ef5c4bfde2993d",
   "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
@@ -14,7 +14,7 @@
   "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
   "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
  },
- "frozen_commit": "17a9d74ad7cfd3035d5591f615061af811d10b6f",
+ "frozen_commit": "f6fd96db75f7db0985fb01888f9f9c4fa39c89aa",
  "draws": [
   {
    "draw": 1,
@@ -23496,6 +23496,369 @@
     "why_the_reference_and_the_scoring_cannot_change": "The reference's replies do not depend on the budget; the credit rule (tests/episode.py) is untouched; the simulation code path is the same statement for statement. The image now pins OpenBLAS's kernels (OPENBLAS_CORETYPE=Haswell, OPENBLAS_L2_SIZE=256): the amend's own re-run below is made under that pin and must repeat the kept runs' steps and outcomes.",
     "local_grading_of_the_reference": "The fix image (numpy 2.5.4, the pin), 4 CPUs, AMD Zen 3 host under load: verify.py on the 18 graded episodes with the oracle submission: mean_request_credit 1.0, 18 of 18 scored, no aborts, probe pairs 120 of 121 differing, controller time 87 s of 6000 s, wall 304 s.",
     "probe_copy_separation": "Choosing the observation with the larger |ee_pos - FK(q)| on probed steps of a scripted motion found the real one in 157 of 300 and 145 of 300 steps at 1 cm per step (practice units p0 and p2) and 98 of 200 at 2 mm per step: chance. The reviewer measured 299 of 300, 300 of 300 and 199 of 200 on the earlier code."
+   }
+  },
+  {
+   "amendment": 5,
+   "amended_utc": "2026-11-25T05:39:53Z",
+   "draw": 6,
+   "commit": "f6fd96db75f7db0985fb01888f9f9c4fa39c89aa",
+   "reason": "A pause is checked again before the next request (a process can continue itself by a timer that sends SIGCONT), and the time it takes to stop the account counts as controller time (2026-11-25, after the validator second review of the merged task).",
+   "changed": {
+    "tests/verify.py": {
+     "recorded": "5bf009d442b8ce7b5a9a82f83caefaff7719010d54f21586fa974362800e6efc",
+     "now": "64b52835d8d94b19a48417c788fa6f0139af8a1a03209c6e347efafe06468b4a"
+    }
+   },
+   "frozen_before": {
+    "tests/verify.py": "5bf009d442b8ce7b5a9a82f83caefaff7719010d54f21586fa974362800e6efc",
+    "tests/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "tests/appliance_env.py": "a675cadf962b9ce0baa3f87dfd2064889c7da3d2b8ea00e583ef5c4bfde2993d",
+    "tests/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "tests/grader_config.json": "de025b512c5d036c71dd46c19bd69b656841b99c161b52fa81d60661ff215690",
+    "solution/oracle/appliance_env.py": "a675cadf962b9ce0baa3f87dfd2064889c7da3d2b8ea00e583ef5c4bfde2993d",
+    "solution/oracle/episode.py": "d2a5b974526ea8b6a00978c94b64772462f22c38b9a51e1448326975c0ec4649",
+    "solution/oracle/oracle_main.py": "b4d163e83cd5e9c027b7137e5aa71bcd87137446b6a079c8da341d56ab1daa02",
+    "solution/oracle/reference.py": "24be1e5ac9f1f1df64b10b8869d3922fe2b71f10e99a942331925bbd66c57f23",
+    "solution/oracle/units.json": "f973a2cf7ae78ab81ce04216435676192e0ce872b758dfb23b943a74a279aa64",
+    "solution/solve.sh": "214f344051ad8cee63d7f5df333e26e49a11c63a6d40c09f656eb7089f4dfc3d"
+   },
+   "frozen_commit_before": "17a9d74ad7cfd3035d5591f615061af811d10b6f",
+   "rerun_in_process": {
+    "rule": "step 3's in-process run of the privileged reference on every episode of the made draw, with the frozen files of the commit; each scored 1.0 with the steps and the per-request outcomes and closing steps recorded when it was kept",
+    "episodes": [
+     {
+      "episode": "u7#1",
+      "seed": 12218416849694862617,
+      "credit": 1.0,
+      "steps": 256,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       81,
+       166,
+       248
+      ],
+      "same_as_kept": true,
+      "wall_s": 4.9
+     },
+     {
+      "episode": "u0#0",
+      "seed": 3659038031876901525,
+      "credit": 1.0,
+      "steps": 532,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       132,
+       386,
+       528
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.7
+     },
+     {
+      "episode": "u8#1",
+      "seed": 20503753265692410,
+      "credit": 1.0,
+      "steps": 602,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       176,
+       472,
+       597
+      ],
+      "same_as_kept": true,
+      "wall_s": 7.4
+     },
+     {
+      "episode": "u0#1",
+      "seed": 2433537977515057068,
+      "credit": 1.0,
+      "steps": 1065,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       283,
+       633,
+       1061
+      ],
+      "same_as_kept": true,
+      "wall_s": 10.6
+     },
+     {
+      "episode": "u2#1",
+      "seed": 16259500198639530817,
+      "credit": 1.0,
+      "steps": 642,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       236,
+       481,
+       637
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.7
+     },
+     {
+      "episode": "u3#1",
+      "seed": 15605881240720506975,
+      "credit": 1.0,
+      "steps": 1295,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       396,
+       556,
+       1290
+      ],
+      "same_as_kept": true,
+      "wall_s": 11.6
+     },
+     {
+      "episode": "u5#1",
+      "seed": 11289930795897151125,
+      "credit": 1.0,
+      "steps": 1039,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       177,
+       476,
+       1034
+      ],
+      "same_as_kept": true,
+      "wall_s": 20.9
+     },
+     {
+      "episode": "u8#0",
+      "seed": 11375561797344878862,
+      "credit": 1.0,
+      "steps": 650,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       257,
+       396,
+       645
+      ],
+      "same_as_kept": true,
+      "wall_s": 7.2
+     },
+     {
+      "episode": "u2#0",
+      "seed": 16177700516589911371,
+      "credit": 1.0,
+      "steps": 741,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       312,
+       499,
+       736
+      ],
+      "same_as_kept": true,
+      "wall_s": 7.9
+     },
+     {
+      "episode": "u5#0",
+      "seed": 14023197352194698727,
+      "credit": 1.0,
+      "steps": 1392,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       187,
+       602,
+       1387
+      ],
+      "same_as_kept": true,
+      "wall_s": 25.6
+     },
+     {
+      "episode": "u1#2",
+      "seed": 603871317898819319,
+      "credit": 1.0,
+      "steps": 243,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       78,
+       164,
+       235
+      ],
+      "same_as_kept": true,
+      "wall_s": 3.0
+     },
+     {
+      "episode": "u6#1",
+      "seed": 5474728899677097721,
+      "credit": 1.0,
+      "steps": 393,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       125,
+       257,
+       388
+      ],
+      "same_as_kept": true,
+      "wall_s": 4.4
+     },
+     {
+      "episode": "u3#0",
+      "seed": 12124688175895452785,
+      "credit": 1.0,
+      "steps": 985,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       406,
+       863,
+       980
+      ],
+      "same_as_kept": true,
+      "wall_s": 8.6
+     },
+     {
+      "episode": "u1#1",
+      "seed": 12221698076534752065,
+      "credit": 1.0,
+      "steps": 262,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       95,
+       167,
+       254
+      ],
+      "same_as_kept": true,
+      "wall_s": 3.2
+     },
+     {
+      "episode": "u4#0",
+      "seed": 5918157982911667440,
+      "credit": 1.0,
+      "steps": 260,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       90,
+       164,
+       252
+      ],
+      "same_as_kept": true,
+      "wall_s": 2.4
+     },
+     {
+      "episode": "u6#0",
+      "seed": 15125693244157032466,
+      "credit": 1.0,
+      "steps": 648,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       145,
+       382,
+       643
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.7
+     },
+     {
+      "episode": "u7#0",
+      "seed": 1726653658657273486,
+      "credit": 1.0,
+      "steps": 447,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       111,
+       277,
+       439
+      ],
+      "same_as_kept": true,
+      "wall_s": 6.5
+     },
+     {
+      "episode": "u4#1",
+      "seed": 15548475382162886622,
+      "credit": 1.0,
+      "steps": 259,
+      "outcomes": [
+       "completed",
+       "completed",
+       "completed"
+      ],
+      "t_close": [
+       80,
+       171,
+       251
+      ],
+      "same_as_kept": true,
+      "wall_s": 2.8
+     }
+    ]
+   },
+   "evidence": {
+    "what_changed": {
+     "tests/verify.py": "before a request is written the grader compares every thread of the controller's account with the record taken when the pause held (state, run time and turns on a CPU from /proc/<pid>/task/<tid>/schedstat): a thread that ran or a new thread aborts the episode; the time it takes to stop the account after a reply is added to the controller's own time. The episode loop, the credit, the probe lock and its stream, the budget's size and the image price are unchanged."
+    },
+    "why_the_reference_and_the_scoring_cannot_change": "The reference's processes stay stopped during a pause, so the new check never fires for it; its replies do not depend on the controller's clock; the credit rule (tests/episode.py) and the environment (tests/appliance_env.py) are untouched.",
+    "tests": "tests/test_pause_recheck.py (repository tests): a controller that stays stopped passes five pauses; one that continues itself by a POSIX timer (SIGCONT every 20 ms) is caught; one that starts a process during the pause is caught. Run in the task image for this grader."
    }
   }
  ]

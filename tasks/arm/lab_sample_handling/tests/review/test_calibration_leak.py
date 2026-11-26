@@ -9,7 +9,8 @@ out. This check builds every unit as the grader and the commissioning service do
   * what a controller can compute, inv(T_sheet) @ T_world_<cam>, is the offset (to 1e-9), which has no share in
     the error;
   * taken as an estimate of the error it is wrong by more than the error's own bound in most components (it is no
-    better than not knowing: the offset's range is four times the error's);
+    better than not knowing: for the fixed cameras the offset's range is four times the error's; for the wrist
+    camera it is two times in translation and three times in rotation);
   * the camera the images are drawn from is the pose on file with the error taken out (to 1e-9).
 
     /opt/venv/bin/python3 -B tests/review/test_calibration_leak.py        (the task image's Python)
