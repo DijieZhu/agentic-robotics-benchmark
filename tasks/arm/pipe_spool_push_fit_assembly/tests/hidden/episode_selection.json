@@ -4,22 +4,35 @@
  "frozen": {
   "tests/spool_grade.py": "0fea8b15805b6eea97b647b62d0a6d34fad937e41a8365abca06807235e647ce",
   "tests/episode.py": "4d018948f9b8fa51f9c900bbb5c8e799e928f09ea05ef46e14d39b5adbd8b8cb",
-  "tests/spool_env.py": "caab5a16cdc48445aef0b47d4e012b920149131e8ab425fd4ad49055de90fdd8",
-  "tests/spool_sim.py": "dc4c8a895244391c357c7cb562db3a924903e80b917986f91a3884aa5a3119ab",
+  "tests/spool_env.py": "736662fbdf0c905969e0d48a84689b389b4112c6f3f91a5cf9791aab813c0d8f",
+  "tests/spool_sim.py": "c9d555cab161ed0818234b89e1b1882c01d75f21e2e4016252bec51337f39d66",
   "tests/units.json": "75fcf50bba77d399af7fc6ff775334ba04387cb4e333905fb4a8c38781eef79a",
   "tests/grader_config.json": "609157fa24ffa819789f375e9f280b80d9800af7383211efabb017058cb604f5",
   "tests/nonet_exec.py": "b300f763444b3dfdbacabbe4e5c73a9fc1dace6ab0fc10fcb613824a44921764",
   "tests/numerics_check.py": "d9fbc507c6b8d9635cf4c535700b6aa175dfb983fdd9ff313203922add361afe",
   "tests/numerics.json": "8001c47392a9b55d5b853f1b27e42ca64a1eb908ae5112b631b384e7482777c7",
-  "solution/oracle/spool_env.py": "caab5a16cdc48445aef0b47d4e012b920149131e8ab425fd4ad49055de90fdd8",
-  "solution/oracle/spool_sim.py": "dc4c8a895244391c357c7cb562db3a924903e80b917986f91a3884aa5a3119ab",
+  "tests/spool_render.py": "cac5862380beb10cae1fa099c9c5c309b5346ca6a6d0e7bd0d0a6a02c7c2cb72",
+  "tests/spool_scene.py": "82dbd60fc6ef371daa6a57da958a407592b965a09ca07d2edfd9ff52967f9fe6",
+  "tests/spool_parts.py": "bcde3be16163cca4ae465fe6686e24c98cd1cfab45e42e93cddcc809474451a6",
+  "tests/spool_geom.py": "913cc139baa2d4558299e440bbe7fc2b7b6df547dccf32ab80d6ac4441c86515",
+  "tests/spool_looks.py": "94f21effe4e817f1fe1b78dbd8397b08f5e0d36626adb2091eb7786057f3a717",
+  "tests/spool_look.json": "ebf55376866c268fbaefc5d21e9abc276a99c0a47de09a4a6e56d24ba3bdc2ee",
+  "environment/assets.sha256": "1d6e22980862bce45c1cef18d5c28ec847362c5cfd75e89b28456a7f0cc218e2",
+  "solution/oracle/spool_env.py": "736662fbdf0c905969e0d48a84689b389b4112c6f3f91a5cf9791aab813c0d8f",
+  "solution/oracle/spool_sim.py": "c9d555cab161ed0818234b89e1b1882c01d75f21e2e4016252bec51337f39d66",
   "solution/oracle/episode.py": "4d018948f9b8fa51f9c900bbb5c8e799e928f09ea05ef46e14d39b5adbd8b8cb",
   "solution/oracle/oracle_main.py": "7200890d50e34bfc14ff30ce48c633bd21f4a655c089b9d360504c1a72627e3f",
   "solution/oracle/reference.py": "0e0e87472c240055966d2f3512947304c4e879b6ee85dbf8bcb771c8454c6224",
   "solution/oracle/wire_world.py": "d0a91fad39718009053c7ca7e24fde37e6ae3de93b766a94d4f1281046183104",
+  "solution/oracle/spool_render.py": "cac5862380beb10cae1fa099c9c5c309b5346ca6a6d0e7bd0d0a6a02c7c2cb72",
+  "solution/oracle/spool_scene.py": "82dbd60fc6ef371daa6a57da958a407592b965a09ca07d2edfd9ff52967f9fe6",
+  "solution/oracle/spool_parts.py": "bcde3be16163cca4ae465fe6686e24c98cd1cfab45e42e93cddcc809474451a6",
+  "solution/oracle/spool_geom.py": "913cc139baa2d4558299e440bbe7fc2b7b6df547dccf32ab80d6ac4441c86515",
+  "solution/oracle/spool_looks.py": "94f21effe4e817f1fe1b78dbd8397b08f5e0d36626adb2091eb7786057f3a717",
+  "solution/oracle/spool_look.json": "ebf55376866c268fbaefc5d21e9abc276a99c0a47de09a4a6e56d24ba3bdc2ee",
   "solution/solve.sh": "33387cd8562bfd62f3a911515eb134aba2f44a1a0580e1e44e93fb6b4e1a3818"
  },
- "frozen_commit": "7366935c5a13dbec917cdc508166746f36140261",
+ "frozen_commit": "a3a513cbad1f8f0723fd0bafdefd75ef724f2a7e",
  "draws": [
   {
    "draw": 1,
@@ -113,7 +126,7 @@
    "key": "250b761be069eb0071a67913458e87fa6d21f196aac73bf743fe98210515b5ac",
    "source": "os.urandom(32)",
    "frozen_commit": "7366935c5a13dbec917cdc508166746f36140261",
-   "status": "made",
+   "status": "void",
    "made_utc": "2026-11-25T16:38:33Z",
    "graded_order": [
     "u7#0",
@@ -128,6 +141,49 @@
     "u9#0",
     "u11#0",
     "u0#4"
+   ],
+   "frozen": {
+    "tests/spool_grade.py": "0fea8b15805b6eea97b647b62d0a6d34fad937e41a8365abca06807235e647ce",
+    "tests/episode.py": "4d018948f9b8fa51f9c900bbb5c8e799e928f09ea05ef46e14d39b5adbd8b8cb",
+    "tests/spool_env.py": "caab5a16cdc48445aef0b47d4e012b920149131e8ab425fd4ad49055de90fdd8",
+    "tests/spool_sim.py": "dc4c8a895244391c357c7cb562db3a924903e80b917986f91a3884aa5a3119ab",
+    "tests/units.json": "75fcf50bba77d399af7fc6ff775334ba04387cb4e333905fb4a8c38781eef79a",
+    "tests/grader_config.json": "609157fa24ffa819789f375e9f280b80d9800af7383211efabb017058cb604f5",
+    "tests/nonet_exec.py": "b300f763444b3dfdbacabbe4e5c73a9fc1dace6ab0fc10fcb613824a44921764",
+    "tests/numerics_check.py": "d9fbc507c6b8d9635cf4c535700b6aa175dfb983fdd9ff313203922add361afe",
+    "tests/numerics.json": "8001c47392a9b55d5b853f1b27e42ca64a1eb908ae5112b631b384e7482777c7",
+    "solution/oracle/spool_env.py": "caab5a16cdc48445aef0b47d4e012b920149131e8ab425fd4ad49055de90fdd8",
+    "solution/oracle/spool_sim.py": "dc4c8a895244391c357c7cb562db3a924903e80b917986f91a3884aa5a3119ab",
+    "solution/oracle/episode.py": "4d018948f9b8fa51f9c900bbb5c8e799e928f09ea05ef46e14d39b5adbd8b8cb",
+    "solution/oracle/oracle_main.py": "7200890d50e34bfc14ff30ce48c633bd21f4a655c089b9d360504c1a72627e3f",
+    "solution/oracle/reference.py": "0e0e87472c240055966d2f3512947304c4e879b6ee85dbf8bcb771c8454c6224",
+    "solution/oracle/wire_world.py": "d0a91fad39718009053c7ca7e24fde37e6ae3de93b766a94d4f1281046183104",
+    "solution/solve.sh": "33387cd8562bfd62f3a911515eb134aba2f44a1a0580e1e44e93fb6b4e1a3818"
+   },
+   "void_reason": "frozen files changed (2026-11-26): the cameras are drawn by spool_render.py from the approved scene (tests/spool_sim.py, tests/spool_env.py and the new drawing modules), the model has contact boxes for the drawn camera rig, and the probe copy's wrench is a second reading of the true wrench",
+   "voided_utc": "2026-11-26T09:17:34Z"
+  },
+  {
+   "draw": 4,
+   "drawn_utc": "2026-11-26T09:17:34Z",
+   "key": "7dec50fd703abbb654421fa1d33342d1e3d1676a2b0b3acbac0d1cbc4a585988",
+   "source": "os.urandom(32)",
+   "frozen_commit": "a3a513cbad1f8f0723fd0bafdefd75ef724f2a7e",
+   "status": "made",
+   "made_utc": "2026-11-26T09:20:47Z",
+   "graded_order": [
+    "u0#3",
+    "u3#0",
+    "u9#0",
+    "u6#2",
+    "u7#0",
+    "u1#0",
+    "u8#1",
+    "u10#0",
+    "u11#0",
+    "u5#1",
+    "u4#1",
+    "u2#0"
    ]
   }
  ],
@@ -4619,6 +4675,1490 @@
    ],
    "status": "kept",
    "draw": 3
+  },
+  {
+   "unit": "u0",
+   "index": 0,
+   "seed": 10444347306967412433,
+   "drawn": {
+    "len_a": 289.4,
+    "len_b": 195.7,
+    "band": -1,
+    "e_yaw": [
+     52.8,
+     77.2
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 0.4,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 58,
+     "probes_passed": 58,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 73.2,
+     "controller_s": 5.89
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u0",
+   "index": 1,
+   "seed": 904988687562714234,
+   "drawn": {
+    "len_a": 279.5,
+    "len_b": 205.9,
+    "band": -1,
+    "e_yaw": [
+     74.4,
+     -159.9
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 0.4,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 60,
+     "probes_passed": 60,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 80.3,
+     "controller_s": 6.36
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u0",
+   "index": 2,
+   "seed": 4424583343530264189,
+   "drawn": {
+    "len_a": 278.4,
+    "len_b": 220.2,
+    "band": -1,
+    "e_yaw": [
+     -99.8,
+     68.1
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 74,
+     "probes_passed": 74,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 56.5,
+     "controller_s": 4.0
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u0",
+   "index": 3,
+   "seed": 6830851633029051493,
+   "drawn": {
+    "len_a": 266.1,
+    "len_b": 217.4,
+    "band": 1,
+    "e_yaw": [
+     -126.7,
+     45.7
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 972,
+     "sim_fault": false,
+     "probes": 14,
+     "probes_passed": 14,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.0,
+     "controller_s": 0.94
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 972,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 15.6,
+     "controller_s": 0.89
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 972,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.3,
+     "controller_s": 1.0
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u1",
+   "index": 0,
+   "seed": 3857181923050223082,
+   "drawn": {
+    "len_a": 279.9,
+    "len_b": 221.7,
+    "band": -1,
+    "e_yaw": [
+     131.4,
+     -23.2
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 888,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 22.8,
+     "controller_s": 1.91
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 888,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.0,
+     "controller_s": 1.25
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 888,
+     "sim_fault": false,
+     "probes": 14,
+     "probes_passed": 14,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.5,
+     "controller_s": 1.05
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u1",
+   "index": 1,
+   "seed": 16941348174632352734,
+   "drawn": {
+    "len_a": 224.5,
+    "len_b": 218.8,
+    "band": -1,
+    "e_yaw": [
+     -92.9,
+     -162.4
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 872,
+     "sim_fault": false,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.4,
+     "controller_s": 1.52
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 872,
+     "sim_fault": false,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.7,
+     "controller_s": 1.24
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 872,
+     "sim_fault": false,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.9,
+     "controller_s": 1.13
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u10",
+   "index": 0,
+   "seed": 15880665772413667671,
+   "drawn": {
+    "len_a": 268.3,
+    "len_b": 193.8,
+    "band": 1,
+    "e_yaw": [
+     -150.5,
+     -68.4
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 966,
+     "sim_fault": false,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.5,
+     "controller_s": 1.4
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 966,
+     "sim_fault": false,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.6,
+     "controller_s": 1.28
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 966,
+     "sim_fault": false,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.1,
+     "controller_s": 1.11
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u10",
+   "index": 1,
+   "seed": 3825314739144350496,
+   "drawn": {
+    "len_a": 276.2,
+    "len_b": 191.2,
+    "band": -1,
+    "e_yaw": [
+     48.7,
+     133.9
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 836,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.6,
+     "controller_s": 1.56
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 836,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 15.6,
+     "controller_s": 1.22
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 836,
+     "sim_fault": false,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 14.4,
+     "controller_s": 1.08
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u11",
+   "index": 0,
+   "seed": 14310619414193006096,
+   "drawn": {
+    "len_a": 255.3,
+    "len_b": 214.1,
+    "band": 1,
+    "e_yaw": [
+     153.5,
+     -130.1
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 988,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.6,
+     "controller_s": 1.54
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 988,
+     "sim_fault": false,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.4,
+     "controller_s": 1.19
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 988,
+     "sim_fault": false,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.2,
+     "controller_s": 1.13
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u11",
+   "index": 1,
+   "seed": 9487622353682298786,
+   "drawn": {
+    "len_a": 238.1,
+    "len_b": 228.9,
+    "band": -1,
+    "e_yaw": [
+     122.1,
+     -42.5
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 887,
+     "sim_fault": false,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.6,
+     "controller_s": 1.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 887,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.8,
+     "controller_s": 1.17
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 887,
+     "sim_fault": false,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.3,
+     "controller_s": 1.14
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u2",
+   "index": 0,
+   "seed": 1182578521774447316,
+   "drawn": {
+    "len_a": 264.1,
+    "len_b": 201.6,
+    "band": -1,
+    "e_yaw": [
+     -170.1,
+     -22.7
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 913,
+     "sim_fault": false,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.9,
+     "controller_s": 1.88
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 913,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 18.0,
+     "controller_s": 1.19
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 913,
+     "sim_fault": false,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.0,
+     "controller_s": 1.1
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u2",
+   "index": 1,
+   "seed": 4845987070690469433,
+   "drawn": {
+    "len_a": 250.4,
+    "len_b": 220.9,
+    "band": -1,
+    "e_yaw": [
+     51.7,
+     -33.4
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1149,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 23.9,
+     "controller_s": 1.97
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1149,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.5,
+     "controller_s": 1.48
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1149,
+     "sim_fault": false,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 18.1,
+     "controller_s": 1.2
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u3",
+   "index": 0,
+   "seed": 15874054359496688188,
+   "drawn": {
+    "len_a": 270.9,
+    "len_b": 203.6,
+    "band": 1,
+    "e_yaw": [
+     -28.1,
+     146.9
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1024,
+     "sim_fault": false,
+     "probes": 14,
+     "probes_passed": 14,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 21.2,
+     "controller_s": 2.09
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1024,
+     "sim_fault": false,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.5,
+     "controller_s": 1.25
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1024,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.6,
+     "controller_s": 1.11
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u3",
+   "index": 1,
+   "seed": 1031776516540521005,
+   "drawn": {
+    "len_a": 234.6,
+    "len_b": 218.1,
+    "band": -1,
+    "e_yaw": [
+     -132.2,
+     8.6
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 904,
+     "sim_fault": false,
+     "probes": 4,
+     "probes_passed": 4,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.5,
+     "controller_s": 1.96
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 904,
+     "sim_fault": false,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.7,
+     "controller_s": 1.18
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 904,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 15.9,
+     "controller_s": 1.11
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u4",
+   "index": 0,
+   "seed": 9121191154758819877,
+   "drawn": {
+    "len_a": 259.6,
+    "len_b": 218.5,
+    "band": -1,
+    "e_yaw": [
+     -13.9,
+     -15.0
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 0.4,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 57,
+     "probes_passed": 57,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 69.3,
+     "controller_s": 5.97
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u4",
+   "index": 1,
+   "seed": 13680172148743812427,
+   "drawn": {
+    "len_a": 262.6,
+    "len_b": 193.1,
+    "band": 1,
+    "e_yaw": [
+     91.5,
+     -23.1
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1031,
+     "sim_fault": false,
+     "probes": 3,
+     "probes_passed": 3,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 23.1,
+     "controller_s": 1.71
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1031,
+     "sim_fault": false,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.7,
+     "controller_s": 1.26
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1031,
+     "sim_fault": false,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.6,
+     "controller_s": 1.11
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u5",
+   "index": 0,
+   "seed": 1693703057013518737,
+   "drawn": {
+    "len_a": 226.3,
+    "len_b": 195.6,
+    "band": -1,
+    "e_yaw": [
+     -72.7,
+     -111.1
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 0.2,
+     "reason": "ok",
+     "steps": 1341,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 30.3,
+     "controller_s": 2.19
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u5",
+   "index": 1,
+   "seed": 11375600415879268977,
+   "drawn": {
+    "len_a": 231.5,
+    "len_b": 202.0,
+    "band": -1,
+    "e_yaw": [
+     -60.0,
+     104.6
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 885,
+     "sim_fault": false,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 21.4,
+     "controller_s": 1.7
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 885,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 18.7,
+     "controller_s": 1.19
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 885,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.2,
+     "controller_s": 1.08
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u6",
+   "index": 0,
+   "seed": 13604975692432955768,
+   "drawn": {
+    "len_a": 239.7,
+    "len_b": 228.3,
+    "band": -1,
+    "e_yaw": [
+     -79.0,
+     -25.2
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 0.2,
+     "reason": "ok",
+     "steps": 1166,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 26.8,
+     "controller_s": 2.28
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u6",
+   "index": 1,
+   "seed": 14756258169018372899,
+   "drawn": {
+    "len_a": 221.0,
+    "len_b": 191.2,
+    "band": -1,
+    "e_yaw": [
+     -28.9,
+     176.4
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 0.0,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 51,
+     "probes_passed": 51,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 69.6,
+     "controller_s": 5.62
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u6",
+   "index": 2,
+   "seed": 16753386440915303490,
+   "drawn": {
+    "len_a": 259.6,
+    "len_b": 195.8,
+    "band": 1,
+    "e_yaw": [
+     -144.1,
+     44.9
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1054,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.6,
+     "controller_s": 0.97
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1054,
+     "sim_fault": false,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.2,
+     "controller_s": 0.93
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1054,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.8,
+     "controller_s": 1.03
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u6",
+   "index": 3,
+   "seed": 9162409148006878732,
+   "drawn": {
+    "len_a": 228.3,
+    "len_b": 208.2,
+    "band": 1,
+    "e_yaw": [
+     120.9,
+     77.5
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 946,
+     "sim_fault": false,
+     "probes": 10,
+     "probes_passed": 10,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.8,
+     "controller_s": 0.98
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 946,
+     "sim_fault": false,
+     "probes": 14,
+     "probes_passed": 14,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.4,
+     "controller_s": 0.89
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 946,
+     "sim_fault": false,
+     "probes": 13,
+     "probes_passed": 13,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.1,
+     "controller_s": 1.01
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u7",
+   "index": 0,
+   "seed": 11856841300821972039,
+   "drawn": {
+    "len_a": 256.9,
+    "len_b": 199.0,
+    "band": -1,
+    "e_yaw": [
+     -17.1,
+     -165.0
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1056,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 26.5,
+     "controller_s": 1.65
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1056,
+     "sim_fault": false,
+     "probes": 15,
+     "probes_passed": 15,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 21.8,
+     "controller_s": 1.45
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1056,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 19.2,
+     "controller_s": 1.2
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u7",
+   "index": 1,
+   "seed": 15243994132157393559,
+   "drawn": {
+    "len_a": 298.0,
+    "len_b": 209.4,
+    "band": 1,
+    "e_yaw": [
+     127.2,
+     27.4
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1172,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 28.1,
+     "controller_s": 2.2
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1172,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 23.0,
+     "controller_s": 1.41
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 1172,
+     "sim_fault": false,
+     "probes": 11,
+     "probes_passed": 11,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.4,
+     "controller_s": 1.17
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u8",
+   "index": 0,
+   "seed": 6250827853211653779,
+   "drawn": {
+    "len_a": 246.5,
+    "len_b": 216.5,
+    "band": -1,
+    "e_yaw": [
+     -98.6,
+     -32.4
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 0.4,
+     "reason": "ok",
+     "steps": 6000,
+     "sim_fault": false,
+     "probes": 56,
+     "probes_passed": 56,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 79.3,
+     "controller_s": 5.64
+    }
+   ],
+   "status": "rejected",
+   "draw": 4
+  },
+  {
+   "unit": "u8",
+   "index": 1,
+   "seed": 17176158671188065583,
+   "drawn": {
+    "len_a": 228.8,
+    "len_b": 199.5,
+    "band": 1,
+    "e_yaw": [
+     -62.4,
+     122.0
+    ],
+    "twist_deg": 180
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 863,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.3,
+     "controller_s": 1.85
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 863,
+     "sim_fault": false,
+     "probes": 5,
+     "probes_passed": 5,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.3,
+     "controller_s": 1.13
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 863,
+     "sim_fault": false,
+     "probes": 9,
+     "probes_passed": 9,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.5,
+     "controller_s": 1.08
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u9",
+   "index": 0,
+   "seed": 15502903135837650631,
+   "drawn": {
+    "len_a": 264.4,
+    "len_b": 228.3,
+    "band": -1,
+    "e_yaw": [
+     4.3,
+     -3.9
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 949,
+     "sim_fault": false,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 22.2,
+     "controller_s": 2.0
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 949,
+     "sim_fault": false,
+     "probes": 6,
+     "probes_passed": 6,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 18.7,
+     "controller_s": 1.21
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 949,
+     "sim_fault": false,
+     "probes": 12,
+     "probes_passed": 12,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.2,
+     "controller_s": 1.09
+    }
+   ],
+   "status": "kept",
+   "draw": 4
+  },
+  {
+   "unit": "u9",
+   "index": 1,
+   "seed": 8447017641082287552,
+   "drawn": {
+    "len_a": 280.0,
+    "len_b": 196.1,
+    "band": -1,
+    "e_yaw": [
+     -87.2,
+     33.6
+    ],
+    "twist_deg": 0
+   },
+   "wire": [
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 834,
+     "sim_fault": false,
+     "probes": 7,
+     "probes_passed": 7,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 20.4,
+     "controller_s": 1.8
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 834,
+     "sim_fault": false,
+     "probes": 8,
+     "probes_passed": 8,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 17.3,
+     "controller_s": 1.12
+    },
+    {
+     "credit": 1.0,
+     "reason": "ok",
+     "steps": 834,
+     "sim_fault": false,
+     "probes": 14,
+     "probes_passed": 14,
+     "probes_idle_skipped": 0,
+     "pinned": null,
+     "swings": null,
+     "swing_deg": null,
+     "wall_s": 16.4,
+     "controller_s": 1.08
+    }
+   ],
+   "status": "kept",
+   "draw": 4
   }
  ]
 }
