@@ -1,0 +1,7 @@
+{
+  "metric": "material_transfer_score",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 1.0,
+  "source": "the privileged reference (solution/ref/params.json: per fabric the planning-simulator material calibrated against the hidden model of the real fabric by tests/review/make_set.py). By the pre-registered keep rule (tests/PREREG.md) every hidden test is one on which the reference scores 1.0, so its metric is 1.0 by construction; measured 1.0 by ale validate. The grader is deterministic under the numerics pin (tests/numerics_check.py), so full_at is 1.0"
+}

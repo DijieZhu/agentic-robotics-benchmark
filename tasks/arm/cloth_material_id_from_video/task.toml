@@ -1,0 +1,29 @@
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/cloth_material_id_from_video"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+[agent]
+timeout_sec = 28800
+network_mode = "no-network"
+
+# Fixed hidden fabrics and tests (tests/PREREG.md): the grader reads them from tests/ref (staged only at verify) in a
+# fresh verifier sandbox; it never trusts anything the agent left besides params.json.
+[verifier]
+# 80 tests, each planned in the simulator (up to 10 runs) and executed once on the real fabric: about 20 minutes on 8
+# cores. There is no deadline inside the grader; this timeout is the only bound, and a stage that reaches it has no score.
+timeout_sec = 7200
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 8
+memory_mb = 8192
+gpus = 0
