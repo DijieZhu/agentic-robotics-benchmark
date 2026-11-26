@@ -1,0 +1,789 @@
+{
+ "format": "estimator-controller-world-table/1",
+ "what": "the values of the task's table of numbers that the hidden world reads, by key (value only)",
+ "values": {
+  "cert.checkout_sequence": {
+   "value": "the sensor-only reference flies, inside the check-out's box, at the nominal fan level and at the nominal mode's limits: 20 s at rest; one torque pulse of 1.5 s on each of the six signed axes, each followed by its return; one out-and-back burn of about 8 s on each of the six signed force axes; 86 s in all. The registered response function reads the same sequence at each fan level's own mode's limits (the lowest level by the quiet mode's). The observability table's estimators read these frames. The sequence is the reference's own; nothing about it is printed"
+  },
+  "interface.step_period_ms": {
+   "value": 16.0
+  },
+  "interface.watchdog_s": {
+   "value": 0.32
+  },
+  "jobs.block_budget": {
+   "value": "B = S + sum over every job announced for the block of (k x t_j + F_j). t_j = max(trap(d_j, a, v), trap(theta_j, alpha, omega)) with trap(x, A, V) = 2 sqrt(x / A) if x <= V^2 / A, else x / V + V / A; d_j and theta_j are the distance and the turn angle between the body pose that meets the goal of the job before (here the last job before it in the block's list that is not a hold, whether it is a request or not; the block's start pose if there is none) and the body pose that meets this job's goal; v, a, omega, alpha are the four hard limits of the job's mode (a job that names a mode that is not in the session paper's list of modes takes the block's mode); a hold has t_j = 0. F_j = 2.5 s for a leg or slew (its end window), the duration for a hold, 1.7 s for a view (its capture). S = jobs.spin_up_term for a block that starts with a mode change, else 0. k = jobs.budget_factor."
+  },
+  "jobs.budget_factor": {
+   "value": 1.35
+  },
+  "jobs.camera_mount_m": {
+   "value": [
+    0.118,
+    0.0,
+    -0.096
+   ]
+  },
+  "jobs.capture_s": {
+   "value": 1.7
+  },
+  "jobs.spin_up_term": {
+   "value": "S = |n_new - n_old| / 200 + 2.0 s with n = 2000, 2500, 2800 rpm for fan levels 1, 2, 3 (4.5 s into the quiet mode, 3.5 s into the precision mode)"
+  },
+  "mode.fan_level": {
+   "value": {
+    "nominal": 2,
+    "quiet": 1,
+    "precision": 3
+   }
+  },
+  "monitor.recovery_s": {
+   "value": {
+    "nominal": 25,
+    "precision": 17,
+    "quiet": 30
+   }
+  },
+  "monitor.tolerance.nominal": {
+   "value": {
+    "position_m": 0.25,
+    "attitude_deg": 20.0,
+    "end_point_m": 0.1
+   }
+  },
+  "monitor.tolerance.precision": {
+   "value": {
+    "position_m": 0.1,
+    "attitude_deg": 10.0,
+    "end_point_m": 0.1
+   }
+  },
+  "monitor.tolerance.quiet": {
+   "value": {
+    "position_m": 0.1,
+    "attitude_deg": 10.0,
+    "end_point_m": 0.1
+   }
+  },
+  "monitor.window_s": {
+   "value": {
+    "releases_from_2021_08_26": 3.0,
+    "earlier_releases": 1.0
+   }
+  },
+  "plan.acceleration_limit": {
+   "value": {
+    "nominal": {
+     "linear_m_s2": 0.0175,
+     "angular_rad_s2": 0.1745
+    },
+    "quiet": {
+     "linear_m_s2": 0.002,
+     "angular_rad_s2": 0.0174
+    },
+    "precision": {
+     "linear_m_s2": 0.01,
+     "angular_rad_s2": 0.1745
+    }
+   }
+  },
+  "plan.consistency": {
+   "value": "setpoint times increase strictly and are at most 1.0 s apart; a setpoint integrated forward at its constant acceleration to the time of the next one agrees with it within 2 mm and 0.2 degrees in pose and 2 mm/s and 0.2 deg/s in velocity and body rate"
+  },
+  "plan.end_tolerance": {
+   "value": {
+    "leg, slew": {
+     "position_m": 0.001,
+     "attitude_deg": 0.1
+    },
+    "view": "the pose of the last setpoint is not checked",
+    "every kind": "the last setpoint has zero velocity, acceleration, body rate and angular acceleration"
+   }
+  },
+  "plan.limit_rule": {
+   "value": "every setpoint of a plan: the norms of velocity, acceleration, body rate and angular acceleration are at most the four hard limits of the job's mode (plan.speed_limit, plan.acceleration_limit), relative tolerance 1e-6; checked when plan returns, before the job starts; a plan that breaks it is invalid"
+  },
+  "plan.max_setpoints": {
+   "value": 2000
+  },
+  "plan.speed_limit.nominal": {
+   "value": {
+    "linear_m_s": 0.2,
+    "angular_rad_s": 0.1745
+   }
+  },
+  "plan.speed_limit.precision": {
+   "value": {
+    "linear_m_s": 0.02,
+    "angular_rad_s": 0.1745
+   }
+  },
+  "plan.speed_limit.quiet": {
+   "value": {
+    "linear_m_s": 0.02,
+    "angular_rad_s": 0.0174
+   }
+  },
+  "plan.start_tolerance": {
+   "value": {
+    "position_m": 0.001,
+    "attitude_deg": 0.1
+   }
+  },
+  "safety.body_radius_m": {
+   "value": 0.28
+  },
+  "safety.overspeed_m_s": {
+   "value": 0.5
+  },
+  "score.end_window_s": {
+   "value": [
+    0.5,
+    2.5
+   ]
+  },
+  "sessions.checkout_box": {
+   "value": {
+    "position_m": 0.3,
+    "attitude_deg": 30.0
+   }
+  },
+  "sessions.checkout_s": {
+   "value": 90.0
+  },
+  "sessions.outage_cap_rule": {
+   "value": "the cap of a mode is the longest outage after which three standard deviations of the position covariance of the sensor-only reference that carries the stated uncertainty (its response off by the unit's measured repeatability, 7 % on x and y and 27 % on z, the signs that hurt, and its estimator parameters off by 30 %, as in cert.budget_factor_rule; not the reference that knows the true response) stay below 0.6 x the mode's tolerance; the statistic is the 5th percentile of that longest outage over the start points of both development sessions and both signs of the stated uncertainty pooled (start points: fixes accepted while the reference is tracking), over the development sessions that give any start point, with at least 30 start points in the pooled set per mode (counted in the pool, not per session: the sparser development day gives none in the nominal and precision modes, by its structure; more noise seeds may be flown to fill a pool, at most 20 per session and sign); a mode whose pool stays below 30 keeps the value of an earlier measurement, reported with the pool's count; as first measured, this statistic read 10, 5 and 5 s (5th percentiles 14.7, 6.8 and 5.16 s over 114, 32 and 54 start points) against an earlier measurement's 5, 5 and 0; rounded down to a multiple of 5 s (the rounding is the registered one); an outage the fix process draws longer than the cap is cut to the cap inside a scored block; the cap is applied from one cap length, and at least 5 s, before a scored block's start, so that no block is entered after a longer blind stretch (the printed sentence is true at a block's entry as well); a cap of 0 s means no failed attempt: every attempt whose image time lies inside the block, and the last attempt before its start, succeeds; otherwise no cap during the start hold, the check-out and between blocks; the check-out is treated as a block of the nominal mode for the cap: inside the check-out, and from one cap length and at least 5 s before its start, no stretch without a successful fix is longer than the nominal mode's cap"
+  },
+  "sessions.outage_cap_s": {
+   "value": {
+    "nominal": 5,
+    "precision": 5,
+    "quiet": 0
+   }
+  },
+  "sessions.paper_fields": {
+   "value": [
+    "session name: an identifier that begins with the session's name",
+    "software release in force (the paper also carries the list of the modes available to the session's jobs, and the monitor's window that holds under this release)",
+    "the mode of each block",
+    "the check-out's mode (nominal, fan level 2)",
+    "start pose (nominal; the built-in controller holds the robot within 0.10 m and 10 degrees of it until the check-out begins)",
+    "zone file in force",
+    "battery slots occupied",
+    "equipment: as prepared for the campaign (see the preparation photographs)",
+    "the session's time window",
+    "per block: its name, its start pose, the ordered job list and the block's budget"
+   ]
+  },
+  "sessions.start_hold_s": {
+   "value": 20.0
+  },
+  "sessions.zone_file": {
+   "value": {
+    "session_1": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.980707,
+     "share_of_flown_poses_inside": 0.974099,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": [
+      "block2_views"
+     ]
+    },
+    "session_2": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.854545,
+     "share_of_flown_poses_inside": 0.860268,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": []
+    },
+    "session_3": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.966129,
+     "share_of_flown_poses_inside": 0.97219,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": [
+      "block2_views"
+     ]
+    },
+    "session_4": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.864341,
+     "share_of_flown_poses_inside": 0.941606,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": [
+      "block3_slews_quiet"
+     ]
+    },
+    "session_5": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.983986,
+     "share_of_flown_poses_inside": 0.975908,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": [
+      "block3_short_legs"
+     ]
+    },
+    "session_6": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.900424,
+     "share_of_flown_poses_inside": 0.906501,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": []
+    },
+    "development 2022-05-13": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.966102,
+     "share_of_flown_poses_inside": 0.953074,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": [
+      "block3_short_legs"
+     ]
+    },
+    "development 2024-02-05": {
+     "zone_file": "the maker's edition 2021-01-21_c8f3da7_station.bin (the maker's zone file of the station, commit c8f3da73c5a4, 2021-01-21)",
+     "share_of_anchor_poses_inside": 0.595238,
+     "share_of_flown_poses_inside": 0.680507,
+     "short_because_of_the_zone_file": [],
+     "short_in_the_records_alone_not_a_zone_matter": []
+    }
+   }
+  },
+  "supervisor.noise": {
+   "value": {
+    "position_sd_m": 0.01,
+    "attitude_sd_deg": 0.5
+   }
+  },
+  "told.accel_offset": {
+   "value": {
+    "per_axis_max_m_s2": 0.4,
+    "change_per_minute_max_mm_s2": 6.0
+   }
+  },
+  "told.steady_force_change_mN_per_min": {
+   "value": 3.0
+  },
+  "world.actuator_tick_ms": {
+   "value": 16.0
+  },
+  "world.arm_mass_kg": {
+   "value": 0.68785
+  },
+  "world.battery_voltage_v": {
+   "value": 14.0
+  },
+  "world.fix.after_outage": {
+   "value": {
+    "counts_2022": {
+     "first_after_outage": [
+      18,
+      19
+     ],
+     "other": [
+      323,
+      903
+     ]
+    },
+    "distance_share": "absent",
+    "landmarks_below": 20,
+    "min_stretch_s": 5.0,
+    "share_lt20": 0.9473684210526315,
+    "one_sided_95_upper_limit_2022 (Clopper-Pearson, 18 of 19: 0.95 ** (1 / 19))": 0.9973039936971287
+   }
+  },
+  "world.fix.frame": {
+   "value": {
+    "pose_of": "the navigation camera in the cabin frame at the image time",
+    "camera_mount": {
+     "position_m": [
+      0.1177,
+      -0.0422,
+      -0.0826
+     ],
+     "quaternion_xyzw": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    }
+   }
+  },
+  "world.fix.gross": {
+   "value": {
+    "share_fewer_than_20": [
+     0.03,
+     0.2
+    ],
+    "share_20_or_more": 0.003,
+    "position_m": [
+     0.1,
+     0.35
+    ],
+    "attitude_deg": [
+     5,
+     20
+    ],
+    "per_session": "by the rank of the day's 99th-percentile correction step",
+    "draws": "each fix independently (ours)",
+    "error_definition": "the sizes are the whole error of the fix against the truth: the gross error replaces the ordinary noise of the fix's class, it is not added to it",
+    "per_session_share_fewer_than_20": {
+     "dev_2022": 0.12714285714285714,
+     "session_1": 0.1757142857142857,
+     "session_2": 0.03,
+     "session_3": 0.2,
+     "session_4": 0.10285714285714286,
+     "dev_2024": 0.15142857142857144,
+     "session_5": 0.054285714285714284,
+     "session_6": 0.07857142857142857
+    }
+   }
+  },
+  "world.fix.noise": {
+   "value": {
+    "landmarks_20_or_more": {
+     "position_m_per_axis": 0.002,
+     "attitude_rad": 0.00088
+    },
+    "fewer_than_20": {
+     "position_m_per_axis": 0.015,
+     "attitude_rad": 0.0075
+    }
+   }
+  },
+  "world.fix.success_process": {
+   "value": {
+    "per_session": {
+     "dev_2022": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 40.633208194910644,
+      "n_on": 23.319805578787886,
+      "off_hi_s": 37.42077612242063,
+      "off_lo_s": 33.311211948254666,
+      "p_track": 0.7095827546549873
+     },
+     "dev_2024": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 46.79038230610964,
+      "n_on": 4.0004001901500885,
+      "off_hi_s": 43.61807488126181,
+      "off_lo_s": 39.55297853198541,
+      "p_track": 0.8325632728770029
+     },
+     "session_1": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 35.32570382869603,
+      "n_on": 17.521761169678296,
+      "off_hi_s": 32.11963813180714,
+      "off_lo_s": 29.441039464399022,
+      "p_track": 0.6009566741337034
+     },
+     "session_2": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 24.237455588963016,
+      "n_on": 2.375334615491159,
+      "off_hi_s": 21.067262059099768,
+      "off_lo_s": 20.06080381446708,
+      "p_track": 0.5802625501535696
+     },
+     "session_3": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 47.04286799612835,
+      "n_on": 8.009376528509456,
+      "off_hi_s": 43.84944339817638,
+      "off_lo_s": 39.49708307546619,
+      "p_track": 0.4999995419143779
+     },
+     "session_4": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 42.48237884866629,
+      "n_on": 27.645940385247545,
+      "off_hi_s": 39.28696371476603,
+      "off_lo_s": 35.48934577605479,
+      "p_track": 0.8058519969447084
+     },
+     "session_5": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 27.987329385467444,
+      "n_on": 20.28217468247032,
+      "off_hi_s": 24.8060115474746,
+      "off_lo_s": 22.384982981416098,
+      "p_track": 0.6056627614588619
+     },
+     "session_6": {
+      "attempt_max_s": 3.1607916355133057,
+      "longest_s": 24.49084354957848,
+      "n_on": 4.255726212849041,
+      "off_hi_s": 21.31105848494264,
+      "off_lo_s": 19.3866514752117,
+      "p_track": 0.49998762047792
+     }
+    },
+    "process": "four_statistics"
+   }
+  },
+  "world.force_gain.rule": {
+   "value": {
+    "level2_and_level1": {
+     "+x": 1.45,
+     "+y": 1.45,
+     "+z": 1.45,
+     "-x": 1.45,
+     "-y": 1.45,
+     "-z": 1.45
+    },
+    "level3": {
+     "+x": 1.54,
+     "+y": 1.54,
+     "+z": 1.54,
+     "-x": 1.395869983477553,
+     "-y": 1.5440735076047245,
+     "-z": 1.362680768193493
+    }
+   }
+  },
+  "world.hold_force_median_N": {
+   "value": {
+    "session_1": [
+     -0.0051,
+     -0.0047,
+     0.0039
+    ],
+    "session_2": [
+     0.001,
+     -0.0066,
+     0.0047
+    ],
+    "session_3": [
+     -0.0008,
+     -0.0043,
+     0.0047
+    ],
+    "session_4": [
+     -0.0052,
+     -0.006,
+     0.0049
+    ],
+    "session_5": [
+     -0.0024,
+     -0.0036,
+     0.0049
+    ],
+    "session_6": [
+     -0.0017,
+     -0.0049,
+     0.0037
+    ]
+   }
+  },
+  "world.hold_torque_median_Nm": {
+   "value": {
+    "session_1": [
+     -0.00017,
+     -0.00027,
+     -0.00016
+    ],
+    "session_2": [
+     -0.00051,
+     -0.00051,
+     -0.00019
+    ],
+    "session_3": [
+     -0.00044,
+     -0.00056,
+     -9e-05
+    ],
+    "session_4": [
+     -0.00035,
+     -4e-05,
+     0.00019
+    ],
+    "session_5": [
+     -0.00043,
+     -0.00032,
+     9e-05
+    ],
+    "session_6": [
+     -0.00068,
+     -0.00024,
+     -4e-05
+    ]
+   }
+  },
+  "world.hold_wrench.rule": {
+   "value": "body-fixed force and torque = minus the delivered hold wrench of the session (the force gain of the level, 1.45, times the session's median commanded hold force; the signed torque gain times its median commanded hold torque); plus a cabin-frame slow component, a first-order process with a time constant of 60 s and a standard deviation of 1.0 mN per axis; the slow component's change over one minute clipped to told.steady_force_change_mN_per_min; each axis capped at 25 mN and 1 mN m"
+  },
+  "world.impeller_ramp_rpm_s": {
+   "value": 200.0
+  },
+  "world.imu.accel_offset": {
+   "value": {
+    "sensor_axes_m_s2_2022": {
+     "x": [
+      -0.0372,
+      -0.0296
+     ],
+     "y": [
+      0.3574,
+      0.3683
+     ],
+     "z": [
+      -0.0129,
+      -0.012
+     ]
+    },
+    "sensor_axes_m_s2_2019_2020": {
+     "x": [
+      -0.0078,
+      0.0027
+     ],
+     "y": [
+      0.3501,
+      0.3613
+     ],
+     "z": [
+      -0.0128,
+      -0.0105
+     ]
+    },
+    "slow_drift_max_mm_s2_per_min": {
+     "measured_p95_of_60_s_changes_mm_s2": 3.3,
+     "shape": "per axis a first-order process about the session's constant offset",
+     "time_constant_s": 60.0,
+     "standard_deviation_mm_s2": 1.5,
+     "one_minute_change_clipped_at_mm_s2": 6.0,
+     "check": "1.96 x 1.5 x sqrt(2 (1 - exp(-1))) = 3.31"
+    },
+    "assignment": "each session takes the 2022 bag values nearest in date"
+   }
+  },
+  "world.imu.device_filter": {
+   "value": {
+    "taps": 64,
+    "output_rate_hz": 125,
+    "internal_rate_hz": 2000,
+    "window_ms": 32.0,
+    "delay_ms": 15.75,
+    "edition_with_62_5_samples_per_second": {
+     "window_ms": 16.0,
+     "delay_ms_at_most": 7.875,
+     "shown_by": "white noise at 16 ms spacing in the idle cells of the 2019 to 2021 records; the lag: the ported dynamics with this filter give 54.0 ms against the measured 53.7"
+    }
+   }
+  },
+  "world.imu.gyro_offset": {
+   "value": {
+    "body_axes_mrad_s": {
+     "x": [
+      -1.8,
+      -1.5
+     ],
+     "y": [
+      -0.3,
+      0.3
+     ],
+     "z": [
+      -0.5,
+      0.0
+     ]
+    }
+   }
+  },
+  "world.imu.mount": {
+   "value": {
+    "position_m": [
+     0.0386,
+     0.0247,
+     -0.01016
+    ],
+    "quarter_turn": "v_body = R v_sensor, R = +90 degrees about z"
+   }
+  },
+  "world.imu.noise": {
+   "value": {
+    "level3": {
+     "rate_mrad_s_xyz": [
+      [
+       0.33133459279215177,
+       2.372584388066441
+      ],
+      [
+       0.35360214918576793,
+       0.6100313781213346
+      ],
+      [
+       0.2968308160296438,
+       1.5081808193394244
+      ]
+     ],
+     "accel_mm_s2_xyz": [
+      [
+       6.4,
+       6.7
+      ],
+      [
+       10.4,
+       11.7
+      ],
+      [
+       9.2,
+       10.1
+      ]
+     ]
+    },
+    "level2": {
+     "rate_mrad_s_xyz": [
+      [
+       0.2636742518615327,
+       0.4822105406830244
+      ],
+      [
+       0.3989465887261803,
+       0.4488901369426212
+      ],
+      [
+       0.504538150406605,
+       0.6592200596635652
+      ]
+     ],
+     "accel_mm_s2_xyz": [
+      [
+       9.5,
+       9.8
+      ],
+      [
+       14.0,
+       15.3
+      ],
+      [
+       5.7,
+       7.6
+      ]
+     ]
+    },
+    "impellers_idle": {
+     "accel_mm_s2_xyz": [
+      [
+       3.7,
+       4.2
+      ],
+      [
+       3.7,
+       4.0
+      ],
+      [
+       2.0,
+       2.2
+      ]
+     ],
+     "rate_mrad_s_xyz": [
+      [
+       0.2989871563235734,
+       0.336511949192382
+      ],
+      [
+       0.28579130115741164,
+       0.49076379810780907
+      ],
+      [
+       0.2740588686435099,
+       0.4933841649278831
+      ]
+     ]
+    },
+    "level1": "the midpoint between impellers idle and level 2"
+   }
+  },
+  "world.mass_as_prepared": {
+   "value": {
+    "com_m": [
+     0.0010880496865335611,
+     -0.0002748152291091527,
+     -0.008566806643022007
+    ],
+    "inertia_kgm2": [
+     [
+      0.16025490755091296,
+      -7.4177945678105595e-06,
+      -0.003114734470485742
+     ],
+     [
+      -7.4177945678105595e-06,
+      0.15236744231729055,
+      4.0739292221201675e-05
+     ],
+     [
+      -0.003114734470485742,
+      4.0739292221201675e-05,
+      0.16662201821114508
+     ]
+    ],
+    "mass_kg": 10.271641307689618
+   }
+  },
+  "world.mass_file": {
+   "value": {
+    "mass_kg": 9.583788668,
+    "com_m": [
+     0.003713818,
+     -0.000326347,
+     -0.002532192
+    ],
+    "inertia_diag": [
+     0.153427995,
+     0.14271405,
+     0.162302759
+    ]
+   }
+  },
+  "world.pure_delay_ms": {
+   "value": {
+    "level3_sessions": 0.0,
+    "sessions_2022": 0.0
+   }
+  },
+  "world.pure_delay_ms_2024": {
+   "value": 0.0
+  },
+  "world.ready_thresholds_rad_s": {
+   "value": {
+    "enter": 10.0,
+    "leave": 30.0
+   }
+  },
+  "world.station_rate": {
+   "value": {
+    "rate_mrad_s": 1.13,
+    "axis_cabin": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "translation_terms": "the Coriolis term and the centrifugal term about the turn's axis act on the body's translation in the cabin frame; the axis passes through the cabin frame's origin (ours); no angular-acceleration term at a constant rate"
+   }
+  },
+  "world.torque_gain.level1": {
+   "value": "equal to level 2"
+  },
+  "world.torque_gain.level2": {
+   "value": {
+    "+x": 1.46,
+    "-x": 1.36,
+    "+y": 1.69,
+    "-y": 1.55,
+    "+z": 1.51,
+    "-z": 2.09
+   }
+  },
+  "world.torque_gain.level3": {
+   "value": {
+    "+x": 1.39,
+    "-x": 1.199,
+    "+y": 1.668,
+    "-y": 1.588,
+    "+z": 1.877,
+    "-z": 2.361
+   }
+  }
+ }
+}

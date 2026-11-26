@@ -1,0 +1,85 @@
+{
+ "message": "a request whose frame carries the notice of a protocol error",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with a controller that sends each reply form once (kept by the maintainers, not given)",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "step",
+  "frame": {
+   "t": 0.016,
+   "in_control": false,
+   "job_id": null,
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [
+    {
+     "stamp": 0.006,
+     "rate": [
+      0.0005761749635453688,
+      0.00026372845812911035,
+      -0.00037066173795908576
+     ],
+     "accel": [
+      0.04870413382532802,
+      -0.020376716535052606,
+      0.006295576739571955
+     ]
+    },
+    {
+     "stamp": 0.012098309,
+     "rate": [
+      0.00264889280219304,
+      -0.000638941886945105,
+      -0.0014528630630121899
+     ],
+     "accel": [
+      0.06173704827189426,
+      -0.015157515471240383,
+      0.006203064097877468
+     ]
+    }
+   ],
+   "registrations": [],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": null,
+    "time_left_s": null
+   },
+   "notices": [
+    {
+     "kind": "protocol_error",
+     "call": "step",
+     "what": "malformed step reply: event is none, done or ready"
+    }
+   ]
+  }
+ },
+ "line": "{\"op\":\"step\",\"frame\":{\"t\":0.016,\"in_control\":false,\"job_id\":null,\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[{\"stamp\":0.006,\"rate\":[0.0005761749635453688,0.00026372845812911035,-0.00037066173795908576],\"accel\":[0.04870413382532802,-0.020376716535052606,0.006295576739571955]},{\"stamp\":0.012098309,\"rate\":[0.00264889280219304,-0.000638941886945105,-0.0014528630630121899],\"accel\":[0.06173704827189426,-0.015157515471240383,0.006203064097877468]}],\"registrations\":[],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":null,\"time_left_s\":null},\"notices\":[{\"kind\":\"protocol_error\",\"call\":\"step\",\"what\":\"malformed step reply: event is none, done or ready\"}]}}"
+}

@@ -1,0 +1,2089 @@
+{
+ "file": "CERTIFICATION.json",
+ "what": "The certification of this task's hidden sessions, written by the maintainers for reviewers; the agent never sees this folder and the grader does not read it. A privileged reference controller, mutants of it with one factor group switched off at a time, degenerate controllers and the house items were flown on the frozen hidden set, through the task's runner and the grader's whole path where the row says so; every number below was copied by script from the results of those flights and checked against them. The terms are defined in the glossary that follows; every line is given in words in its row. Verdicts: holds; missed and recorded; not run by decision (with the reason); recorded without a line; recorded with the mutants.",
+ "glossary": [
+  {
+   "term": "job, block, session",
+   "meaning": "a session is one flight in three blocks: block 1 legs, slews and holds in the nominal mode, block 2 survey views in the nominal mode, block 3 short legs, slews and holds in the quiet or the precision mode; each session announces 9 legs, 6 slews, 7 holds and 8 views and 4 requests that must be refused. A leg moves the body to a goal pose, a slew turns it in place, a hold keeps the pose the job before reached for a set time, a view turns the body to point the camera at a target with the camera's optical centre kept in place and holds for the capture. Each block has a time budget computed from the announced moves; a job not finished when the budget runs out scores 0."
+  },
+  {
+   "term": "the three modes",
+   "meaning": "nominal, precision and quiet are flight modes of the robot's own software with their own speed and acceleration limits (linear acceleration 0.0175, 0.01 and 0.002 m/s2); blocks 1 and 2 fly the nominal mode; block 3 flies the precision mode in sessions 1, 3 and 5 and the quiet mode in sessions 2, 4 and 6."
+  },
+  {
+   "term": "the acceptance seed and the noise seeds",
+   "meaning": "every random draw of the hidden world (sensor noise, which fixes fail, their errors) comes from a stream keyed by the session's name and a seed label. The acceptance seed is the draw a submission is graded on; noise seeds 1 to 20 are other draws of the same six sessions, flown only by the maintainers to place the bands, to choose the scored set and to measure spreads."
+  },
+  {
+   "term": "the reference",
+   "meaning": "the maintainers' privileged controller: it reads a fixed list of hidden quantities written down before any number of the hidden set, shows that the sessions can be flown to the full score, and is never given to an agent. A mutant is this reference with one factor group switched off; its loss is the reference's score minus the mutant's on the same seeds."
+  },
+  {
+   "term": "registered",
+   "meaning": "written into the maintainers' records before the numbers it governs were computed. The records are not shipped; every line this file reads is restated here in words."
+  },
+  {
+   "term": "the development sessions",
+   "meaning": "two further sessions, built from two other recording days, on which the reference was tuned and the rules and lines were set before the hidden set existed; they are not graded and not part of this file's numbers except where a row says so."
+  },
+  {
+   "term": "cell",
+   "meaning": "a kind of job, a mode and one measure of that kind (for example the holds' position RMS in the nominal mode); there are 33 cells, and each job's score is the product of its cells' credits."
+  },
+  {
+   "term": "full end and zero end",
+   "meaning": "the band of a cell. Full end: 1.25 times the interpolated 99th percentile of the reference's error over the jobs and the 20 noise seeds; an error at or below it earns full credit. Zero end: the documents' own limit or the median error of the reference with the cell's driving factor group off, whichever is larger, but never above a cap (half the kind's smallest move: 0.075 m and 5 degrees; 0.033 m for a view's optical centre); an error at or beyond it earns nothing. Between the two the credit falls linearly."
+  },
+  {
+   "term": "dropped cell",
+   "meaning": "a cell whose zero end is below twice its full end cannot separate good flying from poor and is dropped from the product (its credit is 1), but it keeps a completion limit; 11 of the 33 cells are dropped."
+  },
+  {
+   "term": "completion limit",
+   "meaning": "a leg, slew or hold is completed, and a view captured, only if its event was accepted inside the block's budget, no hand-back occurred and each of its own measures is inside its completion limit: the zero end, or twice the full end for a dropped cell, except a view's optical-centre displacement, whose limit is always 0.033 m. A job that is not completed scores 0."
+  },
+  {
+   "term": "an event; the scored set",
+   "meaning": "a job is scored only if the reference completes it with every kept measure inside its full end, inside the block's budget, on the acceptance seed and on at least 19 of the 20 noise seeds; the other jobs are still flown but not scored. Jobs that drop out and follow one another in a block, failing on a common seed, are one event, booked to the kind of the first; a hold falls with the job before it. The scored set's clause: at most one event per kind, three in all, in a session, and no event longer than two jobs."
+  },
+  {
+   "term": "hand-back",
+   "meaning": "control returns to the robot's built-in controller; the job in progress scores 0; the built-in law brings the robot to rest at that job's goal, which takes 25 s (nominal), 17 s (precision) or 30 s (quiet) off the block's budget; the third hand-back in a block ends the block and its remaining jobs score 0."
+  },
+  {
+   "term": "direct and carried loss",
+   "meaning": "of a mutant's loss, the carried part comes from jobs it did not reach or could not finish because earlier jobs ran long, an earlier hand-back's recovery used the budget, or the third hand-back ended the block; the direct part from jobs whose own measures fell or inside which a hand-back occurred."
+  },
+  {
+   "term": "the refusal measure J",
+   "meaning": "J is the share of requests refused plus the share of feasible jobs accepted, minus 1; a session's refusal term is J times the share of accepted feasible jobs completed and weighs 0.1 of the session's score (legs 0.25, slews 0.15, holds 0.15, views 0.35)."
+  },
+  {
+   "term": "the lazy line",
+   "meaning": "0.1: a degenerate controller (zero wrench, done at once, refuse all) or the open-loop replay that scores above it on the hidden set is reported before any agent is graded. It is not applied to never refuse, which is the reference with one capability off and is recorded with the mutants."
+  },
+  {
+   "term": "verdicts",
+   "meaning": "holds: the line is met. Missed and recorded: the line is not met and the miss is kept on file; the certification went on by decisions made before the numbers. Not run by decision: the item was not flown, for the reason given in its row. Recorded without a line: a reading with no pass line. Recorded with the mutants: read as a mutant's loss."
+  },
+  {
+   "term": "the zones, the keep-in rule and the check-out",
+   "meaning": "each session has a zone file in force with keep-in and keep-out boxes of the cabin; the keep-in rule ends the session when the body's bounding sphere leaves the keep-in zones or enters a keep-out zone, and it is tested at every step of the check-out and of the blocks. A request that must be refused either breaks a zone face by at least 0.05 m with the body's bounding sphere or names a mode that the release in force does not list or lists with control disabled; a feasible job keeps at least 0.05 m. Each session opens with 20 s in which the robot's built-in controller holds it, then a check-out of 90 s that the controller flies unscored inside a box of 0.3 m and 30 degrees about the start pose (leaving the box ends the check-out early); the blocks follow."
+  },
+  {
+   "term": "the session paper, the set-up and its reply",
+   "meaning": "the session paper is what the controller's set-up call receives: the session's name, the software release in force, the mode of each block, the check-out's mode, the start pose, the zone file in force, the battery slots occupied, the equipment, the session's time window and, per block, the ordered job list and the block's budget. The set-up has 60 s of processor time and 180 s of wall clock per session; its reply is nothing, or a mass profile (mass, centre of mass, inertia) to be sent to the robot before the first block."
+  },
+  {
+   "term": "the runner, in process, the grader's whole path, a late step, processor time",
+   "meaning": "the runner is the task's harness: it starts the submitted controller as a process of its own and passes its messages to and from the hidden world, one step call every 16 ms. In process means a maintainers' flight in which the world calls the controller directly in its own process, without the runner. The grader's whole path is the task's grader run as it grades a submission, from the runner's records to the score. Processor time is the time the controller's process computes, not the wall clock; a late step is one whose reply uses more than its processor budget per step: it is not applied, the previous command stays and the next step calls are skipped, as many as the overrun divided by the step budget, rounded up. A plan has 5 s of processor time per job."
+  },
+  {
+   "term": "the response",
+   "meaning": "the delivered over the commanded force or torque, per signed axis and fan level. The documents print it as delivered over documented, between 1.1 and 2.6; the reference reads the response the world delivers in flight under a controller's own commands, computed per session on the reference's check-out sequence. With group S4 off the reference predicts with the documents' response of 1.0 and the mass on file."
+  },
+  {
+   "term": "the accelerometer-driven design",
+   "meaning": "a form of the reference whose translation between fixes is integrated from the accelerometer (less its offset and lever arm) without the commanded wrench, so that it does without the response. It is not an equivalent form but an alternative design, recorded apart with its ordering (rows E-4 and E-5): the reference with group S4 off at or below it, and it at least 0.02 below the reference."
+  },
+  {
+   "term": "a fix, a grossly wrong fix, the fix delay, the image time",
+   "meaning": "a fix is a pose (position and attitude) that the robot's localiser computes from one camera image by matching landmarks; the image time is the time the image was taken, and the fix delay is the time from the image to the arrival of its fix, 0.4 to 3.2 s as the documents print it. A grossly wrong fix is one whose whole error against the truth lies in 0.1 to 0.35 m of position and 5 to 20 degrees of attitude; the documents bound the probability of such a fix by 0.25 for fixes from fewer than 20 landmarks and by 0.01 for 20 or more."
+  },
+  {
+   "term": "ready and done",
+   "meaning": "the two events a controller sends in a step's reply: done for a leg or a slew, ready for a view. An event is accepted only in an applied reply, in a frame of the job being flown, once per job, of the job's kind, and at or after the time of the last setpoint of the job's accepted plan; a leg's or a slew's end errors are averaged from 0.5 to 2.5 s after its done."
+  },
+  {
+   "term": "the measures and their units",
+   "meaning": "end_pos and end_att: a leg's or a slew's mean position error (m) and attitude error (rad) over its end window; overshoot: the largest excursion beyond the goal along the move (m for a leg, rad for a slew); pos_rms and att_rms: a hold's RMS position (m) and attitude (rad) about its target, the goal of the job before; speed_rms and rate_rms: a hold's RMS speed (m/s) and rate (rad/s); pointing: a view's mean angle between the camera's axis and the goal axis (rad); centre: the mean displacement of the camera's optical centre from its goal centre (m); rate_rms of a view: over the capture (rad/s). The full ends, zero ends and completion limits that the rows give as numbers are in these units."
+  },
+  {
+   "term": "the card",
+   "meaning": "the task card's factor table lists the factor groups the task scores. A group is named there only if its single-group mutant loses 0.05 or more on the frozen hidden set with at most half of that loss carried; every other group is listed as a printed rule or a given fact. The groups the card may name are at the end of this file."
+  },
+  {
+   "term": "the zero-end caps of the speed and rate measures and of a hold",
+   "meaning": "the cap of a hold's speed RMS is 0.02 m/s and that of the rate RMS of holds and views 0.02 rad/s, the maker's own thresholds below which its control law calls the robot stopped; the documents give these measures a limit of 0, so their zero end is the median error of the reference with the cell's driving group off, never above the cap (for example 0.00123 rad/s for the nominal holds' rate). A hold's position and attitude caps are half the smallest move of the kind of the job before it; in the frozen bands every hold has the caps 0.075 m and 0.0873 rad (5 degrees), half the smallest leg of 0.15 m and half the smallest slew of 10 degrees."
+  },
+  {
+   "term": "the stated uncertainty and its two signs",
+   "meaning": "the reference that carries the stated uncertainty believes the response off by the unit's measured repeatability (7 % on x and y, 27 % on z) and its sensor-model parameters off by 30 %. Plus one (U+1) believes them larger by these shares, minus one (U-1) smaller."
+  },
+  {
+   "term": "what the reference reads",
+   "meaning": "the hidden quantities the reference may read: the response per signed axis and fan level that the world delivers in flight under a controller's own commands; the noise levels of the inertial unit and of the fixes; the mass; and the per-session probability of a grossly wrong fix, which the reference as built stores and uses nowhere (row C-2: the ladder that displaces it is flat by construction). It never reads the offsets' values, the air's force, the true pose or the lag from a command to the gyro (it starts from the midpoint of the printed range and takes the delay its own check-out gives). Everything else it takes from the frame, the session paper and the published and printed values any controller has."
+  }
+ ],
+ "frozen_set": {
+  "sessions": 6,
+  "scored_jobs_per_session": {
+   "session_1": 28,
+   "session_2": 27,
+   "session_3": 29,
+   "session_4": 30,
+   "session_5": 29,
+   "session_6": 29
+  },
+  "cells": 33,
+  "dropped_cells": [
+   "hold/nominal/speed_rms",
+   "hold/precision/pos_rms",
+   "hold/precision/rate_rms",
+   "hold/precision/speed_rms",
+   "leg/nominal/end_pos",
+   "leg/precision/overshoot",
+   "leg/quiet/overshoot",
+   "slew/nominal/overshoot",
+   "slew/precision/overshoot",
+   "view/nominal/centre",
+   "view/nominal/rate_rms"
+  ]
+ },
+ "summary": [
+  "The reference scores exactly 1.0 on the acceptance seed of every session, in process and through the runner; over 20 noise seeds its mean is 0.993 (lowest seed 0.982, standard deviation 0.007 over the 20 seeds, with n - 1).",
+  "Zero wrench, done at once and refuse all score exactly 0; the open-loop replay scores 0.000 to 0.030 on the six sessions, each at or below its line of 0.10. Never refuse (0.156 to 0.187) is recorded with the mutants as the reference with one capability off: it loses 0.813 to 0.844 because the keep-in rule ends its session at the first request it flies; the lazy line is not applied to it.",
+  "Eight factor groups lose 0.05 or more with at most half of the loss carried and may be named on the card: S1 0.62, S2 0.49, S3 0.83, S4 0.62, S5 0.55, S7 0.35, S9 0.40, F 0.37.",
+  "Missed and recorded: session 2's scored-set clause (two view events); the reference's own robustness and view-centre rules on the development sessions, before the certification; the tell audit of the requests (a tell exists). The certification went on past them under decisions made before the numbers; nothing was moved to make a line pass. The task ships with the misses recorded here, each decided before any model was measured on the task.",
+  "The third cell clause holds at exactly 11 dropped cells, by one cell under the interpolated percentile. Groups B and J lose nothing by construction (their switches have nothing to act on), not by measurement.",
+  "Not run by decision: ladder B (flat by construction: the read is stored and unused); ladder C (the hidden world has no input for the fix delay); the full-state filter and the translation half of the carried-forward form (never built); group J's heavier form on sessions 4 to 6; each S group under the accelerometer-driven design on a second seed; three of the five document errors."
+ ],
+ "rows": [
+  {
+   "id": "A-1",
+   "group": "reference",
+   "item": "the registered reference on the acceptance seed of every session",
+   "asked": "exactly 1.0 on the acceptance seed of every session under the frozen bands and scored sets",
+   "line": "exactly 1.0",
+   "verdict": "holds",
+   "reason": "every one of the six sessions scores exactly 1.0 on its acceptance seed.",
+   "rests_on": "the acceptance seed of sessions 1 to 6 (one flight each, in process)",
+   "flights": 6,
+   "numbers": {
+    "session_1": 1.0,
+    "session_2": 1.0,
+    "session_3": 1.0,
+    "session_4": 1.0,
+    "session_5": 1.0,
+    "session_6": 1.0,
+    "every_session_exactly_1": true
+   }
+  },
+  {
+   "id": "A-2",
+   "group": "reference",
+   "item": "the registered reference over the 20 noise seeds: mean and spread",
+   "asked": "the mean of the six sessions and its spread over the 20 noise seeds (information only)",
+   "line": "the lines the task had to pass on its two development sessions before it was built, read again here as information (they move no band): the reference's mean at least 0.95, and the standard deviation of its score over the 20 noise seeds at most 0.03",
+   "verdict": "recorded without a line",
+   "reason": "the mean over the six sessions is 0.9933, the lowest seed mean 0.9817 and the standard deviation 0.0066 (taken over the 20 noise seeds of the six-session mean, with n - 1), inside both lines read again; the lowest single session and seed is 0.893.",
+   "rests_on": "sessions 1 to 6, noise seeds 1 to 20 (120 flights in process)",
+   "flights": 120,
+   "numbers": {
+    "noise_mean_six_sessions": 0.9932991014679218,
+    "noise_lowest_seed_mean": 0.9817333313727815,
+    "noise_sd_ddof1": 0.006577523552938788,
+    "lowest_session_seed": 0.8928571428571428,
+    "session_1_noise_mean": 0.9901824560459888,
+    "session_2_noise_mean": 0.9937942207930266,
+    "session_3_noise_mean": 0.9950891333137146,
+    "session_4_noise_mean": 0.9882291666666667,
+    "session_5_noise_mean": 0.9952801724137931,
+    "session_6_noise_mean": 0.9972194595743401,
+    "line_reference_min": 0.95,
+    "line_sd_max": 0.03
+   }
+  },
+  {
+   "id": "A-3",
+   "group": "reference",
+   "item": "the registered reference through the task's runner and the grader's whole path",
+   "asked": "the reference through the task's runner, graded by the grader's whole path, against its flights in process",
+   "line": "exactly 1.0 on the acceptance seed; no difference to the flights in process",
+   "verdict": "holds",
+   "reason": "all 126 runner flights grade with no error and no late step, the largest difference to the flight in process is 0, and each acceptance flight grades exactly 1.0, also with the scored sets placed as the task's hidden set holds them.",
+   "rests_on": "sessions 1 to 6, the acceptance seed and noise seeds 1 to 20, through the runner (126 flights)",
+   "flights": 126,
+   "numbers": {
+    "flights_graded": 126,
+    "largest_abs_difference_to_in_process": 0.0,
+    "late_steps_total": 0,
+    "acceptance_every_session_exactly_1": true,
+    "session_1_placed_scored_set_score": 1.0,
+    "session_1_placed_scored_jobs": 28,
+    "session_2_placed_scored_set_score": 1.0,
+    "session_2_placed_scored_jobs": 27,
+    "session_3_placed_scored_set_score": 1.0,
+    "session_3_placed_scored_jobs": 29,
+    "session_4_placed_scored_set_score": 1.0,
+    "session_4_placed_scored_jobs": 30,
+    "session_5_placed_scored_set_score": 1.0,
+    "session_5_placed_scored_jobs": 29,
+    "session_6_placed_scored_set_score": 1.0,
+    "session_6_placed_scored_jobs": 29,
+    "control_flight_session_3_runner_score": 1.0,
+    "control_flight_identical": true
+   }
+  },
+  {
+   "id": "A-4",
+   "group": "bands",
+   "item": "the bands on the frozen hidden set",
+   "asked": "each full end and zero end by the registered rules; the dropped cells listed",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "33 cells; 11 are dropped from the product (zero end below twice the full end) and keep a completion limit.",
+   "rests_on": "the reference's 126 flights and the 17 single-group mutants' flights on eight noise seeds",
+   "flights": null,
+   "numbers": {
+    "n_cells": 33,
+    "n_dropped": 11,
+    "dropped_cells": [
+     "hold/nominal/speed_rms",
+     "hold/precision/pos_rms",
+     "hold/precision/rate_rms",
+     "hold/precision/speed_rms",
+     "leg/nominal/end_pos",
+     "leg/precision/overshoot",
+     "leg/quiet/overshoot",
+     "slew/nominal/overshoot",
+     "slew/precision/overshoot",
+     "view/nominal/centre",
+     "view/nominal/rate_rms"
+    ]
+   }
+  },
+  {
+   "id": "A-5",
+   "group": "bands",
+   "item": "stop clause (a): a kind left without a graded measure in a mode it flies",
+   "asked": "no kind without a graded measure in a mode it flies",
+   "line": "no kind left without a graded measure",
+   "verdict": "holds",
+   "reason": "every kind keeps a graded measure in every mode it flies; the thinnest are the precision holds (attitude only) and the views (pointing only).",
+   "rests_on": "the 33 cells of the freeze",
+   "flights": null,
+   "numbers": {
+    "graded_measures_per_kind_and_mode": {
+     "leg/nominal": [
+      "end_att",
+      "overshoot"
+     ],
+     "leg/quiet": [
+      "end_pos",
+      "end_att"
+     ],
+     "leg/precision": [
+      "end_pos",
+      "end_att"
+     ],
+     "slew/nominal": [
+      "end_att",
+      "end_pos"
+     ],
+     "slew/quiet": [
+      "end_att",
+      "end_pos",
+      "overshoot"
+     ],
+     "slew/precision": [
+      "end_att",
+      "end_pos"
+     ],
+     "hold/nominal": [
+      "pos_rms",
+      "att_rms",
+      "rate_rms"
+     ],
+     "hold/quiet": [
+      "pos_rms",
+      "att_rms",
+      "speed_rms",
+      "rate_rms"
+     ],
+     "hold/precision": [
+      "att_rms"
+     ],
+     "view/nominal": [
+      "pointing"
+     ]
+    },
+    "verdict_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-6",
+   "group": "bands",
+   "item": "stop clause (b): a dropped cell whose completion limit lets its degenerate behaviour through",
+   "asked": "every dropped cell's completion limit beside the smallest error of the degenerate behaviour it must reject",
+   "line": "the completion limit stays below that error",
+   "verdict": "holds",
+   "reason": "the three dropped cells that have a degenerate behaviour of their own keep their limits below it (0.090 m against 0.304 m; 0.081 m against 0.180 m; 0.033 m against 0.052 m). For the other eight neither named degenerate behaviour (not moving; a view turned about the body centre) makes an error on those measures (not moving errs by nearly nothing there): a reading, not a measured figure.",
+   "rests_on": "the 33 cells of the freeze; the job list of the hidden set",
+   "flights": null,
+   "numbers": {
+    "hold/nominal/speed_rms|completion_limit": 0.014006421977197285,
+    "hold/nominal/speed_rms|smallest_degenerate": null,
+    "hold/precision/pos_rms|completion_limit": 0.08067197422325617,
+    "hold/precision/pos_rms|smallest_degenerate": 0.179708,
+    "hold/precision/rate_rms|completion_limit": 0.0012589819906572424,
+    "hold/precision/rate_rms|smallest_degenerate": null,
+    "hold/precision/speed_rms|completion_limit": 0.016637759655209722,
+    "hold/precision/speed_rms|smallest_degenerate": null,
+    "leg/nominal/end_pos|completion_limit": 0.09028610779897908,
+    "leg/nominal/end_pos|smallest_degenerate": 0.304278,
+    "leg/precision/overshoot|completion_limit": 0.07503095322308671,
+    "leg/precision/overshoot|smallest_degenerate": null,
+    "leg/quiet/overshoot|completion_limit": 0.018882253867868976,
+    "leg/quiet/overshoot|smallest_degenerate": null,
+    "slew/nominal/overshoot|completion_limit": 0.005247354126936405,
+    "slew/nominal/overshoot|smallest_degenerate": null,
+    "slew/precision/overshoot|completion_limit": 0.004258940610227402,
+    "slew/precision/overshoot|smallest_degenerate": null,
+    "view/nominal/centre|completion_limit": 0.033,
+    "view/nominal/centre|smallest_degenerate": 0.05197,
+    "view/nominal/rate_rms|completion_limit": 0.005603837534821956,
+    "view/nominal/rate_rms|smallest_degenerate": null,
+    "verdict_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-7",
+   "group": "bands",
+   "item": "stop clause (c): more than 11 of the 33 cells dropped",
+   "asked": "at most 11 of 33 cells dropped",
+   "line": "at most 11",
+   "verdict": "holds",
+   "reason": "exactly 11 cells are dropped, at the line and not above it. It holds by one cell and one method: the nominal slews' end position is kept by 0.12 % under the interpolated 99th percentile on file before the numbers; the nearest-rank definition and five others would drop it and make 12. The precision holds' rate is dropped by 1.8 %, its median taken from the 9 holds that the mutant without online offsets finished.",
+   "rests_on": "the 33 cells of the freeze",
+   "flights": null,
+   "numbers": {
+    "n_dropped": 11,
+    "n_dropped_limit": 11,
+    "slew/nominal/end_pos|full_end": 0.03745494296899089,
+    "slew/nominal/end_pos|zero_end": 0.075,
+    "slew/nominal/end_pos|zero_end_over_twice_full_end": 1.001202966215872,
+    "hold/precision/rate_rms|full_end": 0.0006294909953286212,
+    "hold/precision/rate_rms|zero_end": 0.0012357682034256586,
+    "hold/precision/rate_rms|driving_count": 9,
+    "hold/precision/rate_rms|zero_end_over_twice_full_end": 0.9815614620353186,
+    "slew/nominal/end_pos|full_end_nearest_rank_beside": 0.037265569605865204
+   }
+  },
+  {
+   "id": "A-8",
+   "group": "bands",
+   "item": "the bands per direction (seed halves), beside",
+   "asked": "each full end per direction reported beside the frozen full end",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "beside only: for each of the 33 cells the full end computed on noise seeds 1 to 10 alone and on noise seeds 11 to 20 alone is listed beside the frozen full end, which reads all 20 seeds together; by the halves the first drops 12 cells and the second 10. The largest ratio between the halves is listed with its cell.",
+   "rests_on": "the same flights split into seed halves",
+   "flights": null,
+   "numbers": {
+    "direction_A_n_dropped": 12,
+    "direction_B_n_dropped": 10,
+    "hold/nominal/att_rms|full_end_noise_seeds_1_to_10": 0.0017452494987196042,
+    "hold/nominal/att_rms|full_end_noise_seeds_11_to_20": 0.0016528825869257273,
+    "hold/nominal/att_rms|full_end_frozen": 0.0017305410275683774,
+    "hold/nominal/pos_rms|full_end_noise_seeds_1_to_10": 0.03158682145331601,
+    "hold/nominal/pos_rms|full_end_noise_seeds_11_to_20": 0.0328357933473791,
+    "hold/nominal/pos_rms|full_end_frozen": 0.03323235504624486,
+    "hold/nominal/rate_rms|full_end_noise_seeds_1_to_10": 0.00043458829000597916,
+    "hold/nominal/rate_rms|full_end_noise_seeds_11_to_20": 0.0004828984220162685,
+    "hold/nominal/rate_rms|full_end_frozen": 0.00045285747959079593,
+    "hold/nominal/speed_rms|full_end_noise_seeds_1_to_10": 0.006860909569702017,
+    "hold/nominal/speed_rms|full_end_noise_seeds_11_to_20": 0.007022684581388714,
+    "hold/nominal/speed_rms|full_end_frozen": 0.007003210988598642,
+    "hold/precision/att_rms|full_end_noise_seeds_1_to_10": 0.002161253348542808,
+    "hold/precision/att_rms|full_end_noise_seeds_11_to_20": 0.002478478753596386,
+    "hold/precision/att_rms|full_end_frozen": 0.002446996976940676,
+    "hold/precision/pos_rms|full_end_noise_seeds_1_to_10": 0.042331494391932456,
+    "hold/precision/pos_rms|full_end_noise_seeds_11_to_20": 0.02875230339730155,
+    "hold/precision/pos_rms|full_end_frozen": 0.040335987111628085,
+    "hold/precision/rate_rms|full_end_noise_seeds_1_to_10": 0.000590385674323798,
+    "hold/precision/rate_rms|full_end_noise_seeds_11_to_20": 0.000659095990928144,
+    "hold/precision/rate_rms|full_end_frozen": 0.0006294909953286212,
+    "hold/precision/speed_rms|full_end_noise_seeds_1_to_10": 0.008565267565809593,
+    "hold/precision/speed_rms|full_end_noise_seeds_11_to_20": 0.007630696737688575,
+    "hold/precision/speed_rms|full_end_frozen": 0.008318879827604861,
+    "hold/quiet/att_rms|full_end_noise_seeds_1_to_10": 0.0009711151171879287,
+    "hold/quiet/att_rms|full_end_noise_seeds_11_to_20": 0.0010330942474219987,
+    "hold/quiet/att_rms|full_end_frozen": 0.0010338066699514409,
+    "hold/quiet/pos_rms|full_end_noise_seeds_1_to_10": 0.011629000670549394,
+    "hold/quiet/pos_rms|full_end_noise_seeds_11_to_20": 0.011333052251854065,
+    "hold/quiet/pos_rms|full_end_frozen": 0.011383891788986307,
+    "hold/quiet/rate_rms|full_end_noise_seeds_1_to_10": 0.0003323601366602081,
+    "hold/quiet/rate_rms|full_end_noise_seeds_11_to_20": 0.0003340214296147639,
+    "hold/quiet/rate_rms|full_end_frozen": 0.0003344672730756743,
+    "hold/quiet/speed_rms|full_end_noise_seeds_1_to_10": 0.0037008876386410844,
+    "hold/quiet/speed_rms|full_end_noise_seeds_11_to_20": 0.0035741002808650454,
+    "hold/quiet/speed_rms|full_end_frozen": 0.0037061272447133694,
+    "leg/nominal/end_att|full_end_noise_seeds_1_to_10": 0.002265530030380953,
+    "leg/nominal/end_att|full_end_noise_seeds_11_to_20": 0.0021457891420341635,
+    "leg/nominal/end_att|full_end_frozen": 0.0022512023541130565,
+    "leg/nominal/end_pos|full_end_noise_seeds_1_to_10": 0.04402534948583575,
+    "leg/nominal/end_pos|full_end_noise_seeds_11_to_20": 0.04775989957367931,
+    "leg/nominal/end_pos|full_end_frozen": 0.04514305389948954,
+    "leg/nominal/overshoot|full_end_noise_seeds_1_to_10": 0.04017120258983885,
+    "leg/nominal/overshoot|full_end_noise_seeds_11_to_20": 0.030106060189935436,
+    "leg/nominal/overshoot|full_end_frozen": 0.035451918661079024,
+    "leg/precision/end_att|full_end_noise_seeds_1_to_10": 0.002142375510183362,
+    "leg/precision/end_att|full_end_noise_seeds_11_to_20": 0.0021548216915317302,
+    "leg/precision/end_att|full_end_frozen": 0.00215536908968003,
+    "leg/precision/end_pos|full_end_noise_seeds_1_to_10": 0.030293898373105567,
+    "leg/precision/end_pos|full_end_noise_seeds_11_to_20": 0.02581479413170835,
+    "leg/precision/end_pos|full_end_frozen": 0.030311313066614855,
+    "leg/precision/overshoot|full_end_noise_seeds_1_to_10": 0.02665621145486103,
+    "leg/precision/overshoot|full_end_noise_seeds_11_to_20": 0.0496182407144387,
+    "leg/precision/overshoot|full_end_frozen": 0.03751547661154336,
+    "leg/quiet/end_att|full_end_noise_seeds_1_to_10": 0.0014003183668047344,
+    "leg/quiet/end_att|full_end_noise_seeds_11_to_20": 0.0013742364457505765,
+    "leg/quiet/end_att|full_end_frozen": 0.0013812003678192227,
+    "leg/quiet/end_pos|full_end_noise_seeds_1_to_10": 0.012611451292132772,
+    "leg/quiet/end_pos|full_end_noise_seeds_11_to_20": 0.015803526761853634,
+    "leg/quiet/end_pos|full_end_frozen": 0.015309447761539747,
+    "leg/quiet/overshoot|full_end_noise_seeds_1_to_10": 0.00941182342621555,
+    "leg/quiet/overshoot|full_end_noise_seeds_11_to_20": 0.009064945353372681,
+    "leg/quiet/overshoot|full_end_frozen": 0.009441126933934488,
+    "slew/nominal/end_att|full_end_noise_seeds_1_to_10": 0.0021931258847953054,
+    "slew/nominal/end_att|full_end_noise_seeds_11_to_20": 0.0019983298643433105,
+    "slew/nominal/end_att|full_end_frozen": 0.002034278465868498,
+    "slew/nominal/end_pos|full_end_noise_seeds_1_to_10": 0.03522453706593512,
+    "slew/nominal/end_pos|full_end_noise_seeds_11_to_20": 0.03889433593319414,
+    "slew/nominal/end_pos|full_end_frozen": 0.03745494296899089,
+    "slew/nominal/overshoot|full_end_noise_seeds_1_to_10": 0.0028101409060642367,
+    "slew/nominal/overshoot|full_end_noise_seeds_11_to_20": 0.002375111897396974,
+    "slew/nominal/overshoot|full_end_frozen": 0.0026236770634682025,
+    "slew/precision/end_att|full_end_noise_seeds_1_to_10": 0.002327412928252695,
+    "slew/precision/end_att|full_end_noise_seeds_11_to_20": 0.00239558750869846,
+    "slew/precision/end_att|full_end_frozen": 0.002394049658961959,
+    "slew/precision/end_pos|full_end_noise_seeds_1_to_10": 0.026934862693624547,
+    "slew/precision/end_pos|full_end_noise_seeds_11_to_20": 0.030275902482839297,
+    "slew/precision/end_pos|full_end_frozen": 0.03337956925248774,
+    "slew/precision/overshoot|full_end_noise_seeds_1_to_10": 0.0022408996242785934,
+    "slew/precision/overshoot|full_end_noise_seeds_11_to_20": 0.0019393332419498288,
+    "slew/precision/overshoot|full_end_frozen": 0.002129470305113701,
+    "slew/quiet/end_att|full_end_noise_seeds_1_to_10": 0.0010272959800999963,
+    "slew/quiet/end_att|full_end_noise_seeds_11_to_20": 0.0012242777828113888,
+    "slew/quiet/end_att|full_end_frozen": 0.0010553256053358897,
+    "slew/quiet/end_pos|full_end_noise_seeds_1_to_10": 0.012024198165508622,
+    "slew/quiet/end_pos|full_end_noise_seeds_11_to_20": 0.011824925518959854,
+    "slew/quiet/end_pos|full_end_frozen": 0.01247146041933409,
+    "slew/quiet/overshoot|full_end_noise_seeds_1_to_10": 0.0007267099455135288,
+    "slew/quiet/overshoot|full_end_noise_seeds_11_to_20": 0.0008837904473930668,
+    "slew/quiet/overshoot|full_end_frozen": 0.000877279284199407,
+    "view/nominal/centre|full_end_noise_seeds_1_to_10": 0.043405684173393674,
+    "view/nominal/centre|full_end_noise_seeds_11_to_20": 0.05744172769425342,
+    "view/nominal/centre|full_end_frozen": 0.049625183404483825,
+    "view/nominal/pointing|full_end_noise_seeds_1_to_10": 0.002943133850719965,
+    "view/nominal/pointing|full_end_noise_seeds_11_to_20": 0.0029020540139825354,
+    "view/nominal/pointing|full_end_frozen": 0.0029591104530330816,
+    "view/nominal/rate_rms|full_end_noise_seeds_1_to_10": 0.0028445083409054193,
+    "view/nominal/rate_rms|full_end_noise_seeds_11_to_20": 0.0027687664462164477,
+    "view/nominal/rate_rms|full_end_frozen": 0.002801918767410978,
+    "largest_ratio_between_halves": 1.861413832136686,
+    "largest_ratio_between_halves|cell": "leg/precision/overshoot"
+   }
+  },
+  {
+   "id": "A-9",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_1",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "holds",
+   "reason": "events: leg j09; view j23; at most one per kind, three in all, none longer than two jobs.",
+   "rests_on": "session_1: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 28,
+    "jobs_dropped": 2,
+    "events": [
+     {
+      "kind": "leg",
+      "jobs": [
+       "j09"
+      ]
+     },
+     {
+      "kind": "view",
+      "jobs": [
+       "j23"
+      ]
+     }
+    ],
+    "clause_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-10",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_2",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "missed and recorded",
+   "reason": "three events (hold j06; views j19 and j23): two view events against at most one per kind. Each view passes the optical centre's fixed limit of 0.033 m on two noise seeds. It was decided before the numbers that a miss is recorded with its events and causes: the scored set is what the job rule gives, no session is drawn again and no number moves.",
+   "rests_on": "session_2: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 27,
+    "jobs_dropped": 3,
+    "events": [
+     {
+      "kind": "hold",
+      "jobs": [
+       "j06"
+      ]
+     },
+     {
+      "kind": "view",
+      "jobs": [
+       "j19"
+      ]
+     },
+     {
+      "kind": "view",
+      "jobs": [
+       "j23"
+      ]
+     }
+    ],
+    "view_centre_completion_limit": 0.033
+   }
+  },
+  {
+   "id": "A-11",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_3",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "holds",
+   "reason": "events: slew j03; at most one per kind, three in all, none longer than two jobs.",
+   "rests_on": "session_3: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 29,
+    "jobs_dropped": 1,
+    "events": [
+     {
+      "kind": "slew",
+      "jobs": [
+       "j03"
+      ]
+     }
+    ],
+    "clause_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-12",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_4",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "holds",
+   "reason": "events: none; at most one per kind, three in all, none longer than two jobs.",
+   "rests_on": "session_4: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 30,
+    "jobs_dropped": 0,
+    "events": [],
+    "clause_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-13",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_5",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "holds",
+   "reason": "events: slew j05; at most one per kind, three in all, none longer than two jobs.",
+   "rests_on": "session_5: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 29,
+    "jobs_dropped": 1,
+    "events": [
+     {
+      "kind": "slew",
+      "jobs": [
+       "j05"
+      ]
+     }
+    ],
+    "clause_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-14",
+   "group": "scored set",
+   "item": "the scored set's clause in events, session_6",
+   "asked": "at most one event per kind, three in all, none longer than two jobs",
+   "line": "one event per kind, three per session, two jobs per event",
+   "verdict": "holds",
+   "reason": "events: view j18; at most one per kind, three in all, none longer than two jobs.",
+   "rests_on": "session_6: the acceptance seed and noise seeds 1 to 20 of the reference",
+   "flights": 21,
+   "numbers": {
+    "jobs_kept": 29,
+    "jobs_dropped": 1,
+    "events": [
+     {
+      "kind": "view",
+      "jobs": [
+       "j18"
+      ]
+     }
+    ],
+    "clause_in_record": "holds"
+   }
+  },
+  {
+   "id": "A-15",
+   "group": "bands",
+   "item": "the second reader's verdict on the bands and the scored set",
+   "asked": "an independent recomputation of the 33 cells, the scored sets and the reference's scores",
+   "line": "equal to the record",
+   "verdict": "holds",
+   "reason": "with its own script on the same flights: every field of the 33 cells, every scored set job by job and the reference's scores equal the record as doubles; recomputed from the truth logs with the grader's own measure code, nine attitude cells differ by at most 2.45e-11 relative and no verdict changes. The dependence between sessions over the 20 noise seeds is what independence gives.",
+   "rests_on": "the same 1,008 flights (reference 126, mutants 882)",
+   "flights": null,
+   "numbers": {
+    "dropped_equal_to_record": true,
+    "n_dropped": 11,
+    "kept_per_session": {
+     "session_1": 28,
+     "session_2": 27,
+     "session_3": 29,
+     "session_4": 30,
+     "session_5": 29,
+     "session_6": 29
+    },
+    "reference_noise_mean": 0.9932991014679218,
+    "reference_lowest": 0.9817333313727815,
+    "acceptance_every_session_exactly_1": true,
+    "session_dependence_mean": 0.011448958910864065,
+    "session_dependence_sd": 0.22972469353650488,
+    "independence_sd": 0.22941573387056174
+   }
+  },
+  {
+   "id": "B-1",
+   "group": "house item",
+   "item": "zero wrench",
+   "asked": "every command zero; every request accepted",
+   "line": "exactly 0",
+   "verdict": "holds",
+   "reason": "exactly 0 in all six sessions; the reward is 0.",
+   "rests_on": "sessions 1 to 6, acceptance seed, through the task's runner and the grader's whole path",
+   "flights": 6,
+   "numbers": {
+    "session_1": 0.0,
+    "session_2": 0.0,
+    "session_3": 0.0,
+    "session_4": 0.0,
+    "session_5": 0.0,
+    "session_6": 0.0,
+    "reward": 0.0
+   }
+  },
+  {
+   "id": "B-2",
+   "group": "house item",
+   "item": "done at once",
+   "asked": "the zero wrench with done or ready sent from the first step",
+   "line": "exactly 0",
+   "verdict": "holds",
+   "reason": "exactly 0 in all six sessions; the reward is 0.",
+   "rests_on": "sessions 1 to 6, acceptance seed, through the task's runner and the grader's whole path",
+   "flights": 6,
+   "numbers": {
+    "session_1": 0.0,
+    "session_2": 0.0,
+    "session_3": 0.0,
+    "session_4": 0.0,
+    "session_5": 0.0,
+    "session_6": 0.0,
+    "reward": 0.0
+   }
+  },
+  {
+   "id": "B-3",
+   "group": "house item",
+   "item": "refuse all",
+   "asked": "every job refused, every command zero",
+   "line": "exactly 0",
+   "verdict": "holds",
+   "reason": "exactly 0 in all six sessions; the reward is 0.",
+   "rests_on": "sessions 1 to 6, acceptance seed, through the task's runner and the grader's whole path",
+   "flights": 6,
+   "numbers": {
+    "session_1": 0.0,
+    "session_2": 0.0,
+    "session_3": 0.0,
+    "session_4": 0.0,
+    "session_5": 0.0,
+    "session_6": 0.0,
+    "reward": 0.0
+   }
+  },
+  {
+   "id": "B-4",
+   "group": "house item",
+   "item": "never refuse",
+   "asked": "the reference with its zone refusal off",
+   "line": "recorded with the mutants: it is the reference with one capability off, read as a loss against the reference on the same seed; beside it, the line set for this item before the flights (a controller that never refuses but is otherwise perfect scores at most 0.90 per session), which holds",
+   "verdict": "recorded with the mutants",
+   "reason": "0.156 to 0.187 per session (mean 0.168), so it loses 0.813 to 0.844 of the reference's 1.0 on the same seed (listed per session). The refusal term is 0 and every session is ended by the keep-in rule during the first outside-zone request it flies (j08), which is why the loss is far larger than the refusal term's weight of 0.10. The lazy line of 0.10 is not applied to it: it is not a degenerate controller but the reference with its zone refusal switched off, and it is recorded with the mutants. Its own line of 0.90 holds. The early expectation written for this item assumed that the session goes on after a flown request; the keep-in rule ends it there.",
+   "rests_on": "sessions 1 to 6, acceptance seed, through the task's runner and the grader's whole path",
+   "flights": 6,
+   "numbers": {
+    "session_1": 0.18660714285714286,
+    "session_2": 0.15833333333333333,
+    "session_3": 0.15619047619047619,
+    "session_4": 0.17619047619047618,
+    "session_5": 0.15619047619047619,
+    "session_6": 0.17619047619047618,
+    "reward": 0.16828373015873013,
+    "mean_of_sessions": 0.1682837301587302,
+    "session_1_refusal_term": 0.0,
+    "session_1_ended": [
+     "keep_in",
+     258.44799999994814
+    ],
+    "session_1_reference_same_seed": 1.0,
+    "session_1_loss_against_the_reference": 0.8133928571428571,
+    "session_2_refusal_term": 0.0,
+    "session_2_ended": [
+     "keep_in",
+     245.37599999995103
+    ],
+    "session_2_reference_same_seed": 1.0,
+    "session_2_loss_against_the_reference": 0.8416666666666667,
+    "session_3_refusal_term": 0.0,
+    "session_3_ended": [
+     "keep_in",
+     234.46399999995708
+    ],
+    "session_3_reference_same_seed": 1.0,
+    "session_3_loss_against_the_reference": 0.8438095238095238,
+    "session_4_refusal_term": 0.0,
+    "session_4_ended": [
+     "keep_in",
+     273.2959999999663
+    ],
+    "session_4_reference_same_seed": 1.0,
+    "session_4_loss_against_the_reference": 0.8238095238095238,
+    "session_5_refusal_term": 0.0,
+    "session_5_ended": [
+     "keep_in",
+     233.6959999999575
+    ],
+    "session_5_reference_same_seed": 1.0,
+    "session_5_loss_against_the_reference": 0.8438095238095238,
+    "session_6_refusal_term": 0.0,
+    "session_6_ended": [
+     "keep_in",
+     250.55999999994816
+    ],
+    "session_6_reference_same_seed": 1.0,
+    "session_6_loss_against_the_reference": 0.8238095238095238,
+    "loss_lowest": 0.8133928571428571,
+    "loss_highest": 0.8438095238095238,
+    "loss_mean": 0.8317162698412698,
+    "lazy_line": 0.1,
+    "refusal_weight": 0.1
+   }
+  },
+  {
+   "id": "B-5",
+   "group": "house item",
+   "item": "a paused step",
+   "asked": "the reference with three steps of each session paused 0.40 s",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "no late step and no skipped call; each flight is identical to its unpaused flight and scores 1.0. Two flights with three pauses each were flown in place of the six single-pause flights first planned; the change was filed before any paused flight. A pause costs no processor time, and the runner's late-step rule counts processor time; a paused step that scored below 0.10 would be a fault of the runner.",
+   "rests_on": "sessions 3 and 4, acceptance seed, through the task's runner and the grader's whole path",
+   "flights": 2,
+   "numbers": {
+    "session_3": 1.0,
+    "session_4": 1.0,
+    "session_3_late_steps": 0,
+    "session_3_skipped": 0,
+    "session_3_identical_to_unpaused": true,
+    "session_4_late_steps": 0,
+    "session_4_skipped": 0,
+    "session_4_identical_to_unpaused": true
+   }
+  },
+  {
+   "id": "B-6",
+   "group": "house item",
+   "item": "the open-loop replay",
+   "asked": "the reference's own replies (set-up, plans, every step's command and event) recorded on the acceptance seed of a session, replayed step by step without feedback on noise seed 1 of the same session",
+   "line": "at most 0.10 on each session",
+   "verdict": "holds",
+   "reason": "the six replays score 0.030, 0.021, 0.021, 0.000, 0.022, 0.000 (sessions 1 to 6), each at or below the line; each recording is identical to the reference's own flight and scores exactly 1.0. Per session, the scored jobs the replay completed: session 1: 1 of 8 legs, 0 of 6 slews, 0 of 7 holds, 0 of 7 views, 9 hand-backs, blocks ended by third handback; session 2: 1 of 9 legs, 0 of 6 slews, 0 of 6 holds, 0 of 6 views, 8 hand-backs, blocks ended by budget/third handback; session 3: 1 of 9 legs, 0 of 5 slews, 0 of 7 holds, 0 of 8 views, 9 hand-backs, blocks ended by third handback; session 4: 0 of 9 legs, 0 of 6 slews, 0 of 7 holds, 0 of 8 views, 8 hand-backs, blocks ended by budget/third handback; session 5: 1 of 9 legs, 0 of 5 slews, 0 of 7 holds, 0 of 8 views, 8 hand-backs, blocks ended by budget/third handback; session 6: 0 of 9 legs, 0 of 6 slews, 0 of 7 holds, 0 of 7 views, 0 hand-backs, no block reached; the session was ended by the keep-in rule at world time 61.0 s, during the check-out before the first block (this session's start pose leaves the least room to the zones, row F-4). No replay reached a request, so the refusal term is 0.",
+   "rests_on": "sessions 1 to 6: recording on the acceptance seed, replay on noise seed 1, both through the runner and the grader's whole path",
+   "flights": 12,
+   "numbers": {
+    "session_1_recording": 1.0,
+    "session_1_recording_identical_to_the_reference_flight": true,
+    "session_1_replay": 0.030445735597017604,
+    "session_1_replay_handbacks": 9,
+    "session_1_replay_session_ended": null,
+    "session_2_recording": 1.0,
+    "session_2_recording_identical_to_the_reference_flight": true,
+    "session_2_replay": 0.020828544962557687,
+    "session_2_replay_handbacks": 8,
+    "session_2_replay_session_ended": null,
+    "session_3_recording": 1.0,
+    "session_3_recording_identical_to_the_reference_flight": true,
+    "session_3_replay": 0.021176220261266435,
+    "session_3_replay_handbacks": 9,
+    "session_3_replay_session_ended": null,
+    "session_4_recording": 1.0,
+    "session_4_recording_identical_to_the_reference_flight": true,
+    "session_4_replay": 0.0,
+    "session_4_replay_handbacks": 8,
+    "session_4_replay_session_ended": null,
+    "session_5_recording": 1.0,
+    "session_5_recording_identical_to_the_reference_flight": true,
+    "session_5_replay": 0.02195933350611693,
+    "session_5_replay_handbacks": 8,
+    "session_5_replay_session_ended": null,
+    "session_6_recording": 1.0,
+    "session_6_recording_identical_to_the_reference_flight": true,
+    "session_6_replay": 0.0,
+    "session_6_replay_handbacks": 0,
+    "session_6_replay_session_ended": [
+     "keep_in",
+     60.95999999999506
+    ],
+    "session_6_replay_blocks": [],
+    "session_1_replay_at_or_below_the_line": true,
+    "session_2_replay_at_or_below_the_line": true,
+    "session_3_replay_at_or_below_the_line": true,
+    "session_4_replay_at_or_below_the_line": true,
+    "session_5_replay_at_or_below_the_line": true,
+    "session_6_replay_at_or_below_the_line": true,
+    "replay_mean_six_sessions": 0.01573497238782644,
+    "line": 0.1
+   }
+  },
+  {
+   "id": "B-7",
+   "group": "house item",
+   "item": "group J on the task's runner",
+   "asked": "the reference with no command in a cycle whose computation is late, against the same reference with that switch on, through the runner",
+   "line": null,
+   "verdict": "not run by decision (nought by construction)",
+   "reason": "with the reference as built, no step is late in any of its 126 flights through the runner, so group J has nothing to act on and its loss there is nought by construction; it is not a measured loss below 0.05. As information only: a heavier form of the reference (its real-time switch off, which applies the attitude fix from the stored state and also plans views with a slower planner) does have late steps, and with J on against J off it reads 0.000, +0.064 and -0.047 on sessions 1 to 3, mixed with that form's own planning time (some view plans ran past the planner's processor-time cap of 5 s per job in session 2, both forms, and session 3, one form). That form was not flown on sessions 4 to 6.",
+   "rests_on": "the reference's 126 flights through the runner; the heavier form on sessions 1 to 3, acceptance seed",
+   "flights": 132,
+   "numbers": {
+    "late_steps_of_the_reference_through_the_runner": 0,
+    "flights_of_the_reference_through_the_runner": 126,
+    "plan_processor_cap_s": 5.0,
+    "session_1_J_on": 1.0,
+    "session_1_J_off": 1.0,
+    "session_1_J_loss": 0.0,
+    "session_1_late_steps_J_on": 195,
+    "session_2_J_on": 0.5634864191916313,
+    "session_2_J_off": 0.4998575684927167,
+    "session_2_J_loss": 0.06362885069891466,
+    "session_2_late_steps_J_on": 272,
+    "session_3_J_on": 0.9527872484313211,
+    "session_3_J_off": 1.0,
+    "session_3_J_loss": -0.04721275156867888,
+    "session_3_late_steps_J_on": 157,
+    "J_loss_mean_of_flown": 0.005472033043411928
+   }
+  },
+  {
+   "id": "C-1",
+   "group": "ladder",
+   "item": "ladder A: the response the reference reads times 0.8, 1.25, 1.5 and 2.0",
+   "asked": "falls monotonically from 1.0 outward on each side (each pair of neighbouring steps compared over the same 30 session-seeds; a rise is a mean paired difference above twice its standard error, the standard deviation of the 30 paired differences, with n - 1, over the root of 30; this reading of 'monotonic' was written down before the flights)",
+   "line": "no rise on either side",
+   "verdict": "holds",
+   "reason": "0.989, 0.777, 0.682 and 0.514 against 0.992 at 1.0; no pair rises, and the pooled means fall at every step. Marked: the fall at 0.8 is not resolved (0.0027 against twice its standard error 0.0081, taken over the 30 paired session-seed differences), and a few single sessions are higher at the farther step (listed). The upper side falls steeply mostly because, from 1.25 on, the nominal and precision slews pass their completion limit for overshoot (twice the full end, that cell being dropped) and the hold behind each then counts 0.",
+   "rests_on": "the acceptance seed and noise seeds 1, 2, 11 and 12 of sessions 1 to 6 (30 session-seeds per step)",
+   "flights": 120,
+   "numbers": {
+    "score_at_1.0": 0.9919202835985047,
+    "A_x0.8": 0.989233525573377,
+    "A_x0.8_handback_flights": 0,
+    "A_x1.25": 0.7772529702013454,
+    "A_x1.25_handback_flights": 0,
+    "A_x1.5": 0.6823281145310318,
+    "A_x1.5_handback_flights": 0,
+    "A_x2.0": 0.514193319552951,
+    "A_x2.0_handback_flights": 0,
+    "falls_monotonically": true,
+    "pair_1.0_0.8_mean_paired_difference": -0.0026867580251277927,
+    "pair_1.0_0.8_two_se": 0.008084711896921642,
+    "single_sessions_higher_at_the_farther_step": [
+     {
+      "session": "session_2",
+      "from": 1.0,
+      "to": 0.8,
+      "score_from": 0.9875925925925927,
+      "score_to": 0.9994087971759879
+     },
+     {
+      "session": "session_4",
+      "from": 1.0,
+      "to": 0.8,
+      "score_from": 0.9717499999999999,
+      "score_to": 0.9806660411742387
+     },
+     {
+      "session": "session_3",
+      "from": 1.25,
+      "to": 1.5,
+      "score_from": 0.7270078091537683,
+      "score_to": 0.727981251606596
+     },
+     {
+      "session": "session_5",
+      "from": 1.25,
+      "to": 1.5,
+      "score_from": 0.7565601293271046,
+      "score_to": 0.7579582922211061
+     }
+    ]
+   }
+  },
+  {
+   "id": "C-2",
+   "group": "ladder",
+   "item": "ladder B: the per-session probability of a grossly wrong fix the reference reads, times 2 and 4",
+   "asked": "falls monotonically",
+   "line": "no rise",
+   "verdict": "not run by decision (flat by construction)",
+   "reason": "the reference stores this read and uses it nowhere, so this ladder is flat by construction and certifies nothing: all 30 flights at times 2 and the one flight flown at times 4 are identical to the undisplaced flights; the other 29 flights at times 4 were not flown.",
+   "rests_on": "times 2: 30 session-seeds; times 4: session 1 acceptance only",
+   "flights": 31,
+   "numbers": {
+    "B_x4_identical_to_undisplaced": true,
+    "B_x2_pairs": 30,
+    "B_x2": 0.9919202835985047,
+    "B_x2_identical_to_undisplaced": true
+   }
+  },
+  {
+   "id": "C-3",
+   "group": "ladder",
+   "item": "ladder C: the fix delay plus 0.2, 0.5 and 1.0 s",
+   "asked": "falls monotonically",
+   "line": "no rise",
+   "verdict": "not run by decision",
+   "reason": "the hidden world as built has no input that lengthens the delay between an image and its fix, and the frozen world is not changed for a ladder.",
+   "rests_on": "none",
+   "flights": 0,
+   "numbers": {
+    "flown": false
+   }
+  },
+  {
+   "id": "D-1",
+   "group": "single-group mutant",
+   "item": "group S1 off: a fix is applied at its arrival time",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.6229 (standard error 0.0216, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 16.9 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.6229004536280972,
+    "loss_se": 0.02162598515454382,
+    "score_mean": 0.3707190329619259,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.4297600186977043,
+    "direct_hold_job_before": 0.021350834954748023,
+    "carried": 0.10501023812713912,
+    "refusal_term": 0.06677936184850697,
+    "carried_share": 0.1685826965055243,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.7122044490104904,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-2",
+   "group": "single-group mutant",
+   "item": "group S2 off: no weighting by landmark count, no gate",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.4901 (standard error 0.0240, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 34.3 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.49009888881166547,
+    "loss_se": 0.0240397944325359,
+    "score_mean": 0.5035205977783577,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.2673439100659953,
+    "direct_hold_job_before": 0.008556547619047618,
+    "carried": 0.16825911614456265,
+    "refusal_term": 0.045939314982059234,
+    "carried_share": 0.34331666523982113,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.36322413958067423,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-3",
+   "group": "single-group mutant",
+   "item": "group S3 off: offsets taken once at the start",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.8335 (standard error 0.0207, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 41.4 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.8334682435009216,
+    "loss_se": 0.020703833484606242,
+    "score_mean": 0.16015124308910145,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.402901733332007,
+    "direct_hold_job_before": 0.0027529761904761907,
+    "carried": 0.3450886092384287,
+    "refusal_term": 0.08272492474001096,
+    "carried_share": 0.41403930135227357,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.8872221556863918,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-4",
+   "group": "single-group mutant",
+   "item": "group S4 off: prediction with the documents' response 1.0 and the on-file mass",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.6247 (standard error 0.0173, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 30.5 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.6247311511370168,
+    "loss_se": 0.017287914293697207,
+    "score_mean": 0.36888833545300626,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.3407845542629946,
+    "direct_hold_job_before": 0.02008928571428571,
+    "carried": 0.19054843257158305,
+    "refusal_term": 0.07330887858815303,
+    "carried_share": 0.3050086940995069,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.7382382663955092,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-5",
+   "group": "single-group mutant",
+   "item": "group S5 off: no disturbance state, no integral action",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.5462 (standard error 0.0178, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 19.0 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.5462252370778871,
+    "loss_se": 0.017763726757723516,
+    "score_mean": 0.447394249512136,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.3848819531691619,
+    "direct_hold_job_before": 0.010565476190476191,
+    "carried": 0.10402949061522704,
+    "refusal_term": 0.046748317103022574,
+    "carried_share": 0.19045163707877744,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.6539675587598943,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-6",
+   "group": "single-group mutant",
+   "item": "group S6 off: the lever arm is not removed from the accelerometer",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0058 (standard error 0.0036, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.005759931675857616,
+    "loss_se": 0.003580928059836774,
+    "score_mean": 0.9878595549141654,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.004941631335287184,
+    "direct_hold_job_before": 0.0004464285714285714,
+    "carried": 0.0,
+    "refusal_term": 0.0003718717691418837,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.0,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-7",
+   "group": "single-group mutant",
+   "item": "group S7 off: a fixed sample period is assumed and the device filter's delay is ignored",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.3471 (standard error 0.0135, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.5 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.34707899284613214,
+    "loss_se": 0.013458627248076158,
+    "score_mean": 0.6465404937438909,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.31312816650665565,
+    "direct_hold_job_before": 0.005877976190476191,
+    "carried": 0.0017857142857142857,
+    "refusal_term": 0.02628713586328529,
+    "carried_share": 0.005144979449983412,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.36985826718537607,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-8",
+   "group": "single-group mutant",
+   "item": "group S8 off: no change of behaviour in an outage; the first fix after it at full weight",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0023 (standard error 0.0035, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.002294444074929139,
+    "loss_se": 0.0034741174099699296,
+    "score_mean": 0.9913250425150939,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.0021509369594392832,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 0.00014350711548987382,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 1.390696878467157e-05,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-9",
+   "group": "single-group mutant",
+   "item": "group S9 off: no cabin-rotation term",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.3999 (standard error 0.0101, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 4.0 %; may be named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.3999055280792043,
+    "loss_se": 0.010111279443039238,
+    "score_mean": 0.5937139585108188,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.3429876241839301,
+    "direct_hold_job_before": 0.009970238095238096,
+    "carried": 0.015839947089947088,
+    "refusal_term": 0.031107718710089403,
+    "carried_share": 0.039609222623223785,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.328514267435038,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-10",
+   "group": "single-group mutant",
+   "item": "group B off: limits of the nominal mode in every mode",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "nought by construction, not a measured loss: the reference's plan takes its limits from the job's mode with the switch on or off, and the tolerance factor the switch would choose is replaced by one fixed factor in every mode, so the registered off form (the nominal mode's limits in every mode) cannot act in the reference as built and was not flown; the flights with the switch off are the reference's own. What a controller loses that plans every mode with the nominal limits is not measured. loss 0.0000 (standard error 0.0000, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.0,
+    "loss_se": 0.0,
+    "score_mean": 0.9936194865900231,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.0,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 0.0,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.0,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-11",
+   "group": "single-group mutant",
+   "item": "group C off: damping without delay compensation, bandwidth x 1.5",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0053 (standard error 0.0017, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.00527081442783979,
+    "loss_se": 0.0016992837262536874,
+    "score_mean": 0.9883486721621833,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.00334670538447786,
+    "direct_hold_job_before": 0.0013392857142857143,
+    "carried": 0.0,
+    "refusal_term": 0.0005848233290762024,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.00972085385878485,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-12",
+   "group": "single-group mutant",
+   "item": "group D off: no per-axis limits, no scaling, no anti-windup",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0010 (standard error 0.0010, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.001032998497818946,
+    "loss_se": 0.0009784272137766876,
+    "score_mean": 0.9925864880922042,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.0009611594173591775,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 7.183908045977003e-05,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.0,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-13",
+   "group": "single-group mutant",
+   "item": "group E2 off: moves at the mode command",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss -0.0007 (standard error 0.0007, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": -0.0007301629964296119,
+    "loss_se": 0.0007248870627838385,
+    "score_mean": 0.9943496495864528,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": -0.000655758234524821,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": -7.440476190476187e-05,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.0,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-14",
+   "group": "single-group mutant",
+   "item": "group F off: turns about the body centre, ready after 2 s",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.3683 (standard error 0.0031, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; may be named on the card. The form flown turns about the body centre and sends ready by the reference's own rule, not 2 s after the turn as the form written before the flights said; that departure is recorded.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.36828645079096234,
+    "loss_se": 0.00306456872351488,
+    "score_mean": 0.6253330357990607,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.34325974869888715,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 0.025026702092075657,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.3755332056194126,
+    "card_may_name": true
+   }
+  },
+  {
+   "id": "D-15",
+   "group": "single-group mutant",
+   "item": "group I off: acceleration limits halved",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0044 (standard error 0.0029, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.004444238450194399,
+    "loss_se": 0.0028659860817195344,
+    "score_mean": 0.9891752481398286,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.004152282906802067,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 0.00029195554339232484,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 4.979160787910164e-05,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-16",
+   "group": "single-group mutant",
+   "item": "group J off: no command in a cycle whose computation is late",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "nought by construction, not a measured loss: in these flights the group's switch has nothing to act on (for J: no step of the reference is ever late), so its noise-seed numbers are the reference's own flights. loss 0.0000 (standard error 0.0000, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, over the root of 8), of it carried 0.0 %; is not named on the card.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.0,
+    "loss_se": 0.0,
+    "score_mean": 0.9936194865900231,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.0,
+    "direct_hold_job_before": 0.0,
+    "carried": 0.0,
+    "refusal_term": 0.0,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.0,
+    "card_may_name": false
+   }
+  },
+  {
+   "id": "D-17",
+   "group": "single-group mutant",
+   "item": "group L off: loop gains for a response of 1.0",
+   "asked": "the loss against the reference on the same seeds, with its direct and carried parts",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.0493 (standard error 0.0024, taken over the eight noise seeds: the standard deviation of the eight per-seed losses of the six-session mean, with n - 1, over the root of 8), of it carried 0.0 %; is not named on the card. Marked: just under the card's 0.05. On other bases its standard error is 0.0082 (over the 48 session-seeds) or 0.0215 (over the six session means), each with n - 1.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds (1, 2, 3, 4, 11, 12, 13, 14); the acceptance seed apart",
+   "flights": 54,
+   "numbers": {
+    "loss": 0.04928652464066306,
+    "loss_se": 0.0023675380216345993,
+    "score_mean": 0.94433296194936,
+    "reference_mean_same_seeds": 0.9936194865900231,
+    "direct": 0.04512643372051459,
+    "direct_hold_job_before": 0.0008928571428571428,
+    "carried": 0.0,
+    "refusal_term": 0.0032672337772912483,
+    "carried_share": 0.0,
+    "more_than_half_carried": false,
+    "acceptance_seed_loss": 0.06472636259215603,
+    "card_may_name": false,
+    "loss_se_over_48_session_seeds": 0.008216275615455567,
+    "loss_se_over_6_session_means": 0.02149814568237131
+   }
+  },
+  {
+   "id": "D-18",
+   "group": "recorded combination",
+   "item": "groups S1, S2 and S3 off together (the estimator's handling of delay, wrong fixes and offsets)",
+   "asked": "recorded, no line",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.8847.",
+   "rests_on": "sessions 1 to 6, the four recorded noise seeds (1, 2, 11, 12); the acceptance seed apart",
+   "flights": 30,
+   "numbers": {
+    "loss": 0.8847108530610861,
+    "score_mean": 0.10518950143704463,
+    "carried_share": 0.24757699677041334,
+    "acceptance_seed_loss": 0.9374046075565341
+   }
+  },
+  {
+   "id": "D-19",
+   "group": "recorded combination",
+   "item": "every group off",
+   "asked": "recorded, no line",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "loss 0.9688.",
+   "rests_on": "sessions 1 to 6, the four recorded noise seeds (1, 2, 11, 12); the acceptance seed apart",
+   "flights": 30,
+   "numbers": {
+    "loss": 0.968755083563384,
+    "score_mean": 0.021145270934746666,
+    "carried_share": 0.3080912487592134,
+    "acceptance_seed_loss": 0.9840994515820097
+   }
+  },
+  {
+   "id": "D-20",
+   "group": "single-group mutant",
+   "item": "the single-group lines of the development sessions read again on the hidden set",
+   "asked": "information: they move no band",
+   "line": "the lines the task had to pass on its two development sessions before it was built: at least 6 groups whose single-group mutant loses 0.05 or more, and those losses summing to at least 0.45",
+   "verdict": "recorded without a line",
+   "reason": "8 groups lose 0.05 or more; the losses sum to 4.30.",
+   "rests_on": "the 17 single-group mutants on the eight registered noise seeds",
+   "flights": null,
+   "numbers": {
+    "count_losing_0.05": 8,
+    "sum_of_losses": 4.30005373464276,
+    "line_count": 6,
+    "line_sum": 0.45
+   }
+  },
+  {
+   "id": "D-21",
+   "group": "single-group mutant",
+   "item": "group F's captured views (turns about the body centre)",
+   "asked": "the share of the views of the reference with group F off that count as captured",
+   "line": "at most 0.05",
+   "verdict": "holds",
+   "reason": "1 of 376 finished views counts as captured (0.27 %); 0 of 47 on the acceptance seed. The form flown turns about the body centre and sends ready by the reference's own rule, not 2 s after the turn as the form written before the flights said; that departure is recorded.",
+   "rests_on": "sessions 1 to 6, the eight registered noise seeds and the acceptance seed",
+   "flights": 54,
+   "numbers": {
+    "finished_8_seeds": 376,
+    "captured_8_seeds": 1,
+    "share_of_finished": 0.0026595744680851063,
+    "acceptance_finished": 47,
+    "acceptance_captured": 0,
+    "line": 0.05
+   }
+  },
+  {
+   "id": "E-1",
+   "group": "equivalent form",
+   "item": "the quaternion's other sign",
+   "asked": "the reference with its attitude quaternions negated",
+   "line": "at least 0.90",
+   "verdict": "holds",
+   "reason": "all 30 flights are bit-identical to the reference's; mean 0.992, the lowest seed mean 0.982 and the lowest session-seed 0.938, all above 0.90. It shows the reference and the world are sign-invariant; it does not test a filter written in the other convention.",
+   "rests_on": "the acceptance seed and noise seeds 1, 2, 11 and 12 of sessions 1 to 6",
+   "flights": 30,
+   "numbers": {
+    "mean": 0.9919202835985047,
+    "reference_mean": 0.9919202835985047,
+    "lowest_seed_mean_of_six": 0.9817333313727815,
+    "lowest_session_seed": 0.937962962962963,
+    "line": 0.9
+   }
+  },
+  {
+   "id": "E-2",
+   "group": "equivalent form",
+   "item": "a fix applied at its arrival time after being carried forward by its delay",
+   "asked": "the reference's real-time switch off (with it on, as the reference flies, the attitude fix is applied as a delayed measurement carried forward to its arrival, the form this item names; off, it is applied from the stored state, and that is the form flown beside the reference)",
+   "line": "at least 0.90",
+   "verdict": "holds for the attitude half; the translation half not run by decision",
+   "reason": "mean 0.989, the lowest seed mean 0.977 and the lowest session-seed 0.936, all above 0.90. Only the attitude fix changes form: for the translation fix both settings use the stored state, and the carried-forward translation form was never built (no new filter is built for the certification: the privileged reference is what shows the task can be solved). Measured in process only: its flights took 131.7 to 208.7 s against 79.1 to 132.3 s for the quaternion form under the same load; whether it keeps the runner's step time is not measured.",
+   "rests_on": "the acceptance seed and noise seeds 1, 2, 11 and 12 of sessions 1 to 6",
+   "flights": 30,
+   "numbers": {
+    "seconds_elapsed_s_min": 131.66,
+    "seconds_quaternion_form_elapsed_s_min": 79.1,
+    "seconds_elapsed_s_max": 208.68,
+    "seconds_quaternion_form_elapsed_s_max": 132.3,
+    "mean": 0.9885160845348856,
+    "reference_mean": 0.9919202835985047,
+    "lowest_seed_mean_of_six": 0.9770411140426597,
+    "lowest_session_seed": 0.9356703155990412,
+    "line": 0.9
+   }
+  },
+  {
+   "id": "E-3",
+   "group": "equivalent form",
+   "item": "a full state instead of an error state",
+   "asked": "a full-state filter in place of the error-state filter",
+   "line": "at least 0.90",
+   "verdict": "not run by decision",
+   "reason": "never built: the reference has no switch for it and no new filter is built for the certification, as decided before the numbers (the privileged reference shows solvability; no further pilots are built).",
+   "rests_on": "none",
+   "flights": 0,
+   "numbers": {
+    "line": 0.9
+   }
+  },
+  {
+   "id": "E-4",
+   "group": "alternative design",
+   "item": "the accelerometer-driven design and its ordering",
+   "asked": "the reference with group S4 off at or below this design, and this design at least 0.02 below the reference",
+   "line": "the ordering",
+   "verdict": "holds",
+   "reason": "0.379 (the reference with the documents' response) <= 0.637 (this design) <= 0.990 - 0.02 (the reference); the price of doing without the response is 0.353. The design hands back 23 times in 16 of its 30 flights; no session ends by a safety rule.",
+   "rests_on": "the ordering on noise seeds 1, 2, 11 and 12 of sessions 1 to 6; the acceptance seed beside",
+   "flights": 30,
+   "numbers": {
+    "R_S4_four_seeds": 0.3790569281730595,
+    "design_four_seeds": 0.6368171838976006,
+    "reference_four_seeds": 0.9899003544981307,
+    "price_without_the_response": 0.3530831706005302,
+    "ordering_verdict": "HOLDS",
+    "design_acceptance_six_sessions": 0.6624099328118743,
+    "design_per_tight_mode": {
+     "precision": 0.6047616942326631,
+     "quiet": 0.668872673562538
+    },
+    "design_handbacks": {
+     "handbacks": 23,
+     "flights_with_handback": 16,
+     "safety_ends": 0
+    }
+   }
+  },
+  {
+   "id": "E-5",
+   "group": "alternative design",
+   "item": "each S group's loss under the accelerometer-driven design",
+   "asked": "each estimation group switched off under the design, beside its loss under the registered form",
+   "line": null,
+   "verdict": "recorded without a line (one seed; the second not run by decision)",
+   "reason": "each S group stands on one seed, noise seed 1 (54 of the 108 flights first planned), and is reported beside as it is; the second seed was not flown, by decision. Under the design: S1 0.593, S2 0.466, S3 0.619 (more than half carried, flagged), S4 0.011, S5 -0.014, S6 0.062, S7 0.260, S8 -0.009, S9 0.237; under the registered form on the same seed: 0.550, 0.494, 0.872, 0.582, 0.551, 0.008, 0.279, -0.008, 0.456.",
+   "rests_on": "noise seed 1 of sessions 1 to 6",
+   "flights": 54,
+   "numbers": {
+    "S1|loss_under_design": 0.5933330142415464,
+    "S1|carried_share_under_design": 0.423084159311539,
+    "S1|more_than_half_carried_under_design": false,
+    "S1|loss_under_registered_form": 0.5496452252968351,
+    "S2|loss_under_design": 0.4656325044957419,
+    "S2|carried_share_under_design": 0.4020948513265821,
+    "S2|more_than_half_carried_under_design": false,
+    "S2|loss_under_registered_form": 0.4943383045298738,
+    "S3|loss_under_design": 0.6187464548875418,
+    "S3|carried_share_under_design": 0.6587191261402191,
+    "S3|more_than_half_carried_under_design": true,
+    "S3|loss_under_registered_form": 0.8716351246548409,
+    "S4|loss_under_design": 0.01078073979034,
+    "S4|carried_share_under_design": 0.0,
+    "S4|more_than_half_carried_under_design": false,
+    "S4|loss_under_registered_form": 0.5815194676677677,
+    "S5|loss_under_design": -0.013866903989237622,
+    "S5|carried_share_under_design": 0.0,
+    "S5|more_than_half_carried_under_design": false,
+    "S5|loss_under_registered_form": 0.5509955507621394,
+    "S6|loss_under_design": 0.06216444551506206,
+    "S6|carried_share_under_design": 0.0,
+    "S6|more_than_half_carried_under_design": false,
+    "S6|loss_under_registered_form": 0.007874731642280253,
+    "S7|loss_under_design": 0.26007378869537107,
+    "S7|carried_share_under_design": 0.07527791315402406,
+    "S7|more_than_half_carried_under_design": false,
+    "S7|loss_under_registered_form": 0.27920093627188614,
+    "S8|loss_under_design": -0.008789459305386438,
+    "S8|carried_share_under_design": 0.0,
+    "S8|more_than_half_carried_under_design": false,
+    "S8|loss_under_registered_form": -0.007605069908913853,
+    "S9|loss_under_design": 0.23747178236719335,
+    "S9|carried_share_under_design": 0.03539300836988483,
+    "S9|more_than_half_carried_under_design": false,
+    "S9|loss_under_registered_form": 0.45591870979132165
+   }
+  },
+  {
+   "id": "E-6",
+   "group": "stated uncertainty",
+   "item": "the reference carrying the stated uncertainty of the response (both signs)",
+   "asked": "the reference reading the response at the ends of its stated uncertainty",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "plus one: 0.873 (acceptance 0.880), loss 0.120, mostly the nominal slews' overshoot; minus one: 0.989 (acceptance 0.991), loss 0.004. No hand-back and no safety end in either.",
+   "rests_on": "the acceptance seed and noise seeds 1 and 11 of sessions 1 to 6, both signs",
+   "flights": 36,
+   "numbers": {
+    "U+1|noise_mean": 0.8733974224391272,
+    "U+1|acceptance_mean": 0.8801149549273738,
+    "U+1|loss": 0.1196920969336156,
+    "U+1|handbacks": 0,
+    "U-1|noise_mean": 0.989112369155642,
+    "U-1|acceptance_mean": 0.9906809293592836,
+    "U-1|loss": 0.003977150217100767,
+    "U-1|handbacks": 0
+   }
+  },
+  {
+   "id": "E-7",
+   "group": "document error",
+   "item": "the inertial unit's lever arm taken from the older units and the simulator",
+   "asked": "the reference following this real error of the documents",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "mean 0.9973 against 0.9954 for the reference; loss -0.0019.",
+   "rests_on": "the acceptance seed and noise seeds 1 and 11 of sessions 1 to 6",
+   "flights": 18,
+   "numbers": {
+    "mean": 0.9973223713176791,
+    "reference_mean": 0.9953930129151618,
+    "loss": -0.00192935840251724
+   }
+  },
+  {
+   "id": "E-8",
+   "group": "document error",
+   "item": "the mass configuration on file (without the arm)",
+   "asked": "the reference following this real error of the documents",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "mean 0.9914 against 0.9954 for the reference; loss 0.0040.",
+   "rests_on": "the acceptance seed and noise seeds 1 and 11 of sessions 1 to 6",
+   "flights": 18,
+   "numbers": {
+    "mean": 0.9913977690434783,
+    "reference_mean": 0.9953930129151618,
+    "loss": 0.00399524387168354
+   }
+  },
+  {
+   "id": "E-9",
+   "group": "document error",
+   "item": "the sample rate taken from the configuration (125 per second)",
+   "asked": "the reference following this real error of the documents",
+   "line": null,
+   "verdict": "not run by decision",
+   "reason": "the reference reads no sample period (it integrates by time stamp); a fixed period would need a code constant, not an override.",
+   "rests_on": "none",
+   "flights": 0,
+   "numbers": {}
+  },
+  {
+   "id": "E-10",
+   "group": "document error",
+   "item": "the fan level of the older records (3)",
+   "asked": "the reference following this real error of the documents",
+   "line": null,
+   "verdict": "not run by decision",
+   "reason": "the reference reads the level from the frame; overriding the table breaks its own mode lookup; a flown form would be a new construction.",
+   "rests_on": "none",
+   "flights": 0,
+   "numbers": {}
+  },
+  {
+   "id": "E-11",
+   "group": "document error",
+   "item": "the window read as 1.0 s",
+   "asked": "the reference following this real error of the documents",
+   "line": null,
+   "verdict": "not run by decision",
+   "reason": "the reference reads no window: the loss is 0 by construction.",
+   "rests_on": "none",
+   "flights": 0,
+   "numbers": {}
+  },
+  {
+   "id": "F-1",
+   "group": "audit",
+   "item": "the tell audit of the requests that must be refused",
+   "asked": "can a controller pick the requests from the session paper alone, without the zone files",
+   "line": "a tell exists when a rule using the session paper alone, without the zone files, reaches a refusal measure J (share of requests refused plus share of feasible jobs accepted, minus 1) of 0.5 or more",
+   "verdict": "missed and recorded",
+   "reason": "the requests have a tell, recorded and not repaired: the printed start rule makes the job after a refused request start from the pose before it, so a rule on the paper alone (the mode not released, the view farthest from its block's common centre, the two legs with the largest detour) refuses all 24 requests and none of the 180 feasible jobs (J 1.000); the cheapest single rule reaches 0.717. The stake is large: a controller that refuses nothing loses about 0.83 of the reference's score (never refuse, 0.156 to 0.187 per session), because the keep-in rule ends its session at the first request it flies; the refusal term itself weighs only 0.10. The tell lets a controller avoid that loss without reading the zone files; the honest route (the given zone files against each goal) is a few lines. What is lost is that the refusals no longer show whether a controller read the zones. The requests stand at the same four places in all six sessions; no state crosses sessions.",
+   "rests_on": "the six sessions' papers (204 jobs)",
+   "flights": null,
+   "numbers": {
+    "best_rule_J": 1.0,
+    "leg_after_leg_J": 0.7167,
+    "refusal_weight": 0.1,
+    "never_refuse_loss_mean": 0.8317162698412698,
+    "never_refuse_lowest": 0.15619047619047619,
+    "never_refuse_highest": 0.18660714285714286
+   }
+  },
+  {
+   "id": "F-2",
+   "group": "audit",
+   "item": "the tell audit of the scored set, the seed and the hidden parameters",
+   "asked": "does anything a controller receives before its first step tell the scored set, the seed or the hidden values",
+   "line": "no tell",
+   "verdict": "holds",
+   "reason": "no tell: the dropped jobs look like kept ones; the paper, the set-up bytes, the budgets and the set-up reply are byte-identical between seeds and with ten hidden values changed, in all six sessions.",
+   "rests_on": "the six sessions' papers and set-up exchanges",
+   "flights": null,
+   "numbers": {}
+  },
+  {
+   "id": "F-3",
+   "group": "audit",
+   "item": "the invariance test",
+   "asked": "the session papers, job lists, budgets and every reply before the first step byte-identical between worlds that differ only in hidden parameters",
+   "line": "byte-identical",
+   "verdict": "holds",
+   "reason": "byte-identical in all six sessions for three pairs of worlds (another seed label, another key, ten hidden values changed); the two tests on file pass 4 of 4 each. Not shown: the level-2 force response (fixed in the world's code) and anything after the first step.",
+   "rests_on": "the six sessions, three world pairs",
+   "flights": null,
+   "numbers": {}
+  },
+  {
+   "id": "F-4",
+   "group": "audit",
+   "item": "the check-out's excursions against the zones' room on the acceptance flights",
+   "asked": "how close the reference's check-out comes to the zones",
+   "line": null,
+   "verdict": "recorded without a line",
+   "reason": "no flight leaves the zones; the least clearance is 0.083 m (session 6, whose start leaves 0.177 m); the reference's check-out moves up to 0.132 m.",
+   "rests_on": "126 flights in process and 126 through the runner",
+   "flights": 252,
+   "numbers": {
+    "ranking_by_room_left": [
+     [
+      "session_6",
+      0.0827,
+      0.1774
+     ],
+     [
+      "session_4",
+      0.1401,
+      0.2175
+     ],
+     [
+      "session_1",
+      0.1581,
+      0.2294
+     ],
+     [
+      "session_5",
+      0.2768,
+      0.3582
+     ],
+     [
+      "session_2",
+      0.3308,
+      0.4022
+     ],
+     [
+      "session_3",
+      0.5916,
+      0.6894
+     ]
+    ],
+    "session_4_largest_displacement_m": 0.1322,
+    "session_6_room_at_start_pose_m": 0.1774
+   }
+  },
+  {
+   "id": "F-5",
+   "group": "audit",
+   "item": "the reference's own robustness on unseen seeds (before the certification)",
+   "asked": "the robustness rule and the view-centre rule of the reference, written down before their numbers",
+   "line": "on 40 noise seeds of each development session that no tuning had seen: on each development session at most one of its 40 session-seed scores below 0.95 and none below 0.90; a hand-back in at most 2 of the 80 session-seeds; and on each development session at most 0.01 of the reference's views with the optical centre displaced beyond 0.033 m",
+   "verdict": "missed and recorded",
+   "reason": "both rules were missed before the certification and recorded: on the first development session 9 and 8 of the 40 scores fall below 0.95 (two readings of the zero ends), on the second 2 and 1 (lowest 0.9054 and 0.9039; none below 0.90 on either); three of the 80 session-seeds have a hand-back; 2.5 % and 2.8 % of views lie beyond 0.033 m. The reference was not corrected (one known defect: a pair of fixes applied without the motion since the older image when that image has left its kept history).",
+   "rests_on": "the reference on 40 unseen noise seeds of each of the two development sessions (80 session-seeds)",
+   "flights": null,
+   "numbers": {
+    "handbacks_of_80": 3
+   }
+  }
+ ],
+ "exit_gate": [
+  {
+   "line": "1",
+   "text": "The reference scores exactly 1.0.",
+   "verdict": "holds",
+   "reading": "exactly 1.0 on the acceptance seed of every session, in process, through the runner and by the grader's whole path with the scored sets placed. A-1 A-3"
+  },
+  {
+   "line": "2",
+   "text": "Zero wrench, refuse all and done at once score exactly 0.",
+   "verdict": "holds",
+   "reading": "exactly 0 on all six sessions, the reward 0. B-1 B-2 B-3"
+  },
+  {
+   "line": "3",
+   "text": "Every degenerate or recorded controller is at or below 0.10.",
+   "verdict": "holds",
+   "reading": "read, as decided after the flights of the first half, on the three degenerate controllers and on the open-loop replay, the controllers to which the 0.10 belongs ('recorded' in this line means the replay of recorded commands): zero wrench, done at once and refuse all score exactly 0, and the replay scores 0.000 to 0.030 on the six sessions, against at most 0.10 on each. Never refuse is recorded with the mutants as the reference with one capability off (it loses 0.813 to 0.844 per session, its session ended by the keep-in rule at the first request it flies) and this line is not applied to it, because it is not degenerate; its own line of 0.90 holds. A paused step is identical to the unpaused flight and scores 1.0; one that scored below 0.10 would be a fault of the runner. The combination with groups S1, S2 and S3 off together (0.105 on its noise seeds, D-18) is a mutant of the reference, read with the mutants, and this line is not applied to it. B-1 to B-6, D-18"
+  },
+  {
+   "line": "4",
+   "text": "The ladders fall monotonically.",
+   "verdict": "holds for ladder A; ladders B and C not run by decision",
+   "reading": "ladder A (the response the reference reads) falls on both sides. Ladder B is not run by decision: it is flat by construction, because the reference stores that read and uses it nowhere (all 30 flights at times 2 and the one flown at times 4 identical to the undisplaced flights). Ladder C is not run by decision: the hidden world as built has no input for the fix delay and the frozen world is not changed for a ladder. C-1 C-2 C-3"
+  },
+  {
+   "line": "5",
+   "text": "The equivalent forms are at or above 0.90.",
+   "verdict": "holds on the forms flown; the rest not run by decision",
+   "reading": "the quaternion's other sign (0.992) and the attitude fix applied from the stored state, the reference's real-time switch off (0.989, lowest session-seed 0.936), are above 0.90; the reference itself, with the switch on, applies the attitude fix as a delayed measurement carried forward to its arrival, the form the item names. Not run by decision: the full-state filter and the translation half of the carried-forward form were never built, because no new filter is built for the certification. E-1 E-2 E-3"
+  },
+  {
+   "line": "6",
+   "text": "A miss stops the certification and is reported.",
+   "verdict": "missed and recorded",
+   "reading": "session 2's scored-set clause was missed (two view events, line 8) and the certification did not stop: it went on, under decisions made before the numbers, to record that miss and report everything here; of the other listed stops the captured share, the three cell clauses and the ordering hold, and no degenerate controller or replay lies above 0.10."
+  },
+  {
+   "line": "7",
+   "text": "Of the views of the reference with group F off at most 0.05 count as captured.",
+   "verdict": "holds",
+   "reading": "1 of 376 finished views (0.27 %). D-21"
+  },
+  {
+   "line": "8",
+   "text": "The scored set's clause is read in events (at most one event per kind and three in all per session, none longer than two jobs).",
+   "verdict": "missed and recorded",
+   "reading": "session 2 has three events, two of them views (j19 and j23, each beyond the optical centre's limit of 0.033 m on two noise seeds), against at most one per kind: missed, recorded, and nothing moved, as decided before the numbers; sessions 1 and 3 to 6 hold. A-9 to A-14"
+  },
+  {
+   "line": "9",
+   "text": "The zero-end rule's cell clause as amended, with every dropped cell's completion limit beside its degenerate level.",
+   "verdict": "holds",
+   "reading": "no kind without a graded measure in a mode it flies; every dropped cell's completion limit below its degenerate level; 11 of 33 cells dropped, exactly at the line, by one cell under the interpolated percentile. A-5 A-6 A-7"
+  },
+  {
+   "line": "10",
+   "text": "The equivalent forms are at or above 0.90 and the accelerometer-driven form is recorded with the ordering.",
+   "verdict": "holds for the ordering; the forms as in line 5; the S groups on one seed by decision",
+   "reading": "the ordering holds (0.379 <= 0.637 <= 0.990 - 0.02, E-4); the equivalent forms as in line 5; each S group under the accelerometer-driven design stands on one seed (54 flights) and is reported beside as it is (E-5)."
+  },
+  {
+   "line": "11",
+   "text": "Group J is measured on the task's runner.",
+   "verdict": "not run by decision (nought by construction)",
+   "reading": "with the reference as built no step is late in its 126 flights through the runner, so group J has nothing to act on and its loss is nought by construction; the heavier form's three sessions (0.000, +0.064, -0.047) are information, not a measurement of J, and sessions 4 to 6 of it were not flown. B-7"
+  },
+  {
+   "line": "12",
+   "text": "This file marks, by the card rule, which groups the card may name.",
+   "verdict": "holds",
+   "reading": "card groups"
+  }
+ ],
+ "outputs": [
+  {
+   "output": "the frozen bands",
+   "verdict": "holds",
+   "rows": "frozen (A-4 to A-15)"
+  },
+  {
+   "output": "the reference",
+   "verdict": "holds",
+   "rows": "A-1 A-2 A-3"
+  },
+  {
+   "output": "zero wrench",
+   "verdict": "holds",
+   "rows": "B-1"
+  },
+  {
+   "output": "done at once",
+   "verdict": "holds",
+   "rows": "B-2"
+  },
+  {
+   "output": "refuse all",
+   "verdict": "holds",
+   "rows": "B-3"
+  },
+  {
+   "output": "never refuse",
+   "verdict": "recorded with the mutants",
+   "rows": "B-4"
+  },
+  {
+   "output": "a paused step",
+   "verdict": "recorded without a line",
+   "rows": "B-5"
+  },
+  {
+   "output": "the open-loop replay",
+   "verdict": "holds on the six sessions",
+   "rows": "B-6"
+  },
+  {
+   "output": "the ladders of the reference's displaced reads",
+   "verdict": "holds for ladder A; ladders B and C not run by decision",
+   "rows": "C-1 C-2 C-3"
+  },
+  {
+   "output": "each single-group mutant with the loss booking",
+   "verdict": "recorded without a line",
+   "rows": "D-1 to D-17, D-20"
+  },
+  {
+   "output": "S1, S2 and S3 off together and every group off, recorded",
+   "verdict": "recorded without a line",
+   "rows": "D-18 D-19"
+  },
+  {
+   "output": "the equivalent forms",
+   "verdict": "holds on the forms flown; the rest not run by decision",
+   "rows": "E-1 E-2 E-3"
+  },
+  {
+   "output": "the accelerometer-driven form recorded apart with its ordering",
+   "verdict": "holds for the ordering; each S group under it recorded without a line on one seed (the second not run by decision)",
+   "rows": "E-4 E-5"
+  },
+  {
+   "output": "the reference following each real error of the documents",
+   "verdict": "recorded for two; three not run",
+   "rows": "E-7 to E-11"
+  },
+  {
+   "output": "the tell audit of the requests",
+   "verdict": "missed and recorded",
+   "rows": "F-1 F-2"
+  },
+  {
+   "output": "the value of the certification's scores",
+   "verdict": "recorded without a line",
+   "rows": "kept in the maintainers' own records, which are not shipped"
+  }
+ ],
+ "card_groups": {
+  "rule": "a factor group is named in the task card's factor table only if its single-group mutant loses 0.05 or more on the frozen hidden set with at most half of that loss carried; every other group is listed as a printed rule or a given fact",
+  "may_be_named": [
+   {
+    "group": "S1",
+    "off": "a fix is applied at its arrival time",
+    "loss": 0.6229004536280972,
+    "carried_share": 0.1685826965055243
+   },
+   {
+    "group": "S2",
+    "off": "no weighting by landmark count, no gate",
+    "loss": 0.49009888881166547,
+    "carried_share": 0.34331666523982113
+   },
+   {
+    "group": "S3",
+    "off": "offsets taken once at the start",
+    "loss": 0.8334682435009216,
+    "carried_share": 0.41403930135227357
+   },
+   {
+    "group": "S4",
+    "off": "prediction with the documents' response 1.0 and the on-file mass",
+    "loss": 0.6247311511370168,
+    "carried_share": 0.3050086940995069
+   },
+   {
+    "group": "S5",
+    "off": "no disturbance state, no integral action",
+    "loss": 0.5462252370778871,
+    "carried_share": 0.19045163707877744
+   },
+   {
+    "group": "S7",
+    "off": "a fixed sample period is assumed and the device filter's delay is ignored",
+    "loss": 0.34707899284613214,
+    "carried_share": 0.005144979449983412
+   },
+   {
+    "group": "S9",
+    "off": "no cabin-rotation term",
+    "loss": 0.3999055280792043,
+    "carried_share": 0.039609222623223785
+   },
+   {
+    "group": "F",
+    "off": "turns about the body centre, ready after 2 s",
+    "loss": 0.36828645079096234,
+    "carried_share": 0.0
+   }
+  ],
+  "not_named": [
+   {
+    "group": "S6",
+    "off": "the lever arm is not removed from the accelerometer",
+    "loss": 0.005759931675857616,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "S8",
+    "off": "no change of behaviour in an outage; the first fix after it at full weight",
+    "loss": 0.002294444074929139,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "B",
+    "off": "limits of the nominal mode in every mode",
+    "loss": 0.0,
+    "carried_share": 0.0,
+    "why": "nought by construction, not measured: the plan takes its limits from the job's mode with the switch on or off and the tolerance factor is one fixed factor in every mode, so the registered off form (the nominal mode's limits in every mode) cannot act and was not flown; what a controller loses that plans every mode with the nominal limits is not measured"
+   },
+   {
+    "group": "C",
+    "off": "damping without delay compensation, bandwidth x 1.5",
+    "loss": 0.00527081442783979,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "D",
+    "off": "no per-axis limits, no scaling, no anti-windup",
+    "loss": 0.001032998497818946,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "E2",
+    "off": "moves at the mode command",
+    "loss": -0.0007301629964296119,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "I",
+    "off": "acceleration limits halved",
+    "loss": 0.004444238450194399,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   },
+   {
+    "group": "J",
+    "off": "no command in a cycle whose computation is late",
+    "loss": 0.0,
+    "carried_share": 0.0,
+    "why": "nought by construction, not measured: the switch has nothing to act on in these flights"
+   },
+   {
+    "group": "L",
+    "off": "loop gains for a response of 1.0",
+    "loss": 0.04928652464066306,
+    "carried_share": 0.0,
+    "why": "loses less than 0.05"
+   }
+  ],
+  "S4_note": "the card states both readings of group S4 on the frozen set: 0.6247 lost when the reference predicts with the documents' response (eight noise seeds), and 0.3531 as the price of the accelerometer-driven design that does without the response (four noise seeds)"
+ }
+}

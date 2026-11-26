@@ -1,0 +1,58 @@
+{
+ "message": "a request whose frame carries the notice of a valid plan (that of the plan in reply_plan_accept.json)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with a controller that sends each reply form once (kept by the maintainers, not given)",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "step",
+  "frame": {
+   "t": 13.024,
+   "in_control": true,
+   "job_id": "j06",
+   "mode": "nominal",
+   "fan_level_commanded": 1,
+   "inertial": [],
+   "registrations": [],
+   "fixes": [],
+   "propulsion": {
+    "impeller_speed": [
+     100.0,
+     100.0
+    ],
+    "module_state": [
+     "ready",
+     "ready"
+    ],
+    "nozzle_command": [
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128,
+     128
+    ]
+   },
+   "camera": {
+    "busy": false
+   },
+   "block": {
+    "budget_s": 52.48868541833932,
+    "time_left_s": 52.48868541833932
+   },
+   "notices": [
+    {
+     "kind": "plan",
+     "job_id": "j06",
+     "valid": true
+    }
+   ]
+  }
+ },
+ "line": "{\"op\":\"step\",\"frame\":{\"t\":13.024,\"in_control\":true,\"job_id\":\"j06\",\"mode\":\"nominal\",\"fan_level_commanded\":1,\"inertial\":[],\"registrations\":[],\"fixes\":[],\"propulsion\":{\"impeller_speed\":[100.0,100.0],\"module_state\":[\"ready\",\"ready\"],\"nozzle_command\":[128,128,128,128,128,128,128,128,128,128,128,128]},\"camera\":{\"busy\":false},\"block\":{\"budget_s\":52.48868541833932,\"time_left_s\":52.48868541833932},\"notices\":[{\"kind\":\"plan\",\"job_id\":\"j06\",\"valid\":true}]}}"
+}

@@ -1,0 +1,251 @@
+{
+ "values": {
+  "cert.checkout_sequence": {
+   "public": false,
+   "unit": "rule (what the reference flies in the check-out)",
+   "value": "the sensor-only reference flies, inside the check-out's box, at the nominal fan level and at the nominal mode's limits: 20 s at rest; one torque pulse of 1.5 s on each of the six signed axes, each followed by its return; one out-and-back burn of about 8 s on each of the six signed force axes; 86 s in all. The registered response function reads the same sequence at each fan level's own mode's limits (the lowest level by the quiet mode's). The observability table's estimators read these frames. The sequence is the reference's own; nothing about it is printed"
+  },
+  "interface.step_period_ms": {
+   "public": true,
+   "unit": "ms between two step calls (62.5 Hz), constant",
+   "value": 16.0
+  },
+  "jobs.camera_mount_m": {
+   "public": true,
+   "unit": "m, optical centre of the imaging camera in body axes",
+   "value": [
+    0.118,
+    0.0,
+    -0.096
+   ]
+  },
+  "jobs.capture_s": {
+   "public": true,
+   "unit": "s the imaging camera needs for one picture after the event ready",
+   "value": 1.7
+  },
+  "jobs.spin_up_term": {
+   "public": true,
+   "unit": "formula, seconds",
+   "value": "S = |n_new - n_old| / 200 + 2.0 s with n = 2000, 2500, 2800 rpm for fan levels 1, 2, 3 (4.5 s into the quiet mode, 3.5 s into the precision mode)"
+  },
+  "mode.fan_level": {
+   "public": true,
+   "unit": "fan level of each mode in the releases of the acceptance sessions (nominal was 3 before 2020-10-23)",
+   "value": {
+    "nominal": 2,
+    "precision": 3,
+    "quiet": 1
+   }
+  },
+  "monitor.tolerance.nominal": {
+   "public": true,
+   "unit": "limits",
+   "value": {
+    "attitude_deg": 20.0,
+    "end_point_m": 0.1,
+    "position_m": 0.25
+   }
+  },
+  "monitor.tolerance.precision": {
+   "public": true,
+   "unit": "limits",
+   "value": {
+    "attitude_deg": 10.0,
+    "end_point_m": 0.1,
+    "position_m": 0.1
+   }
+  },
+  "monitor.tolerance.quiet": {
+   "public": true,
+   "unit": "limits",
+   "value": {
+    "attitude_deg": 10.0,
+    "end_point_m": 0.1,
+    "position_m": 0.1
+   }
+  },
+  "plan.acceleration_limit": {
+   "public": true,
+   "unit": "hard limits of the mode's block in the flight-mode file of the release in force, undivided",
+   "value": {
+    "nominal": {
+     "angular_rad_s2": 0.1745,
+     "linear_m_s2": 0.0175
+    },
+    "precision": {
+     "angular_rad_s2": 0.1745,
+     "linear_m_s2": 0.01
+    },
+    "quiet": {
+     "angular_rad_s2": 0.0174,
+     "linear_m_s2": 0.002
+    }
+   }
+  },
+  "plan.speed_limit.nominal": {
+   "public": true,
+   "unit": "limit on the plan's speeds",
+   "value": {
+    "angular_rad_s": 0.1745,
+    "linear_m_s": 0.2
+   }
+  },
+  "plan.speed_limit.precision": {
+   "public": true,
+   "unit": "limit on the plan's speeds",
+   "value": {
+    "angular_rad_s": 0.1745,
+    "linear_m_s": 0.02
+   }
+  },
+  "plan.speed_limit.quiet": {
+   "public": true,
+   "unit": "limit on the plan's speeds",
+   "value": {
+    "angular_rad_s": 0.0174,
+    "linear_m_s": 0.02
+   }
+  },
+  "safety.body_radius_m": {
+   "public": true,
+   "unit": "m, radius of the bounding sphere used by the zone rule",
+   "value": 0.28
+  },
+  "score.end_window_s": {
+   "public": true,
+   "unit": "s after done over which the true end errors are averaged; the controller keeps holding",
+   "value": [
+    0.5,
+    2.5
+   ]
+  },
+  "sessions.outage_cap_s": {
+   "public": true,
+   "unit": "s, per mode of the block: the longest stretch between the image times of two successive successful fixes that touches a scored block, the stretch that is running when the block starts included (the results arrive later by the fix delay); a cap of 0 s means that no attempt fails: every attempt whose image time lies inside the block, and the last attempt before the block's start, succeeds; the check-out takes the nominal mode's cap",
+   "value": {
+    "nominal": 5,
+    "precision": 5,
+    "quiet": 0
+   }
+  },
+  "sessions.start_hold_s": {
+   "public": true,
+   "unit": "s of hold by the built-in controller at the start of a session, frames delivered, the node not in control",
+   "value": 20.0
+  },
+  "told.accel_offset": {
+   "public": true,
+   "unit": "constant part of the accelerometer reading per axis, and how far it may differ from its value one minute earlier",
+   "value": {
+    "change_per_minute_max_mm_s2": 6.0,
+    "per_axis_max_m_s2": 0.4
+   }
+  },
+  "told.cabin_rotation": {
+   "public": true,
+   "unit": "the cabin frame turns in inertial space at this rate, as measured on the unit's records; a gyro at rest in the cabin reads it, and the turning frame's terms act on motion relative to the cabin",
+   "value": {
+    "axis": "within 15 degrees of the cabin frame's negative y axis",
+    "rate_mrad_s": [
+     1.09,
+     1.17
+    ]
+   }
+  },
+  "told.fix_attempt_interval_s": {
+   "public": true,
+   "unit": "s between two images the localiser takes, outside the localiser's pauses; one image is processed at a time",
+   "value": [
+    0.3,
+    4.6
+   ]
+  },
+  "told.fix_delay_s": {
+   "public": true,
+   "unit": "s from an image's time to the arrival of its result",
+   "value": [
+    0.4,
+    3.2
+   ]
+  },
+  "told.lag_command_to_motion_ms": {
+   "public": true,
+   "unit": "ms: the pure delay that best aligns the gyro's answer with the commanded torque (the inertial unit's own filter included)",
+   "value": [
+    40,
+    80
+   ]
+  },
+  "told.steady_force_change_mN_per_min": {
+   "public": true,
+   "unit": "mN per cabin axis: the part of the steady force that is fixed in the cabin at any instant differs from its value one minute earlier by at most this; the other part is fixed in the body's axes and constant over a session, so the sum as the body feels it also changes when the robot turns",
+   "value": 3.0
+  },
+  "world.fix.frame": {
+   "public": false,
+   "unit": "what a fix reports",
+   "value": {
+    "camera_mount": {
+     "position_m": [
+      0.1177,
+      -0.0422,
+      -0.0826
+     ],
+     "quaternion_xyzw": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    "pose_of": "the navigation camera in the cabin frame at the image time"
+   }
+  },
+  "world.imu.device_filter": {
+   "public": false,
+   "unit": "the device's moving average in the edition the world flies (125 samples per second); the earlier edition beside it",
+   "value": {
+    "delay_ms": 15.75,
+    "edition_with_62_5_samples_per_second": {
+     "delay_ms_at_most": 7.875,
+     "shown_by": "white noise at 16 ms spacing in the idle cells of the 2019 to 2021 records; the lag: the ported dynamics with this filter give 54.0 ms against the measured 53.7",
+     "window_ms": 16.0
+    },
+    "internal_rate_hz": 2000,
+    "output_rate_hz": 125,
+    "taps": 64,
+    "window_ms": 32.0
+   }
+  },
+  "world.imu.mount": {
+   "public": false,
+   "unit": "the inertial unit in the body",
+   "value": {
+    "position_m": [
+     0.0386,
+     0.0247,
+     -0.01016
+    ],
+    "quarter_turn": "v_body = R v_sensor, R = +90 degrees about z"
+   }
+  },
+  "world.mass_file": {
+   "public": false,
+   "unit": "the profile on file",
+   "value": {
+    "com_m": [
+     0.003713818,
+     -0.000326347,
+     -0.002532192
+    ],
+    "inertia_diag": [
+     0.153427995,
+     0.14271405,
+     0.162302759
+    ],
+    "mass_kg": 9.583788668
+   }
+  }
+ }
+}

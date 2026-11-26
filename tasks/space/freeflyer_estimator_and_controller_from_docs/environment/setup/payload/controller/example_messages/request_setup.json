@@ -1,0 +1,296 @@
+{
+ "message": "the setup request (its session paper is the toy session's)",
+ "direction": "runner to controller: one request line",
+ "captured_from": "a run of the toy self-test (controller/selftest) with controller/example_controller",
+ "values": "toy values of the self-test's toy session: nothing in this message is a value of the robot or of the acceptance sessions",
+ "object": {
+  "op": "setup",
+  "session": {
+   "session": "toy_session",
+   "release": "toy release",
+   "release_modes": [
+    "nominal",
+    "quiet",
+    "precision"
+   ],
+   "checkout_mode": "nominal",
+   "start_pose": {
+    "position": [
+     1.0,
+     2.0,
+     1.5
+    ],
+    "attitude": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "zones": {
+    "keep_in": [
+     [
+      [
+       -2.0,
+       -1.0,
+       -1.5
+      ],
+      [
+       4.0,
+       5.0,
+       4.5
+      ]
+     ]
+    ],
+    "keep_out": [],
+    "note": "toy zones (not a zone file)"
+   },
+   "zone_file": "toy zone file: none (the toy boxes are given inline under 'zones')",
+   "battery_slots": {
+    "occupied": 1,
+    "of": 2
+   },
+   "equipment": "toy equipment: the toy body as this file defines it",
+   "blocks": [
+    {
+     "name": "block_1",
+     "mode": "nominal",
+     "start_pose": {
+      "position": [
+       1.0,
+       2.0,
+       1.5
+      ],
+      "attitude": [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "jobs": [
+      {
+       "id": "j01",
+       "kind": "leg",
+       "mode": "nominal",
+       "goal": {
+        "position": [
+         1.3,
+         2.0,
+         1.5
+        ],
+        "attitude": [
+         0.0,
+         0.0,
+         0.0,
+         1.0
+        ]
+       }
+      },
+      {
+       "id": "j02",
+       "kind": "hold",
+       "mode": "nominal",
+       "goal": {
+        "duration_s": 3.0
+       }
+      },
+      {
+       "id": "j03",
+       "kind": "slew",
+       "mode": "nominal",
+       "goal": {
+        "position": [
+         1.3,
+         2.0,
+         1.5
+        ],
+        "attitude": [
+         0.0,
+         0.0,
+         0.17364817766693033,
+         0.984807753012208
+        ]
+       }
+      },
+      {
+       "id": "j04",
+       "kind": "leg",
+       "mode": "docking",
+       "goal": {
+        "position": [
+         1.3,
+         2.3,
+         1.5
+        ],
+        "attitude": [
+         0.0,
+         0.0,
+         0.17364817766693033,
+         0.984807753012208
+        ]
+       }
+      },
+      {
+       "id": "j05",
+       "kind": "leg",
+       "mode": "nominal",
+       "goal": {
+        "position": [
+         1.0,
+         2.2,
+         1.6
+        ],
+        "attitude": [
+         0.0,
+         0.0,
+         0.17364817766693033,
+         0.984807753012208
+        ]
+       }
+      }
+     ],
+     "budget_s": 41.97451082110727
+    },
+    {
+     "name": "block_2",
+     "mode": "nominal",
+     "start_pose": {
+      "position": [
+       1.0,
+       2.2,
+       1.6
+      ],
+      "attitude": [
+       0.0,
+       0.0,
+       0.17364817766693033,
+       0.984807753012208
+      ]
+     },
+     "jobs": [
+      {
+       "id": "j06",
+       "kind": "view",
+       "mode": "nominal",
+       "goal": {
+        "centre": [
+         1.1,
+         2.3,
+         1.6
+        ],
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "up": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       }
+      },
+      {
+       "id": "j07",
+       "kind": "view",
+       "mode": "nominal",
+       "goal": {
+        "centre": [
+         1.1,
+         2.3,
+         1.6
+        ],
+        "axis": [
+         0.9396926207859084,
+         0.3420201433256687,
+         0.0
+        ],
+        "up": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       }
+      },
+      {
+       "id": "j08",
+       "kind": "view",
+       "mode": "nominal",
+       "goal": {
+        "centre": [
+         5.0,
+         2.0,
+         1.5
+        ],
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "up": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       }
+      }
+     ],
+     "budget_s": 52.48868541833932
+    },
+    {
+     "name": "block_3",
+     "mode": "quiet",
+     "start_pose": {
+      "position": [
+       1.0,
+       2.0,
+       1.5
+      ],
+      "attitude": [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "jobs": [
+      {
+       "id": "j09",
+       "kind": "leg",
+       "mode": "quiet",
+       "goal": {
+        "position": [
+         1.1,
+         2.0,
+         1.5
+        ],
+        "attitude": [
+         0.0,
+         0.0,
+         0.0,
+         1.0
+        ]
+       }
+      },
+      {
+       "id": "j10",
+       "kind": "hold",
+       "mode": "quiet",
+       "goal": {
+        "duration_s": 3.0
+       }
+      }
+     ],
+     "budget_s": 16.471370023173353
+    }
+   ],
+   "window_s": 3.0,
+   "toy": true,
+   "time_window": {
+    "planned_minutes": 2.048909
+   }
+  }
+ },
+ "line": "{\"op\":\"setup\",\"session\":{\"session\":\"toy_session\",\"release\":\"toy release\",\"release_modes\":[\"nominal\",\"quiet\",\"precision\"],\"checkout_mode\":\"nominal\",\"start_pose\":{\"position\":[1.0,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]},\"zones\":{\"keep_in\":[[[-2.0,-1.0,-1.5],[4.0,5.0,4.5]]],\"keep_out\":[],\"note\":\"toy zones (not a zone file)\"},\"zone_file\":\"toy zone file: none (the toy boxes are given inline under 'zones')\",\"battery_slots\":{\"occupied\":1,\"of\":2},\"equipment\":\"toy equipment: the toy body as this file defines it\",\"blocks\":[{\"name\":\"block_1\",\"mode\":\"nominal\",\"start_pose\":{\"position\":[1.0,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]},\"jobs\":[{\"id\":\"j01\",\"kind\":\"leg\",\"mode\":\"nominal\",\"goal\":{\"position\":[1.3,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]}},{\"id\":\"j02\",\"kind\":\"hold\",\"mode\":\"nominal\",\"goal\":{\"duration_s\":3.0}},{\"id\":\"j03\",\"kind\":\"slew\",\"mode\":\"nominal\",\"goal\":{\"position\":[1.3,2.0,1.5],\"attitude\":[0.0,0.0,0.17364817766693033,0.984807753012208]}},{\"id\":\"j04\",\"kind\":\"leg\",\"mode\":\"docking\",\"goal\":{\"position\":[1.3,2.3,1.5],\"attitude\":[0.0,0.0,0.17364817766693033,0.984807753012208]}},{\"id\":\"j05\",\"kind\":\"leg\",\"mode\":\"nominal\",\"goal\":{\"position\":[1.0,2.2,1.6],\"attitude\":[0.0,0.0,0.17364817766693033,0.984807753012208]}}],\"budget_s\":41.97451082110727},{\"name\":\"block_2\",\"mode\":\"nominal\",\"start_pose\":{\"position\":[1.0,2.2,1.6],\"attitude\":[0.0,0.0,0.17364817766693033,0.984807753012208]},\"jobs\":[{\"id\":\"j06\",\"kind\":\"view\",\"mode\":\"nominal\",\"goal\":{\"centre\":[1.1,2.3,1.6],\"axis\":[1.0,0.0,0.0],\"up\":[0.0,0.0,1.0]}},{\"id\":\"j07\",\"kind\":\"view\",\"mode\":\"nominal\",\"goal\":{\"centre\":[1.1,2.3,1.6],\"axis\":[0.9396926207859084,0.3420201433256687,0.0],\"up\":[0.0,0.0,1.0]}},{\"id\":\"j08\",\"kind\":\"view\",\"mode\":\"nominal\",\"goal\":{\"centre\":[5.0,2.0,1.5],\"axis\":[1.0,0.0,0.0],\"up\":[0.0,0.0,1.0]}}],\"budget_s\":52.48868541833932},{\"name\":\"block_3\",\"mode\":\"quiet\",\"start_pose\":{\"position\":[1.0,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]},\"jobs\":[{\"id\":\"j09\",\"kind\":\"leg\",\"mode\":\"quiet\",\"goal\":{\"position\":[1.1,2.0,1.5],\"attitude\":[0.0,0.0,0.0,1.0]}},{\"id\":\"j10\",\"kind\":\"hold\",\"mode\":\"quiet\",\"goal\":{\"duration_s\":3.0}}],\"budget_s\":16.471370023173353}],\"window_s\":3.0,\"toy\":true,\"time_window\":{\"planned_minutes\":2.048909}}}"
+}
