@@ -35,6 +35,12 @@ summary = "Two fixed Franka Pandas replace a cabinet door on loose-pin hinges: a
 platforms = ["arm"]
 stages = ["behavior"]
 
+[pipe_spool_push_fit_assembly]
+title = "Build a push-fit pipe spool with two Pandas"
+summary = "Two Pandas build a copper pipe spool in free space from loose pipes and push-fit elbows: one hand holds while the other pushes each joint home past a hidden O-ring, from cameras and wrist force."
+platforms = ["arm"]
+stages = ["behavior"]
+
 [cloth_material_id_from_video]
 title = "Identify fabric materials from video"
 summary = "Choose the simulator material of ten fabrics from multi-view video of a robot arm handling them, so that a planner using it hits its targets on new slide and overhang handling of the real fabrics."

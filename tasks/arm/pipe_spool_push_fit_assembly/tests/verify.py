@@ -40,7 +40,8 @@ Oracle token: a submission whose .oracle_token hashes to tests/hidden/oracle_tok
 then does every observation also carry `truth` (the unit, the seed, the world's state). An untokened submission never
 sees it.
 
-Images: spool_sim.render draws the cameras with MuJoCo's renderer on OSMesa, exactly as the agent's copy does. Before
+Images: spool_sim.render draws the cameras through spool_render.py (MuJoCo 3.16's Filament on the CPU, a process per
+episode, the render bundle in SPOOL_RENDER_DIR), exactly as the agent's copy does. Before
 the first episode a render self-test draws every camera of one episode (the set's first unit at a fixed seed, not a
 graded episode) and checks their shapes, that none is flat and that their brightness is sane (metric
 `render_selftest`). A renderer failure, in the self-test or at any later image (spool_env.RenderError), is the

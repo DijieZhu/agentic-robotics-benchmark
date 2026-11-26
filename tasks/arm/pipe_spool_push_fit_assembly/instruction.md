@@ -4,7 +4,7 @@ You are a robotics engineer. Two Franka Pandas stand side by side at a plumbing 
 two push-fit elbows on it. They see through cameras and feel through wrist force sensors. Write the controller that
 builds a small pipe spool from these parts **in free space**: one hand holds a part while the other pushes the next
 part onto it. Nothing is clamped, so whatever the pushing hand pushes, the holding hand has to take. The controller
-runs closed loop against a simulator and is graded on fittings and work orders you have not seen. You have 2 hours of
+runs closed loop against a simulator and is graded on fittings and work orders you have not seen. You have 3 hours of
 wall time (see "Session time"). Whatever is in `/home/user/submission/` when the time ends is graded, so keep a
 working controller there.
 
@@ -35,7 +35,9 @@ finger. `task_card.md` gives every number in one place.
    B-socket about A's axis: project both sockets' outward axes on the plane normal to A; twist 0 means they point the
    same way, 180 opposite ways (the measured angle runs counter-clockwise from the B-socket's axis to the free
    socket's when A's axis, pointing from the B-elbow to the other elbow, points at you);
-4. set the spool down on the bench, open both hands and move them away from it.
+4. set the spool down on the bench, open both hands and move them away from it. This step ends the episode early
+   (see "Credit"); it is not part of the credit itself: a spool still held in the air, every part above the bench
+   top, when the episode's steps run out scores the same.
 
 **In free space.** A joint counts only if it was made in the air: if, at the moment its pipe goes past the O-ring or
 at any moment while its pipe is pushed further in, any part connected to it touches anything but the two grippers and
@@ -64,6 +66,7 @@ wrist forces and the cameras, when a pipe has passed the O-ring and when it is h
 | `spool_sim.py` | The simulator of the cell: the robots and their controllers, the pipes, the elbows and their push-fit joints, the cameras, each unit's and each episode's draw. The grader runs this exact file. |
 | `spool_env.py` | The environment your controller talks to: `SpoolEnv(unit).reset(seed)`, `step(action)`, the observation. The grader runs this exact file. |
 | `episode.py` | An episode, its end and its credit. The grader runs this exact file. |
+| `spool_render.py`, `spool_scene.py`, `spool_parts.py`, `spool_geom.py`, `spool_looks.py`, `spool_look.json` | What the cameras draw and the renderer that draws it (see "The pictures"). The grader runs these exact files. |
 | `units.json` | The two practice units (p0, p1). |
 | `task_card.md` | The cell's numbers in one place. |
 | `practice_grader/grade.py` | Runs your controller over the wire, as the grader does, on the practice units; prints the raw credit and what it is made of (see below). |
@@ -72,8 +75,24 @@ wrist forces and the cameras, when a pipe has passed the O-ring and when it is h
 
 Python is `/opt/venv/bin/python3` (MuJoCo 3.16, numpy, scipy, OpenCV, Pillow; robosuite 1.5.2's robot model files).
 There is no network. Your sandbox has 4 CPUs and 12 GB of memory; the grading sandbox has the same. A control step
-takes 15-40 ms of wall time, so a whole 6000-step episode takes 2-4 minutes without images; an image takes 0.05-0.15 s
-to draw. Run a few simulations at a time, not dozens.
+takes 15-40 ms of wall time, so a whole 6000-step episode takes 2-4 minutes without images; an image takes 0.06-0.12 s
+to draw, and an episode's first image about 3 s more (its render process starts then). Run a few simulations at a
+time, not dozens.
+
+**The pictures.** The cameras show the cell as a workshop would have it, drawn by MuJoCo's Filament renderer on the
+CPU (`spool_render.py`; a process of its own per episode) from `spool_scene.py`'s parts and a render bundle in
+`/opt/task-assets/payload/render` (readable, not writable):
+- the parts at the simulation's own geometry: the pipes as 22 mm copper tube, A's band as a ring of blue tape, the
+  elbows as brass push-fit elbows with a dark collar at each socket's mouth, the Pandas with their grippers' soft
+  pads. An elbow is drawn inside its collision shape, and nothing drawn shows a unit's stop depth;
+- the bench as a wooden worktop on a steel frame, with a steel plate under each robot (flush, in the top's plane);
+- a factory hall round the bench (racks, tool chests, pallets): drawn only, nothing of it is in the simulation;
+- the camera rig, drawn and with contact boxes of the same size in the simulation (geoms `x_*`; a hand cannot pass
+  through them): a mast behind the robots at (-0.47, 0) with a boom over the bench at z = 2.25 carrying the
+  `overhead` camera and, on an arm, the `front` camera; a floor stand at (0.45, -1.0) carrying the `side` camera; a
+  camera body at each of these three cameras; and a small camera block on each hand at its wrist camera (geom
+  `wcam`: part of the hand, not of the gripper, so a spool part that touches it touches "something else").
+The light is fixed and no lamp casts a shadow. The sensor noise is added to the drawn picture as before.
 
 **Practice.** You may practise as much as the session allows: the simulator is yours to run, and the practice units'
 truth is yours to read (`units.json` gives their values; the simulator's state gives everything else). For each
@@ -119,7 +138,7 @@ The score is the mean credit over the graded episodes.
 
 ## Session time
 
-- This session is stopped 2 hours of wall-clock time after it started. What is in `/home/user/submission/` at
+- This session is stopped 3 hours of wall-clock time after it started. What is in `/home/user/submission/` at
   that moment is graded as it is: keep a complete, runnable submission there from early on and replace it as you
   improve it.
 - The only clock for this limit is the wall clock. `bash /home/user/session_time.sh` prints the minutes used and
@@ -129,7 +148,7 @@ The score is the mean credit over the graded episodes.
   a summary of what was done. Do not estimate the time used from how much you have done.
 - Two other counts in this task are not your session's time: an episode's length (6000 control steps are 10
   simulated minutes and a few minutes of wall time in your simulator) and the controller's 9000 s budget at
-  grading. Neither says how much of the 2 hours is left.
+  grading. Neither says how much of the 3 hours is left.
 
 ## Observation and action
 
@@ -196,8 +215,8 @@ numerics variables above set: export anything else you need there (to render wit
 **Probes.** About 1 % of steps are asked twice with the same `t`, in a hidden order:
 - once with the real observation;
 - once with a slightly perturbed copy: each arm's joints moved by up to 1 mrad, with the grip-site poses and the
-  wrist cameras' poses recomputed from them the way the real observation's are, and each force by up to 0.2 N; images
-  unchanged.
+  wrist cameras' poses recomputed from them the way the real observation's are, and each wrist's force and torque
+  read once more (the same true wrench with noise drawn anew); images unchanged.
 
 Only the reply to the real observation is applied. A pair is not counted either way when both replies command no
 motion: both arms send 7 numbers whose first six are all within 1e-9 of zero. A pair whose two replies hold a

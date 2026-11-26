@@ -3,7 +3,7 @@
 # before the session started, so the time left is slightly more than printed, never less.
 #   bash /home/user/session_time.sh
 set -u
-LIMIT_MIN=120
+LIMIT_MIN=180
 STAMP=/run/session/start
 if ! start=$(cat "$STAMP" 2>/dev/null) || ! [ "$start" -gt 0 ] 2>/dev/null; then
   echo "session_time: no stamp at $STAMP; note the time with 'date' yourself" >&2

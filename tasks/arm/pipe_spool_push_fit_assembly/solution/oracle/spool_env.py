@@ -94,6 +94,7 @@ class SpoolEnv:
         self.rng = np.random.default_rng([self.seed % 2 ** 32, self.seed >> 32, 31])
         self.render_next = S.ALL_CAMS
         self.faulted = False
+        self.true_wrench = {}
         return self.observation()
 
     @property
@@ -130,6 +131,7 @@ class SpoolEnv:
         q = np.empty(4)
         mujoco.mju_mat2Quat(q, a.R().flatten())
         wr = a.wrench_world()
+        self.true_wrench[s] = wr.copy()                       # for the probe lock's copy (never on the wire)
         noise = np.concatenate([self.rng.normal(0, S.WRENCH_NOISE, 3), self.rng.normal(0, TORQUE_NOISE, 3)])
         out = {"q": d.qpos[a.jq].copy(), "dq": d.qvel[a.jv].copy(), "ee_pos": a.pos(), "ee_quat": q,
                "wrench": wr + noise}
@@ -143,14 +145,15 @@ class SpoolEnv:
             obs[f"T_world_{cam}"] = self.camera_pose(cam)
             obs[f"K_{cam}"] = self.camera_matrix(cam)
             if self.render_images and self.render_next & S.CAMERA_BITS[cam]:
-                obs[cam] = S.render(self.w.m, self.w.d, cam, self.rng, self.renderers)
+                obs[cam] = S.render(self.w, cam, self.rng, self.renderers)
             else:
                 obs[cam] = np.zeros((0, 0, 3), np.uint8)
         return obs
 
     def perturbed_observation(self, obs, rng):
         """The probe lock's other copy: each arm's joints offset by up to 1 mrad, the hand's and the wrist camera's
-        poses recomputed from them, each force offset by up to 0.2 N; images unchanged. A real observation's poses
+        poses recomputed from them, each wrist's wrench read once more (the true wrench of this observation with noise
+        drawn anew, as a second reading of the sensor would be); images unchanged. A real observation's poses
         are those of the joint angles one physics substep before its `q` (MuJoCo computes the poses at the start of
         the last substep), so the copy's poses are computed the same way: from that substep's joint angles moved by
         the same offsets."""
@@ -171,8 +174,7 @@ class SpoolEnv:
             Rs = d.site_xmat[a.site].reshape(3, 3)
             qq = np.empty(4)
             mujoco.mju_mat2Quat(qq, Rs.flatten())
-            wr = np.asarray(obs[s]["wrench"], float).copy()
-            wr[:3] += rng.uniform(-0.2, 0.2, 3)
+            wr = self.true_wrench[s] + np.concatenate([rng.normal(0, S.WRENCH_NOISE, 3), rng.normal(0, TORQUE_NOISE, 3)])
             arm.update(q=np.asarray(obs[s]["q"], float) + dq[s], ee_pos=d.site_xpos[a.site].copy(), ee_quat=qq,
                        wrench=wr)
             out[s] = arm

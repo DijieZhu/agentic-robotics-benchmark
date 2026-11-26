@@ -34,6 +34,8 @@ radians, seconds; quaternions (w, x, y, z). The robots stand on the bench (top a
     (faster than ADVANCE_V), the joint is marked as made on a support if any part of its connected spool touches
     anything other than the two grippers and the other spool parts (the bench, a robot's arm links). The
     mark goes when the joint comes apart.
+- The cameras' pictures are drawn by spool_render.py from spool_scene.py's parts (render, below); the drawn camera
+  rig has contact boxes in the model (spool_parts.contact_shapes; group 3, not drawn).
 - A unit is one batch of fittings and pipe (`draw_unit`): insertion force, stop depth, turning torque, bore
   clearance, elbow mass and pipe mass per metre. An episode (`draw_episode`) draws the pipes' lengths and places,
   which end of A is banded, the elbows' places, poses (flat or standing) and turns on the bench, and the work
@@ -150,28 +152,17 @@ def cam_pose(d, cid):
     return R, d.cam_xpos[cid].copy()
 
 
-_SCENE_OPT = None
-
-
-def scene_option():
-    global _SCENE_OPT
-    if _SCENE_OPT is None:
-        _SCENE_OPT = mujoco.MjvOption()
-        _SCENE_OPT.sitegroup[:] = 0            # no site markers in the images
-        _SCENE_OPT.geomgroup[:] = 1
-    return _SCENE_OPT
-
-
-def render(m, d, cam, rng, cache):
-    """One camera's image (uint8 H x W x 3) with sensor noise; `cache` keeps a renderer per image size for model m.
-    Raises RenderError when the renderer fails."""
+def render(world, cam, rng, cache):
+    """One camera's image (uint8 H x W x 3) of the world's state, with sensor noise. The cameras are drawn by
+    spool_render.py (beside this file: MuJoCo's Filament renderer on the CPU) in a process of its own per episode,
+    started at the episode's first image; `cache` keeps that process. Raises RenderError when the renderer fails."""
+    import spool_render
     w, h, _fovy = camera_size(cam)
     try:
-        r = cache.get((w, h))
-        if r is None:
-            r = cache[(w, h)] = mujoco.Renderer(m, h, w)
-        r.update_scene(d, camera=MJ_CAMERA[cam], scene_option=scene_option())
-        img = r.render().astype(np.float32)
+        view = cache.get("view")
+        if view is None:
+            view = cache["view"] = spool_render.Worker(world.unit, world.episode)
+        img = view.render(MJ_CAMERA[cam], world.d.qpos, w, h).astype(np.float32)
     except Exception as exc:  # noqa: BLE001 - whatever the renderer raises is reported as one error
         raise RenderError("{} camera ({}x{}): {}: {}".format(cam, w, h, type(exc).__name__, str(exc)[:200])) from exc
     img += rng.normal(0, RGB_NOISE, img.shape)
@@ -408,6 +399,15 @@ def build(unit, episode):
     _box(wb, "table", ((TABLE_EDGE_X + 0.28) / 2, TABLE_HALF_Y, TABLE_Z / 2), ((TABLE_EDGE_X - 0.28) / 2, 0.0,
          TABLE_Z / 2), (0.62, 0.58, 0.52, 1), mu=0.4)
 
+    # the contact shapes of the drawn camera rig an arm can reach (spool_parts.contact_shapes: the rear mast and its
+    # boom, the three fixed cameras, the side camera's stand); they are not drawn themselves (spool_scene.py draws
+    # the parts). No part and no reference motion comes near them.
+    import spool_parts
+    for name, lo, hi in spool_parts.contact_shapes(CAMERAS, TABLE_Z):
+        lo, hi = np.asarray(lo, float), np.asarray(hi, float)
+        g = _box(wb, name, (hi - lo) / 2, (lo + hi) / 2, (0.2, 0.2, 0.2, 1), mu=0.4)
+        g.group = 3
+
     ra = robosuite_assets()
     for side, xy in BASES.items():
         robot = mujoco.MjSpec.from_file(os.path.join(ra, "robots", "panda", "robot.xml"))
@@ -416,6 +416,15 @@ def build(unit, episode):
                 robot.delete(cam)
         grip = mujoco.MjSpec.from_file(os.path.join(ra, "grippers", "panda_gripper.xml"))
         robot.body("right_hand").add_frame().attach_body(grip.body("right_gripper"), "g_", "")
+        # the wrist camera's drawn block (spool_parts.WRIST_BOX at the model's eye_in_hand camera) as a massless
+        # contact box on the hand
+        cam = [c for c in robot.cameras if c.name == "eye_in_hand"][0]
+        Rc = mat_from_quat(cam.quat)
+        Rb = np.column_stack([-Rc[:, 2], Rc[:, 0], Rc[:, 1]])
+        lo, hi = np.asarray(spool_parts.WRIST_BOX[0]), np.asarray(spool_parts.WRIST_BOX[1])
+        gw = _box(robot.body("right_hand"), "wcam", (hi - lo) / 2, np.asarray(cam.pos, float) + Rb @ ((lo + hi) / 2),
+                  (0.1, 0.1, 0.1, 1), quat=quat_from_mat(Rb), mu=0.4, mass=0.0)
+        gw.group = 3
         wb.add_frame(pos=[xy[0], xy[1], TABLE_Z]).attach_body(robot.body("base"), f"{side}_", "")
 
     for which, length in (("A", episode["len_a"]), ("B", episode["len_b"])):

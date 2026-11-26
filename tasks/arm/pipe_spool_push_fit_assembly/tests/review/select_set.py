@@ -8,8 +8,9 @@ The rule, fixed before any unit or candidate was drawn:
 1. Freeze. The grader's episode loop and world (tests/spool_grade.py, tests/episode.py, tests/spool_env.py,
    tests/spool_sim.py, tests/units.json, tests/grader_config.json; verify.py only stages the submission around
    spool_grade.run_episodes, which is what selection runs), the launcher and the numerics fingerprint
-   (tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json) and the reference (the solution/oracle/
-   modules, solution/solve.sh) are
+   (tests/nonet_exec.py, tests/numerics_check.py, tests/numerics.json), what the cameras draw (tests/spool_render.py,
+   spool_scene.py, spool_parts.py, spool_geom.py, spool_looks.py, spool_look.json and the render bundle's pin
+   environment/assets.sha256) and the reference (the solution/oracle/ modules, solution/solve.sh) are
    committed first: `draw` refuses to start while any of them differs from the checkout's HEAD and records their
    sha256 and the commit; `run` and `make` refuse to go on when any of them differs from the recorded hashes.
 2. Draw. `draw` takes the set's key from os.urandom(32) (hex) and writes it to the record before any candidate runs.
@@ -64,16 +65,21 @@ sys.dont_write_bytecode = True
 FORMAT = "pipe_spool_push_fit_assembly episode selection 1"
 SET_FORMAT = "pipe_spool_push_fit_assembly fixed set 1"
 N_UNITS = 12
-ORACLE_MODULES = ("spool_env.py", "spool_sim.py", "episode.py", "oracle_main.py", "reference.py", "wire_world.py")
+ORACLE_MODULES = ("spool_env.py", "spool_sim.py", "episode.py", "oracle_main.py", "reference.py", "wire_world.py",
+                  "spool_render.py", "spool_scene.py", "spool_parts.py", "spool_geom.py", "spool_looks.py", "spool_look.json")
 FROZEN = (("tests/spool_grade.py", "tests/episode.py", "tests/spool_env.py", "tests/spool_sim.py",
            "tests/units.json", "tests/grader_config.json", "tests/nonet_exec.py", "tests/numerics_check.py",
-           "tests/numerics.json")
+           "tests/numerics.json", "tests/spool_render.py", "tests/spool_scene.py", "tests/spool_parts.py", "tests/spool_geom.py",
+           "tests/spool_looks.py", "tests/spool_look.json", "environment/assets.sha256")
           + tuple("solution/oracle/" + f for f in ORACLE_MODULES) + ("solution/solve.sh",))
 PER_UNIT = 1
 WIRE_RUNS = 3
 BATCH = 2
 MAX_CANDIDATES = 12
 ENV = {"MKL_NUM_THREADS": "1", "MUJOCO_GL": "osmesa", "PYOPENGL_PLATFORM": "osmesa"}
+for _k in ("SPOOL_RENDER_DIR", "LP_NUM_THREADS", "MESA_SHADER_CACHE_DISABLE"):       # the cameras' render bundle and lavapipe's settings, when set
+    if os.environ.get(_k):
+        ENV[_k] = os.environ[_k]
 
 
 def sha256_file(path):

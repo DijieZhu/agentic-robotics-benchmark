@@ -1,0 +1,43 @@
+{
+ "format": "spool-look/1",
+ "note": "The numbers of the cameras' look (spool_render.py beside this file). The render bundle (SPOOL_RENDER_DIR) holds the hall round the bench, the worktop's colour map, the fixed cameras' body mesh and the image light's panorama; the meshes are spool_scene.py's. Fitted against path-traced pictures of the same cell in the same hall through the same five cameras.",
+ "exposure_scale": 1.0,
+ "ibl": {
+  "file": "ibl.ktx",
+  "intensity": 18732.0
+ },
+ "materials": {
+  "gain": 1.0,
+  "roughness_scale": 1.0,
+  "metallic_scale": 1.0,
+  "specular": 0.3,
+  "gain_by_look": {}
+ },
+ "filament_numeric": {
+  "filament.ao.enabled": 1,
+  "filament.bloom.enabled": 0,
+  "filament.vignette.enabled": 0,
+  "filament.shadows.type": 0
+ },
+ "filament_text": {
+  "filament.cg.tone_mapping": "filmic"
+ },
+ "render": {
+  "fxaa": false,
+  "post_processing": true,
+  "shadows": false,
+  "reflections": false,
+  "clear_color": [
+   0.02,
+   0.02,
+   0.02
+  ],
+  "supersample": 2,
+  "lavapipe_threads": 4,
+  "supersample_by_camera": {
+   "overhead": 1,
+   "front": 1,
+   "side": 1
+  }
+ }
+}

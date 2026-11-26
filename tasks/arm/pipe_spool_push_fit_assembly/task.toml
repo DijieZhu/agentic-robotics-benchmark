@@ -20,17 +20,19 @@ platform = "arm"
 cpus = 4
 memory_mb = 12288
 
-# 2 h; no trials on the hidden units (the full simulator with two practice units is in the agent's home).
+# 3 h (2 h until the cameras were drawn by Filament: a practice step with all five images takes about 1.6 times as
+# long); no trials on the hidden units (the full simulator with two practice units is in the agent's home).
 [agent]
-timeout_sec = 7200
+timeout_sec = 10800
 network_mode = "no-network"
 
 # 12 episodes (one per hidden unit), each at most 6000 control steps. The 9000 s budget (grader_config.json) is the
 # controller's own time (its replies plus 0.1 s per image asked for); the simulation and the drawing are the grader's
 # and come on top: 72000 steps at 40 ms (measured: 15-25 ms) are 2880 s, at 100 ms (a loaded host, 3 CPUs) 7200 s.
-# (7200 + 9000 + 60) x 1.35 = 21950 s.
+# An image is drawn by Filament on the CPU (spool_render.py): 0.06-0.12 s on a loaded host against its 0.1 s price,
+# so the budget's images may take 1.3 times their price: (7200 + 9000 x 1.3 + 60) x 1.35 = 25600 s.
 [verifier]
-timeout_sec = 22000
+timeout_sec = 26000
 environment_mode = "separate"
 
 [verifier.environment]
