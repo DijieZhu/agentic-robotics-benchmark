@@ -30,7 +30,15 @@ one kind of instance but sent to the other kind (an owner topic to a bidder, a b
 witness test to the Owner's staff) passes validation and is CHARGED; it is answered with the fixed
 redirect text of that instance kind (table section `redirects`).
 
-The plugin takes no options: any key in the configuration's `plugin_options` refuses the start.
+One option, `request_log` (the configuration's `plugin_options`; any other key refuses the start): an absolute path
+in the lab-only state folder. The file is opened when the plugin is made, while the worker is still root and before it
+drops its privileges, and kept open; every executed request appends one JSON line with the canonical request key
+(`request`), the instance, whether the cell, a redirect or a facility refusal answered, and the registered digest of
+the reply. Nothing of it reaches a reply. A configured log that cannot be opened refuses the start.
+
+A witness point outside the bidder's declared facility (a chamber temperature its works does not run) is a cell with
+no readings: its text is the works' fixed refusal, the same bytes in every such cell. The server charges it like any
+accepted request (validate_plan sees the plan only).
 
 At start the whole table is checked, and any failure refuses the start (a table that differs from
 the registered one never serves):
@@ -41,7 +49,8 @@ the registered one never serves):
     attachments together at most ATTACHMENT_MAX_BYTES;
   * exactly one reply per cell (248 cells) and per redirect; its text non-empty UTF-8 in NFC with
     `\\n` line ends, no trailing spaces, at most TEXT_MAX_BYTES bytes; its values finite floats, as
-    many as the test's public outputs (none for a question or a redirect);
+    many as the test's public outputs (none for a question or a redirect); a witness cell without
+    values is a facility refusal, and all refusals carry one and the same text;
   * every reply digest against the registry, and the table digest.
 """
 
@@ -49,7 +58,11 @@ import base64
 import hashlib
 import json
 import math
+import os
+import stat
 import struct
+import threading
+import time
 import unicodedata
 import zlib
 
@@ -119,7 +132,8 @@ ATTACHMENT_MAX_BYTES = 700_000  # the PNG bytes of all attachments together (so 
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 PNG_ALLOWED_CHUNKS = (b"IHDR", b"PLTE", b"IDAT", b"IEND")
 PNG_COLOUR_TYPES = (0, 2)  # 8-bit grey, 8-bit RGB
-OPTIONS = frozenset()  # the plugin has no options
+OPTIONS = frozenset({"request_log"})  # the one option: the path of the desk's own request log
+REQUEST_LOG_MAX_BYTES = 16 << 20  # the request log stops growing at this size (a request is never refused for it)
 
 MESSAGES = {
     "bad_plan_shape": 'a desk plan is {"ask": <topic>} or {"witness": <test>, <parameters>}',
@@ -328,7 +342,7 @@ def check_values(values, n):
 
 
 def expected_values(cell):
-    """How many values a cell's reply carries (0 for a question)."""
+    """How many values a cell's reply carries (0 for a question; a witness cell of a facility refusal carries 0)."""
     request = cell.split("|", 1)[1]
     if request.startswith("ask:"):
         return 0
@@ -376,18 +390,23 @@ def load_table(table):
     _need(isinstance(redirects, dict) and set(redirects) == set(REDIRECT_KINDS), "redirects differ from the contract")
     reg_keys = set(CELLS) | {"redirect." + k for k in REDIRECT_KINDS}
     _need(isinstance(registry, dict) and set(registry) == reg_keys, "the registry does not list exactly the cells and redirects")
-    used, out = set(), {}
+    used, out, refusals = set(), {}, set()
     for cell in CELLS:
         rec = cells_in[cell]
         _need(
             isinstance(rec, dict) and set(rec) == {"text", "attachment", "values"},
             "cell %s: keys differ from the contract" % cell,
         )
+        n = expected_values(cell)
         try:
             raw = check_text(rec["text"])
-            values = check_values(rec["values"], expected_values(cell))
+            refusal = n > 0 and isinstance(rec["values"], list) and rec["values"] == []
+            values = check_values(rec["values"], 0 if refusal else n)
         except TableError as exc:
             raise TableError("cell %s: %s" % (cell, exc)) from None
+        if refusal:
+            _need(rec["attachment"] is None, "cell %s: a facility refusal carries an attachment" % cell)
+            refusals.add(rec["text"])
         att = rec["attachment"]
         _need(att is None or (isinstance(att, str) and att in pngs), "cell %s: unknown attachment" % cell)
         png = pngs[att] if att is not None else b""
@@ -410,6 +429,7 @@ def load_table(table):
             "redirect %s: reply digest differs from the registry" % kind,
         )
         red[kind] = raw
+    _need(len(refusals) <= 1, "the facility refusals do not all carry the same text")
     _need(not set(pngs) - used, "unused attachments in the table")
     _need(table_digest(table) == table["table_digest"], "table digest mismatch")
     return out, red
@@ -423,6 +443,33 @@ def _frozen(data):
 
 def _number(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+class RequestLog:
+    """The desk's own request log: append-only JSON lines (0600), opened while the worker is still root and kept open
+    across the privilege drop; one line per executed request with the canonical request key. Size-capped; a failing
+    write never fails a request."""
+
+    def __init__(self, path):
+        if not isinstance(path, str) or not path.startswith("/") or "\x00" in path:
+            raise ValueError("request_log must be an absolute path")
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+        st = os.fstat(fd)
+        if not stat.S_ISREG(st.st_mode) or st.st_nlink != 1:
+            os.close(fd)
+            raise ValueError("request_log is not a plain file")
+        self.fd, self.size, self.lock, self.n = fd, st.st_size, threading.Lock(), 0
+
+    def write(self, **rec):
+        line = (json.dumps(dict({"t": round(time.time(), 3)}, **rec), sort_keys=True, separators=(",", ":")) + "\n").encode()
+        with self.lock:
+            if self.size + len(line) > REQUEST_LOG_MAX_BYTES:
+                return
+            try:
+                os.write(self.fd, line)
+                self.size += len(line)
+            except OSError:
+                pass
 
 
 class DeskPlugin:
@@ -441,6 +488,15 @@ class DeskPlugin:
         }
         self._redirects = {kind: _frozen(raw) for kind, raw in redirects.items()}
         self._empty = _frozen(b"")
+        self._digest = dict(instances["registry"])
+        self._refused = frozenset(
+            c for c, (_raw, _png, values) in cells.items() if expected_values(c) and not values
+        )
+        self._log = None
+        if "request_log" in api.options:
+            self._log = RequestLog(api.options["request_log"])  # opened now, while the worker is still root
+            self._log.write(kind="desk_start", table_digest=instances["table_digest"], cells=len(cells),
+                            refusals=len(self._refused), pid=os.getpid())
 
     def instance_ids(self):
         return list(INSTANCES)
@@ -512,8 +568,14 @@ class DeskPlugin:
         if found is None:  # a valid plan for the other kind of instance: the fixed redirect (charged)
             kind = "owner_staff" if instance in OWNER_STAFF else "bidders"
             text, png, values = self._redirects[kind], self._empty, ()
+            answer, digest = "redirect", self._digest["redirect." + kind]
         else:
             text, png, values = found
+            answer, digest = ("refusal" if cell in self._refused else "cell"), self._digest[cell]
+        if self._log is not None:
+            self._log.n += 1
+            self._log.write(kind="request", n=self._log.n, instance=instance, request=request, answer=answer,
+                            reply_digest=digest)
         return {
             "instance": instance,
             "request": request,

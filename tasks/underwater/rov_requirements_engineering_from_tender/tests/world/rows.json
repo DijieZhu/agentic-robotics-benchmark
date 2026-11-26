@@ -1,5 +1,5 @@
 {
- "note": "frozen by P19 (c1-113-c1m), superseded by the closing lane (ruling O6: lowest water temperature 5.1 degC): delta = the frozen value (= max(assumed, measured)); delta_measured and tolerance = P06 evidence.measure / tolerance_table on this world (table mode, 50 fixed seeds, the expert's ask set)",
+ "note": "version 2's world: the twelve needs' rows with their frozen deltas; tolerances from resolution propagation on the registered cell list and bottom-temperature pool",
  "policy": {
   "buoy_hi": 0.0095,
   "buoy_lo": -0.0005,
@@ -29,7 +29,7 @@
    "basis_function": "n01_trim_reachable / n01_as_delivered",
    "delta": 0.012,
    "delta_assumed": 0.012,
-   "delta_measured": 0.01,
+   "delta_measured": 0.009,
    "id": "W1",
    "kind": "world",
    "margin_unit": "kg",
@@ -72,7 +72,7 @@
    "basis_function": "n04_energy_reserve",
    "delta": 0.05,
    "delta_assumed": 0.05,
-   "delta_measured": 0.05,
+   "delta_measured": 0.04,
    "id": "W4",
    "kind": "world",
    "margin_unit": "1",
@@ -199,7 +199,7 @@
    "site_value": null
   }
  ],
- "schema": "uw-req-rows/1",
+ "schema": "uw-req-rows/2",
  "scoring": {
   "award_ramp_B_frac_of_Jstar": 0.08,
   "fail_delta_mult": 1.0,
@@ -210,11 +210,11 @@
   },
   "phi_plus_delta_mult": 2.0,
   "weights": {
-   "A": 0.15,
-   "F": 0.2,
-   "P": 0.15,
+   "A": 0.25,
+   "F": 0.25,
+   "P": 0.1,
    "Q": 0.05,
-   "V": 0.45
+   "V": 0.35
   }
  },
  "tolerance": {
@@ -228,7 +228,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-01+O-PK20": {
+  "T-01+O-11": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -238,7 +238,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-01+O-PK20+O-XL": {
+  "T-01+O-11+O-12": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -248,7 +248,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-01+O-XL": {
+  "T-01+O-12": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -261,14 +261,14 @@
   "T-02": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.06,
+   "dive_energy_reserve_frac": 0.05,
    "launch_mass_margin_kg": 0.1,
    "pitch_authority_ratio": 0.1,
    "station_thrust_ratio": 0.06,
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-02+O-PK18": {
+  "T-02+O-21": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -278,7 +278,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-02+O-PK18+O-TL150": {
+  "T-02+O-21+O-22": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -288,10 +288,10 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-02+O-TL150": {
+  "T-02+O-22": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.06,
+   "dive_energy_reserve_frac": 0.05,
    "launch_mass_margin_kg": 0.1,
    "pitch_authority_ratio": 0.1,
    "station_thrust_ratio": 0.06,
@@ -308,7 +308,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-03+O-DVL": {
+  "T-03+O-31": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -318,7 +318,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-03+O-DVL+O-L6": {
+  "T-03+O-31+O-32": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -328,7 +328,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-03+O-L6": {
+  "T-03+O-32": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -341,14 +341,14 @@
   "T-04": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.05,
+   "dive_energy_reserve_frac": 0.07,
    "launch_mass_margin_kg": 0.1,
    "pitch_authority_ratio": 0.1,
    "station_thrust_ratio": 0.06,
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-04+O-DVL": {
+  "T-04+O-41": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -358,7 +358,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-04+O-DVL+O-L6": {
+  "T-04+O-41+O-42": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -368,10 +368,10 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-04+O-L6": {
+  "T-04+O-42": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.05,
+   "dive_energy_reserve_frac": 0.07,
    "launch_mass_margin_kg": 0.1,
    "pitch_authority_ratio": 0.1,
    "station_thrust_ratio": 0.06,
@@ -381,14 +381,24 @@
   "T-05": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.05,
+   "dive_energy_reserve_frac": 0.38,
    "launch_mass_margin_kg": 0.1,
    "pitch_authority_ratio": 0.1,
    "station_thrust_ratio": 0.06,
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-05+O-PK20": {
+  "T-05+O-51": {
+   "as_tendered_net_buoyancy_n": 0.12,
+   "depth_rating_margin_m": 0.5,
+   "dive_energy_reserve_frac": 0.38,
+   "launch_mass_margin_kg": 0.1,
+   "pitch_authority_ratio": 0.1,
+   "station_thrust_ratio": 0.06,
+   "tether_reach_margin_m": 1.0,
+   "wet_temperature_margin_c": 0.2
+  },
+  "T-05+O-51+O-52": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -398,17 +408,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-05+O-PK20+O-TL200": {
-   "as_tendered_net_buoyancy_n": 0.12,
-   "depth_rating_margin_m": 0.5,
-   "dive_energy_reserve_frac": 0.05,
-   "launch_mass_margin_kg": 0.1,
-   "pitch_authority_ratio": 0.1,
-   "station_thrust_ratio": 0.06,
-   "tether_reach_margin_m": 1.0,
-   "wet_temperature_margin_c": 0.2
-  },
-  "T-05+O-TL200": {
+  "T-05+O-52": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -428,7 +428,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-06+O-L8": {
+  "T-06+O-61": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -438,7 +438,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-06+O-L8+O-PK20": {
+  "T-06+O-61+O-62": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -448,7 +448,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-06+O-PK20": {
+  "T-06+O-62": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -468,7 +468,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-07+O-DOME": {
+  "T-07+O-71": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -478,7 +478,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-07+O-DOME+O-TL200": {
+  "T-07+O-71+O-72": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -488,7 +488,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-07+O-TL200": {
+  "T-07+O-72": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -508,7 +508,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-08+O-DVL": {
+  "T-08+O-81": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -518,7 +518,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-08+O-DVL+O-XL": {
+  "T-08+O-81+O-82": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,
@@ -528,7 +528,7 @@
    "tether_reach_margin_m": 1.0,
    "wet_temperature_margin_c": 0.2
   },
-  "T-08+O-XL": {
+  "T-08+O-82": {
    "as_tendered_net_buoyancy_n": 0.12,
    "depth_rating_margin_m": 0.5,
    "dive_energy_reserve_frac": 0.05,

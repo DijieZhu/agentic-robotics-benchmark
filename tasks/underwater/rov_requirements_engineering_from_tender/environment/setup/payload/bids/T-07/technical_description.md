@@ -8,25 +8,26 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 2026-07-31 | First issue |
-| B | 2026-09-02 | Tether: thin tether of the same length |
+| A | 24 Jul 2026 | First issue |
 
 ## 2. Summary
 
-A configuration for high-grade imaging. The forward camera is an external unit behind a flat port with a very wide lens; its housing is from the catalogue camera-housing series. The tether is the thin, low-drag type.
+We inspect dams, intakes and penstocks, and this is the vehicle we would take to the job. The camera is an external unit behind a flat port with a wide lens. We chose it to take in a wide strip of the rack in a single picture.
 
-We describe the vehicle as built: section 1 records each change to this description, section 3 gives the configuration and section 6 lists the factory tests with their dates. The lens is an option of the lens table of the external camera in the catalogue. Where an as-built detail differs from a catalogue series figure, the compliance matrix states the as-built figure. Ballast is by removable pieces, with loose pieces supplied (see BOM).
+The thrusters are the TH-C type. It is a plainer unit than the TH-A and pulls less on the bench, and we declare that in the compliance matrix. We fit it because it is sturdy and cheap to replace.
+
+Ballast is by removable pieces, with loose pieces in the crate.
 
 ## 3. Configuration
 
 | Part family | As tendered |
 |---|---|
-| Thrusters | TH-A |
+| Thrusters | TH-C |
 | Electronics tube | acrylic tube |
 | Battery pack | PK-18 |
-| Forward camera | external camera behind a flat port; very wide lens, 120 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
+| Forward camera | external camera behind a flat port; wide lens, 120 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
 | Lights | 4 |
-| Tether | 3.5 mm diameter, 150 m long |
+| Tether | 6.8 mm diameter, 200 m long |
 | Ballast | removable pieces; loose pieces supplied |
 | Frame | open frame |
 
@@ -34,13 +35,13 @@ We describe the vehicle as built: section 1 records each change to this descript
 
 | Item | Value |
 |---|---|
-| Maximum forward speed | 1.7 m/s |
+| Maximum forward speed | 1.3 m/s |
 | Operating water temperature | 0 to 30 degC |
 | Factory preset of the battery current of the tendered unit (firmware limit) | 72 A |
 
 ## 5. Power budget
 
-Catalogue values of the base load and of the lights.
+Added up from the catalogue pages.
 
 | Item | Power |
 |---|---|
@@ -52,8 +53,8 @@ Catalogue values of the base load and of the lights.
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 2026-08-20 |
-| TR-2 | Bollard pull | 2026-08-21 |
-| TR-3 | Pressure test | 2026-08-19 |
-| TR-4 | Battery discharge | 2026-08-24 |
-| TR-5 | Tow test | 2026-08-21 |
+| TR-1 | Trim sheet | 13 Aug 2026 |
+| TR-2 | Bollard pull | 14 Aug 2026 |
+| TR-3 | Pressure test | 12 Aug 2026 |
+| TR-4 | Battery discharge | 17 Aug 2026 |
+| TR-5 | Tow test | 14 Aug 2026 |

@@ -7,9 +7,9 @@ artifacts = ["/home/user/submission"]
 # previous campaign's telemetry and notes), the eight bids (compliance matrices, descriptions, BOMs, prices, delivery
 # statements, scanned factory test reports), an image catalogue of datasheets and errata, and a budgeted enquiry and
 # witness desk (one alelab daemon, 14 paid requests), the agent submits an evaluation of every bid with the award and
-# site predictions, a QA label for every template clause, and the acceptance schedule for the award. The grader is
-# static and deterministic: it reads the three files as data and scores them against one fixed hidden world
-# (tests/world/). No judge, no played party, no practice checker.
+# site predictions, a QA label for every template clause, and one acceptance schedule for each bid it accepts (at most
+# 12 clauses each). The grader is static and deterministic: it reads the three files as data and scores them against
+# one fixed hidden world (tests/world/). No judge, no played party, no practice checker.
 [task]
 name = "grounded-intelligence-initiative/rov_requirements_engineering_from_tender"
 
@@ -17,11 +17,11 @@ name = "grounded-intelligence-initiative/rov_requirements_engineering_from_tende
 platform = "underwater"
 
 # The agent's sandbox: the values of the published requirements tasks (4 CPUs, 8 GB, 14 400 s, no network). The reading
-# load is 71 page images, three desk attachments, 24 CSV logs (about 3 MB) and the narrative documents; the public
-# procedure evaluates one configuration in milliseconds. The instruction prints these three numbers from this file
-# (CPUs, memory in GB, hours), so memory_mb stays a multiple of 1024 and timeout_sec a multiple of 3600. The enquiry
-# and witness desk runs inside this sandbox (environment/setup/setup.sh starts it as root and it drops to the alelab
-# account); no GPU is used.
+# load is the 154 files of the payload: 77 page images, 24 CSV logs (about 3 MB) and 53 text and code files, plus four
+# desk attachments; the public procedure evaluates one configuration in milliseconds. The instruction prints three
+# numbers from this file (CPUs, memory in GB, hours), so memory_mb stays a multiple of 1024 and timeout_sec a multiple
+# of 3600. The enquiry and witness desk runs inside this sandbox (environment/setup/setup.sh starts it as root and it
+# drops to the alelab account); no GPU is used.
 [environment]
 cpus = 4
 memory_mb = 8192
@@ -39,11 +39,13 @@ network_mode = "no-network"
 # pins every numerical library to one thread, so the verdict is a pure function of the submission and tests/.
 #
 # Its machine and limit: timeout_sec = max(600, 5 x the measured worst case). The grader recomputes the truth table
-# (32 configurations x 12 rows), the sets and the four delivery bands (132 units each) and scores at most 24 clauses
-# per band; the worst legal submission (24 clauses, every one on a new dimension of conditions, three files of exactly
-# 128 kB) took at most 0.34 s in a container of the task image limited to 2 CPUs and 4 GB, and its verify phase through
-# the engine's separate verifier (sandbox start, submission restore, stage upload) took 5.72 s (2026-11-15). 5 x 5.72 s
-# is far below 600 s, so the limit is 600 s. 2 CPUs and 4 GB leave room for the base image's desktop session; no GPU.
+# (32 configurations x 12 rows), the sets, the Part B labels and the delivery band of every fit configuration (8 bands
+# of 660 units each, at every declared tank-water density) and scores at most 12 clauses on each accepted bid's
+# schedule. The largest legal submission (12 clauses on each of the four schedules the reference reads, three files of
+# exactly 128 kB) took at most 0.36 s in a container of the task image limited to 2 CPUs and 4 GB; through the
+# engine's separate verifier its verify command (test.sh) took at most 0.68 s and its whole verify phase (sandbox
+# start, submission restore, stage upload) at most 7.27 s (2026-11-24). 5 x 7.27 s is far below 600 s, so the limit is
+# 600 s. 2 CPUs and 4 GB leave room for the base image's desktop session; no GPU.
 [verifier]
 timeout_sec = 600
 environment_mode = "separate"

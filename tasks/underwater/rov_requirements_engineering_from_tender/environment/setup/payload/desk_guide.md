@@ -72,6 +72,11 @@ values.
 A numeric parameter may be written as an integer or as a decimal of the same value: `14` and `14.0` are the same
 request. A string (`"14"`) and a boolean are not numbers.
 
+**The facility.** A bidder runs a witnessed test inside its own facility, as section 1 of its delivery statement
+declares it. A bidder does not run a test with a parameter value of the list that lies outside the range which it
+declares there. The desk accepts such a request and charges it like any other. The reply is one fixed text of the
+works, which says that the test was not run, with no readings (`values` is empty) and no attachment.
+
 **`limiter`.** `"on"` is the unit as delivered: the bench supply feeds the battery interface, and the firmware's limit
 on the battery current, which is the factory current preset, is active. `"off"`: the four horizontal thrusters run
 at full throttle with no current budget. The word has the same meaning in the facility quantities
@@ -108,11 +113,16 @@ instrument (the column "read to").
   Owner's staff, and an Owner topic addressed to a bidder, are well-formed requests. Each costs one request and is
   answered with a fixed text that points to the other side, without readings and without an attachment. The two
   texts are quoted at the end of this section.
+- **A witnessed test that a bidder does not run is charged.** A parameter value of the list that lies outside the
+  facility which the bidder declares (section 3) makes a well-formed request. It costs one request and is answered
+  with the works' fixed text, without readings and without an attachment.
 - Free: `hello`, `budget`, `close`, and every request the desk rejects (an unknown id, an unknown topic or test, a
   missing or extra parameter, a parameter value that is not on its list, a malformed request, too many
   connections).
 - When the budget is used up, a request is answered with the error `budget_exhausted`.
 - The desk keeps nothing for you. Save every text, every attached page and every reading when it arrives.
+- The desk writes every request it accepts into a log of its own, under the canonical key of the request: the
+  `request` string of section 5. You cannot read that log.
 - The desk exists only during your session. Which requests you made is not graded.
 
 The reply of a member of the Owner's staff to a bidder topic or a witnessed test:
@@ -157,10 +167,12 @@ Each command prints the desk's reply as one JSON object. For a request it is
 }
 ```
 
-where `<n>`, `<m>` and the requests left are integers. `request` is `ask:<topic>` for a question and
-`witness:<test>` followed by `:<parameter>=<value>` for each parameter of a witnessed test. The text is at most
-2000 bytes. A reply without an attachment has the `shape` `[0]`; an attached page is one PNG
-image. The reply to a witnessed test carries its readings in `values` and a short text.
+where `<n>`, `<m>` and the requests left are integers. `request` is the canonical key of the request: `ask:<topic>`
+for a question and `witness:<test>` followed by `:<parameter>=<value>` for each parameter of a witnessed test, in
+the order of the table of section 3, each value as that table lists it, the word of `limiter` without its
+quotation marks. The text is at most 2000 bytes. A reply without an attachment has the `shape`
+`[0]`; an attached page is one PNG image. The reply to a witnessed test carries its readings in `values` and a
+short text; when the bidder does not run the test (section 3), `values` is empty.
 
 From Python:
 
@@ -170,7 +182,7 @@ from labclient import LabClient, LabError
 
 def request(who, plan):
     """One request: (reply text, PNG bytes, readings, requests left); the bytes and the readings are empty when
-    there are none. Raises LabError when the desk refuses."""
+    there are none. Raises LabError when the desk answers with an error."""
     with LabClient() as desk:
         reply = desk.request({"op": "execute", "instance": who, "plan": plan})
     outcome = reply["outcome"]
@@ -194,8 +206,8 @@ Inside `with LabClient() as desk:`, `desk.hello()` returns the ids (`instances`)
 each test the values of its parameters and, under `outputs`, the position of each reading in `values`);
 `desk.budget()` returns the number of requests left. The `with` block closes the connection when it ends. At most
 2 connections can be open at the same time, and the desk closes a connection on which
-nothing was sent for 900 s; a request on a new connection costs the same as on an old one. A
-refusal raises `LabError`; its `code` is one of:
+nothing was sent for 900 s; a request on a new connection costs the same as on an old one. An
+error reply raises `LabError`; its `code` is one of:
 
 | code | meaning | charged |
 |---|---|---|

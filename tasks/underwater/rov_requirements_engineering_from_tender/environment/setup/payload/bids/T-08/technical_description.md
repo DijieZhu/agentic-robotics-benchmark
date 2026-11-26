@@ -8,18 +8,14 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 5 August 2026 | First issue |
-| B | 8 September 2026 | Protective cage for rack-contact work fitted; unit re-weighed (TR-1) |
+| A | 2026-07-22 | First issue |
+| B | 2026-08-20 | Lights: LED driver board, current production revision |
 
 ## 2. Summary
 
-This vehicle comes with more than the usual fit, and all of it is in the base price:
+The vehicle is built and tested to our standard works procedures and is kept under revision control (section 1). The type is proven in our own harbour and quay inspection work.
 
-- the large PK-22 battery pack;
-- a protective cage for work in contact with the rack;
-- ballast potted for life, with nothing to shake loose.
-
-Every factory report states the conditions of its test.
+This bid is made without deviation from Part B of TS-01 rev C.
 
 ## 3. Configuration
 
@@ -27,24 +23,24 @@ Every factory report states the conditions of its test.
 |---|---|
 | Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-22 |
+| Battery pack | NC-31 |
 | Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
 | Lights | 4 |
 | Tether | 6.8 mm diameter, 200 m long |
-| Ballast | potted in the frame for life; not removable |
-| Frame | open frame with the protective cage fitted (catalogue: guard frame) |
+| Ballast | potted in the frame to our standard works trim; not removable |
+| Frame | open frame |
 
 ## 4. Performance
 
 | Item | Value |
 |---|---|
-| Maximum forward speed | 1.4 m/s |
+| Maximum forward speed | 1.7 m/s |
 | Operating water temperature | 0 to 30 degC |
 | Factory preset of the battery current of the tendered unit (firmware limit) | 72 A |
 
 ## 5. Power budget
 
-Catalogue figures.
+In accordance with the catalogue values.
 
 | Item | Power |
 |---|---|
@@ -56,8 +52,8 @@ Catalogue figures.
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 10 September 2026 |
-| TR-2 | Bollard pull | 27 August 2026 |
-| TR-3 | Pressure test | 25 August 2026 |
-| TR-4 | Battery discharge | 28 August 2026 |
-| TR-5 | Tow test | 27 August 2026 |
+| TR-1 | Trim sheet | 2026-08-06 |
+| TR-2 | Bollard pull | 2026-08-07 |
+| TR-3 | Pressure test | 2026-08-05 |
+| TR-4 | Battery discharge | 2026-08-10 |
+| TR-5 | Tow test | 2026-08-07 |

@@ -8,40 +8,43 @@
 
 | Rev | Date | Change |
 |---|---|---|
-| A | 24 Jul 2026 | First issue |
+| A | 5 August 2026 | First issue |
+| B | 8 September 2026 | Protective cage for rack-contact work fitted; unit re-weighed (TR-1) |
 
 ## 2. Summary
 
-We inspect dams, intakes and penstocks, and this is the vehicle we would take to the job. The camera is an external unit behind a flat port with a narrow lens. We chose it for close-range pictures of rack bars.
+This vehicle comes with more than the usual fit, and all of it is in the base price:
 
-The thrusters are the TH-C type. It is a plainer unit than the TH-A and pulls less on the bench, and we declare that in the compliance matrix. We fit it because it is sturdy and cheap to replace.
+- the large PK-22 battery pack;
+- a protective cage for work in contact with the rack;
+- ballast potted for life, with nothing to shake loose.
 
-Ballast is by removable pieces, with loose pieces in the crate.
+Every factory report states the conditions of its test.
 
 ## 3. Configuration
 
 | Part family | As tendered |
 |---|---|
-| Thrusters | TH-C |
+| Thrusters | TH-A |
 | Electronics tube | acrylic tube |
-| Battery pack | PK-18 |
-| Forward camera | external camera behind a flat port; narrow lens, 60 deg horizontal field of view in air; housing from the camera-housing series (see BOM) |
+| Battery pack | PK-22 |
+| Forward camera | camera behind the dome of the electronics tube; 90 deg horizontal field of view in air |
 | Lights | 4 |
 | Tether | 6.8 mm diameter, 200 m long |
-| Ballast | removable pieces; loose pieces supplied |
-| Frame | open frame |
+| Ballast | potted in the frame for life; not removable |
+| Frame | open frame with the protective cage fitted (catalogue: guard frame) |
 
 ## 4. Performance
 
 | Item | Value |
 |---|---|
-| Maximum forward speed | 1.3 m/s |
+| Maximum forward speed | 1.4 m/s |
 | Operating water temperature | 0 to 30 degC |
 | Factory preset of the battery current of the tendered unit (firmware limit) | 72 A |
 
 ## 5. Power budget
 
-Added up from the catalogue pages.
+Catalogue figures.
 
 | Item | Power |
 |---|---|
@@ -53,8 +56,8 @@ Added up from the catalogue pages.
 
 | Report | Test | Date |
 |---|---|---|
-| TR-1 | Trim sheet | 13 Aug 2026 |
-| TR-2 | Bollard pull | 14 Aug 2026 |
-| TR-3 | Pressure test | 12 Aug 2026 |
-| TR-4 | Battery discharge | 17 Aug 2026 |
-| TR-5 | Tow test | 14 Aug 2026 |
+| TR-1 | Trim sheet | 10 September 2026 |
+| TR-2 | Bollard pull | 27 August 2026 |
+| TR-3 | Pressure test | 25 August 2026 |
+| TR-4 | Battery discharge | 28 August 2026 |
+| TR-5 | Tow test | 27 August 2026 |
