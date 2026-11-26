@@ -1,0 +1,8 @@
+{
+  "metric": "mean_episode_credit",
+  "direction": "higher",
+  "value": 1.0,
+  "full_at": 0.98,
+  "source": "Own measurement, 2026-11-25, on the fixed hidden set (tests/hidden/episodes.json: 12 episodes, one per unit, draw 3 of tests/hidden/episode_selection.json) with this build's grader: the privileged reference (solution/solve.sh, token truth) through the pinned engine (vendor/ale bfb7505), ale validate runs validate-2b1b0dbd, validate-f38cabd9, validate-e079588f, validate-dc85e32b and validate-f4f92bfe on a shared x86-64 Linux host (AMD, Docker): in each, oracle reward 1.0 and untouched 0.0, mean_episode_credit 1.0 (the oracle's verification.json), 12 of 12 episodes scored, no simulation faults, the numerics check and the render self-test passed, probe pairs 139 of 139 differing; the controller's own time 32.3-35.9 s of the 9000 s budget. At the selection every kept episode gave credit 1.0 in three runs over the real wire (855-2940 steps in the set).",
+  "note": "Measured, not drawn. The set holds only episodes on which the reference scored credit 1.0 in three runs over the real wire when it was selected (tests/hidden/episode_selection.json draw 3: 30 candidates tried, 21 kept, the first kept per unit; draw 1 was voided when the O-ring's tolerance changed, draw 2 when the parts were laid loose and the elbows stood up). full_at 0.98: the runs showed no spread; one joint missing in one episode (0.2 of one episode, 0.017 of the metric) still leaves the reference at reward 1.0 after the engine's rounding."
+}

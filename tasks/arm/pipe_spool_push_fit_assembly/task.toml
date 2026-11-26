@@ -1,0 +1,39 @@
+# Pipe spool push-fit assembly: two fixed Pandas build a small copper pipe spool in free space from two pipes and two
+# push-fit elbows, from RGB cameras and wrist force sensors. One hand holds a part while the other pushes the next part
+# home: a socket's O-ring lets a pipe in only when it comes square, then resists with the unit's insertion force up to
+# the socket's stop, and a joint counts only when it was pushed home in the air (nothing but the two hands and the
+# other spool parts touched the spool meanwhile). The spool has three joints and one geometric requirement, the twist
+# between the elbows' outlets from the work order. Each unit's fittings (insertion force, stop depth, turning torque,
+# clearance, mass) are hidden; each episode draws the pipes' lengths and places, the banded end, the elbows' places and
+# turns and the twist. The grader drives the agent's controller over a stdio wire on a fixed hidden set of 12 episodes.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/pipe_spool_push_fit_assembly"
+
+[metadata]
+platform = "arm"
+
+[environment]
+cpus = 4
+memory_mb = 12288
+
+# 2 h; no trials on the hidden units (the full simulator with two practice units is in the agent's home).
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+# 12 episodes (one per hidden unit), each at most 6000 control steps. The 9000 s budget (grader_config.json) is the
+# controller's own time (its replies plus 0.1 s per image asked for); the simulation and the drawing are the grader's
+# and come on top: 72000 steps at 40 ms (measured: 15-25 ms) are 2880 s, at 100 ms (a loaded host, 3 CPUs) 7200 s.
+# (7200 + 9000 + 60) x 1.35 = 21950 s.
+[verifier]
+timeout_sec = 22000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 12288
+gpus = 0
