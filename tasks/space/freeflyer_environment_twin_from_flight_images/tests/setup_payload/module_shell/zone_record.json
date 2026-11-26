@@ -1,0 +1,69 @@
+{
+ "content": "the maker's dated zone files: every box of its keep-out file, and those boxes of its keep-in file that contain positions of the on-board estimate of the flight (flights/flight_a/onboard_estimate.csv); its other keep-in boxes are left out",
+ "frame": "the robot's own map frame (the frame of the on-board estimate, onboard_estimate.csv), metres",
+ "box_form": "each box is [x1, y1, z1, x2, y2, z2]: two diagonally opposite corners of a box whose faces are parallel to the frame's axes",
+ "rule_as_documented": "the maker's documentation: the union of all keep-in boxes minus the union of all keep-out boxes describes the free space in which safe flight can occur",
+ "keep_out": {
+  "date_created": "2020-09-04",
+  "note": "These keepouts reflect the occupation in the module.",
+  "safe": false,
+  "boxes": [
+   [
+    12.3539,
+    -10.5727,
+    4.4233,
+    11.8722,
+    -9.633,
+    5.6942
+   ],
+   [
+    10.2721,
+    -11.9284,
+    4.0808,
+    11.5956,
+    -10.5859,
+    3.6015
+   ],
+   [
+    9.5142,
+    -10.5559,
+    5.8497,
+    9.82404,
+    -9.6458,
+    4.5099
+   ],
+   [
+    10.1819,
+    -5.335,
+    4.6383,
+    9.8428,
+    -5.7243,
+    4.06
+   ]
+  ]
+ },
+ "keep_in": {
+  "date_created": "1530672755",
+  "date_modified": "1530672755",
+  "note": "Go here.",
+  "safe": true,
+  "boxes": [
+   [
+    9.8594838,
+    -9.2364698,
+    3.7831271999999996,
+    11.995003800000001,
+    -2.7531998,
+    5.9180472
+   ],
+   [
+    9.5358938,
+    -11.6364698,
+    3.7505871999999996,
+    12.335893800000001,
+    -9.2364698,
+    5.950587199999999
+   ]
+  ]
+ }
+}

@@ -1,0 +1,172 @@
+{
+ "format": "flight-twin-grader-config/1",
+ "generated_from": {
+  "fixture": false,
+  "frame_sha256": "2341bad9d943d2319a2ae1640ce136877735935209129853b6d47e0357e9aa52",
+  "gaps_sha256": null,
+  "generator": "the task's configuration generator",
+  "table_sha256": "c464ede0f2b3ee708584474c86b4618968833c07dcdc9ef94adfff345c59cc73"
+ },
+ "layout": {
+  "estimate_csv": "flights/{flight}/onboard_estimate.csv",
+  "frames_csv": "flights/{flight}/frames.csv",
+  "givens_dir": "setup_payload",
+  "ray_table": "sensors/depth_rays.npy",
+  "reference_dir": "gt/reference",
+  "truth_dir": "gt"
+ },
+ "pending_in_table": {},
+ "runtime": {
+  "default_budget_s": 1800,
+  "late_gate_max_gap_s": 600,
+  "max_worker_s": 3600,
+  "min_worker_s": 30,
+  "ray_chunk_rows": 8,
+  "reserve_s": 30,
+  "stage_caps_s": {
+   "fit": 60,
+   "gate": 120,
+   "hazard": 120,
+   "rays": 300,
+   "scene": 120,
+   "score": 60,
+   "selftest": 600
+  },
+  "worker_account": "nobody",
+  "worker_address_space_mb": 6144,
+  "worker_margin_s": 10
+ },
+ "values": {
+  "caps.bodies_per_flight": 2000,
+  "caps.files": 5000,
+  "caps.geoms_per_flight": 2000,
+  "caps.megabytes": 64,
+  "caps.mesh_assets_per_flight": 8000,
+  "caps.mesh_faces_per_flight": 500000,
+  "caps.mesh_megabytes_per_flight": 26,
+  "caps.nesting_levels_per_flight": 400,
+  "caps.stl_faces_per_file": 200000,
+  "caps.xml_elements_per_flight": 20000,
+  "contract.megabyte_bytes": 1048576,
+  "depth.band_full_abs": 0.06,
+  "depth.band_full_rel": 0.04,
+  "depth.band_zero_factor": 3,
+  "depth.min_class_pixels_per_frame": 1500,
+  "depth.scored_range_max": 5.0,
+  "depth.scored_range_min": 0.2,
+  "depth.weight_content": 0.6,
+  "depth.weight_structure_times_content": 0.4,
+  "depth_camera.image_size": [
+   224,
+   171
+  ],
+  "depth_camera.never_returning_corner_pixels": 1304,
+  "depth_camera.ray_table_sha256": "1d8d9dbd3531e66cbc6e57bbe0eaa0dfedbf715df0e6e2b2f355ae50d22649c2",
+  "depth_camera.rays": 38304,
+  "flights.count_first_version": 1,
+  "flights.frames_given": {
+   "flight_a": 1068
+  },
+  "flights.names_neutral": [
+   "flight_a"
+  ],
+  "gate.coordinate_bound": 100,
+  "gate.mesh_cast": "convex hull (a vertex-only copy of each mesh)",
+  "gate.one_flight.angle_threshold": 15,
+  "gate.one_flight.max_iterations": 10,
+  "gate.one_flight.min_inliers": 12,
+  "gate.one_flight.position_threshold": 0.5,
+  "gate.one_flight.scale_clamp": [
+   0.8,
+   1.25
+  ],
+  "gate.one_flight.scale_min_spread": 1e-06,
+  "gate.opaque_forced": true,
+  "gate.quaternion_norm_range": [
+   0.9,
+   1.1
+  ],
+  "gate.ray_cutoff": 1000,
+  "gate.warnings_fail": false,
+  "hazard.collision_distance": 0.02,
+  "hazard.directions_azimuth": [
+   -20,
+   -15,
+   -10,
+   -5,
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "hazard.directions_elevation": [
+   -12,
+   -6,
+   0,
+   6,
+   12
+  ],
+  "hazard.inflation_offsets": 251,
+  "hazard.inflation_radius": 0.3,
+  "hazard.lengths": [
+   0.6,
+   0.8,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5
+  ],
+  "hazard.max_length": 3.5,
+  "hazard.max_range": 4.0,
+  "hazard.min_range": 0.2,
+  "hazard.move_start": [
+   0.03462969950432764,
+   -0.08609609681043709,
+   -0.11139868174201827
+  ],
+  "hazard.path_sample": 0.02,
+  "hazard.robot_radius": 0.28,
+  "hazard.stop_band_full": 0.16,
+  "hazard.stop_band_zero": 0.4,
+  "hazard.structure_floor": 0.5,
+  "hazard.voxel": 0.08,
+  "key_frames.named": false,
+  "key_frames.per_flight": 24,
+  "key_frames.time_offset_wide_minus_depth_stamp": 0.067,
+  "runtime.rays_time_limit_s": 300,
+  "runtime.scene_memory_limit_mb": 6144,
+  "runtime.scene_time_limit_s": 120,
+  "score.anchor": 1.0,
+  "score.depth_aggregation": "product",
+  "score.flight_aggregation": "product",
+  "score.full_at": 1.0,
+  "score.hazard_aggregation": "min_of_moves_and_poses",
+  "score.weight_depth": 0.5,
+  "score.weight_hazard": 0.5,
+  "two_camera_transform.quaternion_xyzw": [
+   -0.006069374726179163,
+   0.008046021087535497,
+   0.9999290115421315,
+   0.006355793535658162
+  ],
+  "two_camera_transform.translation": [
+   0.0764645596864683,
+   -0.0021427546911120254,
+   0.005471206683257068
+  ],
+  "wide_camera.body_mount_quaternion_xyzw": [
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "wide_camera.body_mount_translation": [
+   0.1177,
+   -0.0422,
+   -0.0826
+  ]
+ }
+}

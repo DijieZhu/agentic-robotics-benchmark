@@ -1,0 +1,155 @@
+{
+ "format": "flight-twin-check-config/1",
+ "what": "the public numbers that check_twin.py and twinprobe/ read: the values twin_contract.md and the sensor files print; and the sentences of twin_contract.md that state the scoring rules in force, which check_twin.py prints as they are",
+ "rules_in_force": [
+  {
+   "rule": "rule L",
+   "sentences": [
+    "The grader scores 24 moments of the flight and does not say which.",
+    "`cameras.json` declares the wide camera's pose at every given frame of the flight (1068 poses) because the grader reads the scored moments' poses from it and does not say which they are.",
+    "This is rule L: a file that lacks a given frame, holds an entry for a name that is no given frame of the flight, or writes a frame or a key twice fails rule Z2.",
+    "Every other entry is checked for form only, by the same per-entry rules as rule Z4 (an object with a `position` and a `quaternion_wxyz`): an entry without a valid pose at a moment that is not scored changes no score, and the same entry at a scored moment is rule Z4."
+   ]
+  },
+  {
+   "rule": "rule P",
+   "sentences": [
+    "J = max(0, aC + aBC - 1),  H_moves = J x (0.5 + 0.5 aBS)",
+    "The scored moments are also judged one by one (rule P): one wrong obstacle verdict at a scored moment loses that moment.",
+    "A scored moment that has at least one scored move is lost when one of its scored moves scores 0: a clear move that your twin's frame blocks within its length, a blocked move that your twin's frame finds clear over 3.5 m, a blocked move whose stop differs by 0.4 m or more, or any move of a moment that rule Z4, Z5 or Z6 zeroes.",
+    "A move with partial credit does not lose its moment.",
+    "With K the number of scored moments that have at least one scored move and K_lost the number of them that are lost:",
+    "H_poses = 1 - K_lost / K,  H = min(H_moves, H_poses)"
+   ]
+  },
+  {
+   "rule": "rule S",
+   "sentences": [
+    "D is the product of Dc and Ds (rule S):",
+    "D = Dc x Ds"
+   ]
+  },
+  {
+   "rule": "the flight's score",
+   "sentences": [
+    "The flight scores H x D."
+   ]
+  }
+ ],
+ "values": {
+  "flights.names_neutral": [
+   "flight_a"
+  ],
+  "flights.frames_given": {
+   "flight_a": 1068
+  },
+  "key_frames.named": false,
+  "key_frames.per_flight": 24,
+  "key_frames.time_offset_wide_minus_depth_stamp": 0.067,
+  "wide_camera.image_size": [
+   1280,
+   960
+  ],
+  "wide_camera.fx": 608.8073,
+  "wide_camera.fy": 607.61439,
+  "wide_camera.cx": 632.53684,
+  "wide_camera.cy": 549.08386,
+  "wide_camera.fov_coefficient_w": 0.998693,
+  "wide_camera.body_mount_translation": [
+   0.1177,
+   -0.0422,
+   -0.0826
+  ],
+  "wide_camera.body_mount_quaternion_xyzw": [
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "two_camera_transform.translation": [
+   0.0764645596864683,
+   -0.0021427546911120254,
+   0.005471206683257068
+  ],
+  "two_camera_transform.quaternion_xyzw": [
+   -0.006069374726179163,
+   0.008046021087535497,
+   0.9999290115421315,
+   0.006355793535658162
+  ],
+  "depth.scored_range_min": 0.2,
+  "depth.scored_range_max": 5.0,
+  "hazard.voxel": 0.08,
+  "hazard.min_range": 0.2,
+  "hazard.max_range": 4.0,
+  "hazard.robot_radius": 0.28,
+  "hazard.collision_distance": 0.02,
+  "hazard.inflation_radius": 0.3,
+  "hazard.inflation_offsets": 251,
+  "hazard.path_sample": 0.02,
+  "hazard.move_start": [
+   0.03462969950432764,
+   -0.08609609681043709,
+   -0.11139868174201827
+  ],
+  "hazard.directions_azimuth": [
+   -20,
+   -15,
+   -10,
+   -5,
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "hazard.directions_elevation": [
+   -12,
+   -6,
+   0,
+   6,
+   12
+  ],
+  "hazard.lengths": [
+   0.6,
+   0.8,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5
+  ],
+  "hazard.max_length": 3.5,
+  "gate.one_flight.position_threshold": 0.5,
+  "gate.one_flight.angle_threshold": 15,
+  "gate.one_flight.scale_clamp": [
+   0.8,
+   1.25
+  ],
+  "gate.one_flight.min_inliers": 12,
+  "gate.one_flight.max_iterations": 10,
+  "gate.one_flight.scale_min_spread": 1e-06,
+  "gate.quaternion_norm_range": [
+   0.9,
+   1.1
+  ],
+  "gate.coordinate_bound": 100,
+  "gate.ray_cutoff": 1000,
+  "gate.warnings_fail": false,
+  "caps.files": 5000,
+  "caps.megabytes": 64,
+  "caps.geoms_per_flight": 2000,
+  "caps.bodies_per_flight": 2000,
+  "caps.mesh_assets_per_flight": 8000,
+  "caps.xml_elements_per_flight": 20000,
+  "caps.mesh_faces_per_flight": 500000,
+  "caps.mesh_megabytes_per_flight": 26,
+  "caps.stl_faces_per_file": 200000,
+  "contract.megabyte_bytes": 1048576,
+  "caps.nesting_levels_per_flight": 400,
+  "runtime.rays_time_limit_s": 300,
+  "runtime.scene_time_limit_s": 120,
+  "runtime.scene_memory_limit_mb": 6144
+ }
+}
