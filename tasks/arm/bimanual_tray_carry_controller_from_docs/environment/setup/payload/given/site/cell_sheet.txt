@@ -1,0 +1,42 @@
+CELL SHEET
+
+Frame: the cell frame is the world frame of the maker's pedestal model (maker/openarm_mujoco/v2/pedestal/): its
+origin lies on the column axis in the plane the pedestal's base plate stands on (the mounting plane), z up, x to
+the pair's front, y towards the left arm; the base links of the two arms (openarm_left_base_link,
+openarm_right_base_link) lie 0.697 m above that plane. Gravity 9.81 m/s^2 along -z.
+
+BENCH: rigid top at z = 220.0 +-0.5 mm over x 0.12 to 0.72 m and |y| <= 0.45 m.
+
+SEATING FIXTURE F (on the bench): a plate (its top flush with the bench top) with four cups that locate the tray's feet.
+  Each cup's inner size is a foot's size with 0.5 mm of clearance per side (21.0 x 21.0 mm); its walls stand 4 mm high and are 4 mm thick; the walls are drawn without lead-in.
+  F is surveyed, +-0.3 mm per axis and +-0.05 deg; on the drawing a tray standing centred in its cups has its reference point at (0.220, 0.000, 0.280) m.
+  The tray is presented standing in its cups.
+  F is rigid and fixed in place: it neither moves nor gives measurably under a tray or under a press.
+
+RACK SHELF S: a plate 0.170 m deep (x 0.315 to 0.485 m), |y| <= 0.24 m, its top at z = 0.280 m on the drawing; a tray standing on it at its seat mark has its reference point at (0.400, 0.000, 0.340) m.
+  S is surveyed, +-2.0 mm per axis and +-0.3 deg (a shelf of a rack, not a fixture).
+  S is a plate 20 mm thick (its underside at z = 0.260 m on the drawing) with nothing between it and the bench top; no other part of the rack lies within the pair's reach. S is rigid and fixed in place: it neither moves nor gives measurably under a tray or under a press.
+
+CONTACT: the tray's feet slide on F's plate, on the faces and tops of F's cup walls and on S's top with a coefficient of friction of 1.0, static and sliding alike.
+
+TRAY REFERENCE POINT: the midpoint of the tray's two grip points (tray drawing).
+HAND: the maker's body openarm_left_ee_base_link (right: openarm_right_ee_base_link) with its two finger bodies.
+TOOL FRAME of a hand: the frame of its ee_base_link body moved, without rotation, to the hand's tool point,
+which lies at (0.000, 0.000, -0.135) m in that body's frame.
+GRIP FRAME of a neck: its origin is the neck's grip point; its y axis is the tray's y axis (the closing axis);
+its -z axis is (cos a, 0, sin a) in the tray's axes with a = -40 deg (forward and down); its x axis completes the
+right-handed frame. The tray's axes are the tray drawing's, with z up; they are parallel to the cell's when the
+tray stands in F or on S as drawn.
+CLEAR VOLUME: outside the two boxes that contain a tray standing in F and a tray standing on S, each grown by 40 mm, and above z = 0.26 m.
+READY POSE: both tool points 0.10 m above the grip points of a tray standing in F, grippers open.
+
+SUPERVISOR'S SIGNALS (in every feedback): the index of the slot last presented and the number of cycles since that presentation; both are none before the first presentation.
+The supervisor presents each tray standing in F, takes a set-down tray off S, and takes a declined tray out of F, as the shift sheet's schedule says; it moves a tray only while no gripper holds it.
+
+TRAYS: trays of the customer's band, about 0.9 to 1.6 kg, with the load placed in the seats so that the centre of the loaded tray (tray and load together) lies within 40 mm of the midpoint between the handles along their line, within 5 mm of that line fore and aft, and between 0 and 45 mm below it; heavier trays, up to about 10 kg, are sometimes offered.
+A tray with its load is one rigid body (the load does not shift in its seats), and a closed gripper holds its grip block without play, so a held tray moves and turns with the hands that hold it.
+A closing gripper completes the centring that the tray drawing states within 0.2 s of its capture.
+
+AMBIENT: the site's room lies between 20 and 30 deg C.
+
+AS DATA: the object of cell_sheet.json is handed to setup as site["cell"]. The HAND, TOOL FRAME, GRIP FRAME and CONTACT paragraphs and the sentences on the rigid and fixed rests F and S, on S's thickness, on the rigid tray and its grip and on the centring time are in this text only.

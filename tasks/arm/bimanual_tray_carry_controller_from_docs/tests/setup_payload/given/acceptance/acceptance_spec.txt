@@ -1,0 +1,68 @@
+ACCEPTANCE SPECIFICATION: CARRYING THE CUSTOMER'S TRAYS
+
+Every unit is accepted in one continuous shift at its site: the hand-over, a free interval of 8.0 s, then the trays of its shift sheet, one slot after the other. All times of a slot are in seconds from the cycle in which the supervisor presents the slot's tray standing in F.
+
+THE JOB PER TRAY
+  closing, t = 0 to 5.0: both grippers capture their necks by t = 5.0; before that the hands may be anywhere outside the tray.
+  trial lift and decision, t = 5.0 to 9.0: the tray may be raised from its cups by up to 15 mm and set back; a decline is accepted from t = 0 to t = 9.0.
+  carry, t = 9.0 to T_e = 9.0 + 2.06 n: the job's n targets, each reached by a move of 1.16 s and held for 0.9 s; the carry starts at the lifted point L, 10 mm above the seated reference point.
+  set-down, T_e to T_e + 6.0: the tray is lowered from the pre-place point (20 mm above the shelf seat's drawn reference point) onto S and both grippers open.
+  retreat, to T_e + 9.0: both hands inside the clear volume; then the supervisor takes the tray off S. The next tray is presented at T_e + 12.0.
+  A tray is carried only if the pair can carry it through its whole job without a protective stop and without a slip; otherwise it is declined inside the decision window and put back.
+  A declined tray (decline sent at t_d): seated and released in F by t_d + 4.0, its put-back deadline; hands in the clear volume by t_d + 7.0; next tray at t_d + 10.0; the tray then leaves F.
+  A missed capture (a hand has not captured its neck by t = 5.0): the job has failed; both grippers open and the hands in the clear volume by t = 12.0; next tray at t = 15.0.
+  The supervisor moves a tray only while no gripper holds it; a gripper that still holds the tray, or a hand inside the keep-out (the box of a tray standing in F or on S grown by 40 mm, the two boxes of the clear volume) at that moment is a contact.
+
+CAPTURE AND RELEASE
+  A hand has captured its neck at the first instant at which its clamp exceeds 5 N after it closed with its tool frame inside the capture box: within 8 mm along and 4 deg about each axis of the neck's grip frame. A hand has released when its clamp falls below 2 N.
+  The clamp F_c of a hand is the sum of the forces with which its two pads press the grip block; it follows the gripper module's delivered torque over the finger lever of 0.067 m.
+  Releasing a tray whose feet are more than 10 mm above a rest, or anywhere but over F or S, drops it; this holds at each hand's release, also while the other hand still holds the tray.
+
+EVENTS (each ends the unit's shift)
+  E1 module protection: a module's status leaves 'enabled' by one of its protections as the unit's registers define them: coil over-temperature at its OT_Value, driver stage at 120 deg C. A module out of enable lets its joint go (the arm has no brake).
+  E2 slip or drop: the capacity rule at either neck; or a dropped tray.
+  E3 spill: the tray's deck more than 10 deg from level at any instant between capture and release.
+  E4 contact: any contact other than a hand's pads on its grip block, the tray's feet in F's cups or on S's top, and the two fingers of one hand with each other (robot with robot, pedestal, bench, F, S or tray; tray with bench, with S's edge, with F's body).
+  E5 stop: an arm joint within 0.5 deg of an end of its range.
+  At an event the supervisor disables the pair and the shift is over: the tray in work and every later tray score 0; trays completed before keep their scores. A missed capture, a late or soft set-down, a declined tray and a press on the shelf are not events.
+
+THE CAPACITY RULE
+  At a neck let F_s be the load across the pads (the component of the force between hand and neck in the pad plane) and F_n the pull across the jaws (its component along the closing direction). The handle has slipped when F_s > mu F_c or F_n > F_c for 20 ms, mu being that hand's pad friction (0.55 or more).
+  THE CAPACITY RULE, WHEN IT IS EVALUATED. The rule is armed 0.5 s after capture. It is evaluated at every step from the arming until release, except at a step at or after T_e (the start of the set-down window) at which the shelf S carries at least 2 N of the tray. The 20 ms are consecutive steps at each of which the rule is evaluated and breached. A hand that has released and closes again has captured again by the same condition as a first capture (its clamp above 5 N with its tool frame inside the capture box); the rule at its neck is armed 0.5 s after that capture. At a neck the rule ends when the hand at that neck releases. A tray is released when the last hand that held it has released.
+  A step is 1 ms of the simulated plant; a control cycle is 4 ms.
+
+  THE END OF A SHIFT. A step that the simulated plant cannot integrate ends the shift. The tray in work is the tray of the slot in which the shift ends. An outcome decided before the end of the shift is kept: a carry tray's completion decided at T_e + 6.0 s, a decline tray DECLINED at its put-back deadline, and the first hold of a carry tray on a lap job, VISITED at the end of its scored window. Every outcome not decided by then is lost. This holds for an event, for a step the simulated plant cannot integrate and for the stop for late time.
+
+COMPLETION
+  A carry tray is completed when it was captured, carried without an event, and stands on S inside its seat frame with both grippers open (both hands released) at T_e + 6.0.
+  THE STAND. A tray stands on S inside its seat frame when each of its four feet lies inside S's seat mark grown by 10 mm, with each foot's bottom within 1 mm of S's top. S's seat mark is the outline of the four feet of a tray standing at S's seat as drawn, taken at S's true pose; a foot lies inside the seat frame when each of its bottom corners lies inside its own foot's outline grown by 10 mm along S's x and along S's y. A tray stands in F when each foot's centre lies within 0.6 mm of its cup's centre along F's x and along F's y, with its bottom within 1 mm of F's plate.
+
+THE SCORED QUANTITIES (on the true unit and the true tray; smaller is better)
+  H, hold: e_z, the distance in height between the tray's reference point and its target, and theta, the angle of the deck from level; per hold, the mean over its scored window (the last 0.4 s of each hold); H_h = L(e_z) x L(theta).
+  R, repeatability: rho_t, the largest distance between the settled positions of the reference point at a target over its arrivals (targets the job reaches at least twice), in the same windows.
+  A, absolute position: e_xy, the horizontal distance between the reference point and its target in the cell frame, in the same windows.
+  P, path: d_m, the RMS distance between the reference point and the timed straight path over a move (the straight line between the two targets, its length run by a trapezoid of equal thirds in time); P_m = L(d_m) x progress_m, progress_m the travel projected on the move, clipped to [0, 1].
+  L(x) = 1 for x at or below the full end, 0 at or above the zero end, linear between. Each term is the mean of its rows over the tray's job.
+  Band ends: none (no quantity is kept).
+  Kept terms: none of H, R, A and P, so Q = 1; the press is not kept (place = 1). Q = 0.30 H + 0.25 R + 0.25 A + 0.20 P over the kept terms, the weights divided by their sum (Q = 1 if none is kept).
+
+  THE JOB FOLLOWED. V is the share of the job's holds that are VISITED. The holds of a job are numbered k = 0 to n - 1 in the job's order. p_k is the mean position of the tray's reference point over the scored window of hold k (the last 0.4 s), and t_k is the target of hold k. p_(-1) is the tray's reference point in the record of the last step before the carry's first cycle (the state at t = 9.0 s), one reading, not a window mean, and t_(-1) is the lifted point L, the point 10 mm above the reference point of a tray standing centred in its cups at F's true pose. Hold k is VISITED when the 3-D distance |p_k - t_k| is at most 0.020 m and |(p_k - p_(k-1)) - (t_k - t_(k-1))| is at most 0.020 m. A hold whose scored window has not ended when the shift ends is not VISITED. A hold whose scored window does not end before the next tray's presentation, or that lies after the supervisor has taken its tray out of F, is not VISITED. V = the number of VISITED holds / n. tray = completed x V x Q x place.
+
+  THE SET-DOWN. place = 1. The landing speed, what the shelf carries when the first gripper lets go and the tray's place on the shelf are reported.
+
+  THE DECLINES. A tray counts as DECLINED only if both hands captured it in that slot before the decline was sent and it then stands released in the fixture F at its put-back deadline, its four feet on F's plate inside their cups. A slot whose capture was missed (a hand had not captured its neck at t = 5.0 and no decline had been sent before t = 5.0) follows the missed capture's schedule: a decline flag sent in it after t = 5.0 is ignored, and its tray is not DECLINED. TPR = DECLINED decline trays / decline trays. FPR = the share of the unit's carry trays on lap jobs that count against the controller; such a tray counts against the controller unless the first hold of its job is VISITED, whether or not a decline was sent, also when the shift ends before that tray is presented. J = max(0, TPR - FPR).
+
+THE SCORE
+  A carry tray that is declined, missed at capture, cut by an event or never reached scores 0 and stays in the mean.
+  unit = 0.85 x (the mean over the unit's carry trays of tray) + 0.15 x J.
+  score = min(1, gates x (the mean over the units of unit) / anchor), anchor = 1.0000.
+
+GATES
+  The controller imports and is built within 60 s of wall time, and setup returns a valid mode choice inside its budget (60 s CPU, 120 s wall) on every unit; the submission's size cap; the static import audit; at least one call answered; at least 90 per cent of each unit's cycles on time; no write after the lock; no process left behind. Without every gate the score is 0.
+  The size cap: the folder submission/controller/ holds at most 80 MB of files (a MB of 2^20 bytes).
+  The static import audit reads every .py file of that folder (without running it). It refuses a file that imports one of the modules socket, _socket, ssl, _ssl, urllib, urllib2, urllib3, http, httplib, requests, httpx, aiohttp, ftplib, smtplib, imaplib, poplib, nntplib, telnetlib, websocket, websockets, paramiko, pycurl, xmlrpc, asyncio, socketserver, grpc, zmq, huggingface_hub, boto3, botocore, wget, ctypes, _ctypes, cffi, selectors, multiprocessing.connection, multiprocessing.managers, logging.handlers, subprocess, pty or _posixsubprocess (or a module inside one of them); that calls __import__, import_module or find_spec with an argument that is not a literal string, or names one of those modules in a literal argument of __import__, import_module, find_spec, spec_from_file_location or load_module; that calls exec, eval or compile with an argument that is not a literal string; or that calls system, popen, execv, execve, execvp, execvpe, execl, execle, execlp, execlpe, spawnv, spawnve, spawnvp, spawnvpe, spawnl, spawnle, spawnlp, spawnlpe, posix_spawn, posix_spawnp or fork_exec (as os.<name> or by the bare name), which start another program.
+  The lock is taken when grading starts, before any controller runs: every process of the agent's account is stopped and the submission is copied. An entry of submission/ created or changed after that moment fails the gate of no write after the lock. No process left behind: no process that a controller started still runs when its unit's run has ended.
+  A unit whose late time exceeds 10 per cent of its planned shift is stopped there; its remaining trays score 0.
+
+REPORTED, NOT SCORED
+  Per tray: the internal force between the hands, the largest grasp load as a share of the capacity, the moments at the necks, the grip torque by phase, the torque of each wrist's J6, every module's winding and reported temperatures with the smallest margin to a protection, the peak-to-peak motion of the reference point in each hold window, the largest tilt in the moves, the landing speed, the tray's place on the shelf, late cycles. Per unit: the kind and time of an event.

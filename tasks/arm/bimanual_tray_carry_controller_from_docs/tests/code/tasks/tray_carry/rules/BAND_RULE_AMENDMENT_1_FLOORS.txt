@@ -1,0 +1,72 @@
+STAGE 05 (OpenArm pair, tray-carry controller): THE BAND RULE, AMENDMENT 1: THE FLOORS
+Plain text of rules/band_rule_amendment_1_floors.json; the two say the same. Written before any
+number of the built task exists; committed after an independent recomputation. The committed rules/band_rule.json and rules/BAND_RULE.txt are not edited; for the
+floors of e_z, theta, e_xy and d_m this amendment holds. No number of any built unit, shift, tray or submission appears
+here.
+
+1. RULE
+   floor_x = max(the committed floor of x, T_x). T_x = the 90th percentile (nearest rank: the value of rank ceil(0.9 n)) of |x| at the tray's reference point, pooled over every (draw, target) or (draw, move) pair, on the nominal model, for targets commanded as displacements from the module angles read at the end of the seating with F taken at its drawn pose, when the tolerances that reach x and that no frame shows are drawn uniformly inside their printed ranges in one draw. The full end stays as committed: F_x = max(floor_x, 1.25 x the 90th percentile of x over the privileged reference's rows on the three true units, pooled).
+
+2. TOLERANCES (uniform inside the printed range, all drawn in one draw)
+   F's survey: +-0.3 mm per axis, +-0.05 deg about each axis (F's frame: origin on the bench top under F's reference point); enters: e_z, theta, e_xy, d_m
+   the cups' play: +-0.5 mm per horizontal axis of F (nothing prints a centring of a presented tray); enters: e_xy, d_m
+   the zero residual: +-0.4 deg per arm joint, 14 joints; enters: e_z, theta, d_m
+   the mounting of the right arm against the left: +-0.5 mm per axis, +-0.15 deg about each axis; enters: e_z, theta, d_m
+   the tray drawing's fit note: along the closing axis +-1.0 mm, the two tilts +-0.5 deg; along the pad faces and about the closing axis the pads hold where they closed (anywhere inside the capture box, +-8 mm, +-4 deg); enters: none (contributes nothing on this route (fit_note below))
+
+3. THE ROUTE (fixed before any value was computed)
+   a controller reads every arm module's angle at the end of the seating (the read angle = the joint angle less the zero residual), takes the hand's pose to be the nominal model's forward kinematics of those angles and the tray to be at F's drawn seated pose (0.220, 0, 0.280); a target t is commanded as the pure translation t - (0.220, 0, 0.280) of that believed hand pose through the nominal inverse kinematics at the target's elbow swivel; the joint reaches the commanded angle plus the residual (a static offset: no load, friction or dynamics); the true hand is the nominal model with the true mounting.
+   This reading, the pooled percentile and the lap's 140 moves were confirmed before any value was computed.
+   First order: F's survey: t_F + a_F x (0, 0, 0.060 m) and a tilt (a_x, a_y); the cups' play: (c_x, c_y, 0); the zero residual: each hand's twist error (J(q_t) - J(q_F)) delta at its tool point; the mounting: the right hand's displacement rotated, w_m x (t - p_F) (its translation cancels); the fit note: nothing.
+   Not the route: the joint-space reading (the read angles plus the plan's joint displacement, as the mutant M-geom-d is built) is recorded for information under 'information_joint_space_reading': on it the fit note does reach the scored point.
+
+4. HOW EACH QUANTITY TAKES A STATIC OFFSET
+   e_z: at a hold: the vertical part of the reference point's offset at that target (the reference point = the midpoint of the two grip points).
+   e_xy: at a hold: the horizontal part of the same offset.
+   theta: at a hold: the deck's tilt at that target: tilt_x = (z_left - z_right) / 0.360 m of the grip points, tilt_y = the mean of the two grip frames' rotations about the handle line (world y), theta = sqrt(tilt_x^2 + tilt_y^2) (the committed step floor's definition).
+   d_m: of a move: the root mean square, over its 1160 samples (1 ms steps, the record of step j at (j + 1) ms, path length by the trapezoid of equal thirds over 1.16 s, as the grader's path rows), of the distance between the offset path and zero, the offset at each sample given by the first-order map of section 3 evaluated at that sample's planned joint angles (IK at knots every 10 mm or less, a cubic spline in the path parameter, the swivel linear from the start's to the end's); the first move starts at the grader's L, the reference point of a tray seated at F's true pose (no cups' play) + 10 mm, so its reference carries (1 - s) times the part of the seated tray's offset due to F's survey. The linear interpolation of the two ends' offsets is NOT used: it differs by up to 0.357 mm.
+   rho: takes none: a difference of two settled poses of one target, in which a static offset cancels.
+   Targets: the 6 x 5 x 3 grid of the box (x 0.20 to 0.40 m, y -0.08 to 0.08 m, z 0.36 to 0.42 m) and the three fixed targets (0.22, 0, 0.38), (0.36, 0, 0.40), (0.40, 0, 0.36): the committed floors' set (93); each target at the swivel the job generator stores (ref/shift.solve_target): {"45.0": 87, "54.0": 6}; the seat at F at 45.0 deg.
+   Moves: the lap's list on the nominal model (ref/shift.lap_targets): the move from L to the fixed first target and the moves between the lap's targets, one per target as the grader counts them (140, 0.0447 to 0.2631 m); each move ending at its target's solve_target swivel (the generator's planned lap, minimal.plan_moves, ends 3 of the 140 at another swivel, 60, 60 and 54 deg; second order).
+
+5. THE FLOORS
+   e_z: committed 0.12 mm; T = 0.7344 mm; FLOOR 0.7344 mm (binds: T_x).
+      Derivation: the 90th percentile (nearest rank) of the vertical offset of the tray reference point over 93 targets x 10,000 draws of F's survey (+-0.3 mm, +-0.05 deg), the zero residual (+-0.4 deg, 14 joints) and the mounting (+-0.5 mm, +-0.15 deg) in one draw, targets commanded as displacements from the angles read at the end of the seating, F at its drawn pose, nominal model: 0.7344 mm (F's survey alone 0.270, the residual and the mounting alone 0.686).
+   theta: committed 0.047 deg; T = 0.2397 deg; FLOOR 0.2397 deg (binds: T_x).
+      Derivation: the 90th percentile of the deck's tilt (the grip points' vertical difference over 0.360 m and the grip frames' mean rotation about the handle line, root-sum-square) over the same targets and draws, the same tolerances: 0.2397 deg (F's survey alone 0.0557, the residual and the mounting alone 0.2328).
+   e_xy: committed 0.33 mm; T = 0.6983 mm; FLOOR 0.6983 mm (binds: T_x).
+      Derivation: the 90th percentile of the horizontal offset over the same targets and draws, F's survey and the cups' play (+-0.5 mm per horizontal axis) only (the residual and the mounting are this quantity's owner): 0.6983 mm (F's survey alone 0.342: the committed 0.33 with F's rotation about its frame at the 0.060 m lever).
+   d_m: committed 0.2 mm; T = 1.3396 mm; FLOOR 1.3396 mm (binds: T_x).
+      Derivation: the 90th percentile over the lap's 140 moves x 10,000 draws of the RMS over each move's 1160 samples of the offset path (the linear map at each sample's planned joint angles), every tolerance above: 1.3396 mm (F's survey alone 0.398).
+   Kept: rho 0.28 mm (a difference: no static offset reaches it); v_c 1.0 mm/s (the working floor: no printed tolerance gives a speed); P_r 0.5 N (the working floor: no printed tolerance gives a force); d_s [2.0, 0.3] mm; deg (as committed).
+
+6. THE FIT NOTE
+   first order: the seat is the hand's pose on its neck and lies inside the angles read at the end of the seating; a pure translation D of the hand carries the neck with it exactly, grip = (D hand) o seat^-1 = D (hand o seat^-1), so the seat adds nothing to any of the four quantities.
+   Check: exact route, 200 draws (seed 20261123) of every tolerance, 93 targets and 28 move midpoints, the same draws with and without a seat per hand drawn as the fit note prints it (along the closing axis +-1.0 mm, the two tilts +-0.5 deg; along the faces and about the closing axis anywhere inside the capture box, +-8 mm and +-4 deg): the largest change 0.152 mm and 0.031 deg (a cross term with the residual, second order; 0 to the inverse kinematics' tolerance without the residual and the mounting); the 90th percentiles with every tolerance on: e_z 0.7274 / 0.7265 mm, theta 0.2536 / 0.2539 deg (without / with the seats).
+   Without the residual and the mounting: 20 of the same draws with the residual and the mounting set to 0: the largest change 6.0e-07 mm and 1.5e-07 deg (the inverse kinematics' tolerance).
+   Recorded: contributes nothing (0) to e_z, theta, e_xy and d_m on this route.
+
+7. COMPUTATION
+   The maintainers' floors program (sha256 a731b7956756dbc678d003836af44386d39b9521525120dfc90abea122f8175a; not shipped) computed the values.
+   Seed 20261122, 10,000 draws: numpy.random.default_rng(seed).uniform(-1, 1, (n_draws, 28)) x half ranges; draws sha256 22de6339f0aeeb42698c5916da9aa3800c06cb9b655371270da26b0d167bf612; values sha256 76d130b72e04532015e27d70574bdb891546539d3c3c775e0d760ab7347f23da. Model: the maker's nominal model as vendored by the shared unit (ref/shift.Kin: base.unit_model with the file's base poses and stops); ref/shift.py read only.
+   The four T are the values of the first-order map of section 3; an independent recomputation by the exact route gave them within 1.5 %.
+   Linear map against the exact route: 200 draws (seed 20261123) x (93 targets + 28 move midpoints): largest difference 0.049 mm in position, 0.0139 deg in tilt; the 90th percentiles with every tolerance on, exact / linear: e_z 0.7274 / 0.7285 mm, theta 0.2536 / 0.2532 deg.
+
+8. COMPARISON WITH THE READER'S FIGURES (an independent reader's figures and their checks, quoted)
+   F_survey_alone.e_xy_p90_mm: reader 0.343, here 0.3421 (-0.3 %): within 5 %
+   F_survey_alone.e_z_p90_mm: reader 0.27, here 0.2696 (-0.2 %): within 5 %
+   F_survey_alone.tilt_p90_deg: reader 0.056, here 0.0557 (-0.6 %): within 5 %
+   F_survey_alone.offset_3d_p90_mm: reader 0.398, here 0.3984 (+0.1 %): within 5 %
+   residual_and_mounting_alone.e_z_p90_mm: reader 0.176, here 0.6864 (+290.0 %): Above 5 %: a different route, not an error in this one: the reader's code reads the joint-space route with the seated joint angles taken as the IK of the mounted model onto the drawn grip frames at swivel 45 deg, the same for every residual, and commands them plus the nominal joint displacement, so the residual it draws cancels exactly ("+ delta cancels in the difference", its own comment) and its figures are the mounting alone on a joint-space displacement (F at its drawing, the 90 grid targets at swivel 45 deg, numpy's interpolated percentile) (here, on that reading, the mounting alone gives e_z 0.169 mm: information section). On this amendment's route the residual enters fully: the controller believes the hand at FK_nom(read angles) and displaces that belief through the nominal IK, so each hand ends off by (J(q_t) - J(q_F)) delta, first order in the residual times the change of configuration from the seat to the target (components: residual_alone, mounting_alone). Even on the joint-space reading a seating that follows the servo's compliance leaves the residual's null-space part in the arm: the residual alone gives e_z 0.277 mm there (information section). Earlier independent figures for this route (0.4 deg, with the datum: horizontal p50 0.57 / p90 1.08 mm, height p90 0.72 mm, 27 targets, 500 units) agree with this amendment's (0.544 / 1.040, 0.686) within 5 %.
+   residual_and_mounting_alone.e_xy_p90_mm: reader 0.379, here 1.0404 (+174.5 %): Above 5 %: the same cause (see residual_and_mounting_alone.e_z_p90_mm).
+   residual_and_mounting_alone.tilt_p90_deg: reader 0.067, here 0.2328 (+247.5 %): Above 5 %: the same cause (see residual_and_mounting_alone.e_z_p90_mm).
+   F_survey_residual_mounting.e_z_p90_mm: reader 0.328, here 0.7344 (+123.9 %): Above 5 %: the same cause (the residual; see residual_and_mounting_alone.e_z_p90_mm).
+   F_survey_and_cups.e_xy_p90_mm: reader 0.701, here 0.6983 (-0.4 %): within 5 %
+
+9. INFORMATION ONLY: THE JOINT-SPACE READING (not the route of the floors)
+   Model of the seating: the joint change of least servo energy (weights 1 / kp, the reference's gains) from the approach's rest to the grip frame, with six axes pinned; 'with the fit note' = a seat drawn inside +-1.0 mm and +-0.5 deg on all six axes.
+   e_z: p90 0.4450 without the fit note, 0.6390 with it (mm).
+   theta: p90 0.1447 without the fit note, 0.2310 with it (deg).
+   e_xy: p90 0.6340 without the fit note, 0.9673 with it (mm).
+   The fit note alone on that reading: e_z 0.467 mm, e_xy 0.745 mm, tilt 0.1822 deg (p90).
+   Quoted from the independent reader: With the seat as the fit note prints it (three axes located, the other three held where the approach left them) an independent reader computed, every tolerance on, e_z 0.7236 mm, theta 0.2426 deg, e_xy 1.1922 mm, against 0.7245 mm, 0.2398 deg and 1.2583 mm on this file's route by the same reader's code.

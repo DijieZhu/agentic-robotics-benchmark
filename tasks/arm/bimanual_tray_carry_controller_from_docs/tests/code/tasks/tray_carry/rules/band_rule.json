@@ -1,0 +1,291 @@
+{
+ "format": "openarm05-band-rule/1",
+ "task": "bimanual_tray_carry_controller_from_docs",
+ "status": "pre-registered: written before any number of the built task exists; committed by the maintainers",
+ "no_built_numbers": "No number of any built unit, shift, tray or submission appears in this file. The floors' figures are tolerances or one field step at the observable, computed on the maker's nominal model.",
+ "authority": [
+  "",
+  "",
+  "the committed pre-check; its consequences are quoted under 'precheck_consequences'"
+ ],
+ "credit": {
+  "formula": "L(x) = 1 if x <= F; 0 if x >= Z; (Z - x) / (Z - F) in between (linear, as #88)",
+  "symbols": {
+   "x": "the quantity in one row (smaller is better)",
+   "F": "the full end",
+   "Z": "the zero end"
+  },
+  "source": ""
+ },
+ "full_end": {
+  "rule": "F_x = max(floor_x, 1.25 x the 90th percentile of x over the privileged reference's rows on the three true units)",
+  "reference_factor": 1.25,
+  "percentile": 90,
+  "rows": "the privileged reference's rows of the quantity on the three frozen units, pooled",
+  "source": "",
+  "floor_rule": "a floor is what a printed tolerance or a field's resolution produces at the scored point, with one line of derivation; it is never a measurement of what the agent's material allows. A floor that no printed tolerance or field resolution gives is listed under 'floors_without_derivation' and goes back to the maintainers; it is not invented."
+ },
+ "zero_end": {
+  "rule": "Z_x = the median of x over the rows of the reference with the owning factor's ONE belief set to the documents' value, on the three true units",
+  "recorded_also_at": [
+   0.25,
+   0.5,
+   2.0
+  ],
+  "recorded_also_at_meaning": "the medians with that belief's error (documents' value minus truth) scaled by these factors; recorded beside Z, never used as an end",
+  "source": ""
+ },
+ "three_x_rule": {
+  "ratio": 3.0,
+  "rule": "a quantity whose Z_x is below 3 F_x is merged into another quantity of the same owner or reported only",
+  "merged": "its credit factor is dropped from its term and the term is computed from the owner's remaining quantity (H keeps the other of e_z and theta; place keeps the remaining of v_c, P_r, d_s)",
+  "reported": "a term left with no scored quantity is reported only; its weight goes to the remaining terms of Q in proportion (renormalised); a place term with no quantity left leaves the product: tray = completed x Q",
+  "decided": "once, on the frozen set, by this rule; never by looking at a model's episode",
+  "source": ""
+ },
+ "structure": {
+  "Q": "Q_i = 0.30 H + 0.25 R + 0.25 A + 0.20 P (each term the mean of its rows over tray i's job)",
+  "H_row": "H_h = L(e_z) x L(theta), one row per hold",
+  "P_row": "P_m = L(d_m) x progress_m, progress_m = the travel projected on the move, clipped to [0, 1]; one row per move",
+  "place": "place_i = L(v_c) x L(P_r) (x L(d_s) only if d_s passes the 3x rule)",
+  "tray": "tray_i = completed_i x Q_i x (0.5 + 0.5 x place_i)",
+  "completed": "completed_i = 1 iff captured, carried without an event, standing on S inside its seat frame (the seat mark grown by 10 mm on the true shelf, all four feet) with both grippers open at T_e + 6.0",
+  "unit": "unit_u = 0.85 x the mean over the unit's CARRY trays of tray_i + 0.15 x J_u",
+  "carry_tray_zero": "a carry tray that is declined, missed at capture, cut by an event or never reached has tray_i = 0 and stays in the mean",
+  "raw": "raw = gates x the mean over the three units of unit_u",
+  "reward": "reward = min(1, raw / anchor), anchor = the privileged reference's raw score on the frozen set (tests/anchor.json)",
+  "J": "J_u = max(0, TPR - FPR); TPR = declined decline trays / decline trays of the unit; FPR = declined carry trays / carry trays of the unit; a tray counts as declined only if it stands released in F at its put-back deadline; a tray never reached counts as not declined",
+  "source": ""
+ },
+ "weights_of_record": {
+  "Q": {
+   "H": 0.3,
+   "R": 0.25,
+   "A": 0.25,
+   "P": 0.2
+  },
+  "unit": {
+   "carry_trays": 0.85,
+   "J": 0.15
+  },
+  "tray_place": {
+   "base": 0.5,
+   "place": 0.5
+  },
+  "source": "the Q weights; J at 0.15; 0.5 + 0.5 x place"
+ },
+ "renormalisation": "when a term leaves Q (3x rule, or a pre-check line), the remaining Q weights are divided by their sum; the unit's 0.85 / 0.15 and the tray's 0.5 / 0.5 are not renormalised except as 'precheck_consequences' says (J at 0.10 if line a1 fails: then 0.90 / 0.10)",
+ "terms": {
+  "H": {
+   "name": "hold: height and tilt",
+   "owner": "the load is in no model (mass and centre)",
+   "mutant": "M-load: the reference feeding forward the middle of the printed band (1.25 kg) with its centre midway",
+   "window": "the mean over the last 0.4 s of each 0.9 s hold",
+   "quantities": {
+    "e_z": {
+     "what": "distance in height between the tray reference point and its target",
+     "unit": "mm",
+     "floor": {
+      "value": 0.12,
+      "unit": "mm",
+      "derivation": "one position step (25 / 65535 rad = 0.021857 deg) at each of the fourteen arm joints through the nominal kinematics, the vertical shift of the tray reference point (the midpoint of the two tool points), root-sum-square: median 0.1219 mm (0.099 to 0.138 over the box)",
+      "status": "derived by one position step through the kinematics"
+     }
+    },
+    "theta": {
+     "what": "angle of the deck from level",
+     "unit": "deg",
+     "floor": {
+      "value": 0.047,
+      "unit": "deg",
+      "derivation": "one position step at each of the fourteen arm joints: the two grip points' vertical difference over 0.360 m and the mean of the two hands' rotations about the handle line, root-sum-square: median 0.0466 deg (0.041 to 0.051)",
+      "status": "derived by one position step through the kinematics"
+     }
+    }
+   }
+  },
+  "R": {
+   "name": "repeatability",
+   "owner": "joint friction (level by direction, holding band, the profile along the travel)",
+   "mutant": "M-fric: the reference with the model file's joint table (frictionloss 0.2 / 0.1 / 0.04, damping 1.0 / 0.9 / 0.9) as its friction belief",
+   "window": "the hold windows of the targets visited at least twice from directions at least 60 deg apart",
+   "quantities": {
+    "rho_t": {
+     "what": "the largest distance between the settled positions of the reference point at a target over its visits",
+     "unit": "mm",
+     "floor": {
+      "value": 0.28,
+      "unit": "mm",
+      "derivation": "two settled poses, each with one position step at each of the fourteen arm joints: sqrt(2) x 0.2009 mm (the 3-D shift of the reference point per step, root-sum-square, median over the box) = 0.284 mm",
+      "status": "derived by one position step through the kinematics, in the two-pose form"
+     }
+    }
+   }
+  },
+  "A": {
+   "name": "absolute position",
+   "owner": "what neither arm can sense: zero residual and mounting, against the site's datum",
+   "mutant": "M-geom: the reference believing zeros of 0 and the drawn mounting, placing the tray by the nominal kinematics (the capture in F not used)",
+   "window": "the hold windows",
+   "quantities": {
+    "e_xy": {
+     "what": "horizontal distance between the reference point and its target in the cell frame",
+     "unit": "mm",
+     "floor": {
+      "value": 0.33,
+      "unit": "mm",
+      "derivation": "the 90th percentile of the horizontal error that F's printed survey tolerance (+-0.3 mm per axis, uniform) leaves at the tray reference point: 0.33 mm",
+      "status": "the committed pre-check line (d) (F_A floor)",
+      "note": "the seat cancels for targets commanded as displacements from the end of the seating, so the fit note adds nothing at the scored point; one position step gives 0.16 mm horizontally (below this floor)"
+     }
+    }
+   }
+  },
+  "P": {
+   "name": "path",
+   "owner": "joint friction",
+   "mutant": "M-fric",
+   "window": "each 1.16 s move",
+   "quantities": {
+    "d_m": {
+     "what": "RMS distance between the reference point and the timed straight reference over a move",
+     "unit": "mm",
+     "floor": {
+      "value": 0.2,
+      "unit": "mm",
+      "derivation": "one position step at each of the fourteen arm joints, the 3-D shift of the reference point, root-sum-square: median 0.2009 mm (0.168 to 0.230)",
+      "status": "derived by one position step through the kinematics"
+     }
+    }
+   },
+   "split_rule": "split only if the pre-check's report shows the damping half of M-fric moving the path term by 0.1 alone"
+  },
+  "place": {
+   "name": "the set-down",
+   "owner": "setting down by feel: S is within its survey tolerance of the drawing",
+   "mutant": "M-shelf: the reference taking S at its drawn pose, lowering at 8 mm/s to the drawn height and letting go",
+   "window": "the set-down window (T_e to T_e + 6.0 s)",
+   "quantities": {
+    "v_c": {
+     "what": "the tray's downward speed when its first foot meets S",
+     "unit": "mm/s",
+     "floor": {
+      "value": 1.0,
+      "unit": "mm/s",
+      "derivation": "working value, ours, the committed pre-check's planning floor: one eighth of the reference's own lowering speed of 8 mm/s, so it is not expected to bind (the full end is 1.25 x the reference's 90th percentile)",
+      "status": "not a derivation from a printed figure, said so"
+     }
+    },
+    "P_r": {
+     "what": "the difference between what S carries and the tray's weight at the cycle in which the first gripper lets go (the weight if let go in the air; the push if the hands still press)",
+     "unit": "N",
+     "floor": {
+      "value": 0.5,
+      "unit": "N",
+      "derivation": "working value, ours, the committed pre-check's planning floor: about three times what one step of the reply's torque field at the proximal joints of both arms produces at the tray (0.15 N by the maintainers' arithmetic: 0.02637 N m over about 0.3 m at J1 and 0.01368 N m over about 0.25 m at J4, both arms, root-sum-square)",
+      "status": "not a derivation from a printed figure, said so; the audit never lifts it"
+     }
+    },
+    "d_s": {
+     "what": "horizontal distance and yaw of the standing tray from S's true seat mark",
+     "unit": "mm; deg",
+     "expected": "fails the 3x rule (its only source is S's survey offset in its own plane, which nothing on the wire shows): reported",
+     "floor": {
+      "value": 2.0,
+      "unit": "mm; deg",
+      "value_deg": 0.3,
+      "derivation": "the shelf's printed survey tolerance (2.0 mm, 0.3 deg): nothing on the wire shows S's place in its own plane, so by construction this quantity cannot pass the 3x rule and is reported",
+      "status": "fixed before any number of the built task existed"
+     }
+    }
+   }
+  }
+ },
+ "not_band_terms": {
+  "completed": "the chain: layer 1 (two arms closed through one rigid tray: grasp load, slip) and layer 2 (the gripper and the wrist are motors with a rating: protections); M-int and M-grip are the chain's event mutants",
+  "J": "layer 2; the dummies 'never decline' and 'decline all'"
+ },
+ "floors_without_derivation": [],
+ "events": {
+  "rule": "an event ends the unit's shift: the supervisor disables the pair; the tray in work and every later tray score 0; trays completed before keep their scores",
+  "E1": "module protection: a module's status leaves 'enabled' by one of its protections as this unit's registers define them: coil over-temperature at its OT_Value, driver stage at 120 deg C; TIMEOUT 0 in every record (no time-out)",
+  "E2": "slip or drop: at a neck, F_s > mu x F_c or F_n > F_c for 20 ms, armed 0.5 s after capture until release; or a dropped tray (released with its feet more than 10 mm above a rest, or anywhere but over F or S)",
+  "E3": "spill: the deck more than 10 deg from level at any instant between capture and release",
+  "E4": "contact: any contact other than a hand's pads on its grip block, the tray's feet in F's cups or on S's top, and the two fingers of one hand with each other",
+  "E5": "stop: an arm joint within 0.5 deg of an end of its range",
+  "not_events": [
+   "a missed capture (that job fails)",
+   "a late or soft set-down (that tray is not completed)",
+   "a declined tray",
+   "a press on the shelf"
+  ]
+ },
+ "gates": {
+  "list": [
+   "the controller imports and setup returns a valid mode choice inside its budget on every unit",
+   "the size cap",
+   "the static import audit",
+   "at least one call answered",
+   "at least 90 % of each unit's cycles on time",
+   "no write after the lock",
+   "no process left behind"
+  ],
+  "late_time_stop": "a unit whose late time exceeds 10 % of its planned shift is stopped there (its remaining trays score 0)",
+  "source": ""
+ },
+ "precheck_consequences": {
+  "source": "the committed pre-check's rule, quoted; the rule file holds where the two differ",
+  "a": {
+   "a1_fails": "an over-grip is not an event inside a shift; layer 2 leaves the scored chain (protections stay events; J goes to a weight of 0.10 and decline trays are kept only where a joint's holding torque exceeds its module's peak)",
+   "a2_fails": "the shift cannot be carried with margin on the documented worst case; the maintainers shorten the lap or narrow the centre region BEFORE anything is built, and the line is run again (no change of the score's form)"
+  },
+  "b": "layer 1 leaves the scored chain; the internal force stays a reported quantity",
+  "c": "repeatability R is reported; the friction factor keeps the path term P only if d_m passes the 3x rule under the same mutant, otherwise the factor leaves the score (R and P out; Q renormalised over H and A)",
+  "d": "the absolute-position term A is reported (Q renormalised); the zero residual and the mounting stay in the units at the same tolerance",
+  "e": "one half fails: that quantity (P_r or v_c) is reported and the place term keeps the other; both fail: the place term leaves the product (tray = completed x Q)",
+  "count": "with fewer than three of the five lines standing the form goes back to design before anything task-specific is built"
+ },
+ "reported_not_scored": [
+  "per tray: the internal force between the hands (the part of the two weld forces that cancels)",
+  "per tray: the largest grasp-load share of capacity",
+  "per tray: moments at the welds",
+  "per tray: the grip torque by phase",
+  "per tray: J6's torque",
+  "per tray: every module's winding and reported temperatures and the smallest margin to a protection",
+  "per tray: the peak-to-peak motion of the reference point in each hold window (stillness)",
+  "per tray: the largest tilt in the moves",
+  "per tray: d_s (if it fails the 3x rule)",
+  "per tray: late cycles",
+  "per unit: the kind and time of an event",
+  "where the loop closes (stillness, velocity ripple of the wrist joints) unless the pre-check shows it moves a term of its own by 0.1 (M-loop)",
+  "the zero ends at 0.25, 0.5 and 2 times each belief error"
+ ],
+ "fixed_before_any_band": {
+  "reference_gains": {
+   "kp": [
+    400,
+    400,
+    300,
+    300,
+    60,
+    60,
+    60
+   ],
+   "kd": [
+    5,
+    5,
+    4,
+    4,
+    1.5,
+    1.5,
+    1.5
+   ],
+   "source": "fixed before any band exists and never tuned on a score"
+  },
+  "label_margins": {
+   "grasp_load_share_max": 0.8,
+   "winding_margin_K_min": 10.0,
+   "source": ""
+  }
+ }
+}

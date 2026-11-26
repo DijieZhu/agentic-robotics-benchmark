@@ -1,0 +1,43 @@
+block,quantity,element,low,high,unit
+joint friction in motion,Coulomb level,J1,0.306,1.02,N m
+joint friction in motion,Coulomb level,J2,0.306,0.72,N m
+joint friction in motion,Coulomb level,J3,0.2,0.586,N m
+joint friction in motion,Coulomb level,J4,0.15,1.27,N m
+joint friction in motion,Coulomb level,J5,0.05,0.16,N m
+joint friction in motion,Coulomb level,J6,0.09,0.16,N m
+joint friction in motion,Coulomb level,J7,0.1,0.31,N m
+joint friction in motion,"variation of the level along the travel, at most",every arm joint,-57,57,per cent
+joint friction in motion,"variation of the level along the travel, RMS",every arm joint,29,29,per cent
+joint friction in motion,repeat of the variation's pattern,every arm joint,1.7,2.3,deg of joint angle
+viscous damping,damping,J1-J2,0.0,0.52,N m s/rad
+viscous damping,damping,J3-J4,0.0,0.81,N m s/rad
+viscous damping,damping,J5-J7,0.015,0.1,N m s/rad
+delivered torque,delivered per commanded,every module,0.88,1.04,-
+torque offset,constant offset,J1-J4,-0.15,0.15,N m
+torque offset,constant offset,J5-J7,-0.04,0.04,N m
+zero residual,after the fixture check,every arm joint,-0.4,0.4,deg
+mounting,"right arm against left, translation",per axis,-0.0005,0.0005,m
+mounting,"right arm against left, rotation",per axis,-0.15,0.15,deg
+gripper,gripper friction,per hand,0.2,0.92,N m
+gripper,"gripper viscous damping, both fingers together",per hand,0.084,0.084,N m s/rad
+gripper,pad friction,per hand,0.55,,-
+site,lab ambient,per site,20.0,30.0,deg C
+site,coil above ambient at hand-over,per module,0.0,15.0,K
+
+coil hold,class,held torque N m,"time to protection s (low, high)",reply at protection C,reply next minute C,clearable after s,holds,holds without protection
+coil hold,DM8009,20.0,243 1263,54 62,54 62,7 8,27,0
+coil hold,DM8009,25.0,78 293,36 50,40 52,5 6,27,0
+coil hold,DM8009,30.0,43 119,28 47,33 49,4 6,27,0
+coil hold,DM8009,35.0,28 67,25 46,30 49,4 6,27,0
+coil hold,DM8009,40.0,21 45,23 46,29 48,4 6,27,0
+coil hold,DM4340,9.0,,,,,27,27
+coil hold,DM4340,12.0,,,,,27,27
+coil hold,DM4340,15.0,169 852,53 61,54 61,5 6,27,0
+coil hold,DM4340,20.0,44 146,32 48,36 50,3 4,27,0
+coil hold,DM4340,27.0,19 44,24 46,30 48,3 4,27,0
+coil hold,DM4310,3.0,,,,,27,27
+coil hold,DM4310,3.5,297 832,56 61,56 61,6 7,27,15
+coil hold,DM4310,4.0,124 523,49 57,50 57,5 6,27,0
+coil hold,DM4310,5.0,51 144,36 49,40 51,4 5,27,0
+coil hold,DM4310,6.0,30 72,30 47,36 50,4 5,27,0
+coil hold,DM4310,7.0,20 45,26 46,34 49,4 5,27,0

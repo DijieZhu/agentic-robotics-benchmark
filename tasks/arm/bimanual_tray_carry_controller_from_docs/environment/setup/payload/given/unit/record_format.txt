@@ -1,0 +1,21 @@
+DELIVERY RECORD: FORMAT
+
+Each pair leaves our workshop with one record (a JSON object), handed over with the pair at its acceptance.
+Fields:
+  unit_id                 the pair's label
+  modules                 sixteen entries in the module order (left J1..J7, left gripper, right J1..J7,
+                          right gripper), each with: label, product, edition, firmware, serial, Imax_A (the
+                          maximum drive current as printed at power-up), and register_dump: the module's
+                          full register dump as the maker's parameter tool prints it (every register the
+                          module carries, the identified Rs, Ls and Flux, NPP and Gr, PMAX, VMAX, TMAX,
+                          OT_Value, OC_Value, TIMEOUT, KT_Value, GREF, CTRL_MODE), followed by the power-up
+                          serial line with Imax
+  zeroing                 how the pair was zeroed and checked
+  mounting                the arms' mounting to the pedestal drawing
+  pads                    the lot of the gripper pads
+  home_pose_rad           the pose in which the pair is handed over (per arm J1..J7)
+  not_identified          what was not identified on the unit
+
+On every record: OT_Value 100 and TIMEOUT 0 on every module; Imax 10.26 A on every gripper module of this version;
+the fixture check: every arm joint within 0.4 deg; the mounting: 0.5 mm, 0.15 deg.
+The record of another pair (not one of the pairs at acceptance) is in example_record.json.

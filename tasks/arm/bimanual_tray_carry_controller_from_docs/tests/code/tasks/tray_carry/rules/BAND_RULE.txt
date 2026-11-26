@@ -1,0 +1,123 @@
+STAGE 05 (OpenArm pair, tray-carry controller): THE BAND RULE
+Plain text of rules/band_rule.json; the two say the same. Pre-registered before any number of the built
+task exists. No number of any built unit, shift, tray or submission appears here; the floors are tolerances or one field step
+at the observable, computed on the maker's nominal model.
+The pre-check that section 8 quotes was committed before this rule.
+
+1. CREDIT (linear, as #88)
+   For a quantity x of one row (smaller is better), with F the full end and Z the zero end:
+     L(x) = 1 if x <= F; 0 if x >= Z; (Z - x) / (Z - F) in between.
+
+2. FULL END
+   F_x = max(floor_x, 1.25 x the 90th percentile of x over the privileged reference's rows on the three true units, pooled).
+   A floor is what a printed tolerance or a field's resolution produces at the scored point, with one line of derivation; it is
+   never a measurement of what the agent's material allows. A floor that nothing printed gives is listed as
+   going back to the maintainers (section 6) and is not invented.
+
+3. ZERO END
+   Z_x = the median of x over the rows of the reference with the owning factor's ONE belief set to the documents' value (the
+   named mutant of section 6), on the three true units. Recorded beside it, never used as an end: the medians with that
+   belief's error (documents' value minus truth) scaled by 0.25, 0.5 and 2.
+
+4. THE 3x RULE
+   A quantity whose Z_x is below 3 F_x is merged into another quantity of the same owner or reported only. Merged: its credit
+   factor is dropped and the term is computed from the owner's remaining quantity (H keeps the other of e_z and theta; place
+   keeps the remaining of v_c, P_r, d_s). A term left with no scored quantity is reported only and its weight goes to the
+   remaining terms of Q in proportion; a place term with no quantity left leaves the product (tray = completed x Q). Decided
+   once, on the frozen set, by this rule; never by looking at a model's episode.
+
+5. STRUCTURE AND WEIGHTS OF RECORD
+     Q_i     = 0.30 H + 0.25 R + 0.25 A + 0.20 P        each term the mean of its rows over tray i's job
+     H row   = L(e_z) x L(theta)                         one row per hold
+     P row   = L(d_m) x progress_m                       one row per move; progress = travel projected on the move, in [0, 1]
+     place_i = L(v_c) x L(P_r)                           (x L(d_s) only if d_s passes the 3x rule)
+     tray_i  = completed_i x Q_i x (0.5 + 0.5 x place_i)
+     unit_u  = 0.85 x the mean over the unit's CARRY trays of tray_i + 0.15 x J_u
+     raw     = gates x the mean over the three units of unit_u;   reward = min(1, raw / anchor)
+   completed_i = 1 iff captured, carried without an event, standing on S inside its seat frame (the seat mark grown by 10 mm on
+   the true shelf, all four feet) with both grippers open at T_e + 6.0. A carry tray that is declined, missed at capture, cut by
+   an event or never reached has tray_i = 0 and stays in the mean. J_u = max(0, TPR - FPR) over the unit's decline and carry
+   trays; a tray counts as declined only if it stands released in F at its put-back deadline; a tray never reached counts as
+   not declined. The anchor is the privileged reference's raw score on the frozen set (tests/anchor.json).
+   When a term leaves Q (3x rule or a pre-check line) the remaining Q weights are divided by their sum. The unit's 0.85 / 0.15
+   and the tray's 0.5 / 0.5 change only as section 8 says (J at 0.10 if line a1 fails: 0.90 / 0.10).
+
+6. TERMS, QUANTITIES, WINDOWS, OWNERS, ZERO-END MUTANTS, FLOORS
+   H, hold (0.30). Owner: the load is in no model (mass and centre). Mutant M-load: the reference feeding forward the middle
+     of the printed band (1.25 kg) with its centre midway. Window: the mean over the last 0.4 s of each 0.9 s hold.
+     e_z, height error of the tray reference point, mm. Floor 0.12 mm: one position step (25 / 65535 rad = 0.021857 deg) at
+       each of the fourteen arm joints through the nominal kinematics, vertical shift of the reference point, root-sum-square,
+       median 0.1219 mm over the box (0.099 to 0.138).
+     theta, deck angle from level, deg. Floor 0.047 deg: one position step at each of the fourteen joints, the grip points'
+       vertical difference over 0.360 m and the hands' mean rotation about the handle line, root-sum-square, median 0.0466 deg
+       (0.041 to 0.051).
+   R, repeatability (0.25). Owner: joint friction (level by direction, holding band, profile along the travel). Mutant M-fric:
+     the reference with the model file's joint table (frictionloss 0.2 / 0.1 / 0.04, damping 1.0 / 0.9 / 0.9). Window: the
+     hold windows of targets visited at least twice from directions at least 60 deg apart.
+     rho_t, the largest distance between a target's settled positions over its visits, mm. Floor 0.28 mm: two settled poses,
+       each with one position step per joint: sqrt(2) x 0.2009 mm (the reference point's 3-D shift per step, root-sum-square,
+       median over the box) = 0.284 mm.
+   A, absolute position (0.25). Owner: zero residual and mounting, against the site's datum. Mutant M-geom: zeros of 0, the
+     drawn mounting, the tray placed by the nominal kinematics (the capture in F not used). Window: the hold windows.
+     e_xy, horizontal distance of the reference point from its target in the cell frame, mm. Floor 0.33 mm: the 90th
+       percentile of the horizontal error that F's printed survey tolerance (+-0.3 mm per axis) leaves at the reference point
+       (the committed pre-check's F_A floor). The fit note adds nothing at the scored point for targets commanded
+       as displacements from the end of the seating; one position step gives 0.16 mm horizontally.
+   P, path (0.20). Owner: joint friction, the same factor and mutant as R (split only if the pre-check shows the
+     damping half moving P by 0.1 alone). Window: each 1.16 s move.
+     d_m, RMS distance from the timed straight reference over a move, mm. Floor 0.2 mm: one position step at each of the
+       fourteen joints, 3-D shift of the reference point, root-sum-square, median 0.2009 mm (0.168 to 0.230).
+   place (as 0.5 + 0.5 x place). Owner: setting down by feel (S within its survey tolerance). Mutant M-shelf: S at its drawn
+     pose, lowering at 8 mm/s to the drawn height, then release. Window: T_e to T_e + 6.0 s.
+     v_c, downward speed when the first foot meets S, mm/s. Floor 1.0 mm/s: a working value, ours, the
+       pre-check's planning floor; one eighth of the reference's own lowering speed, not expected to bind.
+     P_r, what S carries minus the tray's weight when the first gripper lets go, N. Floor 0.5 N: a working value, ours,
+       the pre-check's planning floor; about three times what one torque-field step at the proximal joints
+       of both arms produces at the tray. The audit never lifts it.
+     d_s, horizontal distance and yaw from S's true seat mark. Expected to fail the 3x rule and be reported.
+       Floor 2.0 mm (and 0.3 deg): the shelf's printed survey tolerance; by construction it cannot pass the 3x rule.
+   Not band terms: completed (the chain, layers 1 and 2; M-int and M-grip are its event mutants) and J (layer 2; the dummies
+   "never decline" and "decline all").
+   The floor figures of H, R and P were computed on the maker's nominal model by the rule of section 2 (one field step at
+   the observable): 93 targets, both arms at pitch -40 deg.
+   The three place floors were fixed before any number of the built task existed: two working
+   values, said so, and one tolerance.
+
+7. EVENTS (each ends the unit's shift; the tray in work and every later tray score 0; earlier trays keep their scores)
+   E1 module protection: coil over-temperature at the module's OT_Value (100 deg C on every module of version 1); driver
+      stage at 120 deg C (the unit never produces it); TIMEOUT 0 in every record.
+   E2 slip or drop: F_s > mu x F_c or F_n > F_c for 20 ms at a neck (mu printed "0.55 or more"; F_c = the finger stop's torque
+      over 0.067 m, both pads together), armed 0.5 s after capture until release; or a tray released with its feet more than
+      10 mm above a rest, or anywhere but over F or S.
+   E3 spill: the deck more than 10 deg from level between capture and release.
+   E4 contact: any contact other than pads on a grip block (not simulated), feet in F's cups or on S's top, and the two fingers
+      of one hand with each other.
+   E5 stop: an arm joint within 0.5 deg of an end of its range.
+   Not events: a missed capture, a late or soft set-down, a declined tray, a press on the shelf.
+
+8. WHAT EACH LINE OF THE PRE-CHECK TAKES OUT IF IT FAILS (quoted from the committed pre-check's rule, which holds where the two differ)
+   (a) a1: layer 2 leaves the scored chain: protections stay events; J goes to a weight of 0.10; decline trays are kept only
+       where a joint's holding torque exceeds its module's peak. a2: the maintainers shorten the lap or narrow the centre region
+       before anything is built and the line is run again (the score's form is unchanged).
+   (b) layer 1 leaves the scored chain; the internal force stays reported.
+   (c) R is reported; the friction factor keeps P only if d_m passes the 3x rule under M-fric, otherwise the factor leaves the
+       score (R and P out; Q renormalised over H and A).
+   (d) A is reported (Q renormalised); the zero residual and the mounting stay in the units at the same tolerance.
+   (e) one half fails: that quantity (P_r or v_c) is reported and place keeps the other; both fail: place leaves the product.
+   With fewer than three of the five lines standing the form goes back to design.
+
+9. GATES (only what makes scoring impossible or the run invalid; #88's)
+   The controller imports and setup returns a valid mode choice inside its budget on every unit; the size cap; the static
+   import audit; at least one call answered; at least 90 % of each unit's cycles on time; no write after the lock; no process
+   left behind. A unit whose late time exceeds 10 % of its planned shift is stopped there.
+
+10. REPORTED, NEVER SCORED
+   Per tray: the internal force between the hands, the largest grasp-load share of capacity, moments at the welds, the grip
+   torque by phase, J6's torque, every module's winding and reported temperatures and the smallest margin to a protection,
+   stillness in each hold window, the largest tilt in the moves, d_s (if it fails the 3x rule), late cycles. Per unit: the kind
+   and time of an event. Where the loop closes, unless the pre-check shows it moves a term of its own by 0.1 (M-loop). The zero
+   ends at 0.25, 0.5 and 2 times each belief error.
+
+11. FIXED BEFORE ANY BAND
+   The reference's gains kp 400 / 400 / 300 / 300 / 60 / 60 / 60, kd 5 / 5 / 4 / 4 / 1.5 / 1.5 / 1.5; the
+   label's margins: grasp load at most 0.80 of capacity, every winding at least 10 K below its protection.

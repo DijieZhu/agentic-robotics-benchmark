@@ -1,0 +1,807 @@
+{
+ "format": "openarm_unit/profile/1",
+ "task": "bimanual_tray_carry_controller_from_docs",
+ "profile": "stage05",
+ "status": "the shared unit's law package implements the schema",
+ "law_file": "",
+ "law_version": "openarm_unit-law/1",
+ "schema": {
+  "entry": "per quantity AND element",
+  "mode": {
+   "draw": "drawn inside 'range' (or the law's range where no range is given) with 'shape'",
+   "fixed": "set to 'value' (inside the law)",
+   "nominal": "the law's nominal",
+   "off": "not modelled"
+  },
+  "range": "inside the law's range at 'law_path'",
+  "law_path": "keys into params_law.json; null for quantities the law fixes or that are not unit quantities",
+  "grouping": "element, module, arm, class, unit (or site); 'unit' = one value for the whole unit",
+  "pending_unit_patch": "the note names the unit package"
+ },
+ "zero_mode": "residual",
+ "units": 3,
+ "registry": "the task's hidden tests",
+ "worth_hiding": "off",
+ "spread_rule": {
+  "rule": "any two of the three units differ by at least w_min in at least two scored quantities",
+  "w_min": {
+   "C1": null,
+   "P1": null,
+   "PL1": null
+  },
+  "status": "stage 05's values are not stated anywhere; left null"
+ },
+ "entries": [
+  {
+   "quantity": "P1",
+   "element": "J1",
+   "mode": "draw",
+   "range": [
+    0.306,
+    1.02
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    0
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J2",
+   "mode": "draw",
+   "range": [
+    0.306,
+    0.72
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    1
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J3",
+   "mode": "draw",
+   "range": [
+    0.2,
+    0.586
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    2
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J4",
+   "mode": "draw",
+   "range": [
+    0.15,
+    1.27
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    3
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J5",
+   "mode": "draw",
+   "range": [
+    0.05,
+    0.16
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    4
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J6",
+   "mode": "draw",
+   "range": [
+    0.09,
+    0.16
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    5
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1",
+   "element": "J7",
+   "mode": "draw",
+   "range": [
+    0.1,
+    0.31
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "range_Nm",
+    "value",
+    6
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "unit: the two arms share the draw",
+   "source": ""
+  },
+  {
+   "quantity": "P1.arm_factor",
+   "element": "left, right",
+   "mode": "draw",
+   "range": [
+    0.94,
+    1.06
+   ],
+   "law_path": [
+    "quantities",
+    "P1",
+    "arm_factor_range",
+    "value"
+   ],
+   "unit": "-",
+   "shape": "uniform",
+   "grouping": "arm",
+   "source": "the product with every factor stays inside the joint's range, else the element is redrawn"
+  },
+  {
+   "quantity": "HS1.relative_rms",
+   "element": "14 arm joints",
+   "mode": "draw",
+   "value": 0.29,
+   "law_path": [
+    "quantities",
+    "HS1",
+    "relative_rms",
+    "value"
+   ],
+   "unit": "-",
+   "grouping": "unit (fixed for the unit)",
+   "source": "a function of the joint's MECHANICAL angle, never of the reported angle"
+  },
+  {
+   "quantity": "HS1.period",
+   "element": "14 arm joints",
+   "mode": "draw",
+   "range": [
+    0.03,
+    0.04
+   ],
+   "law_path": [
+    "quantities",
+    "HS1",
+    "period_range_rad",
+    "value"
+   ],
+   "unit": "rad",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "P2",
+   "element": "J1-J2",
+   "mode": "draw",
+   "range": [
+    0.0,
+    0.52
+   ],
+   "law_path": [
+    "quantities",
+    "P2",
+    "range_Nm_s_rad",
+    "value",
+    "J1-J2"
+   ],
+   "unit": "N m s/rad",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "P2",
+   "element": "J3-J4",
+   "mode": "draw",
+   "range": [
+    0.0,
+    0.81
+   ],
+   "law_path": [
+    "quantities",
+    "P2",
+    "range_Nm_s_rad",
+    "value",
+    "J3-J4"
+   ],
+   "unit": "N m s/rad",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "P2",
+   "element": "J5-J7",
+   "mode": "draw",
+   "range": [
+    0.015,
+    0.1
+   ],
+   "law_path": [
+    "quantities",
+    "P2",
+    "range_Nm_s_rad",
+    "value",
+    "J5-J7"
+   ],
+   "unit": "N m s/rad",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "P3",
+   "element": "14 arm joints",
+   "mode": "nominal",
+   "law_path": null,
+   "source": ""
+  },
+  {
+   "quantity": "P4",
+   "element": "all links",
+   "mode": "nominal",
+   "law_path": null,
+   "source": ""
+  },
+  {
+   "quantity": "P5",
+   "element": "both arms",
+   "mode": "nominal",
+   "value": "nothing mounted",
+   "law_path": null,
+   "source": ""
+  },
+  {
+   "quantity": "P6",
+   "element": "left, right gripper",
+   "mode": "draw",
+   "range": [
+    0.2,
+    0.92
+   ],
+   "law_path": [
+    "quantities",
+    "P6",
+    "range_Nm",
+    "value"
+   ],
+   "unit": "N m",
+   "shape": "log-uniform",
+   "grouping": "arm",
+   "source": ""
+  },
+  {
+   "quantity": "P7",
+   "element": "left, right gripper",
+   "mode": "fixed",
+   "value": 0.084,
+   "law_path": [
+    "quantities",
+    "P7",
+    "nominal_Nm_s_rad",
+    "value"
+   ],
+   "unit": "N m s/rad",
+   "source": "fixed at the law's nominal"
+  },
+  {
+   "quantity": "C0",
+   "element": "16 modules",
+   "mode": "nominal",
+   "value": 0.0,
+   "law_path": [
+    "quantities",
+    "C0",
+    "nominal",
+    "value"
+   ],
+   "unit": "rad",
+   "source": ""
+  },
+  {
+   "quantity": "C1",
+   "element": "14 arm joints",
+   "mode": "draw",
+   "range": [
+    -0.4,
+    0.4
+   ],
+   "law_path": [
+    "quantities",
+    "C1",
+    "residual_range_deg",
+    "value"
+   ],
+   "unit": "deg",
+   "shape": "uniform, independent per joint",
+   "grouping": "element",
+   "source": "zero_mode = residual",
+   "pending_unit_patch": "the law's residual half-width becomes 0.4 deg; params_law.json still holds 0.3 deg"
+  },
+  {
+   "quantity": "C2",
+   "element": "DM4340 modules",
+   "mode": "fixed",
+   "value": 10.0,
+   "law_path": [
+    "quantities",
+    "C2",
+    "values",
+    "value"
+   ],
+   "unit": "rad/s",
+   "source": ""
+  },
+  {
+   "quantity": "C3",
+   "element": "16 modules",
+   "mode": "draw",
+   "range": [
+    0.88,
+    1.04
+   ],
+   "law_path": [
+    "quantities",
+    "C3",
+    "range",
+    "value"
+   ],
+   "unit": "-",
+   "shape": "uniform, independent",
+   "grouping": "module",
+   "source": ""
+  },
+  {
+   "quantity": "C4",
+   "element": "J1-J4",
+   "mode": "draw",
+   "range": [
+    -0.15,
+    0.15
+   ],
+   "law_path": [
+    "quantities",
+    "C4",
+    "range_Nm",
+    "value",
+    "J1-J4"
+   ],
+   "unit": "N m",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "C4",
+   "element": "J5-J7",
+   "mode": "draw",
+   "range": [
+    -0.04,
+    0.04
+   ],
+   "law_path": [
+    "quantities",
+    "C4",
+    "range_Nm",
+    "value",
+    "J5-J7"
+   ],
+   "unit": "N m",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": ""
+  },
+  {
+   "quantity": "C5",
+   "element": "16 modules",
+   "mode": "fixed",
+   "value": {
+    "OT_Value": 100.0,
+    "OC_Value": 0.8,
+    "TIMEOUT": 0,
+    "CTRL_MODE_arm": 1,
+    "gripper_mode": "the controller's choice at setup, written while disabled"
+   },
+   "law_path": [
+    "quantities",
+    "C5",
+    "nominal",
+    "value"
+   ],
+   "source": ""
+  },
+  {
+   "quantity": "C6",
+   "element": "every class",
+   "mode": "nominal",
+   "value": {
+    "DM8009": "DM8009P",
+    "DM4340": "DM4340_1",
+    "DM4310": "DM4310_V1_1"
+   },
+   "law_path": [
+    "quantities",
+    "C6",
+    "values",
+    "value"
+   ],
+   "source": "params_public class_nominal_edition"
+  },
+  {
+   "quantity": "C7",
+   "element": "left, right gripper",
+   "mode": "fixed",
+   "value": 10.261194,
+   "law_path": [
+    "quantities",
+    "C7",
+    "values",
+    "value",
+    "DM4310_V1_1"
+   ],
+   "unit": "A",
+   "source": ""
+  },
+  {
+   "quantity": "registers_identification_spread",
+   "element": "16 modules x (Flux, Rs, Ls)",
+   "mode": "draw",
+   "range": [
+    -0.06,
+    0.06
+   ],
+   "law_path": [
+    "quantities",
+    "registers_identification_spread",
+    "range",
+    "value"
+   ],
+   "unit": "-",
+   "shape": "uniform, independent of everything",
+   "grouping": "module and register",
+   "source": ""
+  },
+  {
+   "quantity": "TH1",
+   "element": "16 modules",
+   "mode": "draw",
+   "range": [
+    0.9,
+    1.1
+   ],
+   "law_path": [
+    "quantities",
+    "TH1",
+    "range",
+    "value"
+   ],
+   "unit": "-",
+   "shape": "uniform",
+   "grouping": "class and unit: one factor per module class per unit",
+   "source": "",
+   "pending_unit_patch": "grouping by class (the law draws TH1 independently per module)"
+  },
+  {
+   "quantity": "S1",
+   "element": "16 modules",
+   "mode": "fixed",
+   "value": 1.0,
+   "law_path": [
+    "quantities",
+    "S1",
+    "nominal",
+    "value"
+   ],
+   "unit": "-",
+   "source": "one session per unit (its acceptance); fixed at the nominal (conservative)"
+  },
+  {
+   "quantity": "S2",
+   "element": "14 arm modules",
+   "mode": "fixed",
+   "value": 0.0,
+   "law_path": [
+    "quantities",
+    "S2",
+    "nominal",
+    "value"
+   ],
+   "unit": "N m",
+   "source": "as S1"
+  },
+  {
+   "quantity": "S3.ambient",
+   "element": "the unit's site",
+   "mode": "draw",
+   "range": [
+    20.0,
+    30.0
+   ],
+   "law_path": [
+    "quantities",
+    "S3",
+    "ambient_range_C",
+    "value"
+   ],
+   "unit": "deg C",
+   "shape": "uniform",
+   "grouping": "unit (one value per site)",
+   "source": ""
+  },
+  {
+   "quantity": "S3.start_offset",
+   "element": "16 modules (both nodes of a module alike)",
+   "mode": "draw",
+   "range": [
+    0.0,
+    15.0
+   ],
+   "law_path": [
+    "quantities",
+    "S3",
+    "start_offset_range_K",
+    "value"
+   ],
+   "unit": "K",
+   "shape": "uniform",
+   "grouping": "module",
+   "source": "",
+   "pending_unit_patch": "SessionState holds the start offsets per module (state.py still holds two, per arm)"
+  },
+  {
+   "quantity": "S4",
+   "element": "supply",
+   "mode": "nominal",
+   "value": 24.0,
+   "law_path": [
+    "quantities",
+    "S4",
+    "nominal_V",
+    "value"
+   ],
+   "unit": "V",
+   "source": ""
+  },
+  {
+   "quantity": "ST1",
+   "element": "28 stops",
+   "mode": "nominal",
+   "law_path": null,
+   "source": ""
+  },
+  {
+   "quantity": "PL1.translation",
+   "element": "right arm (per axis)",
+   "mode": "draw",
+   "range": [
+    -0.0005,
+    0.0005
+   ],
+   "law_path": [
+    "quantities",
+    "PL1",
+    "translation_range_m",
+    "value"
+   ],
+   "unit": "m",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": "",
+   "pending_unit_patch": "per-element entries (the law draws both arms)"
+  },
+  {
+   "quantity": "PL1.rotation",
+   "element": "right arm (per axis)",
+   "mode": "draw",
+   "range": [
+    -0.15,
+    0.15
+   ],
+   "law_path": [
+    "quantities",
+    "PL1",
+    "rotation_range_deg",
+    "value"
+   ],
+   "unit": "deg",
+   "shape": "uniform",
+   "grouping": "element",
+   "source": "",
+   "pending_unit_patch": "per-element entries, as PL1.translation"
+  },
+  {
+   "quantity": "PL1",
+   "element": "left arm",
+   "mode": "nominal",
+   "law_path": null,
+   "source": ""
+  }
+ ],
+ "task_quantities": [
+  {
+   "quantity": "pad_friction",
+   "element": "per hand",
+   "mode": "draw",
+   "range": [
+    0.55,
+    0.75
+   ],
+   "unit": "-",
+   "shape": "uniform",
+   "printed": "0.55 or more",
+   "source": ""
+  },
+  {
+   "quantity": "F_pose_offset",
+   "element": "per site, per axis",
+   "mode": "draw",
+   "range": {
+    "m": [
+     -0.0003,
+     0.0003
+    ],
+    "deg": [
+     -0.05,
+     0.05
+    ]
+   },
+   "shape": "uniform",
+   "source": ""
+  },
+  {
+   "quantity": "S_pose_offset",
+   "element": "per site, per axis",
+   "mode": "draw",
+   "range": {
+    "m": [
+     -0.002,
+     0.002
+    ],
+    "deg": [
+     -0.3,
+     0.3
+    ]
+   },
+   "shape": "uniform",
+   "source": ""
+  },
+  {
+   "quantity": "seat_offset",
+   "element": "per grasp event, per axis",
+   "mode": "draw",
+   "range": {
+    "m": [
+     -0.001,
+     0.001
+    ],
+    "deg": [
+     -0.5,
+     0.5
+    ]
+   },
+   "shape": "uniform",
+   "source": ""
+  },
+  {
+   "quantity": "tray_mass_and_centre",
+   "element": "per tray",
+   "mode": "draw",
+   "range": {
+    "classes_kg": {
+     "band": [
+      0.9,
+      1.6
+     ],
+     "proof": [
+      1.7,
+      2.2
+     ],
+     "decline": [
+      9.0,
+      10.0
+     ]
+    },
+    "centre_along_m": [
+     -0.04,
+     0.04
+    ],
+    "centre_fore_aft_m": [
+     -0.005,
+     0.005
+    ],
+    "centre_below_m": [
+     0.0,
+     0.045
+    ],
+    "decline_centre_along_abs_m": [
+     0.03,
+     0.04
+    ]
+   },
+   "source": ""
+  }
+ ],
+ "bracket": {
+  "rule": "U_worst and U_best are constructed states at the ends of the law's ranges as this profile narrows them; stored with their own digest, flagged 'constructed', never a hidden unit",
+  "U_worst": {
+   "C3": 0.88,
+   "P6": 0.92,
+   "P1": "the low end of each joint's range (the product with the arm factor)",
+   "TH1": 1.1,
+   "S3.ambient": 30.0,
+   "S3.start_offset": 15.0,
+   "pad_friction": 0.55,
+   "others": "nominal"
+  },
+  "U_best": {
+   "C3": 1.04,
+   "P6": 0.2,
+   "P1": "the high end of each joint's range (the product with the arm factor)",
+   "TH1": 0.9,
+   "S3.ambient": 20.0,
+   "S3.start_offset": 0.0,
+   "thermal_at_slot_start": "every coil at ambient at the start of each tray's slot",
+   "others": "nominal"
+  },
+  "label_run_options": {
+   "capacity_rule_off": "the option 'pad friction unbounded' of the label's run: the grasp taken as never limiting; not a state"
+  },
+  "source": ""
+ }
+}

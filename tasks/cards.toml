@@ -29,6 +29,12 @@ summary = "Specify seven upgraded replicas of a two-arm robot that has left the 
 platforms = ["arm"]
 stages = ["requirements"]
 
+[bimanual_tray_carry_controller_from_docs]
+title = "Write a two-arm robot's tray-carrying controller"
+summary = "Write the joint-level controller with which an OpenArm 2.0 pair carries trays to a shelf and declines those it cannot carry, from the documents, on units it has never run on."
+platforms = ["arm"]
+stages = ["control"]
+
 [cabinet_door_hanging]
 title = "Replace a cabinet door with two Pandas"
 summary = "Two fixed Franka Pandas replace a cabinet door on loose-pin hinges: a vacuum cup holds the hanging door while a gripper pulls the old pins and drives in new ones, from cameras and wrist force."

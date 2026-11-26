@@ -1,0 +1,58 @@
+# bimanual_tray_carry_controller_from_docs: the control stage on the OpenArm 2.0 pair (an atomic task).
+#
+# The agent is the controls engineer of an integrator whose OpenArm 2.0 pairs stand at customers' sites. From the maker's
+# published files, the joint modules' data pages, the integrator's sheet of observations, a unit's delivery-record
+# format and the site's sheets it writes ONE joint-level controller (submission/controller/controller.py, class
+# Controller: setup / step on a 4 ms bus cycle, sixteen module frames per cycle) with which the pair carries the
+# customer's trays from a seating fixture to a rack shelf, and declines the trays it cannot carry.
+#
+# Grading (tests/test.sh, tests/code/tasks/tray_carry/grader/verify.py): the controller is run, as an unprivileged
+# account under a no-network filter, once on each of three hidden units of the unaltered pair (tests/hidden), one
+# continuous shift each; the true tray's motion on the true unit is scored by the acceptance specification the agent
+# holds; reward = min(1, gates x the mean over the units / the anchor). The oracle (solution/) submits the task's
+# own controller with a random token, with which the grader hands it each unit's hidden state at setup.
+
+schema_version = "1.4+ale.1"
+artifacts = ["/home/user/submission"]
+
+[task]
+name = "grounded-intelligence-initiative/bimanual_tray_carry_controller_from_docs"
+
+[metadata]
+platform = "arm"
+stage = "control"
+hidden_instance = "a fixed hidden set of three units of the unaltered pair, one continuous shift each (tests/hidden)"
+given_from = {stage = "assembly", adapter = "the assembled pair's documents"}
+oracle_kind = "token-privileged"
+compute = "cpu"
+tags = ["control", "bimanual", "openarm", "tray-carry", "joint-level-control", "mujoco", "code-as-policy", "proprioceptive", "hidden-units", "oracle-token", "no-practice"]
+
+[environment]
+cpus = 4
+memory_mb = 8192
+
+[agent]
+timeout_sec = 21600
+network_mode = "no-network"
+
+# Separate verification: a fresh sandbox from the task image with only the submission restored; the three units are
+# graded one after another, one continuous shift each.
+#
+# The time-out, 9,000 s, covers the controller's budgets over the three units: 3 x (60 s to import and build the
+# controller + 120 s of setup's wall time) = 540 s, and its CPU over the shifts: 4 ms on each cycle of the roughly
+# 1,700 s of planned shift, and less than 4 ms more for each late step (a step late by L cycles stands for L cycles,
+# and a shift stops once its late cycles pass 10 % of its plan), so at most about 1,900 s. That leaves more than 6,500
+# s for the grader's own work, the hand-overs, the simulated plant and the exchange.
+#
+# Not in the sum: a step's wall time beyond its CPU (a step may take up to 5 s of wall time without being late, so a
+# controller that waits inside its steps can reach the time-out), and the cycles by which a shift runs past its plan,
+# which counts each decline tray as declined 0.5 s after its presentation (a later decline, or none, lengthens the
+# shift).
+[verifier]
+timeout_sec = 9000
+environment_mode = "separate"
+
+[verifier.environment]
+cpus = 4
+memory_mb = 8192
+gpus = 0
