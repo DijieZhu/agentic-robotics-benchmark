@@ -563,6 +563,18 @@ def _crossing(P, a, b, zmax):
     return None
 
 
+def _nearest_on_cable(P, c):
+    """The point of polyline P nearest to c in the plane, on its segments as in _seg_dist (the first one on a tie):
+    (segment index j, parameter t along it, the point (3D), its distance from c in the plane)."""
+    a, b = P[:-1], P[1:]
+    ab = b[:, :2] - a[:, :2]
+    t = np.clip(np.einsum("ij,ij->i", c - a[:, :2], ab) / np.maximum(np.einsum("ij,ij->i", ab, ab), 1e-12), 0.0, 1.0)
+    X = a + t[:, None] * (b - a)
+    dist = np.linalg.norm(X[:, :2] - c, axis=1)
+    j = int(np.argmin(dist))
+    return j, float(t[j]), X[j], float(dist[j])
+
+
 def evaluate(ep, P, damaged=False, peak_mean=0.0, peak=0.0):
     """Which fixtures the settled cable satisfies, in route order. P: (N+1, 3) cable points (world)."""
     checks = []
@@ -575,15 +587,13 @@ def evaluate(ep, P, damaged=False, peak_mean=0.0, peak=0.0):
             checks.append({"type": "clip", "ok": s is not None, "s": s})
         else:
             c = f["pos"]
-            dist = np.linalg.norm(P[:, :2] - c, axis=1)
-            j = int(np.argmin(dist))
-            touching = dist[j] <= POST_R + ep.radius + POST_TOL and P[j, 2] < BOARD_T + POST_H
-            jj = min(max(j, 1), len(P) - 2)
-            tang = P[jj + 1, :2] - P[jj - 1, :2]
-            cross = tang[0] * (c[1] - P[j, 1]) - tang[1] * (c[0] - P[j, 0])
+            j, t, x, dist = _nearest_on_cable(P, c)
+            touching = dist <= POST_R + ep.radius + POST_TOL and x[2] < BOARD_T + POST_H
+            tang = P[j + 1, :2] - P[j, :2]
+            cross = tang[0] * (c[1] - x[1]) - tang[1] * (c[0] - x[0])
             side_ok = (cross > 0) if f["side"] == "left" else (cross < 0)
             ok = bool(touching and side_ok)
-            checks.append({"type": "post", "ok": ok, "s": float(arc[j]) if ok else None})
+            checks.append({"type": "post", "ok": ok, "s": float(arc[j] + t * (arc[j + 1] - arc[j])) if ok else None})
     routed, last = 0, -1.0
     for c in checks:
         if not c["ok"] or c["s"] <= last:

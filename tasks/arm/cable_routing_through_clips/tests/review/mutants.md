@@ -22,3 +22,8 @@ change what they show.
 
 Removed before the set was drawn: "clip turned by 90 degrees" (tests/review/PREREG.md: it changes nothing the
 reference does; a clip's axis is neither scored nor needed).
+
+After the post check was brought to its rule (tests/review/PREREG.md, second amendment), the five controls were run
+in process on the 20 boards (as the walk runs the reference) and each settled cable judged by the old and the fixed
+check: all 100 episodes are judged alike by both. In process "takes every post on the wrong side" completes 6 boards,
+none with a post, and "does not watch the tension" 5 (13 damaged); the other three as in the table.
